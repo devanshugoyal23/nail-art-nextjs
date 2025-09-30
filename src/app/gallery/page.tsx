@@ -1,5 +1,6 @@
 import React from 'react'
 import Gallery from '@/components/Gallery'
+import RelatedCategories from '@/components/RelatedCategories'
 
 export default function GalleryPage() {
   return (
@@ -12,6 +13,11 @@ export default function GalleryPage() {
       </div>
       
       <Gallery showPrompts={true} showDelete={true} />
+      
+      {/* Related Categories Section */}
+      <div className="mt-16">
+        <RelatedCategories />
+      </div>
     </div>
   )
 }

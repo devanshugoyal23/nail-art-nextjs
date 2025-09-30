@@ -1,7 +1,8 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { getGalleryItem } from "@/lib/galleryService";
+import { getGalleryItem, getGalleryItemsByCategory } from "@/lib/galleryService";
 import { Metadata } from "next";
+import RelatedCategories from "@/components/RelatedCategories";
 
 interface GalleryDetailPageProps {
   params: {
@@ -38,6 +39,11 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
   if (!item) {
     notFound();
   }
+
+  // Fetch other items from the same category
+  const categoryItems = item.category ? await getGalleryItemsByCategory(item.category) : [];
+  // Filter out the current item from the category items
+  const otherCategoryItems = categoryItems.filter(categoryItem => categoryItem.id !== item.id);
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {
@@ -136,6 +142,58 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
           </div>
         </div>
 
+        {/* Related categories section */}
+        <RelatedCategories currentCategory={item.category} />
+        
+        {/* Same category items section */}
+        {otherCategoryItems.length > 0 && (
+          <div className="mt-12">
+            <h2 className="text-2xl font-bold text-white mb-6">
+              More {item.category} Designs
+            </h2>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+              {otherCategoryItems.slice(0, 10).map((categoryItem) => (
+                <Link
+                  key={categoryItem.id}
+                  href={`/gallery/${categoryItem.id}`}
+                  className="group bg-gray-800 rounded-lg overflow-hidden hover:bg-gray-700 transition-all duration-300 transform hover:-translate-y-1"
+                >
+                  <div className="aspect-square relative">
+                    <img
+                      src={categoryItem.image_url}
+                      alt={categoryItem.design_name || 'Generated nail art'}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      loading="lazy"
+                    />
+                  </div>
+                  
+                  <div className="p-3">
+                    {categoryItem.design_name && (
+                      <h3 className="text-sm font-medium text-white mb-1 line-clamp-1">
+                        {categoryItem.design_name}
+                      </h3>
+                    )}
+                    <p className="text-xs text-gray-400 line-clamp-2">
+                      {categoryItem.prompt}
+                    </p>
+                  </div>
+                </Link>
+              ))}
+            </div>
+            
+            {otherCategoryItems.length > 10 && (
+              <div className="text-center mt-6">
+                <Link
+                  href={`/gallery/category/${encodeURIComponent(item.category!)}`}
+                  className="inline-flex items-center bg-gray-800 text-white font-semibold py-3 px-6 rounded-lg hover:bg-gray-700 transition-colors"
+                >
+                  View All {item.category} Designs ({otherCategoryItems.length})
+                </Link>
+              </div>
+            )}
+          </div>
+        )}
+        
         {/* Related designs section */}
         <div className="mt-12">
           <h2 className="text-2xl font-bold text-white mb-6">More Designs</h2>

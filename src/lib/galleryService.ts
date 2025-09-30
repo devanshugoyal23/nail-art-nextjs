@@ -91,6 +91,47 @@ export async function getGalleryItem(id: string): Promise<GalleryItem | null> {
   }
 }
 
+export async function getGalleryItemsByCategory(category: string): Promise<GalleryItem[]> {
+  try {
+    const { data, error } = await supabase
+      .from('gallery_items')
+      .select('*')
+      .eq('category', category)
+      .order('created_at', { ascending: false })
+
+    if (error) {
+      console.error('Error fetching gallery items by category:', error)
+      return []
+    }
+
+    return data || []
+  } catch (error) {
+    console.error('Error fetching gallery items by category:', error)
+    return []
+  }
+}
+
+export async function getAllCategories(): Promise<string[]> {
+  try {
+    const { data, error } = await supabase
+      .from('gallery_items')
+      .select('category')
+      .not('category', 'is', null)
+
+    if (error) {
+      console.error('Error fetching categories:', error)
+      return []
+    }
+
+    // Get unique categories
+    const categories = [...new Set(data?.map(item => item.category).filter(Boolean) || [])]
+    return categories
+  } catch (error) {
+    console.error('Error fetching categories:', error)
+    return []
+  }
+}
+
 export async function deleteGalleryItem(id: string): Promise<boolean> {
   try {
     // Get the item to find the image filename
