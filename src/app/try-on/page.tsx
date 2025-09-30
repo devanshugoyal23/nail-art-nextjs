@@ -4,6 +4,7 @@ import React, { useState, useRef, useEffect, useCallback, Suspense } from 'react
 import { useSearchParams } from 'next/navigation';
 import { NAIL_ART_DESIGNS } from '@/lib/constants';
 import { NailArtDesign } from '@/lib/types';
+import { GalleryItem } from '@/lib/supabase';
 // import { applyNailArt } from '@/lib/geminiService';
 import { fileToBase64 } from '@/lib/imageUtils';
 import Loader from '@/components/Loader';
@@ -13,13 +14,18 @@ type ActiveTab = 'gallery' | 'create';
 function TryOnContent() {
   const searchParams = useSearchParams();
   const designId = searchParams.get('design');
-  const initialState = designId ? NAIL_ART_DESIGNS.find(d => d.id === designId) : null;
+  const [galleryItem, setGalleryItem] = useState<GalleryItem | null>(null);
+  const [isLoadingGalleryItem, setIsLoadingGalleryItem] = useState<boolean>(false);
+  
+  // Check if designId is from gallery or predefined designs
+  const isGalleryItem = designId && !NAIL_ART_DESIGNS.find(d => d.id === designId);
+  const initialState = designId && !isGalleryItem ? NAIL_ART_DESIGNS.find(d => d.id === designId) : null;
 
   const [sourceImage, setSourceImage] = useState<string | null>(null);
   const [generatedImage, setGeneratedImage] = useState<string | null>(null);
   const [selectedDesign, setSelectedDesign] = useState<NailArtDesign | null>(initialState || null);
   const [customPrompt, setCustomPrompt] = useState<string>('');
-  const [activeTab, setActiveTab] = useState<ActiveTab>(initialState ? 'gallery' : 'create');
+  const [activeTab, setActiveTab] = useState<ActiveTab>(initialState || isGalleryItem ? 'gallery' : 'create');
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [isCameraActive, setIsCameraActive] = useState<boolean>(false);
@@ -34,10 +40,33 @@ function TryOnContent() {
       setActiveTab('gallery');
       setSelectedDesign(initialState);
       setCustomPrompt('');
+    } else if (isGalleryItem && designId) {
+      fetchGalleryItem(designId);
     } else {
       setActiveTab('create');
     }
-  }, [initialState]);
+  }, [initialState, isGalleryItem, designId]);
+
+  const fetchGalleryItem = async (id: string) => {
+    setIsLoadingGalleryItem(true);
+    try {
+      const response = await fetch(`/api/gallery/${id}`);
+      const data = await response.json();
+      
+      if (data.success && data.item) {
+        setGalleryItem(data.item);
+        setActiveTab('gallery');
+        setCustomPrompt('');
+      } else {
+        setError('Failed to load gallery item');
+      }
+    } catch (err) {
+      console.error('Error fetching gallery item:', err);
+      setError('Failed to load gallery item');
+    } finally {
+      setIsLoadingGalleryItem(false);
+    }
+  };
 
   const startCamera = async () => {
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
@@ -103,7 +132,17 @@ function TryOnContent() {
   };
 
   const handleGenerate = async () => {
-    const prompt = activeTab === 'gallery' ? selectedDesign?.prompt : customPrompt;
+    let prompt = '';
+    if (activeTab === 'gallery') {
+      if (galleryItem) {
+        prompt = galleryItem.prompt;
+      } else if (selectedDesign) {
+        prompt = selectedDesign.prompt;
+      }
+    } else {
+      prompt = customPrompt;
+    }
+    
     if (!sourceImage || !prompt) {
       setError('Please provide an image and select or create a design first.');
       return;
@@ -156,9 +195,23 @@ function TryOnContent() {
   const handleSaveToGallery = async () => {
     if (!generatedImage || !sourceImage) return;
     
-    const prompt = activeTab === 'gallery' ? selectedDesign?.prompt : customPrompt;
-    const designName = selectedDesign ? selectedDesign.name : 'Custom Design';
-    const category = selectedDesign ? selectedDesign.category : 'Custom';
+    let prompt = '';
+    let designName = 'Custom Design';
+    let category = 'Custom';
+    
+    if (activeTab === 'gallery') {
+      if (galleryItem) {
+        prompt = galleryItem.prompt;
+        designName = galleryItem.design_name || 'Gallery Design';
+        category = galleryItem.category || 'Gallery';
+      } else if (selectedDesign) {
+        prompt = selectedDesign.prompt;
+        designName = selectedDesign.name;
+        category = selectedDesign.category;
+      }
+    } else {
+      prompt = customPrompt;
+    }
 
     try {
       const response = await fetch('/api/gallery', {
@@ -233,7 +286,7 @@ function TryOnContent() {
     </div>
   );
   
-  const isGenerateDisabled = !sourceImage || (!selectedDesign && !customPrompt) || isLoading;
+  const isGenerateDisabled = !sourceImage || (!selectedDesign && !galleryItem && !customPrompt) || isLoading;
 
   return (
     <div className="flex flex-col lg:flex-row gap-8">
@@ -267,16 +320,32 @@ function TryOnContent() {
         {/* Content based on tab */}
         {activeTab === 'gallery' ? (
           <div className="space-y-2 h-64 overflow-y-auto pr-2">
-            {NAIL_ART_DESIGNS.map(design => (
-              <div
-                key={design.id}
-                onClick={() => handleSelectDesign(design)}
-                className={`p-3 rounded-lg cursor-pointer transition-all duration-200 flex items-center gap-4 ${selectedDesign?.id === design.id ? 'bg-indigo-500 shadow-lg' : 'bg-gray-700 hover:bg-gray-600'}`}
-              >
-                <img src={design.image} alt={design.name} className="w-10 h-10 rounded-md object-cover flex-shrink-0" />
-                <span className="font-semibold">{design.name}</span>
+            {isLoadingGalleryItem ? (
+              <div className="flex items-center justify-center h-full">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-500"></div>
               </div>
-            ))}
+            ) : galleryItem ? (
+              <div className="p-3 rounded-lg bg-indigo-500 shadow-lg">
+                <div className="flex items-center gap-4">
+                  <img src={galleryItem.image_url} alt={galleryItem.design_name || 'Gallery Design'} className="w-10 h-10 rounded-md object-cover flex-shrink-0" />
+                  <div>
+                    <span className="font-semibold text-white">{galleryItem.design_name || 'Gallery Design'}</span>
+                    <p className="text-xs text-indigo-200">{galleryItem.category}</p>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              NAIL_ART_DESIGNS.map(design => (
+                <div
+                  key={design.id}
+                  onClick={() => handleSelectDesign(design)}
+                  className={`p-3 rounded-lg cursor-pointer transition-all duration-200 flex items-center gap-4 ${selectedDesign?.id === design.id ? 'bg-indigo-500 shadow-lg' : 'bg-gray-700 hover:bg-gray-600'}`}
+                >
+                  <img src={design.image} alt={design.name} className="w-10 h-10 rounded-md object-cover flex-shrink-0" />
+                  <span className="font-semibold">{design.name}</span>
+                </div>
+              ))
+            )}
           </div>
         ) : (
           <div className="h-64 flex flex-col">

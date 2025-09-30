@@ -71,6 +71,26 @@ export async function getGalleryItems(): Promise<GalleryItem[]> {
   }
 }
 
+export async function getGalleryItem(id: string): Promise<GalleryItem | null> {
+  try {
+    const { data, error } = await supabase
+      .from('gallery_items')
+      .select('*')
+      .eq('id', id)
+      .single()
+
+    if (error) {
+      console.error('Error fetching gallery item:', error)
+      return null
+    }
+
+    return data
+  } catch (error) {
+    console.error('Error fetching gallery item:', error)
+    return null
+  }
+}
+
 export async function deleteGalleryItem(id: string): Promise<boolean> {
   try {
     // Get the item to find the image filename
