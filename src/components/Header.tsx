@@ -30,6 +30,7 @@ const Header: React.FC = () => {
               <Link href="/" className={linkClass('/')}>Home</Link>
               <Link href="/designs" className={linkClass('/designs')}>Designs</Link>
               <Link href="/try-on" className={linkClass('/try-on')}>Virtual Try-On</Link>
+              <Link href="/gallery" className={linkClass('/gallery')}>Gallery</Link>
             </div>
           </div>
           <div className="-mr-2 flex md:hidden">
@@ -61,6 +62,7 @@ const Header: React.FC = () => {
             <Link href="/" className={linkClass('/')} onClick={() => setIsOpen(false)}>Home</Link>
             <Link href="/designs" className={linkClass('/designs')} onClick={() => setIsOpen(false)}>Designs</Link>
             <Link href="/try-on" className={linkClass('/try-on')} onClick={() => setIsOpen(false)}>Virtual Try-On</Link>
+            <Link href="/gallery" className={linkClass('/gallery')} onClick={() => setIsOpen(false)}>Gallery</Link>
           </div>
         </div>
       )}

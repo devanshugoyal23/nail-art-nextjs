@@ -153,6 +153,41 @@ function TryOnContent() {
     document.body.removeChild(link);
   };
 
+  const handleSaveToGallery = async () => {
+    if (!generatedImage || !sourceImage) return;
+    
+    const prompt = activeTab === 'gallery' ? selectedDesign?.prompt : customPrompt;
+    const designName = selectedDesign ? selectedDesign.name : 'Custom Design';
+    const category = selectedDesign ? selectedDesign.category : 'Custom';
+
+    try {
+      const response = await fetch('/api/gallery', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          imageData: generatedImage,
+          prompt: prompt,
+          originalImageData: sourceImage,
+          designName: designName,
+          category: category
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        alert('Saved to gallery successfully!');
+      } else {
+        alert('Failed to save to gallery');
+      }
+    } catch (err) {
+      console.error('Error saving to gallery:', err);
+      alert('Failed to save to gallery');
+    }
+  };
+
   const handleSelectDesign = (design: NailArtDesign) => {
     setSelectedDesign(design);
     setCustomPrompt('');
@@ -283,7 +318,7 @@ function TryOnContent() {
               <div className="w-full flex flex-col items-center gap-4">
                 <h3 className="text-center text-xl font-semibold text-gray-300">Interactive Comparison</h3>
                 <ComparisonSlider before={sourceImage} after={generatedImage} />
-                 <div className="mt-4 text-center">
+                 <div className="mt-4 text-center space-x-4">
                   <button
                     onClick={handleSaveImage}
                     className="inline-flex items-center gap-2 bg-green-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-green-700 transition duration-300 shadow-lg shadow-green-500/50"
@@ -291,7 +326,16 @@ function TryOnContent() {
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                       <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
                     </svg>
-                    Save Image
+                    Download
+                  </button>
+                  <button
+                    onClick={handleSaveToGallery}
+                    className="inline-flex items-center gap-2 bg-pink-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-pink-700 transition duration-300 shadow-lg shadow-pink-500/50"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
+                    </svg>
+                    Save to Gallery
                   </button>
                 </div>
               </div>
