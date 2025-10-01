@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react'
 import { GalleryItem } from '@/lib/supabase'
+import { generateGalleryItemUrl } from '@/lib/galleryService'
 import Link from 'next/link'
 
 interface GalleryProps {
@@ -62,8 +63,9 @@ export default function Gallery({
   }
 
   const handleImageClick = (item: GalleryItem) => {
-    // Navigate to individual page instead of showing modal
-    window.location.href = `/gallery/${item.id}`
+    // Navigate to SEO-friendly URL
+    const seoUrl = generateGalleryItemUrl(item)
+    window.location.href = seoUrl
   }
 
   const formatDate = (dateString: string) => {
@@ -171,4 +173,5 @@ export default function Gallery({
     </div>
   )
 }
+
 

@@ -24,3 +24,4 @@ export interface SaveGalleryItemRequest {
   category?: string
 }
 
+

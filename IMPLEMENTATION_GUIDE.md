@@ -136,3 +136,4 @@ Once everything is working:
 
 **Need Help?** Check the Supabase logs in your dashboard for detailed error messages.
 
+

@@ -1,7 +1,8 @@
 import { MetadataRoute } from 'next';
 import { NAIL_ART_DESIGNS } from '@/lib/constants';
+import { getGalleryItems, getAllCategories } from '@/lib/galleryService';
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://your-domain.com'; // Replace with your actual domain
   
   // Static pages
@@ -23,6 +24,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date(),
       changeFrequency: 'monthly' as const,
       priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/gallery`,
+      lastModified: new Date(),
+      changeFrequency: 'daily' as const,
+      priority: 0.9,
     },
   ];
 
@@ -93,6 +100,26 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.4,
   }));
 
+  // Gallery pages - fetch from database
+  const galleryItems = await getGalleryItems();
+  const categories = await getAllCategories();
+  
+  // Gallery item pages now at root-level
+  const galleryItemPages = galleryItems.map(item => ({
+    url: `${baseUrl}/${item.category?.toLowerCase().replace(/\s+/g, '-')}/${item.design_name?.toLowerCase().replace(/\s+/g, '-') || `design-${item.id.slice(-8)}`}`,
+    lastModified: new Date(item.created_at),
+    changeFrequency: 'monthly' as const,
+    priority: 0.6,
+  }));
+
+  // Category pages remain under /gallery/category for now
+  const categoryPages = categories.map(category => ({
+    url: `${baseUrl}/gallery/category/${encodeURIComponent(category)}`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly' as const,
+    priority: 0.7,
+  }));
+
   return [
     ...staticPages,
     ...designPages,
@@ -102,7 +129,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...occasionPages,
     ...seasonPages,
     ...cityPages,
+    ...galleryItemPages,
+    ...categoryPages,
   ];
 }
+
 
 

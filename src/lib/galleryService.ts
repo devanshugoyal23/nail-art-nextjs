@@ -1,4 +1,5 @@
 import { supabase, GalleryItem, SaveGalleryItemRequest } from './supabase'
+import { generateDesignSlug, createFallbackSlug, parseDesignSlug } from './slugUtils'
 
 export async function saveGalleryItem(item: SaveGalleryItemRequest): Promise<GalleryItem | null> {
   try {
@@ -183,6 +184,157 @@ export async function deleteGalleryItem(id: string): Promise<boolean> {
   }
 }
 
+/**
+ * Get gallery item by SEO-friendly slug
+ * @param category - The category slug
+ * @param slug - The design slug
+ * @returns Gallery item or null
+ */
+export async function getGalleryItemBySlug(category: string, slug: string): Promise<GalleryItem | null> {
+  try {
+    // Convert slugs back to readable format
+    const categoryName = category.replace(/-/g, ' ')
+    const designName = slug.replace(/-/g, ' ')
+    
+    console.log('Searching for:', { categoryName, designName })
+    
+    // Check if this is a generic design slug (format: design-xxxxxxxx)
+    const isGenericSlug = slug.startsWith('design-') && slug.length > 7
+    
+    if (isGenericSlug) {
+      // Extract the ID part from the generic slug
+      const idPart = slug.replace('design-', '')
+      console.log('Detected generic slug, looking for ID ending with:', idPart)
+      
+      // Try to find an item by ID ending
+      const { data: idData, error: idError } = await supabase
+        .from('gallery_items')
+        .select('*')
+        .eq('category', categoryName)
+        .like('id', `%${idPart}`)
+        .single()
+      
+      if (!idError && idData) {
+        console.log('Found item by ID ending:', idData.design_name)
+        return idData
+      }
+    }
+    
+    // Strategy 1: Try exact match with both category and design name
+    let { data, error } = await supabase
+      .from('gallery_items')
+      .select('*')
+      .eq('category', categoryName)
+      .ilike('design_name', `%${designName}%`)
+      .single()
+
+    if (!error && data) {
+      console.log('Found exact match:', data.design_name)
+      return data
+    }
+
+    // Strategy 2: Try category match only
+    console.log('No exact match, trying category match...')
+    const { data: categoryData, error: categoryError } = await supabase
+      .from('gallery_items')
+      .select('*')
+      .eq('category', categoryName)
+      .order('created_at', { ascending: false })
+      .limit(1)
+      .single()
+
+    if (!categoryError && categoryData) {
+      console.log('Found category match:', categoryData.design_name)
+      return categoryData
+    }
+
+    // Strategy 3: Try design name match only
+    console.log('No category match, trying design name match...')
+    const { data: designData, error: designError } = await supabase
+      .from('gallery_items')
+      .select('*')
+      .ilike('design_name', `%${designName}%`)
+      .order('created_at', { ascending: false })
+      .limit(1)
+      .single()
+
+    if (!designError && designData) {
+      console.log('Found design name match:', designData.design_name)
+      return designData
+    }
+
+    // Strategy 4: Try any item (fallback)
+    console.log('No specific match, trying any item...')
+    const { data: anyData, error: anyError } = await supabase
+      .from('gallery_items')
+      .select('*')
+      .order('created_at', { ascending: false })
+      .limit(1)
+      .single()
+
+    if (!anyError && anyData) {
+      console.log('Found fallback item:', anyData.design_name)
+      return anyData
+    }
+
+    console.error('No gallery items found at all')
+    return null
+  } catch (error) {
+    console.error('Error fetching gallery item by slug:', error)
+    return null
+  }
+}
+
+/**
+ * Generate SEO-friendly URL for a gallery item
+ * @param item - The gallery item
+ * @returns SEO-friendly URL path
+ */
+export function generateGalleryItemUrl(item: GalleryItem): string {
+  if (item.category && item.design_name) {
+    const categorySlug = item.category.toLowerCase().replace(/\s+/g, '-')
+    const designSlug = item.design_name.toLowerCase().replace(/\s+/g, '-')
+    return `/${categorySlug}/${designSlug}`
+  } else if (item.category) {
+    // For items with category but no design name, use a generic slug
+    const categorySlug = item.category.toLowerCase().replace(/\s+/g, '-')
+    const genericSlug = `design-${item.id.slice(-8)}` // Use last 8 chars of ID
+    return `/${categorySlug}/${genericSlug}`
+  } else if (item.design_name) {
+    const designSlug = item.design_name.toLowerCase().replace(/\s+/g, '-')
+    return `/design/${designSlug}`
+  } else {
+    return `/design/${item.id}`
+  }
+}
+
+/**
+ * Get gallery items by category slug
+ * @param categorySlug - The category slug
+ * @returns Array of gallery items
+ */
+export async function getGalleryItemsByCategorySlug(categorySlug: string): Promise<GalleryItem[]> {
+  try {
+    const category = categorySlug.replace(/-/g, ' ')
+    
+    const { data, error } = await supabase
+      .from('gallery_items')
+      .select('*')
+      .eq('category', category)
+      .order('created_at', { ascending: false })
+
+    if (error) {
+      console.error('Error fetching gallery items by category slug:', error)
+      return []
+    }
+
+    return data || []
+  } catch (error) {
+    console.error('Error fetching gallery items by category slug:', error)
+    return []
+  }
+}
+
 // Helper function to convert data URL to blob
 function dataURLtoBlob(dataURL: string): Blob {
   const arr = dataURL.split(',')
@@ -225,4 +377,5 @@ async function uploadOriginalImage(originalImageData: string): Promise<string | 
     return null
   }
 }
+
 

@@ -144,3 +144,4 @@ npm install @supabase/supabase-js
 - You may want to add rate limiting for uploads
 - Consider adding image size limits and validation
 
+

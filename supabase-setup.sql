@@ -44,3 +44,4 @@ CREATE POLICY "Allow public upload access" ON storage.objects
 CREATE POLICY "Allow public delete access" ON storage.objects
   FOR DELETE USING (bucket_id = 'nail-art-images');
 
+

@@ -22,3 +22,4 @@ echo "2. Navigate to Settings > API"
 echo "3. Copy the Project URL and Anon/Public Key"
 echo "4. Update .env.local with these values"
 
+

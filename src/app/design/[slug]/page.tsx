@@ -1,17 +1,17 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { getGalleryItem, getGalleryItemsByCategory } from "@/lib/galleryService";
+import { getGalleryItemBySlug, getGalleryItemsByCategorySlug, generateGalleryItemUrl } from "@/lib/galleryService";
 import { Metadata } from "next";
 import RelatedCategories from "@/components/RelatedCategories";
 
-interface GalleryDetailPageProps {
+interface DesignDetailPageProps {
   params: {
-    id: string;
+    slug: string;
   };
 }
 
-export async function generateMetadata({ params }: GalleryDetailPageProps): Promise<Metadata> {
-  const item = await getGalleryItem(params.id);
+export async function generateMetadata({ params }: DesignDetailPageProps): Promise<Metadata> {
+  const item = await getGalleryItemBySlug('design', params.slug);
   
   if (!item) {
     return {
@@ -33,15 +33,15 @@ export async function generateMetadata({ params }: GalleryDetailPageProps): Prom
   };
 }
 
-export default async function GalleryDetailPage({ params }: GalleryDetailPageProps) {
-  const item = await getGalleryItem(params.id);
+export default async function DesignDetailPage({ params }: DesignDetailPageProps) {
+  const item = await getGalleryItemBySlug('design', params.slug);
 
   if (!item) {
     notFound();
   }
 
-  // Fetch other items from the same category
-  const categoryItems = item.category ? await getGalleryItemsByCategory(item.category) : [];
+  // Fetch other items from the same category if available
+  const categoryItems = item.category ? await getGalleryItemsByCategorySlug(item.category) : [];
   // Filter out the current item from the category items
   const otherCategoryItems = categoryItems.filter(categoryItem => categoryItem.id !== item.id);
 
@@ -155,7 +155,7 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
               {otherCategoryItems.slice(0, 10).map((categoryItem) => (
                 <Link
                   key={categoryItem.id}
-                  href={`/gallery/${categoryItem.id}`}
+                  href={generateGalleryItemUrl(categoryItem)}
                   className="group bg-gray-800 rounded-lg overflow-hidden hover:bg-gray-700 transition-all duration-300 transform hover:-translate-y-1"
                 >
                   <div className="aspect-square relative">
