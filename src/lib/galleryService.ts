@@ -339,7 +339,8 @@ export async function getGalleryItemsByCategorySlug(categorySlug: string): Promi
     const { data, error } = await supabase
       .from('gallery_items')
       .select('*')
-      .eq('category', category)
+      // Use case-insensitive match so 'japanese-nail-art' matches 'Japanese Nail Art'
+      .ilike('category', category)
       .order('created_at', { ascending: false })
 
     if (error) {
