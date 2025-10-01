@@ -568,6 +568,84 @@
 24. "Traditional Japanese nail design with calligraphy patterns and black and gold colors"
 25. "Japanese nail art with origami patterns and colorful paper colors"
 
+### 21. St. Patrick's Day Nails (50K searches, Low competition)
+
+1. "Emerald green chrome nails with lucky clover charms on accent nails"
+2. "Mint ombré nails with soft shamrock stamping and gold flake details"
+3. "Green French tips with a thin gold glitter cuticle line on nude base"
+4. "Plaid green nails with metallic gold foil accents and glossy top coat"
+5. "Minimal shamrock outline on sheer milky base with clean finish"
+6. "Deep green glossy nails with a single gold foil shamrock accent"
+7. "Sage green nails with micro glitter gradient and tiny clovers"
+8. "Chrome aura green nails with subtle lucky charm gem accents"
+9. "Matte hunter green nails with glossy shamrock line art"
+10. "Pastel green tips with gold micro dots and nude base"
+
+### 22. Simple Christmas Nails (50K searches, Low competition)
+
+1. "Simple red French tips with a single white snowflake accent nail"
+2. "Minimal green dots on nude base arranged like Christmas lights"
+3. "Gold glitter fade from tip on deep red glossy nails"
+4. "White tree outline on milky base with tiny gold star"
+5. "Candy cane striped accent nail with clean red set"
+6. "Nude base with tiny red bow accents on ring fingers"
+7. "Matte red nails with glossy stripe down the center"
+8. "White snow dot pattern over sheer nude base"
+9. "Red chrome tips with subtle gold glitter cuticle line"
+10. "Green glossy nails with single gold foil accent"
+
+### 23. Nail Art for Beginners (5K searches, Medium competition)
+
+1. "Single white dot accent on each nail over nude base"
+2. "Easy diagonal white stripe using tape guide on sheer base"
+3. "Simple soft-white French tips with clean lines"
+4. "Single glitter accent nail with neutral glossy set"
+5. "Minimal heart outline on ring finger over milky base"
+6. "Two-tone color block using tape on nude base"
+7. "Simple vertical line accent on each nail"
+8. "Tiny star sticker accents on sheer pink base"
+9. "Easy polka dots with dotting tool on milky base"
+10. "Minimal V-shaped tips in white on nude"
+
+### 24. Easy Halloween Nails (5K searches, Medium competition)
+
+1. "Black tips with tiny ghost accent on ring finger"
+2. "Orange base with minimal bat silhouette in black"
+3. "White spider web accent on glossy black base"
+4. "Pumpkin outline on nude base with orange stem detail"
+5. "Striped black-and-orange accent nail with simple set"
+6. "Matte black nails with glossy drip accent"
+7. "Minimal skull outline on milky base"
+8. "Orange French tips with tiny bat stickers"
+9. "Black polka dots on orange base with glossy finish"
+10. "White ghost sticker accents on sheer nude"
+
+### 25. DIY Nail Art (5K searches, Medium competition)
+
+1. "DIY diagonal lines using tape on nude base with white polish"
+2. "DIY polka dots using dotting tool on sheer pink base"
+3. "DIY sponge gradient from nude to baby pink"
+4. "DIY stamping florals in white over pastel base"
+5. "DIY glitter fade from tip downward on neutral base"
+6. "DIY striping tape geometric lines on milky base"
+7. "DIY chrome powder aura effect over nude"
+8. "DIY simple French tips using guide stickers"
+9. "DIY tiny heart decals on blush base"
+10. "DIY negative space line art with tape"
+
+### 26. Nail Art Near Me (5K searches, Low competition)
+
+1. "Salon-style nail art with glossy finish and clean cuticles"
+2. "Modern salon nail art with chrome aura and micro gems"
+3. "Simple salon French tips with shimmer and nude base"
+4. "Elegant salon nail art with gold foil accents on milky base"
+5. "Trendy salon ombré nails in pastel gradient with glossy top"
+6. "Salon floral accents with ultra-fine line work on nude"
+7. "Salon geometric minimal lines on sheer pink base"
+8. "Salon glitter gradient tips over neutral gel base"
+9. "Salon marble effect tips with gold foil details"
+10. "Salon chrome French tips on soft nude base"
+
 ---
 
 ## 📝 Usage Instructions
