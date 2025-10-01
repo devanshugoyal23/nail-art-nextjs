@@ -194,7 +194,9 @@ export async function getGalleryItemBySlug(category: string, slug: string): Prom
   try {
     // Convert slugs back to readable format
     const categoryName = category.replace(/-/g, ' ')
-    const designName = slug.replace(/-/g, ' ')
+    const idSuffixMatch = slug.match(/-([A-Za-z0-9]{8})$/)
+    const idSuffix = idSuffixMatch ? idSuffixMatch[1] : null
+    const designName = slug.replace(/-([A-Za-z0-9]{8})$/, '').replace(/-/g, ' ')
     
     console.log('Searching for:', { categoryName, designName })
     
@@ -216,6 +218,21 @@ export async function getGalleryItemBySlug(category: string, slug: string): Prom
       
       if (!idError && idData) {
         console.log('Found item by ID ending:', idData.design_name)
+        return idData
+      }
+    }
+
+    // If a short id suffix is present, try to resolve by id suffix first (most precise)
+    if (idSuffix) {
+      const { data: idData, error: idError } = await supabase
+        .from('gallery_items')
+        .select('*')
+        .eq('category', categoryName)
+        .like('id', `%${idSuffix}`)
+        .single()
+
+      if (!idError && idData) {
+        console.log('Found item by short ID suffix:', idData.design_name)
         return idData
       }
     }
@@ -294,7 +311,8 @@ export function generateGalleryItemUrl(item: GalleryItem): string {
   if (item.category && item.design_name) {
     const categorySlug = item.category.toLowerCase().replace(/\s+/g, '-')
     const designSlug = item.design_name.toLowerCase().replace(/\s+/g, '-')
-    return `/${categorySlug}/${designSlug}`
+    const idSuffix = item.id.slice(-8)
+    return `/${categorySlug}/${designSlug}-${idSuffix}`
   } else if (item.category) {
     // For items with category but no design name, use a generic slug
     const categorySlug = item.category.toLowerCase().replace(/\s+/g, '-')
@@ -302,7 +320,8 @@ export function generateGalleryItemUrl(item: GalleryItem): string {
     return `/${categorySlug}/${genericSlug}`
   } else if (item.design_name) {
     const designSlug = item.design_name.toLowerCase().replace(/\s+/g, '-')
-    return `/design/${designSlug}`
+    const idSuffix = item.id.slice(-8)
+    return `/design/${designSlug}-${idSuffix}`
   } else {
     return `/design/${item.id}`
   }

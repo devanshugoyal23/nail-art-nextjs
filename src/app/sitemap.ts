@@ -106,7 +106,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   
   // Gallery item pages now at root-level
   const galleryItemPages = galleryItems.map(item => ({
-    url: `${baseUrl}/${item.category?.toLowerCase().replace(/\s+/g, '-')}/${item.design_name?.toLowerCase().replace(/\s+/g, '-') || `design-${item.id.slice(-8)}`}`,
+    url: `${baseUrl}/${item.category?.toLowerCase().replace(/\s+/g, '-')}/${item.design_name ? `${item.design_name.toLowerCase().replace(/\s+/g, '-')}-${item.id.slice(-8)}` : `design-${item.id.slice(-8)}`}`,
     lastModified: new Date(item.created_at),
     changeFrequency: 'monthly' as const,
     priority: 0.6,
