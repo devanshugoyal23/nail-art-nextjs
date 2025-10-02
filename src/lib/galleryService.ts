@@ -1,4 +1,5 @@
 import { supabase, GalleryItem, SaveGalleryItemRequest } from './supabase'
+import { generateEditorialContentForNailArt, NailArtEditorial } from './geminiService'
 import { generateDesignSlug, createFallbackSlug, parseDesignSlug } from './slugUtils'
 
 export async function saveGalleryItem(item: SaveGalleryItemRequest): Promise<GalleryItem | null> {

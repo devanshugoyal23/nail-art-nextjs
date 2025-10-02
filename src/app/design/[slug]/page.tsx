@@ -4,6 +4,9 @@ import React from "react";
 import { getGalleryItemBySlug, getGalleryItemsByCategorySlug, generateGalleryItemUrl } from "@/lib/galleryService";
 import { Metadata } from "next";
 import RelatedCategories from "@/components/RelatedCategories";
+import { generateEditorialContentForNailArt } from "@/lib/geminiService";
+import { getEditorialByItemId, upsertEditorial } from "@/lib/editorialService";
+import { getRelatedKeywords } from "@/lib/keywordMapper";
 
 interface DesignDetailPageProps {
   params: {
@@ -79,6 +82,37 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
       minute: '2-digit'
     });
   };
+
+  const parseAttributes = (text: string) => {
+    const lower = (text || '').toLowerCase();
+    const colorsList = ['purple','red','blue','green','gold','silver','black','white','nude','pink','lavender','emerald'];
+    const shapes = ['almond','square','coffin','oval','stiletto'];
+    const lengths = ['short','medium','long'];
+    const finishes = ['glitter','chrome','matte','glossy','shimmer'];
+    const techniques = ['butterfly','marble','ombre','french','stamping','foil'];
+    const pick = (list: string[]) => list.filter(k => lower.includes(k));
+    return {
+      colors: pick(colorsList),
+      shape: pick(shapes),
+      length: pick(lengths),
+      finish: pick(finishes),
+      technique: pick(techniques)
+    };
+  };
+
+  const attrs = parseAttributes(item.prompt || '');
+  const relatedKeywords = getRelatedKeywords(item.category, attrs.colors, attrs.technique);
+  
+  let editorial = await getEditorialByItemId(item.id);
+  if (!editorial) {
+    editorial = await generateEditorialContentForNailArt(
+      item.design_name, 
+      item.category || undefined, 
+      item.prompt || undefined,
+      relatedKeywords
+    );
+    await upsertEditorial(item.id, editorial);
+  }
 
   return (
     <div className="min-h-screen bg-black" itemScope itemType="https://schema.org/CreativeWork">
@@ -321,6 +355,227 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
               View All Gallery Items
             </Link>
           </div>
+        </div>
+
+        {/* Bottom SEO/Content section */}
+        <div className="mt-12 space-y-10">
+          {/* Who it's for & Quick Stats */}
+          <section className="bg-gray-800 rounded-lg p-6 border border-gray-700">
+            <h2 className="text-xl font-semibold text-white mb-3">{editorial?.title || 'About This Design'}</h2>
+            <p className="text-gray-300 leading-relaxed mb-4">{editorial?.intro || `${item.design_name || 'Nail Art'} blends ${attrs.colors.length ? attrs.colors.join(', ') : 'modern'} tones with ${(attrs.finish.join(', ') || 'a glossy')} finish.`}</p>
+            
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-4 p-4 bg-gray-900/50 rounded-lg">
+              <div className="text-center">
+                <div className="text-purple-400 text-sm font-medium">Who It's For</div>
+                <div className="text-white text-base mt-1">{editorial?.audience || 'All skill levels'}</div>
+              </div>
+              <div className="text-center">
+                <div className="text-purple-400 text-sm font-medium">Time Needed</div>
+                <div className="text-white text-base mt-1">{editorial?.timeMinutes || 45} min</div>
+              </div>
+              <div className="text-center">
+                <div className="text-purple-400 text-sm font-medium">Difficulty</div>
+                <div className="text-white text-base mt-1">{editorial?.difficulty || 'Medium'}</div>
+              </div>
+              <div className="text-center">
+                <div className="text-purple-400 text-sm font-medium">Est. Cost</div>
+                <div className="text-white text-base mt-1">{editorial?.costEstimate || '$20-40'}</div>
+              </div>
+            </div>
+            
+            <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 gap-3 text-sm text-gray-300">
+              <div><span className="text-gray-400">Shape:</span> {editorial?.attributes?.shape || attrs.shape[0] || 'Any'}</div>
+              <div><span className="text-gray-400">Length:</span> {editorial?.attributes?.length || attrs.length[0] || 'Short/Medium'}</div>
+              <div><span className="text-gray-400">Finish:</span> {(editorial?.attributes?.finish && editorial.attributes.finish.join(', ')) || attrs.finish.join(', ') || 'Glossy'}</div>
+              <div><span className="text-gray-400">Colors:</span> {(editorial?.attributes?.colors && editorial.attributes.colors.join(', ')) || attrs.colors.join(', ') || 'Neutral'}</div>
+              <div><span className="text-gray-400">Technique:</span> {(editorial?.attributes?.technique && editorial.attributes.technique.join(', ')) || attrs.technique.join(', ') || 'Painted'}</div>
+              <div><span className="text-gray-400">Category:</span> {item.category}</div>
+            </div>
+          </section>
+
+          {/* Supplies */}
+          <section className="bg-gray-800 rounded-lg p-6 border border-gray-700">
+            <h2 className="text-xl font-semibold text-white mb-3">Supplies You'll Need</h2>
+            <ul className="grid sm:grid-cols-2 gap-2 text-gray-300">
+              {(editorial?.supplies || ['Base coat','Gel color polish','Detail liner brush','Top coat']).map((s, i) => (
+                <li key={i} className="flex items-start">
+                  <svg className="w-5 h-5 text-purple-400 mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                  </svg>
+                  {s}
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          {/* How To */}
+          <section className="bg-gray-800 rounded-lg p-6 border border-gray-700">
+            <h2 className="text-xl font-semibold text-white mb-3">How To Recreate It</h2>
+            <ol className="list-decimal pl-6 space-y-3 text-gray-300">
+              {(editorial?.steps || [
+                'Prep nails, then apply dehydrator/primer.',
+                `Apply ${attrs.colors.includes('nude') ? 'nude' : 'sheer nude'} base; cure if using gel.`,
+                `Add design details (e.g., ${attrs.technique[0] || 'art details'}${attrs.colors.length ? ` in ${attrs.colors.join(', ')}` : ''}); cure.`,
+                `${attrs.finish.includes('glitter') ? 'Dust fine glitter on accents and ' : ''}seal with high‑gloss top coat; cure.`
+              ]).map((s, i) => (<li key={i}>{s}</li>))}
+            </ol>
+          </section>
+
+          {/* Expert Tip */}
+          {editorial?.expertTip && (
+            <section className="bg-purple-900/30 rounded-lg p-6 border border-purple-700">
+              <div className="flex items-start">
+                <svg className="w-6 h-6 text-purple-400 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                </svg>
+                <div>
+                  <h3 className="text-lg font-semibold text-white mb-2">Expert Tip</h3>
+                  <p className="text-gray-300">{editorial.expertTip}</p>
+                </div>
+              </div>
+            </section>
+          )}
+
+          {/* Variations */}
+          <section className="bg-gray-800 rounded-lg p-6 border border-gray-700">
+            <h2 className="text-xl font-semibold text-white mb-3">Try These Variations</h2>
+            <ul className="space-y-2 text-gray-300">
+              {(editorial?.variations || [
+                `Swap ${attrs.colors[0] || 'primary color'} for blue or red for a bolder look.`,
+                'Change shape to square or coffin for a sharper silhouette.',
+                'Use chrome instead of glitter for a metallic finish.'
+              ]).map((v, i) => (
+                <li key={i} className="flex items-start">
+                  <span className="text-purple-400 mr-2">→</span>
+                  {v}
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          {/* Aftercare & Removal */}
+          <div className="grid sm:grid-cols-2 gap-6">
+            <section className="bg-gray-800 rounded-lg p-6 border border-gray-700">
+              <h3 className="text-lg font-semibold text-white mb-3">Aftercare Tips</h3>
+              <ul className="space-y-2 text-sm text-gray-300">
+                {(editorial?.aftercare || ['Apply cuticle oil daily','Wear gloves when cleaning','Avoid prolonged water exposure']).map((tip, i) => (
+                  <li key={i} className="flex items-start">
+                    <span className="text-green-400 mr-2">✓</span>
+                    {tip}
+                  </li>
+                ))}
+              </ul>
+            </section>
+            <section className="bg-gray-800 rounded-lg p-6 border border-gray-700">
+              <h3 className="text-lg font-semibold text-white mb-3">Safe Removal</h3>
+              <ul className="space-y-2 text-sm text-gray-300">
+                {(editorial?.removal || ['Soak cotton in acetone, wrap with foil','Wait 10-15 minutes','Gently push off softened polish']).map((step, i) => (
+                  <li key={i} className="flex items-start">
+                    <span className="text-blue-400 mr-2">{i + 1}.</span>
+                    {step}
+                  </li>
+                ))}
+              </ul>
+            </section>
+          </div>
+
+          {/* Troubleshooting */}
+          {editorial?.troubleshooting && editorial.troubleshooting.length > 0 && (
+            <section className="bg-gray-800 rounded-lg p-6 border border-gray-700">
+              <h2 className="text-xl font-semibold text-white mb-3">Common Issues & Fixes</h2>
+              <ul className="space-y-2 text-gray-300">
+                {editorial.troubleshooting.map((issue, i) => (
+                  <li key={i} className="flex items-start">
+                    <span className="text-yellow-400 mr-2">⚠</span>
+                    {issue}
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
+
+          {/* FAQs */}
+          <section className="bg-gray-800 rounded-lg p-6 border border-gray-700">
+            <h2 className="text-xl font-semibold text-white mb-3">FAQs</h2>
+            <div className="space-y-4">
+              {(editorial?.faqs || [
+                { q: 'How long does it last?', a: 'With a gel top coat, typically 2–3 weeks depending on prep and lifestyle.' },
+                { q: 'Best shapes?', a: `${attrs.shape[0] ? `${attrs.shape[0][0].toUpperCase()}${attrs.shape[0].slice(1)}` : 'Almond'} and coffin showcase the artwork nicely.` },
+                { q: 'Is glitter required?', a: 'No—swap glitter for chrome or keep a clean glossy finish.' }
+              ]).map((f, i) => (
+                <div key={i}>
+                  <p className="text-white font-medium mb-1">{f.q}</p>
+                  <p className="text-gray-300 text-sm">{f.a}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* Related Links */}
+          {editorial?.internalLinks && editorial.internalLinks.length > 0 && (
+            <section className="bg-purple-900/20 rounded-lg p-6 border border-purple-800">
+              <h3 className="text-lg font-semibold text-white mb-4">Explore Related Styles</h3>
+              <div className="flex flex-wrap gap-3">
+                {editorial.internalLinks.map((link, i) => (
+                  <Link
+                    key={i}
+                    href={link.href}
+                    className="inline-flex items-center px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors text-sm"
+                    title={link.label}
+                  >
+                    {link.label}
+                    <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </Link>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* Enhanced JSON-LD */}
+          {editorial && (
+            <>
+              <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+                '@context': 'https://schema.org',
+                '@type': 'HowTo',
+                name: editorial.title || item.design_name,
+                description: editorial.intro,
+                totalTime: `PT${editorial.timeMinutes || 45}M`,
+                estimatedCost: {
+                  '@type': 'MonetaryAmount',
+                  currency: 'USD',
+                  value: editorial.costEstimate || '$20-40'
+                },
+                supply: (editorial.supplies || []).map((s: string) => ({
+                  '@type': 'HowToSupply',
+                  name: s
+                })),
+                tool: (editorial.supplies || []).filter((s: string) => s.toLowerCase().includes('brush') || s.toLowerCase().includes('tool')).map((s: string) => ({
+                  '@type': 'HowToTool',
+                  name: s
+                })),
+                step: (editorial.steps || []).map((s: string, idx: number) => ({
+                  '@type': 'HowToStep',
+                  position: idx + 1,
+                  name: s.length > 50 ? s.substring(0, 50) + '...' : s,
+                  text: s
+                }))
+              }) }} />
+              <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+                '@context': 'https://schema.org',
+                '@type': 'FAQPage',
+                mainEntity: (editorial.faqs || []).map((f: any) => ({
+                  '@type': 'Question',
+                  name: f.q,
+                  acceptedAnswer: {
+                    '@type': 'Answer',
+                    text: f.a
+                  }
+                }))
+              }) }} />
+            </>
+          )}
         </div>
       </div>
     </div>
