@@ -253,7 +253,7 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
                   <h3 className="text-white font-semibold mb-4 text-xl">AI Generation Prompt</h3>
                   <div className="bg-gray-700 p-6 rounded-lg border border-gray-600">
                     <p className="text-gray-300 leading-relaxed">
-                      "{item.prompt}"
+                      &ldquo;{item.prompt}&rdquo;
                     </p>
                   </div>
                 </div>
@@ -366,7 +366,7 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
             
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-4 p-4 bg-gray-900/50 rounded-lg">
               <div className="text-center">
-                <div className="text-purple-400 text-sm font-medium">Who It's For</div>
+                <div className="text-purple-400 text-sm font-medium">Who It&apos;s For</div>
                 <div className="text-white text-base mt-1">{editorial?.audience || 'All skill levels'}</div>
               </div>
               <div className="text-center">
@@ -395,7 +395,7 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
 
           {/* Supplies */}
           <section className="bg-gray-800 rounded-lg p-6 border border-gray-700">
-            <h2 className="text-xl font-semibold text-white mb-3">Supplies You'll Need</h2>
+            <h2 className="text-xl font-semibold text-white mb-3">Supplies You&apos;ll Need</h2>
             <ul className="grid sm:grid-cols-2 gap-2 text-gray-300">
               {(editorial?.supplies || ['Base coat','Gel color polish','Detail liner brush','Top coat']).map((s, i) => (
                 <li key={i} className="flex items-start">
@@ -565,7 +565,7 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
               <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
                 '@context': 'https://schema.org',
                 '@type': 'FAQPage',
-                mainEntity: (editorial.faqs || []).map((f: any) => ({
+                mainEntity: (editorial.faqs || []).map((f: { q: string; a: string }) => ({
                   '@type': 'Question',
                   name: f.q,
                   acceptedAnswer: {

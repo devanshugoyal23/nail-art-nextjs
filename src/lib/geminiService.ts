@@ -188,7 +188,7 @@ Be helpful, specific, and natural. Avoid keyword stuffing. ${keywordHint}`;
       ],
       internalLinks: data.internalLinks || [],
     };
-  } catch (e) {
+  } catch {
     // Fallback minimal editorial
     return {
       title: designName || 'About This Design',

@@ -1,5 +1,5 @@
 import { GoogleGenAI, Modality } from "@google/genai";
-import { supabase, SaveGalleryItemRequest } from './supabase';
+import { supabase } from './supabase';
 import { getRandomPromptFromCategory, getAllCategories, PROMPT_CATEGORIES } from './promptGenerator';
 
 let ai: GoogleGenAI | null = null;
@@ -171,7 +171,7 @@ async function uploadImageToSupabase(imageData: string, filename: string): Promi
   try {
     const imageBlob = dataURLtoBlob(imageData);
     
-    const { data: uploadData, error: uploadError } = await supabase.storage
+    const { error: uploadError } = await supabase.storage
       .from('nail-art-images')
       .upload(filename, imageBlob, {
         contentType: 'image/jpeg',

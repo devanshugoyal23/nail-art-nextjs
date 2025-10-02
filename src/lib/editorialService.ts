@@ -23,7 +23,7 @@ export async function getEditorialByItemId(itemId: string): Promise<NailArtEdito
       return null
     }
     return (data as { editorial: NailArtEditorial } | null)?.editorial || null
-  } catch (e) {
+  } catch {
     return null
   }
 }
@@ -44,7 +44,7 @@ export async function upsertEditorial(itemId: string, editorial: NailArtEditoria
       return false
     }
     return true
-  } catch (e) {
+  } catch {
     return false
   }
 }

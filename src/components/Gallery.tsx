@@ -12,7 +12,6 @@ interface GalleryProps {
 }
 
 export default function Gallery({ 
-  onImageSelect, 
   showPrompts = true, 
   showDelete = false 
 }: GalleryProps) {
@@ -68,15 +67,6 @@ export default function Gallery({
     window.location.href = seoUrl
   }
 
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
-    })
-  }
 
   if (loading) {
     return (

@@ -2,7 +2,6 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getGalleryItemsByCategory, getAllCategories, generateGalleryItemUrl } from "@/lib/galleryService";
 import { Metadata } from "next";
-import Gallery from "@/components/Gallery";
 
 interface CategoryPageProps {
   params: {

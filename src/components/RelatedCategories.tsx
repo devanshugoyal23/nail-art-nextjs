@@ -1,8 +1,9 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
-import { getAllCategories, getGalleryItemsByCategory } from '@/lib/galleryService'
+import { getGalleryItemsByCategory } from '@/lib/galleryService'
+import { GalleryItem } from '@/lib/supabase'
 
 interface RelatedCategoriesProps {
   currentCategory?: string
@@ -14,33 +15,38 @@ export default function RelatedCategories({
   limit = 6 
 }: RelatedCategoriesProps) {
   const [categories, setCategories] = useState<string[]>([])
-  const [categoryItems, setCategoryItems] = useState<Record<string, any[]>>({})
+  const [categoryItems, setCategoryItems] = useState<Record<string, GalleryItem[]>>({})
   const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
-    fetchCategories()
-  }, [])
-
-  const fetchCategories = async () => {
+  const fetchCategories = useCallback(async () => {
     try {
       setLoading(true)
-      const allCategories = await getAllCategories()
+      
+      // Fetch categories from API route
+      const response = await fetch('/api/generate-gallery')
+      const data = await response.json()
+      
+      if (!data.success) {
+        throw new Error('Failed to fetch categories')
+      }
+      
+      const allCategories = data.categories.all
       
       // Filter out current category if provided
       const filteredCategories = currentCategory 
-        ? allCategories.filter(cat => cat !== currentCategory)
+        ? allCategories.filter((cat: string) => cat !== currentCategory)
         : allCategories
       
       setCategories(filteredCategories.slice(0, limit))
       
       // Fetch sample items for each category
-      const itemsPromises = filteredCategories.slice(0, limit).map(async (category) => {
+      const itemsPromises = filteredCategories.slice(0, limit).map(async (category: string) => {
         const items = await getGalleryItemsByCategory(category)
         return { category, items: items.slice(0, 1) } // Get first item as preview
       })
       
       const results = await Promise.all(itemsPromises)
-      const categoryItemsMap: Record<string, any[]> = {}
+      const categoryItemsMap: Record<string, GalleryItem[]> = {}
       results.forEach(({ category, items }) => {
         categoryItemsMap[category] = items
       })
@@ -51,7 +57,11 @@ export default function RelatedCategories({
     } finally {
       setLoading(false)
     }
-  }
+  }, [currentCategory, limit])
+
+  useEffect(() => {
+    fetchCategories()
+  }, [fetchCategories])
 
   if (loading) {
     return (

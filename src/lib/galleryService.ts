@@ -1,6 +1,4 @@
 import { supabase, GalleryItem, SaveGalleryItemRequest } from './supabase'
-import { generateEditorialContentForNailArt, NailArtEditorial } from './geminiService'
-import { generateDesignSlug, createFallbackSlug, parseDesignSlug } from './slugUtils'
 
 export async function saveGalleryItem(item: SaveGalleryItemRequest): Promise<GalleryItem | null> {
   try {
@@ -12,7 +10,7 @@ export async function saveGalleryItem(item: SaveGalleryItemRequest): Promise<Gal
     const imageBlob = dataURLtoBlob(item.imageData)
     
     // Upload image to Supabase storage
-    const { data: uploadData, error: uploadError } = await supabase.storage
+    const { error: uploadError } = await supabase.storage
       .from('nail-art-images')
       .upload(filename, imageBlob, {
         contentType: 'image/jpeg',
@@ -239,7 +237,7 @@ export async function getGalleryItemBySlug(category: string, slug: string): Prom
     }
     
     // Strategy 1: Try exact match with both category and design name
-    let { data, error } = await supabase
+    const { data, error } = await supabase
       .from('gallery_items')
       .select('*')
       .eq('category', categoryName)
@@ -376,7 +374,7 @@ async function uploadOriginalImage(originalImageData: string): Promise<string | 
     const filename = `original-${timestamp}.jpg`
     const imageBlob = dataURLtoBlob(originalImageData)
     
-    const { data: uploadData, error: uploadError } = await supabase.storage
+    const { error: uploadError } = await supabase.storage
       .from('nail-art-images')
       .upload(filename, imageBlob, {
         contentType: 'image/jpeg',

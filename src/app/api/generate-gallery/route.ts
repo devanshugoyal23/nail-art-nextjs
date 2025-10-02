@@ -1,11 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { 
-  generateSingleNailArt, 
   generateMultipleNailArt, 
   generateCategoryNailArt,
   getAvailableCategories,
-  getCategoriesByTier,
-  GenerationOptions 
+  getCategoriesByTier
 } from '@/lib/nailArtGenerator';
 
 export async function POST(request: NextRequest) {
