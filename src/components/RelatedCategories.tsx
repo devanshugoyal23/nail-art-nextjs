@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { getGalleryItemsByCategory } from '@/lib/galleryService'
 import { GalleryItem } from '@/lib/supabase'
 
@@ -93,9 +94,11 @@ export default function RelatedCategories({
             >
               <div className="aspect-square relative">
                 {previewItem ? (
-                  <img
+                  <Image
                     src={previewItem.image_url}
                     alt={`${category} nail art preview`}
+                    width={300}
+                    height={300}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     loading="lazy"
                   />

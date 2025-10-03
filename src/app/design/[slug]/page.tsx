@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import React from "react";
 import { getGalleryItemBySlug, getGalleryItemsByCategorySlug, generateGalleryItemUrl } from "@/lib/galleryService";
 import { Metadata } from "next";
@@ -217,12 +218,14 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
             {/* Left side - Image */}
             <div className="lg:w-1/2">
               <div className="relative">
-                <img
+                <Image
                   src={item.image_url}
                   alt={`${item.design_name || 'AI Generated'} ${item.category ? item.category + ' ' : ''}nail art`}
+                  width={600}
+                  height={600}
                   className="w-full h-96 lg:h-[600px] object-cover"
                   loading="eager"
-                  fetchPriority="high"
+                  priority
                   sizes="(max-width: 1024px) 100vw, 50vw"
                 />
               </div>
@@ -306,9 +309,11 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
                   title={`${categoryItem.design_name || 'Nail art'} details`}
                 >
                   <div className="aspect-square relative">
-                    <img
+                    <Image
                       src={categoryItem.image_url}
                       alt={`${categoryItem.design_name || 'AI Generated'} ${categoryItem.category ? categoryItem.category + ' ' : ''}nail art`}
+                      width={300}
+                      height={300}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                       loading="lazy"
                       sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"

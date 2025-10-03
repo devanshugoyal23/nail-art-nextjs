@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { getGalleryItemsByCategory, getAllCategories, generateGalleryItemUrl } from "@/lib/galleryService";
 import { Metadata } from "next";
 
@@ -75,9 +76,11 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
               className="bg-gray-800 rounded-lg shadow-lg overflow-hidden hover:shadow-purple-500/20 transition-all duration-300 transform hover:-translate-y-1 block"
             >
               <div className="aspect-square relative">
-                <img
+                <Image
                   src={item.image_url}
                   alt={item.design_name || 'Generated nail art'}
+                  width={300}
+                  height={300}
                   className="w-full h-full object-cover"
                   loading="lazy"
                 />

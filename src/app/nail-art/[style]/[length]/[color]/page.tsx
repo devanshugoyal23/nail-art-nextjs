@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
 import { NAIL_ART_DESIGNS } from '@/lib/constants';
 
 interface SEOPageProps {
@@ -46,7 +47,7 @@ export default function SEOPage({ params }: SEOPageProps) {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {filtered.map(d => (
           <Link key={d.id} href={`/designs/${d.id}`} className="bg-gray-800 rounded-lg overflow-hidden hover:opacity-95">
-            <img src={d.image} alt={d.name} loading="lazy" className="w-full h-56 object-cover" />
+            <Image src={d.image} alt={d.name} width={400} height={224} loading="lazy" className="w-full h-56 object-cover" />
             <div className="p-3">
               <div className="text-sm text-indigo-400">{d.category}</div>
               <div className="font-semibold">{d.name}</div>

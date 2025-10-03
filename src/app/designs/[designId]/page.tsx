@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { NAIL_ART_DESIGNS } from "@/lib/constants";
 import { Metadata } from "next";
 
@@ -40,7 +41,7 @@ export default function DesignDetailPage({ params }: DesignDetailPageProps) {
     <div className="max-w-4xl mx-auto">
       <div className="bg-gray-800 rounded-lg shadow-xl p-8 flex flex-col md:flex-row gap-8">
         <div className="md:w-1/2">
-          <img src={design.image} alt={design.name} className="w-full h-auto object-cover rounded-lg shadow-md" />
+          <Image src={design.image} alt={design.name} width={600} height={400} className="w-full h-auto object-cover rounded-lg shadow-md" />
         </div>
         <div className="md:w-1/2 flex flex-col">
           <div>

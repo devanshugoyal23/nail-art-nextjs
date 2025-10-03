@@ -8,6 +8,7 @@ import { GalleryItem } from '@/lib/supabase';
 // import { applyNailArt } from '@/lib/geminiService';
 import { fileToBase64 } from '@/lib/imageUtils';
 import Loader from '@/components/Loader';
+import Image from 'next/image';
 
 type ActiveTab = 'gallery' | 'create';
 
@@ -256,7 +257,7 @@ function TryOnContent() {
   const ImageDisplay = ({ src, title }: { src: string | null; title: string }) => (
     <div className="w-full h-96 bg-gray-700 rounded-lg flex items-center justify-center overflow-hidden">
       {src ? (
-        <img src={src} alt={title} className="w-full h-full object-cover" />
+        <Image src={src} alt={title} width={400} height={384} className="w-full h-full object-cover" />
       ) : (
         <span className="text-gray-400">{title}</span>
       )}
@@ -265,9 +266,9 @@ function TryOnContent() {
 
   const ComparisonSlider = ({ before, after }: { before: string; after: string }) => (
     <div className="relative w-full max-w-2xl mx-auto aspect-square rounded-lg overflow-hidden group">
-      <img src={before} alt="Original Hand" className="absolute inset-0 w-full h-full object-cover" />
+      <Image src={before} alt="Original Hand" width={512} height={512} className="absolute inset-0 w-full h-full object-cover" />
       <div className="absolute inset-0 w-full h-full" style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}>
-        <img src={after} alt="AI Generated Nails" className="absolute inset-0 w-full h-full object-cover" />
+        <Image src={after} alt="AI Generated Nails" width={512} height={512} className="absolute inset-0 w-full h-full object-cover" />
       </div>
       <input
         type="range"
@@ -327,7 +328,7 @@ function TryOnContent() {
             ) : galleryItem ? (
               <div className="p-3 rounded-lg bg-indigo-500 shadow-lg">
                 <div className="flex items-center gap-4">
-                  <img src={galleryItem.image_url} alt={galleryItem.design_name || 'Gallery Design'} className="w-10 h-10 rounded-md object-cover flex-shrink-0" />
+                  <Image src={galleryItem.image_url} alt={galleryItem.design_name || 'Gallery Design'} width={40} height={40} className="w-10 h-10 rounded-md object-cover flex-shrink-0" />
                   <div>
                     <span className="font-semibold text-white">{galleryItem.design_name || 'Gallery Design'}</span>
                     <p className="text-xs text-indigo-200">{galleryItem.category}</p>
@@ -341,7 +342,7 @@ function TryOnContent() {
                   onClick={() => handleSelectDesign(design)}
                   className={`p-3 rounded-lg cursor-pointer transition-all duration-200 flex items-center gap-4 ${selectedDesign?.id === design.id ? 'bg-indigo-500 shadow-lg' : 'bg-gray-700 hover:bg-gray-600'}`}
                 >
-                  <img src={design.image} alt={design.name} className="w-10 h-10 rounded-md object-cover flex-shrink-0" />
+                  <Image src={design.image} alt={design.name} width={40} height={40} className="w-10 h-10 rounded-md object-cover flex-shrink-0" />
                   <span className="font-semibold">{design.name}</span>
                 </div>
               ))

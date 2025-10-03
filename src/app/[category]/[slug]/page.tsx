@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { getGalleryItemBySlug, getGalleryItemsByCategorySlug, generateGalleryItemUrl } from "@/lib/galleryService";
 import { Metadata } from "next";
 import { generateEditorialContentForNailArt } from "@/lib/geminiService";
@@ -117,9 +118,11 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
             {/* Left side - Image */}
             <div className="lg:w-1/2">
               <div className="relative">
-                <img
+                <Image
                   src={item.image_url}
                   alt={item.design_name || 'Generated nail art'}
+                  width={600}
+                  height={600}
                   className="w-full h-96 lg:h-[600px] object-cover"
                 />
               </div>
@@ -200,9 +203,11 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
                   className="group bg-gray-800 rounded-lg overflow-hidden hover:bg-gray-700 transition-all duration-300 transform hover:-translate-y-1"
                 >
                   <div className="aspect-square relative">
-                    <img
+                    <Image
                       src={categoryItem.image_url}
                       alt={categoryItem.design_name || 'Generated nail art'}
+                      width={300}
+                      height={300}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                       loading="lazy"
                     />

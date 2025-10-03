@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { getAvailableCategories, getCategoriesByTier } from '@/lib/nailArtGenerator';
 
 interface GenerationResult {
@@ -150,9 +151,11 @@ export default function GenerateGalleryPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {results.map((result) => (
                 <div key={result.id} className="bg-gray-700 rounded-lg overflow-hidden">
-                  <img
+                  <Image
                     src={result.image_url}
                     alt={result.design_name}
+                    width={400}
+                    height={192}
                     className="w-full h-48 object-cover"
                   />
                   <div className="p-4">
