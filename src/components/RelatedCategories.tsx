@@ -23,36 +23,60 @@ export default function RelatedCategories({
     try {
       setLoading(true)
       
-      // Fetch categories from API route
-      const response = await fetch('/api/generate-gallery')
-      const data = await response.json()
-      
-      if (!data.success) {
-        throw new Error('Failed to fetch categories')
-      }
-      
-      const allCategories = data.categories.all
+      // Use fallback categories for build time
+      const fallbackCategories = [
+        'Christmas Nail Art',
+        'Halloween Nail Art', 
+        'Summer Nail Art',
+        'Butterfly Nail Art',
+        'French Nail Art',
+        'Abstract Nail Art'
+      ]
       
       // Filter out current category if provided
       const filteredCategories = currentCategory 
-        ? allCategories.filter((cat: string) => cat !== currentCategory)
-        : allCategories
+        ? fallbackCategories.filter((cat: string) => cat !== currentCategory)
+        : fallbackCategories
       
       setCategories(filteredCategories.slice(0, limit))
       
-      // Fetch sample items for each category
-      const itemsPromises = filteredCategories.slice(0, limit).map(async (category: string) => {
-        const items = await getGalleryItemsByCategory(category)
-        return { category, items: items.slice(0, 1) } // Get first item as preview
-      })
+      // Try to fetch from API, but don't fail if it doesn't work
+      try {
+        const response = await fetch('/api/generate-gallery')
+        if (response.ok) {
+          const data = await response.json()
+          if (data.success && data.categories?.all) {
+            const allCategories = data.categories.all
+            const filteredApiCategories = currentCategory 
+              ? allCategories.filter((cat: string) => cat !== currentCategory)
+              : allCategories
+            setCategories(filteredApiCategories.slice(0, limit))
+          }
+        }
+      } catch {
+        // Silently fail and use fallback categories
+        console.log('Using fallback categories for build')
+      }
       
-      const results = await Promise.all(itemsPromises)
-      const categoryItemsMap: Record<string, GalleryItem[]> = {}
-      results.forEach(({ category, items }) => {
-        categoryItemsMap[category] = items
-      })
-      
-      setCategoryItems(categoryItemsMap)
+      // Fetch sample items for each category (only if not in build mode)
+      if (typeof window !== 'undefined') {
+        const itemsPromises = filteredCategories.slice(0, limit).map(async (category: string) => {
+          try {
+            const items = await getGalleryItemsByCategory(category)
+            return { category, items: items.slice(0, 1) } // Get first item as preview
+          } catch {
+            return { category, items: [] }
+          }
+        })
+        
+        const results = await Promise.all(itemsPromises)
+        const categoryItemsMap: Record<string, GalleryItem[]> = {}
+        results.forEach(({ category, items }) => {
+          categoryItemsMap[category] = items
+        })
+        
+        setCategoryItems(categoryItemsMap)
+      }
     } catch (error) {
       console.error('Error fetching categories:', error)
     } finally {
