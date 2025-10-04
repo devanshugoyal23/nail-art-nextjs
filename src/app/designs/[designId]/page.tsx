@@ -39,10 +39,10 @@ export default function DesignDetailPage({ params }: DesignDetailPageProps) {
   }
 
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="max-w-6xl mx-auto">
       <div className="bg-gray-800 rounded-lg shadow-xl p-8 flex flex-col md:flex-row gap-8">
         <div className="md:w-1/2">
-          <Image src={design.image} alt={design.name} width={600} height={400} className="w-full h-auto object-cover rounded-lg shadow-md" />
+          <Image src={design.image} alt={design.name} width={600} height={500} className="w-full h-[500px] object-cover rounded-lg shadow-md" />
         </div>
         <div className="md:w-1/2 flex flex-col">
           <div>
@@ -50,22 +50,53 @@ export default function DesignDetailPage({ params }: DesignDetailPageProps) {
             <h1 className="text-4xl font-bold mb-4">{design.name}</h1>
             <p className="text-gray-300 mb-6">{design.description}</p>
 
-            {/* AI Prompt Display */}
-            <div className="mb-8">
-              <h4 className="text-sm font-semibold text-gray-400 mb-2">AI Generation Prompt</h4>
-              <p className="text-sm text-indigo-200 bg-gray-900/50 p-3 rounded-md font-mono italic border border-gray-700">
-                &ldquo;{design.prompt}&rdquo;
-              </p>
+            {/* Enhanced Metadata Sections */}
+            <div className="mb-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {/* Category */}
+                <div className="bg-gray-800/40 rounded-lg p-4 border border-gray-700/50 hover:border-indigo-500/30 transition-colors">
+                  <div className="flex items-center mb-3">
+                    <div className="w-2 h-2 bg-indigo-500 rounded-full mr-2"></div>
+                    <h4 className="text-sm font-semibold text-indigo-300">Category</h4>
+                  </div>
+                  <span className="bg-indigo-600/80 text-white px-3 py-1.5 rounded-full text-xs font-medium shadow-sm">
+                    {design.category}
+                  </span>
+                </div>
+                
+                {/* Style/Type */}
+                <div className="bg-gray-800/40 rounded-lg p-4 border border-gray-700/50 hover:border-purple-500/30 transition-colors">
+                  <div className="flex items-center mb-3">
+                    <div className="w-2 h-2 bg-purple-500 rounded-full mr-2"></div>
+                    <h4 className="text-sm font-semibold text-purple-300">Style</h4>
+                  </div>
+                  <span className="bg-purple-600/80 text-white px-3 py-1.5 rounded-full text-xs font-medium shadow-sm">
+                    {design.category === 'Abstract' ? 'Artistic' : 
+                     design.category === 'Minimalist' ? 'Clean & Simple' :
+                     design.category === 'Modern' ? 'Contemporary' : 'Classic'}
+                  </span>
+                </div>
+              </div>
             </div>
+
           </div>
           
           <div className="mt-auto">
-            <Link
-              href={`/try-on?design=${design.id}`}
-              className="w-full bg-indigo-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-indigo-700 transition-transform transform hover:scale-105 duration-300 shadow-lg shadow-indigo-500/50 text-center block"
-            >
-              Try This Design
-            </Link>
+            <div className="flex gap-3">
+              <Link
+                href={`/try-on?design=${design.id}`}
+                className="flex-1 bg-purple-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-purple-700 transition-colors duration-200 text-center"
+              >
+                Try This Design Virtually
+              </Link>
+              <a
+                href={design.image}
+                download={`${design.name.toLowerCase().replace(/\s+/g, '-')}.jpg`}
+                className="flex-1 bg-green-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-green-700 transition-colors duration-200 text-center"
+              >
+                Download
+              </a>
+            </div>
           </div>
         </div>
       </div>

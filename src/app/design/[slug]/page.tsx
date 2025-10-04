@@ -206,7 +206,7 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
           }),
         }}
       />
-      <div className="max-w-6xl mx-auto px-4 py-8">
+      <div className="max-w-7xl mx-auto px-4 py-8">
         {/* Breadcrumbs */}
         <nav aria-label="Breadcrumb" className="mb-4 text-sm text-gray-400" itemScope itemType="https://schema.org/BreadcrumbList">
           <ol className="flex flex-wrap gap-2">
@@ -260,7 +260,7 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
                   designName={item.design_name || 'AI Generated'}
                   category={item.category}
                   prompt={item.prompt}
-                  className="w-full h-96 lg:h-[600px] object-cover"
+                  className="w-full h-[500px] lg:h-[700px] object-cover"
                 />
               </div>
             </div>
@@ -285,13 +285,76 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
                   {item.prompt}
                 </p>
                 
-                {/* AI Generation Prompt Section */}
-                <div className="mb-8">
-                  <h3 className="text-white font-semibold mb-4 text-xl">AI Generation Prompt</h3>
-                  <div className="bg-gray-700 p-6 rounded-lg border border-gray-600">
-                    <p className="text-gray-300 leading-relaxed">
-                      &ldquo;{item.prompt}&rdquo;
-                    </p>
+                {/* Enhanced Metadata Sections */}
+                <div className="mb-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {/* Colors */}
+                    {item.colors && item.colors.length > 0 && (
+                      <div className="bg-gray-800/40 rounded-lg p-4 border border-gray-700/50 hover:border-purple-500/30 transition-colors">
+                        <div className="flex items-center mb-3">
+                          <div className="w-2 h-2 bg-purple-500 rounded-full mr-2"></div>
+                          <h4 className="text-sm font-semibold text-purple-300">Colors</h4>
+                        </div>
+                        <div className="flex flex-wrap gap-2">
+                          {item.colors.map((color, index) => (
+                            <span key={index} className="bg-purple-600/80 text-white px-3 py-1.5 rounded-full text-xs font-medium shadow-sm">
+                              {color}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                    
+                    {/* Techniques */}
+                    {item.techniques && item.techniques.length > 0 && (
+                      <div className="bg-gray-800/40 rounded-lg p-4 border border-gray-700/50 hover:border-green-500/30 transition-colors">
+                        <div className="flex items-center mb-3">
+                          <div className="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
+                          <h4 className="text-sm font-semibold text-green-300">Techniques</h4>
+                        </div>
+                        <div className="flex flex-wrap gap-2">
+                          {item.techniques.map((technique, index) => (
+                            <span key={index} className="bg-green-600/80 text-white px-3 py-1.5 rounded-full text-xs font-medium shadow-sm">
+                              {technique}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                    
+                    {/* Occasions */}
+                    {item.occasions && item.occasions.length > 0 && (
+                      <div className="bg-gray-800/40 rounded-lg p-4 border border-gray-700/50 hover:border-blue-500/30 transition-colors">
+                        <div className="flex items-center mb-3">
+                          <div className="w-2 h-2 bg-blue-500 rounded-full mr-2"></div>
+                          <h4 className="text-sm font-semibold text-blue-300">Occasions</h4>
+                        </div>
+                        <div className="flex flex-wrap gap-2">
+                          {item.occasions.map((occasion, index) => (
+                            <span key={index} className="bg-blue-600/80 text-white px-3 py-1.5 rounded-full text-xs font-medium shadow-sm">
+                              {occasion}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                    
+                    {/* Styles */}
+                    {item.styles && item.styles.length > 0 && (
+                      <div className="bg-gray-800/40 rounded-lg p-4 border border-gray-700/50 hover:border-pink-500/30 transition-colors">
+                        <div className="flex items-center mb-3">
+                          <div className="w-2 h-2 bg-pink-500 rounded-full mr-2"></div>
+                          <h4 className="text-sm font-semibold text-pink-300">Styles</h4>
+                        </div>
+                        <div className="flex flex-wrap gap-2">
+                          {item.styles.map((style, index) => (
+                            <span key={index} className="bg-pink-600/80 text-white px-3 py-1.5 rounded-full text-xs font-medium shadow-sm">
+                              {style}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
                 
@@ -305,18 +368,18 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
               
               {/* Action buttons */}
               <div className="space-y-4">
-                <div className="flex flex-col sm:flex-row gap-4">
+                <div className="flex gap-3">
                   <Link
                     href={`/try-on?design=${item.id}`}
-                    className="flex-1 bg-gradient-to-r from-purple-600 to-purple-700 text-white font-bold py-4 px-6 rounded-lg hover:from-purple-700 hover:to-purple-800 transition-all duration-300 text-center shadow-lg"
+                    className="flex-1 bg-purple-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-purple-700 transition-colors duration-200 text-center"
                     title={`Virtual try-on for ${item.design_name || 'this nail art'}`}
                   >
-                    {editorial?.ctaText || 'Try This Design Virtually'}
+                    Try This Design Virtually
                   </Link>
                   <a
                     href={item.image_url}
                     download={`nail-art-${item.id}.jpg`}
-                    className="flex-1 bg-gradient-to-r from-green-600 to-green-700 text-white font-bold py-4 px-6 rounded-lg hover:from-green-700 hover:to-green-800 transition-all duration-300 shadow-lg text-center"
+                    className="flex-1 bg-green-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-green-700 transition-colors duration-200 text-center"
                     title={`Download ${item.design_name || 'nail art'} image`}
                   >
                     Download
