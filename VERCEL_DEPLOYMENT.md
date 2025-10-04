@@ -17,7 +17,7 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your_actual_anon_key
 
 ### 3. Optional: Site URL
 ```
-NEXT_PUBLIC_SITE_URL=https://your-domain.vercel.app
+NEXT_PUBLIC_SITE_URL=https://nailartai.app
 ```
 
 ## Deployment Steps

@@ -33,7 +33,7 @@ export async function generateMetadata({ params }: DesignDetailPageProps): Promi
     };
   }
 
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://your-domain.com';
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://nailartai.app';
   const longTail = `${item.design_name || 'AI Generated'} ${item.category ? `${item.category} ` : ''}Nail Art`;
   const title = `${longTail} – Real Photo, Prompt & Try-On`;
   const description = item.prompt
@@ -169,7 +169,7 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
               item.category,
               item.prompt
             ),
-            url: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://your-domain.com'}/design/${encodeURIComponent(params.slug)}`,
+            url: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://nailartai.app'}/design/${encodeURIComponent(params.slug)}`,
           }),
         }}
       />
@@ -184,20 +184,20 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
                 '@type': 'ListItem',
                 position: 1,
                 name: 'Home',
-                item: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://your-domain.com'}/`,
+                item: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://nailartai.app'}/`,
               },
               {
                 '@type': 'ListItem',
                 position: 2,
                 name: 'Gallery',
-                item: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://your-domain.com'}/nail-art-gallery`,
+                item: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://nailartai.app'}/nail-art-gallery`,
               },
               item.category
                 ? {
                     '@type': 'ListItem',
                     position: 3,
                     name: item.category,
-                    item: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://your-domain.com'}/nail-art-gallery/category/${encodeURIComponent(
+                    item: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://nailartai.app'}/nail-art-gallery/category/${encodeURIComponent(
                       item.category
                     )}`,
                   }

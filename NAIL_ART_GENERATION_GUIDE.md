@@ -13,7 +13,7 @@ Make sure you have these environment variables set:
 GEMINI_API_KEY=your_gemini_api_key
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
-NEXT_PUBLIC_SITE_URL=https://your-domain.com
+NEXT_PUBLIC_SITE_URL=https://nailartai.app
 ```
 
 ### 2. Database Setup

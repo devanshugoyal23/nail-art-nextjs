@@ -3,7 +3,7 @@ import { NAIL_ART_DESIGNS } from '@/lib/constants';
 import { getGalleryItems, getAllCategories } from '@/lib/galleryService';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = 'https://your-domain.com'; // Replace with your actual domain
+  const baseUrl = 'https://nailartai.app';
   
   // Static pages
   const staticPages = [
