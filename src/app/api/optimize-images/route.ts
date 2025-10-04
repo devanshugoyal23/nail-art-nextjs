@@ -70,14 +70,22 @@ async function optimizeGalleryImages(options: {
       });
     }
 
+    // Map database images to the format expected by batchOptimizeImages
+    const mappedImages = images.map(img => ({
+      imageUrl: img.image_url,
+      designName: img.design_name,
+      category: img.category,
+      prompt: img.prompt
+    }));
+
     // Optimize images
-    const optimizedImages = batchOptimizeImages(images, {
+    const optimizedImages = batchOptimizeImages(mappedImages, {
       priority: options.priority || false,
       generateStructuredData: true
     });
 
     // Generate optimization report
-    const report = generateOptimizationReport(images);
+    const report = generateOptimizationReport(mappedImages);
 
     return NextResponse.json({
       success: true,
@@ -89,8 +97,9 @@ async function optimizeGalleryImages(options: {
 
   } catch (error) {
     console.error('Gallery optimization error:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     return NextResponse.json(
-      { error: `Failed to optimize gallery images: ${error.message}` },
+      { error: `Failed to optimize gallery images: ${errorMessage}` },
       { status: 500 }
     );
   }
@@ -120,7 +129,14 @@ async function generateImageReport() {
       });
     }
 
-    const report = generateOptimizationReport(images);
+    // Map database images to the format expected by generateOptimizationReport
+    const mappedImages = images.map(img => ({
+      imageUrl: img.image_url,
+      designName: img.design_name,
+      category: img.category
+    }));
+
+    const report = generateOptimizationReport(mappedImages);
     const recommendations = generateOptimizationRecommendations(report);
 
     return NextResponse.json({
@@ -139,8 +155,9 @@ async function generateImageReport() {
 
   } catch (error) {
     console.error('Report generation error:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     return NextResponse.json(
-      { error: `Failed to generate report: ${error.message}` },
+      { error: `Failed to generate report: ${errorMessage}` },
       { status: 500 }
     );
   }
@@ -193,14 +210,20 @@ async function validateAllImages() {
 
   } catch (error) {
     console.error('Image validation error:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     return NextResponse.json(
-      { error: `Failed to validate images: ${error.message}` },
+      { error: `Failed to validate images: ${errorMessage}` },
       { status: 500 }
     );
   }
 }
 
-function generateOptimizationRecommendations(report: any): string[] {
+function generateOptimizationRecommendations(report: {
+  invalidImages: number;
+  averageNameLength: number;
+  totalImages: number;
+  categories: number;
+}): string[] {
   const recommendations: string[] = [];
 
   if (report.invalidImages > 0) {
@@ -222,7 +245,7 @@ function generateOptimizationRecommendations(report: any): string[] {
   return recommendations;
 }
 
-function getCategoryBreakdown(images: any[]): Record<string, number> {
+function getCategoryBreakdown(images: Array<{ category?: string }>): Record<string, number> {
   const breakdown: Record<string, number> = {};
   
   images.forEach(img => {

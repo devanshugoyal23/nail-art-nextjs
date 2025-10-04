@@ -57,12 +57,11 @@ export default function OptimizedImage({
   );
 
   // Use provided alt text or generate one
-  const finalAlt = alt || optimizedProps.alt;
+  const finalAlt = alt || optimizedProps.alt || designName || 'Nail art design';
 
   // Override with custom props if provided
   const finalProps = {
     ...optimizedProps,
-    alt: finalAlt,
     ...(width && { width }),
     ...(height && { height }),
     ...(sizes && { sizes }),
@@ -74,10 +73,10 @@ export default function OptimizedImage({
     ...(onClick && { onClick }),
     ...(onLoad && { onLoad }),
     ...(onError && { onError }),
-    className: `${optimizedProps.className || ''} ${className}`.trim(),
+    className: className.trim(),
   };
 
-  return <Image {...finalProps} />;
+  return <Image {...finalProps} alt={finalAlt} />;
 }
 
 /**

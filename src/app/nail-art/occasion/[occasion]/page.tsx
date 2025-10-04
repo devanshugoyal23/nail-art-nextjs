@@ -35,7 +35,23 @@ export default async function OccasionPage({ params }: OccasionPageProps) {
 
   // Get all gallery items and filter by occasion
   const allItems = await getGalleryItems();
-  const filteredItems = filterGalleryItemsByTag(allItems, 'occasions', occasion);
+  
+  // Try multiple tag values for better matching
+  let filteredItems = filterGalleryItemsByTag(allItems, 'occasions', occasion);
+  
+  // For date-nights, also try related tags
+  if (occasion === 'date-nights' && filteredItems.length === 0) {
+    const dateNightItems = allItems.filter(item => {
+      const occasions = item.occasions || [];
+      return occasions.some(occ => 
+        occ === 'date-night' || 
+        occ === 'date' || 
+        occ === 'romantic' ||
+        occ === 'date-nights'
+      );
+    });
+    filteredItems = dateNightItems;
+  }
   
   // Get all available tags for this occasion
   const allTags = getAllTagsFromGalleryItems(filteredItems);

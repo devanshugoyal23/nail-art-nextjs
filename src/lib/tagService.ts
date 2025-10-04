@@ -258,6 +258,13 @@ export function getAllTagsFromGalleryItems(items: GalleryItem[]): ExtractedTags 
  */
 export function filterGalleryItemsByTag(items: GalleryItem[], tagType: string, tagValue: string): GalleryItem[] {
   return items.filter(item => {
+    // Use stored tags from database if available, otherwise extract from item
+    const storedTags = item[tagType as keyof GalleryItem] as string[] | null;
+    if (storedTags && storedTags.length > 0) {
+      return storedTags.includes(tagValue);
+    }
+    
+    // Fallback to extracting tags from item if no stored tags
     const itemTags = extractTagsFromGalleryItem(item);
     const relevantTags = itemTags[tagType as keyof ExtractedTags] || [];
     return relevantTags.some(tag => tag.value === tagValue);

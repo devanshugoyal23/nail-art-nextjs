@@ -14,8 +14,7 @@ import { extractTagsFromEditorial } from "@/lib/tagService";
 import { 
   generateImageAltText, 
   generateSocialMetaTags, 
-  generateImageStructuredData, 
-  getOptimizedImageProps 
+  generateImageStructuredData
 } from "@/lib/imageUtils";
 import { HeroImage } from "@/components/OptimizedImage";
 

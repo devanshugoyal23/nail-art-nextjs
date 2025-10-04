@@ -1,6 +1,7 @@
 import { GoogleGenAI, Modality } from "@google/genai";
 import { supabase } from './supabase';
 import { getRandomPromptFromCategory, getAllCategories, PROMPT_CATEGORIES } from './promptGenerator';
+import { extractTagsFromGalleryItem } from './tagService';
 
 let ai: GoogleGenAI | null = null;
 
@@ -204,6 +205,19 @@ async function saveNailArtToDatabase(
   category: string
 ): Promise<GeneratedNailArt | null> {
   try {
+    // Create a temporary item to extract tags
+    const tempItem = {
+      id: 'temp',
+      image_url: imageUrl,
+      prompt: prompt,
+      design_name: designName,
+      category: category,
+      created_at: new Date().toISOString()
+    };
+
+    // Extract tags from the item
+    const extractedTags = extractTagsFromGalleryItem(tempItem);
+
     const { data, error } = await supabase
       .from('gallery_items')
       .insert({
@@ -211,6 +225,12 @@ async function saveNailArtToDatabase(
         prompt: prompt,
         design_name: designName,
         category: category,
+        colors: extractedTags.colors.map(tag => tag.value),
+        techniques: extractedTags.techniques.map(tag => tag.value),
+        occasions: extractedTags.occasions.map(tag => tag.value),
+        seasons: extractedTags.seasons.map(tag => tag.value),
+        styles: extractedTags.styles.map(tag => tag.value),
+        shapes: extractedTags.shapes.map(tag => tag.value)
       })
       .select()
       .single();

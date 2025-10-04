@@ -24,7 +24,7 @@ export interface OptimizedImageData {
   quality: number;
   placeholder: 'blur';
   blurDataURL: string;
-  structuredData?: any;
+  structuredData?: Record<string, unknown>;
 }
 
 /**

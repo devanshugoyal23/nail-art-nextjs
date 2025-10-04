@@ -26,7 +26,7 @@ interface SEOHeadProps {
   };
   twitterImage?: string;
   pinterestImage?: string;
-  structuredData?: any;
+  structuredData?: Record<string, unknown>;
 }
 
 export default function SEOHead({
@@ -102,15 +102,18 @@ export default function SEOHead({
   }
 
   // Add alternate locales
-  alternateLocales.forEach(({ locale, url }) => {
+  alternateLocales.forEach(({ locale }) => {
     metaTags.push({ property: 'og:locale:alternate', content: locale });
-    metaTags.push({ rel: 'alternate', hrefLang: locale, href: url });
   });
 
   return (
     <Head>
       <title>{fullTitle}</title>
       {canonical && <link rel="canonical" href={canonical} />}
+      
+      {alternateLocales.map(({ locale, url }, index) => (
+        <link key={index} rel="alternate" hrefLang={locale} href={url} />
+      ))}
       
       {metaTags.map((tag, index) => (
         <meta key={index} {...tag} />
