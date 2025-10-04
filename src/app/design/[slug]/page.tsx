@@ -11,6 +11,13 @@ import { getRelatedKeywords } from "@/lib/keywordMapper";
 import SocialShareButton from "@/components/SocialShareButton";
 import TagCollection from "@/components/TagCollection";
 import { extractTagsFromEditorial } from "@/lib/tagService";
+import { 
+  generateImageAltText, 
+  generateSocialMetaTags, 
+  generateImageStructuredData, 
+  getOptimizedImageProps 
+} from "@/lib/imageUtils";
+import { HeroImage } from "@/components/OptimizedImage";
 
 interface DesignDetailPageProps {
   params: {
@@ -35,6 +42,16 @@ export async function generateMetadata({ params }: DesignDetailPageProps): Promi
     : 'AI-generated nail art design with prompt, real photo, and virtual try-on.';
   const canonicalUrl = `${baseUrl}/design/${encodeURIComponent(params.slug)}`;
 
+  // Generate enhanced social meta tags
+  const socialMetaTags = generateSocialMetaTags(
+    title,
+    description,
+    item.image_url,
+    canonicalUrl,
+    item.design_name || 'AI Generated',
+    item.category
+  );
+
   return {
     title,
     description,
@@ -44,19 +61,32 @@ export async function generateMetadata({ params }: DesignDetailPageProps): Promi
     openGraph: {
       type: 'article',
       url: canonicalUrl,
-      title,
-      description,
+      title: socialMetaTags['og:title'],
+      description: socialMetaTags['og:description'],
       images: [
         {
           url: item.image_url,
+          width: 600,
+          height: 600,
+          alt: generateImageAltText(item.design_name || 'AI Generated', item.category, item.prompt),
         },
       ],
+      siteName: 'AI Nail Art Studio',
     },
     twitter: {
       card: 'summary_large_image',
-      title,
-      description,
+      title: socialMetaTags['twitter:title'],
+      description: socialMetaTags['twitter:description'],
       images: [item.image_url],
+    },
+    other: {
+      // Pinterest meta tags
+      'pinterest:title': socialMetaTags['pinterest:title'],
+      'pinterest:description': socialMetaTags['pinterest:description'],
+      'pinterest:image': socialMetaTags['pinterest:image'],
+      'pinterest:image:width': socialMetaTags['pinterest:image:width'],
+      'pinterest:image:height': socialMetaTags['pinterest:image:height'],
+      'pinterest:image:alt': socialMetaTags['pinterest:image:alt'],
     },
     robots: {
       index: true,
@@ -134,10 +164,12 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
             description: item.prompt,
             genre: item.category || 'Nail Art',
             dateCreated: item.created_at,
-            image: {
-              '@type': 'ImageObject',
-              url: item.image_url,
-            },
+            image: generateImageStructuredData(
+              item.image_url,
+              item.design_name || 'AI Generated',
+              item.category,
+              item.prompt
+            ),
             url: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://your-domain.com'}/design/${encodeURIComponent(params.slug)}`,
           }),
         }}
@@ -224,15 +256,12 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
             {/* Left side - Image */}
             <div className="lg:w-1/2">
               <div className="relative">
-                <Image
+                <HeroImage
                   src={item.image_url}
-                  alt={`${item.design_name || 'AI Generated'} ${item.category ? item.category + ' ' : ''}nail art`}
-                  width={600}
-                  height={600}
+                  designName={item.design_name || 'AI Generated'}
+                  category={item.category}
+                  prompt={item.prompt}
                   className="w-full h-96 lg:h-[600px] object-cover"
-                  loading="eager"
-                  priority
-                  sizes="(max-width: 1024px) 100vw, 50vw"
                 />
               </div>
             </div>
