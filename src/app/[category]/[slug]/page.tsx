@@ -7,6 +7,9 @@ import { generateEditorialContentForNailArt } from "@/lib/geminiService";
 import { getEditorialByItemId, upsertEditorial } from "@/lib/editorialService";
 import { getRelatedKeywords } from "@/lib/keywordMapper";
 import RelatedCategories from "@/components/RelatedCategories";
+import SocialShareButton from "@/components/SocialShareButton";
+import TagCollection from "@/components/TagCollection";
+import { extractTagsFromEditorial } from "@/lib/tagService";
 
 interface GalleryDetailPageProps {
   params: {
@@ -97,6 +100,9 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
     await upsertEditorial(item.id, editorial);
   }
 
+  // Extract tags from editorial content
+  const extractedTags = extractTagsFromEditorial(editorial);
+
   return (
     <div className="min-h-screen bg-black">
       <div className="max-w-6xl mx-auto px-4 py-8">
@@ -167,20 +173,32 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
               </div>
               
               {/* Action buttons */}
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Link
-                  href={`/try-on?design=${item.id}`}
-                  className="flex-1 bg-gradient-to-r from-purple-600 to-purple-700 text-white font-bold py-4 px-6 rounded-lg hover:from-purple-700 hover:to-purple-800 transition-all duration-300 text-center shadow-lg"
-                >
-                  Try This Design
-                </Link>
-                <a
-                  href={item.image_url}
-                  download={`nail-art-${item.id}.jpg`}
-                  className="flex-1 bg-gradient-to-r from-green-600 to-green-700 text-white font-bold py-4 px-6 rounded-lg hover:from-green-700 hover:to-green-800 transition-all duration-300 shadow-lg text-center"
-                >
-                  Download
-                </a>
+              <div className="space-y-4">
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <Link
+                    href={`/try-on?design=${item.id}`}
+                    className="flex-1 bg-gradient-to-r from-purple-600 to-purple-700 text-white font-bold py-4 px-6 rounded-lg hover:from-purple-700 hover:to-purple-800 transition-all duration-300 text-center shadow-lg"
+                  >
+                    {editorial?.ctaText || 'Try This Design Virtually'}
+                  </Link>
+                  <a
+                    href={item.image_url}
+                    download={`nail-art-${item.id}.jpg`}
+                    className="flex-1 bg-gradient-to-r from-green-600 to-green-700 text-white font-bold py-4 px-6 rounded-lg hover:from-green-700 hover:to-green-800 transition-all duration-300 shadow-lg text-center"
+                  >
+                    Download
+                  </a>
+                </div>
+                
+                {/* Social sharing buttons */}
+                <div className="flex items-center justify-center space-x-4 pt-2">
+                  <span className="text-gray-400 text-sm">Share this design:</span>
+                  <SocialShareButton
+                    title={item.design_name || 'Nail Art Design'}
+                    text={editorial?.intro || item.prompt || ''}
+                    url={typeof window !== 'undefined' ? window.location.href : ''}
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -375,6 +393,89 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
             </section>
           </div>
 
+          {/* Quick Facts */}
+          {editorial?.quickFacts && editorial.quickFacts.length > 0 && (
+            <section className="bg-gradient-to-r from-purple-900/30 to-indigo-900/30 rounded-lg p-6 border border-purple-700">
+              <h2 className="text-xl font-semibold text-white mb-4">Quick Facts</h2>
+              <div className="grid sm:grid-cols-2 gap-3">
+                {editorial.quickFacts.map((fact, i) => (
+                  <div key={i} className="flex items-start">
+                    <span className="text-purple-400 mr-2 mt-1">✨</span>
+                    <span className="text-gray-300">{fact}</span>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* Trending Now */}
+          {editorial?.trendingNow && (
+            <section className="bg-gradient-to-r from-pink-900/30 to-rose-900/30 rounded-lg p-6 border border-pink-700">
+              <h2 className="text-xl font-semibold text-white mb-3">Why It&apos;s Trending</h2>
+              <p className="text-gray-300">{editorial.trendingNow}</p>
+            </section>
+          )}
+
+          {/* Seasonal Tips */}
+          {editorial?.seasonalTips && (
+            <section className="bg-gradient-to-r from-green-900/30 to-emerald-900/30 rounded-lg p-6 border border-green-700">
+              <h2 className="text-xl font-semibold text-white mb-3">Seasonal Styling</h2>
+              <p className="text-gray-300">{editorial.seasonalTips}</p>
+            </section>
+          )}
+
+          {/* Color Variations */}
+          {editorial?.colorVariations && editorial.colorVariations.length > 0 && (
+            <section className="bg-gray-800 rounded-lg p-6 border border-gray-700">
+              <h2 className="text-xl font-semibold text-white mb-4">Color Variations</h2>
+              <div className="grid sm:grid-cols-2 gap-3">
+                {editorial.colorVariations.map((variation, i) => (
+                  <div key={i} className="flex items-start">
+                    <span className="text-blue-400 mr-2 mt-1">🎨</span>
+                    <span className="text-gray-300">{variation}</span>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* Best Occasions */}
+          {editorial?.occasions && editorial.occasions.length > 0 && (
+            <section className="bg-gray-800 rounded-lg p-6 border border-gray-700">
+              <h2 className="text-xl font-semibold text-white mb-4">Perfect For</h2>
+              <div className="flex flex-wrap gap-2">
+                {editorial.occasions.map((occasion, i) => (
+                  <span key={i} className="bg-purple-600 text-white px-3 py-1 rounded-full text-sm">
+                    {occasion}
+                  </span>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* Social Proof */}
+          {editorial?.socialProof && (
+            <section className="bg-gradient-to-r from-yellow-900/30 to-orange-900/30 rounded-lg p-6 border border-yellow-700">
+              <h2 className="text-xl font-semibold text-white mb-3">Why People Love It</h2>
+              <p className="text-gray-300">{editorial.socialProof}</p>
+            </section>
+          )}
+
+          {/* Maintenance */}
+          {editorial?.maintenance && editorial.maintenance.length > 0 && (
+            <section className="bg-gray-800 rounded-lg p-6 border border-gray-700">
+              <h2 className="text-xl font-semibold text-white mb-3">Daily Maintenance</h2>
+              <ul className="space-y-2 text-gray-300">
+                {editorial.maintenance.map((tip, i) => (
+                  <li key={i} className="flex items-start">
+                    <span className="text-green-400 mr-2">💅</span>
+                    {tip}
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
+
           {/* Troubleshooting */}
           {editorial?.troubleshooting && editorial.troubleshooting.length > 0 && (
             <section className="bg-gray-800 rounded-lg p-6 border border-gray-700">
@@ -389,6 +490,134 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
               </ul>
             </section>
           )}
+
+          {/* Inspiration */}
+          {editorial?.inspiration && (
+            <section className="bg-gradient-to-r from-indigo-900/30 to-purple-900/30 rounded-lg p-6 border border-indigo-700">
+              <h2 className="text-xl font-semibold text-white mb-3">Design Inspiration</h2>
+              <p className="text-gray-300">{editorial.inspiration}</p>
+            </section>
+          )}
+
+          {/* Tags Section */}
+          <section className="bg-gray-800 rounded-lg p-6 border border-gray-700">
+            <h2 className="text-xl font-semibold text-white mb-6">Explore Similar Designs</h2>
+            
+            {/* Design-Specific Tags */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {/* Colors from this design */}
+              {extractedTags.colors.length > 0 && (
+                <TagCollection
+                  title="Colors in this Design"
+                  tags={extractedTags.colors}
+                  variant="color"
+                  size="md"
+                />
+              )}
+              
+              {/* Techniques used */}
+              {extractedTags.techniques.length > 0 && (
+                <TagCollection
+                  title="Techniques Used"
+                  tags={extractedTags.techniques}
+                  variant="technique"
+                  size="md"
+                />
+              )}
+              
+              {/* Perfect occasions */}
+              {extractedTags.occasions.length > 0 && (
+                <TagCollection
+                  title="Perfect For"
+                  tags={extractedTags.occasions}
+                  variant="occasion"
+                  size="md"
+                />
+              )}
+              
+              {/* Seasons */}
+              {extractedTags.seasons.length > 0 && (
+                <TagCollection
+                  title="Best Seasons"
+                  tags={extractedTags.seasons}
+                  variant="season"
+                  size="md"
+                />
+              )}
+              
+              {/* Styles */}
+              {extractedTags.styles.length > 0 && (
+                <TagCollection
+                  title="Style Category"
+                  tags={extractedTags.styles}
+                  variant="style"
+                  size="md"
+                />
+              )}
+              
+              {/* Shapes */}
+              {extractedTags.shapes.length > 0 && (
+                <TagCollection
+                  title="Nail Shapes"
+                  tags={extractedTags.shapes}
+                  variant="shape"
+                  size="md"
+                />
+              )}
+            </div>
+            
+            {/* Additional Related Tags */}
+            <div className="mt-8 pt-6 border-t border-gray-700">
+              <h3 className="text-lg font-semibold text-white mb-4">More Categories to Explore</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <TagCollection
+                  title="Popular Colors"
+                  tags={[
+                    { label: 'Red', value: 'red', type: 'color' },
+                    { label: 'Blue', value: 'blue', type: 'color' },
+                    { label: 'Green', value: 'green', type: 'color' },
+                    { label: 'Purple', value: 'purple', type: 'color' },
+                    { label: 'Black', value: 'black', type: 'color' },
+                    { label: 'White', value: 'white', type: 'color' },
+                    { label: 'Pink', value: 'pink', type: 'color' },
+                    { label: 'Gold', value: 'gold', type: 'color' }
+                  ]}
+                  variant="color"
+                  size="sm"
+                />
+                <TagCollection
+                  title="Popular Techniques"
+                  tags={[
+                    { label: 'French Manicure', value: 'french-manicure', type: 'technique' },
+                    { label: 'Ombre', value: 'ombre', type: 'technique' },
+                    { label: 'Marble', value: 'marble', type: 'technique' },
+                    { label: 'Glitter', value: 'glitter', type: 'technique' },
+                    { label: 'Chrome', value: 'chrome', type: 'technique' },
+                    { label: 'Geometric', value: 'geometric', type: 'technique' },
+                    { label: 'Watercolor', value: 'watercolor', type: 'technique' },
+                    { label: 'Stamping', value: 'stamping', type: 'technique' }
+                  ]}
+                  variant="technique"
+                  size="sm"
+                />
+                <TagCollection
+                  title="Perfect Occasions"
+                  tags={[
+                    { label: 'Wedding', value: 'wedding', type: 'occasion' },
+                    { label: 'Party', value: 'party', type: 'occasion' },
+                    { label: 'Work', value: 'work', type: 'occasion' },
+                    { label: 'Date Night', value: 'date-night', type: 'occasion' },
+                    { label: 'Casual', value: 'casual', type: 'occasion' },
+                    { label: 'Formal', value: 'formal', type: 'occasion' },
+                    { label: 'Holiday', value: 'holiday', type: 'occasion' },
+                    { label: 'Summer', value: 'summer', type: 'occasion' }
+                  ]}
+                  variant="occasion"
+                  size="sm"
+                />
+              </div>
+            </div>
+          </section>
 
           {/* FAQs */}
           <section className="bg-gray-800 rounded-lg p-6 border border-gray-700">

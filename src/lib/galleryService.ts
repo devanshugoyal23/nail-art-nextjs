@@ -1,4 +1,5 @@
 import { supabase, GalleryItem, SaveGalleryItemRequest } from './supabase'
+import { extractTagsFromGalleryItem } from './tagService'
 
 export async function saveGalleryItem(item: SaveGalleryItemRequest): Promise<GalleryItem | null> {
   try {
@@ -27,7 +28,19 @@ export async function saveGalleryItem(item: SaveGalleryItemRequest): Promise<Gal
       .from('nail-art-images')
       .getPublicUrl(filename)
 
-    // Save to database
+    // Extract tags from the item
+    const tempItem = {
+      id: 'temp',
+      image_url: publicUrl,
+      prompt: item.prompt,
+      design_name: item.designName,
+      category: item.category,
+      created_at: new Date().toISOString()
+    } as GalleryItem;
+    
+    const extractedTags = extractTagsFromGalleryItem(tempItem);
+
+    // Save to database with tags
     const { data, error } = await supabase
       .from('gallery_items')
       .insert({
@@ -35,7 +48,13 @@ export async function saveGalleryItem(item: SaveGalleryItemRequest): Promise<Gal
         prompt: item.prompt,
         design_name: item.designName,
         category: item.category,
-        original_image_url: item.originalImageData ? await uploadOriginalImage(item.originalImageData) : null
+        original_image_url: item.originalImageData ? await uploadOriginalImage(item.originalImageData) : null,
+        colors: extractedTags.colors.map(tag => tag.value),
+        techniques: extractedTags.techniques.map(tag => tag.value),
+        occasions: extractedTags.occasions.map(tag => tag.value),
+        seasons: extractedTags.seasons.map(tag => tag.value),
+        styles: extractedTags.styles.map(tag => tag.value),
+        shapes: extractedTags.shapes.map(tag => tag.value)
       })
       .select()
       .single()
@@ -394,6 +413,85 @@ async function uploadOriginalImage(originalImageData: string): Promise<string | 
   } catch (error) {
     console.error('Error uploading original image:', error)
     return null
+  }
+}
+
+/**
+ * Filter gallery items by tag
+ * @param items - Array of gallery items to filter
+ * @param tagType - Type of tag to filter by (color, technique, occasion, etc.)
+ * @param tagValue - Value of the tag to filter by
+ * @returns Filtered array of gallery items
+ */
+export function filterGalleryItemsByTag(items: GalleryItem[], tagType: string, tagValue: string): GalleryItem[] {
+  return items.filter(item => {
+    // First try to use stored tags
+    const storedTags = item[tagType as keyof GalleryItem] as string[] | undefined;
+    if (storedTags && storedTags.length > 0) {
+      return storedTags.includes(tagValue);
+    }
+    
+    // Fallback to dynamic extraction for items without stored tags
+    const itemTags = extractTagsFromGalleryItem(item);
+    const relevantTags = itemTags[tagType as keyof typeof itemTags] || [];
+    return relevantTags.some(tag => tag.value === tagValue);
+  });
+}
+
+/**
+ * Migrate existing gallery items to include tags
+ * This function should be run once to populate tags for existing items
+ */
+export async function migrateExistingItemsWithTags(): Promise<{ success: number; failed: number }> {
+  try {
+    console.log('Starting migration of existing items with tags...');
+    
+    // Get all existing items
+    const allItems = await getGalleryItems();
+    let successCount = 0;
+    let failedCount = 0;
+    
+    for (const item of allItems) {
+      try {
+        // Extract tags for this item
+        const extractedTags = extractTagsFromGalleryItem(item);
+        
+        // Update the item with extracted tags using direct SQL
+        const colorsArray = extractedTags.colors.map(tag => tag.value);
+        const techniquesArray = extractedTags.techniques.map(tag => tag.value);
+        const occasionsArray = extractedTags.occasions.map(tag => tag.value);
+        const seasonsArray = extractedTags.seasons.map(tag => tag.value);
+        const stylesArray = extractedTags.styles.map(tag => tag.value);
+        const shapesArray = extractedTags.shapes.map(tag => tag.value);
+        
+        const { error } = await supabase.rpc('update_gallery_item_tags', {
+          item_id: item.id,
+          colors_array: colorsArray,
+          techniques_array: techniquesArray,
+          occasions_array: occasionsArray,
+          seasons_array: seasonsArray,
+          styles_array: stylesArray,
+          shapes_array: shapesArray
+        });
+        
+        if (error) {
+          console.error(`Failed to update item ${item.id}:`, error);
+          failedCount++;
+        } else {
+          console.log(`Successfully updated tags for item ${item.id}`);
+          successCount++;
+        }
+      } catch (error) {
+        console.error(`Error processing item ${item.id}:`, error);
+        failedCount++;
+      }
+    }
+    
+    console.log(`Migration completed. Success: ${successCount}, Failed: ${failedCount}`);
+    return { success: successCount, failed: failedCount };
+  } catch (error) {
+    console.error('Error during migration:', error);
+    return { success: 0, failed: 0 };
   }
 }
 

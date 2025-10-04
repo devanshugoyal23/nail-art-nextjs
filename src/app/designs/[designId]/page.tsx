@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { NAIL_ART_DESIGNS } from "@/lib/constants";
 import { Metadata } from "next";
+import TagCollection from "@/components/TagCollection";
 
 interface DesignDetailPageProps {
   params: {
@@ -68,7 +69,101 @@ export default function DesignDetailPage({ params }: DesignDetailPageProps) {
           </div>
         </div>
       </div>
-       <div className="text-center mt-8">
+
+      {/* Tags Section */}
+      <div className="mt-8 bg-gray-800 rounded-lg p-6 border border-gray-700">
+        <h2 className="text-xl font-semibold text-white mb-6">Explore Similar Designs</h2>
+        
+        {/* Design-Specific Tags */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <TagCollection
+            title="Colors in this Design"
+            tags={[
+              { label: 'Red', value: 'red', type: 'color' },
+              { label: 'White', value: 'white', type: 'color' },
+              { label: 'Gold', value: 'gold', type: 'color' },
+              { label: 'Silver', value: 'silver', type: 'color' }
+            ]}
+            variant="color"
+            size="md"
+          />
+          <TagCollection
+            title="Techniques Used"
+            tags={[
+              { label: 'French Manicure', value: 'french-manicure', type: 'technique' },
+              { label: 'Stamping', value: 'stamping', type: 'technique' },
+              { label: 'Glitter', value: 'glitter', type: 'technique' }
+            ]}
+            variant="technique"
+            size="md"
+          />
+          <TagCollection
+            title="Perfect For"
+            tags={[
+              { label: 'Christmas', value: 'christmas', type: 'occasion' },
+              { label: 'Holiday', value: 'holiday', type: 'occasion' },
+              { label: 'Winter', value: 'winter', type: 'season' },
+              { label: 'Party', value: 'party', type: 'occasion' }
+            ]}
+            variant="occasion"
+            size="md"
+          />
+        </div>
+        
+        {/* Additional Related Tags */}
+        <div className="mt-8 pt-6 border-t border-gray-700">
+          <h3 className="text-lg font-semibold text-white mb-4">More Categories to Explore</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <TagCollection
+              title="Popular Colors"
+              tags={[
+                { label: 'Red', value: 'red', type: 'color' },
+                { label: 'Blue', value: 'blue', type: 'color' },
+                { label: 'Green', value: 'green', type: 'color' },
+                { label: 'Purple', value: 'purple', type: 'color' },
+                { label: 'Black', value: 'black', type: 'color' },
+                { label: 'White', value: 'white', type: 'color' },
+                { label: 'Pink', value: 'pink', type: 'color' },
+                { label: 'Gold', value: 'gold', type: 'color' }
+              ]}
+              variant="color"
+              size="sm"
+            />
+            <TagCollection
+              title="Popular Techniques"
+              tags={[
+                { label: 'French Manicure', value: 'french-manicure', type: 'technique' },
+                { label: 'Ombre', value: 'ombre', type: 'technique' },
+                { label: 'Marble', value: 'marble', type: 'technique' },
+                { label: 'Glitter', value: 'glitter', type: 'technique' },
+                { label: 'Chrome', value: 'chrome', type: 'technique' },
+                { label: 'Geometric', value: 'geometric', type: 'technique' },
+                { label: 'Watercolor', value: 'watercolor', type: 'technique' },
+                { label: 'Stamping', value: 'stamping', type: 'technique' }
+              ]}
+              variant="technique"
+              size="sm"
+            />
+            <TagCollection
+              title="Perfect Occasions"
+              tags={[
+                { label: 'Wedding', value: 'wedding', type: 'occasion' },
+                { label: 'Party', value: 'party', type: 'occasion' },
+                { label: 'Work', value: 'work', type: 'occasion' },
+                { label: 'Date Night', value: 'date-night', type: 'occasion' },
+                { label: 'Casual', value: 'casual', type: 'occasion' },
+                { label: 'Formal', value: 'formal', type: 'occasion' },
+                { label: 'Holiday', value: 'holiday', type: 'occasion' },
+                { label: 'Summer', value: 'summer', type: 'occasion' }
+              ]}
+              variant="occasion"
+              size="sm"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div className="text-center mt-8">
         <Link href="/designs" className="text-indigo-400 hover:text-indigo-300 transition-colors">
           &larr; Back to all designs
         </Link>

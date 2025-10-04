@@ -14,6 +14,12 @@ export interface GalleryItem {
   user_id?: string
   design_name?: string
   category?: string
+  colors?: string[]
+  techniques?: string[]
+  occasions?: string[]
+  seasons?: string[]
+  styles?: string[]
+  shapes?: string[]
 }
 
 export interface SaveGalleryItemRequest {
@@ -22,6 +28,12 @@ export interface SaveGalleryItemRequest {
   originalImageData?: string
   designName?: string
   category?: string
+  colors?: string[]
+  techniques?: string[]
+  occasions?: string[]
+  seasons?: string[]
+  styles?: string[]
+  shapes?: string[]
 }
 
 
