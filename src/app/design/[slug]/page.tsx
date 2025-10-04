@@ -239,7 +239,7 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
         {/* Back button */}
         <div className="mb-6">
           <Link 
-            href="/gallery" 
+            href="/nail-art-gallery" 
             className="inline-flex items-center text-purple-400 hover:text-purple-300 transition-colors"
             title="Back to Gallery"
           >

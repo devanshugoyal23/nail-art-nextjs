@@ -14,12 +14,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 1,
     },
     {
-      url: `${baseUrl}/designs`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly' as const,
-      priority: 0.8,
-    },
-    {
       url: `${baseUrl}/try-on`,
       lastModified: new Date(),
       changeFrequency: 'monthly' as const,
@@ -31,36 +25,24 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'daily' as const,
       priority: 0.9,
     },
+    {
+      url: `${baseUrl}/categories`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly' as const,
+      priority: 0.8,
+    },
   ];
 
-  // Design detail pages
-  const designPages = NAIL_ART_DESIGNS.map(design => ({
-    url: `${baseUrl}/designs/${design.id}`,
-    lastModified: new Date(),
-    changeFrequency: 'monthly' as const,
-    priority: 0.7,
-  }));
+  // Note: Design detail pages removed as /designs route doesn't exist
 
   // pSEO pages - styles
   const styles = ['almond', 'coffin', 'square', 'oval', 'stiletto'];
   const lengths = ['short', 'medium', 'long'];
   const colors = ['milky-white', 'baby-pink', 'chrome-silver', 'emerald-green', 'black'];
   
-  const stylePages = styles.map(style => ({
-    url: `${baseUrl}/nail-art/${style}`,
-    lastModified: new Date(),
-    changeFrequency: 'weekly' as const,
-    priority: 0.6,
-  }));
+  // Note: Single style pages removed as they don't exist (only three-level deep pages exist)
 
-  const styleLengthPages = styles.flatMap(style => 
-    lengths.map(length => ({
-      url: `${baseUrl}/nail-art/${style}/${length}`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly' as const,
-      priority: 0.5,
-    }))
-  );
+  // Note: Two-level style pages removed as they don't exist (only three-level deep pages exist)
 
   const styleLengthColorPages = styles.flatMap(style => 
     lengths.flatMap(length => 
@@ -122,9 +104,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   return [
     ...staticPages,
-    ...designPages,
-    ...stylePages,
-    ...styleLengthPages,
     ...styleLengthColorPages,
     ...occasionPages,
     ...seasonPages,

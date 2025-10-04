@@ -10,7 +10,7 @@ interface NailArtCardProps {
 
 const NailArtCard: React.FC<NailArtCardProps> = ({ design }) => {
   return (
-    <Link href={`/designs/${design.id}`} className="block group bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-indigo-500/50 transition-all duration-300 transform hover:-translate-y-1">
+    <Link href={`/design/${design.id}`} className="block group bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-indigo-500/50 transition-all duration-300 transform hover:-translate-y-1">
       <div className="relative">
         <GalleryImage
           src={design.image}

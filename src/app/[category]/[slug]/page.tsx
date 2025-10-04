@@ -109,7 +109,7 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
         {/* Back button */}
         <div className="mb-6">
           <Link 
-            href="/gallery" 
+            href="/nail-art-gallery" 
             className="inline-flex items-center text-purple-400 hover:text-purple-300 transition-colors"
           >
             <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
