@@ -45,7 +45,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
         {/* Breadcrumb */}
         <div className="mb-6">
           <nav className="flex items-center space-x-2 text-sm">
-            <Link href="/gallery" className="text-purple-400 hover:text-purple-300">
+            <Link href="/nail-art-gallery" className="text-purple-400 hover:text-purple-300">
               Gallery
             </Link>
             <span className="text-gray-400">/</span>
@@ -106,7 +106,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
           <div className="flex flex-wrap gap-4">
             {items.length > 0 && (
               <Link
-                href="/gallery"
+                href="/nail-art-gallery"
                 className="bg-gray-800 text-white px-6 py-3 rounded-lg hover:bg-gray-700 transition-colors"
               >
                 All Designs

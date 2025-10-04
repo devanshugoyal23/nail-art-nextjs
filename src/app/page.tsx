@@ -17,12 +17,6 @@ export default function Home() {
           >
             Start Virtual Try-On
           </Link>
-          <Link
-            href="/designs"
-            className="bg-gray-700 text-white font-bold py-3 px-8 rounded-full hover:bg-gray-600 transition-transform transform hover:scale-105 duration-300"
-          >
-            Explore Designs
-          </Link>
         </div>
       </div>
     </div>

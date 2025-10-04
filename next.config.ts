@@ -34,6 +34,12 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
+      // Redirect old gallery to new nail-art-gallery
+      {
+        source: "/gallery",
+        destination: "/nail-art-gallery",
+        permanent: true,
+      },
       // Redirect old gallery detail URLs to root detail URLs
       {
         source: "/gallery/:category/:slug",

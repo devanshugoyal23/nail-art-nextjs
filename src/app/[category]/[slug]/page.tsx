@@ -311,7 +311,7 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
             {otherCategoryItems.length > 10 && (
               <div className="text-center mt-6">
                 <Link
-                  href={`/gallery/category/${encodeURIComponent(item.category!)}`}
+                  href={`/nail-art-gallery/category/${encodeURIComponent(item.category!)}`}
                   className="inline-flex items-center bg-gray-800 text-white font-semibold py-3 px-6 rounded-lg hover:bg-gray-700 transition-colors"
                 >
                   View All {item.category} Designs ({otherCategoryItems.length})
@@ -326,7 +326,7 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
           <h2 className="text-2xl font-bold text-white mb-6">More Designs</h2>
           <div className="text-center">
             <Link 
-              href="/gallery"
+              href="/nail-art-gallery"
               className="inline-flex items-center bg-gray-800 text-white font-semibold py-3 px-6 rounded-lg hover:bg-gray-700 transition-colors"
             >
               View All Gallery Items

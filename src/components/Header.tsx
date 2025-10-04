@@ -29,9 +29,8 @@ const Header: React.FC = () => {
             <div className="ml-10 flex items-baseline space-x-4">
               <Link href="/" className={linkClass('/')}>Home</Link>
               <Link href="/categories" className={linkClass('/categories')}>Categories</Link>
-              <Link href="/designs" className={linkClass('/designs')}>Designs</Link>
               <Link href="/try-on" className={linkClass('/try-on')}>Virtual Try-On</Link>
-              <Link href="/gallery" className={linkClass('/gallery')}>Gallery</Link>
+              <Link href="/nail-art-gallery" className={linkClass('/nail-art-gallery')}>Gallery</Link>
             </div>
           </div>
           <div className="-mr-2 flex md:hidden">
@@ -62,9 +61,8 @@ const Header: React.FC = () => {
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             <Link href="/" className={linkClass('/')} onClick={() => setIsOpen(false)}>Home</Link>
             <Link href="/categories" className={linkClass('/categories')} onClick={() => setIsOpen(false)}>Categories</Link>
-            <Link href="/designs" className={linkClass('/designs')} onClick={() => setIsOpen(false)}>Designs</Link>
             <Link href="/try-on" className={linkClass('/try-on')} onClick={() => setIsOpen(false)}>Virtual Try-On</Link>
-            <Link href="/gallery" className={linkClass('/gallery')} onClick={() => setIsOpen(false)}>Gallery</Link>
+            <Link href="/nail-art-gallery" className={linkClass('/nail-art-gallery')} onClick={() => setIsOpen(false)}>Gallery</Link>
           </div>
         </div>
       )}

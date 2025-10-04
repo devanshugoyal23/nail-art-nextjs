@@ -157,7 +157,7 @@ export default async function OccasionPage({ params }: OccasionPageProps) {
               <h3 className="text-xl font-semibold text-white mb-2">No designs found</h3>
               <p className="text-gray-400 mb-6">We&apos;re working on adding more {capitalize(occasion)} designs!</p>
               <Link
-                href="/gallery"
+                href="/nail-art-gallery"
                 className="inline-flex items-center bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors"
               >
                 Browse All Designs

@@ -113,7 +113,7 @@ export default function RelatedCategories({
           return (
             <Link
               key={category}
-              href={`/gallery/category/${encodeURIComponent(category)}`}
+              href={`/nail-art-gallery/category/${encodeURIComponent(category)}`}
               className="group bg-gray-800 rounded-lg overflow-hidden hover:bg-gray-700 transition-all duration-300 transform hover:-translate-y-1"
             >
               <div className="aspect-square relative">

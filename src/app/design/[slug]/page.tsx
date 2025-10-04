@@ -190,14 +190,14 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
                 '@type': 'ListItem',
                 position: 2,
                 name: 'Gallery',
-                item: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://your-domain.com'}/gallery`,
+                item: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://your-domain.com'}/nail-art-gallery`,
               },
               item.category
                 ? {
                     '@type': 'ListItem',
                     position: 3,
                     name: item.category,
-                    item: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://your-domain.com'}/gallery/category/${encodeURIComponent(
+                    item: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://your-domain.com'}/nail-art-gallery/category/${encodeURIComponent(
                       item.category
                     )}`,
                   }
@@ -218,7 +218,7 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
             </li>
             <span>/</span>
             <li itemProp="itemListElement" itemScope itemType="https://schema.org/ListItem">
-              <Link href="/gallery" title="Gallery" itemProp="item" className="hover:text-gray-200">
+              <Link href="/nail-art-gallery" title="Gallery" itemProp="item" className="hover:text-gray-200">
                 <span itemProp="name">Gallery</span>
               </Link>
               <meta itemProp="position" content="2" />
@@ -227,7 +227,7 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
               <>
                 <span>/</span>
                 <li itemProp="itemListElement" itemScope itemType="https://schema.org/ListItem">
-                  <Link href={`/gallery/category/${encodeURIComponent(item.category)}`} title={`${item.category} designs`} itemProp="item" className="hover:text-gray-200">
+                  <Link href={`/nail-art-gallery/category/${encodeURIComponent(item.category)}`} title={`${item.category} designs`} itemProp="item" className="hover:text-gray-200">
                     <span itemProp="name">{item.category}</span>
                   </Link>
                   <meta itemProp="position" content="3" />
@@ -446,7 +446,7 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
             {otherCategoryItems.length > 10 && (
               <div className="text-center mt-6">
                 <Link
-                  href={`/gallery/category/${encodeURIComponent(item.category!)}`}
+                  href={`/nail-art-gallery/category/${encodeURIComponent(item.category!)}`}
                   className="inline-flex items-center bg-gray-800 text-white font-semibold py-3 px-6 rounded-lg hover:bg-gray-700 transition-colors"
                   title={`View all ${item.category} designs`}
                 >
@@ -462,7 +462,7 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
           <h2 className="text-2xl font-bold text-white mb-6">More Designs</h2>
           <div className="text-center">
             <Link 
-              href="/gallery"
+              href="/nail-art-gallery"
               className="inline-flex items-center bg-gray-800 text-white font-semibold py-3 px-6 rounded-lg hover:bg-gray-700 transition-colors"
               title="Browse all gallery items"
             >

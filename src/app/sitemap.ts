@@ -26,7 +26,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/gallery`,
+      url: `${baseUrl}/nail-art-gallery`,
       lastModified: new Date(),
       changeFrequency: 'daily' as const,
       priority: 0.9,
@@ -112,9 +112,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.6,
   }));
 
-  // Category pages remain under /gallery/category for now
+  // Category pages now under /nail-art-gallery/category
   const categoryPages = categories.map(category => ({
-    url: `${baseUrl}/gallery/category/${encodeURIComponent(category)}`,
+    url: `${baseUrl}/nail-art-gallery/category/${encodeURIComponent(category)}`,
     lastModified: new Date(),
     changeFrequency: 'weekly' as const,
     priority: 0.7,

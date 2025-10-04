@@ -125,7 +125,7 @@ export default function CategoriesPage() {
           <h2 className="text-2xl font-bold text-white mb-6 text-center">Quick Links</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <Link
-              href="/gallery"
+              href="/nail-art-gallery"
               className="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-4 rounded-lg text-center transition-colors"
             >
               All Designs
@@ -135,12 +135,6 @@ export default function CategoriesPage() {
               className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-4 rounded-lg text-center transition-colors"
             >
               Virtual Try-On
-            </Link>
-            <Link
-              href="/designs"
-              className="bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-4 rounded-lg text-center transition-colors"
-            >
-              Design Gallery
             </Link>
             <Link
               href="/nail-art/trending"
