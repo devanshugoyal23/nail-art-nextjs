@@ -1,22 +1,17 @@
 import React from 'react'
-import Gallery from '@/components/Gallery'
+import EnhancedGallery from '@/components/EnhancedGallery'
 import RelatedCategories from '@/components/RelatedCategories'
 
 export default function GalleryPage() {
   return (
-    <div className="min-h-screen bg-black">
-      <div className="mb-8 text-center">
-        <h1 className="text-4xl font-bold text-white mb-4">Nail Art Design Gallery</h1>
-        <p className="text-white text-lg">
-          Browse our curated collection of stunning nail art designs. Click on any design to learn more and try it on virtually.
-        </p>
-      </div>
-      
-      <Gallery showPrompts={true} showDelete={true} />
-      
-      {/* Related Categories Section */}
-      <div className="mt-16">
-        <RelatedCategories />
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-purple-900">
+      <div className="max-w-7xl mx-auto px-4 py-6">
+        <EnhancedGallery showPrompts={true} showDelete={false} />
+        
+        {/* Related Categories Section */}
+        <div className="mt-16">
+          <RelatedCategories />
+        </div>
       </div>
     </div>
   )
