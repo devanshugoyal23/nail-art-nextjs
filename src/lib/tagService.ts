@@ -181,7 +181,9 @@ export function extractTagsFromGalleryItem(item: GalleryItem): ExtractedTags {
     // Color extraction
     const colorKeywords = ['red', 'blue', 'green', 'purple', 'black', 'white', 'pink', 'yellow', 'orange', 'gold', 'silver', 'glitter'];
     colorKeywords.forEach(color => {
-      if (prompt.includes(color)) {
+      // Use word boundary matching to avoid partial word matches
+      const colorRegex = new RegExp(`\\b${color}\\b`, 'i');
+      if (colorRegex.test(prompt)) {
         tags.colors.push({
           label: color.charAt(0).toUpperCase() + color.slice(1),
           value: color,
@@ -193,7 +195,9 @@ export function extractTagsFromGalleryItem(item: GalleryItem): ExtractedTags {
     // Technique extraction
     const techniqueKeywords = ['french', 'ombre', 'marble', 'geometric', 'watercolor', 'glitter', 'chrome', 'stamping', 'foil'];
     techniqueKeywords.forEach(technique => {
-      if (prompt.includes(technique)) {
+      // Use word boundary matching to avoid partial word matches
+      const techniqueRegex = new RegExp(`\\b${technique}\\b`, 'i');
+      if (techniqueRegex.test(prompt)) {
         tags.techniques.push({
           label: technique.charAt(0).toUpperCase() + technique.slice(1),
           value: technique,
@@ -205,7 +209,9 @@ export function extractTagsFromGalleryItem(item: GalleryItem): ExtractedTags {
     // Shape extraction
     const shapeKeywords = ['almond', 'coffin', 'square', 'oval', 'stiletto'];
     shapeKeywords.forEach(shape => {
-      if (prompt.includes(shape)) {
+      // Use word boundary matching to avoid partial word matches
+      const shapeRegex = new RegExp(`\\b${shape}\\b`, 'i');
+      if (shapeRegex.test(prompt)) {
         tags.shapes.push({
           label: shape.charAt(0).toUpperCase() + shape.slice(1),
           value: shape,
@@ -222,7 +228,9 @@ export function extractTagsFromGalleryItem(item: GalleryItem): ExtractedTags {
       'vacation', 'beach', 'office', 'business', 'interview', 'cocktail', 'gala'
     ];
     occasionKeywords.forEach(occasion => {
-      if (prompt.includes(occasion)) {
+      // Use word boundary matching to avoid partial word matches
+      const occasionRegex = new RegExp(`\\b${occasion.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i');
+      if (occasionRegex.test(prompt)) {
         tags.occasions.push({
           label: occasion.charAt(0).toUpperCase() + occasion.slice(1),
           value: occasion.replace(/\s+/g, '-'),
