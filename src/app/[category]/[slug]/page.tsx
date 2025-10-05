@@ -30,14 +30,59 @@ export async function generateMetadata({ params }: GalleryDetailPageProps): Prom
 
   const title = item.design_name || 'Generated Nail Art';
   const description = item.prompt || 'AI-generated nail art design';
+  const fullTitle = `${title} | AI Nail Art Studio`;
+  const fullDescription = description.length > 160 ? description.substring(0, 157) + '...' : description;
 
   return {
-    title: `${title} | AI Nail Art Studio`,
-    description: description,
+    title: fullTitle,
+    description: fullDescription,
+    keywords: [
+      'nail art',
+      'AI nail art',
+      item.category?.toLowerCase() || 'nail design',
+      ...(item.colors || []),
+      ...(item.techniques || []),
+      ...(item.occasions || []),
+      'manicure',
+      'nail design',
+      'virtual try-on'
+    ],
     openGraph: {
-      title: title,
-      description: description,
+      title: fullTitle,
+      description: fullDescription,
+      images: [
+        {
+          url: `https://nailartai.app/og-design/${resolvedParams.category}/${resolvedParams.slug}`,
+          width: 1200,
+          height: 630,
+          alt: title,
+        },
+        {
+          url: item.image_url,
+          width: 600,
+          height: 700,
+          alt: title,
+        },
+      ],
+      type: 'article',
+      publishedTime: item.created_at,
+      modifiedTime: item.created_at,
+      section: item.category,
+      tags: [
+        ...(item.colors || []),
+        ...(item.techniques || []),
+        ...(item.occasions || []),
+        ...(item.styles || [])
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: fullTitle,
+      description: fullDescription,
       images: [item.image_url],
+    },
+    alternates: {
+      canonical: `https://nailartai.app/${resolvedParams.category}/${resolvedParams.slug}`,
     },
   };
 }
@@ -106,20 +151,132 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
   const extractedTags = extractTagsFromEditorial(editorial);
 
   return (
-    <div className="min-h-screen bg-black">
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        {/* Back button */}
-        <div className="mb-6">
-          <Link 
-            href="/nail-art-gallery" 
-            className="inline-flex items-center text-purple-400 hover:text-purple-300 transition-colors"
-          >
-            <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
-            Back to Gallery
-          </Link>
-        </div>
+    <>
+      {/* Comprehensive Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "CreativeWork",
+            "@id": `https://nailartai.app/${resolvedParams.category}/${resolvedParams.slug}`,
+            "name": item.design_name || 'Generated Nail Art',
+            "description": item.prompt || 'AI-generated nail art design',
+            "image": item.image_url,
+            "url": `https://nailartai.app/${resolvedParams.category}/${resolvedParams.slug}`,
+            "dateCreated": item.created_at,
+            "dateModified": item.created_at,
+            "author": {
+              "@type": "Organization",
+              "name": "AI Nail Art Studio",
+              "url": "https://nailartai.app"
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "AI Nail Art Studio",
+              "url": "https://nailartai.app",
+              "logo": {
+                "@type": "ImageObject",
+                "url": "https://nailartai.app/logo.png"
+              }
+            },
+            "mainEntityOfPage": {
+              "@type": "WebPage",
+              "@id": `https://nailartai.app/${resolvedParams.category}/${resolvedParams.slug}`
+            },
+            "breadcrumb": {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "Home",
+                  "item": "https://nailartai.app"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Gallery",
+                  "item": "https://nailartai.app/nail-art-gallery"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": item.category || "Design",
+                  "item": `https://nailartai.app/nail-art-gallery/category/${encodeURIComponent(item.category || '')}`
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 4,
+                  "name": item.design_name || "Design",
+                  "item": `https://nailartai.app/${resolvedParams.category}/${resolvedParams.slug}`
+                }
+              ]
+            },
+            "keywords": [
+              ...(item.colors || []),
+              ...(item.techniques || []),
+              ...(item.occasions || []),
+              ...(item.styles || []),
+              "nail art",
+              "AI nail art",
+              "manicure",
+              "nail design"
+            ],
+            "genre": item.category,
+            "about": [
+              ...(item.colors || []),
+              ...(item.techniques || []),
+              ...(item.occasions || [])
+            ]
+          })
+        }}
+      />
+      
+      <div className="min-h-screen bg-black">
+        <div className="max-w-7xl mx-auto px-4 py-8">
+          {/* Breadcrumb Navigation */}
+          <nav className="mb-6" aria-label="Breadcrumb">
+            <ol className="flex items-center space-x-2 text-sm text-gray-400">
+              <li>
+                <Link href="/" className="hover:text-purple-400 transition-colors">
+                  Home
+                </Link>
+              </li>
+              <li className="text-gray-500">/</li>
+              <li>
+                <Link href="/nail-art-gallery" className="hover:text-purple-400 transition-colors">
+                  Gallery
+                </Link>
+              </li>
+              <li className="text-gray-500">/</li>
+              <li>
+                <Link 
+                  href={`/nail-art-gallery/category/${encodeURIComponent(item.category || '')}`}
+                  className="hover:text-purple-400 transition-colors"
+                >
+                  {item.category}
+                </Link>
+              </li>
+              <li className="text-gray-500">/</li>
+              <li className="text-white font-medium">
+                {item.design_name || 'Design'}
+              </li>
+            </ol>
+          </nav>
+          
+          {/* Back button */}
+          <div className="mb-6">
+            <Link 
+              href="/nail-art-gallery" 
+              className="inline-flex items-center text-purple-400 hover:text-purple-300 transition-colors"
+            >
+              <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+              Back to Gallery
+            </Link>
+          </div>
 
         <div className="bg-gray-800 rounded-xl shadow-2xl overflow-hidden">
           <div className="flex flex-col lg:flex-row">
@@ -773,5 +930,6 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
         </div>
       </div>
     </div>
+    </>
   );
 }
