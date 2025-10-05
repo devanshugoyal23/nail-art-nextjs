@@ -4,6 +4,10 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { getAvailableCategories, getCategoriesByTier } from '@/lib/nailArtGenerator';
+import { useAutoSEO } from '@/lib/useAutoSEO';
+import { useGlobalStop } from '@/lib/globalStopService';
+import GlobalStopButton from '@/components/GlobalStopButton';
+import { EmergencyStopButton } from '@/components/EmergencyStopButton';
 
 interface GenerationResult {
   id: string;
@@ -40,6 +44,16 @@ export default function GenerateGalleryPage() {
   const [tier2Categories, setTier2Categories] = useState<string[]>([]);
   const [tier3Categories, setTier3Categories] = useState<string[]>([]);
   const [tier4Categories, setTier4Categories] = useState<string[]>([]);
+  
+  // Auto SEO hook
+  const { generateSEO, generateBulkSEO } = useAutoSEO({
+    autoGenerate: true,
+    notifySearchEngines: true,
+    updateSitemap: true
+  });
+  
+  // Global stop hook
+  const { isStopped, hasActiveStopSignal } = useGlobalStop();
   
   // New state for tag-aware generation
   const [activeTab, setActiveTab] = useState<'generate' | 'tags' | 'impact' | 'guide'>('generate');
@@ -120,6 +134,12 @@ export default function GenerateGalleryPage() {
       return;
     }
 
+    // Check for global stop signal
+    if (hasActiveStopSignal) {
+      alert('🚨 Generation stopped by global stop signal');
+      return;
+    }
+
     setLoading(true);
     try {
       const response = await fetch('/api/auto-generate-content', {
@@ -137,6 +157,18 @@ export default function GenerateGalleryPage() {
       if (data.success) {
         setResults(data.results);
         await loadUnderPopulatedTags(); // Refresh tag data
+        
+        // Auto-generate SEO for new content
+        try {
+          const seoResults = await generateBulkSEO(data.results, 'gallery');
+          if (seoResults.success) {
+            console.log('SEO generated successfully for', data.results.length, 'tag-specific items');
+          } else {
+            console.warn('SEO generation failed:', seoResults.error);
+          }
+        } catch (seoError) {
+          console.error('Error generating SEO:', seoError);
+        }
       } else {
         console.error('Tag generation failed:', data.error);
         alert('Tag generation failed: ' + data.error);
@@ -150,11 +182,17 @@ export default function GenerateGalleryPage() {
   };
 
   const generateForTagPages = async () => {
+    // Check for global stop signal
+    if (hasActiveStopSignal) {
+      alert('🚨 Generation stopped by global stop signal');
+      return;
+    }
+    
     setLoading(true);
     setCanStop(true);
     setGenerationProgress({
       current: 0,
-      total: 50, // FIXED: Limited to 50 tag pages to prevent infinite loops
+      total: 100, // Increased limit to allow more tag pages
       currentPage: 'Starting generation...',
       isGenerating: true
     });
@@ -205,6 +243,12 @@ export default function GenerateGalleryPage() {
   };
 
   const generateNailArt = async () => {
+    // Check for global stop signal
+    if (hasActiveStopSignal) {
+      alert('🚨 Generation stopped by global stop signal');
+      return;
+    }
+    
     setLoading(true);
     setCanStop(true);
     setGenerationProgress({
@@ -237,6 +281,18 @@ export default function GenerateGalleryPage() {
           current: count,
           currentPage: 'Generation completed!'
         }));
+        
+        // Auto-generate SEO for new content
+        try {
+          const seoResults = await generateBulkSEO(data.results, 'gallery');
+          if (seoResults.success) {
+            console.log('SEO generated successfully for', data.results.length, 'items');
+          } else {
+            console.warn('SEO generation failed:', seoResults.error);
+          }
+        } catch (seoError) {
+          console.error('Error generating SEO:', seoError);
+        }
       } else {
         console.error('Generation failed:', data.error);
         alert('Generation failed: ' + data.error);
@@ -258,6 +314,12 @@ export default function GenerateGalleryPage() {
 
   return (
     <div className="min-h-screen bg-black text-white p-8">
+        {/* Global Stop Button */}
+      <GlobalStopButton position="fixed" showStatus={true} />
+      
+      {/* Emergency Stop Button */}
+      <EmergencyStopButton position="fixed" showStatus={true} />
+      
       <div className="max-w-6xl mx-auto">
         <div className="flex justify-between items-center mb-8">
           <div>
@@ -370,7 +432,7 @@ export default function GenerateGalleryPage() {
                     value={count}
                     onChange={(e) => setCount(parseInt(e.target.value) || 1)}
                     min="1"
-                    max="10"
+                    max="50"
                     className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white"
                   />
                 </div>
@@ -632,7 +694,7 @@ export default function GenerateGalleryPage() {
                     value={tagGenerationCount}
                     onChange={(e) => setTagGenerationCount(parseInt(e.target.value) || 1)}
                     min="1"
-                    max="10"
+                    max="50"
                     className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white"
                   />
                 </div>

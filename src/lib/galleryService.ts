@@ -152,28 +152,60 @@ export async function getAllCategories(): Promise<string[]> {
 }
 
 /**
+ * Get total count of all gallery items
+ */
+export async function getTotalGalleryItemsCount(): Promise<number> {
+  try {
+    const { count, error } = await supabase
+      .from('gallery_items')
+      .select('*', { count: 'exact', head: true })
+      
+    if (error) {
+      console.error('Error getting total gallery items count:', error)
+      return 0
+    }
+    
+    return count || 0
+  } catch (error) {
+    console.error('Error getting total gallery items count:', error)
+    return 0
+  }
+}
+
+/**
  * Get categories that meet minimum content requirements
  */
 export async function getCategoriesWithMinimumContent(minItems: number = 3): Promise<string[]> {
   try {
-    const { data, error } = await supabase
+    // Get all unique categories first
+    const { data: categoriesData, error: categoriesError } = await supabase
       .from('gallery_items')
       .select('category')
       .not('category', 'is', null);
       
-    if (error) {
-      console.error('Error fetching categories for content check:', error);
+    if (categoriesError) {
+      console.error('Error fetching categories for content check:', categoriesError);
       return [];
     }
     
-    const categoryCounts = data.reduce((acc, item) => {
-      acc[item.category] = (acc[item.category] || 0) + 1;
-      return acc;
-    }, {} as Record<string, number>);
+    // Get unique categories
+    const uniqueCategories = [...new Set(categoriesData?.map(item => item.category).filter(Boolean) || [])];
     
-    return Object.entries(categoryCounts)
-      .filter(([, count]) => count >= minItems)
-      .map(([category]) => category);
+    // Get count for each category using count queries
+    const categoriesWithMinContent: string[] = [];
+    
+    for (const category of uniqueCategories) {
+      const { count, error: countError } = await supabase
+        .from('gallery_items')
+        .select('*', { count: 'exact', head: true })
+        .eq('category', category);
+        
+      if (!countError && (count || 0) >= minItems) {
+        categoriesWithMinContent.push(category);
+      }
+    }
+    
+    return categoriesWithMinContent;
   } catch (error) {
     console.error('Error getting categories with minimum content:', error);
     return [];
@@ -185,24 +217,35 @@ export async function getCategoriesWithMinimumContent(minItems: number = 3): Pro
  */
 export async function getUnderPopulatedCategories(minItems: number = 3): Promise<string[]> {
   try {
-    const { data, error } = await supabase
+    // Get all unique categories first
+    const { data: categoriesData, error: categoriesError } = await supabase
       .from('gallery_items')
       .select('category')
       .not('category', 'is', null);
       
-    if (error) {
-      console.error('Error fetching under-populated categories:', error);
+    if (categoriesError) {
+      console.error('Error fetching under-populated categories:', categoriesError);
       return [];
     }
     
-    const categoryCounts = data.reduce((acc, item) => {
-      acc[item.category] = (acc[item.category] || 0) + 1;
-      return acc;
-    }, {} as Record<string, number>);
+    // Get unique categories
+    const uniqueCategories = [...new Set(categoriesData?.map(item => item.category).filter(Boolean) || [])];
     
-    return Object.entries(categoryCounts)
-      .filter(([, count]) => count < minItems)
-      .map(([category]) => category);
+    // Get count for each category using count queries
+    const underPopulatedCategories: string[] = [];
+    
+    for (const category of uniqueCategories) {
+      const { count, error: countError } = await supabase
+        .from('gallery_items')
+        .select('*', { count: 'exact', head: true })
+        .eq('category', category);
+        
+      if (!countError && (count || 0) < minItems) {
+        underPopulatedCategories.push(category);
+      }
+    }
+    
+    return underPopulatedCategories;
   } catch (error) {
     console.error('Error getting under-populated categories:', error);
     return [];

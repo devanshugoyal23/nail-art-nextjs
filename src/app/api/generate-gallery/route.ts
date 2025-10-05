@@ -2,12 +2,26 @@ import { NextRequest, NextResponse } from 'next/server';
 import { 
   generateMultipleNailArt, 
   generateCategoryNailArt,
+  generateFromTierCategories,
   getAvailableCategories,
   getCategoriesByTier
 } from '@/lib/nailArtGenerator';
 
 export async function POST(request: NextRequest) {
   try {
+    // Check for stop signal before starting
+    const stopResponse = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/global-stop`);
+    if (stopResponse.ok) {
+      const stopData = await stopResponse.json();
+      if (stopData.success && stopData.data.activeSignals > 0) {
+        return NextResponse.json({
+          success: false,
+          error: 'Generation stopped by global stop signal',
+          stopped: true
+        });
+      }
+    }
+
     const body = await request.json();
     const { 
       category, 
@@ -20,7 +34,7 @@ export async function POST(request: NextRequest) {
     let results;
 
     if (tier) {
-      // Generate from specific tier
+      // Generate from specific tier - distribute across multiple random categories
       const categories = getCategoriesByTier(tier);
       if (categories.length === 0) {
         return NextResponse.json(
@@ -29,8 +43,8 @@ export async function POST(request: NextRequest) {
         );
       }
       
-      const randomCategory = categories[Math.floor(Math.random() * categories.length)];
-      results = await generateCategoryNailArt(randomCategory, count);
+      // Generate items from multiple random categories in the tier
+      results = await generateFromTierCategories(categories, count);
     } else if (category) {
       // Generate for specific category
       results = await generateCategoryNailArt(category, count);

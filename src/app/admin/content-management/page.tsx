@@ -2,6 +2,9 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useGlobalStop } from '@/lib/globalStopService';
+import GlobalStopButton from '@/components/GlobalStopButton';
+import { EmergencyStopButton } from '@/components/EmergencyStopButton';
 
 interface ContentGap {
   category: string;
@@ -42,13 +45,23 @@ interface TagInfo {
   priority: 'high' | 'medium' | 'low';
 }
 
+interface EditorialStats {
+  totalItems: number;
+  itemsWithEditorial: number;
+  itemsNeedingEditorial: number;
+  percentageComplete: number;
+}
+
 export default function ContentManagementPage() {
   const [loading, setLoading] = useState(false);
   const [contentGaps, setContentGaps] = useState<ContentGap[]>([]);
   const [lastResult, setLastResult] = useState<GenerationResult | null>(null);
+  const [editorialStats, setEditorialStats] = useState<EditorialStats | null>(null);
+  const [editorialLoading, setEditorialLoading] = useState(false);
+  const [editorialStopped, setEditorialStopped] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('');
   const [generateCount, setGenerateCount] = useState(3);
-  const [activeTab, setActiveTab] = useState<'overview' | 'categories' | 'analytics' | 'tags' | 'guide'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'categories' | 'analytics' | 'tags' | 'guide' | 'editorial'>('overview');
   const [siteStats, setSiteStats] = useState<SiteStats | null>(null);
   const [categoryDetails, setCategoryDetails] = useState<CategoryDetail[]>([]);
   const [selectedCategoryDetail, setSelectedCategoryDetail] = useState<CategoryDetail | null>(null);
@@ -56,6 +69,31 @@ export default function ContentManagementPage() {
   const [underPopulatedTags, setUnderPopulatedTags] = useState<TagInfo[]>([]);
   const [selectedTag, setSelectedTag] = useState('');
   const [tagGenerationCount, setTagGenerationCount] = useState(3);
+  
+  // Global stop hook
+  const { isStopped, hasActiveStopSignal } = useGlobalStop();
+  
+  // New state for distribute randomly preview and control
+  const [showDistributePreview, setShowDistributePreview] = useState(false);
+  const [distributePreview, setDistributePreview] = useState<{
+    totalPages: number;
+    categories: string[];
+    estimatedTime: string;
+    itemsPerCategory: Record<string, number>;
+  } | null>(null);
+  const [isDistributing, setIsDistributing] = useState(false);
+  const [canStopDistribute, setCanStopDistribute] = useState(false);
+  const [distributeProgress, setDistributeProgress] = useState<{
+    current: number;
+    total: number;
+    currentCategory: string;
+    isGenerating: boolean;
+  }>({
+    current: 0,
+    total: 0,
+    currentCategory: '',
+    isGenerating: false
+  });
 
   // Load content gaps on component mount
   useEffect(() => {
@@ -63,7 +101,80 @@ export default function ContentManagementPage() {
     loadSiteStats();
     loadCategoryDetails();
     loadUnderPopulatedTags();
+    loadEditorialStats();
   }, []);
+
+  const loadEditorialStats = async () => {
+    try {
+      const response = await fetch('/api/generate-missing-editorial');
+      if (response.ok) {
+        const data = await response.json();
+        setEditorialStats(data.data);
+        // Reset stopped state when refreshing stats
+        setEditorialStopped(false);
+      }
+    } catch (error) {
+      console.error('Error loading editorial stats:', error);
+    }
+  };
+
+  const generateMissingEditorial = async () => {
+    setEditorialLoading(true);
+    setEditorialStopped(false);
+    try {
+      const response = await fetch('/api/generate-missing-editorial', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          batchSize: 3, 
+          maxItems: 20, 
+          delayMs: 2000 
+        })
+      });
+      
+      if (response.ok) {
+        const data = await response.json();
+        if (data.success) {
+          alert(`Editorial generation completed! Generated ${data.data.successful} editorials, ${data.data.failed} failed.`);
+        } else if (data.data && data.data.stopped) {
+          alert(`Editorial generation stopped. Generated ${data.data.successful} editorials, ${data.data.failed} failed.`);
+          setEditorialStopped(true);
+        } else {
+          alert(`Editorial generation failed: ${data.error}`);
+        }
+        loadEditorialStats(); // Refresh stats
+      } else {
+        const errorData = await response.json();
+        alert(`Failed to generate editorial content: ${errorData.error}`);
+      }
+    } catch (error) {
+      console.error('Error generating editorial content:', error);
+      alert('Error generating editorial content');
+    } finally {
+      setEditorialLoading(false);
+    }
+  };
+
+  const stopEditorialGeneration = async () => {
+    try {
+      const response = await fetch('/api/global-stop', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'stop' })
+      });
+      
+      if (response.ok) {
+        setEditorialStopped(true);
+        setEditorialLoading(false);
+        alert('Editorial generation stopped successfully');
+      } else {
+        alert('Failed to stop editorial generation');
+      }
+    } catch (error) {
+      console.error('Error stopping editorial generation:', error);
+      alert('Error stopping editorial generation');
+    }
+  };
 
   const loadUnderPopulatedTags = async () => {
     try {
@@ -139,15 +250,20 @@ export default function ContentManagementPage() {
 
   const loadSiteStats = async () => {
     try {
-      const response = await fetch('/api/auto-generate-content', {
+      // Add cache-busting parameter to force fresh data
+      const response = await fetch(`/api/auto-generate-content?t=${Date.now()}`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'Cache-Control': 'no-cache'
+        },
         body: JSON.stringify({ action: 'get-site-stats' })
       });
       
       const data = await response.json();
       if (data.success) {
         setSiteStats(data.data);
+        console.log('Site stats loaded:', data.data);
       }
     } catch (error) {
       console.error('Error loading site stats:', error);
@@ -212,8 +328,40 @@ export default function ContentManagementPage() {
     }
   };
 
+  const previewDistributeContent = async () => {
+    try {
+      const response = await fetch('/api/auto-generate-content', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'preview-distribute-evenly' })
+      });
+      
+      const data = await response.json();
+      if (data.success) {
+        setDistributePreview(data.data);
+        setShowDistributePreview(true);
+      }
+    } catch (error) {
+      console.error('Error previewing distribute content:', error);
+    }
+  };
+
   const distributeContentEvenly = async () => {
-    setLoading(true);
+    // Check for global stop signal
+    if (hasActiveStopSignal) {
+      alert('🚨 Distribution stopped by global stop signal');
+      return;
+    }
+    
+    setIsDistributing(true);
+    setCanStopDistribute(true);
+    setDistributeProgress({
+      current: 0,
+      total: distributePreview?.totalPages || 0,
+      currentCategory: 'Starting distribution...',
+      isGenerating: true
+    });
+    
     try {
       const response = await fetch('/api/auto-generate-content', {
         method: 'POST',
@@ -225,12 +373,33 @@ export default function ContentManagementPage() {
       if (data.success) {
         setLastResult(data.data);
         await analyzeContentGaps(); // Refresh the gaps
+        setShowDistributePreview(false);
+        setDistributePreview(null);
       }
     } catch (error) {
       console.error('Error distributing content evenly:', error);
     } finally {
-      setLoading(false);
+      setIsDistributing(false);
+      setCanStopDistribute(false);
+      setDistributeProgress({
+        current: 0,
+        total: 0,
+        currentCategory: '',
+        isGenerating: false
+      });
     }
+  };
+
+  const stopDistributeContent = () => {
+    setIsDistributing(false);
+    setCanStopDistribute(false);
+    setDistributeProgress({
+      current: 0,
+      total: 0,
+      currentCategory: 'Distribution stopped',
+      isGenerating: false
+    });
+    alert('Distribution stopped by user');
   };
 
   const generateRelatedContent = async () => {
@@ -346,6 +515,12 @@ export default function ContentManagementPage() {
 
   return (
     <div className="min-h-screen bg-black text-white p-8">
+      {/* Global Stop Button */}
+      <GlobalStopButton position="fixed" showStatus={true} />
+      
+      {/* Emergency Stop Button */}
+      <EmergencyStopButton position="fixed" showStatus={true} />
+      
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="flex justify-between items-center mb-8">
@@ -447,7 +622,128 @@ export default function ContentManagementPage() {
           >
             📖 Guide
           </button>
+          <button
+            onClick={() => setActiveTab('editorial')}
+            className={`px-6 py-3 rounded-md transition-colors ${
+              activeTab === 'editorial' 
+                ? 'bg-blue-600 text-white' 
+                : 'text-gray-400 hover:text-white'
+            }`}
+          >
+            📝 Editorial
+          </button>
         </div>
+
+        {/* Distribute Progress Display */}
+        {distributeProgress.isGenerating && (
+          <div className="bg-gray-800 p-6 rounded-lg mb-8">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-semibold text-green-400">🔄 Distribution Progress</h2>
+              <div className="flex gap-2">
+                <span className="text-sm text-gray-400">
+                  {distributeProgress.current} / {distributeProgress.total} categories
+                </span>
+                {canStopDistribute && (
+                  <button
+                    onClick={stopDistributeContent}
+                    className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-sm"
+                  >
+                    ⏹️ Stop
+                  </button>
+                )}
+              </div>
+            </div>
+            
+            <div className="mb-4">
+              <div className="flex justify-between text-sm text-gray-400 mb-2">
+                <span>Progress</span>
+                <span>{Math.round((distributeProgress.current / distributeProgress.total) * 100)}%</span>
+              </div>
+              <div className="w-full bg-gray-700 rounded-full h-2">
+                <div 
+                  className="bg-green-600 h-2 rounded-full transition-all duration-300"
+                  style={{ width: `${(distributeProgress.current / distributeProgress.total) * 100}%` }}
+                ></div>
+              </div>
+            </div>
+            
+            <div className="text-sm text-gray-300">
+              <strong>Current:</strong> {distributeProgress.currentCategory}
+            </div>
+          </div>
+        )}
+
+        {/* Distribute Preview Modal */}
+        {showDistributePreview && distributePreview && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div className="bg-gray-800 rounded-lg p-6 max-w-4xl w-full mx-4 max-h-[80vh] overflow-y-auto">
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-2xl font-bold text-green-400">🔍 Distribute Content Preview</h3>
+                <button
+                  onClick={() => setShowDistributePreview(false)}
+                  className="text-gray-400 hover:text-white"
+                >
+                  ✕
+                </button>
+              </div>
+              
+              <div className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="bg-gray-700 p-4 rounded-lg">
+                    <h4 className="text-lg font-semibold text-blue-400 mb-2">Total Pages</h4>
+                    <p className="text-3xl font-bold text-white">{distributePreview.totalPages}</p>
+                    <p className="text-sm text-gray-400">Categories to be updated</p>
+                  </div>
+                  
+                  <div className="bg-gray-700 p-4 rounded-lg">
+                    <h4 className="text-lg font-semibold text-green-400 mb-2">Estimated Time</h4>
+                    <p className="text-2xl font-bold text-white">{distributePreview.estimatedTime}</p>
+                    <p className="text-sm text-gray-400">Expected duration</p>
+                  </div>
+                  
+                  <div className="bg-gray-700 p-4 rounded-lg">
+                    <h4 className="text-lg font-semibold text-purple-400 mb-2">Total Items</h4>
+                    <p className="text-3xl font-bold text-white">
+                      {Object.values(distributePreview.itemsPerCategory).reduce((sum, count) => sum + count, 0)}
+                    </p>
+                    <p className="text-sm text-gray-400">Items to be generated</p>
+                  </div>
+                </div>
+                
+                <div>
+                  <h4 className="text-lg font-semibold mb-3 text-yellow-400">Categories to be Updated</h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-60 overflow-y-auto">
+                    {distributePreview.categories.map((category, index) => (
+                      <div key={index} className="bg-gray-700 p-3 rounded-lg">
+                        <div className="flex justify-between items-center">
+                          <span className="font-medium">{category}</span>
+                          <span className="text-green-400 font-bold">
+                            +{distributePreview.itemsPerCategory[category] || 0} items
+                          </span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                
+                <div className="flex gap-4">
+                  <button
+                    onClick={distributeContentEvenly}
+                    className="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg transition-colors"
+                  >
+                    🚀 Start Distribution
+                  </button>
+                  <button
+                    onClick={() => setShowDistributePreview(false)}
+                    className="bg-gray-600 hover:bg-gray-700 text-white font-bold py-3 px-6 rounded-lg transition-colors"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Overview Tab */}
         {activeTab === 'overview' && (
@@ -491,13 +787,32 @@ export default function ContentManagementPage() {
                   {loading ? 'Processing...' : '🔵 Fill Content Gaps'}
                 </button>
                 
-                <button
-                  onClick={distributeContentEvenly}
-                  disabled={loading}
-                  className="bg-green-600 hover:bg-green-700 disabled:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg transition-colors"
-                >
-                  {loading ? 'Processing...' : '🟢 Distribute Evenly'}
-                </button>
+                <div className="flex gap-2">
+                  <button
+                    onClick={previewDistributeContent}
+                    disabled={loading || isDistributing}
+                    className="bg-green-600 hover:bg-green-700 disabled:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg transition-colors"
+                  >
+                    🔍 Preview Distribute
+                  </button>
+                  
+                  <button
+                    onClick={distributeContentEvenly}
+                    disabled={loading || isDistributing || !distributePreview}
+                    className="bg-green-600 hover:bg-green-700 disabled:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg transition-colors"
+                  >
+                    {isDistributing ? 'Distributing...' : '🟢 Distribute Evenly'}
+                  </button>
+                  
+                  {canStopDistribute && (
+                    <button
+                      onClick={stopDistributeContent}
+                      className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition-colors"
+                    >
+                      ⏹️ Stop
+                    </button>
+                  )}
+                </div>
                 
                 <button
                   onClick={autoGenerateHighPriority}
@@ -1081,6 +1396,136 @@ export default function ContentManagementPage() {
                       <p className="text-sm text-gray-300">If some categories have many items while others are empty, use &quot;Distribute Evenly&quot; to balance content.</p>
                     </div>
                   </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Editorial Tab */}
+        {activeTab === 'editorial' && (
+          <div className="space-y-6">
+            <div className="bg-gray-800 rounded-lg p-6">
+              <h2 className="text-2xl font-semibold mb-4">📝 Editorial Content Management</h2>
+              <p className="text-gray-300 mb-6">
+                Generate editorial content for your nail art items. Editorial content includes detailed descriptions, 
+                tutorials, and SEO-optimized text that helps with search rankings and user engagement.
+              </p>
+
+              {/* Editorial Stats */}
+              {editorialStats && (
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                  <div className="bg-gray-700 rounded-lg p-4">
+                    <div className="text-2xl font-bold text-blue-400">{editorialStats.totalItems}</div>
+                    <div className="text-sm text-gray-300">Total Items</div>
+                  </div>
+                  <div className="bg-gray-700 rounded-lg p-4">
+                    <div className="text-2xl font-bold text-green-400">{editorialStats.itemsWithEditorial}</div>
+                    <div className="text-sm text-gray-300">With Editorial</div>
+                  </div>
+                  <div className="bg-gray-700 rounded-lg p-4">
+                    <div className="text-2xl font-bold text-yellow-400">{editorialStats.itemsNeedingEditorial}</div>
+                    <div className="text-sm text-gray-300">Need Editorial</div>
+                  </div>
+                  <div className="bg-gray-700 rounded-lg p-4">
+                    <div className="text-2xl font-bold text-purple-400">{editorialStats.percentageComplete}%</div>
+                    <div className="text-sm text-gray-300">Complete</div>
+                  </div>
+                </div>
+              )}
+
+              {/* Progress Bar */}
+              {editorialStats && (
+                <div className="mb-6">
+                  <div className="flex justify-between text-sm text-gray-300 mb-2">
+                    <span>Editorial Content Progress</span>
+                    <span>{editorialStats.percentageComplete}%</span>
+                  </div>
+                  <div className="w-full bg-gray-700 rounded-full h-3">
+                    <div 
+                      className="bg-gradient-to-r from-blue-500 to-purple-500 h-3 rounded-full transition-all duration-500"
+                      style={{ width: `${editorialStats.percentageComplete}%` }}
+                    ></div>
+                  </div>
+                </div>
+              )}
+
+              {/* Action Buttons */}
+              <div className="flex flex-wrap gap-4">
+                {!editorialLoading ? (
+                  <button
+                    onClick={generateMissingEditorial}
+                    disabled={!editorialStats || editorialStats.itemsNeedingEditorial === 0}
+                    className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white px-6 py-3 rounded-lg font-semibold transition-colors"
+                  >
+                    📝 Generate Missing Editorial
+                  </button>
+                ) : (
+                  <button
+                    onClick={stopEditorialGeneration}
+                    className="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors"
+                  >
+                    🛑 Stop Generation
+                  </button>
+                )}
+                
+                <button
+                  onClick={loadEditorialStats}
+                  disabled={editorialLoading}
+                  className="bg-gray-600 hover:bg-gray-700 disabled:bg-gray-500 disabled:cursor-not-allowed text-white px-6 py-3 rounded-lg font-semibold transition-colors"
+                >
+                  🔄 Refresh Stats
+                </button>
+              </div>
+
+              {/* Status Messages */}
+              {editorialLoading && (
+                <div className="mt-4 p-4 bg-blue-900/20 border border-blue-700 rounded-lg">
+                  <div className="flex items-center">
+                    <span className="text-blue-400 text-xl mr-2">🔄</span>
+                    <span className="text-blue-300">Generating editorial content... Click "Stop Generation" to halt the process.</span>
+                  </div>
+                </div>
+              )}
+
+              {editorialStopped && (
+                <div className="mt-4 p-4 bg-red-900/20 border border-red-700 rounded-lg">
+                  <div className="flex items-center">
+                    <span className="text-red-400 text-xl mr-2">🛑</span>
+                    <span className="text-red-300">Editorial generation has been stopped.</span>
+                  </div>
+                </div>
+              )}
+
+              {!editorialLoading && !editorialStopped && editorialStats && editorialStats.itemsNeedingEditorial === 0 && (
+                <div className="mt-4 p-4 bg-green-900/20 border border-green-700 rounded-lg">
+                  <div className="flex items-center">
+                    <span className="text-green-400 text-xl mr-2">✅</span>
+                    <span className="text-green-300">All items have editorial content!</span>
+                  </div>
+                </div>
+              )}
+
+              {!editorialLoading && !editorialStopped && editorialStats && editorialStats.itemsNeedingEditorial > 0 && (
+                <div className="mt-4 p-4 bg-yellow-900/20 border border-yellow-700 rounded-lg">
+                  <div className="flex items-center">
+                    <span className="text-yellow-400 text-xl mr-2">⚠️</span>
+                    <span className="text-yellow-300">
+                      {editorialStats.itemsNeedingEditorial} items need editorial content. 
+                      Click &quot;Generate Missing Editorial&quot; to create content for them.
+                    </span>
+                  </div>
+                </div>
+              )}
+
+              {/* Information Panel */}
+              <div className="mt-6 bg-gray-700 rounded-lg p-4">
+                <h3 className="text-lg font-semibold mb-3 text-blue-400">ℹ️ About Editorial Content</h3>
+                <div className="space-y-2 text-sm text-gray-300">
+                  <p>• <strong>SEO Benefits:</strong> Editorial content helps improve search rankings and user engagement</p>
+                  <p>• <strong>Content Quality:</strong> Each editorial includes tutorials, tips, and detailed descriptions</p>
+                  <p>• <strong>Batch Processing:</strong> Content is generated in small batches to avoid overwhelming the AI service</p>
+                  <p>• <strong>Automatic Generation:</strong> New nail art items will automatically get editorial content in the future</p>
                 </div>
               </div>
             </div>

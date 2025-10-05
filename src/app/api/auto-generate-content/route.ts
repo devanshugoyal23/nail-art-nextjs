@@ -4,6 +4,19 @@ import { consolidateSimilarTags } from '@/lib/tagService';
 
 export async function POST(request: NextRequest) {
   try {
+    // Check for stop signal before starting
+    const stopResponse = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/global-stop`);
+    if (stopResponse.ok) {
+      const stopData = await stopResponse.json();
+      if (stopData.success && stopData.data.activeSignals > 0) {
+        return NextResponse.json({
+          success: false,
+          error: 'Content generation stopped by global stop signal',
+          stopped: true
+        });
+      }
+    }
+
     const { action, category, count, customPrompt, tag } = await request.json();
     
     switch (action) {
@@ -13,6 +26,14 @@ export async function POST(request: NextRequest) {
           success: true,
           message: `Generated ${fillResult.generated} items across ${fillResult.categories.length} categories`,
           data: fillResult
+        });
+        
+      case 'preview-distribute-evenly':
+        const previewResult = await contentGenerationService.previewDistributeContent();
+        return NextResponse.json({
+          success: true,
+          message: `Preview generated for ${previewResult.totalPages} categories`,
+          data: previewResult
         });
         
       case 'distribute-evenly':
@@ -65,15 +86,29 @@ export async function POST(request: NextRequest) {
       case 'get-site-stats':
         const { getCategoriesWithMinimumContent, getUnderPopulatedCategories } = await import('@/lib/galleryService');
         const { getTagUsageStats } = await import('@/lib/tagService');
+        const { supabase } = await import('@/lib/supabase');
+        
+        // Get total count directly from database to avoid any limits
+        const { count: totalItems, error: countError } = await supabase
+          .from('gallery_items')
+          .select('*', { count: 'exact', head: true })
+          .limit(10000); // Explicitly set a high limit
+        
+        if (countError) {
+          console.error('Error getting total count:', countError);
+          return NextResponse.json(
+            { success: false, error: 'Failed to get total count' },
+            { status: 500 }
+          );
+        }
         
         const allCategories = await getCategoriesWithMinimumContent(0);
         const categoriesWithMinContent = await getCategoriesWithMinimumContent(3);
         const underPopulated = await getUnderPopulatedCategories(3);
         const tagStats = await getTagUsageStats();
         
-        const totalItems = tagStats.reduce((sum, stat) => sum + stat.count, 0);
         const totalPages = allCategories.length;
-        const averageItemsPerCategory = totalItems / allCategories.length || 0;
+        const averageItemsPerCategory = (totalItems || 0) / allCategories.length || 0;
         const emptyCategories = underPopulated.length;
         
         const siteStats = {
@@ -326,7 +361,7 @@ export async function POST(request: NextRequest) {
         
       default:
         return NextResponse.json(
-          { error: 'Invalid action. Supported actions: fill-gaps, distribute-evenly, generate-related, auto-generate-high-priority, analyze-gaps, consolidate-tags, get-site-stats, get-category-details, get-under-populated-tags, analyze-category-impact, generate-for-tag, generate-for-tag-pages' },
+          { error: 'Invalid action. Supported actions: fill-gaps, preview-distribute-evenly, distribute-evenly, generate-related, auto-generate-high-priority, analyze-gaps, consolidate-tags, get-site-stats, get-category-details, get-under-populated-tags, analyze-category-impact, generate-for-tag, generate-for-tag-pages' },
           { status: 400 }
         );
     }

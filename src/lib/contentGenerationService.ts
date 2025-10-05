@@ -3,6 +3,44 @@ import { getUnderPopulatedCategories, getCategoryItemCount } from './galleryServ
 import { CONTENT_THRESHOLDS } from './tagService';
 import { supabase } from './supabase';
 
+// Global stop flag for immediate halting
+let globalStopFlag = false;
+
+/**
+ * Set global stop flag
+ */
+export function setGlobalStopFlag(stop: boolean) {
+  globalStopFlag = stop;
+  console.log(`🚨 Global stop flag set to: ${stop}`);
+}
+
+/**
+ * Check global stop flag
+ */
+function isGloballyStopped(): boolean {
+  return globalStopFlag;
+}
+
+/**
+ * Check if there's an active stop signal
+ */
+async function checkStopSignal(): Promise<boolean> {
+  try {
+    const response = await fetch('/api/global-stop');
+    if (response.ok) {
+      const data = await response.json();
+      if (data.success && data.data.activeSignals > 0) {
+        console.log('🚨 STOP SIGNAL DETECTED - Halting generation immediately');
+        setGlobalStopFlag(true);
+        return true;
+      }
+    }
+  } catch (error) {
+    console.error('Error checking stop signal:', error);
+  }
+  return false;
+}
+
 export interface AutoGenerationOptions {
   targetCategory: string;
   minItems: number;
@@ -103,6 +141,79 @@ export class ContentGenerationService {
   }
   
   /**
+   * Preview content distribution without actually generating content
+   */
+  async previewDistributeContent(): Promise<{
+    totalPages: number;
+    categories: string[];
+    estimatedTime: string;
+    itemsPerCategory: Record<string, number>;
+  }> {
+    try {
+      console.log('Previewing content distribution...');
+      
+      // Get all categories and their current counts
+      const { data, error } = await supabase
+        .from('gallery_items')
+        .select('category')
+        .not('category', 'is', null);
+        
+      if (error) {
+        console.error('Error fetching categories for preview:', error);
+        return { totalPages: 0, categories: [], estimatedTime: '0 minutes', itemsPerCategory: {} };
+      }
+      
+      const categoryCounts = data.reduce((acc, item) => {
+        acc[item.category] = (acc[item.category] || 0) + 1;
+        return acc;
+      }, {} as Record<string, number>);
+      
+      // Find categories that need more content
+      const categoriesNeedingContent = Object.entries(categoryCounts)
+        .filter(([, count]) => count < CONTENT_THRESHOLDS.MIN_ITEMS_FOR_SEO_PAGE)
+        .map(([category]) => category);
+      
+      if (categoriesNeedingContent.length === 0) {
+        console.log('All categories have sufficient content');
+        return { totalPages: 0, categories: [], estimatedTime: '0 minutes', itemsPerCategory: {} };
+      }
+      
+      const itemsPerCategory: Record<string, number> = {};
+      let totalItems = 0;
+      
+      // Calculate how many items each category needs
+      for (const category of categoriesNeedingContent) {
+        const currentCount = categoryCounts[category];
+        const targetCount = CONTENT_THRESHOLDS.MIN_ITEMS_FOR_SEO_PAGE;
+        const neededCount = targetCount - currentCount;
+        
+        if (neededCount > 0) {
+          itemsPerCategory[category] = neededCount;
+          totalItems += neededCount;
+        }
+      }
+      
+      // Estimate time (roughly 30 seconds per item)
+      const estimatedMinutes = Math.ceil(totalItems * 0.5); // 30 seconds per item
+      const estimatedTime = estimatedMinutes < 60 
+        ? `${estimatedMinutes} minutes` 
+        : `${Math.floor(estimatedMinutes / 60)}h ${estimatedMinutes % 60}m`;
+      
+      console.log(`Preview: ${totalItems} items across ${categoriesNeedingContent.length} categories`);
+      
+      return {
+        totalPages: categoriesNeedingContent.length,
+        categories: categoriesNeedingContent,
+        estimatedTime,
+        itemsPerCategory
+      };
+    } catch (error) {
+      console.error('Error previewing content distribution:', error);
+      return { totalPages: 0, categories: [], estimatedTime: '0 minutes', itemsPerCategory: {} };
+    }
+  }
+
+  /**
    * Smart content distribution across categories
    */
   async distributeContentEvenly(): Promise<{ distributed: number; categories: string[] }> {
@@ -140,6 +251,18 @@ export class ContentGenerationService {
       
       // Generate content for each category that needs it
       for (const category of categoriesNeedingContent) {
+        // Check for stop signal before each category
+        if (isGloballyStopped()) {
+          console.log('🚨 Distribution stopped by global stop flag');
+          return { distributed: totalDistributed, categories: processedCategories };
+        }
+        
+        const isStopped = await checkStopSignal();
+        if (isStopped) {
+          console.log('🚨 Distribution stopped by global stop signal');
+          return { distributed: totalDistributed, categories: processedCategories };
+        }
+
         try {
           const currentCount = categoryCounts[category];
           const targetCount = CONTENT_THRESHOLDS.MIN_ITEMS_FOR_SEO_PAGE;
@@ -147,6 +270,13 @@ export class ContentGenerationService {
           
           if (neededCount > 0) {
             console.log(`Distributing ${neededCount} items to ${category}`);
+            
+            // Check stop signal again before calling generation
+            const isStoppedBeforeGeneration = await checkStopSignal();
+            if (isStoppedBeforeGeneration) {
+              console.log('🚨 Distribution stopped before generation');
+              return { distributed: totalDistributed, categories: processedCategories };
+            }
             
             const results = await generateCategoryNailArt(category, neededCount);
             
@@ -509,12 +639,24 @@ export async function generateForUnderPopulatedTagPages(): Promise<GenerationRes
     const allItems = await getGalleryItems();
     console.log(`Loaded ${allItems.length} total items`);
     
-    // FIXED: Process only the first 50 critical tag pages to prevent infinite loops
-    const limitedTagPages = criticalTagPages.slice(0, 50);
+    // Process all critical tag pages (removed limit)
+    const limitedTagPages = criticalTagPages;
     console.log(`Processing ${limitedTagPages.length} critical tag pages...`);
     
     // Check each critical tag page
     for (let i = 0; i < limitedTagPages.length; i++) {
+      // Check for stop signal before each tag page
+      if (isGloballyStopped()) {
+        console.log('🚨 Tag page generation stopped by global stop flag');
+        return { generated: totalGenerated, categories: generatedTags };
+      }
+      
+      const isStopped = await checkStopSignal();
+      if (isStopped) {
+        console.log('🚨 Tag page generation stopped by global stop signal');
+        return { generated: totalGenerated, categories: generatedTags };
+      }
+
       const tagPage = limitedTagPages[i];
       
       // FIXED: Add progress logging
@@ -524,9 +666,16 @@ export async function generateForUnderPopulatedTagPages(): Promise<GenerationRes
       
       // If this tag page has less than 3 items, generate content for it
       if (filteredItems.length < 3) {
-        const needed = Math.min(3 - filteredItems.length, 3); // FIXED: Cap at 3 items max per tag
+        const needed = 3 - filteredItems.length; // Removed cap to allow more items per tag
         
         console.log(`Generating ${needed} items for ${tagPage.name} (currently has ${filteredItems.length} items)`);
+        
+        // Check stop signal again before calling generation
+        const isStoppedBeforeGeneration = await checkStopSignal();
+        if (isStoppedBeforeGeneration) {
+          console.log('🚨 Tag page generation stopped before generation');
+          return { generated: totalGenerated, categories: generatedTags };
+        }
         
         try {
           const result = await generateCategoryNailArt(tagPage.name, needed);

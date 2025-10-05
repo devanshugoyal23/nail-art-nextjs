@@ -322,24 +322,35 @@ export const CONTENT_THRESHOLDS = {
  */
 export async function getCategoriesWithMinimumContent(minItems: number = CONTENT_THRESHOLDS.MIN_ITEMS_FOR_CATEGORY): Promise<string[]> {
   try {
-    const { data, error } = await supabase
+    // Get all unique categories first
+    const { data: categoriesData, error: categoriesError } = await supabase
       .from('gallery_items')
       .select('category')
       .not('category', 'is', null);
       
-    if (error) {
-      console.error('Error fetching categories for content check:', error);
+    if (categoriesError) {
+      console.error('Error fetching categories for content check:', categoriesError);
       return [];
     }
     
-    const categoryCounts = data.reduce((acc, item) => {
-      acc[item.category] = (acc[item.category] || 0) + 1;
-      return acc;
-    }, {} as Record<string, number>);
+    // Get unique categories
+    const uniqueCategories = [...new Set(categoriesData?.map(item => item.category).filter(Boolean) || [])];
     
-    return Object.entries(categoryCounts)
-      .filter(([, count]) => count >= minItems)
-      .map(([category]) => category);
+    // Get count for each category using count queries
+    const categoriesWithMinContent: string[] = [];
+    
+    for (const category of uniqueCategories) {
+      const { count, error: countError } = await supabase
+        .from('gallery_items')
+        .select('*', { count: 'exact', head: true })
+        .eq('category', category);
+        
+      if (!countError && (count || 0) >= minItems) {
+        categoriesWithMinContent.push(category);
+      }
+    }
+    
+    return categoriesWithMinContent;
   } catch (error) {
     console.error('Error getting categories with minimum content:', error);
     return [];
@@ -351,24 +362,35 @@ export async function getCategoriesWithMinimumContent(minItems: number = CONTENT
  */
 export async function getUnderPopulatedCategories(minItems: number = CONTENT_THRESHOLDS.MIN_ITEMS_FOR_CATEGORY): Promise<string[]> {
   try {
-    const { data, error } = await supabase
+    // Get all unique categories first
+    const { data: categoriesData, error: categoriesError } = await supabase
       .from('gallery_items')
       .select('category')
       .not('category', 'is', null);
       
-    if (error) {
-      console.error('Error fetching under-populated categories:', error);
+    if (categoriesError) {
+      console.error('Error fetching under-populated categories:', categoriesError);
       return [];
     }
     
-    const categoryCounts = data.reduce((acc, item) => {
-      acc[item.category] = (acc[item.category] || 0) + 1;
-      return acc;
-    }, {} as Record<string, number>);
+    // Get unique categories
+    const uniqueCategories = [...new Set(categoriesData?.map(item => item.category).filter(Boolean) || [])];
     
-    return Object.entries(categoryCounts)
-      .filter(([, count]) => count < minItems)
-      .map(([category]) => category);
+    // Get count for each category using count queries
+    const underPopulatedCategories: string[] = [];
+    
+    for (const category of uniqueCategories) {
+      const { count, error: countError } = await supabase
+        .from('gallery_items')
+        .select('*', { count: 'exact', head: true })
+        .eq('category', category);
+        
+      if (!countError && (count || 0) < minItems) {
+        underPopulatedCategories.push(category);
+      }
+    }
+    
+    return underPopulatedCategories;
   } catch (error) {
     console.error('Error getting under-populated categories:', error);
     return [];
@@ -488,20 +510,36 @@ export async function consolidateSimilarTags(): Promise<{ mergedTags: string[]; 
  */
 export async function getTagUsageStats(): Promise<{ category: string; count: number; needsContent: boolean }[]> {
   try {
-    const { data, error } = await supabase
+    // Get all unique categories first
+    const { data: categoriesData, error: categoriesError } = await supabase
       .from('gallery_items')
       .select('category')
       .not('category', 'is', null);
       
-    if (error) {
-      console.error('Error fetching tag usage stats:', error);
+    if (categoriesError) {
+      console.error('Error fetching categories for tag usage stats:', categoriesError);
       return [];
     }
     
-    const categoryCounts = data.reduce((acc, item) => {
-      acc[item.category] = (acc[item.category] || 0) + 1;
-      return acc;
-    }, {} as Record<string, number>);
+    // Get unique categories
+    const uniqueCategories = [...new Set(categoriesData?.map(item => item.category).filter(Boolean) || [])];
+    
+    // Get count for each category using count queries
+    const categoryCounts: Record<string, number> = {};
+    
+    for (const category of uniqueCategories) {
+      const { count, error: countError } = await supabase
+        .from('gallery_items')
+        .select('*', { count: 'exact', head: true })
+        .eq('category', category);
+        
+      if (countError) {
+        console.error(`Error getting count for category ${category}:`, countError);
+        categoryCounts[category] = 0;
+      } else {
+        categoryCounts[category] = count || 0;
+      }
+    }
     
     return Object.entries(categoryCounts)
       .map(([category, count]) => ({

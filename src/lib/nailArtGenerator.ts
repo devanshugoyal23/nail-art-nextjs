@@ -2,8 +2,46 @@ import { GoogleGenAI, Modality } from "@google/genai";
 import { supabase } from './supabase';
 import { getRandomPromptFromCategory, getUniquePromptsFromCategory, getAllCategories, PROMPT_CATEGORIES } from './promptGenerator';
 import { extractTagsFromGalleryItem } from './tagService';
+import { globalStopService } from './globalStopService';
 
 let ai: GoogleGenAI | null = null;
+
+/**
+ * Check if there's an active stop signal
+ */
+async function checkStopSignal(): Promise<boolean> {
+  try {
+    const response = await fetch('/api/global-stop');
+    if (response.ok) {
+      const data = await response.json();
+      if (data.success && data.data.activeSignals > 0) {
+        console.log('🚨 STOP SIGNAL DETECTED - Halting generation immediately');
+        return true;
+      }
+    }
+  } catch (error) {
+    console.error('Error checking stop signal:', error);
+  }
+  return false;
+}
+
+// Global stop flag for immediate halting
+let globalStopFlag = false;
+
+/**
+ * Set global stop flag
+ */
+export function setGlobalStopFlag(stop: boolean) {
+  globalStopFlag = stop;
+  console.log(`🚨 Global stop flag set to: ${stop}`);
+}
+
+/**
+ * Check global stop flag
+ */
+function isGloballyStopped(): boolean {
+  return globalStopFlag;
+}
 
 function getAI() {
   if (!ai) {
@@ -252,6 +290,19 @@ async function saveNailArtToDatabase(
  */
 export async function generateSingleNailArt(options: GenerationOptions): Promise<GeneratedNailArt | null> {
   try {
+    // Check for stop signal before starting generation
+    if (isGloballyStopped()) {
+      console.log('🚨 Single generation stopped by global stop flag');
+      return null;
+    }
+    
+    const isStopped = await checkStopSignal();
+    if (isStopped) {
+      console.log('🚨 Single generation stopped by global stop signal');
+      setGlobalStopFlag(true);
+      return null;
+    }
+
     let prompt: string;
     let category: string;
     let designName: string;
@@ -276,10 +327,24 @@ export async function generateSingleNailArt(options: GenerationOptions): Promise
       designName = options.designName || deriveDesignNameFromPrompt(prompt, category);
     }
 
+    // Check for stop signal before generating image
+    const isStoppedBeforeImage = await checkStopSignal();
+    if (isStoppedBeforeImage) {
+      console.log('🚨 Generation stopped before image generation');
+      return null;
+    }
+
     // Generate image
     const imageData = await generateNailArtImage(prompt);
     if (!imageData) {
       throw new Error('Failed to generate image');
+    }
+
+    // Check for stop signal before uploading
+    const isStoppedBeforeUpload = await checkStopSignal();
+    if (isStoppedBeforeUpload) {
+      console.log('🚨 Generation stopped before upload');
+      return null;
     }
 
     // Upload to Supabase
@@ -289,6 +354,13 @@ export async function generateSingleNailArt(options: GenerationOptions): Promise
     
     if (!imageUrl) {
       throw new Error('Failed to upload image');
+    }
+
+    // Check for stop signal before saving to database
+    const isStoppedBeforeSave = await checkStopSignal();
+    if (isStoppedBeforeSave) {
+      console.log('🚨 Generation stopped before database save');
+      return null;
     }
 
     // Save to database
@@ -309,7 +381,7 @@ export async function generateSingleNailArt(options: GenerationOptions): Promise
  * Generate multiple nail art designs
  */
 export async function generateMultipleNailArt(options: GenerationOptions): Promise<GeneratedNailArt[]> {
-  const count = Math.min(options.count || 1, 10); // FIXED: Cap at 10 items max to prevent infinite loops
+  const count = options.count || 1; // Removed limit to allow any number of items
   const results: GeneratedNailArt[] = [];
 
   // FIXED: Get unique prompts to avoid duplicate titles/descriptions
@@ -320,6 +392,19 @@ export async function generateMultipleNailArt(options: GenerationOptions): Promi
   }
 
   for (let i = 0; i < count; i++) {
+    // Check for stop signal before each generation
+    if (isGloballyStopped()) {
+      console.log('🚨 Generation stopped by global stop flag');
+      break;
+    }
+    
+    const isStopped = await checkStopSignal();
+    if (isStopped) {
+      console.log('🚨 Generation stopped by global stop signal');
+      setGlobalStopFlag(true);
+      break;
+    }
+
     try {
       // FIXED: Use unique prompt for each generation
       const generationOptions = { ...options };
@@ -353,12 +438,68 @@ export async function generateCategoryNailArt(
   categoryName: string, 
   count: number = 5
 ): Promise<GeneratedNailArt[]> {
-  // FIXED: Cap the count to prevent infinite loops
-  const safeCount = Math.min(count, 5);
+  // Removed limit to allow any number of items
   return generateMultipleNailArt({
     category: categoryName,
-    count: safeCount
+    count: count
   });
+}
+
+/**
+ * Generate nail art from multiple random categories within a tier
+ */
+export async function generateFromTierCategories(
+  categories: string[], 
+  totalCount: number
+): Promise<GeneratedNailArt[]> {
+  const results: GeneratedNailArt[] = [];
+  
+  // For better distribution, use more categories if available
+  const maxCategories = Math.min(categories.length, Math.max(3, Math.ceil(totalCount / 3)));
+  const itemsPerCategory = Math.max(1, Math.floor(totalCount / maxCategories));
+  const remainingItems = totalCount - (itemsPerCategory * maxCategories);
+  
+  // Shuffle categories to get truly random selection
+  const shuffledCategories = [...categories].sort(() => Math.random() - 0.5);
+  const selectedCategories = shuffledCategories.slice(0, maxCategories);
+  
+  console.log(`Generating ${totalCount} items across ${selectedCategories.length} random categories from tier`);
+  console.log(`Selected categories:`, selectedCategories);
+  console.log(`Items per category: ${itemsPerCategory}, remaining: ${remainingItems}`);
+  
+  for (let i = 0; i < selectedCategories.length; i++) {
+    // Check for stop signal before each category
+    if (isGloballyStopped()) {
+      console.log('🚨 Generation stopped by global stop flag');
+      break;
+    }
+    
+    const isStopped = await checkStopSignal();
+    if (isStopped) {
+      console.log('🚨 Generation stopped by global stop signal');
+      setGlobalStopFlag(true);
+      break;
+    }
+
+    const category = selectedCategories[i];
+    const itemsToGenerate = itemsPerCategory + (i < remainingItems ? 1 : 0);
+    
+    if (itemsToGenerate > 0) {
+      console.log(`Generating ${itemsToGenerate} items for category: ${category}`);
+      
+      try {
+        const categoryResults = await generateCategoryNailArt(category, itemsToGenerate);
+        results.push(...categoryResults);
+        console.log(`Successfully generated ${categoryResults.length} items for ${category}`);
+      } catch (error) {
+        console.error(`Error generating items for ${category}:`, error);
+        // Continue with other categories even if one fails
+      }
+    }
+  }
+  
+  console.log(`Total generated: ${results.length} items across ${selectedCategories.length} categories`);
+  return results;
 }
 
 /**
