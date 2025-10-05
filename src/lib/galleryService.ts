@@ -172,7 +172,7 @@ export async function getCategoriesWithMinimumContent(minItems: number = 3): Pro
     }, {} as Record<string, number>);
     
     return Object.entries(categoryCounts)
-      .filter(([_, count]) => count >= minItems)
+      .filter(([, count]) => count >= minItems)
       .map(([category]) => category);
   } catch (error) {
     console.error('Error getting categories with minimum content:', error);
@@ -201,7 +201,7 @@ export async function getUnderPopulatedCategories(minItems: number = 3): Promise
     }, {} as Record<string, number>);
     
     return Object.entries(categoryCounts)
-      .filter(([_, count]) => count < minItems)
+      .filter(([, count]) => count < minItems)
       .map(([category]) => category);
   } catch (error) {
     console.error('Error getting under-populated categories:', error);

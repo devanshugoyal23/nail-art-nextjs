@@ -605,7 +605,7 @@ export default function GenerateGalleryPage() {
             <div className="bg-gray-800 rounded-lg p-6">
               <h2 className="text-2xl font-semibold mb-4">Generate Content for Specific Tags</h2>
               <p className="text-gray-400 mb-6">
-                Target under-populated tags to ensure users don't see empty results when clicking on tags.
+                Target under-populated tags to ensure users don&apos;t see empty results when clicking on tags.
               </p>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -909,21 +909,21 @@ export default function GenerateGalleryPage() {
                       <h4 className="font-medium text-white">1. Simple Generation</h4>
                       <p className="text-gray-400 text-sm">Enter a category name and number of items to generate basic nail art content.</p>
                       <div className="bg-gray-600 p-2 rounded mt-2 text-sm">
-                        <strong>Example:</strong> Category: "Red Nails", Count: 5
+                        <strong>Example:</strong> Category: &quot;Red Nails&quot;, Count: 5
                       </div>
                     </div>
                     <div>
                       <h4 className="font-medium text-white">2. Custom Prompts</h4>
                       <p className="text-gray-400 text-sm">Use custom prompts for specific design requirements.</p>
                       <div className="bg-gray-600 p-2 rounded mt-2 text-sm">
-                        <strong>Example:</strong> "vintage red nails with gold accents for wedding"
+                        <strong>Example:</strong> &quot;vintage red nails with gold accents for wedding&quot;
                       </div>
                     </div>
                     <div>
                       <h4 className="font-medium text-white">3. Tiered Generation</h4>
                       <p className="text-gray-400 text-sm">Generate content in multiple tiers for comprehensive coverage.</p>
                       <div className="bg-gray-600 p-2 rounded mt-2 text-sm">
-                        <strong>Example:</strong> Tier 1: "Red Nails" → Tier 2: "Red French Tips" → Tier 3: "Red French Tips with Gold"
+                        <strong>Example:</strong> Tier 1: &quot;Red Nails&quot; → Tier 2: &quot;Red French Tips&quot; → Tier 3: &quot;Red French Tips with Gold&quot;
                       </div>
                     </div>
                   </div>
@@ -941,7 +941,7 @@ export default function GenerateGalleryPage() {
                       <h4 className="font-medium text-white">2. Generate for Specific Tags</h4>
                       <p className="text-gray-400 text-sm">Select a tag and generate content specifically for it.</p>
                       <div className="bg-gray-600 p-2 rounded mt-2 text-sm">
-                        <strong>Example:</strong> Select "Hand Painting" → Generate 3 items → Creates hand painting designs
+                        <strong>Example:</strong> Select &quot;Hand Painting&quot; → Generate 3 items → Creates hand painting designs
                       </div>
                     </div>
                     <div>
@@ -987,7 +987,7 @@ export default function GenerateGalleryPage() {
                     </div>
                     <div>
                       <h4 className="font-medium text-white">3. Fix Empty Pages</h4>
-                      <p className="text-gray-400 text-sm">Use "Fix Empty Tag Pages" to ensure all important tag pages have content.</p>
+                      <p className="text-gray-400 text-sm">Use &quot;Fix Empty Tag Pages&quot; to ensure all important tag pages have content.</p>
                     </div>
                     <div>
                       <h4 className="font-medium text-white">4. Monitor Results</h4>
@@ -1017,7 +1017,7 @@ export default function GenerateGalleryPage() {
                   <div className="space-y-3">
                     <div>
                       <h4 className="font-medium text-white">Empty Tag Pages</h4>
-                      <p className="text-gray-400 text-sm">Use "Fix Empty Tag Pages" button to populate all critical tag pages automatically.</p>
+                      <p className="text-gray-400 text-sm">Use &quot;Fix Empty Tag Pages&quot; button to populate all critical tag pages automatically.</p>
                     </div>
                     <div>
                       <h4 className="font-medium text-white">Low Content Categories</h4>

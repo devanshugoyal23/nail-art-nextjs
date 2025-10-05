@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { getGalleryItems, filterGalleryItemsByTag } from '@/lib/galleryService';
 import { getAllTagsFromGalleryItems } from '@/lib/tagService';
 import TagCollection from '@/components/TagCollection';
-import { notFound } from 'next/navigation';
+// import { notFound } from 'next/navigation';
 
 interface TechniquePageProps {
   params: {
@@ -139,18 +139,86 @@ export default async function TechniquePage({ params }: TechniquePageProps) {
   const allItems = await getGalleryItems();
   const filteredItems = filterGalleryItemsByTag(allItems, 'techniques', technique);
   
-  // If no items found and no predefined data, show empty state instead of 404
+  // If no items found and no predefined data, show related content instead of empty state
   if (filteredItems.length === 0 && !techniqueData) {
     const displayName = technique.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+    
+    // Get related techniques and other content
+    const relatedTechniques = allItems
+      .filter(item => item.techniques && item.techniques.length > 0)
+      .flatMap(item => item.techniques)
+      .filter((tag, index, arr) => arr.indexOf(tag) === index)
+      .slice(0, 6);
+    
+    const relatedItems = allItems.slice(0, 8); // Show some general content
+    
     return (
       <div className="min-h-screen bg-black">
         <div className="max-w-7xl mx-auto px-4 py-8">
-          <div className="text-center py-12">
+          {/* Header */}
+          <div className="text-center py-8">
             <div className="text-6xl mb-4">🎨</div>
             <h1 className="text-4xl font-bold text-white mb-4">{displayName} Nail Art</h1>
             <p className="text-xl text-gray-300 mb-6">
-              We're working on adding more {displayName.toLowerCase()} designs!
+              Explore {displayName.toLowerCase()} techniques and discover amazing nail art designs!
             </p>
+          </div>
+
+          {/* Related Techniques */}
+          {relatedTechniques.length > 0 && (
+            <div className="mb-12">
+              <h2 className="text-2xl font-bold text-white mb-6 text-center">Related Techniques</h2>
+              <div className="flex flex-wrap justify-center gap-3">
+                {relatedTechniques.map((relatedTechnique, index) => (
+                  <Link
+                    key={index}
+                    href={`/techniques/${relatedTechnique?.toLowerCase().replace(/\s+/g, '-') || 'technique'}`}
+                    className="bg-blue-600/20 text-blue-300 hover:bg-blue-600/40 px-4 py-2 rounded-full font-medium transition-colors"
+                  >
+                    {relatedTechnique}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Featured Designs */}
+          <div className="mb-12">
+            <h2 className="text-2xl font-bold text-white mb-6 text-center">Featured Nail Art Designs</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+              {relatedItems.map((item) => (
+                <Link
+                  key={item.id}
+                  href={`/${item.category?.toLowerCase().replace(/\s+/g, '-')}/${item.design_name ? `${item.design_name.toLowerCase().replace(/\s+/g, '-')}-${item.id.slice(-8)}` : `design-${item.id.slice(-8)}`}`}
+                  className="group bg-gray-800 rounded-lg overflow-hidden hover:bg-gray-700 transition-all duration-300 transform hover:-translate-y-1"
+                >
+                  <div className="aspect-square relative">
+                    <Image
+                      src={item.image_url}
+                      alt={item.design_name || 'Generated nail art'}
+                      width={300}
+                      height={300}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      loading="lazy"
+                    />
+                  </div>
+                  <div className="p-4">
+                    {item.design_name && (
+                      <h3 className="text-lg font-semibold text-white mb-2 line-clamp-1">
+                        {item.design_name}
+                      </h3>
+                    )}
+                    <p className="text-sm text-gray-300 line-clamp-2">
+                      {item.prompt}
+                    </p>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          {/* Call to Action */}
+          <div className="text-center">
             <Link
               href="/nail-art-gallery"
               className="inline-flex items-center bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors"

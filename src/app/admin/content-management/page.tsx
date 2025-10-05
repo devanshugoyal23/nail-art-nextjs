@@ -374,7 +374,7 @@ export default function ContentManagementPage() {
               <div>
                 <h3 className="text-lg font-semibold mb-2 text-blue-200">Quick Start Guide</h3>
                 <ol className="list-decimal list-inside space-y-2 text-blue-100">
-                  <li><strong>Check Overview:</strong> Start with the Overview tab to see your site's health</li>
+                  <li><strong>Check Overview:</strong> Start with the Overview tab to see your site&apos;s health</li>
                   <li><strong>Review Categories:</strong> Use the Categories tab to see detailed category information</li>
                   <li><strong>Analyze Gaps:</strong> Look for red/high priority items that need immediate attention</li>
                   <li><strong>Take Action:</strong> Use the action buttons to fix content gaps automatically</li>
@@ -959,7 +959,7 @@ export default function ContentManagementPage() {
                 <div>
                   <h3 className="text-xl font-semibold mb-3 text-blue-400">🎯 Getting Started</h3>
                   <ol className="list-decimal list-inside space-y-2 text-gray-300">
-                    <li><strong>Check Overview:</strong> Start with the Overview tab to see your site's current health status</li>
+                    <li><strong>Check Overview:</strong> Start with the Overview tab to see your site&apos;s current health status</li>
                     <li><strong>Review Categories:</strong> Use the Categories tab to see detailed information about each category</li>
                     <li><strong>Identify Issues:</strong> Look for red/high priority items that need immediate attention</li>
                     <li><strong>Take Action:</strong> Use the action buttons to automatically fix content gaps</li>
@@ -1043,14 +1043,14 @@ export default function ContentManagementPage() {
                       <ul className="text-sm text-gray-300 space-y-1">
                         <li>• Check dashboard for content health</li>
                         <li>• Address high-priority gaps immediately</li>
-                        <li>• Use "Refresh Analysis" for current status</li>
+                        <li>• Use &quot;Refresh Analysis&quot; for current status</li>
                       </ul>
                     </div>
                     <div>
                       <h4 className="font-semibold mb-2 text-green-400">Weekly</h4>
                       <ul className="text-sm text-gray-300 space-y-1">
-                        <li>• Run "Consolidate Tags" to clean duplicates</li>
-                        <li>• Use "Distribute Evenly" for balanced content</li>
+                        <li>• Run &quot;Consolidate Tags&quot; to clean duplicates</li>
+                        <li>• Use &quot;Distribute Evenly&quot; for balanced content</li>
                         <li>• Review priority changes in analysis table</li>
                       </ul>
                     </div>
@@ -1070,15 +1070,15 @@ export default function ContentManagementPage() {
                   <div className="space-y-3">
                     <div className="bg-red-900/20 border border-red-700 rounded-lg p-4">
                       <h4 className="font-semibold text-red-400 mb-2">Empty Category Pages</h4>
-                      <p className="text-sm text-gray-300">If you see categories with 0 items, use "Fill Content Gaps" to generate content automatically.</p>
+                      <p className="text-sm text-gray-300">If you see categories with 0 items, use &quot;Fill Content Gaps&quot; to generate content automatically.</p>
                     </div>
                     <div className="bg-yellow-900/20 border border-yellow-700 rounded-lg p-4">
                       <h4 className="font-semibold text-yellow-400 mb-2">Duplicate Categories</h4>
-                      <p className="text-sm text-gray-300">If you have similar categories like "nail stamping" and "stamping designs", use "Consolidate Tags" to merge them.</p>
+                      <p className="text-sm text-gray-300">If you have similar categories like &quot;nail stamping&quot; and &quot;stamping designs&quot;, use &quot;Consolidate Tags&quot; to merge them.</p>
                     </div>
                     <div className="bg-blue-900/20 border border-blue-700 rounded-lg p-4">
                       <h4 className="font-semibold text-blue-400 mb-2">Unbalanced Content</h4>
-                      <p className="text-sm text-gray-300">If some categories have many items while others are empty, use "Distribute Evenly" to balance content.</p>
+                      <p className="text-sm text-gray-300">If some categories have many items while others are empty, use &quot;Distribute Evenly&quot; to balance content.</p>
                     </div>
                   </div>
                 </div>

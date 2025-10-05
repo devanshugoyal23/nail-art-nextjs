@@ -338,7 +338,7 @@ export async function getCategoriesWithMinimumContent(minItems: number = CONTENT
     }, {} as Record<string, number>);
     
     return Object.entries(categoryCounts)
-      .filter(([_, count]) => count >= minItems)
+      .filter(([, count]) => count >= minItems)
       .map(([category]) => category);
   } catch (error) {
     console.error('Error getting categories with minimum content:', error);
@@ -367,7 +367,7 @@ export async function getUnderPopulatedCategories(minItems: number = CONTENT_THR
     }, {} as Record<string, number>);
     
     return Object.entries(categoryCounts)
-      .filter(([_, count]) => count < minItems)
+      .filter(([, count]) => count < minItems)
       .map(([category]) => category);
   } catch (error) {
     console.error('Error getting under-populated categories:', error);
@@ -398,8 +398,8 @@ export async function consolidateSimilarTags(): Promise<{ mergedTags: string[]; 
     ['birthday nails', 'celebration nails', 'special occasion nails']
   ];
   
-  let mergedTags: string[] = [];
-  let consolidatedCategories: string[] = [];
+  const mergedTags: string[] = [];
+  const consolidatedCategories: string[] = [];
   let removedDuplicates = 0;
   
   try {
@@ -438,7 +438,7 @@ export async function consolidateSimilarTags(): Promise<{ mergedTags: string[]; 
         }
       } else {
         // Primary tag doesn't exist, check if any secondary tags exist
-        let foundSecondary = false;
+        // let foundSecondary = false;
         for (const secondaryTag of secondaryTags) {
           const { data: secondaryData } = await supabase
             .from('gallery_items')
@@ -469,7 +469,7 @@ export async function consolidateSimilarTags(): Promise<{ mergedTags: string[]; 
                 }
               }
             }
-            foundSecondary = true;
+            // foundSecondary = true;
             break;
           }
         }

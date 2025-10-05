@@ -1,5 +1,5 @@
 import { MetadataRoute } from 'next';
-import { NAIL_ART_DESIGNS } from '@/lib/constants';
+// import { NAIL_ART_DESIGNS } from '@/lib/constants';
 import { getGalleryItems, getAllCategories } from '@/lib/galleryService';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {

@@ -127,7 +127,7 @@ export class ContentGenerationService {
       
       // Find categories that need more content
       const categoriesNeedingContent = Object.entries(categoryCounts)
-        .filter(([_, count]) => count < CONTENT_THRESHOLDS.MIN_ITEMS_FOR_SEO_PAGE)
+        .filter(([, count]) => count < CONTENT_THRESHOLDS.MIN_ITEMS_FOR_SEO_PAGE)
         .map(([category]) => category);
       
       if (categoriesNeedingContent.length === 0) {
@@ -514,7 +514,7 @@ export async function generateForUnderPopulatedTagPages(): Promise<GenerationRes
         const needed = 3 - filteredItems.length;
         
         // Generate content specifically for this tag
-        const prompt = `Create ${needed} unique nail art designs specifically for ${tagPage.name.toLowerCase()} technique. Focus on ${tagPage.name.toLowerCase()} styles, methods, and aesthetics. Make each design distinct and showcase different aspects of ${tagPage.name.toLowerCase()}.`;
+        // const prompt = `Create ${needed} unique nail art designs specifically for ${tagPage.name.toLowerCase()} technique. Focus on ${tagPage.name.toLowerCase()} styles, methods, and aesthetics. Make each design distinct and showcase different aspects of ${tagPage.name.toLowerCase()}.`;
         
         try {
           const result = await generateCategoryNailArt(tagPage.name, needed);

@@ -56,6 +56,110 @@ export default async function OccasionPage({ params }: OccasionPageProps) {
   // Get all available tags for this occasion
   const allTags = getAllTagsFromGalleryItems(filteredItems);
 
+  // If no items found, show related content
+  if (filteredItems.length === 0) {
+    const relatedOccasions = allItems
+      .filter(item => item.occasions && item.occasions.length > 0)
+      .flatMap(item => item.occasions)
+      .filter((tag, index, arr) => arr.indexOf(tag) === index)
+      .slice(0, 6);
+    
+    const relatedItems = allItems.slice(0, 8);
+    
+    return (
+      <div className="min-h-screen bg-black">
+        <div className="max-w-7xl mx-auto px-4 py-8">
+          {/* Breadcrumb */}
+          <nav className="mb-6">
+            <div className="flex items-center space-x-2 text-sm">
+              <Link href="/categories" className="text-purple-400 hover:text-purple-300">
+                Categories
+              </Link>
+              <span className="text-gray-400">/</span>
+              <Link href="/categories/occasions" className="text-purple-400 hover:text-purple-300">
+                Occasions
+              </Link>
+              <span className="text-gray-400">/</span>
+              <span className="text-white font-medium">{capitalize(occasion)}</span>
+            </div>
+          </nav>
+
+          {/* Header */}
+          <div className="text-center py-8">
+            <div className="text-6xl mb-4">🎉</div>
+            <h1 className="text-4xl font-bold text-white mb-4">{h1}</h1>
+            <p className="text-xl text-gray-300 mb-6">
+              Discover perfect nail art designs for {occasion} and explore related occasions!
+            </p>
+          </div>
+
+          {/* Related Occasions */}
+          {relatedOccasions.length > 0 && (
+            <div className="mb-12">
+              <h2 className="text-2xl font-bold text-white mb-6 text-center">Related Occasions</h2>
+              <div className="flex flex-wrap justify-center gap-3">
+                {relatedOccasions.map((relatedOccasion, index) => (
+                  <Link
+                    key={index}
+                    href={`/nail-art/occasion/${relatedOccasion?.toLowerCase().replace(/\s+/g, '-') || 'occasion'}`}
+                    className="bg-pink-600/20 text-pink-300 hover:bg-pink-600/40 px-4 py-2 rounded-full font-medium transition-colors"
+                  >
+                    {relatedOccasion}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Featured Designs */}
+          <div className="mb-12">
+            <h2 className="text-2xl font-bold text-white mb-6 text-center">Featured Nail Art Designs</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+              {relatedItems.map((item) => (
+                <Link
+                  key={item.id}
+                  href={`/${item.category?.toLowerCase().replace(/\s+/g, '-')}/${item.design_name ? `${item.design_name.toLowerCase().replace(/\s+/g, '-')}-${item.id.slice(-8)}` : `design-${item.id.slice(-8)}`}`}
+                  className="group bg-gray-800 rounded-lg overflow-hidden hover:bg-gray-700 transition-all duration-300 transform hover:-translate-y-1"
+                >
+                  <div className="aspect-square relative">
+                    <Image
+                      src={item.image_url}
+                      alt={item.design_name || 'Generated nail art'}
+                      width={300}
+                      height={300}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      loading="lazy"
+                    />
+                  </div>
+                  <div className="p-4">
+                    {item.design_name && (
+                      <h3 className="text-lg font-semibold text-white mb-2 line-clamp-1">
+                        {item.design_name}
+                      </h3>
+                    )}
+                    <p className="text-sm text-gray-300 line-clamp-2">
+                      {item.prompt}
+                    </p>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          {/* Call to Action */}
+          <div className="text-center">
+            <Link
+              href="/nail-art-gallery"
+              className="inline-flex items-center bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors"
+            >
+              Browse All Designs
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-black">
       <div className="max-w-7xl mx-auto px-4 py-8">
