@@ -5,10 +5,57 @@
 
 import { getGalleryItems, getAllCategories } from './galleryService';
 
+export interface ContentItem {
+  id?: string;
+  design_name?: string;
+  title?: string;
+  description?: string;
+  prompt?: string;
+  image_url?: string;
+  category?: string;
+  slug?: string;
+  colors?: string[];
+  techniques?: string[];
+  occasions?: string[];
+  styles?: string[];
+  created_at?: string;
+}
+
 export interface SEOUpdate {
   type: 'sitemap' | 'meta' | 'internal_links' | 'structured_data';
-  content: any;
+  content: ContentItem | DynamicMetadata | InternalLinksResult | StructuredData;
   timestamp: Date;
+}
+
+export interface InternalLinksResult {
+  relatedDesigns: ContentItem[];
+  relatedCategories: string[];
+  relatedTags: string[];
+}
+
+export interface StructuredData {
+  "@context": string;
+  "@type": string;
+  "@id": string;
+  name: string;
+  description: string;
+  image?: string;
+  url: string;
+  dateCreated: string;
+  dateModified: string;
+  author: {
+    "@type": string;
+    name: string;
+    url: string;
+  };
+  publisher: {
+    "@type": string;
+    name: string;
+    url: string;
+  };
+  keywords: string[];
+  genre?: string;
+  about: string[];
 }
 
 export interface DynamicMetadata {
@@ -33,7 +80,7 @@ export interface DynamicMetadata {
 /**
  * Generate dynamic metadata for new content
  */
-export async function generateDynamicMetadata(content: any): Promise<DynamicMetadata> {
+export async function generateDynamicMetadata(content: ContentItem): Promise<DynamicMetadata> {
   const title = content.design_name || content.title || 'AI Generated Nail Art';
   const description = content.prompt || content.description || 'Beautiful AI-generated nail art design';
   const keywords = extractKeywords(content);
@@ -61,7 +108,7 @@ export async function generateDynamicMetadata(content: any): Promise<DynamicMeta
 /**
  * Extract keywords from content
  */
-function extractKeywords(content: any): string[] {
+function extractKeywords(content: ContentItem): string[] {
   const baseKeywords = ['nail art', 'AI nail art', 'manicure', 'nail design'];
   const contentKeywords = [];
   
@@ -91,7 +138,7 @@ function extractKeywords(content: any): string[] {
 /**
  * Auto-update sitemap after content generation
  */
-export async function updateSitemapAfterGeneration(newContent: any): Promise<void> {
+export async function updateSitemapAfterGeneration(newContent: ContentItem): Promise<void> {
   try {
     // Trigger sitemap regeneration
     await fetch('/api/regenerate-sitemap', { 
@@ -103,7 +150,7 @@ export async function updateSitemapAfterGeneration(newContent: any): Promise<voi
     });
     
     // Update Google Search Console
-    await notifyGoogleOfNewContent(newContent);
+    await notifyGoogleOfNewContent();
   } catch (error) {
     console.error('Error updating sitemap:', error);
   }
@@ -112,10 +159,8 @@ export async function updateSitemapAfterGeneration(newContent: any): Promise<voi
 /**
  * Notify Google of new content
  */
-async function notifyGoogleOfNewContent(content: any): Promise<void> {
+async function notifyGoogleOfNewContent(): Promise<void> {
   try {
-    const url = `https://nailartai.app/${content.category?.toLowerCase().replace(/\s+/g, '-')}/${content.slug || 'design'}`;
-    
     // Ping Google with new URL
     await fetch(`https://www.google.com/ping?sitemap=https://nailartai.app/sitemap.xml`);
     
@@ -129,11 +174,7 @@ async function notifyGoogleOfNewContent(content: any): Promise<void> {
 /**
  * Auto-generate internal links for new content
  */
-export async function generateInternalLinks(newContent: any): Promise<{
-  relatedDesigns: any[];
-  relatedCategories: string[];
-  relatedTags: string[];
-}> {
+export async function generateInternalLinks(newContent: ContentItem): Promise<InternalLinksResult> {
   try {
     const allItems = await getGalleryItems();
     const categories = await getAllCategories();
@@ -194,12 +235,9 @@ export async function generateInternalLinks(newContent: any): Promise<{
 /**
  * Auto-update category pages when new content is added
  */
-export async function updateCategoryPages(newContent: any): Promise<void> {
+export async function updateCategoryPages(newContent: ContentItem): Promise<void> {
   try {
     if (!newContent.category) return;
-    
-    // Update category page with new content
-    const categoryUrl = `/nail-art-gallery/category/${encodeURIComponent(newContent.category)}`;
     
     // Trigger category page regeneration
     await fetch('/api/update-category-page', {
@@ -220,7 +258,7 @@ export async function updateCategoryPages(newContent: any): Promise<void> {
 /**
  * Generate structured data for new content
  */
-export function generateStructuredDataForContent(content: any): any {
+export function generateStructuredDataForContent(content: ContentItem): StructuredData {
   return {
     "@context": "https://schema.org",
     "@type": "CreativeWork",
@@ -254,7 +292,7 @@ export function generateStructuredDataForContent(content: any): any {
 /**
  * Handle complete SEO update for new content
  */
-export async function handleNewContentGeneration(newContent: any): Promise<SEOUpdate[]> {
+export async function handleNewContentGeneration(newContent: ContentItem): Promise<SEOUpdate[]> {
   const updates: SEOUpdate[] = [];
   
   try {
@@ -303,7 +341,7 @@ export async function handleNewContentGeneration(newContent: any): Promise<SEOUp
 /**
  * Bulk SEO operations for admin panel
  */
-export async function bulkUpdateSEO(operation: string, contentIds: string[]): Promise<any> {
+export async function bulkUpdateSEO(operation: string, contentIds: string[]): Promise<{ success: boolean; updated?: number; optimized?: number }> {
   switch (operation) {
     case 'update-meta-tags':
       return await bulkUpdateMetaTags(contentIds);
@@ -318,25 +356,25 @@ export async function bulkUpdateSEO(operation: string, contentIds: string[]): Pr
   }
 }
 
-async function bulkUpdateMetaTags(contentIds: string[]): Promise<any> {
+async function bulkUpdateMetaTags(contentIds: string[]): Promise<{ success: boolean; updated: number }> {
   // Implementation for bulk meta tag updates
   console.log('Bulk updating meta tags for:', contentIds);
   return { success: true, updated: contentIds.length };
 }
 
-async function regenerateSitemap(): Promise<any> {
+async function regenerateSitemap(): Promise<{ success: boolean }> {
   // Implementation for sitemap regeneration
   console.log('Regenerating sitemap');
   return { success: true };
 }
 
-async function bulkUpdateInternalLinks(contentIds: string[]): Promise<any> {
+async function bulkUpdateInternalLinks(contentIds: string[]): Promise<{ success: boolean; updated: number }> {
   // Implementation for bulk internal link updates
   console.log('Bulk updating internal links for:', contentIds);
   return { success: true, updated: contentIds.length };
 }
 
-async function bulkOptimizeImages(contentIds: string[]): Promise<any> {
+async function bulkOptimizeImages(contentIds: string[]): Promise<{ success: boolean; optimized: number }> {
   // Implementation for bulk image optimization
   console.log('Bulk optimizing images for:', contentIds);
   return { success: true, optimized: contentIds.length };

@@ -1,8 +1,10 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useState, useEffect } from 'react';
-import { GalleryItem, getGalleryItemsByCategory } from '@/lib/galleryService';
+import { getGalleryItemsByCategory } from '@/lib/galleryService';
+import { GalleryItem } from '@/lib/supabase';
 
 interface CategoryCardProps {
   title: string;
@@ -57,9 +59,11 @@ export default function CategoryCard({
     >
       {/* Background Image */}
       <div className="relative h-64 overflow-hidden">
-        <img
+        <Image
           src={image}
           alt={title}
+          width={400}
+          height={256}
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
         />
         <div className={`absolute inset-0 bg-gradient-to-br ${gradient} opacity-60`}></div>
@@ -101,14 +105,16 @@ export default function CategoryCard({
           <div className="mb-4">
             <p className="text-xs text-gray-400 mb-2">Sample designs:</p>
             <div className="flex gap-2">
-              {sampleItems.map((item, index) => (
+              {sampleItems.map((item) => (
                 <div
                   key={item.id}
                   className="w-12 h-12 rounded-lg overflow-hidden border border-gray-600"
                 >
-                  <img
+                  <Image
                     src={item.image_url}
                     alt={item.design_name || 'Sample design'}
+                    width={48}
+                    height={48}
                     className="w-full h-full object-cover"
                   />
                 </div>

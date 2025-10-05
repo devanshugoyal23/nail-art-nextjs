@@ -102,7 +102,7 @@ export default function GalleryPage() {
               <div>
                 <h3 className="text-xl font-semibold text-white mb-3">🎨 Unique AI-Generated Designs</h3>
                 <p className="text-gray-300 mb-4">
-                  Our AI creates completely unique nail art designs that you won't find anywhere else. 
+                  Our AI creates completely unique nail art designs that you won&apos;t find anywhere else. 
                   Each design is generated using advanced machine learning algorithms to ensure originality and creativity.
                 </p>
                 <ul className="text-gray-300 space-y-2">

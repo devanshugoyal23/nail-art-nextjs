@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { GalleryItem } from '@/lib/supabase';
 import { generateGalleryItemUrl } from '@/lib/galleryService';
-import { getAllTagsFromGalleryItems, filterGalleryItemsByTag } from '@/lib/tagService';
+import { getAllTagsFromGalleryItems, filterGalleryItemsByTag, TagItem } from '@/lib/tagService';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -43,7 +43,7 @@ export default function EnhancedGallery({
 
   // Get unique categories
   const categories = useMemo(() => {
-    return [...new Set(items.map(item => item.category).filter(Boolean))];
+    return [...new Set(items.map(item => item.category).filter(Boolean))] as string[];
   }, [items]);
 
   // Filter and sort items
@@ -303,7 +303,7 @@ export default function EnhancedGallery({
                     <span className="text-xs text-gray-400">(any selected)</span>
                   </div>
                   <div className="flex flex-wrap gap-2">
-                    {tags.slice(0, 8).map(tag => (
+                    {tags.slice(0, 8).map((tag: TagItem) => (
                       <button
                         key={tag.value}
                         onClick={() => handleTagToggle(`${tagType}:${tag.value}`)}

@@ -45,19 +45,19 @@ export default function CategorySearch({
     });
   }, [categories, searchTerm, selectedTag, selectedTagType]);
 
-  const allTags = [
+  const allTags = useMemo(() => [
     ...popularColors.map(tag => ({ ...tag, type: 'color' as const })),
     ...popularTechniques.map(tag => ({ ...tag, type: 'technique' as const })),
     ...popularOccasions.map(tag => ({ ...tag, type: 'occasion' as const })),
     ...popularStyles.map(tag => ({ ...tag, type: 'style' as const }))
-  ];
+  ], [popularColors, popularTechniques, popularOccasions, popularStyles]);
 
-  const filteredTags = useMemo(() => {
-    if (!searchTerm) return allTags;
-    return allTags.filter(tag => 
-      tag.label.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-  }, [allTags, searchTerm]);
+  // const filteredTags = useMemo(() => {
+  //   if (!searchTerm) return allTags;
+  //   return allTags.filter(tag => 
+  //     tag.label.toLowerCase().includes(searchTerm.toLowerCase())
+  //   );
+  // }, [allTags, searchTerm]);
 
   return (
     <div className="space-y-8">

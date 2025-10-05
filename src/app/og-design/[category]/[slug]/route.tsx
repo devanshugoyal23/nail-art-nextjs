@@ -5,10 +5,11 @@ export const runtime = 'edge';
 
 export async function GET(
   request: Request,
-  { params }: { params: { category: string; slug: string } }
+  { params }: { params: Promise<{ category: string; slug: string }> }
 ) {
   try {
-    const item = await getGalleryItemBySlug(params.category, params.slug);
+    const { category, slug } = await params;
+    const item = await getGalleryItemBySlug(category, slug);
     
     if (!item) {
       return new Response('Design not found', { status: 404 });

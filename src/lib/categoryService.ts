@@ -16,7 +16,7 @@ export async function getAllCategoriesWithThumbnails(): Promise<CategoryWithThum
     // Get all categories with counts
     const { data: categoryData, error: categoryError } = await supabase
       .from('gallery_items')
-      .select('category, image_url, design_name, id, created_at')
+      .select('category, image_url, design_name, id, created_at, prompt')
       .not('category', 'is', null);
 
     if (categoryError) {
@@ -43,7 +43,8 @@ export async function getAllCategoriesWithThumbnails(): Promise<CategoryWithThum
         image_url: item.image_url,
         design_name: item.design_name,
         category: item.category,
-        created_at: item.created_at
+        created_at: item.created_at,
+        prompt: item.prompt || ''
       });
     });
 

@@ -1,7 +1,8 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
-import { getTagUsageStats, getAllTagsFromGalleryItems } from '@/lib/tagService';
-import { getAllCategories, getGalleryItems } from '@/lib/galleryService';
+import Image from 'next/image';
+import { getAllTagsFromGalleryItems } from '@/lib/tagService';
+import { getGalleryItems } from '@/lib/galleryService';
 import { getAllCategoriesWithThumbnails, getCategoryStatistics } from '@/lib/categoryService';
 import TagCollection from '@/components/TagCollection';
 
@@ -86,10 +87,8 @@ const categories = [
 
 export default async function CategoriesPage() {
   // Get dynamic data from database
-  const [tagStats, galleryItems, dbCategories, allCategoriesWithThumbnails, categoryStats] = await Promise.all([
-    getTagUsageStats(),
+  const [galleryItems, allCategoriesWithThumbnails, categoryStats] = await Promise.all([
     getGalleryItems(),
-    getAllCategories(),
     getAllCategoriesWithThumbnails(),
     getCategoryStatistics()
   ]);
@@ -104,7 +103,7 @@ export default async function CategoriesPage() {
   const popularStyles = allTags.styles.slice(0, 8);
 
   // Get categories with actual content
-  const categoriesWithContent = tagStats.filter(stat => stat.count > 0);
+  // const categoriesWithContent = tagStats.filter(stat => stat.count > 0);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-purple-900">
@@ -229,9 +228,11 @@ export default async function CategoriesPage() {
                     >
                       <div className="w-10 h-10 rounded-lg overflow-hidden flex-shrink-0">
                         {category.thumbnail ? (
-                          <img
+                          <Image
                             src={category.thumbnail}
                             alt={category.category}
+                            width={40}
+                            height={40}
                             className="w-full h-full object-cover"
                           />
                         ) : (
@@ -271,9 +272,11 @@ export default async function CategoriesPage() {
                     >
                       <div className="w-10 h-10 rounded-lg overflow-hidden flex-shrink-0">
                         {category.thumbnail ? (
-                          <img
+                          <Image
                             src={category.thumbnail}
                             alt={category.category}
+                            width={40}
+                            height={40}
                             className="w-full h-full object-cover"
                           />
                         ) : (
@@ -378,9 +381,11 @@ export default async function CategoriesPage() {
               >
                 <div className="relative h-24 overflow-hidden">
                   {category.thumbnail ? (
-                    <img
+                    <Image
                       src={category.thumbnail}
                       alt={category.category}
+                      width={200}
+                      height={96}
                       className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                     />
                   ) : (

@@ -3,7 +3,7 @@ import { revalidatePath } from 'next/cache';
 
 export async function POST(request: NextRequest) {
   try {
-    const { category, newContent } = await request.json();
+    const { category } = await request.json();
     
     if (!category) {
       return NextResponse.json(

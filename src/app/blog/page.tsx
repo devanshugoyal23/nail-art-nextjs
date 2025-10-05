@@ -194,7 +194,7 @@ export default function BlogPage() {
                 <h3 className="text-xl font-semibold text-white mb-3">📈 Trend Analysis</h3>
                 <p className="text-gray-300 mb-4">
                   Stay ahead of the curve with our seasonal trend reports and inspiration galleries. 
-                  Discover what's trending in nail art and get inspired for your next manicure.
+                  Discover what&apos;s trending in nail art and get inspired for your next manicure.
                 </p>
                 <ul className="text-gray-300 space-y-2">
                   <li>• Seasonal trend reports</li>

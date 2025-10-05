@@ -1,6 +1,7 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { CategoryWithThumbnail, getCategoriesWithPagination, getCategoryStatistics } from '@/lib/categoryService';
 
@@ -30,7 +31,7 @@ export default function AllCategoriesGrid({
 
   const itemsPerPage = 24;
 
-  const loadCategories = async (page: number = 1, search: string = '', sort: typeof sortBy = 'count') => {
+  const loadCategories = useCallback(async (page: number = 1, search: string = '', sort: typeof sortBy = 'count') => {
     setLoading(true);
     try {
       const result = await getCategoriesWithPagination(page, itemsPerPage, search, sort);
@@ -43,23 +44,23 @@ export default function AllCategoriesGrid({
     } finally {
       setLoading(false);
     }
-  };
+  }, [itemsPerPage]);
 
-  const loadStats = async () => {
+  const loadStats = useCallback(async () => {
     try {
       const categoryStats = await getCategoryStatistics();
       setStats(categoryStats);
     } catch (error) {
       console.error('Error loading stats:', error);
     }
-  };
+  }, []);
 
   useEffect(() => {
     loadCategories(currentPage, searchTerm, sortBy);
     if (!initialStats) {
       loadStats();
     }
-  }, [searchTerm, sortBy]);
+  }, [currentPage, initialStats, loadCategories, loadStats, searchTerm, sortBy]);
 
   const handleSearch = (value: string) => {
     setSearchTerm(value);
@@ -186,9 +187,11 @@ export default function AllCategoriesGrid({
               {/* Thumbnail */}
               <div className="relative h-32 overflow-hidden">
                 {category.thumbnail ? (
-                  <img
+                  <Image
                     src={category.thumbnail}
                     alt={category.category}
+                    width={300}
+                    height={200}
                     className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                   />
                 ) : (
