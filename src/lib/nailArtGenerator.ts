@@ -1,6 +1,6 @@
 import { GoogleGenAI, Modality } from "@google/genai";
 import { supabase } from './supabase';
-import { getRandomPromptFromCategory, getAllCategories, PROMPT_CATEGORIES } from './promptGenerator';
+import { getRandomPromptFromCategory, getUniquePromptsFromCategory, getAllCategories, PROMPT_CATEGORIES } from './promptGenerator';
 import { extractTagsFromGalleryItem } from './tagService';
 
 let ai: GoogleGenAI | null = null;
@@ -309,16 +309,26 @@ export async function generateSingleNailArt(options: GenerationOptions): Promise
  * Generate multiple nail art designs
  */
 export async function generateMultipleNailArt(options: GenerationOptions): Promise<GeneratedNailArt[]> {
-  const count = options.count || 1;
+  const count = Math.min(options.count || 1, 10); // FIXED: Cap at 10 items max to prevent infinite loops
   const results: GeneratedNailArt[] = [];
+
+  // FIXED: Get unique prompts to avoid duplicate titles/descriptions
+  let uniquePrompts: string[] = [];
+  if (options.category) {
+    uniquePrompts = getUniquePromptsFromCategory(options.category, count);
+    console.log(`Generated ${uniquePrompts.length} unique prompts for category "${options.category}":`, uniquePrompts);
+  }
 
   for (let i = 0; i < count; i++) {
     try {
-      const result = await generateSingleNailArt({
-        ...options,
-        // Do not append numeric counters; keep names derived from the prompt
-        designName: options.designName
-      });
+      // FIXED: Use unique prompt for each generation
+      const generationOptions = { ...options };
+      if (uniquePrompts.length > 0 && i < uniquePrompts.length) {
+        generationOptions.customPrompt = uniquePrompts[i];
+        generationOptions.designName = undefined; // Let it derive from the unique prompt
+      }
+
+      const result = await generateSingleNailArt(generationOptions);
       
       if (result) {
         results.push(result);
@@ -343,9 +353,11 @@ export async function generateCategoryNailArt(
   categoryName: string, 
   count: number = 5
 ): Promise<GeneratedNailArt[]> {
+  // FIXED: Cap the count to prevent infinite loops
+  const safeCount = Math.min(count, 5);
   return generateMultipleNailArt({
     category: categoryName,
-    count: count
+    count: safeCount
   });
 }
 

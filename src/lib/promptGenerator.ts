@@ -559,6 +559,166 @@ export function getRandomPromptFromCategory(categoryName: string): string | null
   return prompts[Math.floor(Math.random() * prompts.length)];
 }
 
+// FIXED: Add function to get unique prompts for multiple generations
+export function getUniquePromptsFromCategory(categoryName: string, count: number): string[] {
+  const prompts = getPromptsByCategory(categoryName);
+  
+  // If no predefined prompts, create unique prompts from scratch
+  if (prompts.length === 0) {
+    return createUniquePromptsForCategory(categoryName, count);
+  }
+  
+  // If we need more prompts than available, we'll create variations
+  if (count <= prompts.length) {
+    // Shuffle and return the requested number
+    const shuffled = [...prompts].sort(() => Math.random() - 0.5);
+    return shuffled.slice(0, count);
+  }
+  
+  // If we need more prompts than available, create variations
+  const result: string[] = [];
+  const usedPrompts = new Set<string>();
+  
+  // First, add all available prompts
+  for (const prompt of prompts) {
+    result.push(prompt);
+    usedPrompts.add(prompt);
+  }
+  
+  // Then create variations for the remaining count
+  const remaining = count - prompts.length;
+  for (let i = 0; i < remaining; i++) {
+    const basePrompt = prompts[i % prompts.length];
+    const variation = createPromptVariation(basePrompt, i + 1);
+    result.push(variation);
+  }
+  
+  return result;
+}
+
+// FIXED: Create unique prompts for categories without predefined prompts
+function createUniquePromptsForCategory(categoryName: string, count: number): string[] {
+  const basePrompt = `${categoryName} inspired nail art with clean, photo-real finish and professional salon quality`;
+  const result: string[] = [];
+  
+  for (let i = 0; i < count; i++) {
+    const variation = createPromptVariation(basePrompt, i + 1);
+    result.push(variation);
+  }
+  
+  return result;
+}
+
+// FIXED: Create variations of existing prompts to ensure uniqueness
+function createPromptVariation(basePrompt: string, variationNumber: number): string {
+  const variations = [
+    // Replace descriptive words that might exist in base prompt
+    (prompt: string) => prompt.replace(/clean/gi, 'elegant'),
+    (prompt: string) => prompt.replace(/clean/gi, 'sophisticated'),
+    (prompt: string) => prompt.replace(/clean/gi, 'stunning'),
+    (prompt: string) => prompt.replace(/clean/gi, 'gorgeous'),
+    (prompt: string) => prompt.replace(/clean/gi, 'beautiful'),
+    (prompt: string) => prompt.replace(/professional/gi, 'luxurious'),
+    (prompt: string) => prompt.replace(/professional/gi, 'premium'),
+    (prompt: string) => prompt.replace(/professional/gi, 'high-end'),
+    (prompt: string) => prompt.replace(/quality/gi, 'perfection'),
+    (prompt: string) => prompt.replace(/quality/gi, 'excellence'),
+    
+    // Add different techniques
+    (prompt: string) => prompt + ' with chrome finish',
+    (prompt: string) => prompt + ' with holographic effect',
+    (prompt: string) => prompt + ' with matte top coat',
+    (prompt: string) => prompt + ' with glossy finish',
+    (prompt: string) => prompt + ' with shimmer details',
+    (prompt: string) => prompt + ' with gradient effect',
+    (prompt: string) => prompt + ' with ombre technique',
+    (prompt: string) => prompt + ' with foil application',
+    (prompt: string) => prompt + ' with stamping technique',
+    (prompt: string) => prompt + ' with hand-painted details',
+    (prompt: string) => prompt + ' with glitter accents',
+    (prompt: string) => prompt + ' with metallic details',
+    (prompt: string) => prompt + ' with pearl finish',
+    (prompt: string) => prompt + ' with iridescent shimmer',
+    (prompt: string) => prompt + ' with geometric patterns',
+    (prompt: string) => prompt + ' with floral designs',
+    (prompt: string) => prompt + ' with abstract art',
+    (prompt: string) => prompt + ' with minimalist details',
+    (prompt: string) => prompt + ' with vintage charm',
+    (prompt: string) => prompt + ' with modern edge',
+    
+    // Add different shapes
+    (prompt: string) => prompt.replace(/almond/gi, 'coffin'),
+    (prompt: string) => prompt.replace(/almond/gi, 'oval'),
+    (prompt: string) => prompt.replace(/almond/gi, 'square'),
+    (prompt: string) => prompt.replace(/almond/gi, 'round'),
+    (prompt: string) => prompt.replace(/almond/gi, 'stiletto'),
+    (prompt: string) => prompt.replace(/almond/gi, 'ballerina'),
+    (prompt: string) => prompt.replace(/almond/gi, 'squoval'),
+    
+    // Add different occasions
+    (prompt: string) => prompt + ' for special occasions',
+    (prompt: string) => prompt + ' for everyday wear',
+    (prompt: string) => prompt + ' for formal events',
+    (prompt: string) => prompt + ' for casual outings',
+    (prompt: string) => prompt + ' for date nights',
+    (prompt: string) => prompt + ' for parties',
+    (prompt: string) => prompt + ' for weddings',
+    (prompt: string) => prompt + ' for holidays',
+    (prompt: string) => prompt + ' for work',
+    (prompt: string) => prompt + ' for vacation',
+    
+    // Add different styles
+    (prompt: string) => prompt + ' in modern style',
+    (prompt: string) => prompt + ' in classic style',
+    (prompt: string) => prompt + ' in trendy style',
+    (prompt: string) => prompt + ' in minimalist style',
+    (prompt: string) => prompt + ' in vintage style',
+    (prompt: string) => prompt + ' in bohemian style',
+    (prompt: string) => prompt + ' in glamorous style',
+    (prompt: string) => prompt + ' in edgy style',
+    (prompt: string) => prompt + ' in romantic style',
+    (prompt: string) => prompt + ' in artistic style',
+    
+    // Add different finishes
+    (prompt: string) => prompt + ' with high-shine finish',
+    (prompt: string) => prompt + ' with satin finish',
+    (prompt: string) => prompt + ' with metallic finish',
+    (prompt: string) => prompt + ' with pearl finish',
+    (prompt: string) => prompt + ' with iridescent finish',
+    (prompt: string) => prompt + ' with matte finish',
+    (prompt: string) => prompt + ' with glossy finish',
+    (prompt: string) => prompt + ' with shimmer finish',
+    (prompt: string) => prompt + ' with chrome finish',
+    (prompt: string) => prompt + ' with holographic finish',
+    
+    // Add different lengths
+    (prompt: string) => prompt + ' on short nails',
+    (prompt: string) => prompt + ' on medium nails',
+    (prompt: string) => prompt + ' on long nails',
+    (prompt: string) => prompt + ' on extra-long nails',
+    (prompt: string) => prompt + ' on natural length',
+    (prompt: string) => prompt + ' on almond-shaped nails',
+    (prompt: string) => prompt + ' on coffin-shaped nails',
+    (prompt: string) => prompt + ' on square-shaped nails',
+    (prompt: string) => prompt + ' on oval-shaped nails',
+    (prompt: string) => prompt + ' on stiletto-shaped nails',
+    
+    // Add different color variations
+    (prompt: string) => prompt.replace(/blue/gi, 'navy blue'),
+    (prompt: string) => prompt.replace(/red/gi, 'burgundy'),
+    (prompt: string) => prompt.replace(/green/gi, 'emerald'),
+    (prompt: string) => prompt.replace(/purple/gi, 'lavender'),
+    (prompt: string) => prompt.replace(/pink/gi, 'rose'),
+    (prompt: string) => prompt.replace(/gold/gi, 'rose gold'),
+    (prompt: string) => prompt.replace(/silver/gi, 'platinum'),
+    (prompt: string) => prompt.replace(/white/gi, 'ivory'),
+    (prompt: string) => prompt.replace(/black/gi, 'charcoal'),
+  ];
+  
+  const variationIndex = (variationNumber - 1) % variations.length;
+  return variations[variationIndex](basePrompt);
+}
+
 export function getAllCategories(): string[] {
   return PROMPT_CATEGORIES.map(cat => cat.name);
 }

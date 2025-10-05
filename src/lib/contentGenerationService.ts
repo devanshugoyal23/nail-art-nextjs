@@ -504,27 +504,54 @@ export async function generateForUnderPopulatedTagPages(): Promise<GenerationRes
     let totalGenerated = 0;
     const generatedTags: string[] = [];
     
+    // FIXED: Load all items once at the beginning to avoid repeated database calls
+    console.log('Loading all gallery items...');
+    const allItems = await getGalleryItems();
+    console.log(`Loaded ${allItems.length} total items`);
+    
+    // FIXED: Process only the first 50 critical tag pages to prevent infinite loops
+    const limitedTagPages = criticalTagPages.slice(0, 50);
+    console.log(`Processing ${limitedTagPages.length} critical tag pages...`);
+    
     // Check each critical tag page
-    for (const tagPage of criticalTagPages) {
-      const allItems = await getGalleryItems();
+    for (let i = 0; i < limitedTagPages.length; i++) {
+      const tagPage = limitedTagPages[i];
+      
+      // FIXED: Add progress logging
+      console.log(`Processing ${i + 1}/${limitedTagPages.length}: ${tagPage.name} (${tagPage.type})`);
+      
       const filteredItems = filterGalleryItemsByTag(allItems, tagPage.type, tagPage.value);
       
       // If this tag page has less than 3 items, generate content for it
       if (filteredItems.length < 3) {
-        const needed = 3 - filteredItems.length;
+        const needed = Math.min(3 - filteredItems.length, 3); // FIXED: Cap at 3 items max per tag
         
-        // Generate content specifically for this tag
-        // const prompt = `Create ${needed} unique nail art designs specifically for ${tagPage.name.toLowerCase()} technique. Focus on ${tagPage.name.toLowerCase()} styles, methods, and aesthetics. Make each design distinct and showcase different aspects of ${tagPage.name.toLowerCase()}.`;
+        console.log(`Generating ${needed} items for ${tagPage.name} (currently has ${filteredItems.length} items)`);
         
         try {
           const result = await generateCategoryNailArt(tagPage.name, needed);
-          totalGenerated += result.length;
-          generatedTags.push(`${tagPage.type}:${tagPage.value}`);
+          if (result && result.length > 0) {
+            totalGenerated += result.length;
+            generatedTags.push(`${tagPage.type}:${tagPage.value}`);
+            console.log(`✅ Generated ${result.length} items for ${tagPage.name}`);
+            
+            // FIXED: Add the new items to our local cache to avoid regenerating
+            allItems.push(...result);
+          }
         } catch (error) {
-          console.error(`Error generating content for ${tagPage.name}:`, error);
+          console.error(`❌ Error generating content for ${tagPage.name}:`, error);
         }
+      } else {
+        console.log(`✅ ${tagPage.name} already has ${filteredItems.length} items (sufficient)`);
+      }
+      
+      // FIXED: Add small delay to prevent overwhelming the system
+      if (i < limitedTagPages.length - 1) {
+        await new Promise(resolve => setTimeout(resolve, 1000));
       }
     }
+    
+    console.log(`Generation completed. Generated ${totalGenerated} items for ${generatedTags.length} tag pages.`);
     
     return {
       generated: totalGenerated,

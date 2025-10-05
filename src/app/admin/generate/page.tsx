@@ -154,7 +154,7 @@ export default function GenerateGalleryPage() {
     setCanStop(true);
     setGenerationProgress({
       current: 0,
-      total: 200, // Approximate number of critical tag pages
+      total: 50, // FIXED: Limited to 50 tag pages to prevent infinite loops
       currentPage: 'Starting generation...',
       isGenerating: true
     });
