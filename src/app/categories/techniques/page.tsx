@@ -1,6 +1,8 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import TagCollection from '@/components/TagCollection';
+import { getGalleryItemsByTechnique } from '@/lib/galleryService';
+import OptimizedImage from '@/components/OptimizedImage';
 
 export const metadata: Metadata = {
   title: 'Nail Art Techniques | Nail Art Categories | AI Nail Art Studio',
@@ -94,7 +96,18 @@ const techniques = [
   }
 ];
 
-export default function TechniquesPage() {
+export default async function TechniquesPage() {
+  // Fetch sample images for each technique
+  const techniqueImages = await Promise.all(
+    techniques.map(async (technique) => {
+      const images = await getGalleryItemsByTechnique(technique.slug, 1);
+      return {
+        ...technique,
+        sampleImage: images[0]?.image_url || null
+      };
+    })
+  );
+
   return (
     <div className="min-h-screen bg-black">
       <div className="max-w-7xl mx-auto px-4 py-8">
@@ -121,16 +134,33 @@ export default function TechniquesPage() {
 
         {/* Techniques Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-          {techniques.map((technique, index) => (
+          {techniqueImages.map((technique, index) => (
             <Link
               key={index}
               href={`/techniques/${technique.slug}`}
               className="group bg-gray-800 rounded-xl overflow-hidden hover:bg-gray-700 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-2xl"
             >
-              <div className="relative h-48 bg-gradient-to-br from-purple-600 to-indigo-600">
+              <div className="relative h-48">
+                {technique.sampleImage ? (
+                  <OptimizedImage
+                    src={technique.sampleImage}
+                    alt={`${technique.name} nail art design`}
+                    designName={technique.name}
+                    width={400}
+                    height={192}
+                    className="w-full h-full object-cover"
+                    priority={index < 3}
+                  />
+                ) : (
+                  <div className="w-full h-full bg-gradient-to-br from-purple-600 to-indigo-600 flex items-center justify-center">
+                    <div className="text-6xl opacity-80">{technique.emoji}</div>
+                  </div>
+                )}
                 <div className="absolute inset-0 bg-black/20"></div>
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-6xl opacity-80">{technique.emoji}</div>
+                  {!technique.sampleImage && (
+                    <div className="text-6xl opacity-80">{technique.emoji}</div>
+                  )}
                 </div>
                 <div className="absolute top-4 right-4">
                   <span className={`px-2 py-1 rounded text-xs font-semibold ${

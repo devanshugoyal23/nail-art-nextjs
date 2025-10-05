@@ -1,6 +1,8 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import TagCollection from '@/components/TagCollection';
+import { getGalleryItemsByStyle } from '@/lib/galleryService';
+import OptimizedImage from '@/components/OptimizedImage';
 
 export const metadata: Metadata = {
   title: 'Nail Art Styles | Nail Art Categories | AI Nail Art Studio',
@@ -86,7 +88,18 @@ const styles = [
   }
 ];
 
-export default function StylesPage() {
+export default async function StylesPage() {
+  // Fetch sample images for each style
+  const styleImages = await Promise.all(
+    styles.map(async (style) => {
+      const images = await getGalleryItemsByStyle(style.slug, 1);
+      return {
+        ...style,
+        sampleImage: images[0]?.image_url || null
+      };
+    })
+  );
+
   return (
     <div className="min-h-screen bg-black">
       <div className="max-w-7xl mx-auto px-4 py-8">
@@ -114,16 +127,33 @@ export default function StylesPage() {
 
         {/* Styles Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-          {styles.map((style, index) => (
+          {styleImages.map((style, index) => (
             <Link
               key={index}
               href={`/nail-art/style/${style.slug}`}
               className="group bg-gray-800 rounded-xl overflow-hidden hover:bg-gray-700 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-2xl"
             >
-              <div className="relative h-48 bg-gradient-to-br from-purple-600 to-indigo-600">
+              <div className="relative h-48">
+                {style.sampleImage ? (
+                  <OptimizedImage
+                    src={style.sampleImage}
+                    alt={`${style.name} nail art design`}
+                    designName={style.name}
+                    width={400}
+                    height={192}
+                    className="w-full h-full object-cover"
+                    priority={index < 3}
+                  />
+                ) : (
+                  <div className="w-full h-full bg-gradient-to-br from-purple-600 to-indigo-600 flex items-center justify-center">
+                    <div className="text-6xl opacity-80">{style.emoji}</div>
+                  </div>
+                )}
                 <div className="absolute inset-0 bg-black/20"></div>
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-6xl opacity-80">{style.emoji}</div>
+                  {!style.sampleImage && (
+                    <div className="text-6xl opacity-80">{style.emoji}</div>
+                  )}
                 </div>
               </div>
               

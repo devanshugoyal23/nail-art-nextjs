@@ -519,6 +519,168 @@ export function filterGalleryItemsByTag(items: GalleryItem[], tagType: string, t
 }
 
 /**
+ * Get gallery items by color
+ * @param color - The color to filter by
+ * @param limit - Maximum number of items to return
+ * @returns Array of gallery items with the specified color
+ */
+export async function getGalleryItemsByColor(color: string, limit: number = 3): Promise<GalleryItem[]> {
+  try {
+    const { data, error } = await supabase
+      .from('gallery_items')
+      .select('*')
+      .contains('colors', [color])
+      .order('created_at', { ascending: false })
+      .limit(limit)
+
+    if (error) {
+      console.error('Error fetching gallery items by color:', error)
+      return []
+    }
+
+    return data || []
+  } catch (error) {
+    console.error('Error fetching gallery items by color:', error)
+    return []
+  }
+}
+
+/**
+ * Get gallery items by technique
+ * @param technique - The technique to filter by
+ * @param limit - Maximum number of items to return
+ * @returns Array of gallery items with the specified technique
+ */
+export async function getGalleryItemsByTechnique(technique: string, limit: number = 3): Promise<GalleryItem[]> {
+  try {
+    const { data, error } = await supabase
+      .from('gallery_items')
+      .select('*')
+      .contains('techniques', [technique])
+      .order('created_at', { ascending: false })
+      .limit(limit)
+
+    if (error) {
+      console.error('Error fetching gallery items by technique:', error)
+      return []
+    }
+
+    return data || []
+  } catch (error) {
+    console.error('Error fetching gallery items by technique:', error)
+    return []
+  }
+}
+
+/**
+ * Get gallery items by occasion
+ * @param occasion - The occasion to filter by
+ * @param limit - Maximum number of items to return
+ * @returns Array of gallery items with the specified occasion
+ */
+export async function getGalleryItemsByOccasion(occasion: string, limit: number = 3): Promise<GalleryItem[]> {
+  try {
+    const { data, error } = await supabase
+      .from('gallery_items')
+      .select('*')
+      .contains('occasions', [occasion])
+      .order('created_at', { ascending: false })
+      .limit(limit)
+
+    if (error) {
+      console.error('Error fetching gallery items by occasion:', error)
+      return []
+    }
+
+    return data || []
+  } catch (error) {
+    console.error('Error fetching gallery items by occasion:', error)
+    return []
+  }
+}
+
+/**
+ * Get gallery items by style
+ * @param style - The style to filter by
+ * @param limit - Maximum number of items to return
+ * @returns Array of gallery items with the specified style
+ */
+export async function getGalleryItemsByStyle(style: string, limit: number = 3): Promise<GalleryItem[]> {
+  try {
+    const { data, error } = await supabase
+      .from('gallery_items')
+      .select('*')
+      .contains('styles', [style])
+      .order('created_at', { ascending: false })
+      .limit(limit)
+
+    if (error) {
+      console.error('Error fetching gallery items by style:', error)
+      return []
+    }
+
+    return data || []
+  } catch (error) {
+    console.error('Error fetching gallery items by style:', error)
+    return []
+  }
+}
+
+/**
+ * Get gallery items by season
+ * @param season - The season to filter by
+ * @param limit - Maximum number of items to return
+ * @returns Array of gallery items with the specified season
+ */
+export async function getGalleryItemsBySeason(season: string, limit: number = 3): Promise<GalleryItem[]> {
+  try {
+    const { data, error } = await supabase
+      .from('gallery_items')
+      .select('*')
+      .contains('seasons', [season])
+      .order('created_at', { ascending: false })
+      .limit(limit)
+
+    if (error) {
+      console.error('Error fetching gallery items by season:', error)
+      return []
+    }
+
+    return data || []
+  } catch (error) {
+    console.error('Error fetching gallery items by season:', error)
+    return []
+  }
+}
+
+/**
+ * Get gallery items by shape
+ * @param shape - The shape to filter by
+ * @param limit - Maximum number of items to return
+ * @returns Array of gallery items with the specified shape
+ */
+export async function getGalleryItemsByShape(shape: string, limit: number = 3): Promise<GalleryItem[]> {
+  try {
+    const { data, error } = await supabase
+      .from('gallery_items')
+      .select('*')
+      .contains('shapes', [shape])
+      .order('created_at', { ascending: false })
+      .limit(limit)
+
+    if (error) {
+      console.error('Error fetching gallery items by shape:', error)
+      return []
+    }
+
+    return data || []
+  } catch (error) {
+    console.error('Error fetching gallery items by shape:', error)
+    return []
+  }
+}
+
+/**
  * Migrate existing gallery items to include tags
  * This function should be run once to populate tags for existing items
  */

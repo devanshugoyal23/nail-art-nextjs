@@ -1,6 +1,8 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import TagCollection from '@/components/TagCollection';
+import { getGalleryItemsByColor } from '@/lib/galleryService';
+import OptimizedImage from '@/components/OptimizedImage';
 
 export const metadata: Metadata = {
   title: 'Nail Art Colors | Nail Art Categories | AI Nail Art Studio',
@@ -77,7 +79,18 @@ const colors = [
   }
 ];
 
-export default function ColorsPage() {
+export default async function ColorsPage() {
+  // Fetch sample images for each color
+  const colorImages = await Promise.all(
+    colors.map(async (color) => {
+      const images = await getGalleryItemsByColor(color.slug, 1);
+      return {
+        ...color,
+        sampleImage: images[0]?.image_url || null
+      };
+    })
+  );
+
   return (
     <div className="min-h-screen bg-black">
       <div className="max-w-7xl mx-auto px-4 py-8">
@@ -104,16 +117,33 @@ export default function ColorsPage() {
 
         {/* Colors Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-          {colors.map((color, index) => (
+          {colorImages.map((color, index) => (
             <Link
               key={index}
               href={`/nail-colors/${color.slug}`}
               className="group bg-gray-800 rounded-xl overflow-hidden hover:bg-gray-700 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-2xl"
             >
-              <div className={`relative h-48 ${color.color}`}>
+              <div className="relative h-48">
+                {color.sampleImage ? (
+                  <OptimizedImage
+                    src={color.sampleImage}
+                    alt={`${color.name} nail art design`}
+                    designName={color.name}
+                    width={400}
+                    height={192}
+                    className="w-full h-full object-cover"
+                    priority={index < 3}
+                  />
+                ) : (
+                  <div className={`w-full h-full ${color.color} flex items-center justify-center`}>
+                    <div className="text-6xl opacity-80">{color.emoji}</div>
+                  </div>
+                )}
                 <div className="absolute inset-0 bg-black/20"></div>
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-6xl opacity-80">{color.emoji}</div>
+                  {!color.sampleImage && (
+                    <div className="text-6xl opacity-80">{color.emoji}</div>
+                  )}
                 </div>
               </div>
               

@@ -1,6 +1,8 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import TagCollection from '@/components/TagCollection';
+import { getGalleryItemsByShape } from '@/lib/galleryService';
+import OptimizedImage from '@/components/OptimizedImage';
 
 export const metadata: Metadata = {
   title: 'Nail Shapes | Nail Art Categories | AI Nail Art Studio',
@@ -54,7 +56,18 @@ const nailShapes = [
   }
 ];
 
-export default function NailShapesPage() {
+export default async function NailShapesPage() {
+  // Fetch sample images for each nail shape
+  const shapeImages = await Promise.all(
+    nailShapes.map(async (shape) => {
+      const images = await getGalleryItemsByShape(shape.slug, 1);
+      return {
+        ...shape,
+        sampleImage: images[0]?.image_url || null
+      };
+    })
+  );
+
   return (
     <div className="min-h-screen bg-black">
       <div className="max-w-7xl mx-auto px-4 py-8">
@@ -81,16 +94,33 @@ export default function NailShapesPage() {
 
         {/* Nail Shapes Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-          {nailShapes.map((shape, index) => (
+          {shapeImages.map((shape, index) => (
             <Link
               key={index}
               href={`/nail-art/${shape.slug}`}
               className="group bg-gray-800 rounded-xl overflow-hidden hover:bg-gray-700 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-2xl"
             >
-              <div className="relative h-48 bg-gradient-to-br from-purple-600 to-indigo-600">
+              <div className="relative h-48">
+                {shape.sampleImage ? (
+                  <OptimizedImage
+                    src={shape.sampleImage}
+                    alt={`${shape.name} nail art design`}
+                    designName={shape.name}
+                    width={400}
+                    height={192}
+                    className="w-full h-full object-cover"
+                    priority={index < 3}
+                  />
+                ) : (
+                  <div className="w-full h-full bg-gradient-to-br from-purple-600 to-indigo-600 flex items-center justify-center">
+                    <div className="text-6xl opacity-80">💅</div>
+                  </div>
+                )}
                 <div className="absolute inset-0 bg-black/20"></div>
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-6xl opacity-80">💅</div>
+                  {!shape.sampleImage && (
+                    <div className="text-6xl opacity-80">💅</div>
+                  )}
                 </div>
               </div>
               
