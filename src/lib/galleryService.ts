@@ -151,6 +151,86 @@ export async function getAllCategories(): Promise<string[]> {
   }
 }
 
+/**
+ * Get categories that meet minimum content requirements
+ */
+export async function getCategoriesWithMinimumContent(minItems: number = 3): Promise<string[]> {
+  try {
+    const { data, error } = await supabase
+      .from('gallery_items')
+      .select('category')
+      .not('category', 'is', null);
+      
+    if (error) {
+      console.error('Error fetching categories for content check:', error);
+      return [];
+    }
+    
+    const categoryCounts = data.reduce((acc, item) => {
+      acc[item.category] = (acc[item.category] || 0) + 1;
+      return acc;
+    }, {} as Record<string, number>);
+    
+    return Object.entries(categoryCounts)
+      .filter(([_, count]) => count >= minItems)
+      .map(([category]) => category);
+  } catch (error) {
+    console.error('Error getting categories with minimum content:', error);
+    return [];
+  }
+}
+
+/**
+ * Get under-populated categories that need more content
+ */
+export async function getUnderPopulatedCategories(minItems: number = 3): Promise<string[]> {
+  try {
+    const { data, error } = await supabase
+      .from('gallery_items')
+      .select('category')
+      .not('category', 'is', null);
+      
+    if (error) {
+      console.error('Error fetching under-populated categories:', error);
+      return [];
+    }
+    
+    const categoryCounts = data.reduce((acc, item) => {
+      acc[item.category] = (acc[item.category] || 0) + 1;
+      return acc;
+    }, {} as Record<string, number>);
+    
+    return Object.entries(categoryCounts)
+      .filter(([_, count]) => count < minItems)
+      .map(([category]) => category);
+  } catch (error) {
+    console.error('Error getting under-populated categories:', error);
+    return [];
+  }
+}
+
+/**
+ * Get category item count
+ */
+export async function getCategoryItemCount(category: string): Promise<number> {
+  try {
+    const { count, error } = await supabase
+      .from('gallery_items')
+      .select('*', { count: 'exact', head: true })
+      .eq('category', category);
+      
+    if (error) {
+      console.error('Error getting category item count:', error);
+      return 0;
+    }
+    
+    return count || 0;
+  } catch (error) {
+    console.error('Error getting category item count:', error);
+    return 0;
+  }
+}
+
 export async function deleteGalleryItem(id: string): Promise<boolean> {
   try {
     // Get the item to find the image filename

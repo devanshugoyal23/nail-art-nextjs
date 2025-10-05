@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { getGalleryItemsByCategory, getAllCategories, generateGalleryItemUrl } from "@/lib/galleryService";
+import { getGalleryItemsByCategory, getCategoriesWithMinimumContent, generateGalleryItemUrl } from "@/lib/galleryService";
 import { Metadata } from "next";
 
 interface CategoryPageProps {
@@ -11,7 +11,8 @@ interface CategoryPageProps {
 }
 
 export async function generateMetadata({ params }: CategoryPageProps): Promise<Metadata> {
-  const category = decodeURIComponent(params.category);
+  const resolvedParams = await params;
+  const category = decodeURIComponent(resolvedParams.category);
   
   return {
     title: `${category} Nail Art Designs | AI Nail Art Studio`,
@@ -24,7 +25,8 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
 }
 
 export async function generateStaticParams() {
-  const categories = await getAllCategories();
+  // Only generate static params for categories with minimum content
+  const categories = await getCategoriesWithMinimumContent(3);
   
   return categories.map((category) => ({
     category: encodeURIComponent(category),
@@ -32,7 +34,8 @@ export async function generateStaticParams() {
 }
 
 export default async function CategoryPage({ params }: CategoryPageProps) {
-  const category = decodeURIComponent(params.category);
+  const resolvedParams = await params;
+  const category = decodeURIComponent(resolvedParams.category);
   const items = await getGalleryItemsByCategory(category);
 
   if (items.length === 0) {

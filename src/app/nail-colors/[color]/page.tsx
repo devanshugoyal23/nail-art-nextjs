@@ -60,11 +60,36 @@ const colorInfo: { [key: string]: { name: string; description: string; emoji: st
     description: 'Sparkly and fun, glitter nails add glamour to any look',
     emoji: '✨',
     gradient: 'from-yellow-400 to-pink-500'
+  },
+  'orange': {
+    name: 'Orange Nail Art',
+    description: 'Vibrant and energetic, orange nails bring warmth and excitement',
+    emoji: '🧡',
+    gradient: 'from-orange-400 to-red-500'
+  },
+  'yellow': {
+    name: 'Yellow Nail Art',
+    description: 'Bright and cheerful, yellow nails radiate positivity',
+    emoji: '💛',
+    gradient: 'from-yellow-400 to-orange-400'
+  },
+  'gold': {
+    name: 'Gold Nail Art',
+    description: 'Luxurious and elegant, gold nails add sophistication',
+    emoji: '✨',
+    gradient: 'from-yellow-400 to-yellow-600'
+  },
+  'silver': {
+    name: 'Silver Nail Art',
+    description: 'Modern and sleek, silver nails offer a metallic finish',
+    emoji: '🤍',
+    gradient: 'from-gray-300 to-gray-500'
   }
 };
 
 export async function generateMetadata({ params }: ColorPageProps): Promise<Metadata> {
-  const color = params.color;
+  const resolvedParams = await params;
+  const color = resolvedParams.color;
   const colorData = colorInfo[color];
   
   if (!colorData) {
@@ -84,7 +109,8 @@ export async function generateMetadata({ params }: ColorPageProps): Promise<Meta
 }
 
 export default async function ColorPage({ params }: ColorPageProps) {
-  const color = params.color;
+  const resolvedParams = await params;
+  const color = resolvedParams.color;
   const colorData = colorInfo[color];
   
   if (!colorData) {

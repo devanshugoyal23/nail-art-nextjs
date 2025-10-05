@@ -25,7 +25,8 @@ interface DesignDetailPageProps {
 }
 
 export async function generateMetadata({ params }: DesignDetailPageProps): Promise<Metadata> {
-  const item = await getGalleryItemBySlug('design', params.slug);
+  const resolvedParams = await params;
+  const item = await getGalleryItemBySlug('design', resolvedParams.slug);
   
   if (!item) {
     return {
@@ -95,7 +96,8 @@ export async function generateMetadata({ params }: DesignDetailPageProps): Promi
 }
 
 export default async function DesignDetailPage({ params }: DesignDetailPageProps) {
-  const item = await getGalleryItemBySlug('design', params.slug);
+  const resolvedParams = await params;
+  const item = await getGalleryItemBySlug('design', resolvedParams.slug);
 
   if (!item) {
     notFound();
@@ -684,7 +686,12 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
                 {editorial.troubleshooting.map((issue, i) => (
                   <li key={i} className="flex items-start">
                     <span className="text-yellow-400 mr-2">⚠</span>
-                    {issue}
+                    <div>
+                      <div className="font-medium text-white">{typeof issue === 'object' ? issue.q : issue}</div>
+                      {typeof issue === 'object' && issue.a && (
+                        <div className="text-gray-400 text-sm mt-1">{issue.a}</div>
+                      )}
+                    </div>
                   </li>
                 ))}
               </ul>

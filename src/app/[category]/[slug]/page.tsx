@@ -19,7 +19,8 @@ interface GalleryDetailPageProps {
 }
 
 export async function generateMetadata({ params }: GalleryDetailPageProps): Promise<Metadata> {
-  const item = await getGalleryItemBySlug(params.category, params.slug);
+  const resolvedParams = await params;
+  const item = await getGalleryItemBySlug(resolvedParams.category, resolvedParams.slug);
   
   if (!item) {
     return {
@@ -42,14 +43,15 @@ export async function generateMetadata({ params }: GalleryDetailPageProps): Prom
 }
 
 export default async function GalleryDetailPage({ params }: GalleryDetailPageProps) {
-  const item = await getGalleryItemBySlug(params.category, params.slug);
+  const resolvedParams = await params;
+  const item = await getGalleryItemBySlug(resolvedParams.category, resolvedParams.slug);
 
   if (!item) {
     notFound();
   }
 
   // Fetch other items from the same category
-  const categoryItems = item.category ? await getGalleryItemsByCategorySlug(params.category) : [];
+  const categoryItems = item.category ? await getGalleryItemsByCategorySlug(resolvedParams.category) : [];
   // Filter out the current item from the category items
   const otherCategoryItems = categoryItems.filter(categoryItem => categoryItem.id !== item.id);
 
@@ -547,7 +549,12 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
                 {editorial.troubleshooting.map((issue, i) => (
                   <li key={i} className="flex items-start">
                     <span className="text-yellow-400 mr-2">⚠</span>
-                    {issue}
+                    <div>
+                      <div className="font-medium text-white">{typeof issue === 'object' ? issue.q : issue}</div>
+                      {typeof issue === 'object' && issue.a && (
+                        <div className="text-gray-400 text-sm mt-1">{issue.a}</div>
+                      )}
+                    </div>
                   </li>
                 ))}
               </ul>

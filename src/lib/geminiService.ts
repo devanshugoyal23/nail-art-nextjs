@@ -88,7 +88,7 @@ export interface NailArtEditorial {
   maintenance: string[];
   aftercare: string[];
   removal: string[];
-  troubleshooting: string[];
+  troubleshooting: string[] | { q: string; a: string }[];
   colorVariations: string[];
   occasions: string[];
   skillLevel: 'Beginner' | 'Intermediate' | 'Advanced';
@@ -114,39 +114,41 @@ export async function generateEditorialContentForNailArt(
     ? `Use these keywords naturally (1-2 times total, NO stuffing): ${relatedKeywords.slice(0, 3).join(', ')}.` 
     : '';
 
-  const sys = `You are a professional nail artist and SEO copywriter. Return STRICT JSON only with these keys:
+  const sys = `You are a professional nail artist and SEO copywriter. Create UNIQUE, DESIGN-SPECIFIC content for this nail art design.
+
+Return STRICT JSON only with these keys:
 - title (string, SEO-optimized, 50-60 characters)
-- intro (string, 2-3 sentences, engaging hook)
+- intro (string, 2-3 sentences describing this design)
 - primaryKeyword (string, main search term)
 - secondaryKeywords (array of 3-5 related terms)
 - quickFacts (array of 4-5 key facts about this design)
-- trendingNow (string, why this design is popular right now)
-- seasonalTips (string, best seasons/occasions for this design)
+- trendingNow (string, why this design is popular)
+- seasonalTips (string, best seasons/occasions)
 - attributes (object: shape, length, finish[], colors[], technique[])
-- audience (string, who it suits, e.g., "short nails, beginners")
+- audience (string, who this design suits)
 - timeMinutes (number, 30-90)
 - difficulty ("Easy"|"Medium"|"Advanced")
 - costEstimate (string, e.g., "$15-30")
-- supplies (array of 4-6 essential items with brand examples)
-- steps (array of 4-6 detailed steps with timing)
+- supplies (array of 4-6 essential items)
+- steps (array of 4-6 detailed steps)
 - variations (array of 3 creative alternatives)
-- expertTip (string, 1-2 sentences, technique insight)
-- maintenance (array of 3-4 daily/weekly maintenance tips)
-- aftercare (array of 3-4 immediate aftercare tips)
+- expertTip (string, 1-2 sentences)
+- maintenance (array of 3-4 maintenance tips)
+- aftercare (array of 3-4 aftercare tips)
 - removal (array of 2-3 removal steps)
 - troubleshooting (array of 3-4 common issues + fixes)
-- colorVariations (array of 3-4 alternative color combinations)
-- occasions (array of 4-5 best occasions to wear this)
+- colorVariations (array of 3-4 alternative colors)
+- occasions (array of 4-5 best occasions)
 - skillLevel (string, "Beginner"|"Intermediate"|"Advanced")
-- socialProof (string, why this design is popular/trending)
-- faqs (array of 5-6 objects: q, a - comprehensive questions)
-- internalLinks (array of 3-4 objects: label, href - use slugified versions)
-- ctaText (string, call-to-action for virtual try-on)
+- socialProof (string, why this design is popular)
+- faqs (array of 5-6 objects: q, a)
+- internalLinks (array of 3-4 objects: label, href)
+- ctaText (string, call-to-action)
 - inspiration (string, what inspired this design)
 
-Be helpful, specific, natural, and SEO-friendly. Focus on user value and search intent. ${keywordHint}`;
+Make content specific to this design. Be helpful, specific, natural, and SEO-friendly. ${keywordHint}`;
 
-  const user = `Design: ${designName || ''}\nCategory: ${category || ''}\nPrompt: ${prompt || ''}\nAudience: consumers searching nail art ideas. Tone: friendly, expert, practical.`;
+  const user = `Design: ${designName || ''}\nCategory: ${category || ''}\nPrompt: ${prompt || ''}\n\nAnalyze this SPECIFIC nail art design and create unique content that would only apply to this exact design. Consider the colors, patterns, techniques, and complexity mentioned in the prompt. Make every field specific to this design - no generic content.`;
 
   const response = await aiInstance.models.generateContent({
     model: 'gemini-2.0-flash',
@@ -172,95 +174,32 @@ Be helpful, specific, natural, and SEO-friendly. Focus on user value and search 
   }
 
   try {
-    const data = JSON.parse(text) as NailArtEditorial;
-    // Basic shape to ensure required keys exist
-    return {
-      title: data.title || (designName ? `${designName}` : 'About This Design'),
-      intro: data.intro || (prompt || ''),
-      primaryKeyword: data.primaryKeyword || category || 'nail art',
-      secondaryKeywords: data.secondaryKeywords || [],
-      quickFacts: data.quickFacts || ['Perfect for special occasions', 'Works on all nail shapes', 'Easy to customize', 'Long-lasting design'],
-      trendingNow: data.trendingNow || 'This design is trending for its versatility and stunning visual impact.',
-      seasonalTips: data.seasonalTips || 'Perfect for year-round wear, with seasonal color variations available.',
-      attributes: {
-        shape: data.attributes?.shape,
-        length: data.attributes?.length,
-        finish: data.attributes?.finish || [],
-        colors: data.attributes?.colors || [],
-        technique: data.attributes?.technique || [],
-      },
-      audience: data.audience || 'All skill levels',
-      timeMinutes: data.timeMinutes || 45,
-      difficulty: data.difficulty || 'Medium',
-      costEstimate: data.costEstimate || '$20-40',
-      supplies: data.supplies || ['Base coat','Nude/primary color polish','Detail liner brush','Glitter or chrome powder','Glossy top coat'],
-      steps: data.steps || [
-        'Prep nails and apply base coat.',
-        'Apply base color and cure/dry.',
-        'Add design details and accents.',
-        'Seal with glossy top coat.'
-      ],
-      variations: data.variations || ['Swap primary color','Change shape to square/coffin','Use chrome instead of glitter'],
-      expertTip: data.expertTip || 'Work with thin layers for better adhesion and longevity.',
-      maintenance: data.maintenance || ['Apply cuticle oil daily', 'Avoid harsh chemicals', 'Use gloves for cleaning', 'Touch up as needed'],
-      aftercare: data.aftercare || ['Avoid prolonged water exposure for 24 hours','Apply cuticle oil daily','Wear gloves when cleaning'],
-      removal: data.removal || ['Soak cotton in acetone, wrap with foil for 10 min','Gently push off softened polish','Buff and moisturize'],
-      troubleshooting: data.troubleshooting || ['Chipping: ensure proper dehydration before base','Uneven lines: use a striping brush and steady your hand'],
-      colorVariations: data.colorVariations || ['Try with gold accents', 'Switch to pastel base', 'Add metallic details', 'Use ombre effect'],
-      occasions: data.occasions || ['Date nights', 'Special events', 'Work meetings', 'Casual outings', 'Holiday parties'],
-      skillLevel: data.skillLevel || 'Intermediate',
-      socialProof: data.socialProof || 'This design is popular among nail art enthusiasts for its elegant simplicity.',
-      faqs: data.faqs || [
-        { q: 'How long does it last?', a: 'With a gel top coat, typically 2–3 weeks.' },
-        { q: 'What shapes work best?', a: 'Almond and coffin showcase artwork nicely.' },
-        { q: 'Can beginners do this?', a: 'Yes, with practice and patience.' },
-        { q: 'What tools do I need?', a: 'Basic nail art brushes and quality polish.' }
-      ],
-      internalLinks: data.internalLinks || [],
-      ctaText: data.ctaText || 'Try this design virtually with our AI tool!',
-      inspiration: data.inspiration || 'Inspired by modern minimalist trends and classic nail art techniques.',
-    };
-  } catch {
-    // Fallback minimal editorial
-    return {
-      title: designName || 'About This Design',
-      intro: prompt || '',
-      primaryKeyword: category || 'nail art',
-      secondaryKeywords: [],
-      quickFacts: ['Perfect for special occasions', 'Works on all nail shapes', 'Easy to customize', 'Long-lasting design'],
-      trendingNow: 'This design is trending for its versatility and stunning visual impact.',
-      seasonalTips: 'Perfect for year-round wear, with seasonal color variations available.',
-      attributes: {},
-      audience: 'All skill levels',
-      timeMinutes: 45,
-      difficulty: 'Medium' as const,
-      costEstimate: '$20-40',
-      supplies: ['Base coat','Nude/primary color polish','Detail liner brush','Glitter or chrome powder','Glossy top coat'],
-      steps: [
-        'Prep nails and apply base coat.',
-        'Apply base color and cure/dry.',
-        'Add design details and accents.',
-        'Seal with glossy top coat.'
-      ],
-      variations: ['Swap primary color','Change shape to square/coffin','Use chrome instead of glitter'],
-      expertTip: 'Work with thin layers for better adhesion and longevity.',
-      maintenance: ['Apply cuticle oil daily', 'Avoid harsh chemicals', 'Use gloves for cleaning', 'Touch up as needed'],
-      aftercare: ['Avoid prolonged water exposure for 24 hours','Apply cuticle oil daily','Wear gloves when cleaning'],
-      removal: ['Soak cotton in acetone, wrap with foil for 10 min','Gently push off softened polish','Buff and moisturize'],
-      troubleshooting: ['Chipping: ensure proper dehydration before base','Uneven lines: use a striping brush and steady your hand'],
-      colorVariations: ['Try with gold accents', 'Switch to pastel base', 'Add metallic details', 'Use ombre effect'],
-      occasions: ['Date nights', 'Special events', 'Work meetings', 'Casual outings', 'Holiday parties'],
-      skillLevel: 'Intermediate' as const,
-      socialProof: 'This design is popular among nail art enthusiasts for its elegant simplicity.',
-      faqs: [
-        { q: 'How long does it last?', a: 'With a gel top coat, typically 2–3 weeks.' },
-        { q: 'What shapes work best?', a: 'Almond and coffin showcase artwork nicely.' },
-        { q: 'Can beginners do this?', a: 'Yes, with practice and patience.' },
-        { q: 'What tools do I need?', a: 'Basic nail art brushes and quality polish.' }
-      ],
-      internalLinks: [],
-      ctaText: 'Try this design virtually with our AI tool!',
-      inspiration: 'Inspired by modern minimalist trends and classic nail art techniques.',
-    };
+    // Clean the response by removing markdown code blocks
+    let cleanText = text.trim();
+    if (cleanText.startsWith('```json')) {
+      cleanText = cleanText.replace(/^```json\s*/, '').replace(/\s*```$/, '');
+    } else if (cleanText.startsWith('```')) {
+      cleanText = cleanText.replace(/^```\s*/, '').replace(/\s*```$/, '');
+    }
+    
+    console.log('Cleaned AI response:', cleanText);
+    const data = JSON.parse(cleanText) as NailArtEditorial;
+    console.log('Parsed data successfully');
+    
+    // Validate that we got meaningful content from AI
+    if (!data.title || !data.intro || !data.supplies || data.supplies.length === 0) {
+      console.error('Insufficient content generated:', {
+        hasTitle: !!data.title,
+        hasIntro: !!data.intro,
+        suppliesCount: data.supplies?.length || 0
+      });
+      throw new Error('AI did not generate sufficient content');
+    }
+    
+    return data;
+  } catch (error) {
+    console.error('Error parsing editorial JSON or insufficient content:', error);
+    console.error('Raw text that failed to parse:', text);
+    throw new Error('Failed to generate unique editorial content for this design');
   }
 }

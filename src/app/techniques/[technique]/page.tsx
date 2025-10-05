@@ -83,16 +83,40 @@ const techniqueInfo: { [key: string]: {
     difficulty: 'Medium',
     time: '45-75 min',
     gradient: 'from-purple-500 to-indigo-500'
+  },
+  'freehand-painting': {
+    name: 'Freehand Painting',
+    description: 'Artistic designs painted directly on nails with brushes for unique, custom looks',
+    emoji: '🖌️',
+    difficulty: 'Advanced',
+    time: '60-90 min',
+    gradient: 'from-pink-500 to-purple-500'
+  },
+  'fine-detailing': {
+    name: 'Fine Detailing',
+    description: 'Intricate details and precision work for sophisticated nail art',
+    emoji: '✨',
+    difficulty: 'Advanced',
+    time: '45-75 min',
+    gradient: 'from-blue-500 to-purple-500'
   }
 };
 
 export async function generateMetadata({ params }: TechniquePageProps): Promise<Metadata> {
-  const technique = params.technique;
+  const resolvedParams = await params;
+  const technique = resolvedParams.technique;
   const techniqueData = techniqueInfo[technique];
   
+  // If technique is not predefined, create dynamic metadata
   if (!techniqueData) {
+    const displayName = technique.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
     return {
-      title: 'Technique Not Found | AI Nail Art Studio',
+      title: `${displayName} Nail Art | AI Nail Art Studio`,
+      description: `Discover beautiful nail art designs using the ${displayName} technique. Explore our collection of AI-generated nail art.`,
+      openGraph: {
+        title: `${displayName} Nail Art`,
+        description: `Discover beautiful nail art designs using the ${displayName} technique.`,
+      },
     };
   }
 
@@ -107,16 +131,37 @@ export async function generateMetadata({ params }: TechniquePageProps): Promise<
 }
 
 export default async function TechniquePage({ params }: TechniquePageProps) {
-  const technique = params.technique;
+  const resolvedParams = await params;
+  const technique = resolvedParams.technique;
   const techniqueData = techniqueInfo[technique];
   
-  if (!techniqueData) {
-    notFound();
-  }
-
   // Get all gallery items and filter by technique
   const allItems = await getGalleryItems();
   const filteredItems = filterGalleryItemsByTag(allItems, 'techniques', technique);
+  
+  // If no items found and no predefined data, show empty state instead of 404
+  if (filteredItems.length === 0 && !techniqueData) {
+    const displayName = technique.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+    return (
+      <div className="min-h-screen bg-black">
+        <div className="max-w-7xl mx-auto px-4 py-8">
+          <div className="text-center py-12">
+            <div className="text-6xl mb-4">🎨</div>
+            <h1 className="text-4xl font-bold text-white mb-4">{displayName} Nail Art</h1>
+            <p className="text-xl text-gray-300 mb-6">
+              We're working on adding more {displayName.toLowerCase()} designs!
+            </p>
+            <Link
+              href="/nail-art-gallery"
+              className="inline-flex items-center bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors"
+            >
+              Browse All Designs
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
   
   // Get all available tags for this technique
   const allTags = getAllTagsFromGalleryItems(filteredItems);
@@ -135,32 +180,38 @@ export default async function TechniquePage({ params }: TechniquePageProps) {
               Techniques
             </Link>
             <span className="text-gray-400">/</span>
-            <span className="text-white font-medium">{techniqueData.name}</span>
+            <span className="text-white font-medium">
+              {techniqueData ? techniqueData.name : technique.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
+            </span>
           </div>
         </nav>
 
         {/* Header */}
         <div className="text-center mb-12">
-          <div className={`w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-r ${techniqueData.gradient} flex items-center justify-center text-4xl`}>
-            {techniqueData.emoji}
+          <div className={`w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-r ${techniqueData?.gradient || 'from-purple-500 to-pink-500'} flex items-center justify-center text-4xl`}>
+            {techniqueData?.emoji || '🎨'}
           </div>
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
-            {techniqueData.name}
+            {techniqueData ? techniqueData.name : technique.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
           </h1>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-6">
-            {techniqueData.description}
+            {techniqueData ? techniqueData.description : `Discover beautiful nail art designs using the ${technique.replace(/-/g, ' ')} technique.`}
           </p>
           
           {/* Technique Info */}
           <div className="flex justify-center gap-8 mb-6">
-            <div className="text-center">
-              <div className="text-2xl font-bold text-white">{techniqueData.difficulty}</div>
-              <div className="text-sm text-gray-400">Difficulty</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-white">{techniqueData.time}</div>
-              <div className="text-sm text-gray-400">Time Required</div>
-            </div>
+            {techniqueData && (
+              <>
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-white">{techniqueData.difficulty}</div>
+                  <div className="text-sm text-gray-400">Difficulty</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-white">{techniqueData.time}</div>
+                  <div className="text-sm text-gray-400">Time Required</div>
+                </div>
+              </>
+            )}
             <div className="text-center">
               <div className="text-2xl font-bold text-white">{filteredItems.length}</div>
               <div className="text-sm text-gray-400">Designs Available</div>

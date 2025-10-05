@@ -9,7 +9,8 @@ interface GalleryDetailPageProps {
 }
 
 export async function generateMetadata({ params }: GalleryDetailPageProps): Promise<Metadata> {
-  const item = await getGalleryItem(params.id);
+  const resolvedParams = await params;
+  const item = await getGalleryItem(resolvedParams.id);
   
   if (!item) {
     return {
@@ -32,7 +33,8 @@ export async function generateMetadata({ params }: GalleryDetailPageProps): Prom
 }
 
 export default async function GalleryDetailPage({ params }: GalleryDetailPageProps) {
-  const item = await getGalleryItem(params.id);
+  const resolvedParams = await params;
+  const item = await getGalleryItem(resolvedParams.id);
 
   if (!item) {
     notFound();

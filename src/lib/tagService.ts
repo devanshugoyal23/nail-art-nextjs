@@ -1,4 +1,4 @@
-import { GalleryItem } from './supabase';
+import { GalleryItem, supabase } from './supabase';
 import { NailArtEditorial } from './geminiService';
 
 export interface TagItem {
@@ -31,12 +31,24 @@ export function extractTagsFromEditorial(editorial: NailArtEditorial): Extracted
 
   // Extract colors from attributes
   if (editorial.attributes?.colors) {
+    // Valid color keywords that can be used for filtering
+    const validColors = ['red', 'blue', 'green', 'purple', 'black', 'white', 'pink', 'yellow', 'orange', 'gold', 'silver', 'glitter', 'brown', 'gray', 'grey'];
+    
     editorial.attributes.colors.forEach(color => {
-      tags.colors.push({
-        label: color,
-        value: color.toLowerCase().replace(/\s+/g, '-'),
-        type: 'color'
-      });
+      // Clean the color name and check if it's valid
+      const cleanColor = color.toLowerCase().trim();
+      const isValidColor = validColors.some(validColor => 
+        cleanColor.includes(validColor) || validColor.includes(cleanColor)
+      );
+      
+      // Only add if it's a valid color (not descriptive text)
+      if (isValidColor && !cleanColor.includes('optional') && !cleanColor.includes('highlights')) {
+        tags.colors.push({
+          label: color,
+          value: cleanColor.replace(/\s+/g, '-'),
+          type: 'color'
+        });
+      }
     });
   }
 
@@ -49,7 +61,7 @@ export function extractTagsFromEditorial(editorial: NailArtEditorial): Extracted
         type: 'technique'
       });
     });
-    }
+  }
 
   // Extract occasions
   if (editorial.occasions) {
@@ -294,4 +306,212 @@ export function getPopularTags(items: GalleryItem[], limit: number = 10): TagIte
     .sort((a, b) => b.count - a.count)
     .slice(0, limit)
     .map(item => item.tag);
+}
+
+/**
+ * Content threshold constants
+ */
+export const CONTENT_THRESHOLDS = {
+  MIN_ITEMS_FOR_CATEGORY: 3,
+  MIN_ITEMS_FOR_TAG_PAGE: 5,
+  MIN_ITEMS_FOR_SEO_PAGE: 8
+};
+
+/**
+ * Get categories that meet minimum content requirements
+ */
+export async function getCategoriesWithMinimumContent(minItems: number = CONTENT_THRESHOLDS.MIN_ITEMS_FOR_CATEGORY): Promise<string[]> {
+  try {
+    const { data, error } = await supabase
+      .from('gallery_items')
+      .select('category')
+      .not('category', 'is', null);
+      
+    if (error) {
+      console.error('Error fetching categories for content check:', error);
+      return [];
+    }
+    
+    const categoryCounts = data.reduce((acc, item) => {
+      acc[item.category] = (acc[item.category] || 0) + 1;
+      return acc;
+    }, {} as Record<string, number>);
+    
+    return Object.entries(categoryCounts)
+      .filter(([_, count]) => count >= minItems)
+      .map(([category]) => category);
+  } catch (error) {
+    console.error('Error getting categories with minimum content:', error);
+    return [];
+  }
+}
+
+/**
+ * Get under-populated categories that need more content
+ */
+export async function getUnderPopulatedCategories(minItems: number = CONTENT_THRESHOLDS.MIN_ITEMS_FOR_CATEGORY): Promise<string[]> {
+  try {
+    const { data, error } = await supabase
+      .from('gallery_items')
+      .select('category')
+      .not('category', 'is', null);
+      
+    if (error) {
+      console.error('Error fetching under-populated categories:', error);
+      return [];
+    }
+    
+    const categoryCounts = data.reduce((acc, item) => {
+      acc[item.category] = (acc[item.category] || 0) + 1;
+      return acc;
+    }, {} as Record<string, number>);
+    
+    return Object.entries(categoryCounts)
+      .filter(([_, count]) => count < minItems)
+      .map(([category]) => category);
+  } catch (error) {
+    console.error('Error getting under-populated categories:', error);
+    return [];
+  }
+}
+
+/**
+ * Consolidate similar tags to reduce fragmentation
+ */
+export async function consolidateSimilarTags(): Promise<{ mergedTags: string[]; consolidatedCategories: string[]; removedDuplicates: number }> {
+  const similarTagGroups = [
+    ['nail stamping', 'stamping designs', 'stamp art', 'nail stamp'],
+    ['french manicure', 'french tips', 'french nails', 'french nail art'],
+    ['christmas nails', 'holiday nails', 'xmas nails', 'christmas nail art'],
+    ['halloween nails', 'spooky nails', 'halloween nail art'],
+    ['summer nails', 'summer nail art', 'summer designs'],
+    ['winter nails', 'winter nail art', 'winter designs'],
+    ['spring nails', 'spring nail art', 'spring designs'],
+    ['fall nails', 'autumn nails', 'fall nail art', 'autumn nail art'],
+    ['wedding nails', 'bridal nails', 'wedding nail art'],
+    ['party nails', 'party nail art', 'celebration nails'],
+    ['work nails', 'office nails', 'professional nails'],
+    ['casual nails', 'everyday nails', 'simple nails'],
+    ['formal nails', 'elegant nails', 'sophisticated nails'],
+    ['date night nails', 'romantic nails', 'date nails'],
+    ['vacation nails', 'travel nails', 'holiday nails'],
+    ['birthday nails', 'celebration nails', 'special occasion nails']
+  ];
+  
+  let mergedTags: string[] = [];
+  let consolidatedCategories: string[] = [];
+  let removedDuplicates = 0;
+  
+  try {
+    for (const group of similarTagGroups) {
+      const primaryTag = group[0];
+      const secondaryTags = group.slice(1);
+      
+      // Check if primary tag exists
+      const { data: primaryData } = await supabase
+        .from('gallery_items')
+        .select('id')
+        .eq('category', primaryTag)
+        .limit(1);
+      
+      if (primaryData && primaryData.length > 0) {
+        // Primary tag exists, merge secondary tags into it
+        for (const secondaryTag of secondaryTags) {
+          const { data: secondaryData } = await supabase
+            .from('gallery_items')
+            .select('id')
+            .eq('category', secondaryTag);
+          
+          if (secondaryData && secondaryData.length > 0) {
+            // Update all items with secondary tag to use primary tag
+            const { error } = await supabase
+              .from('gallery_items')
+              .update({ category: primaryTag })
+              .eq('category', secondaryTag);
+            
+            if (!error) {
+              removedDuplicates += secondaryData.length;
+              mergedTags.push(secondaryTag);
+              consolidatedCategories.push(primaryTag);
+            }
+          }
+        }
+      } else {
+        // Primary tag doesn't exist, check if any secondary tags exist
+        let foundSecondary = false;
+        for (const secondaryTag of secondaryTags) {
+          const { data: secondaryData } = await supabase
+            .from('gallery_items')
+            .select('id')
+            .eq('category', secondaryTag)
+            .limit(1);
+          
+          if (secondaryData && secondaryData.length > 0) {
+            // Use the first found secondary tag as primary
+            const newPrimary = secondaryTag;
+            const otherSecondaries = secondaryTags.filter(tag => tag !== secondaryTag);
+            
+            for (const otherTag of otherSecondaries) {
+              const { data: otherData } = await supabase
+                .from('gallery_items')
+                .select('id')
+                .eq('category', otherTag);
+              
+              if (otherData && otherData.length > 0) {
+                const { error } = await supabase
+                  .from('gallery_items')
+                  .update({ category: newPrimary })
+                  .eq('category', otherTag);
+                
+                if (!error) {
+                  removedDuplicates += otherData.length;
+                  mergedTags.push(otherTag);
+                }
+              }
+            }
+            foundSecondary = true;
+            break;
+          }
+        }
+      }
+    }
+    
+    return { mergedTags, consolidatedCategories, removedDuplicates };
+  } catch (error) {
+    console.error('Error consolidating similar tags:', error);
+    return { mergedTags: [], consolidatedCategories: [], removedDuplicates: 0 };
+  }
+}
+
+/**
+ * Get tag usage statistics
+ */
+export async function getTagUsageStats(): Promise<{ category: string; count: number; needsContent: boolean }[]> {
+  try {
+    const { data, error } = await supabase
+      .from('gallery_items')
+      .select('category')
+      .not('category', 'is', null);
+      
+    if (error) {
+      console.error('Error fetching tag usage stats:', error);
+      return [];
+    }
+    
+    const categoryCounts = data.reduce((acc, item) => {
+      acc[item.category] = (acc[item.category] || 0) + 1;
+      return acc;
+    }, {} as Record<string, number>);
+    
+    return Object.entries(categoryCounts)
+      .map(([category, count]) => ({
+        category,
+        count,
+        needsContent: count < CONTENT_THRESHOLDS.MIN_ITEMS_FOR_CATEGORY
+      }))
+      .sort((a, b) => b.count - a.count);
+  } catch (error) {
+    console.error('Error getting tag usage stats:', error);
+    return [];
+  }
 }

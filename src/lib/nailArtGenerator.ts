@@ -364,3 +364,50 @@ export function getCategoriesByTier(tier: 'TIER_1' | 'TIER_2' | 'TIER_3' | 'TIER
     .filter(cat => cat.priority === tier)
     .map(cat => cat.name);
 }
+
+/**
+ * Auto-generate content for under-populated categories
+ */
+export async function autoGenerateForUnderPopulatedCategories(): Promise<{ generated: number; categories: string[] }> {
+  try {
+    const { getUnderPopulatedCategories, getCategoryItemCount } = await import('./galleryService');
+    const { CONTENT_THRESHOLDS } = await import('./tagService');
+    
+    const underPopulated = await getUnderPopulatedCategories(CONTENT_THRESHOLDS.MIN_ITEMS_FOR_CATEGORY);
+    
+    if (underPopulated.length === 0) {
+      console.log('No under-populated categories found');
+      return { generated: 0, categories: [] };
+    }
+    
+    let totalGenerated = 0;
+    const processedCategories: string[] = [];
+    
+    for (const category of underPopulated) {
+      try {
+        const currentCount = await getCategoryItemCount(category);
+        const targetCount = CONTENT_THRESHOLDS.MIN_ITEMS_FOR_SEO_PAGE; // Target 8 items
+        const neededCount = Math.max(0, targetCount - currentCount);
+        
+        if (neededCount > 0) {
+          console.log(`Auto-generating ${neededCount} items for category: ${category}`);
+          
+          const results = await generateCategoryNailArt(category, neededCount);
+          
+          if (results && results.length > 0) {
+            totalGenerated += results.length;
+            processedCategories.push(category);
+            console.log(`Successfully auto-generated ${results.length} items for ${category}`);
+          }
+        }
+      } catch (error) {
+        console.error(`Error auto-generating content for ${category}:`, error);
+      }
+    }
+    
+    return { generated: totalGenerated, categories: processedCategories };
+  } catch (error) {
+    console.error('Error auto-generating for under-populated categories:', error);
+    return { generated: 0, categories: [] };
+  }
+}
