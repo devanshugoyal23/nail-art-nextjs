@@ -142,7 +142,7 @@ export async function getDynamicPages(): Promise<SitemapEntry[]> {
     const categories = await getAllCategories();
     
     // Get all tags
-    const tags = getAllTagsFromGalleryItems(galleryItems);
+    getAllTagsFromGalleryItems(galleryItems);
 
     // Gallery item pages - using consistent URL pattern
     const galleryItemPages = galleryItems.map(item => ({
@@ -263,7 +263,7 @@ export async function getDynamicPages(): Promise<SitemapEntry[]> {
 export async function validatePage(url: string): Promise<PageValidationResult> {
   try {
     // Extract path from URL
-    const path = url.replace('https://nailartai.app', '');
+    url.replace('https://nailartai.app', '');
     
     // Check if it's a static page
     const staticPages = getStaticPages();
@@ -311,7 +311,7 @@ export async function generateCompleteSitemap(): Promise<MetadataRoute.Sitemap> 
 /**
  * Auto-update sitemap when new content is added
  */
-export async function updateSitemapForNewContent(newContent: any): Promise<void> {
+export async function updateSitemapForNewContent(newContent: { id: string; category?: string; design_name?: string; created_at?: string }): Promise<void> {
   try {
     // Trigger sitemap regeneration
     const response = await fetch('/api/regenerate-sitemap', {

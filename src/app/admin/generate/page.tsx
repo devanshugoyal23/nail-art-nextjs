@@ -46,14 +46,14 @@ export default function GenerateGalleryPage() {
   const [tier4Categories, setTier4Categories] = useState<string[]>([]);
   
   // Auto SEO hook
-  const { generateSEO, generateBulkSEO } = useAutoSEO({
+  const { generateBulkSEO } = useAutoSEO({
     autoGenerate: true,
     notifySearchEngines: true,
     updateSitemap: true
   });
   
   // Global stop hook
-  const { isStopped, hasActiveStopSignal } = useGlobalStop();
+  const { hasActiveStopSignal } = useGlobalStop();
   
   // New state for tag-aware generation
   const [activeTab, setActiveTab] = useState<'generate' | 'tags' | 'impact' | 'guide'>('generate');

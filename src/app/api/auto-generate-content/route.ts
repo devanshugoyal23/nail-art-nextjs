@@ -105,7 +105,7 @@ export async function POST(request: NextRequest) {
         const allCategories = await getCategoriesWithMinimumContent(0);
         const categoriesWithMinContent = await getCategoriesWithMinimumContent(3);
         const underPopulated = await getUnderPopulatedCategories(3);
-        const tagStats = await getTagUsageStats();
+        await getTagUsageStats();
         
         const totalPages = allCategories.length;
         const averageItemsPerCategory = (totalItems || 0) / allCategories.length || 0;

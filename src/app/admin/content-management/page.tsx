@@ -71,7 +71,7 @@ export default function ContentManagementPage() {
   const [tagGenerationCount, setTagGenerationCount] = useState(3);
   
   // Global stop hook
-  const { isStopped, hasActiveStopSignal } = useGlobalStop();
+  const { hasActiveStopSignal } = useGlobalStop();
   
   // New state for distribute randomly preview and control
   const [showDistributePreview, setShowDistributePreview] = useState(false);
@@ -1483,7 +1483,7 @@ export default function ContentManagementPage() {
                 <div className="mt-4 p-4 bg-blue-900/20 border border-blue-700 rounded-lg">
                   <div className="flex items-center">
                     <span className="text-blue-400 text-xl mr-2">🔄</span>
-                    <span className="text-blue-300">Generating editorial content... Click "Stop Generation" to halt the process.</span>
+                    <span className="text-blue-300">Generating editorial content... Click &quot;Stop Generation&quot; to halt the process.</span>
                   </div>
                 </div>
               )}

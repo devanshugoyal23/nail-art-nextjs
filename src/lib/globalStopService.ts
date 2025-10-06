@@ -17,7 +17,7 @@ class GlobalStopService {
   /**
    * Issue a global stop signal
    */
-  issueStopSignal(source: string, reason: string = 'User requested stop'): string {
+  async issueStopSignal(source: string, reason: string = 'User requested stop'): Promise<string> {
     const signalId = `stop_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
     const signal: StopSignal = {
       id: signalId,
@@ -31,8 +31,8 @@ class GlobalStopService {
     
     // Set global stop flags in all services
     try {
-      const { setGlobalStopFlag } = require('./nailArtGenerator');
-      const { setGlobalStopFlag: setContentGlobalStopFlag } = require('./contentGenerationService');
+      const { setGlobalStopFlag } = await import('./nailArtGenerator');
+      const { setGlobalStopFlag: setContentGlobalStopFlag } = await import('./contentGenerationService');
       setGlobalStopFlag(true);
       setContentGlobalStopFlag(true);
     } catch (error) {
@@ -63,14 +63,14 @@ class GlobalStopService {
   /**
    * Clear all stop signals
    */
-  clearStopSignals(): void {
+  async clearStopSignals(): Promise<void> {
     this.stopSignals.clear();
     this.notifyListeners(null);
     
     // Clear global stop flags in all services
     try {
-      const { setGlobalStopFlag } = require('./nailArtGenerator');
-      const { setGlobalStopFlag: setContentGlobalStopFlag } = require('./contentGenerationService');
+      const { setGlobalStopFlag } = await import('./nailArtGenerator');
+      const { setGlobalStopFlag: setContentGlobalStopFlag } = await import('./contentGenerationService');
       setGlobalStopFlag(false);
       setContentGlobalStopFlag(false);
     } catch (error) {
@@ -104,8 +104,8 @@ class GlobalStopService {
   /**
    * Force stop all processes (emergency stop)
    */
-  emergencyStop(): string {
-    return this.issueStopSignal('EMERGENCY', 'Emergency stop activated');
+  async emergencyStop(): Promise<string> {
+    return await this.issueStopSignal('EMERGENCY', 'Emergency stop activated');
   }
 
   /**

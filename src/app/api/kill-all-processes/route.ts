@@ -1,10 +1,13 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { exec } from 'child_process';
 import { promisify } from 'util';
+import { setGlobalStopFlag } from '@/lib/nailArtGenerator';
+import { setGlobalStopFlag as setContentGlobalStopFlag } from '@/lib/contentGenerationService';
+import { globalStopService } from '@/lib/globalStopService';
 
 const execAsync = promisify(exec);
 
-export async function POST(request: NextRequest) {
+export async function POST() {
   try {
     console.log('🚨 KILL ALL PROCESSES - Terminating all generation processes');
     
@@ -21,8 +24,6 @@ export async function POST(request: NextRequest) {
 
     // Set global stop flags
     try {
-      const { setGlobalStopFlag } = require('@/lib/nailArtGenerator');
-      const { setGlobalStopFlag: setContentGlobalStopFlag } = require('@/lib/contentGenerationService');
       setGlobalStopFlag(true);
       setContentGlobalStopFlag(true);
       console.log('✅ Global stop flags set');
@@ -32,9 +33,8 @@ export async function POST(request: NextRequest) {
 
     // Clear all stop signals
     try {
-      const { globalStopService } = require('@/lib/globalStopService');
-      globalStopService.clearStopSignals();
-      globalStopService.issueStopSignal('KILL_ALL', 'All processes killed');
+      await globalStopService.clearStopSignals();
+      await globalStopService.issueStopSignal('KILL_ALL', 'All processes killed');
       console.log('✅ Stop signals cleared and new signal issued');
     } catch (error) {
       console.error('Error managing stop signals:', error);

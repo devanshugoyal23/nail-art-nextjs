@@ -7,7 +7,7 @@ export async function POST(request: NextRequest) {
     
     switch (action) {
       case 'stop':
-        const signalId = globalStopService.issueStopSignal(
+        const signalId = await globalStopService.issueStopSignal(
           source || 'API', 
           reason || 'Global stop requested'
         );
@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
         });
         
       case 'emergency-stop':
-        const emergencySignalId = globalStopService.emergencyStop();
+        const emergencySignalId = await globalStopService.emergencyStop();
         return NextResponse.json({
           success: true,
           message: 'Emergency stop activated',
@@ -28,7 +28,7 @@ export async function POST(request: NextRequest) {
         });
         
       case 'clear':
-        globalStopService.clearStopSignals();
+        await globalStopService.clearStopSignals();
         return NextResponse.json({
           success: true,
           message: 'All stop signals cleared',

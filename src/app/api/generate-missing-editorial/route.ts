@@ -134,7 +134,7 @@ export async function POST(request: NextRequest) {
           }
         } catch (error) {
           console.error(`❌ Failed to generate editorial for ${item.design_name}:`, error);
-          return { success: false, itemId: item.id, designName: item.design_name, error: error.message };
+          return { success: false, itemId: item.id, designName: item.design_name, error: error instanceof Error ? error.message : 'Unknown error' };
         }
       });
 
@@ -207,7 +207,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(
       { 
         success: false, 
-        error: error.message || 'Failed to generate editorial content',
+        error: error instanceof Error ? error.message : 'Failed to generate editorial content',
         data: null
       },
       { status: 500 }
@@ -251,7 +251,7 @@ export async function GET() {
     return NextResponse.json(
       { 
         success: false, 
-        error: error.message || 'Failed to get editorial stats',
+        error: error instanceof Error ? error.message : 'Failed to get editorial stats',
         data: null
       },
       { status: 500 }

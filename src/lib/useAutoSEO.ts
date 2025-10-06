@@ -13,7 +13,17 @@ interface UseAutoSEOOptions {
 
 interface AutoSEOResult {
   success: boolean;
-  seoData?: any;
+  seoData?: {
+    metadata: Record<string, unknown>;
+    structuredData: Record<string, unknown>;
+    internalLinks: string[];
+    relatedContent: Array<{ title: string; url: string; description: string }>;
+    canonicalUrl: string;
+    socialMeta: {
+      openGraph: Record<string, unknown>;
+      twitter: Record<string, unknown>;
+    };
+  };
   error?: string;
 }
 
@@ -25,7 +35,7 @@ export function useAutoSEO(options: UseAutoSEOOptions = {}) {
   } = options;
 
   const generateSEO = useCallback(async (
-    content: any,
+    content: { id?: string; name?: string; title?: string; description?: string; category?: string; image_url?: string; [key: string]: unknown },
     pageType: string
   ): Promise<AutoSEOResult> => {
     try {
@@ -65,7 +75,7 @@ export function useAutoSEO(options: UseAutoSEOOptions = {}) {
   }, [autoGenerate, notifySearchEngines, updateSitemap]);
 
   const generateBulkSEO = useCallback(async (
-    contentItems: any[],
+    contentItems: Array<{ id?: string; name?: string; title?: string; description?: string; category?: string; image_url?: string; [key: string]: unknown }>,
     pageType: string
   ): Promise<AutoSEOResult> => {
     try {

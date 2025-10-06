@@ -72,7 +72,7 @@ export default function SEOManagementPage() {
       } else {
         setError('Failed to regenerate sitemap');
       }
-    } catch (err) {
+    } catch {
       setError('Error regenerating sitemap');
     } finally {
       setLoading(false);
@@ -98,7 +98,7 @@ export default function SEOManagementPage() {
       } else {
         setError('Failed to optimize images');
       }
-    } catch (err) {
+    } catch {
       setError('Error optimizing images');
     } finally {
       setLoading(false);
@@ -129,7 +129,7 @@ export default function SEOManagementPage() {
       } else {
         setError('Failed to generate bulk SEO');
       }
-    } catch (err) {
+    } catch {
       setError('Error generating bulk SEO');
     } finally {
       setLoading(false);
@@ -149,7 +149,7 @@ export default function SEOManagementPage() {
       await fetch('https://www.bing.com/ping?sitemap=https://nailartai.app/sitemap.xml');
       
       setMessage('Search engines notified successfully');
-    } catch (err) {
+    } catch {
       setError('Error notifying search engines');
     } finally {
       setLoading(false);

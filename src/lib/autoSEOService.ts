@@ -4,7 +4,7 @@
  */
 
 import { Metadata } from 'next';
-import { generateDynamicMetadata, generateStructuredDataForContent, handleNewContentGeneration } from './seoService';
+import { generateStructuredDataForContent } from './seoService';
 import { updateSitemapForNewContent } from './dynamicSitemapService';
 
 export interface AutoSEOConfig {
@@ -22,15 +22,69 @@ export interface AutoSEOConfig {
   autoSitemap: boolean;
 }
 
+export interface StructuredData {
+  '@context': string;
+  '@type': string;
+  name?: string;
+  description?: string;
+  url?: string;
+  image?: string | string[];
+  datePublished?: string;
+  dateModified?: string;
+  author?: {
+    '@type': string;
+    name: string;
+  };
+  publisher?: {
+    '@type': string;
+    name: string;
+    logo?: {
+      '@type': string;
+      url: string;
+    };
+  };
+}
+
+export interface OpenGraphData {
+  title: string;
+  description: string;
+  url: string;
+  siteName: string;
+  images: Array<{
+    url: string;
+    width?: number;
+    height?: number;
+    alt?: string;
+  }>;
+  type?: string;
+  locale?: string;
+}
+
+export interface TwitterData {
+  card: string;
+  site?: string;
+  creator?: string;
+  title: string;
+  description: string;
+  images: string[];
+}
+
+export interface RelatedContent {
+  title: string;
+  url: string;
+  description: string;
+  image?: string;
+}
+
 export interface PageSEOData {
   metadata: Metadata;
-  structuredData: any;
+  structuredData: StructuredData;
   internalLinks: string[];
-  relatedContent: any[];
+  relatedContent: RelatedContent[];
   canonicalUrl: string;
   socialMeta: {
-    openGraph: any;
-    twitter: any;
+    openGraph: OpenGraphData;
+    twitter: TwitterData;
   };
 }
 
@@ -59,8 +113,25 @@ const DEFAULT_CONFIG: AutoSEOConfig = {
 /**
  * Generate SEO data for a new page automatically
  */
+export interface ContentData {
+  id?: string;
+  name?: string;
+  title?: string;
+  description?: string;
+  category?: string;
+  image_url?: string;
+  created_at?: string;
+  updated_at?: string;
+  tags?: string[];
+  design_name?: string;
+  prompt?: string;
+  colors?: string[];
+  technique?: string;
+  [key: string]: unknown;
+}
+
 export async function generateAutoSEO(
-  content: any,
+  content: ContentData,
   pageType: 'gallery' | 'category' | 'design' | 'technique' | 'color' | 'occasion' | 'season' | 'city',
   config: Partial<AutoSEOConfig> = {}
 ): Promise<PageSEOData> {
@@ -74,10 +145,10 @@ export async function generateAutoSEO(
     const structuredData = generateStructuredDataForContent(content);
     
     // Generate internal links
-    const internalLinks = await generateInternalLinks(content, pageType);
+    const internalLinks = await generateInternalLinks(content);
     
     // Generate related content
-    const relatedContent = await generateRelatedContent(content, pageType);
+    const relatedContent = await generateRelatedContent();
     
     // Generate canonical URL
     const canonicalUrl = generateCanonicalUrl(content, pageType, finalConfig.baseUrl);
@@ -86,8 +157,13 @@ export async function generateAutoSEO(
     const socialMeta = generateSocialMeta(content, pageType, finalConfig);
     
     // Auto-update sitemap if enabled
-    if (finalConfig.autoSitemap) {
-      await updateSitemapForNewContent(content);
+    if (finalConfig.autoSitemap && content.id) {
+      await updateSitemapForNewContent({
+        id: content.id,
+        category: content.category,
+        design_name: content.name || content.title,
+        created_at: content.created_at
+      });
     }
     
     return {
@@ -109,7 +185,7 @@ export async function generateAutoSEO(
  * Generate page-specific metadata
  */
 async function generatePageMetadata(
-  content: any,
+  content: ContentData,
   pageType: string,
   config: AutoSEOConfig
 ): Promise<Metadata> {
@@ -135,13 +211,13 @@ async function generatePageMetadata(
       siteName: config.siteName,
       title: `${title} | ${config.siteName}`,
       description,
-      images: generateOpenGraphImages(content, config)
+      images: generateOpenGraphImages(content)
     },
     twitter: {
       card: 'summary_large_image',
       title: `${title} | ${config.siteName}`,
       description,
-      images: generateTwitterImages(content, config),
+      images: generateTwitterImages(content),
       creator: config.socialHandles.twitter
     },
     robots: {
@@ -161,7 +237,7 @@ async function generatePageMetadata(
 /**
  * Generate page title based on content and page type
  */
-function generateTitle(content: any, pageType: string): string {
+function generateTitle(content: ContentData, pageType: string): string {
   switch (pageType) {
     case 'gallery':
       return content.design_name || content.title || 'Nail Art Design';
@@ -187,7 +263,7 @@ function generateTitle(content: any, pageType: string): string {
 /**
  * Generate page description based on content and page type
  */
-function generateDescription(content: any, pageType: string): string {
+function generateDescription(content: ContentData, pageType: string): string {
   const baseDescription = 'Discover beautiful AI-generated nail art designs';
   
   switch (pageType) {
@@ -215,7 +291,7 @@ function generateDescription(content: any, pageType: string): string {
 /**
  * Generate keywords based on content and page type
  */
-function generateKeywords(content: any, pageType: string, defaultKeywords: string[]): string[] {
+function generateKeywords(content: ContentData, pageType: string, defaultKeywords: string[]): string[] {
   const keywords = [...defaultKeywords];
   
   // Add content-specific keywords
@@ -270,12 +346,12 @@ function generateKeywords(content: any, pageType: string, defaultKeywords: strin
 /**
  * Generate canonical URL
  */
-function generateCanonicalUrl(content: any, pageType: string, baseUrl: string): string {
+function generateCanonicalUrl(content: ContentData, pageType: string, baseUrl: string): string {
   switch (pageType) {
     case 'gallery':
       return `${baseUrl}/${content.category?.toLowerCase().replace(/\s+/g, '-')}/${content.design_name ? `${content.design_name.toLowerCase().replace(/\s+/g, '-')}-${content.id?.slice(-8)}` : `design-${content.id?.slice(-8)}`}`;
     case 'category':
-      return `${baseUrl}/nail-art-gallery/category/${encodeURIComponent(content.category)}`;
+      return `${baseUrl}/nail-art-gallery/category/${encodeURIComponent(content.category || '')}`;
     case 'design':
       return `${baseUrl}/design/${content.design_name ? content.design_name.toLowerCase().replace(/\s+/g, '-') : `design-${content.id?.slice(-8)}`}`;
     case 'technique':
@@ -296,7 +372,7 @@ function generateCanonicalUrl(content: any, pageType: string, baseUrl: string): 
 /**
  * Generate internal links for the page
  */
-async function generateInternalLinks(content: any, pageType: string): Promise<string[]> {
+async function generateInternalLinks(content: ContentData): Promise<string[]> {
   const links: string[] = [];
   
   // Add category links
@@ -331,7 +407,7 @@ async function generateInternalLinks(content: any, pageType: string): Promise<st
 /**
  * Generate related content
  */
-async function generateRelatedContent(content: any, pageType: string): Promise<any[]> {
+async function generateRelatedContent(): Promise<RelatedContent[]> {
   // This would typically fetch from your database
   // For now, return empty array
   return [];
@@ -340,7 +416,7 @@ async function generateRelatedContent(content: any, pageType: string): Promise<a
 /**
  * Generate social meta tags
  */
-function generateSocialMeta(content: any, pageType: string, config: AutoSEOConfig) {
+function generateSocialMeta(content: ContentData, pageType: string, config: AutoSEOConfig) {
   const title = generateTitle(content, pageType);
   const description = generateDescription(content, pageType);
   
@@ -352,13 +428,13 @@ function generateSocialMeta(content: any, pageType: string, config: AutoSEOConfi
       siteName: config.siteName,
       title: `${title} | ${config.siteName}`,
       description,
-      images: generateOpenGraphImages(content, config)
+      images: generateOpenGraphImages(content)
     },
     twitter: {
       card: 'summary_large_image',
       title: `${title} | ${config.siteName}`,
       description,
-      images: generateTwitterImages(content, config),
+      images: generateTwitterImages(content),
       creator: config.socialHandles.twitter
     }
   };
@@ -367,8 +443,18 @@ function generateSocialMeta(content: any, pageType: string, config: AutoSEOConfi
 /**
  * Generate Open Graph images
  */
-function generateOpenGraphImages(content: any, config: AutoSEOConfig) {
-  const images = [];
+function generateOpenGraphImages(content: ContentData): Array<{
+  url: string;
+  width?: number;
+  height?: number;
+  alt?: string;
+}> {
+  const images: Array<{
+    url: string;
+    width?: number;
+    height?: number;
+    alt?: string;
+  }> = [];
   
   if (content.image_url) {
     images.push({
@@ -395,7 +481,7 @@ function generateOpenGraphImages(content: any, config: AutoSEOConfig) {
 /**
  * Generate Twitter images
  */
-function generateTwitterImages(content: any, config: AutoSEOConfig) {
+function generateTwitterImages(content: ContentData) {
   const images = [];
   
   if (content.image_url) {
@@ -414,8 +500,8 @@ function generateTwitterImages(content: any, config: AutoSEOConfig) {
  * Auto-generate SEO for new content created via admin
  */
 export async function autoGenerateSEOForNewContent(
-  content: any,
-  pageType: string,
+  content: ContentData,
+  pageType: 'gallery' | 'category' | 'design' | 'technique' | 'color' | 'occasion' | 'season' | 'city',
   config?: Partial<AutoSEOConfig>
 ): Promise<PageSEOData> {
   try {
@@ -441,8 +527,8 @@ export async function autoGenerateSEOForNewContent(
  * Bulk SEO generation for multiple content items
  */
 export async function bulkGenerateSEO(
-  contentItems: any[],
-  pageType: string,
+  contentItems: ContentData[],
+  pageType: 'gallery' | 'category' | 'design' | 'technique' | 'color' | 'occasion' | 'season' | 'city',
   config?: Partial<AutoSEOConfig>
 ): Promise<PageSEOData[]> {
   const results: PageSEOData[] = [];

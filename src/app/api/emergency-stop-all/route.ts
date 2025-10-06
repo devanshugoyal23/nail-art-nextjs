@@ -1,13 +1,14 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
+import { setGlobalStopFlag } from '@/lib/nailArtGenerator';
+import { setGlobalStopFlag as setContentGlobalStopFlag } from '@/lib/contentGenerationService';
+import { globalStopService } from '@/lib/globalStopService';
 
-export async function POST(request: NextRequest) {
+export async function POST() {
   try {
     console.log('🚨 EMERGENCY STOP ALL - Halting all generation processes');
     
     // Set global stop flags immediately
     try {
-      const { setGlobalStopFlag } = require('@/lib/nailArtGenerator');
-      const { setGlobalStopFlag: setContentGlobalStopFlag } = require('@/lib/contentGenerationService');
       setGlobalStopFlag(true);
       setContentGlobalStopFlag(true);
       console.log('✅ Global stop flags set to true');
@@ -17,9 +18,8 @@ export async function POST(request: NextRequest) {
 
     // Clear any active generation processes
     try {
-      const { globalStopService } = require('@/lib/globalStopService');
-      globalStopService.clearStopSignals();
-      globalStopService.issueStopSignal('EMERGENCY', 'Emergency stop - all processes halted');
+      await globalStopService.clearStopSignals();
+      await globalStopService.issueStopSignal('EMERGENCY', 'Emergency stop - all processes halted');
       console.log('✅ Emergency stop signal issued');
     } catch (error) {
       console.error('Error issuing emergency stop:', error);

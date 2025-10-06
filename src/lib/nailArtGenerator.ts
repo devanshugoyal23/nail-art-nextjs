@@ -2,7 +2,6 @@ import { GoogleGenAI, Modality } from "@google/genai";
 import { supabase } from './supabase';
 import { getRandomPromptFromCategory, getUniquePromptsFromCategory, getAllCategories, PROMPT_CATEGORIES } from './promptGenerator';
 import { extractTagsFromGalleryItem } from './tagService';
-import { globalStopService } from './globalStopService';
 
 let ai: GoogleGenAI | null = null;
 

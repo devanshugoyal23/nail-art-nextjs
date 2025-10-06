@@ -1,8 +1,8 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { generateCompleteSitemap } from '@/lib/dynamicSitemapService';
 import { autoGenerateSEOForNewContent } from '@/lib/autoSEOService';
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     // Test sitemap generation
     const sitemap = await generateCompleteSitemap();
