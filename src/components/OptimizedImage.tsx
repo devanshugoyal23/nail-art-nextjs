@@ -63,13 +63,19 @@ export default function OptimizedImage({
   // Use provided alt text or generate one
   const finalAlt = alt || optimizedProps.alt || designName || 'Nail art design';
 
+  // Mobile-optimized sizes if not provided
+  const mobileOptimizedSizes = sizes || '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw';
+  
+  // Mobile-optimized quality if not provided
+  const mobileOptimizedQuality = quality || 75;
+
   // Override with custom props if provided
   const finalProps = {
     ...optimizedProps,
     ...(width && { width }),
     ...(height && { height }),
-    ...(sizes && { sizes }),
-    ...(quality && { quality }),
+    sizes: mobileOptimizedSizes,
+    quality: mobileOptimizedQuality,
     ...(placeholder && { placeholder }),
     ...(blurDataURL && { blurDataURL }),
     ...(fill && { fill }),

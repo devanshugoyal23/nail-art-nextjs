@@ -4,6 +4,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { GalleryItem } from '@/lib/supabase';
 import { generateGalleryItemUrl } from '@/lib/galleryService';
 import { getAllTagsFromGalleryItems, filterGalleryItemsByTag, TagItem } from '@/lib/tagService';
+import { useMobileOptimization } from '@/lib/useMobileOptimization';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -23,6 +24,8 @@ export default function EnhancedGallery({
   showDelete = false,
   initialItems = []
 }: EnhancedGalleryProps) {
+  const { isMobile, isSlow, itemsPerPage: mobileItemsPerPage } = useMobileOptimization();
+  
   const [items, setItems] = useState<GalleryItem[]>(initialItems);
   const [loading, setLoading] = useState(!initialItems.length);
   const [error, setError] = useState<string | null>(null);
@@ -34,7 +37,7 @@ export default function EnhancedGallery({
   const [showFilters, setShowFilters] = useState(false);
   const [favorites, setFavorites] = useState<string[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(24);
+  const [itemsPerPage] = useState(mobileItemsPerPage);
 
   // Extract tags from items
   const allTags = useMemo(() => {
@@ -194,8 +197,8 @@ export default function EnhancedGallery({
   return (
     <div className="space-y-6">
       {/* Search and Filter Bar */}
-      <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-6 border border-gray-700/50">
-        <div className="flex flex-col lg:flex-row gap-4">
+      <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-4 sm:p-6 border border-gray-700/50">
+        <div className="flex flex-col gap-4">
           {/* Search */}
           <div className="flex-1">
             <div className="relative">
@@ -204,10 +207,10 @@ export default function EnhancedGallery({
                 placeholder="Search designs, categories, or prompts..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-6 py-3 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                className="w-full bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 sm:px-6 py-3 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm sm:text-base"
               />
-              <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
-                <svg className="w-5 h-5 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="absolute right-3 sm:right-4 top-1/2 transform -translate-y-1/2">
+                <svg className="w-4 h-4 sm:w-5 sm:h-5 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
               </div>
@@ -215,31 +218,33 @@ export default function EnhancedGallery({
           </div>
 
           {/* Controls */}
-          <div className="flex gap-2">
-            <button
-              onClick={() => setShowFilters(!showFilters)}
-              className={`px-4 py-3 rounded-full text-sm font-medium transition-all duration-300 ${
-                showFilters ? 'bg-purple-600 text-white' : 'bg-white/10 text-white hover:bg-white/20'
-              }`}
-            >
-              Filters
-            </button>
-            
-            <select
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value as SortOption)}
-              className="bg-white/10 text-white rounded-full px-4 py-3 text-sm border border-white/20 focus:outline-none focus:ring-2 focus:ring-purple-500"
-            >
-              <option value="newest">Newest</option>
-              <option value="oldest">Oldest</option>
-              <option value="name">Name</option>
-              <option value="popular">Popular</option>
-            </select>
+          <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
+            <div className="flex gap-2">
+              <button
+                onClick={() => setShowFilters(!showFilters)}
+                className={`px-3 sm:px-4 py-2 sm:py-3 rounded-full text-xs sm:text-sm font-medium transition-all duration-300 touch-manipulation ${
+                  showFilters ? 'bg-purple-600 text-white' : 'bg-white/10 text-white hover:bg-white/20'
+                }`}
+              >
+                Filters
+              </button>
+              
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value as SortOption)}
+                className="bg-white/10 text-white rounded-full px-3 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm border border-white/20 focus:outline-none focus:ring-2 focus:ring-purple-500"
+              >
+                <option value="newest">Newest</option>
+                <option value="oldest">Oldest</option>
+                <option value="name">Name</option>
+                <option value="popular">Popular</option>
+              </select>
+            </div>
 
             <div className="flex bg-white/10 rounded-full p-1">
               <button
                 onClick={() => setViewMode('grid')}
-                className={`px-3 py-2 rounded-full text-sm transition-all duration-300 ${
+                className={`px-2 sm:px-3 py-2 rounded-full text-xs sm:text-sm transition-all duration-300 touch-manipulation ${
                   viewMode === 'grid' ? 'bg-purple-600 text-white' : 'text-gray-300 hover:text-white'
                 }`}
               >
@@ -247,7 +252,7 @@ export default function EnhancedGallery({
               </button>
               <button
                 onClick={() => setViewMode('masonry')}
-                className={`px-3 py-2 rounded-full text-sm transition-all duration-300 ${
+                className={`px-2 sm:px-3 py-2 rounded-full text-xs sm:text-sm transition-all duration-300 touch-manipulation ${
                   viewMode === 'masonry' ? 'bg-purple-600 text-white' : 'text-gray-300 hover:text-white'
                 }`}
               >
@@ -255,7 +260,7 @@ export default function EnhancedGallery({
               </button>
               <button
                 onClick={() => setViewMode('list')}
-                className={`px-3 py-2 rounded-full text-sm transition-all duration-300 ${
+                className={`px-2 sm:px-3 py-2 rounded-full text-xs sm:text-sm transition-all duration-300 touch-manipulation ${
                   viewMode === 'list' ? 'bg-purple-600 text-white' : 'text-gray-300 hover:text-white'
                 }`}
               >
@@ -373,8 +378,8 @@ export default function EnhancedGallery({
       {/* Gallery Grid */}
       {paginatedItems.length > 0 ? (
         <div className={`${
-          viewMode === 'grid' ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6' :
-          viewMode === 'masonry' ? 'columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-6' :
+          viewMode === 'grid' ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6' :
+          viewMode === 'masonry' ? 'columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 sm:gap-6' :
           'space-y-4'
         }`}>
           {paginatedItems.map((item) => (
@@ -392,7 +397,10 @@ export default function EnhancedGallery({
                   width={400}
                   height={400}
                   className="w-full h-full object-cover"
-                  loading="lazy"
+                  loading={currentPage === 1 && items.indexOf(item) < 4 ? 'eager' : 'lazy'}
+                  sizes={viewMode === 'list' ? '128px' : isMobile ? '100vw' : '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw'}
+                  quality={isSlow ? 65 : 75}
+                  priority={currentPage === 1 && items.indexOf(item) < 4}
                 />
                 
                 {/* Favorite Button */}
@@ -401,7 +409,8 @@ export default function EnhancedGallery({
                     e.stopPropagation();
                     toggleFavorite(item.id);
                   }}
-                  className="absolute top-2 right-2 bg-black/50 backdrop-blur-sm text-white rounded-full p-2 hover:bg-black/70 transition-colors"
+                  className="absolute top-2 right-2 bg-black/50 backdrop-blur-sm text-white rounded-full p-2 hover:bg-black/70 transition-colors touch-manipulation min-h-[44px] min-w-[44px] flex items-center justify-center"
+                  aria-label={favorites.includes(item.id) ? 'Remove from favorites' : 'Add to favorites'}
                 >
                   <svg className={`w-4 h-4 ${favorites.includes(item.id) ? 'fill-red-500' : 'fill-none'}`} stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
@@ -438,7 +447,7 @@ export default function EnhancedGallery({
                   <Link 
                     href={`/try-on?design=${item.id}`}
                     onClick={(e) => e.stopPropagation()}
-                    className="flex-1 bg-purple-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-purple-700 transition duration-300 text-center text-sm"
+                    className="flex-1 bg-purple-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-purple-700 transition duration-300 text-center text-sm touch-manipulation min-h-[44px] flex items-center justify-center"
                   >
                     Try This Design
                   </Link>
@@ -447,7 +456,8 @@ export default function EnhancedGallery({
                       e.stopPropagation();
                       // Share functionality
                     }}
-                    className="bg-gray-600 text-white py-2 px-3 rounded-lg hover:bg-gray-700 transition duration-300"
+                    className="bg-gray-600 text-white py-3 px-3 rounded-lg hover:bg-gray-700 transition duration-300 touch-manipulation min-h-[44px] min-w-[44px] flex items-center justify-center"
+                    aria-label="Share design"
                   >
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
@@ -472,23 +482,23 @@ export default function EnhancedGallery({
 
       {/* Pagination */}
       {totalPages > 1 && (
-        <div className="flex justify-center items-center space-x-2">
+        <div className="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-2">
           <button
             onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
             disabled={currentPage === 1}
-            className="px-4 py-2 bg-white/10 text-white rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-white/20 transition-colors"
+            className="px-4 py-3 bg-white/10 text-white rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-white/20 transition-colors touch-manipulation min-h-[44px]"
           >
             Previous
           </button>
           
-          <div className="flex space-x-1">
+          <div className="flex flex-wrap justify-center gap-1">
             {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
               const page = i + 1;
               return (
                 <button
                   key={page}
                   onClick={() => setCurrentPage(page)}
-                  className={`px-3 py-2 rounded-lg text-sm transition-colors ${
+                  className={`px-3 py-2 rounded-lg text-sm transition-colors touch-manipulation min-h-[44px] min-w-[44px] flex items-center justify-center ${
                     currentPage === page
                       ? 'bg-purple-600 text-white'
                       : 'bg-white/10 text-white hover:bg-white/20'
@@ -503,7 +513,7 @@ export default function EnhancedGallery({
           <button
             onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
             disabled={currentPage === totalPages}
-            className="px-4 py-2 bg-white/10 text-white rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-white/20 transition-colors"
+            className="px-4 py-3 bg-white/10 text-white rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-white/20 transition-colors touch-manipulation min-h-[44px]"
           >
             Next
           </button>

@@ -81,13 +81,13 @@ export default function GalleryPage() {
       />
       
       <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-purple-900">
-        <div className="max-w-7xl mx-auto px-4 py-6">
+        <div className="max-w-7xl mx-auto px-2 sm:px-4 py-4 sm:py-6">
           {/* SEO Header */}
-          <div className="text-center mb-8">
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+          <div className="text-center mb-6 sm:mb-8">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">
               AI Nail Art Gallery
             </h1>
-            <p className="text-lg text-gray-300 max-w-3xl mx-auto">
+            <p className="text-base sm:text-lg text-gray-300 max-w-3xl mx-auto px-2">
               Discover hundreds of unique AI-generated nail art designs. From classic French manicures to bold artistic creations, 
               find your perfect manicure inspiration.
             </p>
@@ -96,16 +96,16 @@ export default function GalleryPage() {
           <EnhancedGallery showPrompts={true} showDelete={false} />
           
           {/* SEO Content Section */}
-          <div className="mt-16 bg-gray-800/50 rounded-lg p-8 border border-gray-700">
-            <h2 className="text-2xl font-bold text-white mb-6">About Our AI Nail Art Gallery</h2>
-            <div className="grid md:grid-cols-2 gap-8">
+          <div className="mt-12 sm:mt-16 bg-gray-800/50 rounded-lg p-4 sm:p-6 lg:p-8 border border-gray-700">
+            <h2 className="text-xl sm:text-2xl font-bold text-white mb-4 sm:mb-6">About Our AI Nail Art Gallery</h2>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
               <div>
-                <h3 className="text-xl font-semibold text-white mb-3">🎨 Unique AI-Generated Designs</h3>
-                <p className="text-gray-300 mb-4">
+                <h3 className="text-lg sm:text-xl font-semibold text-white mb-3">🎨 Unique AI-Generated Designs</h3>
+                <p className="text-gray-300 mb-4 text-sm sm:text-base">
                   Our AI creates completely unique nail art designs that you won&apos;t find anywhere else. 
                   Each design is generated using advanced machine learning algorithms to ensure originality and creativity.
                 </p>
-                <ul className="text-gray-300 space-y-2">
+                <ul className="text-gray-300 space-y-2 text-sm sm:text-base">
                   <li>• Hundreds of unique designs</li>
                   <li>• All shapes and styles supported</li>
                   <li>• Seasonal and occasion-specific designs</li>
@@ -113,12 +113,12 @@ export default function GalleryPage() {
                 </ul>
               </div>
               <div>
-                <h3 className="text-xl font-semibold text-white mb-3">✨ How to Use the Gallery</h3>
-                <p className="text-gray-300 mb-4">
+                <h3 className="text-lg sm:text-xl font-semibold text-white mb-3">✨ How to Use the Gallery</h3>
+                <p className="text-gray-300 mb-4 text-sm sm:text-base">
                   Browse our collection by category, color, technique, or occasion. Each design comes with 
                   detailed instructions and supply lists for easy recreation.
                 </p>
-                <ul className="text-gray-300 space-y-2">
+                <ul className="text-gray-300 space-y-2 text-sm sm:text-base">
                   <li>• Filter by category or style</li>
                   <li>• Download high-res images</li>
                   <li>• Get step-by-step instructions</li>
