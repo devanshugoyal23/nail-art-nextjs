@@ -1,5 +1,28 @@
 import { supabase, GalleryItem, SaveGalleryItemRequest } from './supabase'
 import { extractTagsFromGalleryItem } from './tagService'
+import { getCdnImageUrl } from './imageProxy'
+
+/**
+ * Convert gallery item URLs to CDN URLs
+ * @param item - Gallery item to convert
+ * @returns Gallery item with CDN URLs
+ */
+function convertToCdnUrls(item: GalleryItem): GalleryItem {
+  return {
+    ...item,
+    image_url: getCdnImageUrl(item.image_url),
+    original_image_url: item.original_image_url ? getCdnImageUrl(item.original_image_url) : undefined,
+  };
+}
+
+/**
+ * Convert array of gallery items to use CDN URLs
+ * @param items - Array of gallery items
+ * @returns Array of gallery items with CDN URLs
+ */
+function convertItemsToCdnUrls(items: GalleryItem[]): GalleryItem[] {
+  return items.map(convertToCdnUrls);
+}
 
 export async function saveGalleryItem(item: SaveGalleryItemRequest): Promise<GalleryItem | null> {
   try {
@@ -83,7 +106,8 @@ export async function getGalleryItems(): Promise<GalleryItem[]> {
       return []
     }
 
-    return data || []
+    // Convert to CDN URLs for reduced egress
+    return convertItemsToCdnUrls(data || [])
   } catch (error) {
     console.error('Error fetching gallery items:', error)
     return []
@@ -103,7 +127,8 @@ export async function getGalleryItem(id: string): Promise<GalleryItem | null> {
       return null
     }
 
-    return data
+    // Convert to CDN URLs for reduced egress
+    return convertToCdnUrls(data)
   } catch (error) {
     console.error('Error fetching gallery item:', error)
     return null
@@ -123,7 +148,8 @@ export async function getGalleryItemsByCategory(category: string): Promise<Galle
       return []
     }
 
-    return data || []
+    // Convert to CDN URLs for reduced egress
+    return convertItemsToCdnUrls(data || [])
   } catch (error) {
     console.error('Error fetching gallery items by category:', error)
     return []
@@ -359,7 +385,7 @@ export async function getGalleryItemBySlug(category: string, slug: string): Prom
       
       if (!idError && idData) {
         console.log('Found item by ID ending:', idData.design_name)
-        return idData
+        return convertToCdnUrls(idData)
       }
     }
 
@@ -374,7 +400,7 @@ export async function getGalleryItemBySlug(category: string, slug: string): Prom
 
       if (!idError && idData) {
         console.log('Found item by short ID suffix:', idData.design_name)
-        return idData
+        return convertToCdnUrls(idData)
       }
     }
     
@@ -388,7 +414,7 @@ export async function getGalleryItemBySlug(category: string, slug: string): Prom
 
     if (!error && data) {
       console.log('Found exact match:', data.design_name)
-      return data
+      return convertToCdnUrls(data)
     }
 
     // Strategy 2: Try category match only
@@ -403,7 +429,7 @@ export async function getGalleryItemBySlug(category: string, slug: string): Prom
 
     if (!categoryError && categoryData) {
       console.log('Found category match:', categoryData.design_name)
-      return categoryData
+      return convertToCdnUrls(categoryData)
     }
 
     // Strategy 3: Try design name match only
@@ -418,7 +444,7 @@ export async function getGalleryItemBySlug(category: string, slug: string): Prom
 
     if (!designError && designData) {
       console.log('Found design name match:', designData.design_name)
-      return designData
+      return convertToCdnUrls(designData)
     }
 
     // Strategy 4: Try any item (fallback)
@@ -432,7 +458,7 @@ export async function getGalleryItemBySlug(category: string, slug: string): Prom
 
     if (!anyError && anyData) {
       console.log('Found fallback item:', anyData.design_name)
-      return anyData
+      return convertToCdnUrls(anyData)
     }
 
     console.error('No gallery items found at all')
@@ -489,7 +515,8 @@ export async function getGalleryItemsByCategorySlug(categorySlug: string): Promi
       return []
     }
 
-    return data || []
+    // Convert to CDN URLs for reduced egress
+    return convertItemsToCdnUrls(data || [])
   } catch (error) {
     console.error('Error fetching gallery items by category slug:', error)
     return []
@@ -581,7 +608,8 @@ export async function getGalleryItemsByColor(color: string, limit: number = 3): 
       return []
     }
 
-    return data || []
+    // Convert to CDN URLs for reduced egress
+    return convertItemsToCdnUrls(data || [])
   } catch (error) {
     console.error('Error fetching gallery items by color:', error)
     return []
@@ -608,7 +636,8 @@ export async function getGalleryItemsByTechnique(technique: string, limit: numbe
       return []
     }
 
-    return data || []
+    // Convert to CDN URLs for reduced egress
+    return convertItemsToCdnUrls(data || [])
   } catch (error) {
     console.error('Error fetching gallery items by technique:', error)
     return []
@@ -635,7 +664,8 @@ export async function getGalleryItemsByOccasion(occasion: string, limit: number 
       return []
     }
 
-    return data || []
+    // Convert to CDN URLs for reduced egress
+    return convertItemsToCdnUrls(data || [])
   } catch (error) {
     console.error('Error fetching gallery items by occasion:', error)
     return []
@@ -662,7 +692,8 @@ export async function getGalleryItemsByStyle(style: string, limit: number = 3): 
       return []
     }
 
-    return data || []
+    // Convert to CDN URLs for reduced egress
+    return convertItemsToCdnUrls(data || [])
   } catch (error) {
     console.error('Error fetching gallery items by style:', error)
     return []
@@ -689,7 +720,8 @@ export async function getGalleryItemsBySeason(season: string, limit: number = 3)
       return []
     }
 
-    return data || []
+    // Convert to CDN URLs for reduced egress
+    return convertItemsToCdnUrls(data || [])
   } catch (error) {
     console.error('Error fetching gallery items by season:', error)
     return []
@@ -716,7 +748,8 @@ export async function getGalleryItemsByShape(shape: string, limit: number = 3): 
       return []
     }
 
-    return data || []
+    // Convert to CDN URLs for reduced egress
+    return convertItemsToCdnUrls(data || [])
   } catch (error) {
     console.error('Error fetching gallery items by shape:', error)
     return []

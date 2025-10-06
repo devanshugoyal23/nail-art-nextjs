@@ -1,6 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { getOptimizedImageProps } from '@/lib/imageUtils';
+import { getCdnImageUrl } from '@/lib/imageProxy';
 
 interface OptimizedImageProps {
   src: string;
@@ -47,9 +48,12 @@ export default function OptimizedImage({
   onLoad,
   onError,
 }: OptimizedImageProps) {
+  // Convert Supabase URL to CDN proxy URL
+  const cdnSrc = getCdnImageUrl(src);
+  
   // Generate optimized image props
   const optimizedProps = getOptimizedImageProps(
-    src,
+    cdnSrc,
     designName,
     category,
     prompt,
