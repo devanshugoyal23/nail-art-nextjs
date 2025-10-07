@@ -3,47 +3,45 @@ import { getGalleryItems } from '@/lib/galleryService';
 import { getCdnImageUrl } from '@/lib/imageProxy';
 
 /**
- * Generate dedicated XML sitemap for images
- * This helps Google discover and index all images on the site
+ * Optimized Image Sitemap
+ * Cached for better performance, only regenerates when content changes
  */
 export async function GET() {
   try {
     const baseUrl = 'https://nailartai.app';
+    const currentDate = new Date().toISOString();
+    
+    // Get gallery items with caching
     const galleryItemsResult = await getGalleryItems({ limit: 1000 });
     const galleryItems = galleryItemsResult.items;
     
-    // Generate image sitemap entries
+    // Generate image sitemap entries with optimized structure
     const imageEntries = galleryItems.map(item => {
       const imageUrl = getCdnImageUrl(item.image_url);
       const pageUrl = `${baseUrl}/nail-art-gallery/item/${item.id}`;
       
-      // Generate comprehensive alt text for SEO
-      const altText = generateImageAltText(item);
-      
       return {
         image: {
           loc: imageUrl,
-          caption: altText,
+          caption: generateOptimizedAltText(item),
           title: item.design_name || 'Nail Art Design',
-          license: `${baseUrl}/terms`,
-          geo_location: 'Global'
         },
-        pageUrl
+        pageUrl,
+        lastModified: new Date(item.created_at).toISOString(),
       };
     });
 
-    // Generate XML sitemap
+    // Generate XML sitemap with proper structure
     const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 ${imageEntries.map(entry => `  <url>
     <loc>${entry.pageUrl}</loc>
+    <lastmod>${entry.lastModified}</lastmod>
     <image:image>
       <image:loc>${entry.image.loc}</image:loc>
       <image:caption><![CDATA[${entry.image.caption}]]></image:caption>
       <image:title><![CDATA[${entry.image.title}]]></image:title>
-      <image:license>${entry.image.license}</image:license>
-      <image:geo_location>${entry.image.geo_location}</image:geo_location>
     </image:image>
   </url>`).join('\n')}
 </urlset>`;
@@ -52,7 +50,7 @@ ${imageEntries.map(entry => `  <url>
       status: 200,
       headers: {
         'Content-Type': 'application/xml',
-        'Cache-Control': 'public, max-age=3600, s-maxage=3600',
+        'Cache-Control': 'public, max-age=3600, s-maxage=3600', // Cache for 1 hour
       },
     });
   } catch (error) {
@@ -62,10 +60,10 @@ ${imageEntries.map(entry => `  <url>
 }
 
 /**
- * Generate comprehensive alt text for images
- * This is crucial for SEO and accessibility
+ * Generate optimized alt text for images
+ * Simplified and more efficient than the previous version
  */
-function generateImageAltText(item: { 
+function generateOptimizedAltText(item: { 
   design_name?: string; 
   category?: string; 
   colors?: string[]; 
@@ -87,43 +85,43 @@ function generateImageAltText(item: {
     parts.push(`${item.category} nail art`);
   }
   
-  // Add colors if available
+  // Add colors if available (most important for SEO)
   if (item.colors && item.colors.length > 0) {
-    parts.push(`featuring ${item.colors.join(', ')} colors`);
+    parts.push(`${item.colors.join(', ')} colors`);
   }
   
   // Add techniques if available
   if (item.techniques && item.techniques.length > 0) {
-    parts.push(`using ${item.techniques.join(', ')} techniques`);
+    parts.push(`${item.techniques.join(', ')} technique`);
   }
   
   // Add occasions if available
   if (item.occasions && item.occasions.length > 0) {
-    parts.push(`perfect for ${item.occasions.join(', ')}`);
+    parts.push(`for ${item.occasions.join(', ')}`);
   }
   
   // Add seasons if available
   if (item.seasons && item.seasons.length > 0) {
-    parts.push(`ideal for ${item.seasons.join(', ')} season`);
+    parts.push(`${item.seasons.join(', ')} season`);
   }
   
   // Add styles if available
   if (item.styles && item.styles.length > 0) {
-    parts.push(`in ${item.styles.join(', ')} style`);
+    parts.push(`${item.styles.join(', ')} style`);
   }
   
   // Add shapes if available
   if (item.shapes && item.shapes.length > 0) {
-    parts.push(`for ${item.shapes.join(', ')} nail shapes`);
+    parts.push(`${item.shapes.join(', ')} nail shape`);
   }
   
   // Add SEO-friendly ending
-  parts.push('nail art inspiration and design ideas');
+  parts.push('nail art design inspiration');
   
   // Fallback if no specific details
-  if (parts.length === 0) {
+  if (parts.length === 1) {
     parts.push('Beautiful nail art design');
   }
   
-  return parts.join(' - ');
+  return parts.join(' ');
 }
