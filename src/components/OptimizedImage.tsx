@@ -60,8 +60,8 @@ export default function OptimizedImage({
     priority
   );
 
-  // Use provided alt text or generate one
-  const finalAlt = alt || optimizedProps.alt || designName || 'Nail art design';
+  // Use provided alt text or generate comprehensive SEO-optimized alt text
+  const finalAlt = alt || generateComprehensiveAltText(designName, category, prompt) || 'Nail art design';
 
   // Mobile-optimized sizes if not provided
   const mobileOptimizedSizes = sizes || '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw';
@@ -71,13 +71,15 @@ export default function OptimizedImage({
 
   // Override with custom props if provided
   const finalProps = {
-    ...optimizedProps,
-    ...(width && { width }),
-    ...(height && { height }),
+    src: optimizedProps.src,
+    alt: optimizedProps.alt,
+    width: width || optimizedProps.width,
+    height: height || optimizedProps.height,
+    priority: optimizedProps.priority,
     sizes: mobileOptimizedSizes,
     quality: mobileOptimizedQuality,
-    ...(placeholder && { placeholder }),
-    ...(blurDataURL && { blurDataURL }),
+    placeholder: placeholder || optimizedProps.placeholder,
+    blurDataURL: blurDataURL || optimizedProps.blurDataURL,
     ...(fill && { fill }),
     ...(fillStyle && { style: fillStyle }),
     ...(onClick && { onClick }),
@@ -87,6 +89,73 @@ export default function OptimizedImage({
   };
 
   return <Image {...finalProps} alt={finalAlt} />;
+}
+
+/**
+ * Generate comprehensive SEO-optimized alt text for images
+ * This function creates descriptive, keyword-rich alt text for better SEO
+ */
+function generateComprehensiveAltText(
+  designName?: string, 
+  category?: string, 
+  prompt?: string
+): string {
+  const parts = [];
+  
+  // Add design name if available
+  if (designName) {
+    parts.push(designName);
+  }
+  
+  // Add category information
+  if (category) {
+    parts.push(`${category} nail art design`);
+  }
+  
+  // Extract keywords from prompt if available
+  if (prompt) {
+    const promptKeywords = extractKeywordsFromPrompt(prompt);
+    if (promptKeywords.length > 0) {
+      parts.push(`featuring ${promptKeywords.join(', ')}`);
+    }
+  }
+  
+  // Add SEO-friendly ending
+  parts.push('nail art inspiration and design ideas');
+  
+  // Fallback if no specific information
+  if (parts.length === 0) {
+    parts.push('Beautiful nail art design');
+  }
+  
+  return parts.join(' - ');
+}
+
+/**
+ * Extract relevant keywords from AI prompt for alt text
+ */
+function extractKeywordsFromPrompt(prompt: string): string[] {
+  const keywords = [];
+  
+  // Common nail art keywords to look for
+  const nailArtKeywords = [
+    'french manicure', 'gel polish', 'nail art', 'gradient', 'glitter', 
+    'matte', 'chrome', 'marble', 'floral', 'geometric', 'abstract',
+    'minimalist', 'vintage', 'modern', 'elegant', 'bold', 'subtle',
+    'almond', 'coffin', 'square', 'oval', 'stiletto', 'round',
+    'red', 'pink', 'blue', 'green', 'purple', 'black', 'white', 'gold', 'silver',
+    'wedding', 'prom', 'graduation', 'birthday', 'date night', 'party',
+    'spring', 'summer', 'autumn', 'winter', 'christmas', 'halloween'
+  ];
+  
+  // Find matching keywords in the prompt
+  for (const keyword of nailArtKeywords) {
+    if (prompt.toLowerCase().includes(keyword.toLowerCase())) {
+      keywords.push(keyword);
+    }
+  }
+  
+  return keywords.slice(0, 5); // Limit to 5 keywords to avoid spam
 }
 
 /**

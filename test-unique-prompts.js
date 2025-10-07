@@ -1,5 +1,5 @@
 // Test script to demonstrate the unique prompt fix
-const { getUniquePromptsFromCategory } = require('./src/lib/promptGenerator.ts');
+import { getUniquePromptsFromCategory } from './src/lib/promptGenerator.ts';
 
 console.log('🧪 Testing Unique Prompt Generation Fix\n');
 

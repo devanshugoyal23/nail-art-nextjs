@@ -4,8 +4,9 @@
  */
 
 import { MetadataRoute } from 'next';
-import { getGalleryItems, getAllCategories } from './galleryService';
+import { getGalleryItems, getAllCategories, generateGalleryItemUrl } from './galleryService';
 import { getAllTagsFromGalleryItems } from './tagService';
+import { getCdnImageUrl } from './imageProxy';
 
 export interface SitemapEntry {
   url: string;
@@ -299,14 +300,50 @@ export async function validatePage(url: string): Promise<PageValidationResult> {
 }
 
 /**
- * Generate complete sitemap
+ * Generate complete sitemap with image information
  */
 export async function generateCompleteSitemap(): Promise<MetadataRoute.Sitemap> {
   const staticPages = getStaticPages();
   const dynamicPages = await getDynamicPages();
   
-  return [...staticPages, ...dynamicPages];
+  // Add image information to pages that have images
+  const pagesWithImages = await addImageInformationToPages([...staticPages, ...dynamicPages]);
+  
+  return pagesWithImages;
 }
+
+/**
+ * Add comprehensive image and structured data information to sitemap entries
+ */
+async function addImageInformationToPages(pages: SitemapEntry[]): Promise<MetadataRoute.Sitemap> {
+  try {
+    const galleryItems = await getGalleryItems();
+    
+    return pages.map(page => {
+      // Add image information for gallery pages
+      if (page.url.includes('/nail-art-gallery/') || page.url.includes('/design/')) {
+        const relevantImages = galleryItems.filter(item => {
+          const itemUrl = generateGalleryItemUrl(item);
+          return page.url.includes(itemUrl) || page.url.includes(item.id);
+        });
+        
+        if (relevantImages.length > 0) {
+          return {
+            ...page,
+            images: relevantImages.map(item => getCdnImageUrl(item.image_url))
+          };
+        }
+      }
+      
+      return page;
+    });
+  } catch (error) {
+    console.error('Error adding image information to pages:', error);
+    return pages;
+  }
+}
+
+
 
 /**
  * Auto-update sitemap when new content is added

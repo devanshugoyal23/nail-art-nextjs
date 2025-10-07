@@ -18,27 +18,66 @@ export function blobToBase64(blob: Blob): Promise<string> {
 }
 
 /**
- * Generate SEO-optimized alt text for nail art images
+ * Generate comprehensive SEO-optimized alt text for nail art images
+ * This function creates descriptive, keyword-rich alt text for better SEO
  */
 export function generateImageAltText(designName: string, category?: string, prompt?: string): string {
-  const baseAlt = designName || 'AI Generated Nail Art';
-  const categoryText = category ? ` ${category}` : '';
+  const parts = [];
   
-  // Extract key descriptive words from prompt for better alt text
+  // Add design name
+  if (designName) {
+    parts.push(designName);
+  }
+  
+  // Add category
+  if (category) {
+    parts.push(`${category} nail art`);
+  }
+  
+  // Extract keywords from prompt
   if (prompt) {
-    const promptWords = prompt.toLowerCase()
-      .replace(/[^\w\s]/g, ' ')
-      .split(/\s+/)
-      .filter(word => word.length > 3)
-      .slice(0, 3)
-      .join(' ');
-    
-    if (promptWords) {
-      return `${baseAlt}${categoryText} - ${promptWords} nail design with professional manicure styling`;
+    const promptKeywords = extractKeywordsFromPrompt(prompt);
+    if (promptKeywords.length > 0) {
+      parts.push(`featuring ${promptKeywords.join(', ')}`);
     }
   }
   
-  return `${baseAlt}${categoryText} nail art design with professional manicure styling`;
+  // Add SEO-friendly ending
+  parts.push('nail art inspiration and design ideas');
+  
+  // Fallback
+  if (parts.length === 0) {
+    parts.push('Beautiful nail art design');
+  }
+  
+  return parts.join(' - ');
+}
+
+/**
+ * Extract relevant keywords from AI prompt for alt text
+ */
+function extractKeywordsFromPrompt(prompt: string): string[] {
+  const keywords = [];
+  
+  // Common nail art keywords to look for
+  const nailArtKeywords = [
+    'french manicure', 'gel polish', 'nail art', 'gradient', 'glitter', 
+    'matte', 'chrome', 'marble', 'floral', 'geometric', 'abstract',
+    'minimalist', 'vintage', 'modern', 'elegant', 'bold', 'subtle',
+    'almond', 'coffin', 'square', 'oval', 'stiletto', 'round',
+    'red', 'pink', 'blue', 'green', 'purple', 'black', 'white', 'gold', 'silver',
+    'wedding', 'prom', 'graduation', 'birthday', 'date night', 'party',
+    'spring', 'summer', 'autumn', 'winter', 'christmas', 'halloween'
+  ];
+  
+  // Find matching keywords in the prompt
+  for (const keyword of nailArtKeywords) {
+    if (prompt.toLowerCase().includes(keyword.toLowerCase())) {
+      keywords.push(keyword);
+    }
+  }
+  
+  return keywords.slice(0, 5); // Limit to 5 keywords to avoid spam
 }
 
 /**
@@ -132,7 +171,7 @@ export function generateImageStructuredData(
 }
 
 /**
- * Optimize image dimensions for different use cases
+ * Optimize image dimensions for different use cases with enhanced SEO
  */
 export function getOptimizedImageProps(
   originalUrl: string,
@@ -144,12 +183,12 @@ export function getOptimizedImageProps(
   return {
     src: originalUrl,
     alt: generateImageAltText(designName, category, prompt),
-    width: 600,
-    height: 600,
+    width: 1024,
+    height: 1024,
     priority,
-    sizes: "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw",
+    sizes: "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw",
     quality: 85,
     placeholder: "blur" as const,
-    blurDataURL: "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM/SBF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q==",
+    blurDataURL: "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM/SBF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
   };
 }

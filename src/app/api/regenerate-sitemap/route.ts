@@ -5,8 +5,9 @@ export async function POST(request: NextRequest) {
   try {
     const { newContent } = await request.json();
     
-    // Revalidate sitemap
+    // Revalidate both sitemaps
     revalidatePath('/sitemap.xml');
+    revalidatePath('/sitemap-images.xml');
     
     // Revalidate related pages
     if (newContent?.category) {
@@ -19,9 +20,20 @@ export async function POST(request: NextRequest) {
     // Revalidate homepage
     revalidatePath('/');
     
+    // Ping search engines about sitemap updates
+    try {
+      await Promise.all([
+        fetch(`https://www.google.com/ping?sitemap=https://nailartai.app/sitemap.xml`),
+        fetch(`https://www.google.com/ping?sitemap=https://nailartai.app/sitemap-images.xml`),
+        fetch(`https://www.bing.com/ping?sitemap=https://nailartai.app/sitemap.xml`)
+      ]);
+    } catch (pingError) {
+      console.warn('Failed to ping search engines:', pingError);
+    }
+    
     return NextResponse.json({ 
       success: true, 
-      message: 'Sitemap regenerated successfully',
+      message: 'Sitemaps regenerated successfully',
       timestamp: new Date().toISOString()
     });
   } catch (error) {

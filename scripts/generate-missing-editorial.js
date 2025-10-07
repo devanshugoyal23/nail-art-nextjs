@@ -5,8 +5,8 @@
  * This will process items in batches to avoid overwhelming the AI service
  */
 
-const { createClient } = require('@supabase/supabase-js');
-const { GoogleGenAI } = require('@google/genai');
+import { createClient } from '@supabase/supabase-js';
+import { GoogleGenAI } from '@google/genai';
 
 // Configuration
 const BATCH_SIZE = 5; // Process 5 items at a time

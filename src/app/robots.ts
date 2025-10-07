@@ -5,8 +5,12 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
+      disallow: ['/admin/', '/api/', '/debug/'],
     },
-    sitemap: 'https://nailartai.app/sitemap.xml',
+    sitemap: [
+      'https://nailartai.app/sitemap.xml',
+      'https://nailartai.app/sitemap-images.xml'
+    ],
   };
 }
 
