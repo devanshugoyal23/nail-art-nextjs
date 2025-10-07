@@ -9,7 +9,8 @@ import { getCdnImageUrl } from '@/lib/imageProxy';
 export async function GET() {
   try {
     const baseUrl = 'https://nailartai.app';
-    const galleryItems = await getGalleryItems();
+    const galleryItemsResult = await getGalleryItems({ limit: 1000 });
+    const galleryItems = galleryItemsResult.items;
     
     // Generate image sitemap entries
     const imageEntries = galleryItems.map(item => {

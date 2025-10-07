@@ -88,7 +88,7 @@ const categories = [
 export default async function CategoriesPage() {
   // Get dynamic data from database
   const [galleryItems, allCategoriesWithThumbnails, categoryStats] = await Promise.all([
-    getGalleryItems(),
+    getGalleryItems({ limit: 1000 }).then(result => result.items),
     getAllCategoriesWithThumbnails(),
     getCategoryStatistics()
   ]);

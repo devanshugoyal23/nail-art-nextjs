@@ -136,7 +136,8 @@ export default async function TechniquePage({ params }: TechniquePageProps) {
   const techniqueData = techniqueInfo[technique];
   
   // Get all gallery items and filter by technique
-  const allItems = await getGalleryItems();
+  const allItemsResult = await getGalleryItems({ limit: 1000 });
+  const allItems = allItemsResult.items;
   const filteredItems = filterGalleryItemsByTag(allItems, 'techniques', technique);
   
   // If no items found and no predefined data, show related content instead of empty state

@@ -2,7 +2,8 @@ import { getGalleryItems } from '@/lib/galleryService';
 
 export default async function DebugPage() {
   try {
-    const items = await getGalleryItems();
+    const itemsResult = await getGalleryItems({ limit: 1000 });
+    const items = itemsResult.items;
     
     return (
       <div className="p-8">

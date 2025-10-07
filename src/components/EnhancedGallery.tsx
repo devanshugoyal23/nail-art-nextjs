@@ -38,6 +38,8 @@ export default function EnhancedGallery({
   const [favorites, setFavorites] = useState<string[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(mobileItemsPerPage);
+  const [totalCount, setTotalCount] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
 
   // Extract tags from items
   const allTags = useMemo(() => {
@@ -49,71 +51,8 @@ export default function EnhancedGallery({
     return [...new Set(items.map(item => item.category).filter(Boolean))] as string[];
   }, [items]);
 
-  // Filter and sort items
-  const filteredItems = useMemo(() => {
-    let filtered = items;
-
-    // Search filter (always applied)
-    if (searchTerm) {
-      filtered = filtered.filter(item => 
-        item.design_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        item.category?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        item.prompt?.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-    }
-
-    // Apply filters with OR logic - if any filter matches, show the item
-    if (selectedCategory || selectedTags.length > 0) {
-      filtered = filtered.filter(item => {
-        let matches = false;
-
-        // Check category filter
-        if (selectedCategory && item.category === selectedCategory) {
-          matches = true;
-        }
-
-        // Check tag filters - if ANY tag matches, include the item
-        if (selectedTags.length > 0) {
-          const tagMatches = selectedTags.some(tag => {
-            const [tagType, tagValue] = tag.split(':');
-            return filterGalleryItemsByTag([item], tagType, tagValue).length > 0;
-          });
-          
-          if (tagMatches) {
-            matches = true;
-          }
-        }
-
-        return matches;
-      });
-    }
-
-    // Sort items
-    switch (sortBy) {
-      case 'newest':
-        filtered.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
-        break;
-      case 'oldest':
-        filtered.sort((a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime());
-        break;
-      case 'name':
-        filtered.sort((a, b) => (a.design_name || '').localeCompare(b.design_name || ''));
-        break;
-      case 'popular':
-        // Sort by category popularity (could be enhanced with actual popularity metrics)
-        filtered.sort((a, b) => (b.category || '').localeCompare(a.category || ''));
-        break;
-    }
-
-    return filtered;
-  }, [items, searchTerm, selectedCategory, selectedTags, sortBy]);
-
-  // Pagination
-  const totalPages = Math.ceil(filteredItems.length / itemsPerPage);
-  const paginatedItems = filteredItems.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
+  // Server-side filtering and pagination - no client-side filtering needed
+  const paginatedItems = items;
 
   useEffect(() => {
     if (!initialItems.length) {
@@ -121,14 +60,40 @@ export default function EnhancedGallery({
     }
   }, [initialItems.length]);
 
+  // Refetch data when filters change
+  useEffect(() => {
+    if (!initialItems.length) {
+      setCurrentPage(1); // Reset to first page when filters change
+      fetchGalleryItems();
+    }
+  }, [searchTerm, selectedCategory, selectedTags, sortBy]);
+
+  // Refetch data when page changes
+  useEffect(() => {
+    if (!initialItems.length) {
+      fetchGalleryItems();
+    }
+  }, [currentPage]);
+
   const fetchGalleryItems = async () => {
     try {
       setLoading(true);
-      const response = await fetch('/api/gallery');
+      const params = new URLSearchParams({
+        page: currentPage.toString(),
+        limit: itemsPerPage.toString(),
+        category: selectedCategory,
+        search: searchTerm,
+        tags: selectedTags.join(','),
+        sortBy
+      });
+      
+      const response = await fetch(`/api/gallery?${params}`);
       const data = await response.json();
       
       if (data.success) {
         setItems(data.items);
+        setTotalCount(data.totalCount);
+        setTotalPages(data.totalPages);
       } else {
         setError('Failed to load gallery items');
       }
@@ -340,7 +305,7 @@ export default function EnhancedGallery({
                 Clear All Filters
               </button>
               <div className="text-gray-400 text-sm">
-                {filteredItems.length} of {items.length} designs
+                {paginatedItems.length} of {totalCount} designs
               </div>
             </div>
           </div>
@@ -349,10 +314,10 @@ export default function EnhancedGallery({
 
       {/* Results */}
       <div className="text-center text-gray-300 mb-6">
-        {filteredItems.length > 0 ? (
+        {paginatedItems.length > 0 ? (
           <div>
             <p>
-              Showing {paginatedItems.length} of {filteredItems.length} designs
+              Showing {paginatedItems.length} of {totalCount} designs
               {searchTerm && ` matching "${searchTerm}"`}
               {selectedCategory && ` in "${selectedCategory}"`}
               {selectedTags.length > 0 && ` with ${selectedTags.length} tag filters`}
@@ -483,12 +448,17 @@ export default function EnhancedGallery({
       {/* Pagination */}
       {totalPages > 1 && (
         <div className="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-2">
+          <div className="text-center mb-4">
+            <p className="text-gray-300 text-sm">
+              Showing {((currentPage - 1) * itemsPerPage) + 1} to {Math.min(currentPage * itemsPerPage, totalCount)} of {totalCount} designs
+            </p>
+          </div>
           <button
             onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
-            disabled={currentPage === 1}
+            disabled={currentPage === 1 || loading}
             className="px-4 py-3 bg-white/10 text-white rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-white/20 transition-colors touch-manipulation min-h-[44px]"
           >
-            Previous
+            {loading ? 'Loading...' : 'Previous'}
           </button>
           
           <div className="flex flex-wrap justify-center gap-1">
@@ -512,10 +482,10 @@ export default function EnhancedGallery({
           
           <button
             onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
-            disabled={currentPage === totalPages}
+            disabled={currentPage === totalPages || loading}
             className="px-4 py-3 bg-white/10 text-white rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-white/20 transition-colors touch-manipulation min-h-[44px]"
           >
-            Next
+            {loading ? 'Loading...' : 'Next'}
           </button>
         </div>
       )}

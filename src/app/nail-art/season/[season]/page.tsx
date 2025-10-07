@@ -34,7 +34,8 @@ export default async function SeasonPage({ params }: SeasonPageProps) {
   const description = `Beautiful ${season} nail art designs. Get inspired by seasonal colors and themes.`;
 
   // Get all gallery items and filter by season
-  const allItems = await getGalleryItems();
+  const allItemsResult = await getGalleryItems({ limit: 1000 });
+  const allItems = allItemsResult.items;
   const filteredItems = filterGalleryItemsByTag(allItems, 'seasons', season);
   
   // Get all available tags for this season

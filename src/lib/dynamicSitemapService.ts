@@ -137,7 +137,8 @@ export async function getDynamicPages(): Promise<SitemapEntry[]> {
 
   try {
     // Get all gallery items
-    const galleryItems = await getGalleryItems();
+    const galleryItemsResult = await getGalleryItems({ limit: 1000 });
+    const galleryItems = galleryItemsResult.items;
     
     // Get all categories
     const categories = await getAllCategories();
@@ -317,7 +318,8 @@ export async function generateCompleteSitemap(): Promise<MetadataRoute.Sitemap> 
  */
 async function addImageInformationToPages(pages: SitemapEntry[]): Promise<MetadataRoute.Sitemap> {
   try {
-    const galleryItems = await getGalleryItems();
+    const galleryItemsResult = await getGalleryItems({ limit: 1000 });
+    const galleryItems = galleryItemsResult.items;
     
     return pages.map(page => {
       // Add image information for gallery pages

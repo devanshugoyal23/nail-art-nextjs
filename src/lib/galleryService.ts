@@ -94,24 +94,113 @@ export async function saveGalleryItem(item: SaveGalleryItemRequest): Promise<Gal
   }
 }
 
-export async function getGalleryItems(): Promise<GalleryItem[]> {
-  try {
-    const { data, error } = await supabase
-      .from('gallery_items')
-      .select('*')
-      .order('created_at', { ascending: false })
+interface GetGalleryItemsParams {
+  page?: number;
+  limit?: number;
+  category?: string;
+  search?: string;
+  tags?: string[];
+  sortBy?: string;
+}
 
-    if (error) {
-      console.error('Error fetching gallery items:', error)
-      return []
+interface GetGalleryItemsResult {
+  items: GalleryItem[];
+  totalCount: number;
+  totalPages: number;
+  currentPage: number;
+}
+
+export async function getGalleryItems(params: GetGalleryItemsParams = {}): Promise<GetGalleryItemsResult> {
+  const {
+    page = 1,
+    limit = 20,
+    category = '',
+    search = '',
+    tags = [],
+    sortBy = 'newest'
+  } = params;
+
+  try {
+    let query = supabase
+      .from('gallery_items')
+      .select('*', { count: 'exact' });
+
+    // Apply filters
+    if (category) {
+      query = query.eq('category', category);
     }
 
+    if (search) {
+      query = query.or(`design_name.ilike.%${search}%,prompt.ilike.%${search}%,category.ilike.%${search}%`);
+    }
+
+    if (tags.length > 0) {
+      query = query.overlaps('tags', tags);
+    }
+
+    // Apply sorting
+    switch (sortBy) {
+      case 'oldest':
+        query = query.order('created_at', { ascending: true });
+        break;
+      case 'name':
+        query = query.order('design_name', { ascending: true });
+        break;
+      case 'popular':
+        // For now, sort by created_at desc as a proxy for popularity
+        query = query.order('created_at', { ascending: false });
+        break;
+      case 'newest':
+      default:
+        query = query.order('created_at', { ascending: false });
+        break;
+    }
+
+    // Apply pagination
+    const from = (page - 1) * limit;
+    const to = from + limit - 1;
+    query = query.range(from, to);
+
+    const { data, error, count } = await query;
+
+    if (error) {
+      console.error('Error fetching gallery items:', error);
+      return {
+        items: [],
+        totalCount: 0,
+        totalPages: 0,
+        currentPage: page
+      };
+    }
+
+    const totalCount = count || 0;
+    const totalPages = Math.ceil(totalCount / limit);
+
     // Convert to CDN URLs for reduced egress
-    return convertItemsToCdnUrls(data || [])
+    const items = convertItemsToCdnUrls(data || []);
+
+    return {
+      items,
+      totalCount,
+      totalPages,
+      currentPage: page
+    };
   } catch (error) {
-    console.error('Error fetching gallery items:', error)
-    return []
+    console.error('Error fetching gallery items:', error);
+    return {
+      items: [],
+      totalCount: 0,
+      totalPages: 0,
+      currentPage: page
+    };
   }
+}
+
+// Keep the old function for backward compatibility, but with a warning
+export async function getAllGalleryItems(): Promise<GalleryItem[]> {
+  console.warn('getAllGalleryItems is deprecated. Use getGalleryItems with pagination instead.');
+  const result = await getGalleryItems({ limit: 1000 }); // Large limit to get all items
+  return result.items;
 }
 
 export async function getGalleryItem(id: string): Promise<GalleryItem | null> {
@@ -765,7 +854,8 @@ export async function migrateExistingItemsWithTags(): Promise<{ success: number;
     console.log('Starting migration of existing items with tags...');
     
     // Get all existing items
-    const allItems = await getGalleryItems();
+    const allItemsResult = await getGalleryItems({ limit: 1000 }); // Get all items
+    const allItems = allItemsResult.items;
     let successCount = 0;
     let failedCount = 0;
     

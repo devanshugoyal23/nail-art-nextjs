@@ -636,7 +636,8 @@ export async function generateForUnderPopulatedTagPages(): Promise<GenerationRes
     
     // FIXED: Load all items once at the beginning to avoid repeated database calls
     console.log('Loading all gallery items...');
-    const allItems = await getGalleryItems();
+    const allItemsResult = await getGalleryItems({ limit: 1000 });
+    const allItems = allItemsResult.items;
     console.log(`Loaded ${allItems.length} total items`);
     
     // Process all critical tag pages (removed limit)

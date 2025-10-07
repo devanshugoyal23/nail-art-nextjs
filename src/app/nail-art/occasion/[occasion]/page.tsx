@@ -34,7 +34,8 @@ export default async function OccasionPage({ params }: OccasionPageProps) {
   const description = `Perfect ${occasion} nail art designs. Find the ideal manicure for your special occasion.`;
 
   // Get all gallery items and filter by occasion
-  const allItems = await getGalleryItems();
+  const allItemsResult = await getGalleryItems({ limit: 1000 });
+  const allItems = allItemsResult.items;
   
   // Try multiple tag values for better matching
   let filteredItems = filterGalleryItemsByTag(allItems, 'occasions', occasion);

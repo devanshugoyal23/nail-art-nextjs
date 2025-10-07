@@ -118,7 +118,8 @@ export default async function ColorPage({ params }: ColorPageProps) {
   }
 
   // Get all gallery items and filter by color
-  const allItems = await getGalleryItems();
+  const allItemsResult = await getGalleryItems({ limit: 1000 });
+  const allItems = allItemsResult.items;
   const filteredItems = filterGalleryItemsByTag(allItems, 'colors', color);
   
   // Get all available tags for this color

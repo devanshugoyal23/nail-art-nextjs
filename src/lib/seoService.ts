@@ -176,7 +176,8 @@ async function notifyGoogleOfNewContent(): Promise<void> {
  */
 export async function generateInternalLinks(newContent: ContentItem): Promise<InternalLinksResult> {
   try {
-    const allItems = await getGalleryItems();
+    const allItemsResult = await getGalleryItems({ limit: 1000 });
+    const allItems = allItemsResult.items;
     const categories = await getAllCategories();
     
     // Find related designs based on category, colors, techniques
