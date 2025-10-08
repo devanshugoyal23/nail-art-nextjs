@@ -9,7 +9,6 @@ import { getCdnImageUrl } from '@/lib/imageProxy';
 export async function GET() {
   try {
     const baseUrl = 'https://nailartai.app';
-    const currentDate = new Date().toISOString();
     
     // Get gallery items with caching
     const galleryItemsResult = await getGalleryItems({ limit: 1000 });

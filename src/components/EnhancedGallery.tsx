@@ -1,9 +1,9 @@
 'use client';
 
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { GalleryItem } from '@/lib/supabase';
 import { generateGalleryItemUrl } from '@/lib/galleryService';
-import { getAllTagsFromGalleryItems, filterGalleryItemsByTag, TagItem } from '@/lib/tagService';
+import { getAllTagsFromGalleryItems, TagItem } from '@/lib/tagService';
 import { useMobileOptimization } from '@/lib/useMobileOptimization';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -54,28 +54,7 @@ export default function EnhancedGallery({
   // Server-side filtering and pagination - no client-side filtering needed
   const paginatedItems = items;
 
-  useEffect(() => {
-    if (!initialItems.length) {
-      fetchGalleryItems();
-    }
-  }, [initialItems.length]);
-
-  // Refetch data when filters change
-  useEffect(() => {
-    if (!initialItems.length) {
-      setCurrentPage(1); // Reset to first page when filters change
-      fetchGalleryItems();
-    }
-  }, [searchTerm, selectedCategory, selectedTags, sortBy]);
-
-  // Refetch data when page changes
-  useEffect(() => {
-    if (!initialItems.length) {
-      fetchGalleryItems();
-    }
-  }, [currentPage]);
-
-  const fetchGalleryItems = async () => {
+  const fetchGalleryItems = useCallback(async () => {
     try {
       setLoading(true);
       const params = new URLSearchParams({
@@ -103,7 +82,28 @@ export default function EnhancedGallery({
     } finally {
       setLoading(false);
     }
-  };
+  }, [currentPage, itemsPerPage, selectedCategory, searchTerm, selectedTags, sortBy]);
+
+  useEffect(() => {
+    if (!initialItems.length) {
+      fetchGalleryItems();
+    }
+  }, [initialItems.length, fetchGalleryItems]);
+
+  // Refetch data when filters change
+  useEffect(() => {
+    if (!initialItems.length) {
+      setCurrentPage(1); // Reset to first page when filters change
+      fetchGalleryItems();
+    }
+  }, [searchTerm, selectedCategory, selectedTags, sortBy, initialItems.length, fetchGalleryItems]);
+
+  // Refetch data when page changes
+  useEffect(() => {
+    if (!initialItems.length) {
+      fetchGalleryItems();
+    }
+  }, [currentPage, initialItems.length, fetchGalleryItems]);
 
   const handleImageClick = (item: GalleryItem) => {
     if (onImageSelect) {
