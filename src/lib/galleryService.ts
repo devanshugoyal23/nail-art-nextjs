@@ -1,17 +1,19 @@
 import { supabase, GalleryItem, SaveGalleryItemRequest } from './supabase'
 import { extractTagsFromGalleryItem } from './tagService'
-import { getCdnImageUrl } from './imageProxy'
+import { uploadToR2, generateR2Key } from './r2Service'
+import { createPinterestOptimizedImage, getOptimalPinterestDimensions } from './imageTransformation'
 
 /**
- * Convert gallery item URLs to CDN URLs
- * @param item - Gallery item to convert
- * @returns Gallery item with CDN URLs
+ * Return gallery item URLs as-is (all are now R2 URLs)
+ * @param item - Gallery item
+ * @returns Gallery item with R2 URLs
  */
 function convertToCdnUrls(item: GalleryItem): GalleryItem {
   return {
     ...item,
-    image_url: getCdnImageUrl(item.image_url),
-    original_image_url: item.original_image_url ? getCdnImageUrl(item.original_image_url) : undefined,
+    // All URLs are now R2 URLs - return as-is
+    image_url: item.image_url,
+    original_image_url: item.original_image_url,
   };
 }
 
@@ -26,35 +28,52 @@ function convertItemsToCdnUrls(items: GalleryItem[]): GalleryItem[] {
 
 export async function saveGalleryItem(item: SaveGalleryItemRequest): Promise<GalleryItem | null> {
   try {
-    // Generate unique filename
-    const timestamp = Date.now()
-    const filename = `nail-art-${timestamp}.jpg`
+    // Generate unique filename for R2
+    const r2Key = generateR2Key('nail-art', 'jpg')
     
-    // Convert base64 to blob
-    const imageBlob = dataURLtoBlob(item.imageData)
+    // Convert base64 to buffer
+    const imageBuffer = dataURLtoBlob(item.imageData)
+    const buffer = await imageBuffer.arrayBuffer()
     
-    // Upload image to Supabase storage
-    const { error: uploadError } = await supabase.storage
-      .from('nail-art-images')
-      .upload(filename, imageBlob, {
-        contentType: 'image/jpeg',
-        upsert: false
-      })
+    // Create Pinterest-optimized image
+    const pinterestDimensions = getOptimalPinterestDimensions('nail-art')
+    const optimizedBuffer = await createPinterestOptimizedImage(
+      Buffer.from(buffer),
+      pinterestDimensions.width,
+      pinterestDimensions.height,
+      pinterestDimensions.quality
+    )
+    
+    // Upload to R2
+    const imageUrl = await uploadToR2(
+      optimizedBuffer,
+      r2Key,
+      'image/jpeg',
+      {
+        'pinterest-optimized': 'true',
+        'aspect-ratio': '2:3',
+        'design-name': item.designName || 'nail-art',
+        'category': item.category || 'general'
+      }
+    )
 
-    if (uploadError) {
-      console.error('Error uploading image:', uploadError)
-      return null
+    // Handle original image if provided
+    let originalImageUrl = null
+    if (item.originalImageData) {
+      const originalR2Key = generateR2Key('original', 'jpg')
+      const originalBuffer = dataURLtoBlob(item.originalImageData)
+      const originalArrayBuffer = await originalBuffer.arrayBuffer()
+      originalImageUrl = await uploadToR2(
+        Buffer.from(originalArrayBuffer),
+        originalR2Key,
+        'image/jpeg'
+      )
     }
-
-    // Get public URL
-    const { data: { publicUrl } } = supabase.storage
-      .from('nail-art-images')
-      .getPublicUrl(filename)
-
+    
     // Extract tags from the item
     const tempItem = {
       id: 'temp',
-      image_url: publicUrl,
+      image_url: imageUrl,
       prompt: item.prompt,
       design_name: item.designName,
       category: item.category,
@@ -67,11 +86,11 @@ export async function saveGalleryItem(item: SaveGalleryItemRequest): Promise<Gal
     const { data, error } = await supabase
       .from('gallery_items')
       .insert({
-        image_url: publicUrl,
+        image_url: imageUrl,
         prompt: item.prompt,
         design_name: item.designName,
         category: item.category,
-        original_image_url: item.originalImageData ? await uploadOriginalImage(item.originalImageData) : null,
+        original_image_url: originalImageUrl,
         colors: extractedTags.colors.map(tag => tag.value),
         techniques: extractedTags.techniques.map(tag => tag.value),
         occasions: extractedTags.occasions.map(tag => tag.value),
@@ -625,35 +644,6 @@ function dataURLtoBlob(dataURL: string): Blob {
   return new Blob([u8arr], { type: mime })
 }
 
-// Helper function to upload original image
-async function uploadOriginalImage(originalImageData: string): Promise<string | null> {
-  try {
-    const timestamp = Date.now()
-    const filename = `original-${timestamp}.jpg`
-    const imageBlob = dataURLtoBlob(originalImageData)
-    
-    const { error: uploadError } = await supabase.storage
-      .from('nail-art-images')
-      .upload(filename, imageBlob, {
-        contentType: 'image/jpeg',
-        upsert: false
-      })
-
-    if (uploadError) {
-      console.error('Error uploading original image:', uploadError)
-      return null
-    }
-
-    const { data: { publicUrl } } = supabase.storage
-      .from('nail-art-images')
-      .getPublicUrl(filename)
-
-    return publicUrl
-  } catch (error) {
-    console.error('Error uploading original image:', error)
-    return null
-  }
-}
 
 /**
  * Filter gallery items by tag

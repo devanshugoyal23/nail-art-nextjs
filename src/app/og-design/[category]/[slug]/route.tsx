@@ -1,7 +1,7 @@
 import { ImageResponse } from 'next/og';
 import { getGalleryItemBySlug } from '@/lib/galleryService';
 
-export const runtime = 'edge';
+export const runtime = 'nodejs';
 
 export async function GET(
   request: Request,

@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
 import { getGalleryItems } from '@/lib/galleryService';
-import { getCdnImageUrl } from '@/lib/imageProxy';
 
 /**
  * Optimized Image Sitemap
@@ -16,7 +15,7 @@ export async function GET() {
     
     // Generate image sitemap entries with optimized structure
     const imageEntries = galleryItems.map(item => {
-      const imageUrl = getCdnImageUrl(item.image_url);
+      const imageUrl = item.image_url; // All URLs are now R2 URLs
       const pageUrl = `${baseUrl}/nail-art-gallery/item/${item.id}`;
       
       return {

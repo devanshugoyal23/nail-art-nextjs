@@ -2,6 +2,8 @@ import { GoogleGenAI, Modality } from "@google/genai";
 import { supabase } from './supabase';
 import { getRandomPromptFromCategory, getUniquePromptsFromCategory, getAllCategories, PROMPT_CATEGORIES } from './promptGenerator';
 import { extractTagsFromGalleryItem } from './tagService';
+import { uploadToR2, generateR2Key } from './r2Service';
+import { createPinterestOptimizedImage, getOptimalPinterestDimensions } from './imageTransformation';
 
 let ai: GoogleGenAI | null = null;
 
@@ -203,31 +205,42 @@ function dataURLtoBlob(dataURL: string): Blob {
 }
 
 /**
- * Upload image to Supabase storage
+ * Upload image to R2 with Pinterest optimization
  */
-async function uploadImageToSupabase(imageData: string, filename: string): Promise<string | null> {
+async function uploadImageToR2(imageData: string, filename: string): Promise<string | null> {
   try {
+    // Convert base64 to buffer
     const imageBlob = dataURLtoBlob(imageData);
+    const buffer = await imageBlob.arrayBuffer();
     
-    const { error: uploadError } = await supabase.storage
-      .from('nail-art-images')
-      .upload(filename, imageBlob, {
-        contentType: 'image/jpeg',
-        upsert: false
-      });
+    // Create Pinterest-optimized image
+    const pinterestDimensions = getOptimalPinterestDimensions('nail-art');
+    const optimizedBuffer = await createPinterestOptimizedImage(
+      Buffer.from(buffer),
+      pinterestDimensions.width,
+      pinterestDimensions.height,
+      pinterestDimensions.quality
+    );
+    
+    // Generate R2 key
+    const r2Key = generateR2Key('generated', 'jpg');
+    
+    // Upload to R2
+    const imageUrl = await uploadToR2(
+      optimizedBuffer,
+      r2Key,
+      'image/jpeg',
+      {
+        'pinterest-optimized': 'true',
+        'aspect-ratio': '2:3',
+        'generated': 'true',
+        'filename': filename
+      }
+    );
 
-    if (uploadError) {
-      console.error('Error uploading image:', uploadError);
-      return null;
-    }
-
-    const { data: { publicUrl } } = supabase.storage
-      .from('nail-art-images')
-      .getPublicUrl(filename);
-
-    return publicUrl;
+    return imageUrl;
   } catch (error) {
-    console.error('Error uploading to Supabase:', error);
+    console.error('Error uploading to R2:', error);
     return null;
   }
 }
@@ -349,7 +362,7 @@ export async function generateSingleNailArt(options: GenerationOptions): Promise
     // Upload to Supabase
     const timestamp = Date.now();
     const filename = `generated-nail-art-${timestamp}.jpg`;
-    const imageUrl = await uploadImageToSupabase(`data:image/jpeg;base64,${imageData}`, filename);
+    const imageUrl = await uploadImageToR2(`data:image/jpeg;base64,${imageData}`, filename);
     
     if (!imageUrl) {
       throw new Error('Failed to upload image');

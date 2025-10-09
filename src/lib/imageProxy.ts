@@ -1,42 +1,28 @@
 /**
  * Image Proxy Utilities
  * 
- * This module provides utilities to convert Supabase image URLs
+ * This module provides utilities to convert Cloudflare R2 image URLs
  * to Vercel CDN proxy URLs, reducing egress usage.
  */
 
 /**
- * Convert Supabase image URL to Vercel CDN proxy URL
- * @param supabaseUrl - The original Supabase storage URL
- * @returns Vercel CDN proxy URL or original URL if not a Supabase URL
+ * Return direct Cloudflare R2 URLs
+ * All URLs are now R2 URLs - no conversion needed
+ * @param imageUrl - The R2 image URL
+ * @returns Direct R2 URL
  */
-export function getCdnImageUrl(supabaseUrl: string): string {
-  // Check if it's a Supabase storage URL
-  if (!supabaseUrl || !supabaseUrl.includes('supabase.co/storage/v1/object/public/nail-art-images/')) {
-    return supabaseUrl; // Return original if not a Supabase URL
+export function getCdnImageUrl(imageUrl: string): string {
+  if (!imageUrl) {
+    return imageUrl;
   }
 
-  try {
-    // Extract filename from Supabase URL
-    const url = new URL(supabaseUrl);
-    const pathParts = url.pathname.split('/');
-    const filename = pathParts[pathParts.length - 1];
-    
-    if (!filename) {
-      return supabaseUrl; // Return original if no filename found
-    }
-
-    // Return Vercel CDN proxy URL
-    return `/api/image/${filename}`;
-  } catch (error) {
-    console.error('Error converting image URL:', error);
-    return supabaseUrl; // Return original on error
-  }
+  // All URLs are now R2 URLs - return directly
+  return imageUrl;
 }
 
 /**
- * Convert multiple Supabase image URLs to Vercel CDN proxy URLs
- * @param urls - Array of Supabase URLs
+ * Convert multiple R2 image URLs to Vercel CDN proxy URLs
+ * @param urls - Array of R2 image URLs
  * @returns Array of CDN URLs
  */
 export function getCdnImageUrls(urls: string[]): string[] {
@@ -44,12 +30,12 @@ export function getCdnImageUrls(urls: string[]): string[] {
 }
 
 /**
- * Check if a URL is a Supabase storage URL
+ * Check if a URL is an R2 storage URL
  * @param url - The URL to check
- * @returns True if it's a Supabase storage URL
+ * @returns True if it's an R2 storage URL
  */
-export function isSupabaseUrl(url: string): boolean {
-  return Boolean(url && url.includes('supabase.co/storage/v1/object/public/nail-art-images/'));
+export function isR2Url(url: string): boolean {
+  return Boolean(url && url.includes('r2.dev'));
 }
 
 /**

@@ -45,11 +45,11 @@ export function generateOptimizedImageData(options: ImageOptimizationOptions): O
   const optimizedData: OptimizedImageData = {
     src: imageUrl,
     alt: altText,
-    width: 600,
-    height: 600,
+    width: 1000, // Pinterest-optimized width
+    height: 1500, // Pinterest-optimized height (2:3 ratio)
     priority,
-    sizes: "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw",
-    quality: 85,
+    sizes: "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw",
+    quality: 90, // Higher quality for Pinterest
     placeholder: 'blur',
     blurDataURL: "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM/SBF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q==",
   };
@@ -82,8 +82,8 @@ export function generatePinterestImageMeta(
     'pinterest:title': pinterestTitle,
     'pinterest:description': pinterestDescription,
     'pinterest:image': imageUrl,
-    'pinterest:image:width': '600',
-    'pinterest:image:height': '600',
+    'pinterest:image:width': '1000', // Updated for 2:3 ratio
+    'pinterest:image:height': '1500', // Updated for 2:3 ratio
     'pinterest:image:alt': generateImageAltText(designName, category),
   };
 }

@@ -3,18 +3,12 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
+      // Cloudflare R2 domain only
       {
         protocol: 'https',
-        hostname: 'ccrarmffjbvkggrtktyy.supabase.co',
+        hostname: 'pub-fc15073de2e24f7bacc00c238f8ada7d.r2.dev',
         port: '',
-        pathname: '/storage/v1/object/public/**',
-      },
-      // Add other common image domains if needed
-      {
-        protocol: 'https',
-        hostname: '*.supabase.co',
-        port: '',
-        pathname: '/storage/v1/object/public/**',
+        pathname: '/**',
       },
       // Add picsum.photos for placeholder images
       {
