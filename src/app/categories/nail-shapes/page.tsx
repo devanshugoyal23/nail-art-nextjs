@@ -105,7 +105,6 @@ export default async function NailShapesPage() {
                   <OptimizedImage
                     src={shape.sampleImage}
                     alt={`${shape.name} nail art design`}
-                    designName={shape.name}
                     width={400}
                     height={192}
                     className="w-full h-full object-cover"

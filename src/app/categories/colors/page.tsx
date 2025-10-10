@@ -128,7 +128,6 @@ export default async function ColorsPage() {
                   <OptimizedImage
                     src={color.sampleImage}
                     alt={`${color.name} nail art design`}
-                    designName={color.name}
                     width={400}
                     height={192}
                     className="w-full h-full object-cover"

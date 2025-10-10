@@ -145,7 +145,6 @@ export default async function TechniquesPage() {
                   <OptimizedImage
                     src={technique.sampleImage}
                     alt={`${technique.name} nail art design`}
-                    designName={technique.name}
                     width={400}
                     height={192}
                     className="w-full h-full object-cover"

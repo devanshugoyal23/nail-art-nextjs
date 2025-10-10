@@ -138,7 +138,6 @@ export default async function OccasionsPage() {
                   <OptimizedImage
                     src={occasion.sampleImage}
                     alt={`${occasion.name} nail art design`}
-                    designName={occasion.name}
                     width={400}
                     height={192}
                     className="w-full h-full object-cover"

@@ -1,5 +1,9 @@
-import Link from "next/link";
 import { Metadata } from "next";
+import HomepageHero from "@/components/HomepageHero";
+import CategoryShowcase from "@/components/CategoryShowcase";
+import FeaturesSection from "@/components/FeaturesSection";
+import StatsSection from "@/components/StatsSection";
+import TestimonialsSection from "@/components/TestimonialsSection";
 
 export const metadata: Metadata = {
   title: "AI Nail Art Studio - Virtual Try-On & Design Generator",
@@ -72,92 +76,20 @@ export default function Home() {
         }}
       />
       
-      <div className="text-center flex flex-col items-center justify-center min-h-[70vh] px-4">
-        <div className="max-w-3xl w-full">
-          <h1 className="text-3xl sm:text-4xl md:text-6xl font-extrabold text-white leading-tight mb-4 animate-fade-in-down">
-            Welcome to the <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-600">AI Nail Art Studio</span>
-          </h1>
-          <p className="text-base sm:text-lg md:text-xl text-gray-300 mb-8 max-w-2xl mx-auto animate-fade-in-up">
-            Discover your next manicure without the commitment. Use our cutting-edge AI to virtually try on hundreds of nail designs on your own hands.
-          </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-4 animate-fade-in-up" style={{ animationDelay: '0.5s' }}>
-            <Link
-              href="/try-on"
-              className="bg-indigo-600 text-white font-bold py-3 px-6 sm:px-8 rounded-full hover:bg-indigo-700 transition-transform transform hover:scale-105 duration-300 shadow-lg shadow-indigo-500/50 touch-manipulation text-center"
-            >
-              Start Virtual Try-On
-            </Link>
-            <Link
-              href="/nail-art-gallery"
-              className="bg-purple-600 text-white font-bold py-3 px-6 sm:px-8 rounded-full hover:bg-purple-700 transition-transform transform hover:scale-105 duration-300 shadow-lg shadow-purple-500/50 touch-manipulation text-center"
-            >
-              Browse Gallery
-            </Link>
-          </div>
-        </div>
-        
-        {/* SEO Content Section */}
-        <div className="mt-12 sm:mt-16 max-w-4xl mx-auto px-2 sm:px-4">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 text-left">
-            <div className="bg-gray-800/50 rounded-lg p-4 sm:p-6 border border-gray-700">
-              <h2 className="text-lg sm:text-xl font-bold text-white mb-3">🎨 AI-Powered Design</h2>
-              <p className="text-gray-300 text-sm sm:text-base">
-                Our advanced AI generates unique nail art designs tailored to your preferences, 
-                from classic French manicures to bold artistic creations.
-              </p>
-            </div>
-            <div className="bg-gray-800/50 rounded-lg p-4 sm:p-6 border border-gray-700">
-              <h2 className="text-lg sm:text-xl font-bold text-white mb-3">📱 Virtual Try-On</h2>
-              <p className="text-gray-300 text-sm sm:text-base">
-                Upload your hand photo and see how different nail designs look on you in real-time. 
-                No commitment, just pure creativity.
-              </p>
-            </div>
-            <div className="bg-gray-800/50 rounded-lg p-4 sm:p-6 border border-gray-700 sm:col-span-2 lg:col-span-1">
-              <h2 className="text-lg sm:text-xl font-bold text-white mb-3">✨ Instant Results</h2>
-              <p className="text-gray-300 text-sm sm:text-base">
-                Get instant AI-generated nail art designs with detailed instructions, 
-                supply lists, and step-by-step tutorials.
-              </p>
-            </div>
-          </div>
-          
-          {/* FAQ Section */}
-          <div className="mt-12 sm:mt-16">
-            <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6 sm:mb-8 text-center">Frequently Asked Questions</h2>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
-              <div className="bg-gray-800/50 rounded-lg p-4 sm:p-6 border border-gray-700">
-                <h3 className="text-base sm:text-lg font-semibold text-white mb-2">How does the AI nail art generator work?</h3>
-                <p className="text-gray-300 text-sm sm:text-base">
-                  Our AI analyzes your preferences and generates unique nail art designs using advanced machine learning. 
-                  Simply describe what you want or browse our gallery for inspiration.
-                </p>
-              </div>
-              <div className="bg-gray-800/50 rounded-lg p-4 sm:p-6 border border-gray-700">
-                <h3 className="text-base sm:text-lg font-semibold text-white mb-2">Can I try designs on my own hands?</h3>
-                <p className="text-gray-300 text-sm sm:text-base">
-                  Yes! Upload a photo of your hand and our virtual try-on feature will show you exactly 
-                  how different nail designs will look on your actual hands.
-                </p>
-              </div>
-              <div className="bg-gray-800/50 rounded-lg p-4 sm:p-6 border border-gray-700">
-                <h3 className="text-base sm:text-lg font-semibold text-white mb-2">Are the designs free to use?</h3>
-                <p className="text-gray-300 text-sm sm:text-base">
-                  Absolutely! All AI-generated nail art designs are free to use. Download high-resolution 
-                  images and get detailed instructions for recreating the designs.
-                </p>
-              </div>
-              <div className="bg-gray-800/50 rounded-lg p-4 sm:p-6 border border-gray-700">
-                <h3 className="text-base sm:text-lg font-semibold text-white mb-2">What nail shapes and styles are supported?</h3>
-                <p className="text-gray-300 text-sm sm:text-base">
-                  We support all nail shapes including almond, square, coffin, oval, and stiletto. 
-                  Our AI can create designs for any occasion, season, or style preference.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      {/* Hero Section with Featured Designs */}
+      <HomepageHero />
+      
+      {/* Category Showcase */}
+      <CategoryShowcase />
+      
+      {/* Stats Section */}
+      <StatsSection />
+      
+      {/* Testimonials Section */}
+      <TestimonialsSection />
+      
+      {/* Features Section */}
+      <FeaturesSection />
     </>
   );
 }

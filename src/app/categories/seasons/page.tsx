@@ -120,7 +120,6 @@ export default async function SeasonsPage() {
                   <OptimizedImage
                     src={season.sampleImage}
                     alt={`${season.name} nail art design`}
-                    designName={season.name}
                     width={400}
                     height={192}
                     className="w-full h-full object-cover"

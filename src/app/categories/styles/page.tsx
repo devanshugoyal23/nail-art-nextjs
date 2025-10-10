@@ -138,7 +138,6 @@ export default async function StylesPage() {
                   <OptimizedImage
                     src={style.sampleImage}
                     alt={`${style.name} nail art design`}
-                    designName={style.name}
                     width={400}
                     height={192}
                     className="w-full h-full object-cover"

@@ -16,7 +16,7 @@ import {
   generateSocialMetaTags, 
   generateImageStructuredData
 } from "@/lib/imageUtils";
-import { HeroImage } from "@/components/OptimizedImage";
+import OptimizedImage from "@/components/OptimizedImage";
 
 interface DesignDetailPageProps {
   params: {
@@ -257,11 +257,11 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
             {/* Left side - Image */}
             <div className="lg:w-1/2">
               <div className="relative">
-                <HeroImage
+                <OptimizedImage
                   src={item.image_url}
-                  designName={item.design_name || 'AI Generated'}
-                  category={item.category}
-                  prompt={item.prompt}
+                  alt={item.design_name || 'AI Generated'}
+                  width={800}
+                  height={600}
                   className="w-full h-[500px] lg:h-[700px] object-cover"
                 />
               </div>
