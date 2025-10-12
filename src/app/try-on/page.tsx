@@ -2,70 +2,147 @@
 
 import React, { useState, useRef, useEffect, useCallback, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { NAIL_ART_DESIGNS } from '@/lib/constants';
-import { NailArtDesign } from '@/lib/types';
 import { GalleryItem } from '@/lib/supabase';
-// import { applyNailArt } from '@/lib/geminiService';
 import { fileToBase64 } from '@/lib/imageUtils';
 import Loader from '@/components/Loader';
+import StepIndicator from '@/components/StepIndicator';
+import DesignGalleryGrid from '@/components/DesignGalleryGrid';
+import DesignPreviewModal from '@/components/DesignPreviewModal';
+import DesignPreviewPanel from '@/components/DesignPreviewPanel';
+import EnhancedUploadArea from '@/components/EnhancedUploadArea';
+import DesignFilters from '@/components/DesignFilters';
+import StickyGenerateButton from '@/components/StickyGenerateButton';
+import DraggableComparisonSlider from '@/components/DraggableComparisonSlider';
 import Image from 'next/image';
-
-type ActiveTab = 'gallery' | 'create';
 
 function TryOnContent() {
   const searchParams = useSearchParams();
   const designId = searchParams.get('design');
-  const [galleryItem, setGalleryItem] = useState<GalleryItem | null>(null);
-  const [isLoadingGalleryItem, setIsLoadingGalleryItem] = useState<boolean>(false);
   
-  // Check if designId is from gallery or predefined designs
-  const isGalleryItem = designId && !NAIL_ART_DESIGNS.find(d => d.id === designId);
-  const initialState = designId && !isGalleryItem ? NAIL_ART_DESIGNS.find(d => d.id === designId) : null;
-
+  // Step management
+  const [currentStep, setCurrentStep] = useState<number>(1);
+  
+  // Image states
   const [sourceImage, setSourceImage] = useState<string | null>(null);
   const [generatedImage, setGeneratedImage] = useState<string | null>(null);
-  const [selectedDesign, setSelectedDesign] = useState<NailArtDesign | null>(initialState || null);
-  const [customPrompt, setCustomPrompt] = useState<string>('');
-  const [activeTab, setActiveTab] = useState<ActiveTab>(initialState || isGalleryItem ? 'gallery' : 'create');
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
   const [isCameraActive, setIsCameraActive] = useState<boolean>(false);
   const [sliderPosition, setSliderPosition] = useState(50);
+  
+  // Design selection states
+  const [selectedDesign, setSelectedDesign] = useState<GalleryItem | null>(null);
+  const [previewModalOpen, setPreviewModalOpen] = useState<boolean>(false);
+  const [previewDesign, setPreviewDesign] = useState<GalleryItem | null>(null);
+  
+  // Gallery states
+  const [designs, setDesigns] = useState<GalleryItem[]>([]);
+  const [categories, setCategories] = useState<string[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<string>('');
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [isLoadingGallery, setIsLoadingGallery] = useState<boolean>(false);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [hasMore, setHasMore] = useState<boolean>(true);
+  
+  // Generation states
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   
-  // Set initial tab based on navigation state
+  // Initialize with design from URL if provided
   useEffect(() => {
-    if (initialState) {
-      setActiveTab('gallery');
-      setSelectedDesign(initialState);
-      setCustomPrompt('');
-    } else if (isGalleryItem && designId) {
+    if (designId) {
       fetchGalleryItem(designId);
-    } else {
-      setActiveTab('create');
     }
-  }, [initialState, isGalleryItem, designId]);
+  }, [designId]);
+
+  // Fetch gallery data
+  useEffect(() => {
+    fetchGalleryData();
+    fetchCategories();
+  }, [selectedCategory, searchQuery]);
 
   const fetchGalleryItem = async (id: string) => {
-    setIsLoadingGalleryItem(true);
     try {
       const response = await fetch(`/api/gallery/${id}`);
       const data = await response.json();
       
       if (data.success && data.item) {
-        setGalleryItem(data.item);
-        setActiveTab('gallery');
-        setCustomPrompt('');
+        setSelectedDesign(data.item);
+        setCurrentStep(2);
       } else {
         setError('Failed to load gallery item');
       }
     } catch (err) {
       console.error('Error fetching gallery item:', err);
       setError('Failed to load gallery item');
+    }
+  };
+
+  const fetchGalleryData = async (page: number = 1, append: boolean = false) => {
+    setIsLoadingGallery(true);
+    try {
+      const params = new URLSearchParams({
+        page: page.toString(),
+        limit: '20',
+        ...(selectedCategory && { category: selectedCategory }),
+        ...(searchQuery && { search: searchQuery })
+      });
+
+      const response = await fetch(`/api/gallery?${params}`);
+      const data = await response.json();
+      
+      if (data.success) {
+        if (append) {
+          setDesigns(prev => [...prev, ...data.items]);
+        } else {
+          setDesigns(data.items);
+        }
+        setHasMore(data.currentPage < data.totalPages);
+        setCurrentPage(data.currentPage);
+      } else {
+        setError('Failed to load designs');
+      }
+    } catch (err) {
+      console.error('Error fetching gallery data:', err);
+      setError('Failed to load designs');
     } finally {
-      setIsLoadingGalleryItem(false);
+      setIsLoadingGallery(false);
+    }
+  };
+
+  const fetchCategories = async () => {
+    try {
+      const response = await fetch('/api/gallery');
+      const data = await response.json();
+      
+      if (data.success) {
+        // Extract unique categories from the response
+        const uniqueCategories = [...new Set(data.items?.map((item: GalleryItem) => item.category).filter(Boolean) || [])] as string[];
+        setCategories(uniqueCategories);
+      }
+    } catch (err) {
+      console.error('Error fetching categories:', err);
+    }
+  };
+
+  // Step navigation - simplified for better UX
+  const handleStepClick = (step: number) => {
+    setCurrentStep(step);
+  };
+
+  // Image handling - auto-advance to gallery on mobile
+  const handleImageSelect = (imageData: string) => {
+    setSourceImage(imageData);
+    setGeneratedImage(null);
+    // On mobile, auto-scroll to gallery after upload
+    if (window.innerWidth < 1024) {
+      setTimeout(() => {
+        const galleryElement = document.querySelector('[data-gallery-section]');
+        if (galleryElement) {
+          galleryElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 500);
     }
   };
 
@@ -113,44 +190,37 @@ function TryOnContent() {
         const dataUrl = canvas.toDataURL('image/jpeg');
         setSourceImage(dataUrl);
         stopCamera();
+        setCurrentStep(2);
       }
     }
   };
 
-  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      try {
-        stopCamera();
-        setGeneratedImage(null);
-        const base64 = await fileToBase64(file);
-        setSourceImage(base64);
-      } catch (err) {
-        setError('Failed to read the image file.');
-        console.error(err);
-      }
-    }
+  // Design selection
+  const handleDesignSelect = (design: GalleryItem) => {
+    setSelectedDesign(design);
+    setCurrentStep(3);
   };
 
+  const handleDesignPreview = (design: GalleryItem) => {
+    setPreviewDesign(design);
+    setPreviewModalOpen(true);
+  };
+
+  const handleLoadMore = () => {
+    fetchGalleryData(currentPage + 1, true);
+  };
+
+  // Generation
   const handleGenerate = async () => {
-    let prompt = '';
-    if (activeTab === 'gallery') {
-      if (galleryItem) {
-        prompt = galleryItem.prompt;
-      } else if (selectedDesign) {
-        prompt = selectedDesign.prompt;
-      }
-    } else {
-      prompt = customPrompt;
-    }
-    
-    if (!sourceImage || !prompt) {
-      setError('Please provide an image and select or create a design first.');
+    if (!sourceImage || !selectedDesign) {
+      setError('Please provide an image and select a design first.');
       return;
     }
+    
     setIsLoading(true);
     setError(null);
     setGeneratedImage(null);
+    
     try {
       const mimeType = sourceImage.substring(sourceImage.indexOf(':') + 1, sourceImage.indexOf(';'));
       const base64Data = sourceImage.split(',')[1];
@@ -163,7 +233,7 @@ function TryOnContent() {
         body: JSON.stringify({
           base64ImageData: base64Data,
           mimeType: mimeType,
-          prompt: prompt,
+          prompt: selectedDesign.prompt,
         }),
       });
 
@@ -186,7 +256,7 @@ function TryOnContent() {
     if (!generatedImage) return;
     const link = document.createElement('a');
     link.href = generatedImage;
-    const designName = selectedDesign ? selectedDesign.id : 'custom-design';
+    const designName = selectedDesign ? selectedDesign.design_name || 'design' : 'custom-design';
     link.download = `ai-nail-art-${designName}.jpeg`;
     document.body.appendChild(link);
     link.click();
@@ -194,25 +264,7 @@ function TryOnContent() {
   };
 
   const handleSaveToGallery = async () => {
-    if (!generatedImage || !sourceImage) return;
-    
-    let prompt = '';
-    let designName = 'Custom Design';
-    let category = 'Custom';
-    
-    if (activeTab === 'gallery') {
-      if (galleryItem) {
-        prompt = galleryItem.prompt;
-        designName = galleryItem.design_name || 'Gallery Design';
-        category = galleryItem.category || 'Gallery';
-      } else if (selectedDesign) {
-        prompt = selectedDesign.prompt;
-        designName = selectedDesign.name;
-        category = selectedDesign.category;
-      }
-    } else {
-      prompt = customPrompt;
-    }
+    if (!generatedImage || !sourceImage || !selectedDesign) return;
 
     try {
       const response = await fetch('/api/gallery', {
@@ -222,10 +274,10 @@ function TryOnContent() {
         },
         body: JSON.stringify({
           imageData: generatedImage,
-          prompt: prompt,
+          prompt: selectedDesign.prompt,
           originalImageData: sourceImage,
-          designName: designName,
-          category: category
+          designName: selectedDesign.design_name || 'Generated Design',
+          category: selectedDesign.category || 'Generated'
         }),
       });
 
@@ -242,187 +294,327 @@ function TryOnContent() {
     }
   };
 
-  const handleSelectDesign = (design: NailArtDesign) => {
-    setSelectedDesign(design);
-    setCustomPrompt('');
-    setActiveTab('gallery');
-  };
-
-  const handleCustomPromptChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setCustomPrompt(e.target.value);
-    setSelectedDesign(null);
-    setActiveTab('create');
-  }
-
-  const ImageDisplay = ({ src, title }: { src: string | null; title: string }) => (
-    <div className="w-full h-96 bg-gray-700 rounded-lg flex items-center justify-center overflow-hidden">
-      {src ? (
-        <Image src={src} alt={title} width={400} height={384} className="w-full h-full object-cover" />
-      ) : (
-        <span className="text-gray-400">{title}</span>
-      )}
-    </div>
-  );
-
-  const ComparisonSlider = ({ before, after }: { before: string; after: string }) => (
-    <div className="relative w-full max-w-2xl mx-auto aspect-square rounded-lg overflow-hidden group">
-      <Image src={before} alt="Original Hand" width={512} height={512} className="absolute inset-0 w-full h-full object-cover" />
-      <div className="absolute inset-0 w-full h-full" style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}>
-        <Image src={after} alt="AI Generated Nails" width={512} height={512} className="absolute inset-0 w-full h-full object-cover" />
-      </div>
-      <input
-        type="range"
-        min="0"
-        max="100"
-        value={sliderPosition}
-        onChange={(e) => setSliderPosition(Number(e.target.value))}
-        className="absolute inset-0 w-full h-full cursor-pointer opacity-0"
-        aria-label="Comparison slider"
-      />
-      <div className="absolute inset-y-0 bg-white/50 w-1 pointer-events-none transition-opacity duration-300 opacity-100 group-hover:opacity-100" style={{ left: `calc(${sliderPosition}% - 2px)` }}>
-        <div className="absolute top-1/2 -translate-y-1/2 -left-4 w-8 h-8 rounded-full bg-white shadow-md flex items-center justify-center">
-          <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 9l4-4 4 4m0 6l-4 4-4-4" /></svg>
-        </div>
-      </div>
-    </div>
-  );
-  
-  const isGenerateDisabled = !sourceImage || (!selectedDesign && !galleryItem && !customPrompt) || isLoading;
+  // Remove the old ComparisonSlider - we'll use DraggableComparisonSlider component
 
   return (
-    <div className="flex flex-col lg:flex-row gap-8">
-      {/* Left Panel: Controls & Designs */}
-      <div className="w-full lg:w-1/3 bg-gray-800/50 p-6 rounded-xl shadow-lg flex-shrink-0">
-        <h2 className="text-2xl font-bold mb-4">1. Choose Your Hand</h2>
-        <div className="space-y-4">
-          <div>
-            <label htmlFor="upload-button" className="w-full text-center bg-indigo-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-indigo-700 transition duration-300 cursor-pointer block">
-              Upload Image
-            </label>
-            <input id="upload-button" type="file" accept="image/*" className="hidden" onChange={handleFileChange} />
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <div className="container mx-auto px-4 py-8">
+        {/* Step Indicator */}
+        <StepIndicator 
+          currentStep={currentStep} 
+          onStepClick={handleStepClick}
+          className="mb-8"
+        />
+
+        {/* Main Content */}
+        <div className="flex flex-col lg:flex-row gap-8">
+          {/* Sidebar - Desktop Only */}
+          <div className="hidden lg:block w-1/3 space-y-6">
+            {/* Upload Hand Section */}
+            <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Upload Your Hand</h3>
+              <EnhancedUploadArea
+                onImageSelect={handleImageSelect}
+                currentImage={sourceImage}
+                onCameraStart={startCamera}
+                onCameraStop={stopCamera}
+                isCameraActive={isCameraActive}
+              />
+            </div>
+
+            {/* Selected Design Preview */}
+            <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Selected Design</h3>
+              <DesignPreviewPanel
+                selectedDesign={selectedDesign}
+                onChangeDesign={() => setCurrentStep(2)}
+              />
+            </div>
+
+            {/* Status Indicator */}
+            <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm">
+              <div className="text-center">
+                <div className={`w-4 h-4 rounded-full mx-auto mb-2 ${
+                  sourceImage && selectedDesign ? 'bg-green-500' : 'bg-gray-400'
+                }`}></div>
+                <p className="text-sm text-gray-600 dark:text-gray-400">
+                  {sourceImage && selectedDesign ? 'Ready to generate!' : 'Upload hand + Select design'}
+                </p>
+                {error && <p className="text-red-500 mt-2 text-sm">{error}</p>}
+              </div>
+            </div>
           </div>
-          <button onClick={isCameraActive ? stopCamera : startCamera} className="w-full bg-purple-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-purple-700 transition duration-300">
-            {isCameraActive ? 'Close Camera' : 'Use Camera'}
-          </button>
-        </div>
-        
-        <h2 className="text-2xl font-bold mt-8 mb-4">2. Select or Create a Design</h2>
-        
-        {/* Tabs */}
-        <div className="flex border-b border-gray-700 mb-4">
-          <button onClick={() => setActiveTab('gallery')} className={`py-2 px-4 font-semibold transition-colors duration-300 ${activeTab === 'gallery' ? 'text-indigo-400 border-b-2 border-indigo-400' : 'text-gray-400 hover:text-white'}`}>
-            Gallery
-          </button>
-          <button onClick={() => setActiveTab('create')} className={`py-2 px-4 font-semibold transition-colors duration-300 ${activeTab === 'create' ? 'text-indigo-400 border-b-2 border-indigo-400' : 'text-gray-400 hover:text-white'}`}>
-            Create with AI
-          </button>
+
+          {/* Main Area - Design Gallery (Always Visible) */}
+          <div className="w-full lg:w-2/3">
+            <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm" data-gallery-section>
+              <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Choose Your Design</h2>
+              
+              {/* Filters */}
+              <DesignFilters
+                categories={categories}
+                selectedCategory={selectedCategory}
+                onCategoryChange={setSelectedCategory}
+                searchQuery={searchQuery}
+                onSearchChange={setSearchQuery}
+                className="mb-6"
+              />
+
+              {/* Design Grid */}
+              <DesignGalleryGrid
+                designs={designs}
+                onSelect={handleDesignSelect}
+                selectedId={selectedDesign?.id}
+                loading={isLoadingGallery}
+                onLoadMore={handleLoadMore}
+                hasMore={hasMore}
+              />
+            </div>
+          </div>
         </div>
 
-        {/* Content based on tab */}
-        {activeTab === 'gallery' ? (
-          <div className="space-y-2 h-64 overflow-y-auto pr-2">
-            {isLoadingGalleryItem ? (
-              <div className="flex items-center justify-center h-full">
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-500"></div>
-              </div>
-            ) : galleryItem ? (
-              <div className="p-3 rounded-lg bg-indigo-500 shadow-lg">
-                <div className="flex items-center gap-4">
-                  <Image src={galleryItem.image_url} alt={galleryItem.design_name || 'Gallery Design'} width={40} height={40} className="w-10 h-10 rounded-md object-cover flex-shrink-0" />
-                  <div>
-                    <span className="font-semibold text-white">{galleryItem.design_name || 'Gallery Design'}</span>
-                    <p className="text-xs text-indigo-200">{galleryItem.category}</p>
-                  </div>
-                </div>
-              </div>
-            ) : (
-              NAIL_ART_DESIGNS.map(design => (
-                <div
-                  key={design.id}
-                  onClick={() => handleSelectDesign(design)}
-                  className={`p-3 rounded-lg cursor-pointer transition-all duration-200 flex items-center gap-4 ${selectedDesign?.id === design.id ? 'bg-indigo-500 shadow-lg' : 'bg-gray-700 hover:bg-gray-600'}`}
-                >
-                  <Image src={design.image} alt={design.name} width={40} height={40} className="w-10 h-10 rounded-md object-cover flex-shrink-0" />
-                  <span className="font-semibold">{design.name}</span>
-                </div>
-              ))
-            )}
-          </div>
-        ) : (
-          <div className="h-64 flex flex-col">
-            <p className="text-gray-300 mb-2 text-sm">Describe the nail art you want to create:</p>
-            <textarea
-              value={customPrompt}
-              onChange={handleCustomPromptChange}
-              placeholder="e.g., 'A design with tiny strawberries and a glossy finish'"
-              className="w-full flex-grow bg-gray-700 text-white p-3 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none resize-none"
-              aria-label="Custom nail art prompt"
+        {/* Mobile Layout */}
+        <div className="lg:hidden space-y-6 pb-24">
+          {/* Step 1: Upload Hand (Mobile) */}
+          <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm">
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Upload Your Hand Photo</h2>
+            <EnhancedUploadArea
+              onImageSelect={handleImageSelect}
+              currentImage={sourceImage}
+              onCameraStart={startCamera}
+              onCameraStop={stopCamera}
+              isCameraActive={isCameraActive}
             />
           </div>
-        )}
 
-        <h2 className="text-2xl font-bold mt-8 mb-4">3. Generate!</h2>
-        <button
-          onClick={handleGenerate}
-          disabled={isGenerateDisabled}
-          className="w-full bg-green-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-green-700 transition duration-300 disabled:bg-gray-500 disabled:cursor-not-allowed"
-        >
-          {isLoading ? 'Creating...' : 'Apply Design'}
-        </button>
-        {error && <p className="text-red-400 mt-4 text-sm">{error}</p>}
-      </div>
+          {/* Step 2: Choose Design (Mobile) - Always Visible */}
+          <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm" data-gallery-section>
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Choose Your Design</h2>
+            
+            {/* Filters */}
+            <DesignFilters
+              categories={categories}
+              selectedCategory={selectedCategory}
+              onCategoryChange={setSelectedCategory}
+              searchQuery={searchQuery}
+              onSearchChange={setSearchQuery}
+              className="mb-6"
+            />
 
-      {/* Right Panel: Image Display */}
-      <div className="w-full lg:w-2/3 relative flex flex-col items-center justify-center">
-        {isLoading && <Loader />}
-        {isCameraActive ? (
-          <div className="w-full bg-black rounded-lg overflow-hidden relative">
-            <video ref={videoRef} autoPlay playsInline className="w-full h-auto transform -scale-x-100" />
-            <button onClick={captureImage} className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-red-600 text-white w-16 h-16 rounded-full border-4 border-white hover:bg-red-700 transition">
-              Capture
-            </button>
+            {/* Design Grid */}
+            <DesignGalleryGrid
+              designs={designs}
+              onSelect={handleDesignSelect}
+              selectedId={selectedDesign?.id}
+              loading={isLoadingGallery}
+              onLoadMore={handleLoadMore}
+              hasMore={hasMore}
+            />
           </div>
-        ) : (
-          <>
-            {generatedImage && sourceImage ? (
-              <div className="w-full flex flex-col items-center gap-4">
-                <h3 className="text-center text-xl font-semibold text-gray-300">Interactive Comparison</h3>
-                <ComparisonSlider before={sourceImage} after={generatedImage} />
-                 <div className="mt-4 text-center space-x-4">
+
+          {/* Step 3: Generate (Mobile) - Only show when both are ready */}
+          {sourceImage && selectedDesign && (
+            <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm">
+              <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Generate Your Nail Art</h2>
+              
+              {/* Summary */}
+              <div className="flex items-center gap-4 mb-6 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                <div className="relative w-16 h-16 rounded-lg overflow-hidden bg-gray-200 dark:bg-gray-600">
+                  {sourceImage && (
+                    <Image src={sourceImage} alt="Your hand" fill className="object-cover" />
+                  )}
+                </div>
+                <div className="text-2xl">+</div>
+                <div className="relative w-16 h-16 rounded-lg overflow-hidden bg-gray-200 dark:bg-gray-600">
+                  {selectedDesign && (
+                    <Image src={selectedDesign.image_url} alt="Selected design" fill className="object-cover" />
+                  )}
+                </div>
+                <div className="text-2xl">=</div>
+                <div className="text-lg font-semibold text-gray-900 dark:text-white">Your AI Nail Art</div>
+              </div>
+
+              <button
+                onClick={handleGenerate}
+                disabled={!sourceImage || !selectedDesign || isLoading}
+                className="w-full bg-indigo-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-indigo-700 disabled:bg-gray-500 disabled:cursor-not-allowed transition-colors"
+              >
+                {isLoading ? 'Generating...' : 'Generate My Nail Art'}
+              </button>
+              {error && <p className="text-red-500 mt-4 text-sm">{error}</p>}
+            </div>
+          )}
+
+          {/* Results - Mobile */}
+          {generatedImage && sourceImage && (
+            <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm">
+              <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Your AI Nail Art</h2>
+              <div className="space-y-4">
+                <DraggableComparisonSlider before={sourceImage} after={generatedImage} />
+                <div className="flex flex-col sm:flex-row gap-3 justify-center">
                   <button
                     onClick={handleSaveImage}
-                    className="inline-flex items-center gap-2 bg-green-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-green-700 transition duration-300 shadow-lg shadow-green-500/50"
+                    className="inline-flex items-center gap-2 bg-green-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-green-700 transition-colors"
                   >
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
+                    <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                     </svg>
                     Download
                   </button>
                   <button
                     onClick={handleSaveToGallery}
-                    className="inline-flex items-center gap-2 bg-pink-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-pink-700 transition duration-300 shadow-lg shadow-pink-500/50"
+                    className="inline-flex items-center gap-2 bg-pink-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-pink-700 transition-colors"
                   >
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
+                    <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
                     Save to Gallery
                   </button>
+                  <button
+                    onClick={() => setCurrentStep(2)}
+                    className="inline-flex items-center gap-2 border border-indigo-600 text-indigo-600 font-bold py-2 px-6 rounded-lg hover:bg-indigo-50 dark:hover:bg-indigo-900/20 transition-colors"
+                  >
+                    Try Another Design
+                  </button>
                 </div>
               </div>
-            ) : (
-              <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-4">
-                 <div>
-                  <h3 className="text-center text-lg font-semibold mb-2 text-gray-300">Your Hand</h3>
-                  <ImageDisplay src={sourceImage} title="Your Hand" />
-                </div>
-                <div>
-                  <h3 className="text-center text-lg font-semibold mb-2 text-gray-300">AI Generated Result</h3>
-                  <ImageDisplay src={generatedImage} title="AI Generated Result" />
+            </div>
+          )}
+
+          {/* Camera Interface - Mobile */}
+          {isCameraActive && (
+            <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm">
+              <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Take a Photo</h2>
+              <div className="bg-black rounded-lg overflow-hidden">
+                <video ref={videoRef} autoPlay playsInline className="w-full h-auto transform -scale-x-100" />
+                <div className="p-4 text-center">
+                  <button
+                    onClick={captureImage}
+                    className="bg-red-600 text-white w-16 h-16 rounded-full border-4 border-white hover:bg-red-700 transition-colors"
+                  >
+                    <svg className="w-6 h-6 mx-auto" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
+                    </svg>
+                  </button>
                 </div>
               </div>
-            )}
-          </>
+            </div>
+          )}
+        </div>
+
+        {/* Results - Desktop */}
+        {generatedImage && sourceImage && (
+          <div className="hidden lg:block bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm mt-8">
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Your AI Nail Art</h2>
+            <div className="space-y-4">
+              <DraggableComparisonSlider before={sourceImage} after={generatedImage} />
+              <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                <button
+                  onClick={handleSaveImage}
+                  className="inline-flex items-center gap-2 bg-green-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-green-700 transition-colors"
+                >
+                  <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                  Download
+                </button>
+                <button
+                  onClick={handleSaveToGallery}
+                  className="inline-flex items-center gap-2 bg-pink-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-pink-700 transition-colors"
+                >
+                  <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                  Save to Gallery
+                </button>
+                <button
+                  onClick={() => setCurrentStep(2)}
+                  className="inline-flex items-center gap-2 border border-indigo-600 text-indigo-600 font-bold py-2 px-6 rounded-lg hover:bg-indigo-50 dark:hover:bg-indigo-900/20 transition-colors"
+                >
+                  Try Another Design
+                </button>
+              </div>
+            </div>
+          </div>
         )}
+
+        {/* Camera Interface - Desktop */}
+        {isCameraActive && (
+          <div className="hidden lg:block bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm mt-8">
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Take a Photo</h2>
+            <div className="bg-black rounded-lg overflow-hidden">
+              <video ref={videoRef} autoPlay playsInline className="w-full h-auto transform -scale-x-100" />
+              <div className="p-4 text-center">
+                <button
+                  onClick={captureImage}
+                  className="bg-red-600 text-white w-16 h-16 rounded-full border-4 border-white hover:bg-red-700 transition-colors"
+                >
+                  <svg className="w-6 h-6 mx-auto" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Design Preview Modal */}
+        <DesignPreviewModal
+          design={previewDesign}
+          isOpen={previewModalOpen}
+          onClose={() => setPreviewModalOpen(false)}
+          onSelect={handleDesignSelect}
+        />
+
+        {/* Sticky Generate Button - Desktop */}
+        <div className="hidden lg:block">
+          <StickyGenerateButton
+            onGenerate={handleGenerate}
+            isLoading={isLoading}
+            disabled={!sourceImage || !selectedDesign || isLoading}
+            sourceImage={sourceImage}
+            selectedDesign={selectedDesign}
+          />
+        </div>
+
+        {/* Mobile Generate Button - Fixed Bottom */}
+        <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 p-4 z-50">
+          <button
+            onClick={handleGenerate}
+            disabled={!sourceImage || !selectedDesign || isLoading}
+            className={`w-full py-4 rounded-lg font-bold text-lg transition-all duration-300 ${
+              sourceImage && selectedDesign && !isLoading
+                ? 'bg-indigo-600 hover:bg-indigo-700 text-white animate-pulse'
+                : 'bg-gray-500 text-gray-300 cursor-not-allowed'
+            }`}
+          >
+            <div className="flex items-center justify-center gap-3">
+              {isLoading ? (
+                <>
+                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                  <span>Generating...</span>
+                </>
+              ) : (
+                <>
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                  <span>Generate My Nail Art</span>
+                </>
+              )}
+            </div>
+          </button>
+          <div className="text-center mt-2">
+            <div className="text-xs text-gray-500">
+              {!sourceImage && !selectedDesign && 'Upload hand + Select design'}
+              {sourceImage && !selectedDesign && 'Select a design'}
+              {!sourceImage && selectedDesign && 'Upload your hand'}
+              {sourceImage && selectedDesign && 'Ready to generate!'}
+            </div>
+          </div>
+        </div>
+
+        {/* Hidden Canvas for Camera */}
         <canvas ref={canvasRef} className="hidden"></canvas>
       </div>
     </div>
