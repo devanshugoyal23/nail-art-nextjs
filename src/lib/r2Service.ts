@@ -4,10 +4,10 @@ import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 // Cloudflare R2 configuration
 const r2Client = new S3Client({
   region: 'auto',
-  endpoint: `https://05b5ee1a83754aa6b4fcd974016ecde8.r2.cloudflarestorage.com`,
+  endpoint: process.env.R2_ENDPOINT || `https://05b5ee1a83754aa6b4fcd974016ecde8.r2.cloudflarestorage.com`,
   credentials: {
-    accessKeyId: '75285deddfed8d17042993c0522c33f5',
-    secretAccessKey: '066792709f1ddeb4b2913ccbd6936817f3bc89bbbaf9482c7eef5e89269b588d',
+    accessKeyId: process.env.R2_ACCESS_KEY_ID!,
+    secretAccessKey: process.env.R2_SECRET_ACCESS_KEY!,
   },
 });
 

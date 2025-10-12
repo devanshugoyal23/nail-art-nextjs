@@ -12,8 +12,20 @@ GEMINI_API_KEY=your_gemini_api_key_here
 NEXT_PUBLIC_SUPABASE_URL=https://nail-art-gallery.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key_here
 
+# Cloudflare R2 Configuration
+R2_ENDPOINT=https://05b5ee1a83754aa6b4fcd974016ecde8.r2.cloudflarestorage.com
+R2_ACCESS_KEY_ID=75285deddfed8d17042993c0522c33f5
+R2_SECRET_ACCESS_KEY=066792709f1ddeb4b2913ccbd6936817f3bc89bbbaf9482c7eef5e89269b588d
+
 # Site URL
 NEXT_PUBLIC_SITE_URL=https://nailartai.app
+
+# Admin Authentication (Optional - for basic protection)
+ADMIN_PASSWORD=your_secure_admin_password
+
+# API Rate Limiting
+RATE_LIMIT_MAX=100
+RATE_LIMIT_WINDOW_MS=900000
 EOF
 
 echo "✅ Created .env.local file"

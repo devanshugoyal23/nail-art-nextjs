@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { deleteGalleryItem, getGalleryItem } from '@/lib/galleryService'
+import { checkAdminAuth } from '@/lib/authUtils'
 
 export async function GET(
   request: NextRequest,
@@ -39,6 +40,15 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    // Check authentication - require admin access for deletions
+    const auth = checkAdminAuth(request);
+    if (!auth.isAuthenticated) {
+      return NextResponse.json(
+        { error: 'Admin authentication required' },
+        { status: 401 }
+      );
+    }
+
     const { id } = await params
 
     if (!id) {
@@ -46,6 +56,15 @@ export async function DELETE(
         { error: 'Missing gallery item ID' },
         { status: 400 }
       )
+    }
+
+    // Validate ID format (basic UUID check)
+    const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    if (!uuidRegex.test(id)) {
+      return NextResponse.json(
+        { error: 'Invalid gallery item ID format' },
+        { status: 400 }
+      );
     }
 
     const success = await deleteGalleryItem(id)

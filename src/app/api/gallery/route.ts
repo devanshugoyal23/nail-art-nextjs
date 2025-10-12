@@ -1,15 +1,34 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getGalleryItems, saveGalleryItem } from '@/lib/galleryService'
+import { checkAdminAuth, checkPublicAuth } from '@/lib/authUtils'
+import { rateLimiters, checkRateLimit } from '@/lib/rateLimiter'
+import { validateQueryParams, validateGalleryItem } from '@/lib/inputValidation'
 
 export async function GET(request: NextRequest) {
   try {
-    const { searchParams } = new URL(request.url)
-    const page = parseInt(searchParams.get('page') || '1')
-    const limit = parseInt(searchParams.get('limit') || '20')
-    const category = searchParams.get('category') || ''
-    const search = searchParams.get('search') || ''
-    const tags = searchParams.get('tags') || ''
-    const sortBy = searchParams.get('sortBy') || 'newest'
+    // Apply rate limiting for read operations
+    const rateLimit = checkRateLimit(request, rateLimiters.read);
+    if (!rateLimit.allowed) {
+      const response = NextResponse.json(
+        { error: rateLimit.error },
+        { status: 429 }
+      );
+      Object.entries(rateLimit.headers).forEach(([key, value]) => {
+        response.headers.set(key, value);
+      });
+      return response;
+    }
+
+    // Validate query parameters
+    const queryValidation = validateQueryParams(request);
+    if (!queryValidation.isValid) {
+      return NextResponse.json(
+        { error: 'Invalid query parameters', details: queryValidation.errors },
+        { status: 400 }
+      );
+    }
+
+    const { page, limit, category, search, tags, sortBy } = queryValidation.sanitizedData;
 
     const result = await getGalleryItems({
       page,
@@ -33,6 +52,11 @@ export async function GET(request: NextRequest) {
     response.headers.set('CDN-Cache-Control', 'public, s-maxage=7200')
     response.headers.set('Vercel-CDN-Cache-Control', 'public, s-maxage=7200')
     
+    // Add rate limit headers
+    Object.entries(rateLimit.headers).forEach(([key, value]) => {
+      response.headers.set(key, value);
+    });
+    
     return response
   } catch (error) {
     console.error('Error fetching gallery items:', error)
@@ -45,15 +69,40 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json()
-    const { imageData, prompt, originalImageData, designName, category } = body
-
-    if (!imageData || !prompt) {
+    // Check authentication - require admin access for gallery uploads
+    const auth = checkAdminAuth(request);
+    if (!auth.isAuthenticated) {
       return NextResponse.json(
-        { error: 'Missing required parameters' },
-        { status: 400 }
-      )
+        { error: 'Admin authentication required' },
+        { status: 401 }
+      );
     }
+
+    // Apply rate limiting for gallery operations
+    const rateLimit = checkRateLimit(request, rateLimiters.gallery);
+    if (!rateLimit.allowed) {
+      const response = NextResponse.json(
+        { error: rateLimit.error },
+        { status: 429 }
+      );
+      Object.entries(rateLimit.headers).forEach(([key, value]) => {
+        response.headers.set(key, value);
+      });
+      return response;
+    }
+
+    const body = await request.json()
+    
+    // Validate gallery item data
+    const validation = validateGalleryItem(body);
+    if (!validation.isValid) {
+      return NextResponse.json(
+        { error: 'Invalid input data', details: validation.errors },
+        { status: 400 }
+      );
+    }
+
+    const { imageData, prompt, originalImageData, designName, category } = validation.sanitizedData;
 
     const item = await saveGalleryItem({
       imageData,

@@ -1,5 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { GoogleGenAI, Modality } from '@google/genai';
+import { checkAdminAuth } from '@/lib/authUtils';
+import { rateLimiters, checkRateLimit } from '@/lib/rateLimiter';
+import { validateAIGeneration } from '@/lib/inputValidation';
 
 const API_KEY = process.env.GEMINI_API_KEY;
 
@@ -11,14 +14,40 @@ const ai = new GoogleGenAI({ apiKey: API_KEY });
 
 export async function POST(request: NextRequest) {
   try {
-    const { base64ImageData, mimeType, prompt } = await request.json();
-
-    if (!base64ImageData || !mimeType || !prompt) {
+    // Check authentication - require admin access for AI generation
+    const auth = checkAdminAuth(request);
+    if (!auth.isAuthenticated) {
       return NextResponse.json(
-        { error: 'Missing required parameters' },
+        { error: 'Admin authentication required' },
+        { status: 401 }
+      );
+    }
+
+    // Apply strict rate limiting for AI generation (expensive operations)
+    const rateLimit = checkRateLimit(request, rateLimiters.aiGeneration);
+    if (!rateLimit.allowed) {
+      const response = NextResponse.json(
+        { error: rateLimit.error },
+        { status: 429 }
+      );
+      Object.entries(rateLimit.headers).forEach(([key, value]) => {
+        response.headers.set(key, value);
+      });
+      return response;
+    }
+
+    const body = await request.json();
+    
+    // Validate AI generation request
+    const validation = validateAIGeneration(body);
+    if (!validation.isValid) {
+      return NextResponse.json(
+        { error: 'Invalid input data', details: validation.errors },
         { status: 400 }
       );
     }
+
+    const { base64ImageData, mimeType, prompt } = validation.sanitizedData;
 
     const response = await ai.models.generateContent({
       model: 'gemini-2.5-flash-image-preview',

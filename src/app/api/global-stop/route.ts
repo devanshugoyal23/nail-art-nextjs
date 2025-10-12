@@ -1,8 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { globalStopService } from '@/lib/globalStopService';
+import { checkAdminAuth } from '@/lib/authUtils';
 
 export async function POST(request: NextRequest) {
   try {
+    // Check authentication - require admin access for system control
+    const auth = checkAdminAuth(request);
+    if (!auth.isAuthenticated) {
+      return NextResponse.json(
+        { error: 'Admin authentication required' },
+        { status: 401 }
+      );
+    }
+
     const { action, source, reason } = await request.json();
     
     switch (action) {
