@@ -25,7 +25,7 @@ setInterval(() => {
 }, 5 * 60 * 1000);
 
 export function createRateLimiter(config: RateLimitConfig) {
-  return function rateLimit(request: NextRequest): {
+  const rateLimitFunction = function rateLimit(request: NextRequest): {
     allowed: boolean;
     remaining: number;
     resetTime: number;
@@ -61,6 +61,11 @@ export function createRateLimiter(config: RateLimitConfig) {
       error: !allowed ? `Rate limit exceeded. Try again in ${Math.ceil((entry.resetTime - now) / 1000)} seconds.` : undefined
     };
   };
+  
+  // Add the maxRequests property to the function
+  (rateLimitFunction as any).maxRequests = config.maxRequests;
+  
+  return rateLimitFunction;
 }
 
 function getClientIP(request: NextRequest): string {
@@ -115,7 +120,7 @@ export function checkRateLimit(
   const result = limiter(request);
   
   const headers = {
-    'X-RateLimit-Limit': limiter.toString(),
+    'X-RateLimit-Limit': (limiter as any).maxRequests?.toString() || '200',
     'X-RateLimit-Remaining': result.remaining.toString(),
     'X-RateLimit-Reset': Math.ceil(result.resetTime / 1000).toString(),
   };
