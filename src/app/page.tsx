@@ -80,16 +80,24 @@ export default function Home() {
       <HomepageHero />
       
       {/* Category Showcase */}
-      <CategoryShowcase />
+      <div className="container mx-auto px-2 sm:px-4 py-4 sm:py-8">
+        <CategoryShowcase />
+      </div>
       
       {/* Stats Section */}
-      <StatsSection />
+      <div className="container mx-auto px-2 sm:px-4 py-4 sm:py-8">
+        <StatsSection />
+      </div>
       
       {/* Testimonials Section */}
-      <TestimonialsSection />
+      <div className="container mx-auto px-2 sm:px-4 py-4 sm:py-8">
+        <TestimonialsSection />
+      </div>
       
       {/* Features Section */}
-      <FeaturesSection />
+      <div className="container mx-auto px-2 sm:px-4 py-4 sm:py-8">
+        <FeaturesSection />
+      </div>
     </>
   );
 }

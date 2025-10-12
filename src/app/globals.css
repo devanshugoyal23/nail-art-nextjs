@@ -80,6 +80,145 @@ img {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+  
+  /* Disable background animations for accessibility */
+  [style*="animationName"] {
+    animation: none !important;
+  }
+}
+
+/* Pinterest-style masonry improvements */
+.pinterest-masonry {
+  column-count: 4;
+  column-gap: 0.75rem;
+  column-fill: auto;
+  height: 100vh;
+  min-height: 100vh;
+}
+
+@media (min-width: 640px) {
+  .pinterest-masonry {
+    column-count: 6;
+    column-gap: 1rem;
+    height: 100vh;
+    min-height: 100vh;
+  }
+}
+
+@media (min-width: 1024px) {
+  .pinterest-masonry {
+    column-count: 8;
+    column-gap: 1rem;
+    height: 100vh;
+    min-height: 100vh;
+  }
+}
+
+@media (min-width: 1280px) {
+  .pinterest-masonry {
+    column-count: 10;
+    column-gap: 0.75rem;
+    height: 100vh;
+    min-height: 100vh;
+  }
+}
+
+.pinterest-item {
+  break-inside: avoid;
+  margin-bottom: 0.75rem;
+  display: inline-block;
+  width: 100%;
+  position: relative;
+}
+
+/* Enhanced image brightness and contrast */
+.pinterest-item img {
+  filter: brightness(1.05) contrast(1.1) saturate(1.05);
+  transition: filter 0.3s ease;
+  content-visibility: auto;
+  contain: layout style paint;
+}
+
+.pinterest-item:hover img {
+  filter: brightness(1.15) contrast(1.15) saturate(1.1);
+}
+
+/* Performance optimizations for masonry layout */
+.pinterest-masonry {
+  contain: layout style paint;
+  will-change: transform;
+}
+
+.pinterest-item {
+  contain: layout style paint;
+  will-change: transform;
+}
+
+/* Ensure images fill the available space better */
+.pinterest-masonry::after {
+  content: '';
+  display: block;
+  height: 100vh;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.1) 100%);
+  pointer-events: none;
+}
+
+/* Enhanced hover effects for desktop */
+@media (hover: hover) {
+  .pinterest-item:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+    z-index: 10;
+  }
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  .pinterest-masonry {
+    column-count: 2;
+    column-gap: 0.5rem;
+  }
+  
+  .pinterest-item {
+    margin-bottom: 0.5rem;
+  }
+  
+  /* Disable complex animations on mobile for performance */
+  [style*="animationName"] {
+    animation: none !important;
+  }
+  
+  /* Reduce animation intensity on mobile */
+  .gpu-accelerated {
+    transform: none !important;
+    backface-visibility: visible;
+    perspective: none;
+    will-change: auto !important;
+  }
+  
+  /* Optimize images for mobile */
+  .pinterest-item img {
+    filter: brightness(1.05) contrast(1.1);
+    transition: none;
+  }
+}
+
+/* Performance optimizations for low-end devices */
+@media (prefers-reduced-data: reduce) {
+  .pinterest-item {
+    animation: none !important;
+    transform: none !important;
+  }
+  
+  .gpu-accelerated {
+    transform: none !important;
+    backface-visibility: visible;
+    perspective: none;
+  }
 }
 
 /* Custom animations for homepage */
@@ -135,6 +274,90 @@ img {
   to {
     opacity: 1;
     transform: scale(1);
+  }
+}
+
+@keyframes wave {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+    opacity: 0.6;
+  }
+  25% {
+    transform: translateY(-3px) rotate(0.5deg);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translateY(-2px) rotate(-0.3deg);
+    opacity: 0.8;
+  }
+  75% {
+    transform: translateY(-4px) rotate(0.3deg);
+    opacity: 0.7;
+  }
+}
+
+@keyframes elegantFloat {
+  0%, 100% {
+    transform: translateY(0px) scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translateY(-2px) scale(1.02);
+    opacity: 0.8;
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  }
+  50% {
+    box-shadow: 0 8px 30px rgba(139, 92, 246, 0.2);
+  }
+}
+
+@keyframes subtleFade {
+  0%, 100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+/* Animation utility classes */
+.animate-elegant-float {
+  animation: elegantFloat 10s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 6s ease-in-out infinite;
+}
+
+.animate-subtle-fade {
+  animation: subtleFade 8s ease-in-out infinite;
+}
+
+/* GPU acceleration for smooth animations */
+.gpu-accelerated {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Enhanced reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .animate-elegant-float,
+  .animate-pulse-glow,
+  .animate-subtle-fade,
+  [style*="animationName"] {
+    animation: none !important;
+    transform: none !important;
+  }
+  
+  .pinterest-item {
+    animation: none !important;
+    transform: none !important;
   }
 }
 

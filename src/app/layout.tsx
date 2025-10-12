@@ -102,9 +102,9 @@ export default function RootLayout({
           `
         }} />
       </head>
-      <body className="min-h-screen bg-gradient-to-br from-gray-900 to-indigo-900 text-gray-100 flex flex-col">
+      <body className="min-h-screen bg-black text-gray-100 flex flex-col">
         <Header />
-        <main className="flex-grow container mx-auto px-2 sm:px-4 py-4 sm:py-8">
+        <main className="flex-grow">
           {children}
         </main>
         <Footer />
