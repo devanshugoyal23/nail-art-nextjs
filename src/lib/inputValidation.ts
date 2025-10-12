@@ -1,9 +1,9 @@
 import { NextRequest } from 'next/server';
 
-export interface ValidationResult {
+export interface ValidationResult<T = unknown> {
   isValid: boolean;
   errors: string[];
-  sanitizedData?: any;
+  sanitizedData?: T;
 }
 
 export interface ValidationRules {
@@ -14,6 +14,20 @@ export interface ValidationRules {
   required?: boolean;
   pattern?: RegExp;
   sanitize?: boolean;
+}
+
+export interface GalleryItemData {
+  imageData: string;
+  prompt: string;
+  designName?: string;
+  category?: string;
+  originalImageData?: string;
+}
+
+export interface AIGenerationData {
+  base64ImageData: string;
+  mimeType: string;
+  prompt: string;
 }
 
 /**
@@ -34,9 +48,9 @@ export function sanitizeText(input: string): string {
  * Validate and sanitize text input
  */
 export function validateText(
-  input: any, 
+  input: unknown, 
   rules: ValidationRules = {}
-): ValidationResult {
+): ValidationResult<string> {
   const errors: string[] = [];
   
   // Check if required
@@ -83,9 +97,9 @@ export function validateText(
  * Validate base64 image data
  */
 export function validateImageData(
-  input: any,
+  input: unknown,
   rules: ValidationRules = {}
-): ValidationResult {
+): ValidationResult<string> {
   const errors: string[] = [];
   
   if (rules.required && !input) {
@@ -94,7 +108,7 @@ export function validateImageData(
   }
   
   if (!input) {
-    return { isValid: true, errors: [], sanitizedData: null };
+    return { isValid: true, errors: [], sanitizedData: undefined };
   }
   
   const data = input.toString();
@@ -122,14 +136,14 @@ export function validateImageData(
   return {
     isValid: errors.length === 0,
     errors,
-    sanitizedData: errors.length === 0 ? data : null
+    sanitizedData: errors.length === 0 ? data : undefined
   };
 }
 
 /**
  * Validate UUID format
  */
-export function validateUUID(input: any): ValidationResult {
+export function validateUUID(input: unknown): ValidationResult<string> {
   const errors: string[] = [];
   
   if (!input) {
@@ -145,7 +159,7 @@ export function validateUUID(input: any): ValidationResult {
   return {
     isValid: errors.length === 0,
     errors,
-    sanitizedData: input
+    sanitizedData: input as string
   };
 }
 
@@ -153,11 +167,11 @@ export function validateUUID(input: any): ValidationResult {
  * Validate pagination parameters
  */
 export function validatePagination(
-  page: any,
-  limit: any,
+  page: unknown,
+  limit: unknown,
   maxPage: number = 1000,
   maxLimit: number = 100
-): ValidationResult {
+): ValidationResult<{ page: number; limit: number }> {
   const errors: string[] = [];
   
   const pageNum = parseInt(page?.toString() || '1');
@@ -184,12 +198,19 @@ export function validatePagination(
 /**
  * Validate gallery item data
  */
-export function validateGalleryItem(data: any): ValidationResult {
+export function validateGalleryItem(data: unknown): ValidationResult<GalleryItemData> {
   const errors: string[] = [];
-  const sanitizedData: any = {};
+  const sanitizedData: Partial<GalleryItemData> = {};
+  
+  // Type guard to ensure data is an object
+  if (!data || typeof data !== 'object') {
+    return { isValid: false, errors: ['Invalid data format'] };
+  }
+  
+  const dataObj = data as Record<string, unknown>;
   
   // Validate image data
-  const imageValidation = validateImageData(data.imageData, {
+  const imageValidation = validateImageData(dataObj.imageData, {
     required: true,
     maxSize: 10 * 1024 * 1024, // 10MB
     allowedTypes: ['jpeg', 'jpg', 'png', 'webp']
@@ -198,11 +219,11 @@ export function validateGalleryItem(data: any): ValidationResult {
   if (!imageValidation.isValid) {
     errors.push(...imageValidation.errors);
   } else {
-    sanitizedData.imageData = imageValidation.sanitizedData;
+    sanitizedData.imageData = imageValidation.sanitizedData as string;
   }
   
   // Validate prompt
-  const promptValidation = validateText(data.prompt, {
+  const promptValidation = validateText(dataObj.prompt, {
     required: true,
     maxLength: 1000,
     sanitize: true
@@ -211,12 +232,12 @@ export function validateGalleryItem(data: any): ValidationResult {
   if (!promptValidation.isValid) {
     errors.push(...promptValidation.errors);
   } else {
-    sanitizedData.prompt = promptValidation.sanitizedData;
+    sanitizedData.prompt = promptValidation.sanitizedData as string;
   }
   
   // Validate design name (optional)
-  if (data.designName) {
-    const designNameValidation = validateText(data.designName, {
+  if (dataObj.designName) {
+    const designNameValidation = validateText(dataObj.designName, {
       maxLength: 200,
       sanitize: true
     });
@@ -224,13 +245,13 @@ export function validateGalleryItem(data: any): ValidationResult {
     if (!designNameValidation.isValid) {
       errors.push(...designNameValidation.errors);
     } else {
-      sanitizedData.designName = designNameValidation.sanitizedData;
+      sanitizedData.designName = designNameValidation.sanitizedData as string;
     }
   }
   
   // Validate category (optional)
-  if (data.category) {
-    const categoryValidation = validateText(data.category, {
+  if (dataObj.category) {
+    const categoryValidation = validateText(dataObj.category, {
       maxLength: 100,
       sanitize: true
     });
@@ -238,13 +259,13 @@ export function validateGalleryItem(data: any): ValidationResult {
     if (!categoryValidation.isValid) {
       errors.push(...categoryValidation.errors);
     } else {
-      sanitizedData.category = categoryValidation.sanitizedData;
+      sanitizedData.category = categoryValidation.sanitizedData as string;
     }
   }
   
   // Validate original image data (optional)
-  if (data.originalImageData) {
-    const originalImageValidation = validateImageData(data.originalImageData, {
+  if (dataObj.originalImageData) {
+    const originalImageValidation = validateImageData(dataObj.originalImageData, {
       maxSize: 10 * 1024 * 1024, // 10MB
       allowedTypes: ['jpeg', 'jpg', 'png', 'webp']
     });
@@ -252,26 +273,33 @@ export function validateGalleryItem(data: any): ValidationResult {
     if (!originalImageValidation.isValid) {
       errors.push(...originalImageValidation.errors);
     } else {
-      sanitizedData.originalImageData = originalImageValidation.sanitizedData;
+      sanitizedData.originalImageData = originalImageValidation.sanitizedData as string;
     }
   }
   
   return {
     isValid: errors.length === 0,
     errors,
-    sanitizedData
+    sanitizedData: errors.length === 0 ? sanitizedData as GalleryItemData : undefined
   };
 }
 
 /**
  * Validate AI generation request
  */
-export function validateAIGeneration(data: any): ValidationResult {
+export function validateAIGeneration(data: unknown): ValidationResult<AIGenerationData> {
   const errors: string[] = [];
-  const sanitizedData: any = {};
+  const sanitizedData: Partial<AIGenerationData> = {};
+  
+  // Type guard to ensure data is an object
+  if (!data || typeof data !== 'object') {
+    return { isValid: false, errors: ['Invalid data format'] };
+  }
+  
+  const dataObj = data as Record<string, unknown>;
   
   // Validate base64 image data
-  const imageValidation = validateImageData(data.base64ImageData, {
+  const imageValidation = validateImageData(dataObj.base64ImageData, {
     required: true,
     maxSize: 20 * 1024 * 1024, // 20MB
     allowedTypes: ['jpeg', 'jpg', 'png', 'webp']
@@ -280,11 +308,11 @@ export function validateAIGeneration(data: any): ValidationResult {
   if (!imageValidation.isValid) {
     errors.push(...imageValidation.errors);
   } else {
-    sanitizedData.base64ImageData = imageValidation.sanitizedData;
+    sanitizedData.base64ImageData = imageValidation.sanitizedData as string;
   }
   
   // Validate MIME type
-  const mimeTypeValidation = validateText(data.mimeType, {
+  const mimeTypeValidation = validateText(dataObj.mimeType, {
     required: true,
     pattern: /^image\/(jpeg|jpg|png|webp)$/
   });
@@ -292,11 +320,11 @@ export function validateAIGeneration(data: any): ValidationResult {
   if (!mimeTypeValidation.isValid) {
     errors.push(...mimeTypeValidation.errors);
   } else {
-    sanitizedData.mimeType = mimeTypeValidation.sanitizedData;
+    sanitizedData.mimeType = mimeTypeValidation.sanitizedData as string;
   }
   
   // Validate prompt
-  const promptValidation = validateText(data.prompt, {
+  const promptValidation = validateText(dataObj.prompt, {
     required: true,
     maxLength: 1000,
     sanitize: true
@@ -305,22 +333,31 @@ export function validateAIGeneration(data: any): ValidationResult {
   if (!promptValidation.isValid) {
     errors.push(...promptValidation.errors);
   } else {
-    sanitizedData.prompt = promptValidation.sanitizedData;
+    sanitizedData.prompt = promptValidation.sanitizedData as string;
   }
   
   return {
     isValid: errors.length === 0,
     errors,
-    sanitizedData
+    sanitizedData: errors.length === 0 ? sanitizedData as AIGenerationData : undefined
   };
 }
 
 /**
  * Validate query parameters
  */
-export function validateQueryParams(request: NextRequest): ValidationResult {
+export interface QueryParamsData {
+  page: number;
+  limit: number;
+  category?: string;
+  search?: string;
+  tags?: string[];
+  sortBy: string;
+}
+
+export function validateQueryParams(request: NextRequest): ValidationResult<QueryParamsData> {
   const errors: string[] = [];
-  const sanitizedData: any = {};
+  const sanitizedData: Partial<QueryParamsData> = {};
   
   const { searchParams } = new URL(request.url);
   
@@ -333,8 +370,8 @@ export function validateQueryParams(request: NextRequest): ValidationResult {
   if (!pageValidation.isValid) {
     errors.push(...pageValidation.errors);
   } else {
-    sanitizedData.page = pageValidation.sanitizedData.page;
-    sanitizedData.limit = pageValidation.sanitizedData.limit;
+    sanitizedData.page = pageValidation.sanitizedData!.page;
+    sanitizedData.limit = pageValidation.sanitizedData!.limit;
   }
   
   // Validate category
@@ -394,6 +431,6 @@ export function validateQueryParams(request: NextRequest): ValidationResult {
   return {
     isValid: errors.length === 0,
     errors,
-    sanitizedData
+    sanitizedData: errors.length === 0 ? sanitizedData as QueryParamsData : undefined
   };
 }

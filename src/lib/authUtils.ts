@@ -36,7 +36,7 @@ export function checkAdminAuth(request: NextRequest): AuthResult {
 /**
  * Check if request is authenticated for public operations
  */
-export function checkPublicAuth(request: NextRequest): AuthResult {
+export function checkPublicAuth(): AuthResult {
   // For now, we'll allow public access but with rate limiting
   // In the future, you might want to implement API keys or user authentication
   return { isAuthenticated: true, isAdmin: false };

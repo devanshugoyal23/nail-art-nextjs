@@ -4,15 +4,15 @@ import Image from 'next/image';
 import { NAIL_ART_DESIGNS } from '@/lib/constants';
 
 interface CityPageProps {
-  params: {
+  params: Promise<{
     city: string;
-  };
+  }>;
 }
 
 const capitalize = (s?: string) => (s ? s.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase()) : '');
 
 export async function generateMetadata({ params }: CityPageProps): Promise<Metadata> {
-  const { city } = params;
+  const { city } = await params;
   const h1 = `Nail Art in ${capitalize(city)}`;
   const description = `Find the best nail art designs and trends in ${capitalize(city)}. Local inspiration and styles.`;
 
@@ -26,8 +26,8 @@ export async function generateMetadata({ params }: CityPageProps): Promise<Metad
   };
 }
 
-export default function CityPage({ params }: CityPageProps) {
-  const { city } = params;
+export default async function CityPage({ params }: CityPageProps) {
+  const { city } = await params;
   const h1 = `Nail Art in ${capitalize(city)}`;
   const description = `Find the best nail art designs and trends in ${capitalize(city)}. Local inspiration and styles.`;
 

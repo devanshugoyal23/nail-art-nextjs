@@ -7,9 +7,9 @@ import TagCollection from '@/components/TagCollection';
 import { notFound } from 'next/navigation';
 
 interface ColorPageProps {
-  params: {
+  params: Promise<{
     color: string;
-  };
+  }>;
 }
 
 const colorInfo: { [key: string]: { name: string; description: string; emoji: string; gradient: string } } = {

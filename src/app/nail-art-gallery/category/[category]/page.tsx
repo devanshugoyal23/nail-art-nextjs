@@ -5,9 +5,9 @@ import { getGalleryItemsByCategory, getCategoriesWithMinimumContent, generateGal
 import { Metadata } from "next";
 
 interface CategoryPageProps {
-  params: {
+  params: Promise<{
     category: string;
-  };
+  }>;
 }
 
 export async function generateMetadata({ params }: CategoryPageProps): Promise<Metadata> {

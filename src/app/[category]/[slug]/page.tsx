@@ -12,10 +12,10 @@ import TagCollection from "@/components/TagCollection";
 import { extractTagsFromEditorial } from "@/lib/tagService";
 
 interface GalleryDetailPageProps {
-  params: {
+  params: Promise<{
     category: string;
     slug: string;
-  };
+  }>;
 }
 
 // Enable ISR (Incremental Static Regeneration) - revalidate every 2 hours

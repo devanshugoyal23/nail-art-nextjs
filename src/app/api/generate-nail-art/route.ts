@@ -47,7 +47,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { base64ImageData, mimeType, prompt } = validation.sanitizedData;
+    const { base64ImageData, mimeType, prompt } = validation.sanitizedData!;
 
     const response = await ai.models.generateContent({
       model: 'gemini-2.5-flash-image-preview',

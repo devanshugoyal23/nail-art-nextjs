@@ -36,7 +36,6 @@ export function createRateLimiter(config: RateLimitConfig) {
       : getClientIP(request);
     
     const now = Date.now();
-    const windowStart = now - config.windowMs;
     
     // Get or create entry
     let entry = rateLimitStore.get(key);

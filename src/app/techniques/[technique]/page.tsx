@@ -7,9 +7,9 @@ import TagCollection from '@/components/TagCollection';
 // import { notFound } from 'next/navigation';
 
 interface TechniquePageProps {
-  params: {
+  params: Promise<{
     technique: string;
-  };
+  }>;
 }
 
 const techniqueInfo: { [key: string]: { 

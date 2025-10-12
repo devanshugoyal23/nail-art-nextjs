@@ -4,17 +4,17 @@ import Image from 'next/image';
 import { NAIL_ART_DESIGNS } from '@/lib/constants';
 
 interface SEOPageProps {
-  params: {
+  params: Promise<{
     style: string;
     length: string;
     color: string;
-  };
+  }>;
 }
 
 const capitalize = (s?: string) => (s ? s.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase()) : '');
 
 export async function generateMetadata({ params }: SEOPageProps): Promise<Metadata> {
-  const { style, length, color } = params;
+  const { style, length, color } = await params;
   const h1 = `${capitalize(style)} ${capitalize(length)} ${capitalize(color)} Nail Art`;
   const description = `Explore ${h1}. Curated designs with real photos, prompts, and a virtual try-on.`;
 
@@ -28,8 +28,8 @@ export async function generateMetadata({ params }: SEOPageProps): Promise<Metada
   };
 }
 
-export default function SEOPage({ params }: SEOPageProps) {
-  const { style, length, color } = params;
+export default async function SEOPage({ params }: SEOPageProps) {
+  const { style, length, color } = await params;
   const h1 = `${capitalize(style)} ${capitalize(length)} ${capitalize(color)} Nail Art`;
   const description = `Explore ${h1}. Curated designs with real photos, prompts, and a virtual try-on.`;
 

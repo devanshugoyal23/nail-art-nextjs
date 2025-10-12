@@ -19,9 +19,9 @@ import {
 import OptimizedImage from "@/components/OptimizedImage";
 
 interface DesignDetailPageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 export async function generateMetadata({ params }: DesignDetailPageProps): Promise<Metadata> {
@@ -40,7 +40,7 @@ export async function generateMetadata({ params }: DesignDetailPageProps): Promi
   const description = item.prompt
     ? `${item.prompt} Explore design details, real image, and virtual try-on.`
     : 'AI-generated nail art design with prompt, real photo, and virtual try-on.';
-  const canonicalUrl = `${baseUrl}/design/${encodeURIComponent(params.slug)}`;
+  const canonicalUrl = `${baseUrl}/design/${encodeURIComponent(resolvedParams.slug)}`;
 
   // Generate enhanced social meta tags
   const socialMetaTags = generateSocialMetaTags(
@@ -171,7 +171,7 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
               item.category,
               item.prompt
             ),
-            url: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://nailartai.app'}/design/${encodeURIComponent(params.slug)}`,
+            url: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://nailartai.app'}/design/${encodeURIComponent(resolvedParams.slug)}`,
           }),
         }}
       />

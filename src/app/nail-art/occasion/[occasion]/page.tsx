@@ -6,9 +6,9 @@ import { getAllTagsFromGalleryItems } from '@/lib/tagService';
 import TagCollection from '@/components/TagCollection';
 
 interface OccasionPageProps {
-  params: {
+  params: Promise<{
     occasion: string;
-  };
+  }>;
 }
 
 const capitalize = (s?: string) => (s ? s.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase()) : '');

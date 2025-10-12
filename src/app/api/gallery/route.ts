@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getGalleryItems, saveGalleryItem } from '@/lib/galleryService'
-import { checkAdminAuth, checkPublicAuth } from '@/lib/authUtils'
+import { checkAdminAuth } from '@/lib/authUtils'
 import { rateLimiters, checkRateLimit } from '@/lib/rateLimiter'
 import { validateQueryParams, validateGalleryItem } from '@/lib/inputValidation'
 
@@ -28,14 +28,14 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const { page, limit, category, search, tags, sortBy } = queryValidation.sanitizedData;
+    const { page, limit, category, search, tags, sortBy } = queryValidation.sanitizedData!;
 
     const result = await getGalleryItems({
       page,
       limit,
       category,
       search,
-      tags: tags ? tags.split(',') : [],
+      tags: tags || [],
       sortBy
     })
     
@@ -102,7 +102,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { imageData, prompt, originalImageData, designName, category } = validation.sanitizedData;
+    const { imageData, prompt, originalImageData, designName, category } = validation.sanitizedData!;
 
     const item = await saveGalleryItem({
       imageData,

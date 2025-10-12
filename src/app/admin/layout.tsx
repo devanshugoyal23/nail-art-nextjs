@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import AdminAuth from '@/components/AdminAuth';
 
 export default function AdminLayout({
@@ -44,7 +45,7 @@ export default function AdminLayout({
           // Clear invalid cookie
           document.cookie = 'admin-auth=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
         }
-      } catch (error) {
+      } catch {
         setIsAuthenticated(false);
         // Clear invalid cookie
         document.cookie = 'admin-auth=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
@@ -86,24 +87,24 @@ export default function AdminLayout({
             <div className="flex items-center space-x-4">
               <h1 className="text-xl font-bold">Admin Panel</h1>
               <nav className="flex space-x-4">
-                <a
+                <Link
                   href="/admin/generate"
                   className="text-gray-300 hover:text-white transition-colors"
                 >
                   Generate
-                </a>
-                <a
+                </Link>
+                <Link
                   href="/admin/content-management"
                   className="text-gray-300 hover:text-white transition-colors"
                 >
                   Content
-                </a>
-                <a
+                </Link>
+                <Link
                   href="/admin/seo-management"
                   className="text-gray-300 hover:text-white transition-colors"
                 >
                   SEO
-                </a>
+                </Link>
               </nav>
             </div>
             <div className="flex items-center space-x-4">

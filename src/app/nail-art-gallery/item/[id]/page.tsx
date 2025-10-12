@@ -3,9 +3,9 @@ import { getGalleryItem, generateGalleryItemUrl } from "@/lib/galleryService";
 import { Metadata } from "next";
 
 interface GalleryDetailPageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 export async function generateMetadata({ params }: GalleryDetailPageProps): Promise<Metadata> {
