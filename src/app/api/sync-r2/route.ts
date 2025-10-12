@@ -43,7 +43,7 @@ export async function GET() {
     const galleryItems = await getDataFromR2('gallery-items.json') as unknown[] | null;
     const editorials = await getDataFromR2('editorials.json') as unknown[] | null;
     
-    return NextResponse.json({
+    const response = NextResponse.json({
       success: true,
       data: {
         r2_available: !!(metadata && galleryItems),
@@ -57,6 +57,11 @@ export async function GET() {
         last_check: new Date().toISOString()
       }
     });
+
+    // Add cache headers for status checks
+    response.headers.set('Cache-Control', 'public, s-maxage=300, stale-while-revalidate=600')
+    
+    return response;
   } catch (error) {
     return NextResponse.json(
       { 

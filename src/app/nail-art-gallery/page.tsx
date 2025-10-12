@@ -2,6 +2,7 @@ import React from 'react'
 import { Metadata } from 'next'
 import EnhancedGallery from '@/components/EnhancedGallery'
 import RelatedCategories from '@/components/RelatedCategories'
+import { getGalleryItems } from '@/lib/galleryService'
 
 export const metadata: Metadata = {
   title: "Nail Art Gallery - AI Generated Designs | AI Nail Art Studio",
@@ -41,7 +42,17 @@ export const metadata: Metadata = {
   },
 };
 
-export default function GalleryPage() {
+// Enable ISR (Incremental Static Regeneration) - revalidate every hour
+export const revalidate = 3600;
+
+export default async function GalleryPage() {
+  // Fetch initial data server-side for instant rendering
+  const initialData = await getGalleryItems({ 
+    page: 1, 
+    limit: 20, 
+    sortBy: 'newest' 
+  });
+
   return (
     <>
       {/* Structured Data for Gallery */}
@@ -93,7 +104,11 @@ export default function GalleryPage() {
             </p>
           </div>
           
-          <EnhancedGallery showPrompts={true} showDelete={false} />
+          <EnhancedGallery 
+            showPrompts={true} 
+            showDelete={false} 
+            initialItems={initialData.items}
+          />
           
           {/* SEO Content Section */}
           <div className="mt-12 sm:mt-16 bg-gray-800/50 rounded-lg p-4 sm:p-6 lg:p-8 border border-gray-700">

@@ -18,6 +18,7 @@ const NailArtCard: React.FC<NailArtCardProps> = ({ design }) => {
           width={400}
           height={224}
           className="w-full h-56 object-cover"
+          preset="card"
         />
         <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-opacity duration-300"></div>
       </div>

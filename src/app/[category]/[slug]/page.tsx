@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { getGalleryItemBySlug, getGalleryItemsByCategorySlug, generateGalleryItemUrl } from "@/lib/galleryService";
+import { getGalleryItemBySlug, getGalleryItemsByCategorySlug, generateGalleryItemUrl, getGalleryItems } from "@/lib/galleryService";
 import { Metadata } from "next";
 import { generateEditorialContentForNailArt } from "@/lib/geminiService";
 import { getEditorialByItemId, upsertEditorial } from "@/lib/editorialService";
@@ -16,6 +16,35 @@ interface GalleryDetailPageProps {
     category: string;
     slug: string;
   };
+}
+
+// Enable ISR (Incremental Static Regeneration) - revalidate every 2 hours
+export const revalidate = 7200;
+
+// Generate static params for popular pages
+export async function generateStaticParams() {
+  try {
+    // Get the most popular/recent items for static generation
+    const result = await getGalleryItems({ 
+      page: 1, 
+      limit: 100, // Generate static pages for top 100 items
+      sortBy: 'newest' 
+    });
+    
+    return result.items.map((item) => {
+      const categorySlug = item.category?.toLowerCase().replace(/\s+/g, '-') || 'design';
+      const designSlug = item.design_name?.toLowerCase().replace(/\s+/g, '-') || 'design';
+      const idSuffix = item.id.slice(-8);
+      
+      return {
+        category: categorySlug,
+        slug: `${designSlug}-${idSuffix}`
+      };
+    });
+  } catch (error) {
+    console.error('Error generating static params:', error);
+    return [];
+  }
 }
 
 export async function generateMetadata({ params }: GalleryDetailPageProps): Promise<Metadata> {

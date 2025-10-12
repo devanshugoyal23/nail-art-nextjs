@@ -20,13 +20,20 @@ export async function GET(request: NextRequest) {
       sortBy
     })
     
-    return NextResponse.json({ 
+    const response = NextResponse.json({ 
       success: true, 
       items: result.items,
       totalCount: result.totalCount,
       totalPages: result.totalPages,
       currentPage: result.currentPage
     })
+
+    // Add cache headers for edge caching
+    response.headers.set('Cache-Control', 'public, s-maxage=3600, stale-while-revalidate=86400')
+    response.headers.set('CDN-Cache-Control', 'public, s-maxage=7200')
+    response.headers.set('Vercel-CDN-Cache-Control', 'public, s-maxage=7200')
+    
+    return response
   } catch (error) {
     console.error('Error fetching gallery items:', error)
     return NextResponse.json(
