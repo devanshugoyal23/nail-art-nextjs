@@ -18,16 +18,25 @@ export default function DraggableComparisonSlider({
   const [isDragging, setIsDragging] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
+  const updateSliderPosition = useCallback((clientX: number) => {
+    if (!containerRef.current) return;
+    
+    const rect = containerRef.current.getBoundingClientRect();
+    const x = clientX - rect.left;
+    const percentage = Math.max(0, Math.min(100, (x / rect.width) * 100));
+    setSliderPosition(percentage);
+  }, []);
+
   const handleMouseDown = useCallback((e: React.MouseEvent) => {
     setIsDragging(true);
     updateSliderPosition(e.clientX);
-  }, []);
+  }, [updateSliderPosition]);
 
   const handleMouseMove = useCallback((e: MouseEvent) => {
     if (isDragging) {
       updateSliderPosition(e.clientX);
     }
-  }, [isDragging]);
+  }, [isDragging, updateSliderPosition]);
 
   const handleMouseUp = useCallback(() => {
     setIsDragging(false);
@@ -37,7 +46,7 @@ export default function DraggableComparisonSlider({
     setIsDragging(true);
     const touch = e.touches[0];
     updateSliderPosition(touch.clientX);
-  }, []);
+  }, [updateSliderPosition]);
 
   const handleTouchMove = useCallback((e: TouchEvent) => {
     if (isDragging) {
@@ -45,19 +54,10 @@ export default function DraggableComparisonSlider({
       const touch = e.touches[0];
       updateSliderPosition(touch.clientX);
     }
-  }, [isDragging]);
+  }, [isDragging, updateSliderPosition]);
 
   const handleTouchEnd = useCallback(() => {
     setIsDragging(false);
-  }, []);
-
-  const updateSliderPosition = useCallback((clientX: number) => {
-    if (!containerRef.current) return;
-    
-    const rect = containerRef.current.getBoundingClientRect();
-    const x = clientX - rect.left;
-    const percentage = Math.max(0, Math.min(100, (x / rect.width) * 100));
-    setSliderPosition(percentage);
   }, []);
 
   useEffect(() => {

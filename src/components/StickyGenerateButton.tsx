@@ -7,7 +7,7 @@ interface StickyGenerateButtonProps {
   isLoading: boolean;
   disabled: boolean;
   sourceImage: string | null;
-  selectedDesign: any;
+  selectedDesign: { id: string; design_name?: string; image_url: string; prompt: string; category?: string } | null;
   className?: string;
 }
 

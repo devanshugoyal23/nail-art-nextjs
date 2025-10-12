@@ -3,11 +3,9 @@
 import React, { useState, useRef, useEffect, useCallback, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { GalleryItem } from '@/lib/supabase';
-import { fileToBase64 } from '@/lib/imageUtils';
 import Loader from '@/components/Loader';
 import StepIndicator from '@/components/StepIndicator';
 import DesignGalleryGrid from '@/components/DesignGalleryGrid';
-import DesignPreviewModal from '@/components/DesignPreviewModal';
 import DesignPreviewPanel from '@/components/DesignPreviewPanel';
 import EnhancedUploadArea from '@/components/EnhancedUploadArea';
 import DesignFilters from '@/components/DesignFilters';
@@ -26,12 +24,9 @@ function TryOnContent() {
   const [sourceImage, setSourceImage] = useState<string | null>(null);
   const [generatedImage, setGeneratedImage] = useState<string | null>(null);
   const [isCameraActive, setIsCameraActive] = useState<boolean>(false);
-  const [sliderPosition, setSliderPosition] = useState(50);
   
   // Design selection states
   const [selectedDesign, setSelectedDesign] = useState<GalleryItem | null>(null);
-  const [previewModalOpen, setPreviewModalOpen] = useState<boolean>(false);
-  const [previewDesign, setPreviewDesign] = useState<GalleryItem | null>(null);
   
   // Gallery states
   const [designs, setDesigns] = useState<GalleryItem[]>([]);
@@ -49,37 +44,7 @@ function TryOnContent() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   
-  // Initialize with design from URL if provided
-  useEffect(() => {
-    if (designId) {
-      fetchGalleryItem(designId);
-    }
-  }, [designId]);
-
-  // Fetch gallery data
-  useEffect(() => {
-    fetchGalleryData();
-    fetchCategories();
-  }, [selectedCategory, searchQuery]);
-
-  const fetchGalleryItem = async (id: string) => {
-    try {
-      const response = await fetch(`/api/gallery/${id}`);
-      const data = await response.json();
-      
-      if (data.success && data.item) {
-        setSelectedDesign(data.item);
-        setCurrentStep(2);
-      } else {
-        setError('Failed to load gallery item');
-      }
-    } catch (err) {
-      console.error('Error fetching gallery item:', err);
-      setError('Failed to load gallery item');
-    }
-  };
-
-  const fetchGalleryData = async (page: number = 1, append: boolean = false) => {
+  const fetchGalleryData = useCallback(async (page: number = 1, append: boolean = false) => {
     setIsLoadingGallery(true);
     try {
       const params = new URLSearchParams({
@@ -109,7 +74,37 @@ function TryOnContent() {
     } finally {
       setIsLoadingGallery(false);
     }
+  }, [selectedCategory, searchQuery]);
+
+  const fetchGalleryItem = async (id: string) => {
+    try {
+      const response = await fetch(`/api/gallery/${id}`);
+      const data = await response.json();
+      
+      if (data.success && data.item) {
+        setSelectedDesign(data.item);
+        setCurrentStep(2);
+      } else {
+        setError('Failed to load gallery item');
+      }
+    } catch (err) {
+      console.error('Error fetching gallery item:', err);
+      setError('Failed to load gallery item');
+    }
   };
+
+  // Initialize with design from URL if provided
+  useEffect(() => {
+    if (designId) {
+      fetchGalleryItem(designId);
+    }
+  }, [designId]);
+
+  // Fetch gallery data
+  useEffect(() => {
+    fetchGalleryData();
+    fetchCategories();
+  }, [fetchGalleryData]);
 
   const fetchCategories = async () => {
     try {
@@ -201,10 +196,6 @@ function TryOnContent() {
     setCurrentStep(3);
   };
 
-  const handleDesignPreview = (design: GalleryItem) => {
-    setPreviewDesign(design);
-    setPreviewModalOpen(true);
-  };
 
   const handleLoadMore = () => {
     fetchGalleryData(currentPage + 1, true);
@@ -558,13 +549,6 @@ function TryOnContent() {
           </div>
         )}
 
-        {/* Design Preview Modal */}
-        <DesignPreviewModal
-          design={previewDesign}
-          isOpen={previewModalOpen}
-          onClose={() => setPreviewModalOpen(false)}
-          onSelect={handleDesignSelect}
-        />
 
         {/* Sticky Generate Button - Desktop */}
         <div className="hidden lg:block">

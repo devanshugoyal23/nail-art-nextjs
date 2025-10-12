@@ -189,7 +189,7 @@ export default function EnhancedUploadArea({
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
                 </div>
-                <p className="text-sm">Camera will be activated when you click "Use Camera"</p>
+                <p className="text-sm">Camera will be activated when you click &quot;Use Camera&quot;</p>
               </div>
             </div>
           </div>
