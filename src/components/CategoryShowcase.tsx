@@ -14,29 +14,9 @@ export default function CategoryShowcase({ initialCategories = [] }: CategorySho
   const [categories, setCategories] = useState<string[]>(initialCategories);
   const [categoryItems, setCategoryItems] = useState<Record<string, GalleryItem[]>>({});
   const [loading, setLoading] = useState(!initialCategories.length);
+  const [hasInitialized, setHasInitialized] = useState(false);
 
-  const fetchCategories = useCallback(async () => {
-    try {
-      setLoading(true);
-      const cats = await getAllCategories();
-      setCategories(cats.slice(0, 6)); // Show top 6 categories
-      await fetchCategoryItems(cats.slice(0, 6));
-    } catch (error) {
-      console.error('Error fetching categories:', error);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (!initialCategories.length) {
-      fetchCategories();
-    } else {
-      fetchCategoryItems(initialCategories);
-    }
-  }, [initialCategories.length, fetchCategories, initialCategories]);
-
-  const fetchCategoryItems = async (cats: string[]) => {
+  const fetchCategoryItems = useCallback(async (cats: string[]) => {
     const items: Record<string, GalleryItem[]> = {};
     
     for (const category of cats) {
@@ -44,13 +24,48 @@ export default function CategoryShowcase({ initialCategories = [] }: CategorySho
         const categoryItems = await getGalleryItemsByCategory(category);
         items[category] = categoryItems.slice(0, 4); // Get 4 sample items per category
       } catch (error) {
-        console.error(`Error fetching items for category ${category}:`, error);
+        console.error(`CategoryShowcase: Error fetching items for category ${category}:`, {
+          category,
+          error: error,
+          message: error instanceof Error ? error.message : 'Unknown error',
+          stack: error instanceof Error ? error.stack : undefined
+        });
         items[category] = [];
       }
     }
     
     setCategoryItems(items);
-  };
+  }, []);
+
+  const fetchCategories = useCallback(async () => {
+    try {
+      setLoading(true);
+      console.log('CategoryShowcase: Starting to fetch categories...');
+      const cats = await getAllCategories();
+      console.log('CategoryShowcase: Fetched categories:', cats);
+      setCategories(cats.slice(0, 6)); // Show top 6 categories
+      await fetchCategoryItems(cats.slice(0, 6));
+    } catch (error) {
+      console.error('CategoryShowcase: Error fetching categories:', {
+        error: error,
+        message: error instanceof Error ? error.message : 'Unknown error',
+        stack: error instanceof Error ? error.stack : undefined
+      });
+    } finally {
+      setLoading(false);
+    }
+  }, [fetchCategoryItems]);
+
+  useEffect(() => {
+    if (hasInitialized) return;
+    
+    if (!initialCategories.length) {
+      fetchCategories();
+    } else {
+      fetchCategoryItems(initialCategories);
+    }
+    setHasInitialized(true);
+  }, [initialCategories, fetchCategories, fetchCategoryItems, hasInitialized]);
 
   const getCategoryIcon = (category: string) => {
     const icons: Record<string, string> = {

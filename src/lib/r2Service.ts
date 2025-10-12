@@ -4,15 +4,16 @@ import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 // Cloudflare R2 configuration
 const r2Client = new S3Client({
   region: 'auto',
-  endpoint: `https://fc15073de2e24f7bacc00c238f8ada7d.r2.cloudflarestorage.com`,
+  endpoint: `https://05b5ee1a83754aa6b4fcd974016ecde8.r2.cloudflarestorage.com`,
   credentials: {
-    accessKeyId: '5508461dc8cc1131349b3b86367416e9',
-    secretAccessKey: '635e6e16157d810fdfdf5254abddefb78ef83a00ba244b5c248cfe487ff3c532',
+    accessKeyId: '75285deddfed8d17042993c0522c33f5',
+    secretAccessKey: '066792709f1ddeb4b2913ccbd6936817f3bc89bbbaf9482c7eef5e89269b588d',
   },
 });
 
-const BUCKET_NAME = 'nail-art-images';
-const PUBLIC_URL = 'https://pub-fc15073de2e24f7bacc00c238f8ada7d.r2.dev';
+const IMAGES_BUCKET = 'nail-art-images';
+const DATA_BUCKET = 'nail-art-data';
+const PUBLIC_URL = 'https://pub-05b5ee1a83754aa6b4fcd974016ecde8.r2.dev';
 
 /**
  * Upload image to Cloudflare R2
@@ -25,7 +26,7 @@ export async function uploadToR2(
 ): Promise<string> {
   try {
     const command = new PutObjectCommand({
-      Bucket: BUCKET_NAME,
+      Bucket: IMAGES_BUCKET,
       Key: key,
       Body: file,
       ContentType: contentType,
@@ -47,7 +48,7 @@ export async function uploadToR2(
 export async function getFromR2(key: string): Promise<Buffer | null> {
   try {
     const command = new GetObjectCommand({
-      Bucket: BUCKET_NAME,
+      Bucket: IMAGES_BUCKET,
       Key: key,
     });
     
@@ -73,7 +74,7 @@ export async function getFromR2(key: string): Promise<Buffer | null> {
 export async function imageExistsInR2(key: string): Promise<boolean> {
   try {
     const command = new HeadObjectCommand({
-      Bucket: BUCKET_NAME,
+      Bucket: IMAGES_BUCKET,
       Key: key,
     });
     
@@ -89,7 +90,7 @@ export async function imageExistsInR2(key: string): Promise<boolean> {
  */
 export async function getSignedR2Url(key: string, expiresIn: number = 3600): Promise<string> {
   const command = new GetObjectCommand({
-    Bucket: BUCKET_NAME,
+    Bucket: IMAGES_BUCKET,
     Key: key,
   });
   
@@ -125,4 +126,119 @@ export function generateR2Key(prefix: string = 'nail-art', extension: string = '
   const timestamp = Date.now();
   const random = Math.random().toString(36).substring(2, 8);
   return `${prefix}-${timestamp}-${random}.${extension}`;
+}
+
+/**
+ * Upload JSON data to R2 data bucket
+ */
+export async function uploadDataToR2(
+  data: unknown,
+  key: string,
+  contentType: string = 'application/json'
+): Promise<string> {
+  try {
+    const jsonString = JSON.stringify(data, null, 2);
+    const buffer = Buffer.from(jsonString, 'utf-8');
+    
+    const command = new PutObjectCommand({
+      Bucket: DATA_BUCKET,
+      Key: key,
+      Body: buffer,
+      ContentType: contentType,
+      CacheControl: 'public, max-age=3600', // 1 hour cache for data
+      Metadata: {
+        'last-modified': new Date().toISOString(),
+        'data-version': '1.0'
+      }
+    });
+    
+    await r2Client.send(command);
+    return `${PUBLIC_URL}/${key}`;
+  } catch (error) {
+    console.error('Error uploading data to R2:', error);
+    throw error;
+  }
+}
+
+/**
+ * Get JSON data from R2 data bucket
+ */
+export async function getDataFromR2(key: string): Promise<unknown | null> {
+  try {
+    const command = new GetObjectCommand({
+      Bucket: DATA_BUCKET,
+      Key: key,
+    });
+    
+    const response = await r2Client.send(command);
+    const chunks: Uint8Array[] = [];
+    
+    if (response.Body) {
+      for await (const chunk of response.Body as AsyncIterable<Uint8Array>) {
+        chunks.push(chunk);
+      }
+    }
+    
+    const buffer = Buffer.concat(chunks);
+    const jsonString = buffer.toString('utf-8');
+    return JSON.parse(jsonString);
+  } catch (error) {
+    console.error('Error getting data from R2:', error);
+    return null;
+  }
+}
+
+/**
+ * Check if data exists in R2 data bucket
+ */
+export async function dataExistsInR2(key: string): Promise<boolean> {
+  try {
+    const command = new HeadObjectCommand({
+      Bucket: DATA_BUCKET,
+      Key: key,
+    });
+    
+    await r2Client.send(command);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * List all data files in R2 data bucket
+ */
+export async function listDataFiles(prefix: string = ''): Promise<string[]> {
+  try {
+    const { ListObjectsV2Command } = await import('@aws-sdk/client-s3');
+    const command = new ListObjectsV2Command({
+      Bucket: DATA_BUCKET,
+      Prefix: prefix,
+    });
+    
+    const response = await r2Client.send(command);
+    return response.Contents?.map(obj => obj.Key || '') || [];
+  } catch (error) {
+    console.error('Error listing data files:', error);
+    return [];
+  }
+}
+
+/**
+ * Delete data file from R2 data bucket
+ */
+export async function deleteDataFromR2(key: string): Promise<boolean> {
+  try {
+    const { DeleteObjectCommand } = await import('@aws-sdk/client-s3');
+    const command = new DeleteObjectCommand({
+      Bucket: DATA_BUCKET,
+      Key: key,
+    });
+    
+    await r2Client.send(command);
+    return true;
+  } catch (error) {
+    console.error('Error deleting data from R2:', error);
+    return false;
+  }
 }

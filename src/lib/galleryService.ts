@@ -2,6 +2,7 @@ import { supabase, GalleryItem, SaveGalleryItemRequest } from './supabase'
 import { extractTagsFromGalleryItem } from './tagService'
 import { uploadToR2, generateR2Key } from './r2Service'
 import { createPinterestOptimizedImage, getOptimalPinterestDimensions } from './imageTransformation'
+import { updateR2DataForNewContent } from './r2DataUpdateService'
 
 /**
  * Return gallery item URLs as-is (all are now R2 URLs)
@@ -104,6 +105,13 @@ export async function saveGalleryItem(item: SaveGalleryItemRequest): Promise<Gal
     if (error) {
       console.error('Error saving to database:', error)
       return null
+    }
+
+    // Update R2 data automatically (non-critical)
+    try {
+      await updateR2DataForNewContent(data);
+    } catch {
+      // Don't throw - this is non-critical
     }
 
     return data
@@ -245,6 +253,8 @@ export async function getGalleryItem(id: string): Promise<GalleryItem | null> {
 
 export async function getGalleryItemsByCategory(category: string): Promise<GalleryItem[]> {
   try {
+    console.log('Fetching gallery items for category:', category)
+    
     const { data, error } = await supabase
       .from('gallery_items')
       .select('*')
@@ -252,35 +262,62 @@ export async function getGalleryItemsByCategory(category: string): Promise<Galle
       .order('created_at', { ascending: false })
 
     if (error) {
-      console.error('Error fetching gallery items by category:', error)
+      console.error('Supabase error fetching gallery items by category:', {
+        category,
+        error: error,
+        message: error.message,
+        details: error.details,
+        hint: error.hint,
+        code: error.code
+      })
       return []
     }
 
+    console.log(`Successfully fetched ${data?.length || 0} items for category: ${category}`)
+    
     // Convert to CDN URLs for reduced egress
     return convertItemsToCdnUrls(data || [])
   } catch (error) {
-    console.error('Error fetching gallery items by category:', error)
+    console.error('Unexpected error fetching gallery items by category:', {
+      category,
+      error: error,
+      message: error instanceof Error ? error.message : 'Unknown error',
+      stack: error instanceof Error ? error.stack : undefined
+    })
     return []
   }
 }
 
 export async function getAllCategories(): Promise<string[]> {
   try {
+    console.log('Fetching all categories...')
+    
     const { data, error } = await supabase
       .from('gallery_items')
       .select('category')
       .not('category', 'is', null)
 
     if (error) {
-      console.error('Error fetching categories:', error)
+      console.error('Supabase error fetching categories:', {
+        error: error,
+        message: error.message,
+        details: error.details,
+        hint: error.hint,
+        code: error.code
+      })
       return []
     }
 
     // Get unique categories
     const categories = [...new Set(data?.map(item => item.category).filter(Boolean) || [])]
+    console.log(`Successfully fetched ${categories.length} unique categories`)
     return categories
   } catch (error) {
-    console.error('Error fetching categories:', error)
+    console.error('Unexpected error fetching categories:', {
+      error: error,
+      message: error instanceof Error ? error.message : 'Unknown error',
+      stack: error instanceof Error ? error.stack : undefined
+    })
     return []
   }
 }
@@ -422,22 +459,30 @@ export async function deleteGalleryItem(id: string): Promise<boolean> {
       return false
     }
 
-    // Delete from storage
-    if (item.image_url) {
-      const filename = item.image_url.split('/').pop()
-      if (filename) {
-        await supabase.storage
-          .from('nail-art-images')
-          .remove([filename])
+    // Delete from R2 storage (if it's an R2 URL)
+    if (item.image_url && item.image_url.includes('r2.dev')) {
+      try {
+        const { deleteDataFromR2 } = await import('./r2Service')
+        const key = item.image_url.split('/').pop()
+        if (key) {
+          await deleteDataFromR2(key)
+        }
+      } catch (error) {
+        console.error('Error deleting from R2:', error)
+        // Continue with database deletion even if R2 deletion fails
       }
     }
 
-    if (item.original_image_url) {
-      const originalFilename = item.original_image_url.split('/').pop()
-      if (originalFilename) {
-        await supabase.storage
-          .from('nail-art-images')
-          .remove([originalFilename])
+    if (item.original_image_url && item.original_image_url.includes('r2.dev')) {
+      try {
+        const { deleteDataFromR2 } = await import('./r2Service')
+        const key = item.original_image_url.split('/').pop()
+        if (key) {
+          await deleteDataFromR2(key)
+        }
+      } catch (error) {
+        console.error('Error deleting original from R2:', error)
+        // Continue with database deletion even if R2 deletion fails
       }
     }
 

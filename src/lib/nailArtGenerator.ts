@@ -4,6 +4,7 @@ import { getRandomPromptFromCategory, getUniquePromptsFromCategory, getAllCatego
 import { extractTagsFromGalleryItem } from './tagService';
 import { uploadToR2, generateR2Key } from './r2Service';
 import { createPinterestOptimizedImage, getOptimalPinterestDimensions } from './imageTransformation';
+import { updateR2DataForNewContent } from './r2DataUpdateService';
 
 let ai: GoogleGenAI | null = null;
 
@@ -380,6 +381,13 @@ export async function generateSingleNailArt(options: GenerationOptions): Promise
     
     if (!savedItem) {
       throw new Error('Failed to save to database');
+    }
+
+    // Update R2 data automatically (non-critical)
+    try {
+      await updateR2DataForNewContent(savedItem as unknown as { category?: string; [key: string]: unknown });
+    } catch {
+      // Don't throw - this is non-critical
     }
 
     return savedItem;

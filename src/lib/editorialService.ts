@@ -1,5 +1,6 @@
 import { supabase } from './supabase'
 import type { NailArtEditorial } from './geminiService'
+import { updateEditorialsInR2 } from './r2DataUpdateService'
 
 export interface GalleryEditorialRecord {
   id: string
@@ -43,6 +44,14 @@ export async function upsertEditorial(itemId: string, editorial: NailArtEditoria
     if (error) {
       return false
     }
+
+    // Update R2 editorial data automatically (non-critical)
+    try {
+      await updateEditorialsInR2(itemId, editorial);
+    } catch {
+      // Don't throw - this is non-critical
+    }
+
     return true
   } catch {
     return false
