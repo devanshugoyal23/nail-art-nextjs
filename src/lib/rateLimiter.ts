@@ -11,6 +11,16 @@ interface RateLimitEntry {
   resetTime: number;
 }
 
+interface RateLimitFunction {
+  (request: NextRequest): {
+    allowed: boolean;
+    remaining: number;
+    resetTime: number;
+    error?: string;
+  };
+  maxRequests: number;
+}
+
 // In-memory store for rate limiting (in production, use Redis)
 const rateLimitStore = new Map<string, RateLimitEntry>();
 
@@ -24,7 +34,7 @@ setInterval(() => {
   }
 }, 5 * 60 * 1000);
 
-export function createRateLimiter(config: RateLimitConfig) {
+export function createRateLimiter(config: RateLimitConfig): RateLimitFunction {
   const rateLimitFunction = function rateLimit(request: NextRequest): {
     allowed: boolean;
     remaining: number;
@@ -60,10 +70,10 @@ export function createRateLimiter(config: RateLimitConfig) {
       resetTime: entry.resetTime,
       error: !allowed ? `Rate limit exceeded. Try again in ${Math.ceil((entry.resetTime - now) / 1000)} seconds.` : undefined
     };
-  };
+  } as RateLimitFunction;
   
   // Add the maxRequests property to the function
-  (rateLimitFunction as any).maxRequests = config.maxRequests;
+  rateLimitFunction.maxRequests = config.maxRequests;
   
   return rateLimitFunction;
 }
@@ -115,12 +125,12 @@ export const rateLimiters = {
 
 export function checkRateLimit(
   request: NextRequest, 
-  limiter: ReturnType<typeof createRateLimiter>
+  limiter: RateLimitFunction
 ): { allowed: boolean; headers: Record<string, string>; error?: string } {
   const result = limiter(request);
   
   const headers = {
-    'X-RateLimit-Limit': (limiter as any).maxRequests?.toString() || '200',
+    'X-RateLimit-Limit': limiter.maxRequests?.toString() || '200',
     'X-RateLimit-Remaining': result.remaining.toString(),
     'X-RateLimit-Reset': Math.ceil(result.resetTime / 1000).toString(),
   };

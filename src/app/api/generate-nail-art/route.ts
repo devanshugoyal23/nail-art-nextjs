@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { GoogleGenAI, Modality } from '@google/genai';
-import { checkAdminAuth } from '@/lib/authUtils';
 import { rateLimiters, checkRateLimit } from '@/lib/rateLimiter';
 import { validateAIGeneration } from '@/lib/inputValidation';
 
@@ -14,14 +13,8 @@ const ai = new GoogleGenAI({ apiKey: API_KEY });
 
 export async function POST(request: NextRequest) {
   try {
-    // Check authentication - require admin access for AI generation
-    const auth = checkAdminAuth(request);
-    if (!auth.isAuthenticated) {
-      return NextResponse.json(
-        { error: 'Admin authentication required' },
-        { status: 401 }
-      );
-    }
+    // Note: Removed admin authentication requirement for public virtual try-on
+    // The rate limiting will handle abuse prevention
 
     // Apply strict rate limiting for AI generation (expensive operations)
     const rateLimit = checkRateLimit(request, rateLimiters.aiGeneration);
@@ -49,13 +42,18 @@ export async function POST(request: NextRequest) {
 
     const { base64ImageData, mimeType, prompt } = validation.sanitizedData!;
 
+    // Extract base64 data from data URL if needed
+    const cleanBase64Data = base64ImageData.includes(',') 
+      ? base64ImageData.split(',')[1] 
+      : base64ImageData;
+
     const response = await ai.models.generateContent({
-      model: 'gemini-2.5-flash-image-preview',
+      model: 'gemini-2.0-flash-exp',
       contents: {
         parts: [
           {
             inlineData: {
-              data: base64ImageData,
+              data: cleanBase64Data,
               mimeType: mimeType,
             },
           },

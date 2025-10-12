@@ -159,6 +159,7 @@ export default function ImageLightbox({
             height={1200}
             className="max-w-full max-h-full object-contain"
             priority
+            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 80vw, 60vw"
           />
         </div>
 

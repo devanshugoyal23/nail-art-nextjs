@@ -113,8 +113,11 @@ export function validateImageData(
   
   const data = input.toString();
   
-  // Check if it's valid base64
-  if (!/^data:image\/(jpeg|jpg|png|webp);base64,/.test(data)) {
+  // Check if it's valid base64 (either data URL format or raw base64)
+  const isDataUrl = /^data:image\/(jpeg|jpg|png|webp);base64,/.test(data);
+  const isRawBase64 = /^[A-Za-z0-9+/]+=*$/.test(data);
+  
+  if (!isDataUrl && !isRawBase64) {
     errors.push('Invalid image format. Must be JPEG, PNG, or WebP');
   }
   
@@ -125,12 +128,18 @@ export function validateImageData(
   }
   
   // Extract and validate MIME type
-  const mimeTypeMatch = data.match(/^data:image\/([^;]+);base64,/);
-  if (mimeTypeMatch) {
-    const mimeType = mimeTypeMatch[1];
-    if (rules.allowedTypes && !rules.allowedTypes.includes(mimeType)) {
-      errors.push(`Image type not allowed. Allowed types: ${rules.allowedTypes.join(', ')}`);
+  let mimeType = null;
+  if (isDataUrl) {
+    const mimeTypeMatch = data.match(/^data:image\/([^;]+);base64,/);
+    if (mimeTypeMatch) {
+      mimeType = mimeTypeMatch[1];
     }
+  }
+  // For raw base64, we can't determine the MIME type from the data itself
+  // The MIME type should be provided separately in the API call
+  
+  if (mimeType && rules.allowedTypes && !rules.allowedTypes.includes(mimeType)) {
+    errors.push(`Image type not allowed. Allowed types: ${rules.allowedTypes.join(', ')}`);
   }
   
   return {

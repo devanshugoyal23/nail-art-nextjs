@@ -12,30 +12,10 @@
   "categories": ["beauty", "lifestyle", "entertainment"],
   "icons": [
     {
-      "src": "/icon-192x192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "maskable any"
-    },
-    {
-      "src": "/icon-512x512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "maskable any"
-    }
-  ],
-  "screenshots": [
-    {
-      "src": "/screenshot-mobile.png",
-      "sizes": "390x844",
-      "type": "image/png",
-      "form_factor": "narrow"
-    },
-    {
-      "src": "/screenshot-desktop.png",
-      "sizes": "1280x720",
-      "type": "image/png",
-      "form_factor": "wide"
+      "src": "/next.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
     }
   ],
   "shortcuts": [
@@ -43,25 +23,13 @@
       "name": "Virtual Try-On",
       "short_name": "Try-On",
       "description": "Upload your hand photo to try on nail designs",
-      "url": "/try-on",
-      "icons": [
-        {
-          "src": "/shortcut-try-on.png",
-          "sizes": "96x96"
-        }
-      ]
+      "url": "/try-on"
     },
     {
       "name": "Browse Gallery",
       "short_name": "Gallery",
       "description": "Browse AI-generated nail art designs",
-      "url": "/nail-art-gallery",
-      "icons": [
-        {
-          "src": "/shortcut-gallery.png",
-          "sizes": "96x96"
-        }
-      ]
+      "url": "/nail-art-gallery"
     }
   ]
 }
