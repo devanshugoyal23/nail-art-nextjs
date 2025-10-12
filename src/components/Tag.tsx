@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 
 interface TagProps {
   label: string;
@@ -40,10 +40,33 @@ export default function Tag({
 }: TagProps) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const [ripples, setRipples] = useState<Array<{ id: number; x: number; y: number }>>([]);
+  const buttonRef = useRef<HTMLButtonElement>(null);
 
-  const handleClick = async () => {
+  const createRipple = (event: React.MouseEvent<HTMLButtonElement>) => {
+    if (!buttonRef.current) return;
+
+    const rect = buttonRef.current.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+    const newRipple = {
+      id: Date.now(),
+      x,
+      y
+    };
+
+    setRipples(prev => [...prev, newRipple]);
+
+    // Remove ripple after animation
+    setTimeout(() => {
+      setRipples(prev => prev.filter(ripple => ripple.id !== newRipple.id));
+    }, 600);
+  };
+
+  const handleClick = async (event: React.MouseEvent<HTMLButtonElement>) => {
     if (!clickable) return;
     
+    createRipple(event);
     setIsLoading(true);
     
     try {
@@ -82,10 +105,10 @@ export default function Tag({
   };
 
   const baseClasses = `
-    inline-flex items-center gap-1 rounded-full font-medium transition-all duration-200
+    relative inline-flex items-center gap-1 rounded-full font-medium transition-all duration-200 overflow-hidden
     ${variantStyles[variant]}
     ${sizeStyles[size]}
-    ${clickable ? 'cursor-pointer hover:scale-105' : 'cursor-default'}
+    ${clickable ? 'cursor-pointer hover:scale-105 active:scale-95' : 'cursor-default'}
     ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}
     ${className}
   `;
@@ -100,16 +123,41 @@ export default function Tag({
 
   return (
     <button
+      ref={buttonRef}
       onClick={handleClick}
       disabled={isLoading}
       className={baseClasses}
       title={`View ${label} nail art`}
     >
-      {isLoading ? (
-        <div className="w-3 h-3 border border-current border-t-transparent rounded-full animate-spin" />
-      ) : (
-        label
-      )}
+      {/* Ripple effects */}
+      {ripples.map(ripple => (
+        <span
+          key={ripple.id}
+          className="absolute pointer-events-none animate-ping"
+          style={{
+            left: ripple.x - 10,
+            top: ripple.y - 10,
+            width: 20,
+            height: 20,
+            background: 'rgba(255, 255, 255, 0.3)',
+            borderRadius: '50%',
+            transform: 'scale(0)',
+            animation: 'ripple 0.6s linear'
+          }}
+        />
+      ))}
+      
+      {/* Content */}
+      <span className="relative z-10">
+        {isLoading ? (
+          <div className="w-3 h-3 border border-current border-t-transparent rounded-full animate-spin" />
+        ) : (
+          label
+        )}
+      </span>
+      
+      {/* Hover glow effect */}
+      <div className="absolute inset-0 rounded-full opacity-0 hover:opacity-100 transition-opacity duration-200 bg-gradient-to-r from-white/10 to-transparent" />
     </button>
   );
 }
