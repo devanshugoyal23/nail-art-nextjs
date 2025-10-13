@@ -13,6 +13,7 @@ interface EnhancedGalleryProps {
   showPrompts?: boolean;
   showDelete?: boolean;
   initialItems?: GalleryItem[];
+  initialTotalCount?: number;
 }
 
 type SortOption = 'newest' | 'oldest' | 'popular' | 'name';
@@ -22,7 +23,8 @@ export default function EnhancedGallery({
   onImageSelect, 
   showPrompts = true, 
   showDelete = false,
-  initialItems = []
+  initialItems = [],
+  initialTotalCount = 0
 }: EnhancedGalleryProps) {
   const { isMobile, isSlow, itemsPerPage: mobileItemsPerPage } = useMobileOptimization();
   
@@ -38,7 +40,7 @@ export default function EnhancedGallery({
   const [favorites, setFavorites] = useState<string[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(mobileItemsPerPage);
-  const [totalCount, setTotalCount] = useState(0);
+  const [totalCount, setTotalCount] = useState(initialTotalCount);
   const [totalPages, setTotalPages] = useState(0);
 
   // Extract tags from items

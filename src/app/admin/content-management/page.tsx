@@ -2,9 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { useGlobalStop } from '@/lib/globalStopService';
-import GlobalStopButton from '@/components/GlobalStopButton';
-import { EmergencyStopButton } from '@/components/EmergencyStopButton';
 
 interface ContentGap {
   category: string;
@@ -53,7 +50,14 @@ interface EditorialStats {
 }
 
 export default function ContentManagementPage() {
-  const [loading, setLoading] = useState(false);
+  // Individual loading states for each operation
+  const [isGeneratingForTag, setIsGeneratingForTag] = useState(false);
+  const [isGeneratingTagPages, setIsGeneratingTagPages] = useState(false);
+  const [isFillingGaps, setIsFillingGaps] = useState(false);
+  const [isGeneratingHighPriority, setIsGeneratingHighPriority] = useState(false);
+  const [isConsolidatingTags, setIsConsolidatingTags] = useState(false);
+  const [isAnalyzingGaps, setIsAnalyzingGaps] = useState(false);
+  const [isGeneratingRelated, setIsGeneratingRelated] = useState(false);
   const [contentGaps, setContentGaps] = useState<ContentGap[]>([]);
   const [lastResult, setLastResult] = useState<GenerationResult | null>(null);
   const [editorialStats, setEditorialStats] = useState<EditorialStats | null>(null);
@@ -70,8 +74,6 @@ export default function ContentManagementPage() {
   const [selectedTag, setSelectedTag] = useState('');
   const [tagGenerationCount, setTagGenerationCount] = useState(3);
   
-  // Global stop hook
-  const { hasActiveStopSignal } = useGlobalStop();
   
   // New state for distribute randomly preview and control
   const [showDistributePreview, setShowDistributePreview] = useState(false);
@@ -199,7 +201,7 @@ export default function ContentManagementPage() {
       return;
     }
 
-    setLoading(true);
+    setIsGeneratingForTag(true);
     try {
       const response = await fetch('/api/auto-generate-content', {
         method: 'POST',
@@ -220,12 +222,12 @@ export default function ContentManagementPage() {
     } catch (error) {
       console.error('Error generating for tag:', error);
     } finally {
-      setLoading(false);
+      setIsGeneratingForTag(false);
     }
   };
 
   const generateForTagPages = async () => {
-    setLoading(true);
+    setIsGeneratingTagPages(true);
     try {
       const response = await fetch('/api/auto-generate-content', {
         method: 'POST',
@@ -244,7 +246,7 @@ export default function ContentManagementPage() {
     } catch (error) {
       console.error('Error generating for tag pages:', error);
     } finally {
-      setLoading(false);
+      setIsGeneratingTagPages(false);
     }
   };
 
@@ -288,7 +290,7 @@ export default function ContentManagementPage() {
   };
 
   const analyzeContentGaps = async () => {
-    setLoading(true);
+    setIsAnalyzingGaps(true);
     try {
       const response = await fetch('/api/auto-generate-content', {
         method: 'POST',
@@ -303,12 +305,12 @@ export default function ContentManagementPage() {
     } catch (error) {
       console.error('Error analyzing content gaps:', error);
     } finally {
-      setLoading(false);
+      setIsAnalyzingGaps(false);
     }
   };
 
   const fillContentGaps = async () => {
-    setLoading(true);
+    setIsFillingGaps(true);
     try {
       const response = await fetch('/api/auto-generate-content', {
         method: 'POST',
@@ -324,7 +326,7 @@ export default function ContentManagementPage() {
     } catch (error) {
       console.error('Error filling content gaps:', error);
     } finally {
-      setLoading(false);
+      setIsFillingGaps(false);
     }
   };
 
@@ -347,12 +349,6 @@ export default function ContentManagementPage() {
   };
 
   const distributeContentEvenly = async () => {
-    // Check for global stop signal
-    if (hasActiveStopSignal) {
-      alert('🚨 Distribution stopped by global stop signal');
-      return;
-    }
-    
     setIsDistributing(true);
     setCanStopDistribute(true);
     setDistributeProgress({
@@ -390,6 +386,42 @@ export default function ContentManagementPage() {
     }
   };
 
+  // Individual cancel functions for each operation
+  const cancelTagGeneration = () => {
+    setIsGeneratingForTag(false);
+    alert('Tag generation cancelled');
+  };
+
+  const cancelTagPagesGeneration = () => {
+    setIsGeneratingTagPages(false);
+    alert('Tag pages generation cancelled');
+  };
+
+  const cancelFillingGaps = () => {
+    setIsFillingGaps(false);
+    alert('Filling gaps cancelled');
+  };
+
+  const cancelHighPriorityGeneration = () => {
+    setIsGeneratingHighPriority(false);
+    alert('High priority generation cancelled');
+  };
+
+  const cancelConsolidatingTags = () => {
+    setIsConsolidatingTags(false);
+    alert('Tag consolidation cancelled');
+  };
+
+  const cancelAnalyzingGaps = () => {
+    setIsAnalyzingGaps(false);
+    alert('Gap analysis cancelled');
+  };
+
+  const cancelGeneratingRelated = () => {
+    setIsGeneratingRelated(false);
+    alert('Related content generation cancelled');
+  };
+
   const stopDistributeContent = () => {
     setIsDistributing(false);
     setCanStopDistribute(false);
@@ -408,7 +440,7 @@ export default function ContentManagementPage() {
       return;
     }
 
-    setLoading(true);
+    setIsGeneratingRelated(true);
     try {
       const response = await fetch('/api/auto-generate-content', {
         method: 'POST',
@@ -428,12 +460,12 @@ export default function ContentManagementPage() {
     } catch (error) {
       console.error('Error generating related content:', error);
     } finally {
-      setLoading(false);
+      setIsGeneratingRelated(false);
     }
   };
 
   const autoGenerateHighPriority = async () => {
-    setLoading(true);
+    setIsGeneratingHighPriority(true);
     try {
       const response = await fetch('/api/auto-generate-content', {
         method: 'POST',
@@ -449,12 +481,12 @@ export default function ContentManagementPage() {
     } catch (error) {
       console.error('Error auto-generating high-priority content:', error);
     } finally {
-      setLoading(false);
+      setIsGeneratingHighPriority(false);
     }
   };
 
   const consolidateTags = async () => {
-    setLoading(true);
+    setIsConsolidatingTags(true);
     try {
       const response = await fetch('/api/auto-generate-content', {
         method: 'POST',
@@ -470,7 +502,7 @@ export default function ContentManagementPage() {
     } catch (error) {
       console.error('Error consolidating tags:', error);
     } finally {
-      setLoading(false);
+      setIsConsolidatingTags(false);
     }
   };
 
@@ -515,12 +547,6 @@ export default function ContentManagementPage() {
 
   return (
     <div className="min-h-screen bg-black text-white p-8">
-      {/* Global Stop Button */}
-      <GlobalStopButton position="fixed" showStatus={true} />
-      
-      {/* Emergency Stop Button */}
-      <EmergencyStopButton position="fixed" showStatus={true} />
-      
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="flex justify-between items-center mb-8">
@@ -779,18 +805,28 @@ export default function ContentManagementPage() {
               <h2 className="text-2xl font-semibold mb-4">Content Generation Actions</h2>
               
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
-                <button
-                  onClick={fillContentGaps}
-                  disabled={loading}
-                  className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg transition-colors"
-                >
-                  {loading ? 'Processing...' : '🔵 Fill Content Gaps'}
-                </button>
+                <div className="flex gap-2">
+                  <button
+                    onClick={fillContentGaps}
+                    disabled={isFillingGaps}
+                    className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg transition-colors"
+                  >
+                    {isFillingGaps ? 'Processing...' : '🔵 Fill Content Gaps'}
+                  </button>
+                  {isFillingGaps && (
+                    <button
+                      onClick={cancelFillingGaps}
+                      className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition-colors"
+                    >
+                      Cancel
+                    </button>
+                  )}
+                </div>
                 
                 <div className="flex gap-2">
                   <button
                     onClick={previewDistributeContent}
-                    disabled={loading || isDistributing}
+                    disabled={isDistributing}
                     className="bg-green-600 hover:bg-green-700 disabled:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg transition-colors"
                   >
                     🔍 Preview Distribute
@@ -798,7 +834,7 @@ export default function ContentManagementPage() {
                   
                   <button
                     onClick={distributeContentEvenly}
-                    disabled={loading || isDistributing || !distributePreview}
+                    disabled={isDistributing || !distributePreview}
                     className="bg-green-600 hover:bg-green-700 disabled:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg transition-colors"
                   >
                     {isDistributing ? 'Distributing...' : '🟢 Distribute Evenly'}
@@ -814,29 +850,59 @@ export default function ContentManagementPage() {
                   )}
                 </div>
                 
-                <button
-                  onClick={autoGenerateHighPriority}
-                  disabled={loading}
-                  className="bg-red-600 hover:bg-red-700 disabled:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg transition-colors"
-                >
-                  {loading ? 'Processing...' : '🔴 Auto-Generate High Priority'}
-                </button>
+                <div className="flex gap-2">
+                  <button
+                    onClick={autoGenerateHighPriority}
+                    disabled={isGeneratingHighPriority}
+                    className="bg-red-600 hover:bg-red-700 disabled:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg transition-colors"
+                  >
+                    {isGeneratingHighPriority ? 'Processing...' : '🔴 Auto-Generate High Priority'}
+                  </button>
+                  {isGeneratingHighPriority && (
+                    <button
+                      onClick={cancelHighPriorityGeneration}
+                      className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition-colors"
+                    >
+                      Cancel
+                    </button>
+                  )}
+                </div>
                 
-                <button
-                  onClick={consolidateTags}
-                  disabled={loading}
-                  className="bg-purple-600 hover:bg-purple-700 disabled:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg transition-colors"
-                >
-                  {loading ? 'Processing...' : '🟣 Consolidate Tags'}
-                </button>
+                <div className="flex gap-2">
+                  <button
+                    onClick={consolidateTags}
+                    disabled={isConsolidatingTags}
+                    className="bg-purple-600 hover:bg-purple-700 disabled:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg transition-colors"
+                  >
+                    {isConsolidatingTags ? 'Processing...' : '🟣 Consolidate Tags'}
+                  </button>
+                  {isConsolidatingTags && (
+                    <button
+                      onClick={cancelConsolidatingTags}
+                      className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition-colors"
+                    >
+                      Cancel
+                    </button>
+                  )}
+                </div>
                 
-                <button
-                  onClick={analyzeContentGaps}
-                  disabled={loading}
-                  className="bg-orange-600 hover:bg-orange-700 disabled:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg transition-colors"
-                >
-                  {loading ? 'Analyzing...' : '🟠 Refresh Analysis'}
-                </button>
+                <div className="flex gap-2">
+                  <button
+                    onClick={analyzeContentGaps}
+                    disabled={isAnalyzingGaps}
+                    className="bg-orange-600 hover:bg-orange-700 disabled:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg transition-colors"
+                  >
+                    {isAnalyzingGaps ? 'Analyzing...' : '🟠 Refresh Analysis'}
+                  </button>
+                  {isAnalyzingGaps && (
+                    <button
+                      onClick={cancelAnalyzingGaps}
+                      className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition-colors"
+                    >
+                      Cancel
+                    </button>
+                  )}
+                </div>
               </div>
               
               {/* Custom Generation */}
@@ -871,13 +937,23 @@ export default function ContentManagementPage() {
                     />
                   </div>
                   
-                  <button
-                    onClick={generateRelatedContent}
-                    disabled={loading || !selectedCategory}
-                    className="bg-indigo-600 hover:bg-indigo-700 disabled:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg transition-colors"
-                  >
-                    Generate
-                  </button>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={generateRelatedContent}
+                      disabled={isGeneratingRelated || !selectedCategory}
+                      className="bg-indigo-600 hover:bg-indigo-700 disabled:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg transition-colors"
+                    >
+                      {isGeneratingRelated ? 'Generating...' : 'Generate'}
+                    </button>
+                    {isGeneratingRelated && (
+                      <button
+                        onClick={cancelGeneratingRelated}
+                        className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg transition-colors"
+                      >
+                        Cancel
+                      </button>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
@@ -1169,21 +1245,41 @@ export default function ContentManagementPage() {
               </div>
               
               <div className="flex gap-4 mt-6">
-                <button
-                  onClick={generateForSpecificTag}
-                  disabled={loading || !selectedTag}
-                  className="bg-green-600 hover:bg-green-700 disabled:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg transition-colors"
-                >
-                  {loading ? 'Generating...' : 'Generate for Tag'}
-                </button>
+                <div className="flex gap-2">
+                  <button
+                    onClick={generateForSpecificTag}
+                    disabled={isGeneratingForTag || !selectedTag}
+                    className="bg-green-600 hover:bg-green-700 disabled:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg transition-colors"
+                  >
+                    {isGeneratingForTag ? 'Generating...' : 'Generate for Tag'}
+                  </button>
+                  {isGeneratingForTag && (
+                    <button
+                      onClick={cancelTagGeneration}
+                      className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition-colors"
+                    >
+                      Cancel
+                    </button>
+                  )}
+                </div>
                 
-                <button
-                  onClick={generateForTagPages}
-                  disabled={loading}
-                  className="bg-purple-600 hover:bg-purple-700 disabled:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg transition-colors"
-                >
-                  {loading ? 'Generating...' : 'Fix Empty Tag Pages'}
-                </button>
+                <div className="flex gap-2">
+                  <button
+                    onClick={generateForTagPages}
+                    disabled={isGeneratingTagPages}
+                    className="bg-purple-600 hover:bg-purple-700 disabled:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg transition-colors"
+                  >
+                    {isGeneratingTagPages ? 'Generating...' : 'Fix Empty Tag Pages'}
+                  </button>
+                  {isGeneratingTagPages && (
+                    <button
+                      onClick={cancelTagPagesGeneration}
+                      className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition-colors"
+                    >
+                      Cancel
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
 

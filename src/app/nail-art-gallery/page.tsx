@@ -108,6 +108,7 @@ export default async function GalleryPage() {
             showPrompts={true} 
             showDelete={false} 
             initialItems={initialData.items}
+            initialTotalCount={initialData.totalCount}
           />
           
           {/* SEO Content Section */}
