@@ -13,7 +13,8 @@ const r2Client = new S3Client({
 
 const IMAGES_BUCKET = 'nail-art-images';
 const DATA_BUCKET = 'nail-art-data';
-const PUBLIC_URL = 'https://pub-05b5ee1a83754aa6b4fcd974016ecde8.r2.dev';
+const PUBLIC_URL = process.env.R2_PUBLIC_URL || 'https://pub-fc15073de2e24f7bacc00c238f8ada7d.r2.dev';
+
 
 /**
  * Upload image to Cloudflare R2
@@ -35,7 +36,9 @@ export async function uploadToR2(
     });
     
     await r2Client.send(command);
-    return `${PUBLIC_URL}/${key}`;
+    // Ensure no double slashes in the URL
+    const cleanKey = key.startsWith('/') ? key.slice(1) : key;
+    return `${PUBLIC_URL}/${cleanKey}`;
   } catch (error) {
     console.error('Error uploading to R2:', error);
     throw error;
@@ -101,7 +104,9 @@ export async function getSignedR2Url(key: string, expiresIn: number = 3600): Pro
  * Get public URL for R2 object
  */
 export function getR2PublicUrl(key: string): string {
-  return `${PUBLIC_URL}/${key}`;
+  // Remove any leading slash from key to avoid double slashes
+  const cleanKey = key.startsWith('/') ? key.slice(1) : key;
+  return `${PUBLIC_URL}/${cleanKey}`;
 }
 
 /**
