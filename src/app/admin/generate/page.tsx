@@ -5,9 +5,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { getAvailableCategories, getCategoriesByTier } from '@/lib/nailArtGenerator';
 import { useAutoSEO } from '@/lib/useAutoSEO';
-import { useGlobalStop } from '@/lib/globalStopService';
-import GlobalStopButton from '@/components/GlobalStopButton';
-import { EmergencyStopButton } from '@/components/EmergencyStopButton';
 
 interface GenerationResult {
   id: string;
@@ -33,7 +30,6 @@ interface CategoryImpact {
 }
 
 export default function GenerateGalleryPage() {
-  const [loading, setLoading] = useState(false);
   const [results, setResults] = useState<GenerationResult[]>([]);
   const [selectedCategory, setSelectedCategory] = useState('');
   const [count, setCount] = useState(1);
@@ -52,8 +48,6 @@ export default function GenerateGalleryPage() {
     updateSitemap: true
   });
   
-  // Global stop hook
-  const { hasActiveStopSignal } = useGlobalStop();
   
   // New state for tag-aware generation
   const [activeTab, setActiveTab] = useState<'generate' | 'tags' | 'impact' | 'guide'>('generate');
@@ -75,7 +69,10 @@ export default function GenerateGalleryPage() {
     currentPage: '',
     isGenerating: false
   });
-  const [canStop, setCanStop] = useState(false);
+  // Individual loading states for each generation type
+  const [isGeneratingNailArt, setIsGeneratingNailArt] = useState(false);
+  const [isGeneratingForTag, setIsGeneratingForTag] = useState(false);
+  const [isGeneratingTagPages, setIsGeneratingTagPages] = useState(false);
 
   // Load categories on component mount
   useEffect(() => {
@@ -134,13 +131,7 @@ export default function GenerateGalleryPage() {
       return;
     }
 
-    // Check for global stop signal
-    if (hasActiveStopSignal) {
-      alert('🚨 Generation stopped by global stop signal');
-      return;
-    }
-
-    setLoading(true);
+    setIsGeneratingForTag(true);
     try {
       const response = await fetch('/api/auto-generate-content', {
         method: 'POST',
@@ -177,19 +168,12 @@ export default function GenerateGalleryPage() {
       console.error('Error generating for tag:', error);
       alert('Error generating for tag');
     } finally {
-      setLoading(false);
+      setIsGeneratingForTag(false);
     }
   };
 
   const generateForTagPages = async () => {
-    // Check for global stop signal
-    if (hasActiveStopSignal) {
-      alert('🚨 Generation stopped by global stop signal');
-      return;
-    }
-    
-    setLoading(true);
-    setCanStop(true);
+    setIsGeneratingTagPages(true);
     setGenerationProgress({
       current: 0,
       total: 100, // Increased limit to allow more tag pages
@@ -219,8 +203,7 @@ export default function GenerateGalleryPage() {
       console.error('Error generating for tag pages:', error);
       alert('Error generating for tag pages');
     } finally {
-      setLoading(false);
-      setCanStop(false);
+      setIsGeneratingTagPages(false);
       setGenerationProgress({
         current: 0,
         total: 0,
@@ -230,27 +213,36 @@ export default function GenerateGalleryPage() {
     }
   };
 
-  const stopGeneration = () => {
-    setLoading(false);
-    setCanStop(false);
+  // Individual cancel functions for each generation type
+  const cancelNailArtGeneration = () => {
+    setIsGeneratingNailArt(false);
     setGenerationProgress({
       current: 0,
       total: 0,
-      currentPage: 'Generation stopped',
+      currentPage: 'Generation cancelled',
       isGenerating: false
     });
-    alert('Generation stopped by user');
+    alert('Nail art generation cancelled');
+  };
+
+  const cancelTagGeneration = () => {
+    setIsGeneratingForTag(false);
+    alert('Tag generation cancelled');
+  };
+
+  const cancelTagPagesGeneration = () => {
+    setIsGeneratingTagPages(false);
+    setGenerationProgress({
+      current: 0,
+      total: 0,
+      currentPage: 'Generation cancelled',
+      isGenerating: false
+    });
+    alert('Tag pages generation cancelled');
   };
 
   const generateNailArt = async () => {
-    // Check for global stop signal
-    if (hasActiveStopSignal) {
-      alert('🚨 Generation stopped by global stop signal');
-      return;
-    }
-    
-    setLoading(true);
-    setCanStop(true);
+    setIsGeneratingNailArt(true);
     setGenerationProgress({
       current: 0,
       total: count,
@@ -301,8 +293,7 @@ export default function GenerateGalleryPage() {
       console.error('Error generating nail art:', error);
       alert('Error generating nail art');
     } finally {
-      setLoading(false);
-      setCanStop(false);
+      setIsGeneratingNailArt(false);
       setGenerationProgress({
         current: 0,
         total: 0,
@@ -314,11 +305,6 @@ export default function GenerateGalleryPage() {
 
   return (
     <div className="min-h-screen bg-black text-white p-8">
-        {/* Global Stop Button */}
-      <GlobalStopButton position="fixed" showStatus={true} />
-      
-      {/* Emergency Stop Button */}
-      <EmergencyStopButton position="fixed" showStatus={true} />
       
       <div className="max-w-6xl mx-auto">
         <div className="flex justify-between items-center mb-8">
@@ -343,12 +329,12 @@ export default function GenerateGalleryPage() {
                 <span className="text-sm text-gray-400">
                   {generationProgress.current} / {generationProgress.total} pages
                 </span>
-                {canStop && (
+                {isGeneratingTagPages && (
                   <button
-                    onClick={stopGeneration}
+                    onClick={cancelTagPagesGeneration}
                     className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-sm"
                   >
-                    ⏹️ Stop
+                    Cancel
                   </button>
                 )}
               </div>
@@ -530,24 +516,24 @@ export default function GenerateGalleryPage() {
                 <div className="flex gap-2">
                   <button
                     onClick={generateNailArt}
-                    disabled={loading}
+                    disabled={isGeneratingNailArt}
                     className="bg-purple-600 hover:bg-purple-700 disabled:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg transition-colors"
                   >
-                    {loading ? 'Generating...' : 'Generate Nail Art'}
+                    {isGeneratingNailArt ? 'Generating...' : 'Generate Nail Art'}
                   </button>
-                  {canStop && (
+                  {isGeneratingNailArt && (
                     <button
-                      onClick={stopGeneration}
+                      onClick={cancelNailArtGeneration}
                       className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition-colors"
                     >
-                      ⏹️ Stop
+                      Cancel
                     </button>
                   )}
                 </div>
                 
                 <button
                   onClick={analyzeCategoryImpact}
-                  disabled={loading || (!selectedCategory && !customPrompt)}
+                  disabled={isGeneratingNailArt || isGeneratingForTag || isGeneratingTagPages || (!selectedCategory && !customPrompt)}
                   className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg transition-colors"
                 >
                   Analyze Impact
@@ -701,36 +687,46 @@ export default function GenerateGalleryPage() {
               </div>
               
               <div className="flex gap-4 mt-6">
-                <button
-                  onClick={generateForSpecificTag}
-                  disabled={loading || !selectedTag}
-                  className="bg-green-600 hover:bg-green-700 disabled:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg transition-colors"
-                >
-                  {loading ? 'Generating...' : 'Generate for Tag'}
-                </button>
+                <div className="flex gap-2">
+                  <button
+                    onClick={generateForSpecificTag}
+                    disabled={isGeneratingForTag || !selectedTag}
+                    className="bg-green-600 hover:bg-green-700 disabled:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg transition-colors"
+                  >
+                    {isGeneratingForTag ? 'Generating...' : 'Generate for Tag'}
+                  </button>
+                  {isGeneratingForTag && (
+                    <button
+                      onClick={cancelTagGeneration}
+                      className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition-colors"
+                    >
+                      Cancel
+                    </button>
+                  )}
+                </div>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="flex gap-2">
                     <button
                       onClick={generateForTagPages}
-                      disabled={loading}
+                      disabled={isGeneratingTagPages}
                       className="bg-purple-600 hover:bg-purple-700 disabled:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg transition-colors flex-1"
                     >
-                      {loading ? 'Generating...' : 'Fix Empty Tag Pages'}
+                      {isGeneratingTagPages ? 'Generating...' : 'Fix Empty Tag Pages'}
                     </button>
-                    {canStop && (
+                    {isGeneratingTagPages && (
                       <button
-                        onClick={stopGeneration}
+                        onClick={cancelTagPagesGeneration}
                         className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-4 rounded-lg transition-colors"
                       >
-                        ⏹️
+                        Cancel
                       </button>
                     )}
                   </div>
                   
                   <button
                     onClick={loadUnderPopulatedTags}
-                    disabled={loading}
+                    disabled={isGeneratingForTag || isGeneratingTagPages}
                     className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg transition-colors"
                   >
                     🔄 Refresh Tag List
@@ -786,7 +782,7 @@ export default function GenerateGalleryPage() {
                       setTagGenerationCount(3);
                     }
                   }}
-                  disabled={loading || underPopulatedTags.filter(tag => tag.priority === 'high').length === 0}
+                  disabled={isGeneratingForTag || isGeneratingTagPages || underPopulatedTags.filter(tag => tag.priority === 'high').length === 0}
                   className="bg-red-600 hover:bg-red-700 disabled:bg-gray-600 text-white px-4 py-3 rounded-lg transition-colors"
                 >
                   🔥 Generate for High Priority
@@ -801,7 +797,7 @@ export default function GenerateGalleryPage() {
                       setTagGenerationCount(2);
                     }
                   }}
-                  disabled={loading || underPopulatedTags.filter(tag => tag.priority === 'medium').length === 0}
+                  disabled={isGeneratingForTag || isGeneratingTagPages || underPopulatedTags.filter(tag => tag.priority === 'medium').length === 0}
                   className="bg-yellow-600 hover:bg-yellow-700 disabled:bg-gray-600 text-white px-4 py-3 rounded-lg transition-colors"
                 >
                   ⚡ Generate for Medium Priority
@@ -816,7 +812,7 @@ export default function GenerateGalleryPage() {
                       setTagGenerationCount(1);
                     }
                   }}
-                  disabled={loading || underPopulatedTags.filter(tag => tag.priority === 'low').length === 0}
+                  disabled={isGeneratingForTag || isGeneratingTagPages || underPopulatedTags.filter(tag => tag.priority === 'low').length === 0}
                   className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 text-white px-4 py-3 rounded-lg transition-colors"
                 >
                   📈 Generate for Low Priority
@@ -910,10 +906,10 @@ export default function GenerateGalleryPage() {
               
               <button
                 onClick={analyzeCategoryImpact}
-                disabled={loading || (!selectedCategory && !customPrompt)}
+                disabled={isGeneratingNailArt || isGeneratingForTag || isGeneratingTagPages || (!selectedCategory && !customPrompt)}
                 className="mt-6 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg transition-colors"
               >
-                {loading ? 'Analyzing...' : 'Analyze Impact'}
+                {(isGeneratingNailArt || isGeneratingForTag || isGeneratingTagPages) ? 'Analyzing...' : 'Analyze Impact'}
               </button>
             </div>
 
