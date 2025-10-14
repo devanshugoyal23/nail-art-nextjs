@@ -23,8 +23,8 @@ export default function HomepageHero({ initialItems = [] }: HomepageHeroProps) {
   const fetchFeaturedItems = async () => {
     try {
       setLoading(true);
-      // Reduce to 20 items for mobile performance
-      const result = await getGalleryItems({ limit: 20, sortBy: 'newest' });
+      // Restore to 60 items for desktop, mobile will still be optimized via CSS
+      const result = await getGalleryItems({ limit: 60, sortBy: 'newest' });
       setFeaturedItems(result.items);
     } catch (error) {
       console.error('Error fetching featured items:', error);
@@ -69,7 +69,7 @@ export default function HomepageHero({ initialItems = [] }: HomepageHeroProps) {
           className="pinterest-masonry p-2 sm:p-4 w-full min-h-screen relative z-10"
           style={{ height: '100vh' }}
         >
-          {featuredItems.slice(0, 20).map((item, index) => {
+          {featuredItems.slice(0, 60).map((item, index) => {
             // Simplified height variations for mobile
             const heightVariations = [
               'aspect-[3/4]', 'aspect-[4/5]', 'aspect-[2/3]', 'aspect-square'
