@@ -151,7 +151,7 @@ export default async function TechniquePage({ params }: TechniquePageProps) {
       .filter((tag, index, arr) => arr.indexOf(tag) === index)
       .slice(0, 6);
     
-    const relatedItems = allItems.slice(0, 8); // Show some general content
+    const relatedItems = allItems.slice(0, 12); // Show more related content
     
     return (
       <div className="min-h-screen bg-black">

@@ -165,7 +165,18 @@ export function generateImageStructuredData(
     "keywords": category ? [category, "nail art", "manicure", "nail design"] : ["nail art", "manicure", "nail design"],
     "creator": {
       "@type": "Organization",
-      "name": "AI Nail Art Studio"
+      "name": "AI Nail Art Studio",
+      "url": "https://nailartai.app"
+    },
+    "license": "https://nailartai.app/terms",
+    "copyrightNotice": "© AI Nail Art Studio",
+    "creditText": "AI Nail Art Studio",
+    "acquireLicensePage": "https://nailartai.app/terms",
+    "copyrightYear": new Date().getFullYear(),
+    "publisher": {
+      "@type": "Organization",
+      "name": "AI Nail Art Studio",
+      "url": "https://nailartai.app"
     }
   };
 }

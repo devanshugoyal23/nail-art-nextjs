@@ -204,27 +204,60 @@ export async function POST(request: NextRequest) {
 
   } catch (error) {
     console.error('💥 Editorial generation failed:', error);
+    
+    // Handle specific error types
+    let errorMessage = 'Failed to generate editorial content';
+    let statusCode = 500;
+    
+    if (error instanceof Error) {
+      if (error.message.includes('GEMINI_API_KEY')) {
+        errorMessage = 'Gemini API key not configured';
+        statusCode = 503;
+      } else if (error.message.includes('Failed to generate unique editorial content')) {
+        errorMessage = 'AI content generation failed - please try again';
+        statusCode = 502;
+      } else if (error.message.includes('Database error')) {
+        errorMessage = 'Database connection failed';
+        statusCode = 503;
+      } else {
+        errorMessage = error.message;
+      }
+    }
+    
     return NextResponse.json(
       { 
         success: false, 
-        error: error instanceof Error ? error.message : 'Failed to generate editorial content',
+        error: errorMessage,
         data: null
       },
-      { status: 500 }
+      { status: statusCode }
     );
   }
 }
 
 export async function GET() {
   try {
+    // Health check - test basic connectivity
+    console.log('🔍 Editorial API health check...');
+    
+    // Test Gemini API key
+    const geminiKey = process.env.GEMINI_API_KEY;
+    if (!geminiKey) {
+      console.error('❌ GEMINI_API_KEY not configured');
+      throw new Error('Gemini API key not configured');
+    }
+
     // Get current stats
     const { count: totalItems, error: itemsError } = await supabase
       .from('gallery_items')
       .select('*', { count: 'exact', head: true });
 
     if (itemsError) {
-      throw new Error(`Failed to get total items: ${itemsError.message}`);
+      console.error('❌ Supabase connection failed:', itemsError);
+      throw new Error(`Database connection failed: ${itemsError.message}`);
     }
+
+    console.log('✅ Health check passed - both Supabase and Gemini API key are configured');
 
     const { count: itemsWithEditorial, error: editorialError } = await supabase
       .from('gallery_editorials')

@@ -150,19 +150,43 @@ Make content specific to this design. Be helpful, specific, natural, and SEO-fri
 
   const user = `Design: ${designName || ''}\nCategory: ${category || ''}\nPrompt: ${prompt || ''}\n\nAnalyze this SPECIFIC nail art design and create unique content that would only apply to this exact design. Consider the colors, patterns, techniques, and complexity mentioned in the prompt. Make every field specific to this design - no generic content.`;
 
-  const response = await aiInstance.models.generateContent({
-    model: 'gemini-2.0-flash',
-    contents: {
-      parts: [
-        { text: sys },
-        { text: user },
-        { text: 'Output valid JSON only, no markdown.' }
-      ],
-    },
-    config: {
-      responseModalities: [Modality.TEXT],
-    },
-  });
+  let response;
+  try {
+    response = await aiInstance.models.generateContent({
+      model: 'gemini-2.5-pro',
+      contents: {
+        parts: [
+          { text: sys },
+          { text: user },
+          { text: 'Output valid JSON only, no markdown.' }
+        ],
+      },
+      config: {
+        responseModalities: [Modality.TEXT],
+      },
+    });
+  } catch (apiError) {
+    console.error('Gemini 2.0-flash failed, trying fallback model:', apiError);
+    try {
+      // Fallback to gemini-1.5-flash if 2.0-flash fails
+      response = await aiInstance.models.generateContent({
+        model: 'gemini-2.5-flash',
+        contents: {
+          parts: [
+            { text: sys },
+            { text: user },
+            { text: 'Output valid JSON only, no markdown.' }
+          ],
+        },
+        config: {
+          responseModalities: [Modality.TEXT],
+        },
+      });
+    } catch (fallbackError) {
+      console.error('Both Gemini models failed:', { apiError, fallbackError });
+      throw new Error(`Gemini API error: ${apiError instanceof Error ? apiError.message : 'Unknown API error'}`);
+    }
+  }
 
   let text = '';
   if (response.candidates && response.candidates[0]?.content?.parts) {
@@ -171,6 +195,11 @@ Make content specific to this design. Be helpful, specific, natural, and SEO-fri
         text += part.text;
       }
     }
+  }
+  
+  if (!text || text.trim().length === 0) {
+    console.error('Empty response from Gemini API');
+    throw new Error('Gemini API returned empty response');
   }
 
   try {

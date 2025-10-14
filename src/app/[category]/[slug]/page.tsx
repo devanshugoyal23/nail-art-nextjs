@@ -31,7 +31,7 @@ export async function generateStaticParams() {
     // Get the most popular/recent items for static generation
     const result = await getGalleryItems({ 
       page: 1, 
-      limit: 100, // Generate static pages for top 100 items
+      limit: 500, // Generate static pages for top 500 items
       sortBy: 'newest' 
     });
     
@@ -62,9 +62,18 @@ export async function generateMetadata({ params }: GalleryDetailPageProps): Prom
   }
 
   const title = item.design_name || 'Generated Nail Art';
-  const description = item.prompt || 'AI-generated nail art design';
-  const fullTitle = `${title} | AI Nail Art Studio`;
-  const fullDescription = description.length > 160 ? description.substring(0, 157) + '...' : description;
+  const baseDescription = item.prompt || 'AI-generated nail art design';
+  
+  // Create SEO-optimized description with keywords
+  const categoryKeyword = item.category ? `${item.category} nail art` : 'nail art';
+  const colorKeywords = item.colors && item.colors.length > 0 ? ` ${item.colors.join(', ')} colors` : '';
+  const techniqueKeywords = item.techniques && item.techniques.length > 0 ? ` ${item.techniques.join(', ')} technique` : '';
+  
+  const enhancedDescription = `${baseDescription}${colorKeywords}${techniqueKeywords}. Try this ${categoryKeyword} design virtually with AI-powered nail art try-on.`;
+  // Create SEO-optimized title with keyword context
+  const categoryContext = item.category ? ` - ${item.category} Nail Art` : '';
+  const fullTitle = `${title}${categoryContext} | AI Nail Art Studio`;
+  const fullDescription = enhancedDescription.length > 160 ? enhancedDescription.substring(0, 157) + '...' : enhancedDescription;
   
   // Enhanced keywords with long-tail variations
   const baseKeywords = [
@@ -86,13 +95,13 @@ export async function generateMetadata({ params }: GalleryDetailPageProps): Prom
     `${item.category} manicure`
   ] : [];
   
-  const colorKeywords = (item.colors || []).map(color => [
+  const colorKeywordArray = (item.colors || []).map(color => [
     `${color} nail art`,
     `${color} nail design`,
     `${color} manicure`
   ]).flat();
   
-  const techniqueKeywords = (item.techniques || []).map(technique => [
+  const techniqueKeywordArray = (item.techniques || []).map(technique => [
     `${technique} nail art`,
     `${technique} nail design`,
     `${technique} manicure`
@@ -110,8 +119,8 @@ export async function generateMetadata({ params }: GalleryDetailPageProps): Prom
     keywords: [
       ...baseKeywords,
       ...categoryKeywords,
-      ...colorKeywords,
-      ...techniqueKeywords,
+      ...colorKeywordArray,
+      ...techniqueKeywordArray,
       ...occasionKeywords,
       item.category?.toLowerCase() || 'nail design',
       ...(item.colors || []),
@@ -210,14 +219,78 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
   // Fetch editorial (cache in Supabase; fallback to live Gemini)
   let editorial = await getEditorialByItemId(item.id);
   if (!editorial) {
-    editorial = await generateEditorialContentForNailArt(
-      item.design_name, 
-      item.category || undefined, 
-      item.prompt || undefined,
-      relatedKeywords
-    );
-    // best-effort cache
-    await upsertEditorial(item.id, editorial);
+    try {
+      editorial = await generateEditorialContentForNailArt(
+        item.design_name, 
+        item.category || undefined, 
+        item.prompt || undefined,
+        relatedKeywords
+      );
+      // best-effort cache
+      await upsertEditorial(item.id, editorial);
+    } catch (error) {
+      console.error('Failed to generate editorial content, using fallback:', error);
+      // Provide fallback editorial content for build time
+      editorial = {
+        title: `${item.design_name || 'Nail Art'} Design Guide`,
+        intro: `Discover this beautiful ${item.category || 'nail art'} design featuring ${attrs.colors.length ? attrs.colors.join(', ') : 'stunning'} colors and ${attrs.technique.length ? attrs.technique.join(', ') : 'artistic'} techniques.`,
+        primaryKeyword: `${item.category || 'nail art'} design`,
+        secondaryKeywords: ['nail art', 'manicure', 'nail design', 'nail inspiration'],
+        quickFacts: [
+          'Perfect for all skill levels',
+          'Works with any nail shape',
+          'Long-lasting with proper care',
+          'Trendy and fashionable'
+        ],
+        trendingNow: 'This design is currently trending for its versatility and beauty.',
+        seasonalTips: 'Perfect for any season with the right color variations.',
+        attributes: {
+          shape: attrs.shape[0] || 'almond',
+          length: attrs.length[0] || 'medium',
+          finish: attrs.finish,
+          colors: attrs.colors,
+          technique: attrs.technique
+        },
+        audience: 'All skill levels',
+        timeMinutes: 45,
+        difficulty: 'Medium' as const,
+        costEstimate: '$20-40',
+        supplies: ['Base coat', 'Color polish', 'Top coat', 'Nail art brush', 'Acetone', 'Cotton pads'],
+        steps: [
+          'Prep your nails with base coat',
+          'Apply your chosen colors',
+          'Add design details with brush',
+          'Seal with top coat',
+          'Clean up edges'
+        ],
+        variations: ['Try different colors', 'Add glitter accents', 'Create ombre effect'],
+        expertTip: 'Take your time with each step for best results.',
+        maintenance: ['Apply cuticle oil daily', 'Wear gloves when cleaning', 'Avoid harsh chemicals'],
+        aftercare: ['Moisturize regularly', 'Avoid picking at polish', 'Use gentle nail care products'],
+        removal: ['Soak cotton in acetone', 'Wrap with foil for 10 minutes', 'Gently push off polish'],
+        troubleshooting: [
+          { q: 'Polish chipping?', a: 'Apply thin coats and seal with top coat' },
+          { q: 'Design smudging?', a: 'Let each layer dry completely' },
+          { q: 'Colors bleeding?', a: 'Use a barrier between colors' }
+        ],
+        colorVariations: ['Try pastel versions', 'Go bold with neons', 'Create monochrome look'],
+        occasions: ['Everyday wear', 'Special events', 'Date night', 'Work appropriate', 'Party ready'],
+        skillLevel: 'Beginner' as const,
+        socialProof: 'This design is loved by nail art enthusiasts worldwide.',
+        faqs: [
+          { q: 'How long does this design last?', a: 'With proper care, 1-2 weeks' },
+          { q: 'Can beginners do this?', a: 'Yes, start with simpler variations' },
+          { q: 'What tools do I need?', a: 'Basic nail art brushes and polishes' }
+        ],
+        internalLinks: [
+          { label: 'More nail art designs', href: '/nail-art-gallery' },
+          { label: 'Nail art tutorials', href: '/techniques' },
+          { label: 'Color inspiration', href: '/nail-colors' }
+        ],
+        ctaText: 'Try This Design Virtually',
+        inspiration: 'Inspired by current nail art trends and classic techniques.'
+      };
+    }
   }
 
   // Extract tags from editorial content
@@ -652,7 +725,7 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
             <section className="mb-8">
               <h2 className="text-2xl font-bold text-white mb-6">Similar Designs You&apos;ll Love</h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                {otherCategoryItems.slice(0, 8).map((categoryItem) => (
+                {otherCategoryItems.slice(0, 12).map((categoryItem) => (
                 <Link
                   key={categoryItem.id}
                   href={generateGalleryItemUrl(categoryItem)}

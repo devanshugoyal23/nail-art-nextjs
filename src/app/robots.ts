@@ -19,10 +19,7 @@ export default function robots(): MetadataRoute.Robots {
       ],
     },
     sitemap: [
-      'https://nailartai.app/sitemap-index.xml', // Main sitemap index
-      'https://nailartai.app/sitemap.xml', // Static pages
-      'https://nailartai.app/sitemap-gallery.xml', // Gallery content
-      'https://nailartai.app/sitemap-images.xml' // Images
+      'https://nailartai.app/sitemap-index.xml' // Main sitemap index - contains all sub-sitemaps
     ],
   };
 }

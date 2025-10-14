@@ -2,6 +2,10 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Tooltip from '@/components/Tooltip';
+import ActionCard from '@/components/ActionCard';
+import StatusBadge from '@/components/StatusBadge';
+import AnimatedStatCard from '@/components/AnimatedStatCard';
 
 interface ContentGap {
   category: string;
@@ -135,23 +139,41 @@ export default function ContentManagementPage() {
       });
       
       if (response.ok) {
-        const data = await response.json();
-        if (data.success) {
-          alert(`Editorial generation completed! Generated ${data.data.successful} editorials, ${data.data.failed} failed.`);
-        } else if (data.data && data.data.stopped) {
-          alert(`Editorial generation stopped. Generated ${data.data.successful} editorials, ${data.data.failed} failed.`);
-          setEditorialStopped(true);
+        const contentType = response.headers.get('content-type');
+        if (contentType && contentType.includes('application/json')) {
+          const data = await response.json();
+          if (data.success) {
+            alert(`Editorial generation completed! Generated ${data.data.successful} editorials, ${data.data.failed} failed.`);
+          } else if (data.data && data.data.stopped) {
+            alert(`Editorial generation stopped. Generated ${data.data.successful} editorials, ${data.data.failed} failed.`);
+            setEditorialStopped(true);
+          } else {
+            alert(`Editorial generation failed: ${data.error}`);
+          }
+          loadEditorialStats(); // Refresh stats
         } else {
-          alert(`Editorial generation failed: ${data.error}`);
+          const text = await response.text();
+          console.error('Non-JSON response:', text);
+          alert('Server returned invalid response format');
         }
-        loadEditorialStats(); // Refresh stats
       } else {
-        const errorData = await response.json();
-        alert(`Failed to generate editorial content: ${errorData.error}`);
+        const contentType = response.headers.get('content-type');
+        if (contentType && contentType.includes('application/json')) {
+          const errorData = await response.json();
+          alert(`Failed to generate editorial content: ${errorData.error}`);
+        } else {
+          const errorText = await response.text();
+          console.error('Error response:', errorText);
+          alert(`Server error (${response.status}): ${errorText.substring(0, 100)}...`);
+        }
       }
     } catch (error) {
       console.error('Error generating editorial content:', error);
-      alert('Error generating editorial content');
+      if (error instanceof SyntaxError && error.message.includes('JSON')) {
+        alert('Server returned invalid JSON response. Please check the server logs.');
+      } else {
+        alert(`Error generating editorial content: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      }
     } finally {
       setEditorialLoading(false);
     }
@@ -546,25 +568,72 @@ export default function ContentManagementPage() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white p-8">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-4xl font-bold">Content Management Dashboard</h1>
-          <div className="flex gap-4">
-            <button
-              onClick={() => setShowHelp(!showHelp)}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors"
-            >
-              {showHelp ? 'Hide Help' : 'Show Help'}
-            </button>
-            <Link
-              href="/admin/generate"
-              className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg transition-colors"
-            >
-              Generate New Content
-            </Link>
+    <div className="min-h-screen bg-black text-white">
+      {/* Sticky Header */}
+      <div className="sticky top-0 z-40 bg-black/95 backdrop-blur-md border-b border-gray-800">
+        <div className="max-w-7xl mx-auto px-8 py-4">
+          <div className="flex justify-between items-center">
+            <div className="flex items-center gap-4">
+              {/* Breadcrumb */}
+              <nav className="flex items-center gap-2 text-sm text-gray-400">
+                <Link href="/admin" className="hover:text-white transition-colors">
+                  Admin
+                </Link>
+                <span>/</span>
+                <span className="text-white">Content Management</span>
+              </nav>
+            </div>
+            
+            <div className="flex items-center gap-4">
+              {/* Quick Stats */}
+              {siteStats && (
+                <div className="hidden md:flex items-center gap-4 text-sm">
+                  <div className="flex items-center gap-2">
+                    <span className="text-gray-400">Health:</span>
+                    <StatusBadge 
+                      status={siteStats.emptyCategories === 0 ? 'excellent' : siteStats.emptyCategories <= 2 ? 'good' : 'needs-improvement'}
+                      text={`${Math.round((siteStats.categoriesWithMinContent / siteStats.totalCategories) * 100)}%`}
+                      size="sm"
+                    />
+                  </div>
+                  <div className="text-gray-400">
+                    Last updated: {siteStats.lastGenerated || 'Never'}
+                  </div>
+                </div>
+              )}
+              
+              <div className="flex gap-2">
+                <Tooltip content="Toggle help panel with detailed explanations and guides">
+                  <button
+                    onClick={() => setShowHelp(!showHelp)}
+                    className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors flex items-center gap-2"
+                  >
+                    <span>ℹ️</span>
+                    {showHelp ? 'Hide Help' : 'Show Help'}
+                  </button>
+                </Tooltip>
+                <Tooltip content="Generate new nail art content with AI">
+                  <Link
+                    href="/admin/generate"
+                    className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg transition-colors flex items-center gap-2"
+                  >
+                    <span>✨</span>
+                    Generate New Content
+                  </Link>
+                </Tooltip>
+              </div>
+            </div>
           </div>
+        </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-8 py-8">
+        {/* Main Header */}
+        <div className="mb-8">
+          <h1 className="text-4xl font-bold mb-2">Content Management Dashboard</h1>
+          <p className="text-gray-400 text-lg">
+            Manage and optimize your nail art content library with AI-powered tools
+          </p>
         </div>
 
         {/* Help Panel */}
@@ -597,104 +666,123 @@ export default function ContentManagementPage() {
         )}
 
         {/* Navigation Tabs */}
-        <div className="flex space-x-1 mb-8 bg-gray-800 p-1 rounded-lg">
-          <button
-            onClick={() => setActiveTab('overview')}
-            className={`px-6 py-3 rounded-md transition-colors ${
-              activeTab === 'overview' 
-                ? 'bg-blue-600 text-white' 
-                : 'text-gray-400 hover:text-white'
-            }`}
-          >
-            📊 Overview
-          </button>
-          <button
-            onClick={() => setActiveTab('categories')}
-            className={`px-6 py-3 rounded-md transition-colors ${
-              activeTab === 'categories' 
-                ? 'bg-blue-600 text-white' 
-                : 'text-gray-400 hover:text-white'
-            }`}
-          >
-            📁 Categories
-          </button>
-          <button
-            onClick={() => setActiveTab('analytics')}
-            className={`px-6 py-3 rounded-md transition-colors ${
-              activeTab === 'analytics' 
-                ? 'bg-blue-600 text-white' 
-                : 'text-gray-400 hover:text-white'
-            }`}
-          >
-            📈 Analytics
-          </button>
-          <button
-            onClick={() => setActiveTab('tags')}
-            className={`px-6 py-3 rounded-md transition-colors ${
-              activeTab === 'tags' 
-                ? 'bg-blue-600 text-white' 
-                : 'text-gray-400 hover:text-white'
-            }`}
-          >
-            🏷️ Tag Management
-          </button>
-          <button
-            onClick={() => setActiveTab('guide')}
-            className={`px-6 py-3 rounded-md transition-colors ${
-              activeTab === 'guide' 
-                ? 'bg-blue-600 text-white' 
-                : 'text-gray-400 hover:text-white'
-            }`}
-          >
-            📖 Guide
-          </button>
-          <button
-            onClick={() => setActiveTab('editorial')}
-            className={`px-6 py-3 rounded-md transition-colors ${
-              activeTab === 'editorial' 
-                ? 'bg-blue-600 text-white' 
-                : 'text-gray-400 hover:text-white'
-            }`}
-          >
-            📝 Editorial
-          </button>
+        <div className="mb-8">
+          <div className="flex flex-wrap gap-2 bg-gray-800 p-2 rounded-xl">
+            {[
+              {
+                id: 'overview',
+                icon: '📊',
+                title: 'Overview',
+                description: 'Site health and quick actions'
+              },
+              {
+                id: 'categories',
+                icon: '📁',
+                title: 'Categories',
+                description: 'Detailed category analysis'
+              },
+              {
+                id: 'analytics',
+                icon: '📈',
+                title: 'Analytics',
+                description: 'Content distribution insights'
+              },
+              {
+                id: 'tags',
+                icon: '🏷️',
+                title: 'Tag Management',
+                description: 'Manage under-populated tags'
+              },
+              {
+                id: 'guide',
+                icon: '📖',
+                title: 'Guide',
+                description: 'Complete user documentation'
+              },
+              {
+                id: 'editorial',
+                icon: '📝',
+                title: 'Editorial',
+                description: 'Generate editorial content'
+              }
+            ].map((tab) => (
+              <Tooltip
+                key={tab.id}
+                content={tab.description}
+                position="bottom"
+              >
+                <button
+                  onClick={() => setActiveTab(tab.id as 'overview' | 'categories' | 'analytics' | 'tags' | 'guide' | 'editorial')}
+                  className={`px-4 py-3 rounded-lg transition-all duration-200 flex items-center gap-2 ${
+                    activeTab === tab.id 
+                      ? 'bg-blue-600 text-white shadow-lg' 
+                      : 'text-gray-400 hover:text-white hover:bg-gray-700'
+                  }`}
+                >
+                  <span className="text-lg">{tab.icon}</span>
+                  <span className="font-medium">{tab.title}</span>
+                </button>
+              </Tooltip>
+            ))}
+          </div>
         </div>
 
-        {/* Distribute Progress Display */}
+        {/* Enhanced Progress Display */}
         {distributeProgress.isGenerating && (
-          <div className="bg-gray-800 p-6 rounded-lg mb-8">
+          <div className="bg-gradient-to-r from-gray-800 to-gray-700 p-6 rounded-xl mb-8 border border-gray-600">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-semibold text-green-400">🔄 Distribution Progress</h2>
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center animate-pulse">
+                  <span className="text-white text-sm">🔄</span>
+                </div>
+                <div>
+                  <h2 className="text-xl font-semibold text-green-400">Distribution in Progress</h2>
+                  <p className="text-sm text-gray-400">Balancing content across categories</p>
+                </div>
+              </div>
               <div className="flex gap-2">
-                <span className="text-sm text-gray-400">
-                  {distributeProgress.current} / {distributeProgress.total} categories
-                </span>
+                <div className="text-right">
+                  <div className="text-sm text-gray-400">Progress</div>
+                  <div className="text-lg font-bold text-white">
+                    {distributeProgress.current} / {distributeProgress.total}
+                  </div>
+                </div>
                 {canStopDistribute && (
-                  <button
-                    onClick={stopDistributeContent}
-                    className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-sm"
-                  >
-                    ⏹️ Stop
-                  </button>
+                  <Tooltip content="Stop the current distribution process">
+                    <button
+                      onClick={stopDistributeContent}
+                      className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+                    >
+                      ⏹️ Stop
+                    </button>
+                  </Tooltip>
                 )}
               </div>
             </div>
             
             <div className="mb-4">
               <div className="flex justify-between text-sm text-gray-400 mb-2">
-                <span>Progress</span>
-                <span>{Math.round((distributeProgress.current / distributeProgress.total) * 100)}%</span>
+                <span>Distribution Progress</span>
+                <span className="font-medium">{Math.round((distributeProgress.current / distributeProgress.total) * 100)}%</span>
               </div>
-              <div className="w-full bg-gray-700 rounded-full h-2">
+              <div className="w-full bg-gray-600 rounded-full h-3 overflow-hidden">
                 <div 
-                  className="bg-green-600 h-2 rounded-full transition-all duration-300"
+                  className="bg-gradient-to-r from-green-500 to-blue-500 h-3 rounded-full transition-all duration-500 ease-out"
                   style={{ width: `${(distributeProgress.current / distributeProgress.total) * 100}%` }}
                 ></div>
               </div>
             </div>
             
-            <div className="text-sm text-gray-300">
-              <strong>Current:</strong> {distributeProgress.currentCategory}
+            <div className="flex items-center justify-between text-sm">
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                <span className="text-gray-300">
+                  <strong>Current:</strong> {distributeProgress.currentCategory}
+                </span>
+              </div>
+              <div className="text-gray-400">
+                Estimated time remaining: {Math.max(0, Math.round((distributeProgress.total - distributeProgress.current) * 2))} minutes
+              </div>
             </div>
           </div>
         )}
@@ -777,181 +865,307 @@ export default function ContentManagementPage() {
             {/* Site Stats */}
             {siteStats && (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div className="bg-gray-800 rounded-lg p-6">
-                  <h3 className="text-lg font-semibold text-blue-400 mb-2">Total Categories</h3>
-                  <p className="text-3xl font-bold text-white">{siteStats.totalCategories}</p>
-                  <p className="text-sm text-gray-400 mt-1">Categories in system</p>
-                </div>
-                <div className="bg-gray-800 rounded-lg p-6">
-                  <h3 className="text-lg font-semibold text-green-400 mb-2">Total Items</h3>
-                  <p className="text-3xl font-bold text-white">{siteStats.totalItems}</p>
-                  <p className="text-sm text-gray-400 mt-1">Nail art designs</p>
-                </div>
-                <div className="bg-gray-800 rounded-lg p-6">
-                  <h3 className="text-lg font-semibold text-purple-400 mb-2">Total Pages</h3>
-                  <p className="text-3xl font-bold text-white">{siteStats.totalPages}</p>
-                  <p className="text-sm text-gray-400 mt-1">Generated pages</p>
-                </div>
-                <div className="bg-gray-800 rounded-lg p-6">
-                  <h3 className="text-lg font-semibold text-yellow-400 mb-2">Avg per Category</h3>
-                  <p className="text-3xl font-bold text-white">{siteStats.averageItemsPerCategory.toFixed(1)}</p>
-                  <p className="text-sm text-gray-400 mt-1">Items per category</p>
-                </div>
+                <Tooltip
+                  content="Total number of content categories in your system. Each category represents a different type of nail art style or theme."
+                  title="Total Categories"
+                >
+                  <AnimatedStatCard
+                    label="Total Categories"
+                    value={siteStats.totalCategories}
+                    icon={<span className="text-white">📁</span>}
+                    color="blue"
+                    tooltip="Categories in your content system"
+                  />
+                </Tooltip>
+                
+                <Tooltip
+                  content="Total number of nail art designs across all categories. This includes all generated and uploaded content."
+                  title="Total Items"
+                >
+                  <AnimatedStatCard
+                    label="Total Items"
+                    value={siteStats.totalItems}
+                    icon={<span className="text-white">🎨</span>}
+                    color="green"
+                    tooltip="Nail art designs in library"
+                  />
+                </Tooltip>
+                
+                <Tooltip
+                  content="Total number of generated pages on your website. This includes category pages, individual design pages, and other content pages."
+                  title="Total Pages"
+                >
+                  <AnimatedStatCard
+                    label="Total Pages"
+                    value={siteStats.totalPages}
+                    icon={<span className="text-white">📄</span>}
+                    color="purple"
+                    tooltip="Generated website pages"
+                  />
+                </Tooltip>
+                
+                <Tooltip
+                  content="Average number of items per category. Higher numbers indicate better content distribution across categories."
+                  title="Average per Category"
+                >
+                  <AnimatedStatCard
+                    label="Avg per Category"
+                    value={siteStats.averageItemsPerCategory.toFixed(1)}
+                    icon={<span className="text-white">📊</span>}
+                    color="yellow"
+                    tooltip="Items per category average"
+                  />
+                </Tooltip>
               </div>
             )}
 
-            {/* Action Buttons */}
+            {/* Recommended Actions */}
+            <div className="mb-8">
+              <h2 className="text-2xl font-semibold mb-6 flex items-center gap-2">
+                <span>⭐</span>
+                Recommended Actions
+                <Tooltip content="These are the most important actions based on your current content health">
+                  <span className="text-lg">ℹ️</span>
+                </Tooltip>
+              </h2>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <ActionCard
+                  title="Fill Content Gaps"
+                  description="Automatically generate content for empty or under-populated categories to improve user experience."
+                  icon="🔵"
+                  priority="high"
+                  recommended={true}
+                  tooltip="This will generate content for categories that have fewer than 5 items, focusing on the most critical gaps first."
+                >
+                  <div className="flex gap-2">
+                    <Tooltip content="Generate content for empty categories. This is the most important action for improving site health.">
+                      <button
+                        onClick={fillContentGaps}
+                        disabled={isFillingGaps}
+                        className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg transition-colors flex-1"
+                      >
+                        {isFillingGaps ? 'Processing...' : 'Fill Gaps'}
+                      </button>
+                    </Tooltip>
+                    {isFillingGaps && (
+                      <Tooltip content="Cancel the current operation">
+                        <button
+                          onClick={cancelFillingGaps}
+                          className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg transition-colors"
+                        >
+                          Cancel
+                        </button>
+                      </Tooltip>
+                    )}
+                  </div>
+                </ActionCard>
+
+                <ActionCard
+                  title="Distribute Content Evenly"
+                  description="Balance content across all categories to ensure consistent user experience and better SEO performance."
+                  icon="🟢"
+                  priority="medium"
+                  recommended={true}
+                  tooltip="This will analyze your content distribution and generate items to balance categories that are under-populated."
+                >
+                  <div className="flex gap-2">
+                    <Tooltip content="Preview the distribution plan before executing">
+                      <button
+                        onClick={previewDistributeContent}
+                        disabled={isDistributing}
+                        className="bg-green-600 hover:bg-green-700 disabled:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg transition-colors"
+                      >
+                        Preview
+                      </button>
+                    </Tooltip>
+                    <Tooltip content="Execute the distribution plan">
+                      <button
+                        onClick={distributeContentEvenly}
+                        disabled={isDistributing || !distributePreview}
+                        className="bg-green-600 hover:bg-green-700 disabled:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg transition-colors"
+                      >
+                        {isDistributing ? 'Distributing...' : 'Execute'}
+                      </button>
+                    </Tooltip>
+                    {canStopDistribute && (
+                      <Tooltip content="Stop the current distribution">
+                        <button
+                          onClick={stopDistributeContent}
+                          className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg transition-colors"
+                        >
+                          Stop
+                        </button>
+                      </Tooltip>
+                    )}
+                  </div>
+                </ActionCard>
+
+                <ActionCard
+                  title="Refresh Analysis"
+                  description="Update all data and statistics to get the latest content health information."
+                  icon="🟠"
+                  priority="low"
+                  tooltip="This will refresh all statistics and content gap analysis with the latest data from your database."
+                >
+                  <div className="flex gap-2">
+                    <Tooltip content="Refresh all data and statistics">
+                      <button
+                        onClick={analyzeContentGaps}
+                        disabled={isAnalyzingGaps}
+                        className="bg-orange-600 hover:bg-orange-700 disabled:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg transition-colors flex-1"
+                      >
+                        {isAnalyzingGaps ? 'Analyzing...' : 'Refresh'}
+                      </button>
+                    </Tooltip>
+                    {isAnalyzingGaps && (
+                      <Tooltip content="Cancel the analysis">
+                        <button
+                          onClick={cancelAnalyzingGaps}
+                          className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg transition-colors"
+                        >
+                          Cancel
+                        </button>
+                      </Tooltip>
+                    )}
+                  </div>
+                </ActionCard>
+              </div>
+            </div>
+
+            {/* Advanced Tools */}
             <div className="bg-gray-800 rounded-lg p-6">
-              <h2 className="text-2xl font-semibold mb-4">Content Generation Actions</h2>
+              <h2 className="text-2xl font-semibold mb-4 flex items-center gap-2">
+                <span>⚙️</span>
+                Advanced Tools
+                <Tooltip content="Advanced content management tools for experienced users">
+                  <span className="text-lg">ℹ️</span>
+                </Tooltip>
+              </h2>
               
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
-                <div className="flex gap-2">
-                  <button
-                    onClick={fillContentGaps}
-                    disabled={isFillingGaps}
-                    className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg transition-colors"
-                  >
-                    {isFillingGaps ? 'Processing...' : '🔵 Fill Content Gaps'}
-                  </button>
-                  {isFillingGaps && (
-                    <button
-                      onClick={cancelFillingGaps}
-                      className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition-colors"
-                    >
-                      Cancel
-                    </button>
-                  )}
-                </div>
-                
-                <div className="flex gap-2">
-                  <button
-                    onClick={previewDistributeContent}
-                    disabled={isDistributing}
-                    className="bg-green-600 hover:bg-green-700 disabled:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg transition-colors"
-                  >
-                    🔍 Preview Distribute
-                  </button>
-                  
-                  <button
-                    onClick={distributeContentEvenly}
-                    disabled={isDistributing || !distributePreview}
-                    className="bg-green-600 hover:bg-green-700 disabled:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg transition-colors"
-                  >
-                    {isDistributing ? 'Distributing...' : '🟢 Distribute Evenly'}
-                  </button>
-                  
-                  {canStopDistribute && (
-                    <button
-                      onClick={stopDistributeContent}
-                      className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition-colors"
-                    >
-                      ⏹️ Stop
-                    </button>
-                  )}
-                </div>
-                
-                <div className="flex gap-2">
-                  <button
-                    onClick={autoGenerateHighPriority}
-                    disabled={isGeneratingHighPriority}
-                    className="bg-red-600 hover:bg-red-700 disabled:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg transition-colors"
-                  >
-                    {isGeneratingHighPriority ? 'Processing...' : '🔴 Auto-Generate High Priority'}
-                  </button>
-                  {isGeneratingHighPriority && (
-                    <button
-                      onClick={cancelHighPriorityGeneration}
-                      className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition-colors"
-                    >
-                      Cancel
-                    </button>
-                  )}
-                </div>
-                
-                <div className="flex gap-2">
-                  <button
-                    onClick={consolidateTags}
-                    disabled={isConsolidatingTags}
-                    className="bg-purple-600 hover:bg-purple-700 disabled:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg transition-colors"
-                  >
-                    {isConsolidatingTags ? 'Processing...' : '🟣 Consolidate Tags'}
-                  </button>
-                  {isConsolidatingTags && (
-                    <button
-                      onClick={cancelConsolidatingTags}
-                      className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition-colors"
-                    >
-                      Cancel
-                    </button>
-                  )}
-                </div>
-                
-                <div className="flex gap-2">
-                  <button
-                    onClick={analyzeContentGaps}
-                    disabled={isAnalyzingGaps}
-                    className="bg-orange-600 hover:bg-orange-700 disabled:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg transition-colors"
-                  >
-                    {isAnalyzingGaps ? 'Analyzing...' : '🟠 Refresh Analysis'}
-                  </button>
-                  {isAnalyzingGaps && (
-                    <button
-                      onClick={cancelAnalyzingGaps}
-                      className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition-colors"
-                    >
-                      Cancel
-                    </button>
-                  )}
-                </div>
+                <ActionCard
+                  title="High Priority Generation"
+                  description="Focus on the most critical content gaps that need immediate attention."
+                  icon="🔴"
+                  priority="high"
+                  tooltip="This will generate content for the highest priority categories first, focusing on those with the most critical gaps."
+                >
+                  <div className="flex gap-2">
+                    <Tooltip content="Generate content for high-priority categories">
+                      <button
+                        onClick={autoGenerateHighPriority}
+                        disabled={isGeneratingHighPriority}
+                        className="bg-red-600 hover:bg-red-700 disabled:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg transition-colors flex-1"
+                      >
+                        {isGeneratingHighPriority ? 'Processing...' : 'Generate'}
+                      </button>
+                    </Tooltip>
+                    {isGeneratingHighPriority && (
+                      <Tooltip content="Cancel the current operation">
+                        <button
+                          onClick={cancelHighPriorityGeneration}
+                          className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg transition-colors"
+                        >
+                          Cancel
+                        </button>
+                      </Tooltip>
+                    )}
+                  </div>
+                </ActionCard>
+
+                <ActionCard
+                  title="Consolidate Tags"
+                  description="Merge similar categories to reduce duplicates and improve content organization."
+                  icon="🟣"
+                  priority="medium"
+                  tooltip="This will identify and merge similar categories to reduce duplication and improve content organization."
+                >
+                  <div className="flex gap-2">
+                    <Tooltip content="Consolidate similar categories">
+                      <button
+                        onClick={consolidateTags}
+                        disabled={isConsolidatingTags}
+                        className="bg-purple-600 hover:bg-purple-700 disabled:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg transition-colors flex-1"
+                      >
+                        {isConsolidatingTags ? 'Processing...' : 'Consolidate'}
+                      </button>
+                    </Tooltip>
+                    {isConsolidatingTags && (
+                      <Tooltip content="Cancel the consolidation">
+                        <button
+                          onClick={cancelConsolidatingTags}
+                          className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg transition-colors"
+                        >
+                          Cancel
+                        </button>
+                      </Tooltip>
+                    )}
+                  </div>
+                </ActionCard>
               </div>
-              
+
               {/* Custom Generation */}
               <div className="border-t border-gray-700 pt-6">
-                <h3 className="text-lg font-semibold mb-4">Generate Related Content</h3>
+                <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                  <span>🎯</span>
+                  Generate Related Content
+                  <Tooltip content="Generate content for a specific category with custom parameters">
+                    <span className="text-lg">ℹ️</span>
+                  </Tooltip>
+                </h3>
                 <div className="flex flex-wrap gap-4 items-end">
                   <div>
                     <label className="block text-sm font-medium mb-2">Category</label>
-                    <select
-                      value={selectedCategory}
-                      onChange={(e) => setSelectedCategory(e.target.value)}
-                      className="px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white"
-                    >
-                      <option value="">Select Category</option>
-                      {contentGaps.map((gap) => (
-                        <option key={gap.category} value={gap.category}>
-                          {gap.category} ({gap.currentCount} items)
-                        </option>
-                      ))}
-                    </select>
+                    <Tooltip content="Select a category that needs more content">
+                      <select
+                        value={selectedCategory}
+                        onChange={(e) => setSelectedCategory(e.target.value)}
+                        className="px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white"
+                      >
+                        <option value="">Select Category</option>
+                        {contentGaps.map((gap) => (
+                          <option key={gap.category} value={gap.category}>
+                            {gap.category} ({gap.currentCount} items)
+                          </option>
+                        ))}
+                      </select>
+                    </Tooltip>
                   </div>
                   
                   <div>
                     <label className="block text-sm font-medium mb-2">Count</label>
-                    <input
-                      type="number"
-                      value={generateCount}
-                      onChange={(e) => setGenerateCount(parseInt(e.target.value) || 1)}
-                      min="1"
-                      max="10"
-                      className="px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white"
-                    />
+                    <Tooltip content="Number of items to generate (1-10)">
+                      <input
+                        type="number"
+                        value={generateCount}
+                        onChange={(e) => setGenerateCount(parseInt(e.target.value) || 1)}
+                        min="1"
+                        max="10"
+                        className="px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white"
+                      />
+                    </Tooltip>
                   </div>
                   
                   <div className="flex gap-2">
-                    <button
-                      onClick={generateRelatedContent}
-                      disabled={isGeneratingRelated || !selectedCategory}
-                      className="bg-indigo-600 hover:bg-indigo-700 disabled:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg transition-colors"
-                    >
-                      {isGeneratingRelated ? 'Generating...' : 'Generate'}
-                    </button>
-                    {isGeneratingRelated && (
+                    <Tooltip content="Generate content for the selected category">
                       <button
-                        onClick={cancelGeneratingRelated}
-                        className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg transition-colors"
+                        onClick={generateRelatedContent}
+                        disabled={isGeneratingRelated || !selectedCategory}
+                        className="bg-indigo-600 hover:bg-indigo-700 disabled:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg transition-colors"
                       >
-                        Cancel
+                        {isGeneratingRelated ? 'Generating...' : 'Generate'}
                       </button>
+                    </Tooltip>
+                    {isGeneratingRelated && (
+                      <Tooltip content="Cancel the generation">
+                        <button
+                          onClick={cancelGeneratingRelated}
+                          className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg transition-colors"
+                        >
+                          Cancel
+                        </button>
+                      </Tooltip>
                     )}
                   </div>
                 </div>
@@ -978,10 +1192,19 @@ export default function ContentManagementPage() {
 
             {/* Content Gaps Analysis */}
             <div className="bg-gray-800 rounded-lg p-6">
-              <h2 className="text-2xl font-semibold mb-4">Content Gaps Analysis</h2>
+              <h2 className="text-2xl font-semibold mb-4 flex items-center gap-2">
+                <span>📊</span>
+                Content Gaps Analysis
+                <Tooltip content="Analysis of categories that need more content to meet minimum requirements">
+                  <span className="text-lg">ℹ️</span>
+                </Tooltip>
+              </h2>
               
               {contentGaps.length === 0 ? (
-                <p className="text-gray-400">No content gaps found. All categories have sufficient content!</p>
+                <div className="text-center py-8">
+                  <div className="text-6xl mb-4">🎉</div>
+                  <p className="text-gray-400 text-lg">No content gaps found. All categories have sufficient content!</p>
+                </div>
               ) : (
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm">
@@ -992,17 +1215,41 @@ export default function ContentManagementPage() {
                         <th className="text-left py-3 px-4">Target</th>
                         <th className="text-left py-3 px-4">Needed</th>
                         <th className="text-left py-3 px-4">Priority</th>
+                        <th className="text-left py-3 px-4">Status</th>
                       </tr>
                     </thead>
                     <tbody>
                       {contentGaps.map((gap, index) => (
-                        <tr key={index} className="border-b border-gray-700">
+                        <tr key={index} className="border-b border-gray-700 hover:bg-gray-700/50 transition-colors">
                           <td className="py-3 px-4 font-medium">{gap.category}</td>
-                          <td className="py-3 px-4">{gap.currentCount}</td>
-                          <td className="py-3 px-4">{gap.targetCount}</td>
-                          <td className="py-3 px-4 font-bold text-yellow-400">{gap.neededCount}</td>
-                          <td className={`py-3 px-4 font-bold ${getPriorityColor(gap.priority)}`}>
-                            {gap.priority.toUpperCase()}
+                          <td className="py-3 px-4">
+                            <Tooltip content={`Current number of items in ${gap.category}`}>
+                              <span>{gap.currentCount}</span>
+                            </Tooltip>
+                          </td>
+                          <td className="py-3 px-4">
+                            <Tooltip content="Target number of items for optimal SEO">
+                              <span>{gap.targetCount}</span>
+                            </Tooltip>
+                          </td>
+                          <td className="py-3 px-4 font-bold text-yellow-400">
+                            <Tooltip content="Number of items needed to reach target">
+                              <span>{gap.neededCount}</span>
+                            </Tooltip>
+                          </td>
+                          <td className="py-3 px-4">
+                            <Tooltip content={`Priority level: ${gap.priority}. High = urgent, Medium = important, Low = nice to have`}>
+                              <span className={`font-bold ${getPriorityColor(gap.priority)}`}>
+                                {gap.priority.toUpperCase()}
+                              </span>
+                            </Tooltip>
+                          </td>
+                          <td className="py-3 px-4">
+                            <StatusBadge 
+                              status={gap.priority === 'high' ? 'critical' : gap.priority === 'medium' ? 'warning' : 'info'}
+                              text={gap.priority === 'high' ? 'Critical' : gap.priority === 'medium' ? 'Needs Attention' : 'Low Priority'}
+                              size="sm"
+                            />
                           </td>
                         </tr>
                       ))}
@@ -1018,10 +1265,19 @@ export default function ContentManagementPage() {
         {activeTab === 'categories' && (
           <div className="space-y-6">
             <div className="bg-gray-800 rounded-lg p-6">
-              <h2 className="text-2xl font-semibold mb-4">Category Details</h2>
+              <h2 className="text-2xl font-semibold mb-4 flex items-center gap-2">
+                <span>📁</span>
+                Category Details
+                <Tooltip content="Detailed analysis of each category including SEO scores and content health">
+                  <span className="text-lg">ℹ️</span>
+                </Tooltip>
+              </h2>
               
               {categoryDetails.length === 0 ? (
-                <p className="text-gray-400">Loading category details...</p>
+                <div className="text-center py-8">
+                  <div className="text-4xl mb-4">⏳</div>
+                  <p className="text-gray-400">Loading category details...</p>
+                </div>
               ) : (
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm">
@@ -1037,33 +1293,56 @@ export default function ContentManagementPage() {
                     </thead>
                     <tbody>
                       {categoryDetails.map((category, index) => (
-                        <tr key={index} className="border-b border-gray-700">
-                          <td className="py-3 px-4 font-medium">{category.category}</td>
-                          <td className="py-3 px-4">{category.itemCount}</td>
-                          <td className="py-3 px-4">
-                            <span className={`px-2 py-1 rounded-full text-xs font-bold ${getStatusColor(category.status)}`}>
-                              {getStatusIcon(category.status)} {category.status.replace('-', ' ').toUpperCase()}
-                            </span>
+                        <tr key={index} className="border-b border-gray-700 hover:bg-gray-700/50 transition-colors">
+                          <td className="py-3 px-4 font-medium">
+                            <Tooltip content={`Category: ${category.category}`}>
+                              <span>{category.category}</span>
+                            </Tooltip>
                           </td>
                           <td className="py-3 px-4">
-                            <div className="flex items-center">
-                              <div className="w-16 bg-gray-700 rounded-full h-2 mr-2">
-                                <div 
-                                  className="bg-blue-600 h-2 rounded-full" 
-                                  style={{ width: `${category.seoScore}%` }}
-                                ></div>
+                            <Tooltip content={`${category.itemCount} items in this category`}>
+                              <span>{category.itemCount}</span>
+                            </Tooltip>
+                          </td>
+                          <td className="py-3 px-4">
+                            <Tooltip content={`Status: ${category.status}. This indicates the overall health of the category based on content quantity and quality.`}>
+                              <StatusBadge 
+                                status={category.status}
+                                text={category.status.replace('-', ' ').toUpperCase()}
+                                size="sm"
+                              />
+                            </Tooltip>
+                          </td>
+                          <td className="py-3 px-4">
+                            <Tooltip content={`SEO Score: ${category.seoScore}%. Based on content quantity, quality, and optimization.`}>
+                              <div className="flex items-center">
+                                <div className="w-16 bg-gray-700 rounded-full h-2 mr-2">
+                                  <div 
+                                    className={`h-2 rounded-full transition-all duration-300 ${
+                                      category.seoScore >= 80 ? 'bg-green-500' :
+                                      category.seoScore >= 60 ? 'bg-yellow-500' : 'bg-red-500'
+                                    }`}
+                                    style={{ width: `${category.seoScore}%` }}
+                                  ></div>
+                                </div>
+                                <span className="text-xs">{category.seoScore}%</span>
                               </div>
-                              <span className="text-xs">{category.seoScore}%</span>
-                            </div>
+                            </Tooltip>
                           </td>
-                          <td className="py-3 px-4 text-xs text-gray-400">{formatDate(category.lastUpdated)}</td>
+                          <td className="py-3 px-4 text-xs text-gray-400">
+                            <Tooltip content={`Last updated: ${formatDate(category.lastUpdated)}`}>
+                              <span>{formatDate(category.lastUpdated)}</span>
+                            </Tooltip>
+                          </td>
                           <td className="py-3 px-4">
-                            <button
-                              onClick={() => setSelectedCategoryDetail(category)}
-                              className="text-blue-400 hover:text-blue-300 text-xs"
-                            >
-                              View Details
-                            </button>
+                            <Tooltip content="View detailed information about this category">
+                              <button
+                                onClick={() => setSelectedCategoryDetail(category)}
+                                className="text-blue-400 hover:text-blue-300 text-xs transition-colors"
+                              >
+                                View Details
+                              </button>
+                            </Tooltip>
                           </td>
                         </tr>
                       ))}

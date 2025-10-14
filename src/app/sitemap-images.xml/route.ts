@@ -13,16 +13,21 @@ export async function GET() {
     const galleryItemsResult = await getGalleryItems({ limit: 1000 });
     const galleryItems = galleryItemsResult.items;
     
-    // Generate image sitemap entries with optimized structure
+    // Generate image sitemap entries with rich metadata for Google Images
     const imageEntries = galleryItems.map(item => {
       const imageUrl = item.image_url; // All URLs are now R2 URLs
-      const pageUrl = `${baseUrl}/nail-art-gallery/item/${item.id}`;
+      const pageUrl = `${baseUrl}/${item.category?.toLowerCase().replace(/\s+/g, '-') || 'design'}/${item.design_name?.toLowerCase().replace(/\s+/g, '-') || 'design'}-${item.id.slice(-8)}`;
       
       return {
         image: {
           loc: imageUrl,
           caption: generateOptimizedAltText(item),
           title: item.design_name || 'Nail Art Design',
+          license: 'https://nailartai.app/terms',
+          geoLocation: 'United States', // Optional: can be more specific
+          contentUrl: imageUrl,
+          width: '1024',
+          height: '1024',
         },
         pageUrl,
         lastModified: new Date(item.created_at).toISOString(),
@@ -40,6 +45,11 @@ ${imageEntries.map(entry => `  <url>
       <image:loc>${entry.image.loc}</image:loc>
       <image:caption><![CDATA[${entry.image.caption}]]></image:caption>
       <image:title><![CDATA[${entry.image.title}]]></image:title>
+      <image:license>${entry.image.license}</image:license>
+      <image:geo_location>${entry.image.geoLocation}</image:geo_location>
+      <image:content_url>${entry.image.contentUrl}</image:content_url>
+      <image:width>${entry.image.width}</image:width>
+      <image:height>${entry.image.height}</image:height>
     </image:image>
   </url>`).join('\n')}
 </urlset>`;

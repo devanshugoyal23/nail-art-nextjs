@@ -21,13 +21,19 @@ export async function generateMetadata({ params }: GalleryDetailPageProps): Prom
   const title = item.design_name || 'Generated Nail Art';
   const description = item.prompt || 'AI-generated nail art design';
 
+  const canonicalUrl = generateGalleryItemUrl(item);
+
   return {
     title: `${title} | AI Nail Art Studio`,
     description: description,
+    alternates: {
+      canonical: `https://nailartai.app${canonicalUrl}`,
+    },
     openGraph: {
       title: title,
       description: description,
       images: [item.image_url],
+      url: `https://nailartai.app${canonicalUrl}`,
     },
   };
 }

@@ -65,7 +65,7 @@ export default async function OccasionPage({ params }: OccasionPageProps) {
       .filter((tag, index, arr) => arr.indexOf(tag) === index)
       .slice(0, 6);
     
-    const relatedItems = allItems.slice(0, 8);
+    const relatedItems = allItems.slice(0, 12);
     
     return (
       <div className="min-h-screen bg-black">

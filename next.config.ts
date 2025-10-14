@@ -1,6 +1,14 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // Core Web Vitals optimizations
+  experimental: {
+    optimizeCss: true,
+    optimizePackageImports: ['lucide-react', '@radix-ui/react-icons'],
+  },
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production',
+  },
   // Security headers
   async headers() {
     return [
@@ -30,6 +38,11 @@ const nextConfig: NextConfig = {
           {
             key: 'Permissions-Policy',
             value: 'camera=(), microphone=(), geolocation=(), interest-cohort=()',
+          },
+          // Core Web Vitals optimizations
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
           },
         ],
       },
@@ -65,8 +78,8 @@ const nextConfig: NextConfig = {
                 pathname: '/**',
               },
             ],
-            // Mobile-optimized image settings
-            formats: ['image/webp', 'image/avif'],
+            // Core Web Vitals optimized image settings
+            formats: ['image/avif', 'image/webp'], // AVIF first for better compression
             deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
             imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
             minimumCacheTTL: 60 * 60 * 24 * 365, // 1 year cache for CDN

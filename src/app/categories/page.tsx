@@ -97,10 +97,10 @@ export default async function CategoriesPage() {
   const allTags = getAllTagsFromGalleryItems(galleryItems);
 
   // Extract popular tags by type
-  const popularColors = allTags.colors.slice(0, 8);
-  const popularTechniques = allTags.techniques.slice(0, 8);
-  const popularOccasions = allTags.occasions.slice(0, 8);
-  const popularStyles = allTags.styles.slice(0, 8);
+  const popularColors = allTags.colors.slice(0, 12);
+  const popularTechniques = allTags.techniques.slice(0, 12);
+  const popularOccasions = allTags.occasions.slice(0, 12);
+  const popularStyles = allTags.styles.slice(0, 12);
 
   // Get categories with actual content
   // const categoriesWithContent = tagStats.filter(stat => stat.count > 0);
