@@ -188,16 +188,25 @@ img {
   }
 }
 
-/* Pinterest-style masonry improvements */
+/* Pinterest-style masonry improvements - Mobile Optimized */
 .pinterest-masonry {
-  column-count: 4;
-  column-gap: 0.75rem;
+  column-count: 2;
+  column-gap: 0.5rem;
   column-fill: auto;
   height: 100vh;
   min-height: 100vh;
 }
 
 @media (min-width: 640px) {
+  .pinterest-masonry {
+    column-count: 3;
+    column-gap: 0.75rem;
+    height: 100vh;
+    min-height: 100vh;
+  }
+}
+
+@media (min-width: 1024px) {
   .pinterest-masonry {
     column-count: 6;
     column-gap: 1rem;
@@ -206,18 +215,9 @@ img {
   }
 }
 
-@media (min-width: 1024px) {
-  .pinterest-masonry {
-    column-count: 8;
-    column-gap: 1rem;
-    height: 100vh;
-    min-height: 100vh;
-  }
-}
-
 @media (min-width: 1280px) {
   .pinterest-masonry {
-    column-count: 10;
+    column-count: 8;
     column-gap: 0.75rem;
     height: 100vh;
     min-height: 100vh;
@@ -277,15 +277,21 @@ img {
   }
 }
 
-/* Mobile optimizations */
+/* Mobile optimizations - Enhanced */
 @media (max-width: 768px) {
   .pinterest-masonry {
     column-count: 2;
     column-gap: 0.5rem;
+    /* Reduce complexity for mobile */
+    contain: layout style paint;
   }
   
   .pinterest-item {
     margin-bottom: 0.5rem;
+    /* Disable all animations on mobile */
+    animation: none !important;
+    transform: none !important;
+    transition: none !important;
   }
   
   /* Disable complex animations on mobile for performance */
@@ -301,10 +307,23 @@ img {
     will-change: auto !important;
   }
   
-  /* Optimize images for mobile */
+  /* Optimize images for mobile - reduce processing */
   .pinterest-item img {
     filter: brightness(1.05) contrast(1.1);
     transition: none;
+    /* Improve rendering performance */
+    image-rendering: optimizeSpeed;
+    content-visibility: auto;
+  }
+  
+  /* Reduce backdrop blur on mobile for performance */
+  .backdrop-blur-sm {
+    backdrop-filter: none;
+  }
+  
+  /* Simplify gradients for mobile */
+  .bg-gradient-to-br {
+    background: rgba(0, 0, 0, 0.6) !important;
   }
 }
 
