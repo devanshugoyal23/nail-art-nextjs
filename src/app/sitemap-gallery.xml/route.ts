@@ -27,7 +27,7 @@ export async function GET() {
       priority: 0.6,
     }));
     
-    // Generate category pages
+    // Generate category pages - match generateStaticParams format
     const categoryPages = categories.map(category => ({
       url: `${baseUrl}/nail-art-gallery/category/${encodeURIComponent(category)}`,
       lastModified: currentDate,
@@ -35,21 +35,32 @@ export async function GET() {
       priority: 0.7,
     }));
     
-    // Generate design pages
-    const designPages = galleryItems.map(item => ({
-      url: `${baseUrl}/design/${item.design_name ? item.design_name.toLowerCase().replace(/\s+/g, '-') : `design-${item.id.slice(-8)}`}`,
-      lastModified: new Date(item.created_at).toISOString(),
-      changeFrequency: 'monthly',
-      priority: 0.5,
-    }));
+    // Generate design pages - match the /design/[slug] route format
+    const designPages = galleryItems.map(item => {
+      const designSlug = item.design_name ? item.design_name.toLowerCase().replace(/\s+/g, '-') : `design`;
+      const idSuffix = item.id.slice(-8);
+
+      return {
+        url: `${baseUrl}/design/${designSlug}-${idSuffix}`,
+        lastModified: new Date(item.created_at).toISOString(),
+        changeFrequency: 'monthly',
+        priority: 0.5,
+      };
+    });
     
-    // Generate category-based design pages
-    const categoryDesignPages = galleryItems.map(item => ({
-      url: `${baseUrl}/${item.category?.toLowerCase().replace(/\s+/g, '-')}/${item.design_name ? `${item.design_name.toLowerCase().replace(/\s+/g, '-')}-${item.id.slice(-8)}` : `design-${item.id.slice(-8)}`}`,
-      lastModified: new Date(item.created_at).toISOString(),
-      changeFrequency: 'monthly',
-      priority: 0.6,
-    }));
+    // Generate category-based design pages - match generateStaticParams format
+    const categoryDesignPages = galleryItems.map(item => {
+      const categorySlug = item.category?.toLowerCase().replace(/\s+/g, '-') || 'design';
+      const designSlug = item.design_name?.toLowerCase().replace(/\s+/g, '-') || 'design';
+      const idSuffix = item.id.slice(-8);
+
+      return {
+        url: `${baseUrl}/${categorySlug}/${designSlug}-${idSuffix}`,
+        lastModified: new Date(item.created_at).toISOString(),
+        changeFrequency: 'monthly',
+        priority: 0.6,
+      };
+    });
     
     const allPages = [
       ...galleryItemPages,

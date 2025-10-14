@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import Link from 'next/link';
 import { GalleryItem } from '@/lib/supabase';
 import { getGalleryItemsByCategory, getAllCategories } from '@/lib/galleryService';
@@ -10,7 +10,7 @@ interface CategoryShowcaseProps {
   initialCategories?: string[];
 }
 
-export default function CategoryShowcase({ initialCategories = [] }: CategoryShowcaseProps) {
+const CategoryShowcase = React.memo(function CategoryShowcase({ initialCategories = [] }: CategoryShowcaseProps) {
   const [categories, setCategories] = useState<string[]>(initialCategories);
   const [categoryItems, setCategoryItems] = useState<Record<string, GalleryItem[]>>({});
   const [loading, setLoading] = useState(!initialCategories.length);
@@ -18,11 +18,12 @@ export default function CategoryShowcase({ initialCategories = [] }: CategorySho
 
   const fetchCategoryItems = useCallback(async (cats: string[]) => {
     const items: Record<string, GalleryItem[]> = {};
-    
-    for (const category of cats) {
+
+    // Use Promise.all for parallel loading instead of sequential for loops
+    const categoryPromises = cats.map(async (category) => {
       try {
         const categoryItems = await getGalleryItemsByCategory(category);
-        items[category] = categoryItems.slice(0, 4); // Get 4 sample items per category
+        return { category, items: categoryItems.slice(0, 4) }; // Get 4 sample items per category
       } catch (error) {
         console.error(`CategoryShowcase: Error fetching items for category ${category}:`, {
           category,
@@ -30,10 +31,15 @@ export default function CategoryShowcase({ initialCategories = [] }: CategorySho
           message: error instanceof Error ? error.message : 'Unknown error',
           stack: error instanceof Error ? error.stack : undefined
         });
-        items[category] = [];
+        return { category, items: [] };
       }
-    }
-    
+    });
+
+    const results = await Promise.all(categoryPromises);
+    results.forEach(({ category, items: categoryItems }) => {
+      items[category] = categoryItems;
+    });
+
     setCategoryItems(items);
   }, []);
 
@@ -43,8 +49,8 @@ export default function CategoryShowcase({ initialCategories = [] }: CategorySho
       console.log('CategoryShowcase: Starting to fetch categories...');
       const cats = await getAllCategories();
       console.log('CategoryShowcase: Fetched categories:', cats);
-      setCategories(cats.slice(0, 6)); // Show top 6 categories
-      await fetchCategoryItems(cats.slice(0, 6));
+      setCategories(cats.slice(0, 4)); // Show top 4 categories for better performance
+      await fetchCategoryItems(cats.slice(0, 4));
     } catch (error) {
       console.error('CategoryShowcase: Error fetching categories:', {
         error: error,
@@ -67,8 +73,9 @@ export default function CategoryShowcase({ initialCategories = [] }: CategorySho
     setHasInitialized(true);
   }, [initialCategories, fetchCategories, fetchCategoryItems, hasInitialized]);
 
-  const getCategoryIcon = (category: string) => {
-    const icons: Record<string, string> = {
+  // Memoize category mappings for better performance
+  const categoryMappings = useMemo(() => ({
+    icons: {
       'Japanese Nail Art': '🌸',
       'French Manicure': '💅',
       'Gradient Nails': '🌈',
@@ -81,12 +88,8 @@ export default function CategoryShowcase({ initialCategories = [] }: CategorySho
       'Winter Nails': '❄️',
       'Spring Nails': '🌱',
       'Fall Nails': '🍂',
-    };
-    return icons[category] || '💅';
-  };
-
-  const getCategoryGradient = (category: string) => {
-    const gradients: Record<string, string> = {
+    },
+    gradients: {
       'Japanese Nail Art': 'from-pink-500 to-rose-500',
       'French Manicure': 'from-white to-pink-200',
       'Gradient Nails': 'from-purple-500 to-pink-500',
@@ -99,9 +102,16 @@ export default function CategoryShowcase({ initialCategories = [] }: CategorySho
       'Winter Nails': 'from-blue-400 to-purple-400',
       'Spring Nails': 'from-green-400 to-pink-400',
       'Fall Nails': 'from-orange-500 to-red-500',
-    };
-    return gradients[category] || 'from-purple-500 to-pink-500';
-  };
+    }
+  }), []);
+
+  const getCategoryIcon = useCallback((category: string) => {
+    return categoryMappings.icons[category as keyof typeof categoryMappings.icons] || '💅';
+  }, [categoryMappings]);
+
+  const getCategoryGradient = useCallback((category: string) => {
+    return categoryMappings.gradients[category as keyof typeof categoryMappings.gradients] || 'from-purple-500 to-pink-500';
+  }, [categoryMappings]);
 
   if (loading) {
     return (
@@ -203,4 +213,8 @@ export default function CategoryShowcase({ initialCategories = [] }: CategorySho
       </div>
     </div>
   );
-}
+});
+
+CategoryShowcase.displayName = 'CategoryShowcase';
+
+export default CategoryShowcase;

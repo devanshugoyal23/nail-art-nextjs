@@ -24,6 +24,31 @@ interface DesignDetailPageProps {
   }>;
 }
 
+// Generate static params for popular design pages
+export async function generateStaticParams() {
+  try {
+    const { getGalleryItems } = await import("@/lib/galleryService");
+    // Get the most popular/recent items for static generation
+    const result = await getGalleryItems({
+      page: 1,
+      limit: 500, // Generate static pages for top 500 items
+      sortBy: 'newest'
+    });
+
+    return result.items.map((item) => {
+      const designSlug = item.design_name?.toLowerCase().replace(/\s+/g, '-') || 'design';
+      const idSuffix = item.id.slice(-8);
+
+      return {
+        slug: `${designSlug}-${idSuffix}`
+      };
+    });
+  } catch (error) {
+    console.error('Error generating static params for design pages:', error);
+    return [];
+  }
+}
+
 export async function generateMetadata({ params }: DesignDetailPageProps): Promise<Metadata> {
   const resolvedParams = await params;
   const item = await getGalleryItemBySlug('design', resolvedParams.slug);

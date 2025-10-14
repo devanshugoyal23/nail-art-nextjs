@@ -10,7 +10,7 @@ interface HomepageHeroProps {
   initialItems?: GalleryItem[];
 }
 
-export default function HomepageHero({ initialItems = [] }: HomepageHeroProps) {
+const HomepageHero = React.memo(function HomepageHero({ initialItems = [] }: HomepageHeroProps) {
   const [featuredItems, setFeaturedItems] = useState<GalleryItem[]>(initialItems);
   const [loading, setLoading] = useState(!initialItems.length);
 
@@ -23,8 +23,8 @@ export default function HomepageHero({ initialItems = [] }: HomepageHeroProps) {
   const fetchFeaturedItems = async () => {
     try {
       setLoading(true);
-      // Restore to 60 items for desktop, mobile will still be optimized via CSS
-      const result = await getGalleryItems({ limit: 60, sortBy: 'newest' });
+      // Reduced to 12 items for better performance - 4x less data to load
+      const result = await getGalleryItems({ limit: 12, sortBy: 'newest' });
       setFeaturedItems(result.items);
     } catch (error) {
       console.error('Error fetching featured items:', error);
@@ -69,7 +69,7 @@ export default function HomepageHero({ initialItems = [] }: HomepageHeroProps) {
           className="pinterest-masonry p-2 sm:p-4 w-full min-h-screen relative z-10"
           style={{ height: '100vh' }}
         >
-          {featuredItems.slice(0, 60).map((item, index) => {
+          {featuredItems.slice(0, 12).map((item, index) => {
             // Simplified height variations for mobile
             const heightVariations = [
               'aspect-[3/4]', 'aspect-[4/5]', 'aspect-[2/3]', 'aspect-square'
@@ -228,4 +228,8 @@ export default function HomepageHero({ initialItems = [] }: HomepageHeroProps) {
 
     </div>
   );
-}
+});
+
+HomepageHero.displayName = 'HomepageHero';
+
+export default HomepageHero;

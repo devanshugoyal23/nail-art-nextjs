@@ -10,7 +10,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: '*',
       allow: '/',
       disallow: [
-        '/admin/',
         '/api/',
         '/debug/',
         '/try-on/', // Exclude try-on pages from indexing

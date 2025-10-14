@@ -13,7 +13,7 @@ export async function GET() {
     // Get all unique categories
     const categories = await getAllCategories();
     
-    // Generate category pages
+    // Generate category pages - match generateStaticParams format
     const categoryPages = categories.map(category => ({
       url: `${baseUrl}/nail-art-gallery/category/${encodeURIComponent(category)}`,
       lastModified: currentDate,
