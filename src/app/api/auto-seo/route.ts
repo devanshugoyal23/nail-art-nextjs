@@ -68,7 +68,7 @@ export async function GET(request: NextRequest) {
     // Return SEO configuration for the page type
     const config = {
       baseUrl: 'https://nailartai.app',
-      siteName: 'AI Nail Art Studio',
+      siteName: 'Nail Art AI',
       defaultKeywords: [
         'nail art',
         'AI nail art',

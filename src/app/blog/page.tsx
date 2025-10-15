@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: "Nail Art Blog - Tutorials, Trends & Tips | AI Nail Art Studio",
+  title: "Nail Art Blog - Tutorials, Trends & Tips | Nail Art AI",
   description: "Discover the latest nail art trends, tutorials, and techniques. Learn from expert guides, seasonal inspiration, and step-by-step nail art tutorials.",
   keywords: [
     "nail art blog",
@@ -96,12 +96,12 @@ export default function BlogPage() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Blog",
-            "name": "AI Nail Art Studio Blog",
+            "name": "Nail Art AI Blog",
             "description": "Discover the latest nail art trends, tutorials, and techniques",
             "url": "https://nailartai.app/blog",
             "publisher": {
               "@type": "Organization",
-              "name": "AI Nail Art Studio",
+              "name": "Nail Art AI",
               "url": "https://nailartai.app"
             },
             "mainEntityOfPage": {

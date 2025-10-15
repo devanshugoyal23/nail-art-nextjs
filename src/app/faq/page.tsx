@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: "Frequently Asked Questions | AI Nail Art Studio",
+  title: "Frequently Asked Questions | Nail Art AI",
   description: "Find answers to common questions about AI nail art, virtual try-on, nail art techniques, and more. Get help with your nail art journey.",
   keywords: [
     "nail art FAQ",
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     "manicure questions"
   ],
   openGraph: {
-    title: "Frequently Asked Questions | AI Nail Art Studio",
+    title: "Frequently Asked Questions | Nail Art AI",
     description: "Find answers to common questions about AI nail art, virtual try-on, nail art techniques, and more.",
     images: [
       {
@@ -112,7 +112,7 @@ const troubleshootingFAQs = [
   },
   {
     question: "Can I use the designs for commercial purposes?",
-    answer: "Yes, our AI-generated designs are free for personal and commercial use. However, we recommend crediting AI Nail Art Studio when sharing or using designs publicly."
+    answer: "Yes, our AI-generated designs are free for personal and commercial use. However, we recommend crediting Nail Art AI when sharing or using designs publicly."
   }
 ];
 

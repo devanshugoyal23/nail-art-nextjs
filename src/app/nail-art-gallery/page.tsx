@@ -5,7 +5,7 @@ import RelatedCategories from '@/components/RelatedCategories'
 import { getGalleryItems } from '@/lib/galleryService'
 
 export const metadata: Metadata = {
-  title: "Nail Art Gallery - AI Generated Designs | AI Nail Art Studio",
+  title: "Nail Art Gallery - AI Generated Designs | Nail Art AI",
   description: "Browse our extensive collection of AI-generated nail art designs. Discover unique manicure ideas, seasonal designs, and trending nail art styles. Free high-resolution downloads.",
   keywords: [
     "nail art gallery",

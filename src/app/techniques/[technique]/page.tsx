@@ -111,7 +111,7 @@ export async function generateMetadata({ params }: TechniquePageProps): Promise<
   if (!techniqueData) {
     const displayName = technique.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
     return {
-      title: `${displayName} Nail Art | AI Nail Art Studio`,
+      title: `${displayName} Nail Art | Nail Art AI`,
       description: `Discover beautiful nail art designs using the ${displayName} technique. Explore our collection of AI-generated nail art.`,
       openGraph: {
         title: `${displayName} Nail Art`,
@@ -121,7 +121,7 @@ export async function generateMetadata({ params }: TechniquePageProps): Promise<
   }
 
   return {
-    title: `${techniqueData.name} | AI Nail Art Studio`,
+    title: `${techniqueData.name} | Nail Art AI`,
     description: techniqueData.description,
     openGraph: {
       title: techniqueData.name,

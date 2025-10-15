@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: "Nail Art Hub - Complete Guide to Nail Designs | AI Nail Art Studio",
+  title: "Nail Art Hub - Complete Guide to Nail Designs | Nail Art AI",
   description: "Your complete guide to nail art designs. Explore seasonal nail art, occasion-specific designs, techniques, and color combinations. Find inspiration for your next manicure.",
   keywords: [
     "nail art hub",

@@ -90,8 +90,8 @@ export interface PageSEOData {
 
 const DEFAULT_CONFIG: AutoSEOConfig = {
   baseUrl: 'https://nailartai.app',
-  siteName: 'AI Nail Art Studio',
-  defaultAuthor: 'AI Nail Art Studio',
+  siteName: 'Nail Art AI',
+  defaultAuthor: 'Nail Art AI',
   socialHandles: {
     twitter: '@nailartai',
     instagram: '@nailartai',
@@ -471,7 +471,7 @@ function generateOpenGraphImages(content: ContentData): Array<{
       url: '/og-image.jpg',
       width: 1200,
       height: 630,
-      alt: 'AI Nail Art Studio'
+      alt: 'Nail Art AI'
     });
   }
   

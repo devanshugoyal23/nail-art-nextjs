@@ -72,7 +72,7 @@ export async function generateMetadata({ params }: GalleryDetailPageProps): Prom
   const enhancedDescription = `${baseDescription}${colorKeywords}${techniqueKeywords}. Try this ${categoryKeyword} design virtually with AI-powered nail art try-on.`;
   // Create SEO-optimized title with keyword context
   const categoryContext = item.category ? ` - ${item.category} Nail Art` : '';
-  const fullTitle = `${title}${categoryContext} | AI Nail Art Studio`;
+  const fullTitle = `${title}${categoryContext} | Nail Art AI`;
   const fullDescription = enhancedDescription.length > 160 ? enhancedDescription.substring(0, 157) + '...' : enhancedDescription;
   
   // Enhanced keywords with long-tail variations
@@ -173,7 +173,7 @@ export async function generateMetadata({ params }: GalleryDetailPageProps): Prom
         ...(item.styles || [])
       ].join(','),
       'article:section': item.category || 'Nail Art',
-      'article:author': 'AI Nail Art Studio',
+      'article:author': 'Nail Art AI',
     },
   };
 }
@@ -314,12 +314,12 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
             "dateModified": item.created_at,
             "author": {
               "@type": "Organization",
-              "name": "AI Nail Art Studio",
+              "name": "Nail Art AI",
               "url": "https://nailartai.app"
             },
             "publisher": {
               "@type": "Organization",
-              "name": "AI Nail Art Studio",
+              "name": "Nail Art AI",
               "url": "https://nailartai.app",
               "logo": {
                 "@type": "ImageObject",

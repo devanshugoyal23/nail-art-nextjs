@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "Virtual Nail Art Try-On | AI Nail Art Studio",
+  title: "Virtual Nail Art Try-On | Nail Art AI",
   description: "Try on nail art designs virtually with AI. Upload your hand photo or use your camera to see how different nail designs look on you in real-time.",
   keywords: [
     "virtual nail art try-on",
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     "nail art app"
   ],
   openGraph: {
-    title: "Virtual Nail Art Try-On | AI Nail Art Studio",
+    title: "Virtual Nail Art Try-On | Nail Art AI",
     description: "Try on nail art designs virtually with AI. Upload your hand photo or use your camera to see how different nail designs look on you in real-time.",
     images: [
       {
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Virtual Nail Art Try-On | AI Nail Art Studio',
+    title: 'Virtual Nail Art Try-On | Nail Art AI',
     description: 'Try on nail art designs virtually with AI. Upload your hand photo or use your camera to see how different nail designs look on you in real-time.',
     images: ['/twitter-try-on.jpg'],
   },

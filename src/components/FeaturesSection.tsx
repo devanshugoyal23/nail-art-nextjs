@@ -47,7 +47,7 @@ export default function FeaturesSection() {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
       <div className="text-center mb-16">
         <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-          Why Choose Our AI Nail Art Studio?
+          Why Choose Nail Art AI?
         </h2>
         <p className="text-gray-300 text-lg max-w-3xl mx-auto">
           Experience the future of nail art with our cutting-edge AI technology that brings your wildest nail design dreams to life.

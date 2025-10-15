@@ -4,7 +4,7 @@ import { getAllCategoriesWithThumbnails, getCategoryStatistics } from '@/lib/cat
 import AllCategoriesGrid from '@/components/AllCategoriesGrid';
 
 export const metadata: Metadata = {
-  title: 'All Nail Art Categories | AI Nail Art Studio',
+  title: 'All Nail Art Categories | Nail Art AI',
   description: 'Browse all nail art categories with thumbnails and design counts. Find your perfect nail art style from our complete collection.',
   openGraph: {
     title: 'All Nail Art Categories',

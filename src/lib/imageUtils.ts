@@ -127,7 +127,7 @@ export function generateSocialMetaTags(
     'og:image:alt': generateImageAltText(designName, category),
     'og:url': url,
     'og:type': 'article',
-    'og:site_name': 'AI Nail Art Studio',
+    'og:site_name': 'Nail Art AI',
     
     // Twitter Card
     'twitter:card': 'summary_large_image',
@@ -165,17 +165,17 @@ export function generateImageStructuredData(
     "keywords": category ? [category, "nail art", "manicure", "nail design"] : ["nail art", "manicure", "nail design"],
     "creator": {
       "@type": "Organization",
-      "name": "AI Nail Art Studio",
+      "name": "Nail Art AI",
       "url": "https://nailartai.app"
     },
     "license": "https://nailartai.app/terms",
-    "copyrightNotice": "© AI Nail Art Studio",
-    "creditText": "AI Nail Art Studio",
+    "copyrightNotice": "© Nail Art AI",
+    "creditText": "Nail Art AI",
     "acquireLicensePage": "https://nailartai.app/terms",
     "copyrightYear": new Date().getFullYear(),
     "publisher": {
       "@type": "Organization",
-      "name": "AI Nail Art Studio",
+      "name": "Nail Art AI",
       "url": "https://nailartai.app"
     }
   };

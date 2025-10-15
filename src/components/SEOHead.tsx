@@ -30,14 +30,14 @@ interface SEOHeadProps {
 }
 
 export default function SEOHead({
-  title = "AI Nail Art Studio",
+  title = "Nail Art AI",
   description = "An AI-powered virtual nail art try-on experience. Upload a photo of your hand or use your camera to see how different nail designs look on you in real-time.",
   image,
   url,
   type = "website",
-  siteName = "AI Nail Art Studio",
+  siteName = "Nail Art AI",
   keywords = ["nail art", "AI nail art", "virtual try-on", "manicure", "nail design"],
-  author = "AI Nail Art Studio",
+  author = "Nail Art AI",
   publishedTime,
   modifiedTime,
   section,
@@ -52,7 +52,7 @@ export default function SEOHead({
   pinterestImage,
   structuredData,
 }: SEOHeadProps) {
-  const fullTitle = title.includes('AI Nail Art Studio') ? title : `${title} | AI Nail Art Studio`;
+  const fullTitle = title.includes('Nail Art AI') ? title : `${title} | Nail Art AI`;
   const fullDescription = description.length > 160 ? description.substring(0, 157) + '...' : description;
   const fullUrl = url || (typeof window !== 'undefined' ? window.location.href : '');
   const fullImage = image || ogImage?.url || '/og-image.jpg';

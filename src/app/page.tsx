@@ -6,7 +6,7 @@ import StatsSection from "@/components/StatsSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 
 export const metadata: Metadata = {
-  title: "AI Nail Art Studio - Virtual Try-On & Design Generator",
+  title: "Nail Art AI - Virtual Try-On & Design Generator",
   description: "Discover your next manicure with AI-powered virtual nail art try-on. Upload your hand photo to see hundreds of nail designs in real-time. Free AI nail art generator with instant results.",
   keywords: [
     "nail art",
@@ -23,20 +23,20 @@ export const metadata: Metadata = {
     "nail art app"
   ],
   openGraph: {
-    title: "AI Nail Art Studio - Virtual Try-On & Design Generator",
+    title: "Nail Art AI - Virtual Try-On & Design Generator",
     description: "Discover your next manicure with AI-powered virtual nail art try-on. Upload your hand photo to see hundreds of nail designs in real-time.",
     images: [
       {
         url: '/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'AI Nail Art Studio - Virtual Try-On Experience',
+        alt: 'Nail Art AI - Virtual Try-On Experience',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'AI Nail Art Studio - Virtual Try-On & Design Generator',
+    title: 'Nail Art AI - Virtual Try-On & Design Generator',
     description: 'Discover your next manicure with AI-powered virtual nail art try-on. Upload your hand photo to see hundreds of nail designs in real-time.',
     images: ['/twitter-image.jpg'],
   },
@@ -55,7 +55,7 @@ export default function Home() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "WebSite",
-            "name": "AI Nail Art Studio",
+            "name": "Nail Art AI",
             "url": "https://nailartai.app",
             "description": "AI-powered virtual nail art try-on experience with instant results",
             "potentialAction": {
@@ -65,7 +65,7 @@ export default function Home() {
             },
             "publisher": {
               "@type": "Organization",
-              "name": "AI Nail Art Studio",
+              "name": "Nail Art AI",
               "url": "https://nailartai.app",
               "logo": {
                 "@type": "ImageObject",

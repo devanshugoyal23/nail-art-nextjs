@@ -7,8 +7,8 @@ import { Analytics } from '@vercel/analytics/react';
 
 export const metadata: Metadata = {
   title: {
-    default: "AI Nail Art Studio - Virtual Try-On & Design Generator",
-    template: "%s | AI Nail Art Studio"
+    default: "Nail Art AI - Virtual Try-On & Design Generator",
+    template: "%s | Nail Art AI"
   },
   description: "Discover your next manicure with AI-powered virtual nail art try-on. Upload your hand photo to see hundreds of nail designs in real-time. Free AI nail art generator with instant results.",
   keywords: [
@@ -25,9 +25,9 @@ export const metadata: Metadata = {
     "virtual manicure",
     "nail art app"
   ],
-  authors: [{ name: "AI Nail Art Studio" }],
-  creator: "AI Nail Art Studio",
-  publisher: "AI Nail Art Studio",
+  authors: [{ name: "Nail Art AI" }],
+  creator: "Nail Art AI",
+  publisher: "Nail Art AI",
   formatDetection: {
     email: false,
     address: false,
@@ -41,21 +41,21 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     url: 'https://nailartai.app',
-    siteName: 'AI Nail Art Studio',
-    title: 'AI Nail Art Studio - Virtual Try-On & Design Generator',
+    siteName: 'Nail Art AI',
+    title: 'Nail Art AI - Virtual Try-On & Design Generator',
     description: 'Discover your next manicure with AI-powered virtual nail art try-on. Upload your hand photo to see hundreds of nail designs in real-time.',
     images: [
       {
         url: '/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'AI Nail Art Studio - Virtual Try-On Experience',
+        alt: 'Nail Art AI - Virtual Try-On Experience',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'AI Nail Art Studio - Virtual Try-On & Design Generator',
+    title: 'Nail Art AI - Virtual Try-On & Design Generator',
     description: 'Discover your next manicure with AI-powered virtual nail art try-on. Upload your hand photo to see hundreds of nail designs in real-time.',
     images: ['/twitter-image.jpg'],
     creator: '@nailartai',
