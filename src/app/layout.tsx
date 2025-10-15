@@ -72,6 +72,9 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
+  other: {
+    'p:domain_verify': 'd35fc9b798405234e7ce574a3418aafb',
+  },
   // Verification handled via DNS records
 };
 
