@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -96,6 +97,19 @@ export default function RootLayout({
         <link rel="preconnect" href="https://pub-05b5ee1a83754aa6b4fcd974016ecde8.r2.dev" />
         <link rel="preconnect" href="https://pub-f94b6dc4538f33bcd1553dcdda15b36d.r2.dev" />
         <link rel="preconnect" href="https://pub-fc15073de2e24f7bacc00c238f8ada7d.r2.dev" />
+        {/* Google Analytics */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-F2H0CBYDGF"
+          strategy="afterInteractive"
+        />
+        <Script id="ga-gtag" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);} // eslint-disable-line
+            gtag('js', new Date());
+            gtag('config', 'G-F2H0CBYDGF');
+          `}
+        </Script>
         <script dangerouslySetInnerHTML={{
           __html: `
             (${initializeMobileOptimizations.toString()})();

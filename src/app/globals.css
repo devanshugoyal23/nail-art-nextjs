@@ -195,6 +195,9 @@ img {
   column-fill: auto;
   height: 100vh;
   min-height: 100vh;
+  /* Performance optimizations */
+  contain: layout style paint;
+  will-change: transform;
 }
 
 @media (min-width: 640px) {
@@ -208,7 +211,7 @@ img {
 
 @media (min-width: 1024px) {
   .pinterest-masonry {
-    column-count: 8;
+    column-count: 6;
     column-gap: 1rem;
     height: 100vh;
     min-height: 100vh;
@@ -217,7 +220,7 @@ img {
 
 @media (min-width: 1280px) {
   .pinterest-masonry {
-    column-count: 12;
+    column-count: 8;
     column-gap: 0.75rem;
     height: 100vh;
     min-height: 100vh;
@@ -232,16 +235,20 @@ img {
   position: relative;
 }
 
-/* Enhanced image brightness and contrast */
+/* Enhanced image brightness and contrast - Optimized for performance */
 .pinterest-item img {
-  filter: brightness(1.05) contrast(1.1) saturate(1.05);
-  transition: filter 0.3s ease;
+  filter: brightness(1.05) contrast(1.1);
   content-visibility: auto;
   contain: layout style paint;
+  /* Remove transitions for better performance */
+  transition: none;
 }
 
-.pinterest-item:hover img {
-  filter: brightness(1.15) contrast(1.15) saturate(1.1);
+/* Disable hover effects on mobile for performance */
+@media (hover: hover) {
+  .pinterest-item:hover img {
+    filter: brightness(1.1) contrast(1.15);
+  }
 }
 
 /* Performance optimizations for masonry layout */

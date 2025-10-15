@@ -5,11 +5,32 @@ const nextConfig: NextConfig = {
   experimental: {
     optimizeCss: true,
     optimizePackageImports: ['lucide-react', '@radix-ui/react-icons'],
+    // Reduce JavaScript bundle size
+    esmExternals: true,
   },
+  // External packages for server components
+  serverExternalPackages: ['@aws-sdk/client-s3', '@aws-sdk/s3-request-presigner'],
   // Enable compression and optimization
   compress: true,
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
+  },
+  // Optimize bundle splitting
+  webpack: (config, { dev, isServer }) => {
+    if (!dev && !isServer) {
+      // Reduce bundle size by splitting vendor chunks
+      config.optimization.splitChunks = {
+        chunks: 'all',
+        cacheGroups: {
+          vendor: {
+            test: /[\\/]node_modules[\\/]/,
+            name: 'vendors',
+            chunks: 'all',
+          },
+        },
+      };
+    }
+    return config;
   },
   // Security headers
   async headers() {
@@ -111,7 +132,7 @@ const nextConfig: NextConfig = {
             // Mobile performance optimizations
             loader: 'default',
             // Fix quality warnings by explicitly configuring qualities
-            qualities: [25, 50, 65, 70, 75, 85, 90, 95, 100],
+            qualities: [25, 50, 60, 65, 70, 75, 80, 85, 90, 95, 100],
           },
   async redirects() {
     return [

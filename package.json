@@ -3,10 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "optimize": "node scripts/optimize-performance.js",
+    "analyze": "npm run build && npx @next/bundle-analyzer"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.906.0",

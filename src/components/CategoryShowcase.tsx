@@ -22,8 +22,8 @@ const CategoryShowcase = React.memo(function CategoryShowcase({ initialCategorie
     // Use Promise.all for parallel loading instead of sequential for loops
     const categoryPromises = cats.map(async (category) => {
       try {
-        const categoryItems = await getGalleryItemsByCategory(category);
-        return { category, items: categoryItems.slice(0, 4) }; // Get 4 sample items per category
+      const categoryItems = await getGalleryItemsByCategory(category);
+      return { category, items: categoryItems.slice(0, 2) }; // Get 2 sample items per category for better performance
       } catch (error) {
         console.error(`CategoryShowcase: Error fetching items for category ${category}:`, {
           category,
@@ -165,18 +165,21 @@ const CategoryShowcase = React.memo(function CategoryShowcase({ initialCategorie
                 {items.length > 0 && (
                   <div className="mb-4">
                     <div className="grid grid-cols-2 gap-2">
-                      {items.slice(0, 4).map((item) => (
+                      {items.slice(0, 2).map((item) => (
                         <div
                           key={item.id}
                           className="aspect-square rounded-lg overflow-hidden border border-gray-600"
+                          style={{ minHeight: '80px', maxHeight: '80px' }}
                         >
                           <OptimizedImage
                             src={item.image_url}
                             alt={item.design_name || 'Sample design'}
-                            width={100}
-                            height={100}
+                            width={80}
+                            height={80}
                             className="w-full h-full object-cover"
                             loading="lazy"
+                            quality={60}
+                            sizes="(max-width: 640px) 50vw, 25vw"
                           />
                         </div>
                       ))}

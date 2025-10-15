@@ -1,9 +1,6 @@
 import { Metadata } from "next";
 import HomepageHero from "@/components/HomepageHero";
-import CategoryShowcase from "@/components/CategoryShowcase";
-import FeaturesSection from "@/components/FeaturesSection";
-import StatsSection from "@/components/StatsSection";
-import TestimonialsSection from "@/components/TestimonialsSection";
+import LazyHomepageSections from "@/components/LazyHomepageSections";
 
 export const metadata: Metadata = {
   title: "Nail Art AI - Virtual Try-On & Design Generator",
@@ -79,25 +76,8 @@ export default function Home() {
       {/* Hero Section with Featured Designs */}
       <HomepageHero />
       
-      {/* Category Showcase */}
-      <div className="container mx-auto px-2 sm:px-4 py-4 sm:py-8">
-        <CategoryShowcase />
-      </div>
-      
-      {/* Stats Section */}
-      <div className="container mx-auto px-2 sm:px-4 py-4 sm:py-8">
-        <StatsSection />
-      </div>
-      
-      {/* Testimonials Section */}
-      <div className="container mx-auto px-2 sm:px-4 py-4 sm:py-8">
-        <TestimonialsSection />
-      </div>
-      
-      {/* Features Section */}
-      <div className="container mx-auto px-2 sm:px-4 py-4 sm:py-8">
-        <FeaturesSection />
-      </div>
+      {/* Lazy-loaded sections for better performance */}
+      <LazyHomepageSections />
     </>
   );
 }

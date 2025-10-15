@@ -85,18 +85,22 @@ const HomepageHero = React.memo(function HomepageHero({ initialItems = [] }: Hom
                 animation: 'none',
                 willChange: 'auto',
                 transform: 'none',
-                backfaceVisibility: 'visible'
+                backfaceVisibility: 'visible',
+                // Prevent layout shift by setting explicit dimensions
+                minHeight: '120px',
+                maxHeight: '200px'
               }}
             >
               <OptimizedImage
                 src={item.image_url}
                 alt={item.design_name || 'AI nail art'}
-                width={80}
-                height={120}
+                width={120}
+                height={160}
                 className="w-full h-full object-cover brightness-105 contrast-110"
-                loading={index < 8 ? "eager" : "lazy"}
-                priority={index < 4}
-                quality={65}
+                loading={index < 4 ? "eager" : "lazy"}
+                priority={index < 2}
+                quality={60}
+                sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 12vw"
               />
             </div>
             );

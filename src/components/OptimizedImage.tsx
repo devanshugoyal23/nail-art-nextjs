@@ -18,31 +18,31 @@ interface OptimizedImageProps {
   preset?: 'thumbnail' | 'card' | 'detail' | 'mobile';
 }
 
-// Image size presets for different contexts
+// Image size presets for different contexts - Optimized for performance
 const IMAGE_PRESETS = {
   thumbnail: {
-    width: 400,
-    height: 400,
-    quality: 70,
-    sizes: '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw'
+    width: 200,
+    height: 200,
+    quality: 60,
+    sizes: '(max-width: 640px) 50vw, (max-width: 1024px) 25vw, (max-width: 1280px) 20vw, 15vw'
   },
   card: {
-    width: 400,
-    height: 224,
-    quality: 75,
-    sizes: '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw'
+    width: 200,
+    height: 112,
+    quality: 65,
+    sizes: '(max-width: 640px) 50vw, (max-width: 1024px) 25vw, (max-width: 1280px) 20vw, 15vw'
   },
   detail: {
-    width: 800,
-    height: 1200,
-    quality: 85,
-    sizes: '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 800px'
+    width: 400,
+    height: 600,
+    quality: 75,
+    sizes: '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px'
   },
   mobile: {
-    width: 300,
-    height: 300,
-    quality: 65,
-    sizes: '100vw'
+    width: 150,
+    height: 150,
+    quality: 60,
+    sizes: '50vw'
   }
 };
 

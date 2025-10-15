@@ -20,27 +20,22 @@ export async function GET() {
   <sitemap>
     <loc>${baseUrl}/sitemap-static.xml</loc>
     <lastmod>${currentDate}</lastmod>
-    <comment>Core site pages (home, gallery, categories)</comment>
   </sitemap>
   <sitemap>
     <loc>${baseUrl}/sitemap-designs.xml</loc>
     <lastmod>${currentDate}</lastmod>
-    <comment>Canonical design URLs only - NO DUPLICATES</comment>
   </sitemap>
   <sitemap>
     <loc>${baseUrl}/sitemap-categories.xml</loc>
     <lastmod>${currentDate}</lastmod>
-    <comment>Category pages for topical authority</comment>
   </sitemap>
   <sitemap>
     <loc>${baseUrl}/sitemap-images.xml</loc>
     <lastmod>${currentDate}</lastmod>
-    <comment>Image metadata for Google Images (CC0 license)</comment>
   </sitemap>
   <sitemap>
     <loc>${baseUrl}/sitemap-gallery.xml</loc>
     <lastmod>${currentDate}</lastmod>
-    <comment>Gallery overview only - no item URLs to prevent duplication</comment>
   </sitemap>
 </sitemapindex>`;
 
