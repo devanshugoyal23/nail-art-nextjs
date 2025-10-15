@@ -362,8 +362,6 @@ function generateCanonicalUrl(content: ContentData, pageType: string, baseUrl: s
       return `${baseUrl}/nail-art/occasion/${content.occasion}`;
     case 'season':
       return `${baseUrl}/nail-art/season/${content.season}`;
-    case 'city':
-      return `${baseUrl}/nail-art/in/${content.city}`;
     default:
       return baseUrl;
   }

@@ -22,7 +22,7 @@ const Header: React.FC = () => {
         <div className="flex items-center justify-between h-14 sm:h-16">
           <div className="flex-shrink-0">
              <Link href="/" className="text-white text-lg sm:text-xl font-bold tracking-wider">
-              AI Nail Studio
+              Nail Art AI
             </Link>
           </div>
           <div className="hidden md:block">

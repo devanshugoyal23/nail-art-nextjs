@@ -529,7 +529,7 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
               <SocialShareButton
                 title={item.design_name || 'Nail Art Design'}
                 text={editorial?.intro || item.prompt || ''}
-                url={typeof window !== 'undefined' ? window.location.href : ''}
+                url=""
               />
             </div>
           </div>

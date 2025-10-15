@@ -98,21 +98,19 @@ export default function RootLayout({
         <link rel="preconnect" href="https://pub-fc15073de2e24f7bacc00c238f8ada7d.r2.dev" />
         <script dangerouslySetInnerHTML={{
           __html: `
-            if (typeof window !== 'undefined') {
-              (${initializeMobileOptimizations.toString()})();
+            (${initializeMobileOptimizations.toString()})();
 
-              // Register service worker for caching
-              if ('serviceWorker' in navigator) {
-                window.addEventListener('load', () => {
-                  navigator.serviceWorker.register('/sw.js')
-                    .then((registration) => {
-                      console.log('Service Worker registered successfully:', registration.scope);
-                    })
-                    .catch((error) => {
-                      console.log('Service Worker registration failed:', error);
-                    });
-                });
-              }
+            // Register service worker for caching
+            if ('serviceWorker' in navigator) {
+              window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                  .then((registration) => {
+                    console.log('Service Worker registered successfully:', registration.scope);
+                  })
+                  .catch((error) => {
+                    console.log('Service Worker registration failed:', error);
+                  });
+              });
             }
           `
         }} />

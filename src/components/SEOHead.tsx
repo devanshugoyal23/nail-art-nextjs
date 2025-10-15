@@ -54,7 +54,7 @@ export default function SEOHead({
 }: SEOHeadProps) {
   const fullTitle = title.includes('Nail Art AI') ? title : `${title} | Nail Art AI`;
   const fullDescription = description.length > 160 ? description.substring(0, 157) + '...' : description;
-  const fullUrl = url || (typeof window !== 'undefined' ? window.location.href : '');
+  const fullUrl = url || '';
   const fullImage = image || ogImage?.url || '/og-image.jpg';
   const fullTwitterImage = twitterImage || fullImage;
   const fullPinterestImage = pinterestImage || fullImage;

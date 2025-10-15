@@ -170,22 +170,6 @@ export async function getDynamicPages(): Promise<SitemapEntry[]> {
       priority: 0.5,
     }));
 
-    // Programmatic SEO pages - styles
-    const styles = ['almond', 'coffin', 'square', 'oval', 'stiletto'];
-    const lengths = ['short', 'medium', 'long'];
-    const colors = ['milky-white', 'baby-pink', 'chrome-silver', 'emerald-green', 'black'];
-    
-    const styleLengthColorPages = styles.flatMap(style => 
-      lengths.flatMap(length => 
-        colors.map(color => ({
-          url: `${baseUrl}/nail-art/${style}/${length}/${color}`,
-          lastModified: new Date(),
-          changeFrequency: 'weekly' as const,
-          priority: 0.4,
-        }))
-      )
-    );
-
     // Occasion pages
     const occasions = ['wedding', 'prom', 'graduation', 'birthday', 'date-night'];
     const occasionPages = occasions.map(occasion => ({
@@ -202,15 +186,6 @@ export async function getDynamicPages(): Promise<SitemapEntry[]> {
       lastModified: new Date(),
       changeFrequency: 'weekly' as const,
       priority: 0.5,
-    }));
-
-    // City pages
-    const cities = ['new-york', 'los-angeles', 'chicago', 'houston', 'phoenix', 'philadelphia', 'san-antonio', 'san-diego', 'dallas', 'san-jose'];
-    const cityPages = cities.map(city => ({
-      url: `${baseUrl}/nail-art/in/${city}`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly' as const,
-      priority: 0.4,
     }));
 
     // Technique pages
@@ -243,10 +218,8 @@ export async function getDynamicPages(): Promise<SitemapEntry[]> {
       ...galleryItemPages,
       ...categoryPages,
       ...galleryDetailPages,
-      ...styleLengthColorPages,
       ...occasionPages,
       ...seasonPages,
-      ...cityPages,
       ...techniquePages,
       ...colorPages,
       ...designPages
