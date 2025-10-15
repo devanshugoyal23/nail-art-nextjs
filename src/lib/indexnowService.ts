@@ -10,7 +10,7 @@ interface IndexNowConfig {
 }
 
 const INDEXNOW_CONFIG: IndexNowConfig = {
-  apiKey: process.env.INDEXNOW_API_KEY || 'your-indexnow-api-key',
+  apiKey: process.env.INDEXNOW_API_KEY || '16c58702ade8484b9f5557f3f8d07e8e',
   baseUrl: 'https://nailartai.app',
   searchEngines: [
     'https://api.indexnow.org/indexnow',
