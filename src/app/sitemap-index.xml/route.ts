@@ -1,8 +1,15 @@
 import { NextResponse } from 'next/server';
 
 /**
- * Sitemap Index - Organizes multiple sitemaps for better performance
+ * Optimized Sitemap Index - NO DUPLICATES
  * This is the main sitemap that search engines should crawl
+ * 
+ * Structure:
+ * - sitemap-static.xml: Core pages (home, gallery, categories)
+ * - sitemap-designs.xml: Canonical design URLs only (highest priority)
+ * - sitemap-categories.xml: Category pages only
+ * - sitemap-images.xml: Image metadata for Google Images
+ * - sitemap-gallery.xml: Gallery overview only (no item URLs)
  */
 export async function GET() {
   const baseUrl = 'https://nailartai.app';
@@ -13,22 +20,27 @@ export async function GET() {
   <sitemap>
     <loc>${baseUrl}/sitemap-static.xml</loc>
     <lastmod>${currentDate}</lastmod>
+    <comment>Core site pages (home, gallery, categories)</comment>
   </sitemap>
   <sitemap>
     <loc>${baseUrl}/sitemap-designs.xml</loc>
     <lastmod>${currentDate}</lastmod>
+    <comment>Canonical design URLs only - NO DUPLICATES</comment>
   </sitemap>
   <sitemap>
     <loc>${baseUrl}/sitemap-categories.xml</loc>
     <lastmod>${currentDate}</lastmod>
+    <comment>Category pages for topical authority</comment>
   </sitemap>
   <sitemap>
     <loc>${baseUrl}/sitemap-images.xml</loc>
     <lastmod>${currentDate}</lastmod>
+    <comment>Image metadata for Google Images (CC0 license)</comment>
   </sitemap>
   <sitemap>
     <loc>${baseUrl}/sitemap-gallery.xml</loc>
     <lastmod>${currentDate}</lastmod>
+    <comment>Gallery overview only - no item URLs to prevent duplication</comment>
   </sitemap>
 </sitemapindex>`;
 

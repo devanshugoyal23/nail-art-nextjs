@@ -1,20 +1,52 @@
 import { NextResponse } from 'next/server';
 import { getGalleryItems } from '@/lib/galleryService';
+import { GalleryItem } from '@/lib/supabase';
 
 /**
- * Designs Sitemap - Primary content pages (highest priority)
+ * Designs Sitemap - Canonical design URLs only (highest priority)
  * These are the main nail art design pages that should rank highest
+ * NO DUPLICATES - This is the ONLY sitemap with design URLs
  */
 export async function GET() {
   try {
     const baseUrl = 'https://nailartai.app';
     
-    // Get all gallery items (designs) - these are the primary content
-    const galleryItemsResult = await getGalleryItems({ limit: 1000 });
-    const galleryItems = galleryItemsResult.items;
+    // Get all gallery items with paging support to avoid 1000 limit
+    let allGalleryItems: GalleryItem[] = [];
+    let page = 1;
+    const limit = 1000;
+    
+    while (true) {
+      const galleryItemsResult = await getGalleryItems({ 
+        page, 
+        limit,
+        sortBy: 'newest' 
+      });
+      
+      if (!galleryItemsResult.items || galleryItemsResult.items.length === 0) {
+        break;
+      }
+      
+      allGalleryItems = [...allGalleryItems, ...galleryItemsResult.items];
+      
+      // If we got fewer items than requested, we've reached the end
+      if (galleryItemsResult.items.length < limit) {
+        break;
+      }
+      
+      page++;
+      
+      // Safety limit to prevent infinite loops
+      if (page > 10) {
+        console.warn('Reached safety limit of 10 pages in designs sitemap');
+        break;
+      }
+    }
+    
+    console.log(`Generated designs sitemap with ${allGalleryItems.length} items`);
     
     // Generate design pages using the canonical URL format: /{category}/{design-name}-{id}
-    const designPages = galleryItems.map(item => {
+    const designPages = allGalleryItems.map(item => {
       const categorySlug = item.category?.toLowerCase().replace(/\s+/g, '-') || 'design';
       const designSlug = item.design_name?.toLowerCase().replace(/\s+/g, '-') || 'design';
       const idSuffix = item.id.slice(-8);

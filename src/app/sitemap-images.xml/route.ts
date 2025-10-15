@@ -1,20 +1,49 @@
 import { NextResponse } from 'next/server';
 import { getGalleryItems } from '@/lib/galleryService';
+import { GalleryItem } from '@/lib/supabase';
 
 /**
- * Optimized Image Sitemap
+ * Optimized Image Sitemap - Fixed for CC0 license and proper dimensions
  * Cached for better performance, only regenerates when content changes
  */
 export async function GET() {
   try {
     const baseUrl = 'https://nailartai.app';
     
-    // Get gallery items with caching
-    const galleryItemsResult = await getGalleryItems({ limit: 1000 });
-    const galleryItems = galleryItemsResult.items;
+    // Get all gallery items with paging support
+    let allGalleryItems: GalleryItem[] = [];
+    let page = 1;
+    const limit = 1000;
+    
+    while (true) {
+      const galleryItemsResult = await getGalleryItems({ 
+        page, 
+        limit,
+        sortBy: 'newest' 
+      });
+      
+      if (!galleryItemsResult.items || galleryItemsResult.items.length === 0) {
+        break;
+      }
+      
+      allGalleryItems = [...allGalleryItems, ...galleryItemsResult.items];
+      
+      if (galleryItemsResult.items.length < limit) {
+        break;
+      }
+      
+      page++;
+      
+      if (page > 10) {
+        console.warn('Reached safety limit of 10 pages in images sitemap');
+        break;
+      }
+    }
+    
+    console.log(`Generated images sitemap with ${allGalleryItems.length} items`);
     
     // Generate image sitemap entries with rich metadata for Google Images
-    const imageEntries = galleryItems.map(item => {
+    const imageEntries = allGalleryItems.map(item => {
       const imageUrl = item.image_url; // All URLs are now R2 URLs
       const pageUrl = `${baseUrl}/${item.category?.toLowerCase().replace(/\s+/g, '-') || 'design'}/${item.design_name?.toLowerCase().replace(/\s+/g, '-') || 'design'}-${item.id.slice(-8)}`;
       
@@ -23,11 +52,11 @@ export async function GET() {
           loc: imageUrl,
           caption: generateOptimizedAltText(item),
           title: item.design_name || 'Nail Art Design',
-          license: 'https://nailartai.app/terms',
-          geoLocation: 'United States', // Optional: can be more specific
+          license: 'https://creativecommons.org/publicdomain/zero/1.0/', // CC0 license
+          geoLocation: 'United States',
           contentUrl: imageUrl,
-          width: '1024',
-          height: '1024',
+          width: '1024', // Pinterest optimized 2:3 ratio
+          height: '1536', // 1024 * 1.5 = 1536 for 2:3 ratio
         },
         pageUrl,
         lastModified: new Date(item.created_at).toISOString(),

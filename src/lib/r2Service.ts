@@ -17,21 +17,57 @@ const PUBLIC_URL = process.env.R2_PUBLIC_URL || 'https://pub-fc15073de2e24f7bacc
 
 
 /**
- * Upload image to Cloudflare R2
+ * Generate SEO-optimized metadata for nail art images
+ */
+export function generateImageMetadata(
+  designName?: string,
+  category?: string,
+  customMetadata?: Record<string, string>
+): Record<string, string> {
+  const baseMetadata = {
+    'license': 'CC0-1.0',
+    'usage-rights': 'free-commercial-use',
+    'source': 'nailartai.app',
+    'website': 'https://nailartai.app',
+    'brand': 'Nail Art AI',
+    'attribution': 'optional',
+    'downloadable': 'true',
+    'commercial-use': 'allowed',
+    'copyright': 'none',
+    'created-by': 'nailartai.app',
+    'seo-title': designName ? `Free ${designName} Nail Art Design by nailartai.app` : 'Free Nail Art Design by nailartai.app',
+    'seo-description': `Free downloadable nail art design by nailartai.app - Commercial use allowed, no attribution required`,
+    'category': category || 'nail-art',
+    'type': 'nail-art-design',
+    'quality': 'high-resolution',
+    'format': 'jpeg'
+  };
+
+  // Merge with custom metadata if provided
+  return { ...baseMetadata, ...customMetadata };
+}
+
+/**
+ * Upload image to Cloudflare R2 with SEO-optimized metadata
  */
 export async function uploadToR2(
   file: Buffer, 
   key: string, 
   contentType: string = 'image/jpeg',
-  metadata?: Record<string, string>
+  metadata?: Record<string, string>,
+  designName?: string,
+  category?: string
 ): Promise<string> {
   try {
+    // Generate SEO-optimized metadata
+    const seoMetadata = generateImageMetadata(designName, category, metadata);
+    
     const command = new PutObjectCommand({
       Bucket: IMAGES_BUCKET,
       Key: key,
       Body: file,
       ContentType: contentType,
-      Metadata: metadata,
+      Metadata: seoMetadata,
       CacheControl: 'public, max-age=31536000, immutable',
     });
     

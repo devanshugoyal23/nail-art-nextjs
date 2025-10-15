@@ -3,6 +3,7 @@ import { extractTagsFromGalleryItem } from './tagService'
 import { uploadToR2, generateR2Key } from './r2Service'
 import { createPinterestOptimizedImage, getOptimalPinterestDimensions } from './imageTransformation'
 import { updateR2DataForNewContent } from './r2DataUpdateService'
+import { generateAltText, generateImageTitle, generateImageDescription } from './seoUtils'
 
 /**
  * Return gallery item URLs as-is (all are now R2 URLs)
@@ -15,6 +16,60 @@ function convertToCdnUrls(item: GalleryItem): GalleryItem {
     // All URLs are now R2 URLs - return as-is
     image_url: item.image_url,
     original_image_url: item.original_image_url,
+  };
+}
+
+/**
+ * Enhance gallery item with SEO data
+ * @param item - Gallery item
+ * @returns Gallery item with SEO enhancements
+ */
+function enhanceWithSeoData(item: GalleryItem): GalleryItem & {
+  alt_text: string;
+  seo_title: string;
+  seo_description: string;
+  download_url: string;
+  source_url: string;
+  license_info: {
+    type: string;
+    commercialUse: boolean;
+    attributionRequired: boolean;
+  };
+} {
+  const altText = generateAltText(
+    item.design_name || 'Nail Art Design',
+    item.category || 'nail-art',
+    item.colors,
+    item.techniques
+  );
+  
+  const seoTitle = generateImageTitle(
+    item.design_name || 'Nail Art Design',
+    item.category || 'nail-art'
+  );
+  
+  const seoDescription = generateImageDescription(
+    item.design_name || 'Nail Art Design',
+    item.category || 'nail-art',
+    item.colors,
+    item.techniques
+  );
+  
+  const downloadUrl = `https://nailartai.app/download/${item.id}`;
+  const sourceUrl = `https://nailartai.app/design/${item.id}`;
+  
+  return {
+    ...item,
+    alt_text: altText,
+    seo_title: seoTitle,
+    seo_description: seoDescription,
+    download_url: downloadUrl,
+    source_url: sourceUrl,
+    license_info: {
+      type: 'CC0-1.0',
+      commercialUse: true,
+      attributionRequired: false
+    }
   };
 }
 
@@ -45,7 +100,7 @@ export async function saveGalleryItem(item: SaveGalleryItemRequest): Promise<Gal
       pinterestDimensions.quality
     )
     
-    // Upload to R2
+    // Upload to R2 with SEO metadata
     const imageUrl = await uploadToR2(
       optimizedBuffer,
       r2Key,
@@ -54,8 +109,12 @@ export async function saveGalleryItem(item: SaveGalleryItemRequest): Promise<Gal
         'pinterest-optimized': 'true',
         'aspect-ratio': '2:3',
         'design-name': item.designName || 'nail-art',
-        'category': item.category || 'general'
-      }
+        'category': item.category || 'general',
+        'download-url': `https://nailartai.app/download/${r2Key}`,
+        'source-url': `https://nailartai.app/design/${r2Key}`
+      },
+      item.designName,
+      item.category
     )
 
     // Handle original image if provided
@@ -203,8 +262,8 @@ export async function getGalleryItems(params: GetGalleryItemsParams = {}): Promi
     const totalCount = count || 0;
     const totalPages = Math.ceil(totalCount / limit);
 
-    // Convert to CDN URLs for reduced egress
-    const items = convertItemsToCdnUrls(data || []);
+    // Convert to CDN URLs and enhance with SEO data
+    const items = convertItemsToCdnUrls(data || []).map(enhanceWithSeoData);
 
     return {
       items,
@@ -243,8 +302,8 @@ export async function getGalleryItem(id: string): Promise<GalleryItem | null> {
       return null
     }
 
-    // Convert to CDN URLs for reduced egress
-    return convertToCdnUrls(data)
+    // Convert to CDN URLs and enhance with SEO data
+    return enhanceWithSeoData(convertToCdnUrls(data))
   } catch (error) {
     console.error('Error fetching gallery item:', error)
     return null

@@ -206,9 +206,14 @@ function dataURLtoBlob(dataURL: string): Blob {
 }
 
 /**
- * Upload image to R2 with Pinterest optimization
+ * Upload image to R2 with Pinterest optimization and SEO metadata
  */
-async function uploadImageToR2(imageData: string, filename: string): Promise<string | null> {
+async function uploadImageToR2(
+  imageData: string, 
+  filename: string, 
+  designName?: string, 
+  category?: string
+): Promise<string | null> {
   try {
     // Convert base64 to buffer
     const imageBlob = dataURLtoBlob(imageData);
@@ -226,7 +231,7 @@ async function uploadImageToR2(imageData: string, filename: string): Promise<str
     // Generate R2 key
     const r2Key = generateR2Key('generated', 'jpg');
     
-    // Upload to R2
+    // Upload to R2 with SEO-optimized metadata
     const imageUrl = await uploadToR2(
       optimizedBuffer,
       r2Key,
@@ -235,8 +240,12 @@ async function uploadImageToR2(imageData: string, filename: string): Promise<str
         'pinterest-optimized': 'true',
         'aspect-ratio': '2:3',
         'generated': 'true',
-        'filename': filename
-      }
+        'filename': filename,
+        'download-url': `https://nailartai.app/download/${r2Key}`,
+        'source-url': `https://nailartai.app/design/${r2Key}`
+      },
+      designName,
+      category
     );
 
     return imageUrl;
@@ -360,10 +369,10 @@ export async function generateSingleNailArt(options: GenerationOptions): Promise
       return null;
     }
 
-    // Upload to Supabase
+    // Upload to R2 with SEO metadata
     const timestamp = Date.now();
     const filename = `generated-nail-art-${timestamp}.jpg`;
-    const imageUrl = await uploadImageToR2(`data:image/jpeg;base64,${imageData}`, filename);
+    const imageUrl = await uploadImageToR2(`data:image/jpeg;base64,${imageData}`, filename, designName, category);
     
     if (!imageUrl) {
       throw new Error('Failed to upload image');
