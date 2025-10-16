@@ -248,7 +248,16 @@ export function generatePinterestHashtags(category: string, colors: string[], te
 /**
  * Create Pinterest Rich Pins data from gallery item
  */
-export function createPinterestRichPinDataFromItem(item: any, pageUrl: string): PinterestRichPinData {
+export function createPinterestRichPinDataFromItem(item: {
+  design_name?: string;
+  category?: string;
+  prompt?: string;
+  image_url: string;
+  created_at: string;
+  colors?: string[];
+  techniques?: string[];
+  occasions?: string[];
+}, pageUrl: string): PinterestRichPinData {
   return {
     title: `${item.design_name || 'AI Generated'} ${item.category ? `- ${item.category}` : ''} Nail Art Design`,
     description: item.prompt 

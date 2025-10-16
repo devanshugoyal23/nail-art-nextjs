@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
-import Script from "next/script";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { initializeMobileOptimizations } from "@/lib/mobileOptimization";
 import { Analytics } from '@vercel/analytics/react';
 
 export const metadata: Metadata = {
@@ -101,33 +99,45 @@ export default function RootLayout({
         <link rel="preconnect" href="https://pub-f94b6dc4538f33bcd1553dcdda15b36d.r2.dev" />
         <link rel="preconnect" href="https://pub-fc15073de2e24f7bacc00c238f8ada7d.r2.dev" />
         {/* Google Analytics */}
-        <Script
+        <script
           src="https://www.googletagmanager.com/gtag/js?id=G-F2H0CBYDGF"
-          strategy="afterInteractive"
+          async
         />
-        <Script id="ga-gtag" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);} // eslint-disable-line
-            gtag('js', new Date());
-            gtag('config', 'G-F2H0CBYDGF');
-          `}
-        </Script>
         <script dangerouslySetInnerHTML={{
           __html: `
-            (${initializeMobileOptimizations.toString()})();
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-F2H0CBYDGF');
+          `
+        }} />
+        <script dangerouslySetInnerHTML={{
+          __html: `
+            // Mobile optimizations
+            if (typeof window !== 'undefined') {
+              // Check if mobile
+              const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+              
+              // Optimize for mobile
+              if (isMobile) {
+                document.documentElement.style.setProperty('--vh', window.innerHeight * 0.01 + 'px');
+                window.addEventListener('resize', () => {
+                  document.documentElement.style.setProperty('--vh', window.innerHeight * 0.01 + 'px');
+                });
+              }
 
-            // Register service worker for caching
-            if ('serviceWorker' in navigator) {
-              window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js')
-                  .then((registration) => {
-                    console.log('Service Worker registered successfully:', registration.scope);
-                  })
-                  .catch((error) => {
-                    console.log('Service Worker registration failed:', error);
-                  });
-              });
+              // Register service worker for caching
+              if ('serviceWorker' in navigator) {
+                window.addEventListener('load', () => {
+                  navigator.serviceWorker.register('/sw.js')
+                    .then((registration) => {
+                      console.log('Service Worker registered successfully:', registration.scope);
+                    })
+                    .catch((error) => {
+                      console.log('Service Worker registration failed:', error);
+                    });
+                });
+              }
             }
           `
         }} />

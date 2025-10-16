@@ -132,7 +132,7 @@ const nextConfig: NextConfig = {
             // Mobile performance optimizations
             loader: 'default',
             // Fix quality warnings by explicitly configuring qualities
-            qualities: [75, 80, 85, 90],
+            qualities: [60, 65, 75, 80, 85, 90],
           },
   async redirects() {
     return [
