@@ -81,25 +81,41 @@ function extractKeywordsFromPrompt(prompt: string): string[] {
 }
 
 /**
- * Generate Pinterest-optimized meta tags
+ * Generate Pinterest-optimized meta tags with Article Rich Pins support
  */
 export function generatePinterestMetaTags(
   title: string,
   description: string,
   imageUrl: string,
   designName: string,
-  category?: string
+  category?: string,
+  pageUrl?: string,
+  publishedTime?: string,
+  author?: string
 ) {
   const pinterestTitle = `${designName} ${category ? `- ${category}` : ''} Nail Art Design`;
   const pinterestDescription = description || `Beautiful ${designName} nail art design. ${category ? `Perfect for ${category} occasions. ` : ''}Try this design virtually and get inspired!`;
   
   return {
+    // Basic Pinterest meta tags
     'pinterest:title': pinterestTitle,
     'pinterest:description': pinterestDescription,
     'pinterest:image': imageUrl,
-    'pinterest:image:width': '600',
-    'pinterest:image:height': '600',
+    'pinterest:image:width': '1000', // Pinterest-optimized width
+    'pinterest:image:height': '1500', // Pinterest-optimized height (2:3 ratio)
     'pinterest:image:alt': generateImageAltText(designName, category),
+    
+    // Article Rich Pins meta tags
+    'pinterest-rich-pin': 'true',
+    'article:author': author || 'Nail Art AI',
+    'article:published_time': publishedTime || new Date().toISOString(),
+    'article:section': category || 'Nail Art',
+    'article:tag': category || 'nail-art',
+    
+    // Enhanced Pinterest meta tags for better engagement
+    'pinterest:board': category ? `${category} Nail Art Ideas` : 'Nail Art Ideas',
+    'pinterest:category': 'beauty',
+    'pinterest:type': 'article',
   };
 }
 
@@ -112,7 +128,9 @@ export function generateSocialMetaTags(
   imageUrl: string,
   url: string,
   designName: string,
-  category?: string
+  category?: string,
+  publishedTime?: string,
+  author?: string
 ) {
   const socialTitle = `${designName} ${category ? `- ${category}` : ''} Nail Art Design`;
   const socialDescription = description || `Beautiful ${designName} nail art design. ${category ? `Perfect for ${category} occasions. ` : ''}Try this design virtually and get inspired!`;
@@ -137,7 +155,7 @@ export function generateSocialMetaTags(
     'twitter:image:alt': generateImageAltText(designName, category),
     
     // Pinterest
-    ...generatePinterestMetaTags(title, description, imageUrl, designName, category),
+    ...generatePinterestMetaTags(title, description, imageUrl, designName, category, url, publishedTime, author),
   };
 }
 

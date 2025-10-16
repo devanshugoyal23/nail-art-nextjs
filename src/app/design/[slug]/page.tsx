@@ -67,14 +67,16 @@ export async function generateMetadata({ params }: DesignDetailPageProps): Promi
     : 'AI-generated nail art design with prompt, real photo, and virtual try-on.';
   const canonicalUrl = `${baseUrl}/design/${encodeURIComponent(resolvedParams.slug)}`;
 
-  // Generate enhanced social meta tags
+  // Generate enhanced social meta tags with Pinterest Article Rich Pins
   const socialMetaTags = generateSocialMetaTags(
     title,
     description,
     item.image_url,
     canonicalUrl,
     item.design_name || 'AI Generated',
-    item.category
+    item.category,
+    item.created_at,
+    'Nail Art AI'
   );
 
   return {
@@ -91,12 +93,18 @@ export async function generateMetadata({ params }: DesignDetailPageProps): Promi
       images: [
         {
           url: item.image_url,
-          width: 600,
-          height: 600,
+          width: 1000,
+          height: 1500,
           alt: generateImageAltText(item.design_name || 'AI Generated', item.category, item.prompt),
         },
       ],
-      siteName: 'AI Nail Art Studio',
+      siteName: 'Nail Art AI',
+      locale: 'en_US',
+      publishedTime: item.created_at,
+      modifiedTime: item.created_at,
+      authors: ['Nail Art AI'],
+      section: item.category || 'Nail Art',
+      tags: [item.category || 'nail-art', 'nail-design', 'manicure'],
     },
     twitter: {
       card: 'summary_large_image',
@@ -105,13 +113,23 @@ export async function generateMetadata({ params }: DesignDetailPageProps): Promi
       images: [item.image_url],
     },
     other: {
-      // Pinterest meta tags
+      // Pinterest Article Rich Pins meta tags
       'pinterest:title': socialMetaTags['pinterest:title'],
       'pinterest:description': socialMetaTags['pinterest:description'],
       'pinterest:image': socialMetaTags['pinterest:image'],
       'pinterest:image:width': socialMetaTags['pinterest:image:width'],
       'pinterest:image:height': socialMetaTags['pinterest:image:height'],
       'pinterest:image:alt': socialMetaTags['pinterest:image:alt'],
+      'pinterest-rich-pin': socialMetaTags['pinterest-rich-pin'],
+      'pinterest:board': socialMetaTags['pinterest:board'],
+      'pinterest:category': socialMetaTags['pinterest:category'],
+      'pinterest:type': socialMetaTags['pinterest:type'],
+      
+      // Article Rich Pins meta tags
+      'article:author': socialMetaTags['article:author'],
+      'article:published_time': socialMetaTags['article:published_time'],
+      'article:section': socialMetaTags['article:section'],
+      'article:tag': socialMetaTags['article:tag'],
     },
     robots: {
       index: true,

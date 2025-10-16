@@ -140,15 +140,19 @@ export async function generateMetadata({ params }: GalleryDetailPageProps): Prom
         },
         {
           url: item.image_url,
-          width: 600,
-          height: 700,
+          width: 1000,
+          height: 1500,
           alt: generateImageAltText(title, item.category, item.prompt),
         },
       ],
       type: 'article',
+      url: `https://nailartai.app/${resolvedParams.category}/${resolvedParams.slug}`,
+      siteName: 'Nail Art AI',
+      locale: 'en_US',
       publishedTime: item.created_at,
       modifiedTime: item.created_at,
-      section: item.category,
+      authors: ['Nail Art AI'],
+      section: item.category || 'Nail Art',
       tags: [
         ...(item.colors || []),
         ...(item.techniques || []),
@@ -166,6 +170,7 @@ export async function generateMetadata({ params }: GalleryDetailPageProps): Prom
       canonical: `https://nailartai.app/${resolvedParams.category}/${resolvedParams.slug}`,
     },
     other: {
+      // Article Rich Pins meta tags
       'article:tag': [
         ...(item.colors || []),
         ...(item.techniques || []),
@@ -174,6 +179,20 @@ export async function generateMetadata({ params }: GalleryDetailPageProps): Prom
       ].join(','),
       'article:section': item.category || 'Nail Art',
       'article:author': 'Nail Art AI',
+      'article:published_time': item.created_at,
+      'article:modified_time': item.created_at,
+      
+      // Pinterest Article Rich Pins meta tags
+      'pinterest-rich-pin': 'true',
+      'pinterest:title': fullTitle,
+      'pinterest:description': fullDescription,
+      'pinterest:image': item.image_url,
+      'pinterest:image:width': '1000',
+      'pinterest:image:height': '1500',
+      'pinterest:image:alt': generateImageAltText(title, item.category, item.prompt),
+      'pinterest:board': item.category ? `${item.category} Nail Art Ideas` : 'Nail Art Ideas',
+      'pinterest:category': 'beauty',
+      'pinterest:type': 'article',
     },
   };
 }
