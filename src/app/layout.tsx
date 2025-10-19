@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -95,22 +96,25 @@ export default function RootLayout({
         {/* Preload critical resources for better performance */}
         <link rel="preload" href="/sw.js" as="script" />
         <link rel="preload" href="/globals.css" as="style" />
+        {/* Custom domain for unified bucket */}
+        <link rel="preconnect" href="https://cdn.nailartai.app" />
+        {/* Previous R2 domains (for backward compatibility during migration) */}
         <link rel="preconnect" href="https://pub-05b5ee1a83754aa6b4fcd974016ecde8.r2.dev" />
         <link rel="preconnect" href="https://pub-f94b6dc4538f33bcd1553dcdda15b36d.r2.dev" />
         <link rel="preconnect" href="https://pub-fc15073de2e24f7bacc00c238f8ada7d.r2.dev" />
         {/* Google Analytics */}
-        <script
+        <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-F2H0CBYDGF"
-          async
+          strategy="afterInteractive"
         />
-        <script dangerouslySetInnerHTML={{
-          __html: `
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
             gtag('config', 'G-F2H0CBYDGF');
-          `
-        }} />
+          `}
+        </Script>
         <script dangerouslySetInnerHTML={{
           __html: `
             // Mobile optimizations

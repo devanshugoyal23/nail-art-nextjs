@@ -92,14 +92,20 @@ const nextConfig: NextConfig = {
   },
   images: {
             remotePatterns: [
-              // New Cloudflare R2 domain (public access)
+              // Custom domain for unified bucket
+              {
+                protocol: 'https',
+                hostname: 'cdn.nailartai.app',
+                port: '',
+                pathname: '/**',
+              },
+              // Previous R2 domains (for backward compatibility during migration)
               {
                 protocol: 'https',
                 hostname: 'pub-05b5ee1a83754aa6b4fcd974016ecde8.r2.dev',
                 port: '',
                 pathname: '/**',
               },
-              // Previous R2 domains (for backward compatibility)
               {
                 protocol: 'https',
                 hostname: 'pub-f94b6dc4538f33bcd1553dcdda15b36d.r2.dev',

@@ -4,7 +4,7 @@ import {
   validatePinterestRichPins,
   generatePinterestValidationUrl 
 } from '@/lib/pinterestRichPinsService';
-import { getGalleryItemBySlug } from '@/lib/galleryService';
+import { getGalleryItemBySlug } from '@/lib/optimizedGalleryService';
 
 /**
  * Pinterest Rich Pins Validation API

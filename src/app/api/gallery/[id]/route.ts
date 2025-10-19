@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { deleteGalleryItem, getGalleryItem } from '@/lib/galleryService'
+import { deleteGalleryItem } from '@/lib/galleryService'
+import { getGalleryItem } from '@/lib/optimizedGalleryService'
 import { checkAdminAuth } from '@/lib/authUtils'
 
 export async function GET(

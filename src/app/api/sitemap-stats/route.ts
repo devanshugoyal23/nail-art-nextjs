@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getGalleryItems } from '@/lib/galleryService';
+import { getGalleryItems } from '@/lib/optimizedGalleryService';
 import { getAllCategoriesWithThumbnails } from '@/lib/categoryService';
 
 /**

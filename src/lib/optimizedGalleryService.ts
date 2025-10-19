@@ -51,36 +51,8 @@ export async function getGalleryItems(params: {
   const { page = 1, limit = 20, category, search, tags = [], sortBy = 'newest' } = params;
   
   try {
-    // Try R2 first if available
-    if (await isR2DataAvailable()) {
-      const r2Result = await getR2GalleryItemsPaginated(page, limit, category);
-      
-      // Apply search filter if provided
-      let items = r2Result.items;
-      if (search) {
-        items = await searchGalleryItems(search, limit);
-        if (category) {
-          items = items.filter(item => item.category === category);
-        }
-      }
-      
-      // Apply tag filters
-      if (tags.length > 0) {
-        items = filterItemsByTags(items as GalleryItem[], tags) as R2GalleryItem[];
-      }
-      
-      // Apply sorting
-      items = applySorting(items as GalleryItem[], sortBy) as R2GalleryItem[];
-      
-      return {
-        items: items.slice(0, limit) as GalleryItem[],
-        totalCount: r2Result.total,
-        totalPages: Math.ceil(r2Result.total / limit),
-        currentPage: page
-      };
-    }
-    
-    // Fallback to Supabase
+    // Force use of Supabase for now to ensure correct URLs
+    // TODO: Re-enable R2 once URLs are properly migrated
     return await getSupabaseGalleryItems(params);
     
   } catch (error) {
@@ -99,13 +71,8 @@ export async function getGalleryItems(params: {
  */
 export async function getGalleryItem(id: string): Promise<GalleryItem | null> {
   try {
-    // Try R2 first
-    if (await isR2DataAvailable()) {
-      const item = await getR2GalleryItemById(id);
-      if (item) return item as GalleryItem;
-    }
-    
-    // Fallback to Supabase
+    // Force use of Supabase for now to ensure correct URLs
+    // TODO: Re-enable R2 once URLs are properly migrated
     return await getSupabaseGalleryItem(id);
     
   } catch (error) {
@@ -119,12 +86,8 @@ export async function getGalleryItem(id: string): Promise<GalleryItem | null> {
  */
 export async function getGalleryItemsByCategory(category: string): Promise<GalleryItem[]> {
   try {
-    // Try R2 first
-    if (await isR2DataAvailable()) {
-      return await getR2GalleryItemsByCategory(category) as GalleryItem[];
-    }
-    
-    // Fallback to Supabase
+    // Force use of Supabase for now to ensure correct URLs
+    // TODO: Re-enable R2 once URLs are properly migrated
     return await getSupabaseGalleryItemsByCategory(category);
     
   } catch (error) {
@@ -158,29 +121,8 @@ export async function getGalleryItemsByCategorySlug(categorySlug: string): Promi
  */
 export async function getGalleryItemBySlug(category: string, slug: string): Promise<GalleryItem | null> {
   try {
-    // Try R2 first
-    if (await isR2DataAvailable()) {
-      // For R2, we need to search through items
-      const allItems = await getR2GalleryItems();
-      const categoryName = category.replace(/-/g, ' ');
-      
-      // Try to find by slug pattern
-      const item = allItems.find(item => {
-        if (item.category !== categoryName) return false;
-        
-        // Check various slug patterns
-        const designSlug = item.design_name?.toLowerCase().replace(/\s+/g, '-') || '';
-        const idSuffix = item.id.slice(-8);
-        
-        return slug === `${designSlug}-${idSuffix}` || 
-               slug === `design-${idSuffix}` ||
-               slug === designSlug;
-      });
-      
-      if (item) return item as GalleryItem;
-    }
-    
-    // Fallback to Supabase
+    // Force use of Supabase for now to ensure correct URLs
+    // TODO: Re-enable R2 once URLs are properly migrated
     return await getSupabaseGalleryItemBySlug(category, slug);
     
   } catch (error) {

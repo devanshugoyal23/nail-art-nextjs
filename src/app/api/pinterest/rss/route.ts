@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getGalleryItems } from '@/lib/galleryService';
+import { getGalleryItems } from '@/lib/optimizedGalleryService';
 import { createPinterestRichPinDataFromItem } from '@/lib/pinterestRichPinsService';
 
 /**

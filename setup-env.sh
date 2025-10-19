@@ -12,10 +12,13 @@ GEMINI_API_KEY=your_gemini_api_key_here
 NEXT_PUBLIC_SUPABASE_URL=https://nail-art-gallery.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key_here
 
-# Cloudflare R2 Configuration
+# Cloudflare R2 Configuration (Unified Bucket)
 R2_ENDPOINT=https://05b5ee1a83754aa6b4fcd974016ecde8.r2.cloudflarestorage.com
 R2_ACCESS_KEY_ID=75285deddfed8d17042993c0522c33f5
 R2_SECRET_ACCESS_KEY=066792709f1ddeb4b2913ccbd6936817f3bc89bbbaf9482c7eef5e89269b588d
+
+# R2 Public URL (Custom Domain)
+R2_PUBLIC_URL=https://cdn.nailartai.app
 
 # Site URL
 NEXT_PUBLIC_SITE_URL=https://nailartai.app

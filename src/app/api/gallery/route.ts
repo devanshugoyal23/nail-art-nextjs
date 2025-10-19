@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getGalleryItems, saveGalleryItem } from '@/lib/galleryService'
+import { getGalleryItems } from '@/lib/optimizedGalleryService'
+import { saveGalleryItem } from '@/lib/galleryService'
 import { checkAdminAuth } from '@/lib/authUtils'
 import { rateLimiters, checkRateLimit } from '@/lib/rateLimiter'
 import { validateQueryParams, validateGalleryItem } from '@/lib/inputValidation'
