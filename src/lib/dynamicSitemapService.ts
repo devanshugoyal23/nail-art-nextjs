@@ -146,12 +146,12 @@ export async function getDynamicPages(): Promise<SitemapEntry[]> {
     // Get all tags
     getAllTagsFromGalleryItems(galleryItems);
 
-    // Gallery item pages - using consistent URL pattern
+    // Gallery item pages - using /design/[slug] URL pattern
     const galleryItemPages = galleryItems.map(item => ({
-      url: `${baseUrl}/${item.category?.toLowerCase().replace(/\s+/g, '-')}/${item.design_name ? `${item.design_name.toLowerCase().replace(/\s+/g, '-')}-${item.id.slice(-8)}` : `design-${item.id.slice(-8)}`}`,
+      url: `${baseUrl}/design/${item.design_name ? `${item.design_name.toLowerCase().replace(/\s+/g, '-')}-${item.id.slice(-8)}` : item.id}`,
       lastModified: new Date(item.created_at),
       changeFrequency: 'monthly' as const,
-      priority: 0.6,
+      priority: 0.8, // High priority for main content
     }));
 
     // Category pages under /nail-art-gallery/category

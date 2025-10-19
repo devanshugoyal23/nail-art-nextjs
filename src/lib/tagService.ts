@@ -76,10 +76,16 @@ export function extractTagsFromEditorial(editorial: NailArtEditorial): Extracted
 
   // Extract shapes
   if (editorial.attributes?.shape) {
-    tags.shapes.push({
-      label: editorial.attributes.shape,
-      value: editorial.attributes.shape.toLowerCase().replace(/\s+/g, '-'),
-      type: 'shape'
+    const shapes = Array.isArray(editorial.attributes.shape) 
+      ? editorial.attributes.shape 
+      : [editorial.attributes.shape];
+    
+    shapes.forEach(shape => {
+      tags.shapes.push({
+        label: shape,
+        value: shape.toLowerCase().replace(/\s+/g, '-'),
+        type: 'shape'
+      });
     });
   }
 

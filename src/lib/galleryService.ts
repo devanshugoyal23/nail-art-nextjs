@@ -682,6 +682,74 @@ export async function getGalleryItemBySlug(category: string, slug: string): Prom
 }
 
 /**
+ * Get gallery item by design slug (for /design/[slug] route)
+ * @param slug - The design slug
+ * @returns Gallery item or null if not found
+ */
+export async function getGalleryItemByDesignSlug(slug: string): Promise<GalleryItem | null> {
+  try {
+    console.log('Searching for design slug:', slug)
+    
+    // Extract ID suffix and design name from slug
+    const idSuffixMatch = slug.match(/-([A-Za-z0-9]{8})$/)
+    const idSuffix = idSuffixMatch ? idSuffixMatch[1] : null
+    const designName = slug.replace(/-([A-Za-z0-9]{8})$/, '').replace(/-/g, ' ')
+    
+    console.log('Extracted:', { designName, idSuffix })
+    
+    // Try to find by ID suffix first (most precise)
+    if (idSuffix) {
+      const { data: allItems, error: allError } = await supabase
+        .from('gallery_items')
+        .select('*')
+
+      if (!allError && allItems) {
+        const idData = allItems.find(item => item.id.endsWith(idSuffix))
+        if (idData) {
+          console.log('Found item by ID suffix:', idData.design_name)
+          return convertToCdnUrls(idData)
+        }
+      }
+    }
+    
+    // Try to find by design name
+    if (designName && designName !== 'design') {
+      const { data, error } = await supabase
+        .from('gallery_items')
+        .select('*')
+        .ilike('design_name', `%${designName}%`)
+        .limit(1)
+        .single()
+
+      if (!error && data) {
+        console.log('Found item by design name:', data.design_name)
+        return convertToCdnUrls(data)
+      }
+    }
+    
+    // Try to find by full ID if the slug is a UUID
+    if (slug.length === 36 && slug.includes('-')) {
+      const { data: fullIdData, error: fullIdError } = await supabase
+        .from('gallery_items')
+        .select('*')
+        .eq('id', slug)
+        .single()
+
+      if (!fullIdError && fullIdData) {
+        console.log('Found item by full ID:', fullIdData.design_name)
+        return convertToCdnUrls(fullIdData)
+      }
+    }
+    
+    console.error('No gallery item found for design slug:', slug)
+    return null
+  } catch (error) {
+    console.error('Error fetching gallery item by design slug:', error)
+    return null
+  }
+}
+
+/**
  * Generate SEO-friendly URL for a gallery item
  * @param item - The gallery item
  * @returns SEO-friendly URL path
