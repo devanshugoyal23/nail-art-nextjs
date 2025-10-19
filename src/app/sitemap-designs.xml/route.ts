@@ -45,13 +45,14 @@ export async function GET() {
     
     console.log(`Generated designs sitemap with ${allGalleryItems.length} items`);
     
-    // Generate design pages using the canonical URL format: /design/{design-name}-{id}
+    // Generate design pages using the canonical URL format: /{category}/{design-name}-{id}
     const designPages = allGalleryItems.map(item => {
+      const categorySlug = item.category?.toLowerCase().replace(/\s+/g, '-') || 'design';
       const designSlug = item.design_name?.toLowerCase().replace(/\s+/g, '-') || 'design';
       const idSuffix = item.id.slice(-8);
       
       return {
-        url: `${baseUrl}/design/${designSlug}-${idSuffix}`,
+        url: `${baseUrl}/${categorySlug}/${designSlug}-${idSuffix}`,
         lastModified: new Date(item.created_at).toISOString(),
         changeFrequency: 'monthly',
         priority: 0.8, // High priority for main content

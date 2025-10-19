@@ -151,7 +151,7 @@ export async function getDynamicPages(): Promise<SitemapEntry[]> {
       url: `${baseUrl}/design/${item.design_name ? `${item.design_name.toLowerCase().replace(/\s+/g, '-')}-${item.id.slice(-8)}` : item.id}`,
       lastModified: new Date(item.created_at),
       changeFrequency: 'monthly' as const,
-      priority: 0.8, // High priority for main content
+      priority: 0.6,
     }));
 
     // Category pages under /nail-art-gallery/category
