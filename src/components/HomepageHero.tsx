@@ -31,8 +31,8 @@ const HomepageHero = React.memo(function HomepageHero({ initialItems = [] }: Hom
   const fetchFeaturedItems = async () => {
     try {
       setLoading(true);
-      // Reduced to 12 items for better performance - 4x less data to load
-      const result = await getGalleryItems({ limit: 12, sortBy: 'newest' });
+      // Reduced to 8 items for better performance - 6x less data to load
+      const result = await getGalleryItems({ limit: 8, sortBy: 'newest' });
       setFeaturedItems(result.items);
     } catch (error) {
       console.error('Error fetching featured items:', error);
@@ -85,8 +85,8 @@ const HomepageHero = React.memo(function HomepageHero({ initialItems = [] }: Hom
           className="pinterest-masonry p-2 sm:p-4 w-full min-h-screen relative z-10"
           style={{ height: HERO_HEIGHT }}
         >
-          {featuredItems.slice(0, 12).map((item, index) => {
-            // Simplified height variations for mobile
+          {featuredItems.slice(0, 8).map((item, index) => {
+            // Simplified height variations for mobile - reduced for better performance
             const heightVariations = [
               'aspect-[3/4]', 'aspect-[4/5]', 'aspect-[2/3]', 'aspect-square'
             ];
@@ -113,7 +113,7 @@ const HomepageHero = React.memo(function HomepageHero({ initialItems = [] }: Hom
                 width={120}
                 height={160}
                 className="w-full h-full object-cover brightness-105 contrast-110"
-                loading={index < 2 ? "eager" : "lazy"}
+                loading={index < 1 ? "eager" : "lazy"}
                 priority={index === 0}
                 sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 12vw"
               />

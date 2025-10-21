@@ -81,14 +81,18 @@ export default function OptimizedImage({
         className="w-full h-full object-cover transition-transform duration-300 hover:scale-105 image-optimized"
         loading={priority ? 'eager' : loading}
         sizes={mobileSizes}
-        // Core Web Vitals optimizations - fetchPriority for LCP improvement
+        // Core Web Vitals optimizations - enhanced for mobile performance
         fetchPriority={priority ? 'high' : 'low'}
         decoding={priority ? 'sync' : 'async'}
         data-priority={priority ? "true" : "false"}
+        // Additional mobile optimizations
         style={{
           aspectRatio: `${finalWidth} / ${finalHeight}`,
           width: '100%',
-          height: 'auto'
+          height: 'auto',
+          // Reduce paint complexity on mobile
+          transform: 'translateZ(0)',
+          backfaceVisibility: 'hidden'
         }}
       />
     </div>

@@ -20,17 +20,32 @@ const nextConfig: NextConfig = {
   // Reduce polyfills for modern browsers via .browserslistrc
   // This helps reduce the 11.5 KiB of wasted bytes from legacy polyfills
   productionBrowserSourceMaps: false,
-  // Optimize bundle splitting
+  // Optimize bundle splitting - Enhanced for mobile performance
   webpack: (config, { dev, isServer }) => {
     if (!dev && !isServer) {
-      // Reduce bundle size by splitting vendor chunks
+      // Aggressive bundle splitting for better mobile performance
       config.optimization.splitChunks = {
         chunks: 'all',
+        minSize: 20000,
+        maxSize: 244000,
         cacheGroups: {
           vendor: {
             test: /[\\/]node_modules[\\/]/,
             name: 'vendors',
             chunks: 'all',
+            priority: 10,
+          },
+          common: {
+            name: 'common',
+            minChunks: 2,
+            chunks: 'all',
+            priority: 5,
+          },
+          react: {
+            test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
+            name: 'react',
+            chunks: 'all',
+            priority: 20,
           },
         },
       };

@@ -195,9 +195,12 @@ img {
   column-fill: auto;
   height: 100vh;
   min-height: 100vh;
-  /* Performance optimizations - avoid will-change for better stability */
+  /* Performance optimizations - enhanced for mobile */
   contain: layout style paint;
   content-visibility: auto;
+  /* Reduce paint complexity on mobile */
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 @media (min-width: 640px) {
@@ -233,9 +236,12 @@ img {
   display: inline-block;
   width: 100%;
   position: relative;
-  /* Optimize rendering performance */
+  /* Optimize rendering performance - enhanced for mobile */
   contain: layout style paint;
   content-visibility: auto;
+  /* GPU acceleration for smoother rendering */
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 /* Enhanced image brightness and contrast - Optimized for performance */
@@ -278,21 +284,28 @@ img {
   }
 }
 
-/* Mobile optimizations - Enhanced */
+/* Mobile optimizations - Enhanced for PageSpeed */
 @media (max-width: 768px) {
   .pinterest-masonry {
     column-count: 2;
     column-gap: 0.5rem;
-    /* Reduce complexity for mobile */
+    /* Reduce complexity for mobile - enhanced performance */
     contain: layout style paint;
+    content-visibility: auto;
+    /* GPU acceleration for smoother scrolling */
+    transform: translateZ(0);
+    backface-visibility: hidden;
   }
   
   .pinterest-item {
     margin-bottom: 0.5rem;
-    /* Disable all animations on mobile */
+    /* Disable all animations on mobile for better performance */
     animation: none !important;
-    transform: none !important;
+    transform: translateZ(0) !important;
     transition: none !important;
+    /* Enhanced containment for mobile */
+    contain: layout style paint;
+    content-visibility: auto;
   }
   
   /* Disable complex animations on mobile for performance */
@@ -300,27 +313,40 @@ img {
     animation: none !important;
   }
   
-  /* Reduce animation intensity on mobile */
+  /* Optimize GPU usage on mobile */
   .gpu-accelerated {
-    transform: none !important;
-    backface-visibility: visible;
-    perspective: none;
+    transform: translateZ(0) !important;
+    backface-visibility: hidden !important;
+    perspective: none !important;
     will-change: auto !important;
   }
   
-  /* Optimize images for mobile - reduce processing */
+  /* Optimize images for mobile - enhanced performance */
   .pinterest-item img {
     filter: brightness(1.05) contrast(1.1);
     transition: none;
     /* Improve rendering performance */
     image-rendering: optimizeSpeed;
     content-visibility: auto;
+    /* GPU acceleration for images */
+    transform: translateZ(0);
+    backface-visibility: hidden;
   }
   
   /* Reduce backdrop blur on mobile for performance */
   .backdrop-blur-sm {
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+  }
+  
+  /* Additional mobile performance optimizations */
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  /* Reduce paint complexity */
+  .pinterest-masonry::after {
+    display: none;
   }
 }
 

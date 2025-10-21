@@ -93,25 +93,32 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-title" content="Nail Art AI" />
         <link rel="manifest" href="/manifest.json" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-        {/* Critical CSS for faster initial render - prevents CLS */}
+        {/* Critical CSS for faster initial render - enhanced for mobile performance */}
         <style dangerouslySetInnerHTML={{
           __html: `
-            html{height:100%}
-            body{min-height:100%;background:#0a0a0a;color:#ededed;margin:0}
-            img{content-visibility:auto}
+            html{height:100%;font-size:16px}
+            body{min-height:100%;background:#0a0a0a;color:#ededed;margin:0;font-family:system-ui,-apple-system,sans-serif}
+            img{content-visibility:auto;max-width:100%;height:auto}
             *{box-sizing:border-box}
+            .pinterest-masonry{column-count:2;column-gap:0.5rem;height:100vh;contain:layout style paint;content-visibility:auto}
+            .pinterest-item{break-inside:avoid;margin-bottom:0.75rem;display:inline-block;width:100%;position:relative;contain:layout style paint;content-visibility:auto}
+            @media(min-width:640px){.pinterest-masonry{column-count:4;column-gap:0.75rem}}
+            @media(min-width:1024px){.pinterest-masonry{column-count:6;column-gap:1rem}}
+            @media(min-width:1280px){.pinterest-masonry{column-count:8;column-gap:0.75rem}}
           `
         }} />
-        {/* Preconnect to critical domains for better performance */}
+        {/* Preconnect to critical domains for better performance - Enhanced for mobile */}
         <link rel="preconnect" href="https://cdn.nailartai.app" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://cdn.nailartai.app" />
         {/* Previous R2 domains (for backward compatibility during migration) */}
         <link rel="preconnect" href="https://pub-05b5ee1a83754aa6b4fcd974016ecde8.r2.dev" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://pub-f94b6dc4538f33bcd1553dcdda15b36d.r2.dev" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://pub-fc15073de2e24f7bacc00c238f8ada7d.r2.dev" crossOrigin="anonymous" />
-        {/* Preconnect to Google Analytics */}
-        <link rel="preconnect" href="https://www.googletagmanager.com" />
+        {/* Preconnect to Google Analytics - delayed for LCP optimization */}
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+        {/* Additional performance hints */}
+        <link rel="preload" as="font" href="/fonts/inter-var.woff2" type="font/woff2" crossOrigin="anonymous" />
+        <link rel="preload" as="style" href="/globals.css" />
         {/* Google Analytics - Lazy loaded to improve LCP */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-F2H0CBYDGF"
