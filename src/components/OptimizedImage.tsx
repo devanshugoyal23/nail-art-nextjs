@@ -81,7 +81,9 @@ export default function OptimizedImage({
         className="w-full h-full object-cover transition-transform duration-300 hover:scale-105 image-optimized"
         loading={priority ? 'eager' : loading}
         sizes={mobileSizes}
-        // Core Web Vitals optimizations
+        // Core Web Vitals optimizations - fetchPriority for LCP improvement
+        fetchPriority={priority ? 'high' : 'low'}
+        decoding={priority ? 'sync' : 'async'}
         data-priority={priority ? "true" : "false"}
         style={{
           aspectRatio: `${finalWidth} / ${finalHeight}`,

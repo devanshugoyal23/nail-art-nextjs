@@ -93,21 +93,31 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-title" content="Nail Art AI" />
         <link rel="manifest" href="/manifest.json" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-        {/* Preload critical resources for better performance */}
-        <link rel="preload" href="/sw.js" as="script" />
-        <link rel="preload" href="/globals.css" as="style" />
-        {/* Custom domain for unified bucket */}
-        <link rel="preconnect" href="https://cdn.nailartai.app" />
+        {/* Critical CSS for faster initial render - prevents CLS */}
+        <style dangerouslySetInnerHTML={{
+          __html: `
+            html{height:100%}
+            body{min-height:100%;background:#0a0a0a;color:#ededed;margin:0}
+            img{content-visibility:auto}
+            *{box-sizing:border-box}
+          `
+        }} />
+        {/* Preconnect to critical domains for better performance */}
+        <link rel="preconnect" href="https://cdn.nailartai.app" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://cdn.nailartai.app" />
         {/* Previous R2 domains (for backward compatibility during migration) */}
-        <link rel="preconnect" href="https://pub-05b5ee1a83754aa6b4fcd974016ecde8.r2.dev" />
-        <link rel="preconnect" href="https://pub-f94b6dc4538f33bcd1553dcdda15b36d.r2.dev" />
-        <link rel="preconnect" href="https://pub-fc15073de2e24f7bacc00c238f8ada7d.r2.dev" />
-        {/* Google Analytics */}
+        <link rel="preconnect" href="https://pub-05b5ee1a83754aa6b4fcd974016ecde8.r2.dev" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://pub-f94b6dc4538f33bcd1553dcdda15b36d.r2.dev" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://pub-fc15073de2e24f7bacc00c238f8ada7d.r2.dev" crossOrigin="anonymous" />
+        {/* Preconnect to Google Analytics */}
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+        {/* Google Analytics - Lazy loaded to improve LCP */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-F2H0CBYDGF"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
         />
-        <Script id="google-analytics" strategy="afterInteractive">
+        <Script id="google-analytics" strategy="lazyOnload">
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
@@ -137,16 +147,19 @@ export default function RootLayout({
               }
             })();
             
-            // Register service worker for caching
+            // Register service worker for caching - delayed to not block LCP
             if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
               window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js')
-                  .then((registration) => {
-                    console.log('Service Worker registered successfully:', registration.scope);
-                  })
-                  .catch((error) => {
-                    console.log('Service Worker registration failed:', error);
-                  });
+                // Wait 2 seconds after load to register SW
+                setTimeout(() => {
+                  navigator.serviceWorker.register('/sw.js')
+                    .then((registration) => {
+                      console.log('Service Worker registered successfully:', registration.scope);
+                    })
+                    .catch((error) => {
+                      console.log('Service Worker registration failed:', error);
+                    });
+                }, 2000);
               });
             }
           `

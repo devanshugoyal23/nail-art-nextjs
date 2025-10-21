@@ -10,12 +10,20 @@ interface HomepageHeroProps {
   initialItems?: GalleryItem[];
 }
 
+// Prevent CLS by using consistent height
+const HERO_HEIGHT = '100vh';
+const HERO_CONTENT_HEIGHT = '85vh';
+
 const HomepageHero = React.memo(function HomepageHero({ initialItems = [] }: HomepageHeroProps) {
   const [featuredItems, setFeaturedItems] = useState<GalleryItem[]>(initialItems);
-  const [loading, setLoading] = useState(!initialItems.length);
+  const [loading, setLoading] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
+  // Prevent hydration mismatch by ensuring client-side only logic
   useEffect(() => {
+    setMounted(true);
     if (!initialItems.length) {
+      setLoading(true);
       fetchFeaturedItems();
     }
   }, [initialItems.length]);
@@ -33,26 +41,34 @@ const HomepageHero = React.memo(function HomepageHero({ initialItems = [] }: Hom
     }
   };
 
-  if (loading) {
+  // Prevent hydration mismatch by not rendering loading state on server
+  if (!mounted || loading) {
     return (
-      <div className="min-h-screen bg-black relative overflow-hidden">
-        {/* Simplified loading skeleton for mobile */}
+      <div className="min-h-screen bg-black relative overflow-hidden" style={{ height: HERO_HEIGHT }}>
+        {/* Background - same structure as loaded state to prevent CLS */}
         <div className="absolute inset-0 opacity-60 z-10">
-          <div className="pinterest-masonry p-2 sm:p-4 w-full min-h-screen relative z-10" style={{ height: '100vh' }}>
-            {Array.from({ length: 15 }).map((_, index) => (
-              <div
-                key={index}
-                className="pinterest-item aspect-[3/4] rounded-2xl bg-gray-800 animate-pulse"
-                style={{ animationDelay: `${index * 0.1}s` }}
-              />
-            ))}
-          </div>
+          <div className="absolute inset-0 bg-gradient-to-br from-gray-800 via-gray-900 to-gray-700"></div>
         </div>
         <div className="absolute inset-0 bg-gradient-to-br from-black/50 via-black/40 to-black/50 z-20"></div>
-        <div className="relative z-30 flex items-center justify-center min-h-[85vh] px-4">
-          <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-500 mx-auto mb-4"></div>
-            <p className="text-white text-lg">Loading beautiful nail art...</p>
+        
+        {/* Content skeleton - matching exact layout to prevent CLS */}
+        <div className="relative z-30 flex items-center justify-center px-4" style={{ minHeight: HERO_CONTENT_HEIGHT }}>
+          <div className="max-w-7xl w-full" style={{ maxWidth: '80rem' }}>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-16 items-center">
+              <div className="text-center lg:text-left space-y-4">
+                {/* Skeleton matching actual content dimensions */}
+                <div className="h-8 w-56 bg-purple-600/20 rounded-full mx-auto lg:mx-0 animate-pulse"></div>
+                <div className="h-16 sm:h-20 bg-gray-800/50 rounded-lg animate-pulse"></div>
+                <div className="space-y-3">
+                  <div className="h-6 bg-gray-800/50 rounded animate-pulse"></div>
+                  <div className="h-6 bg-gray-800/50 rounded animate-pulse"></div>
+                  <div className="h-6 bg-gray-800/50 rounded animate-pulse"></div>
+                </div>
+              </div>
+              <div className="flex justify-center lg:justify-end">
+                <div className="h-96 w-full max-w-md bg-gray-800/50 rounded-3xl animate-pulse"></div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -60,14 +76,14 @@ const HomepageHero = React.memo(function HomepageHero({ initialItems = [] }: Hom
   }
 
   return (
-    <div className="min-h-screen bg-black relative overflow-hidden" style={{ height: '100vh' }}>
+    <div className="min-h-screen bg-black relative overflow-hidden" style={{ height: HERO_HEIGHT }}>
       {/* Background Gallery - Optimized for Mobile */}
       <div className="absolute inset-0 opacity-85 z-10 backdrop-blur-sm">
         {/* Fallback background pattern */}
         <div className="absolute inset-0 bg-gradient-to-br from-gray-800 via-gray-900 to-gray-700"></div>
         <div 
           className="pinterest-masonry p-2 sm:p-4 w-full min-h-screen relative z-10"
-          style={{ height: '100vh' }}
+          style={{ height: HERO_HEIGHT }}
         >
           {featuredItems.slice(0, 12).map((item, index) => {
             // Simplified height variations for mobile
@@ -97,8 +113,8 @@ const HomepageHero = React.memo(function HomepageHero({ initialItems = [] }: Hom
                 width={120}
                 height={160}
                 className="w-full h-full object-cover brightness-105 contrast-110"
-                loading={index < 4 ? "eager" : "lazy"}
-                priority={index < 2}
+                loading={index < 2 ? "eager" : "lazy"}
+                priority={index === 0}
                 sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 12vw"
               />
             </div>
@@ -111,8 +127,8 @@ const HomepageHero = React.memo(function HomepageHero({ initialItems = [] }: Hom
       <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-black/50 to-black/60 z-20"></div>
 
       {/* Main Hero Section - Mobile Optimized */}
-      <div className="relative z-30 flex items-center justify-center min-h-[85vh] px-4">
-        <div className="max-w-7xl w-full">
+      <div className="relative z-30 flex items-center justify-center px-4" style={{ minHeight: HERO_CONTENT_HEIGHT }}>
+        <div className="max-w-7xl w-full" style={{ maxWidth: '80rem' }}>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-16 items-center">
             
             {/* Left Side - Headline & Features */}

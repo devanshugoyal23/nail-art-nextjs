@@ -195,9 +195,9 @@ img {
   column-fill: auto;
   height: 100vh;
   min-height: 100vh;
-  /* Performance optimizations */
+  /* Performance optimizations - avoid will-change for better stability */
   contain: layout style paint;
-  will-change: transform;
+  content-visibility: auto;
 }
 
 @media (min-width: 640px) {
@@ -233,6 +233,9 @@ img {
   display: inline-block;
   width: 100%;
   position: relative;
+  /* Optimize rendering performance */
+  contain: layout style paint;
+  content-visibility: auto;
 }
 
 /* Enhanced image brightness and contrast - Optimized for performance */
@@ -251,16 +254,7 @@ img {
   }
 }
 
-/* Performance optimizations for masonry layout */
-.pinterest-masonry {
-  contain: layout style paint;
-  will-change: transform;
-}
-
-.pinterest-item {
-  contain: layout style paint;
-  will-change: transform;
-}
+/* Performance optimizations for masonry layout - already defined above */
 
 /* Ensure images fill the available space better */
 .pinterest-masonry::after {
@@ -325,12 +319,8 @@ img {
   
   /* Reduce backdrop blur on mobile for performance */
   .backdrop-blur-sm {
-    backdrop-filter: none;
-  }
-  
-  /* Simplify gradients for mobile */
-  .bg-gradient-to-br {
-    background: rgba(0, 0, 0, 0.6) !important;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
   }
 }
 

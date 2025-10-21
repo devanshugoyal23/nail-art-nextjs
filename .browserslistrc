@@ -1,0 +1,28 @@
+# Modern browsers only - reduces polyfill needs and bundle size
+# This helps eliminate the 11.5 KiB of legacy JavaScript polyfills
+
+# Chrome
+last 2 Chrome versions
+
+# Firefox
+last 2 Firefox versions
+
+# Safari
+last 2 Safari versions
+
+# Edge
+last 2 Edge versions
+
+# iOS Safari
+iOS >= 13
+
+# Android
+Android >= 9
+
+# Exclude dead browsers
+not dead
+not IE 11
+not op_mini all
+not android < 9
+not safari < 13
+

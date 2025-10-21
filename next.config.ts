@@ -14,7 +14,12 @@ const nextConfig: NextConfig = {
   compress: true,
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
+    // Remove React dev properties in production
+    reactRemoveProperties: process.env.NODE_ENV === 'production',
   },
+  // Reduce polyfills for modern browsers via .browserslistrc
+  // This helps reduce the 11.5 KiB of wasted bytes from legacy polyfills
+  productionBrowserSourceMaps: false,
   // Optimize bundle splitting
   webpack: (config, { dev, isServer }) => {
     if (!dev && !isServer) {
