@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import Image from 'next/image';
+import OptimizedImage from "./OptimizedImage";
 import Link from 'next/link';
 import { CategoryWithThumbnail, getCategoriesWithPagination, getCategoryStatistics } from '@/lib/categoryService';
 
@@ -187,7 +187,7 @@ export default function AllCategoriesGrid({
               {/* Thumbnail */}
               <div className="relative h-32 overflow-hidden">
                 {category.thumbnail ? (
-                  <Image
+                  <OptimizedImage
                     src={category.thumbnail}
                     alt={category.category}
                     width={300}

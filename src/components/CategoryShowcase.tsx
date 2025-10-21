@@ -178,7 +178,6 @@ const CategoryShowcase = React.memo(function CategoryShowcase({ initialCategorie
                             height={80}
                             className="w-full h-full object-cover"
                             loading="lazy"
-                            quality={60}
                             sizes="(max-width: 640px) 50vw, 25vw"
                           />
                         </div>

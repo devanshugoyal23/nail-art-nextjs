@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import Image from "next/image";
+import OptimizedImage from "@/components/OptimizedImage";
 import React from "react";
 import { getGalleryItemByDesignSlug, getGalleryItemsByCategorySlug, generateGalleryItemUrl } from "@/lib/galleryService";
 import { Metadata } from "next";
@@ -16,7 +16,6 @@ import {
   generateSocialMetaTags, 
   generateImageStructuredData
 } from "@/lib/imageUtils";
-import OptimizedImage from "@/components/OptimizedImage";
 
 interface DesignDetailPageProps {
   params: Promise<{
@@ -483,7 +482,7 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
                   title={`${categoryItem.design_name || 'Nail art'} details`}
                 >
                   <div className="aspect-square relative">
-                    <Image
+                    <OptimizedImage
                       src={categoryItem.image_url}
                       alt={`${categoryItem.design_name || 'AI Generated'} ${categoryItem.category ? categoryItem.category + ' ' : ''}nail art`}
                       width={300}

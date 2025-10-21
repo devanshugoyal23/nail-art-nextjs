@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react'
 import { GalleryItem } from '@/lib/supabase'
 import { generateGalleryItemUrl } from '@/lib/galleryService'
 import Link from 'next/link'
-import Image from 'next/image'
+import OptimizedImage from './OptimizedImage'
 
 interface GalleryProps {
   onImageSelect?: (item: GalleryItem) => void
@@ -116,7 +116,7 @@ export default function Gallery({
             onClick={() => handleImageClick(item)}
           >
             <div className="aspect-square relative">
-              <Image
+              <OptimizedImage
                 src={item.image_url}
                 alt={item.design_name || 'Generated nail art'}
                 width={400}

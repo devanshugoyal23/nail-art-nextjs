@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
+import OptimizedImage from './OptimizedImage'
 import { getGalleryItemsByCategory } from '@/lib/galleryService'
 import { GalleryItem } from '@/lib/supabase'
 
@@ -118,7 +118,7 @@ export default function RelatedCategories({
             >
               <div className="aspect-square relative">
                 {previewItem ? (
-                  <Image
+                  <OptimizedImage
                     src={previewItem.image_url}
                     alt={`${category} nail art preview`}
                     width={300}

@@ -11,7 +11,7 @@ import EnhancedUploadArea from '@/components/EnhancedUploadArea';
 import DesignFilters from '@/components/DesignFilters';
 import StickyGenerateButton from '@/components/StickyGenerateButton';
 import DraggableComparisonSlider from '@/components/DraggableComparisonSlider';
-import Image from 'next/image';
+import OptimizedImage from "@/components/OptimizedImage";
 
 function TryOnContent() {
   const searchParams = useSearchParams();
@@ -412,13 +412,13 @@ function TryOnContent() {
               <div className="flex items-center gap-4 mb-6 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
                 <div className="relative w-16 h-16 rounded-lg overflow-hidden bg-gray-200 dark:bg-gray-600">
                   {sourceImage && (
-                    <Image src={sourceImage} alt="Your hand" fill className="object-cover" />
+                    <OptimizedImage src={sourceImage} alt="Your hand" width={64} height={64} className="object-cover" />
                   )}
                 </div>
                 <div className="text-2xl">+</div>
                 <div className="relative w-16 h-16 rounded-lg overflow-hidden bg-gray-200 dark:bg-gray-600">
                   {selectedDesign && (
-                    <Image src={selectedDesign.image_url} alt="Selected design" fill className="object-cover" />
+                    <OptimizedImage src={selectedDesign.image_url} alt="Selected design" width={64} height={64} className="object-cover" />
                   )}
                 </div>
                 <div className="text-2xl">=</div>

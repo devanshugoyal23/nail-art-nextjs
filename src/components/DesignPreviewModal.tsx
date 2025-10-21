@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import Image from 'next/image';
+import OptimizedImage from "./OptimizedImage";
 import { GalleryItem } from '@/lib/supabase';
 
 interface DesignPreviewModalProps {
@@ -48,10 +48,11 @@ export default function DesignPreviewModal({ design, isOpen, onClose, onSelect }
         <div className="p-6 overflow-y-auto max-h-[calc(90vh-80px)]">
           {/* Large Image */}
           <div className="relative aspect-square mb-6 rounded-lg overflow-hidden bg-gray-100 dark:bg-gray-700">
-            <Image
+            <OptimizedImage
               src={design.image_url}
               alt={design.design_name || 'Nail Art Design'}
-              fill
+              width={400}
+              height={400}
               className="object-cover"
               sizes="(max-width: 768px) 100vw, 50vw"
             />

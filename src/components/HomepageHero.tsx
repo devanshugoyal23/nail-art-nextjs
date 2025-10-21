@@ -99,7 +99,6 @@ const HomepageHero = React.memo(function HomepageHero({ initialItems = [] }: Hom
                 className="w-full h-full object-cover brightness-105 contrast-110"
                 loading={index < 4 ? "eager" : "lazy"}
                 priority={index < 2}
-                quality={60}
                 sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 12vw"
               />
             </div>

@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
-import Image from 'next/image';
+import OptimizedImage from "@/components/OptimizedImage";
 import { getGalleryItems, filterGalleryItemsByTag } from '@/lib/galleryService';
 import { getAllTagsFromGalleryItems } from '@/lib/tagService';
 import TagCollection from '@/components/TagCollection';
@@ -113,7 +113,7 @@ export default async function SeasonPage({ params }: SeasonPageProps) {
                   className="group bg-gray-800 rounded-lg overflow-hidden hover:bg-gray-700 transition-all duration-300 transform hover:-translate-y-1"
                 >
                   <div className="aspect-square relative">
-                    <Image
+                    <OptimizedImage
                       src={item.image_url}
                       alt={item.design_name || 'Generated nail art'}
                       width={300}

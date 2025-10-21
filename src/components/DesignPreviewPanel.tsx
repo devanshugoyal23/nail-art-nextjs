@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import Image from 'next/image';
+import OptimizedImage from "./OptimizedImage";
 import { GalleryItem } from '@/lib/supabase';
 
 interface DesignPreviewPanelProps {
@@ -53,10 +53,11 @@ export default function DesignPreviewPanel({
 
         {/* Design Image */}
         <div className="relative aspect-square rounded-lg overflow-hidden bg-gray-100 dark:bg-gray-700">
-          <Image
+          <OptimizedImage
             src={selectedDesign.image_url}
             alt={selectedDesign.design_name || 'Selected Design'}
-            fill
+            width={300}
+            height={300}
             className="object-cover"
             sizes="(max-width: 768px) 100vw, 300px"
           />

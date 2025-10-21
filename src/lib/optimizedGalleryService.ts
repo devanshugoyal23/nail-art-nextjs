@@ -6,16 +6,13 @@
  */
 
 import { 
-  getGalleryItems as getR2GalleryItems,
-  getGalleryItemById as getR2GalleryItemById,
   getGalleryItemsByCategory as getR2GalleryItemsByCategory,
   getPopularItems,
   searchGalleryItems,
   getCategories as getR2Categories,
   getCategoryStats,
   getPerformanceMetrics,
-  isR2DataAvailable,
-  R2GalleryItem
+  isR2DataAvailable
 } from './optimizedDataService';
 
 import { 
@@ -48,7 +45,7 @@ export async function getGalleryItems(params: {
   totalPages: number;
   currentPage: number;
 }> {
-  const { page = 1, limit = 20, category, search, tags = [], sortBy = 'newest' } = params;
+  const { page = 1 } = params;
   
   try {
     // Force use of Supabase for now to ensure correct URLs
@@ -333,49 +330,6 @@ export async function preloadCriticalData(): Promise<void> {
 }
 
 // Helper functions
-
-/**
- * Filter items by tags
- */
-function filterItemsByTags(items: GalleryItem[], tags: string[]): GalleryItem[] {
-  return items.filter(item => {
-    return tags.some(tag => {
-      const searchableText = [
-        item.design_name,
-        item.prompt,
-        item.category,
-        ...((item as GalleryItem & { tags?: string[] }).tags || [])
-      ].join(' ').toLowerCase();
-      
-      return searchableText.includes(tag.toLowerCase());
-    });
-  });
-}
-
-/**
- * Apply sorting to items
- */
-function applySorting(items: GalleryItem[], sortBy: string): GalleryItem[] {
-  switch (sortBy) {
-    case 'oldest':
-      return items.sort((a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime());
-    case 'name':
-      return items.sort((a, b) => (a.design_name || '').localeCompare(b.design_name || ''));
-    case 'popular':
-      return items.sort((a, b) => ((b as GalleryItem & { popularity_score?: number }).popularity_score || 0) - ((a as GalleryItem & { popularity_score?: number }).popularity_score || 0));
-    case 'newest':
-    default:
-      return items.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
-  }
-}
-
-/**
- * Get R2 gallery items with pagination
- */
-async function getR2GalleryItemsPaginated(page: number, limit: number, category?: string) {
-  const { getGalleryItemsPaginated } = await import('./optimizedDataService');
-  return await getGalleryItemsPaginated(page, limit, category);
-}
 
 /**
  * Generate SEO-friendly URL for a gallery item

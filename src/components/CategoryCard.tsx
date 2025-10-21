@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
+import OptimizedImage from "./OptimizedImage";
 import { useState, useEffect } from 'react';
 import { getGalleryItemsByCategory } from '@/lib/galleryService';
 import { GalleryItem } from '@/lib/supabase';
@@ -59,7 +59,7 @@ export default function CategoryCard({
     >
       {/* Background Image */}
       <div className="relative h-64 overflow-hidden">
-        <Image
+        <OptimizedImage
           src={image}
           alt={title}
           width={400}
@@ -110,7 +110,7 @@ export default function CategoryCard({
                   key={item.id}
                   className="w-12 h-12 rounded-lg overflow-hidden border border-gray-600"
                 >
-                  <Image
+                  <OptimizedImage
                     src={item.image_url}
                     alt={item.design_name || 'Sample design'}
                     width={48}

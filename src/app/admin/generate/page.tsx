@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Image from 'next/image';
+import OptimizedImage from "@/components/OptimizedImage";
 import Link from 'next/link';
 import { getAvailableCategories, getCategoriesByTier } from '@/lib/nailArtGenerator';
 import { useAutoSEO } from '@/lib/useAutoSEO';
@@ -582,7 +582,7 @@ export default function GenerateGalleryPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {results.map((result) => (
                     <div key={result.id} className="bg-gray-700 rounded-lg overflow-hidden">
-                      <Image
+                      <OptimizedImage
                         src={result.image_url}
                         alt={result.design_name}
                         width={400}

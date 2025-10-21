@@ -117,31 +117,37 @@ export default function RootLayout({
         </Script>
         <script dangerouslySetInnerHTML={{
           __html: `
-            // Mobile optimizations
-            if (typeof window !== 'undefined') {
-              // Check if mobile
-              const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            // Mobile viewport height fix
+            (function() {
+              if (typeof window === 'undefined') return;
               
-              // Optimize for mobile
+              const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
               if (isMobile) {
-                document.documentElement.style.setProperty('--vh', window.innerHeight * 0.01 + 'px');
-                window.addEventListener('resize', () => {
-                  document.documentElement.style.setProperty('--vh', window.innerHeight * 0.01 + 'px');
-                });
+                const setVH = () => {
+                  if (document && document.documentElement) {
+                    document.documentElement.style.setProperty('--vh', window.innerHeight * 0.01 + 'px');
+                  }
+                };
+                
+                // Set initial value
+                setVH();
+                
+                // Update on resize
+                window.addEventListener('resize', setVH);
               }
-
-              // Register service worker for caching
-              if ('serviceWorker' in navigator) {
-                window.addEventListener('load', () => {
-                  navigator.serviceWorker.register('/sw.js')
-                    .then((registration) => {
-                      console.log('Service Worker registered successfully:', registration.scope);
-                    })
-                    .catch((error) => {
-                      console.log('Service Worker registration failed:', error);
-                    });
-                });
-              }
+            })();
+            
+            // Register service worker for caching
+            if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
+              window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                  .then((registration) => {
+                    console.log('Service Worker registered successfully:', registration.scope);
+                  })
+                  .catch((error) => {
+                    console.log('Service Worker registration failed:', error);
+                  });
+              });
             }
           `
         }} />

@@ -6,7 +6,7 @@ import { generateGalleryItemUrl } from '@/lib/galleryService';
 import { getAllTagsFromGalleryItems, TagItem } from '@/lib/tagService';
 import { useMobileOptimization } from '@/lib/useMobileOptimization';
 import Link from 'next/link';
-import Image from 'next/image';
+import OptimizedImage from './OptimizedImage';
 
 interface EnhancedGalleryProps {
   onImageSelect?: (item: GalleryItem) => void;
@@ -26,7 +26,7 @@ export default function EnhancedGallery({
   initialItems = [],
   initialTotalCount = 0
 }: EnhancedGalleryProps) {
-  const { isMobile, isSlow, itemsPerPage: mobileItemsPerPage } = useMobileOptimization();
+  const { isMobile, itemsPerPage: mobileItemsPerPage } = useMobileOptimization();
   
   const [items, setItems] = useState<GalleryItem[]>(initialItems);
   const [loading, setLoading] = useState(!initialItems.length);
@@ -358,7 +358,7 @@ export default function EnhancedGallery({
               onClick={() => handleImageClick(item)}
             >
               <div className={`${viewMode === 'list' ? 'w-32 h-32 flex-shrink-0' : 'aspect-square'} relative`}>
-                <Image
+                <OptimizedImage
                   src={item.image_url}
                   alt={item.design_name || 'Generated nail art'}
                   width={400}
@@ -366,10 +366,7 @@ export default function EnhancedGallery({
                   className="w-full h-full object-cover"
                   loading={currentPage === 1 && items.indexOf(item) < 4 ? 'eager' : 'lazy'}
                   sizes={viewMode === 'list' ? '128px' : isMobile ? '100vw' : '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw'}
-                  quality={isSlow ? 65 : 75}
                   priority={currentPage === 1 && items.indexOf(item) < 4}
-                  placeholder="blur"
-                  blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
                 />
                 
                 {/* Favorite Button */}

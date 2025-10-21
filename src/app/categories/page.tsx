@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
-import Image from 'next/image';
+import OptimizedImage from "@/components/OptimizedImage";
 import { getAllTagsFromGalleryItems } from '@/lib/tagService';
 import { getGalleryItems } from '@/lib/galleryService';
 import { getAllCategoriesWithThumbnails, getCategoryStatistics } from '@/lib/categoryService';
@@ -228,7 +228,7 @@ export default async function CategoriesPage() {
                     >
                       <div className="w-10 h-10 rounded-lg overflow-hidden flex-shrink-0">
                         {category.thumbnail ? (
-                          <Image
+                          <OptimizedImage
                             src={category.thumbnail}
                             alt={category.category}
                             width={40}
@@ -272,7 +272,7 @@ export default async function CategoriesPage() {
                     >
                       <div className="w-10 h-10 rounded-lg overflow-hidden flex-shrink-0">
                         {category.thumbnail ? (
-                          <Image
+                          <OptimizedImage
                             src={category.thumbnail}
                             alt={category.category}
                             width={40}
@@ -381,7 +381,7 @@ export default async function CategoriesPage() {
               >
                 <div className="relative h-24 overflow-hidden">
                   {category.thumbnail ? (
-                    <Image
+                    <OptimizedImage
                       src={category.thumbnail}
                       alt={category.category}
                       width={200}

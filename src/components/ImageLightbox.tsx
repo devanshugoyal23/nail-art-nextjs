@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import Image from 'next/image';
+import OptimizedImage from "./OptimizedImage";
 
 interface ImageLightboxProps {
   isOpen: boolean;
@@ -152,7 +152,7 @@ export default function ImageLightbox({
             transition: isDragging ? 'none' : 'transform 0.2s ease-out'
           }}
         >
-          <Image
+          <OptimizedImage
             src={src}
             alt={alt}
             width={800}

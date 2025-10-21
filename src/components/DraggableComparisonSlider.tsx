@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useRef, useCallback, useEffect } from 'react';
-import Image from 'next/image';
+import OptimizedImage from "./OptimizedImage";
 
 interface DraggableComparisonSliderProps {
   before: string;
@@ -82,7 +82,7 @@ export default function DraggableComparisonSlider({
       className={`relative w-full max-w-2xl mx-auto aspect-square rounded-lg overflow-hidden group ${className}`}
     >
       {/* Before Image */}
-      <Image 
+      <OptimizedImage 
         src={before} 
         alt="Original Hand" 
         width={512} 
@@ -95,7 +95,7 @@ export default function DraggableComparisonSlider({
         className="absolute inset-0 w-full h-full" 
         style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
       >
-        <Image 
+        <OptimizedImage 
           src={after} 
           alt="AI Generated Nails" 
           width={512} 
