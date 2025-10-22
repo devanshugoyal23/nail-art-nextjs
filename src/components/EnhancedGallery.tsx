@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { GalleryItem } from '@/lib/supabase';
-import { generateGalleryItemUrl } from '@/lib/galleryService';
 import { getAllTagsFromGalleryItems, TagItem } from '@/lib/tagService';
 import { useMobileOptimization } from '@/lib/useMobileOptimization';
 import Link from 'next/link';
@@ -111,8 +110,12 @@ export default function EnhancedGallery({
     if (onImageSelect) {
       onImageSelect(item);
     } else {
-      const seoUrl = generateGalleryItemUrl(item);
-      window.location.href = seoUrl;
+      // Navigate to canonical URL format: /{category}/{design-name}-{id}
+      const categorySlug = item.category?.toLowerCase().replace(/\s+/g, '-') || 'design';
+      const designSlug = item.design_name?.toLowerCase().replace(/\s+/g, '-') || 'design';
+      const idSuffix = item.id.slice(-8);
+      const canonicalUrl = `/${categorySlug}/${designSlug}-${idSuffix}`;
+      window.location.href = canonicalUrl;
     }
   };
 

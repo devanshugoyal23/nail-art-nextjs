@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from 'react'
 import { GalleryItem } from '@/lib/supabase'
-import { generateGalleryItemUrl } from '@/lib/galleryService'
 import Link from 'next/link'
 import OptimizedImage from './OptimizedImage'
 
@@ -63,9 +62,12 @@ export default function Gallery({
   }
 
   const handleImageClick = (item: GalleryItem) => {
-    // Navigate to SEO-friendly URL
-    const seoUrl = generateGalleryItemUrl(item)
-    window.location.href = seoUrl
+    // Navigate to canonical URL format: /{category}/{design-name}-{id}
+    const categorySlug = item.category?.toLowerCase().replace(/\s+/g, '-') || 'design';
+    const designSlug = item.design_name?.toLowerCase().replace(/\s+/g, '-') || 'design';
+    const idSuffix = item.id.slice(-8);
+    const canonicalUrl = `/${categorySlug}/${designSlug}-${idSuffix}`;
+    window.location.href = canonicalUrl;
   }
 
 

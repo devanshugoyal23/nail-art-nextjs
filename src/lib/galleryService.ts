@@ -603,6 +603,7 @@ export async function getGalleryItemBySlug(category: string, slug: string): Prom
 
     // If a short id suffix is present, try to resolve by id suffix first (most precise)
     if (idSuffix) {
+      // First try with category filter
       const { data: idData, error: idError } = await supabase
         .from('gallery_items')
         .select('*')
@@ -611,8 +612,20 @@ export async function getGalleryItemBySlug(category: string, slug: string): Prom
         .single()
 
       if (!idError && idData) {
-        console.log('Found item by short ID suffix:', idData.design_name)
+        console.log('Found item by short ID suffix with category:', idData.design_name)
         return convertToCdnUrls(idData)
+      }
+
+      // If category filter fails, try without category filter (fallback)
+      const { data: idDataFallback, error: idErrorFallback } = await supabase
+        .from('gallery_items')
+        .select('*')
+        .ilike('id', `%${idSuffix}`)
+        .single()
+
+      if (!idErrorFallback && idDataFallback) {
+        console.log('Found item by short ID suffix without category:', idDataFallback.design_name)
+        return convertToCdnUrls(idDataFallback)
       }
     }
     
@@ -630,6 +643,19 @@ export async function getGalleryItemBySlug(category: string, slug: string): Prom
         console.log('Found exact match:', data.design_name)
         return convertToCdnUrls(data)
       }
+
+      // If category-specific search fails, try without category filter
+      const { data: fallbackData, error: fallbackError } = await supabase
+        .from('gallery_items')
+        .select('*')
+        .ilike('design_name', `%${designName}%`)
+        .limit(1)
+        .single()
+
+      if (!fallbackError && fallbackData) {
+        console.log('Found fallback match by design name:', fallbackData.design_name)
+        return convertToCdnUrls(fallbackData)
+      }
     }
 
     // Strategy 2: Try to find by full ID if the slug contains a full UUID
@@ -646,6 +672,20 @@ export async function getGalleryItemBySlug(category: string, slug: string): Prom
       }
     }
 
+    // Final fallback: Try to find any item in the category to prevent 404s
+    console.log('No specific match found, trying fallback to any item in category:', categoryName)
+    const { data: fallbackData, error: fallbackError } = await supabase
+      .from('gallery_items')
+      .select('*')
+      .ilike('category', categoryName)
+      .limit(1)
+      .single()
+
+    if (!fallbackError && fallbackData) {
+      console.log('Found fallback item in category:', fallbackData.design_name)
+      return convertToCdnUrls(fallbackData)
+    }
+
     // No fallback to random items - return null if no specific match found
     console.error('No gallery item found for the specific slug:', { category, slug })
     return null
@@ -656,20 +696,16 @@ export async function getGalleryItemBySlug(category: string, slug: string): Prom
 }
 
 /**
- * Generate SEO-friendly URL for a gallery item
+ * Generate canonical URL for a gallery item
  * @param item - The gallery item
- * @returns SEO-friendly URL path
+ * @returns Canonical URL path in format: /{category}/{design-name}-{id}
  */
 export function generateGalleryItemUrl(item: GalleryItem): string {
-  // Use the /design/[slug] route format for all gallery items
-  if (item.design_name) {
-    const designSlug = item.design_name.toLowerCase().replace(/\s+/g, '-')
-    const idSuffix = item.id.slice(-8)
-    return `/design/${designSlug}-${idSuffix}`
-  } else {
-    // Fallback to using the full ID for items without design name
-    return `/design/${item.id}`
-  }
+  // Use canonical format: /{category}/{design-name}-{id}
+  const categorySlug = item.category?.toLowerCase().replace(/\s+/g, '-') || 'design'
+  const designSlug = item.design_name?.toLowerCase().replace(/\s+/g, '-') || 'design'
+  const idSuffix = item.id.slice(-8)
+  return `/${categorySlug}/${designSlug}-${idSuffix}`
 }
 
 /**

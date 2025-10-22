@@ -1,23 +1,18 @@
 import { NextResponse } from 'next/server';
 
 /**
- * Gallery Sitemap - REMOVED TO PREVENT DUPLICATION
+ * Gallery Sitemap - ONLY CANONICAL URLs
  * 
- * This sitemap was causing duplicate content issues:
- * - Gallery item URLs duplicated with design URLs
- * - Category URLs duplicated with categories sitemap
+ * This sitemap includes only the main gallery overview page.
+ * Individual design URLs are in sitemap-designs.xml to prevent duplication.
  * 
- * Content is now properly organized in:
- * - sitemap-designs.xml (canonical design URLs)
- * - sitemap-categories.xml (category pages)
- * - sitemap-images.xml (image metadata)
- * - sitemap-static.xml (core pages)
+ * CRITICAL: No redirect URLs or gallery item URLs included here.
  */
 export async function GET() {
   const baseUrl = 'https://nailartai.app';
   const currentDate = new Date().toISOString();
   
-  // Only include essential gallery overview pages to avoid duplication
+  // Only include the main gallery overview page - NO individual item URLs
   const galleryPages = [
     {
       url: `${baseUrl}/nail-art-gallery`,

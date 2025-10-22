@@ -3,6 +3,34 @@ import { getGalleryItems } from '@/lib/galleryService';
 import { GalleryItem } from '@/lib/supabase';
 
 /**
+ * Get priority based on category popularity
+ */
+function getCategoryPriority(category?: string): number {
+  const highPriorityCategories = [
+    'christmas', 'halloween', 'wedding', 'bridesmaid', 'prom', 
+    'valentine', 'summer', 'spring', 'autumn', 'winter'
+  ];
+  
+  const mediumPriorityCategories = [
+    'french', 'gel', 'acrylic', 'natural', 'glitter', 'chrome'
+  ];
+  
+  if (!category) return 0.6;
+  
+  const categoryLower = category.toLowerCase();
+  
+  if (highPriorityCategories.some(cat => categoryLower.includes(cat))) {
+    return 0.9; // High priority for seasonal/popular categories
+  }
+  
+  if (mediumPriorityCategories.some(cat => categoryLower.includes(cat))) {
+    return 0.8; // Medium priority for technique categories
+  }
+  
+  return 0.7; // Default priority
+}
+
+/**
  * Designs Sitemap - Canonical design URLs only (highest priority)
  * These are the main nail art design pages that should rank highest
  * NO DUPLICATES - This is the ONLY sitemap with design URLs
@@ -51,11 +79,14 @@ export async function GET() {
       const designSlug = item.design_name?.toLowerCase().replace(/\s+/g, '-') || 'design';
       const idSuffix = item.id.slice(-8);
       
+      // Higher priority for popular categories
+      const categoryPriority = getCategoryPriority(item.category);
+      
       return {
         url: `${baseUrl}/${categorySlug}/${designSlug}-${idSuffix}`,
         lastModified: new Date(item.created_at).toISOString(),
-        changeFrequency: 'monthly',
-        priority: 0.8, // High priority for main content
+        changeFrequency: 'weekly', // More frequent for better indexing
+        priority: categoryPriority,
       };
     });
     

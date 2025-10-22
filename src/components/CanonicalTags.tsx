@@ -20,6 +20,7 @@ export default function CanonicalTags({ canonicalUrl, noIndex = true }: Canonica
 
 /**
  * Generate canonical URL for gallery items
+ * Uses the canonical format: /{category}/{design-name}-{id}
  */
 export function generateCanonicalUrl(item: {
   id: string;

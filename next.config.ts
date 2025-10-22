@@ -168,21 +168,27 @@ const nextConfig: NextConfig = {
         destination: "/nail-art-gallery",
         permanent: true,
       },
-      // Redirect old gallery detail URLs to root detail URLs
+      // Redirect old gallery detail URLs to canonical format
       {
         source: "/gallery/:category/:slug",
         destination: "/:category/:slug",
         permanent: true,
       },
-      // Redirect old design fallback URLs
+      // Redirect old design fallback URLs to canonical format
       {
         source: "/gallery/design/:slug",
         destination: "/design/:slug",
         permanent: true,
       },
-      // Redirect legacy ID detail route
+      // Redirect legacy ID detail route to canonical format
       {
         source: "/gallery/:id",
+        destination: "/design/:id",
+        permanent: true,
+      },
+      // Redirect gallery item URLs to canonical format
+      {
+        source: "/nail-art-gallery/item/:id",
         destination: "/design/:id",
         permanent: true,
       },
