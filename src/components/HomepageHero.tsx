@@ -22,11 +22,12 @@ const HomepageHero = React.memo(function HomepageHero({ initialItems = [] }: Hom
   // Prevent hydration mismatch by ensuring client-side only logic
   useEffect(() => {
     setMounted(true);
-    if (!initialItems.length) {
+    // Only fetch if no initial items provided - prevents duplicate API call
+    if (!initialItems.length && featuredItems.length === 0) {
       setLoading(true);
       fetchFeaturedItems();
     }
-  }, [initialItems.length]);
+  }, [initialItems.length, featuredItems.length]);
 
   const fetchFeaturedItems = async () => {
     try {
@@ -40,6 +41,9 @@ const HomepageHero = React.memo(function HomepageHero({ initialItems = [] }: Hom
       setLoading(false);
     }
   };
+
+  // Use initialItems if provided, otherwise use fetched items
+  const displayItems = initialItems.length > 0 ? initialItems : featuredItems;
 
   // Prevent hydration mismatch by not rendering loading state on server
   if (!mounted || loading) {
@@ -85,7 +89,7 @@ const HomepageHero = React.memo(function HomepageHero({ initialItems = [] }: Hom
           className="pinterest-masonry p-2 sm:p-4 w-full min-h-screen relative z-10"
           style={{ height: HERO_HEIGHT }}
         >
-          {featuredItems.slice(0, 8).map((item, index) => {
+          {displayItems.slice(0, 8).map((item, index) => {
             // Simplified height variations for mobile - reduced for better performance
             const heightVariations = [
               'aspect-[3/4]', 'aspect-[4/5]', 'aspect-[2/3]', 'aspect-square'
@@ -216,7 +220,7 @@ const HomepageHero = React.memo(function HomepageHero({ initialItems = [] }: Hom
                   
                   <div className="flex items-center justify-center gap-2 text-gray-400 text-sm sm:text-sm">
                     <span className="text-yellow-400">🌟</span>
-                    <span>{featuredItems.length > 0 ? `${featuredItems.length * 50}+` : '1000+'} designs generated this month</span>
+                    <span>{displayItems.length > 0 ? `${displayItems.length * 50}+` : '1000+'} designs generated this month</span>
                   </div>
                   
                   <div className="relative">

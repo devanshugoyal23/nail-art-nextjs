@@ -48,10 +48,10 @@ export async function GET(request: NextRequest) {
       currentPage: result.currentPage
     })
 
-    // Add cache headers for edge caching
-    response.headers.set('Cache-Control', 'public, s-maxage=3600, stale-while-revalidate=86400')
-    response.headers.set('CDN-Cache-Control', 'public, s-maxage=7200')
-    response.headers.set('Vercel-CDN-Cache-Control', 'public, s-maxage=7200')
+    // Add cache headers for edge caching - increased TTL for better performance
+    response.headers.set('Cache-Control', 'public, s-maxage=7200, stale-while-revalidate=172800')
+    response.headers.set('CDN-Cache-Control', 'public, s-maxage=14400')
+    response.headers.set('Vercel-CDN-Cache-Control', 'public, s-maxage=14400')
     
     // Add rate limit headers
     Object.entries(rateLimit.headers).forEach(([key, value]) => {

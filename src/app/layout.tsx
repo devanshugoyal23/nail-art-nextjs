@@ -110,10 +110,6 @@ export default function RootLayout({
         {/* Preconnect to critical domains for better performance - Enhanced for mobile */}
         <link rel="preconnect" href="https://cdn.nailartai.app" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://cdn.nailartai.app" />
-        {/* Previous R2 domains (for backward compatibility during migration) */}
-        <link rel="preconnect" href="https://pub-05b5ee1a83754aa6b4fcd974016ecde8.r2.dev" crossOrigin="anonymous" />
-        <link rel="preconnect" href="https://pub-f94b6dc4538f33bcd1553dcdda15b36d.r2.dev" crossOrigin="anonymous" />
-        <link rel="preconnect" href="https://pub-fc15073de2e24f7bacc00c238f8ada7d.r2.dev" crossOrigin="anonymous" />
         {/* Preconnect to Google Analytics - delayed for LCP optimization */}
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
         {/* Additional performance hints */}

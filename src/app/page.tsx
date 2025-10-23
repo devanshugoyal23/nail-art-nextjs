@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import HomepageHero from "@/components/HomepageHero";
 import LazyHomepageSections from "@/components/LazyHomepageSections";
+import { getGalleryItems } from "@/lib/optimizedGalleryService";
 
 export const metadata: Metadata = {
   title: "Nail Art AI - Virtual Try-On & Design Generator",
@@ -42,7 +43,9 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Home() {
+export default async function Home() {
+  // Fetch initial gallery data server-side for faster homepage load
+  const { items } = await getGalleryItems({ limit: 8, sortBy: 'newest' });
   return (
     <>
       {/* Structured Data */}
@@ -74,7 +77,7 @@ export default function Home() {
       />
       
       {/* Hero Section with Featured Designs */}
-      <HomepageHero />
+      <HomepageHero initialItems={items} />
       
       {/* Lazy-loaded sections for better performance */}
       <LazyHomepageSections />

@@ -11,7 +11,7 @@ interface GalleryProps {
   showDelete?: boolean
 }
 
-export default function Gallery({ 
+const Gallery = function Gallery({ 
   showPrompts = true, 
   showDelete = false 
 }: GalleryProps) {
@@ -168,5 +168,7 @@ export default function Gallery({
     </div>
   )
 }
+
+export default React.memo(Gallery);
 
 

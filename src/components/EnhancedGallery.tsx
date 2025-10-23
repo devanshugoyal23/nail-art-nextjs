@@ -18,14 +18,14 @@ interface EnhancedGalleryProps {
 type SortOption = 'newest' | 'oldest' | 'popular' | 'name';
 type ViewMode = 'grid' | 'masonry' | 'list';
 
-export default function EnhancedGallery({ 
+const EnhancedGallery = function EnhancedGallery({ 
   onImageSelect, 
   showPrompts = true, 
   showDelete = false,
   initialItems = [],
   initialTotalCount = 0
 }: EnhancedGalleryProps) {
-  const { isMobile, itemsPerPage: mobileItemsPerPage } = useMobileOptimization();
+  const { isMobile } = useMobileOptimization();
   
   const [items, setItems] = useState<GalleryItem[]>(initialItems);
   const [loading, setLoading] = useState(!initialItems.length);
@@ -38,7 +38,7 @@ export default function EnhancedGallery({
   const [showFilters, setShowFilters] = useState(false);
   const [favorites, setFavorites] = useState<string[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(mobileItemsPerPage);
+  const [itemsPerPage] = useState(12);  // Reduced from mobileItemsPerPage for better performance
   const [totalCount, setTotalCount] = useState(initialTotalCount);
   const [totalPages, setTotalPages] = useState(0);
 
@@ -85,26 +85,12 @@ export default function EnhancedGallery({
     }
   }, [currentPage, itemsPerPage, selectedCategory, searchTerm, selectedTags, sortBy]);
 
+  // Consolidated useEffect to prevent multiple API calls
   useEffect(() => {
     if (!initialItems.length) {
       fetchGalleryItems();
     }
-  }, [initialItems.length, fetchGalleryItems]);
-
-  // Refetch data when filters change
-  useEffect(() => {
-    if (!initialItems.length) {
-      setCurrentPage(1); // Reset to first page when filters change
-      fetchGalleryItems();
-    }
-  }, [searchTerm, selectedCategory, selectedTags, sortBy, initialItems.length, fetchGalleryItems]);
-
-  // Refetch data when page changes
-  useEffect(() => {
-    if (!initialItems.length) {
-      fetchGalleryItems();
-    }
-  }, [currentPage, initialItems.length, fetchGalleryItems]);
+  }, [currentPage, searchTerm, selectedCategory, selectedTags, sortBy, initialItems.length, fetchGalleryItems]);
 
   const handleImageClick = (item: GalleryItem) => {
     if (onImageSelect) {
@@ -495,4 +481,6 @@ export default function EnhancedGallery({
       )}
     </div>
   );
-}
+};
+
+export default React.memo(EnhancedGallery);

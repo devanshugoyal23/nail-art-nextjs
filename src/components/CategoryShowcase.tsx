@@ -23,7 +23,7 @@ const CategoryShowcase = React.memo(function CategoryShowcase({ initialCategorie
     const categoryPromises = cats.map(async (category) => {
       try {
       const categoryItems = await getGalleryItemsByCategory(category);
-      return { category, items: categoryItems.slice(0, 2) }; // Get 2 sample items per category for better performance
+      return { category, items: categoryItems.slice(0, 1) }; // Get 1 sample item per category for better performance
       } catch (error) {
         console.error(`CategoryShowcase: Error fetching items for category ${category}:`, {
           category,

@@ -199,7 +199,7 @@ interface GetGalleryItemsResult {
 export async function getGalleryItems(params: GetGalleryItemsParams = {}): Promise<GetGalleryItemsResult> {
   const {
     page = 1,
-    limit = 20,
+    limit = 12,  // Reduced from 20 to 12 for better performance
     category = '',
     search = '',
     tags = [],
