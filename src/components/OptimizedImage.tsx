@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useMobileOptimization } from '@/lib/useMobileOptimization';
 import { getOptimizedImageUrl } from './MobileOptimizedImage';
 
@@ -54,6 +54,7 @@ export default function OptimizedImage({
   preset
 }: OptimizedImageProps) {
   const { isMobile } = useMobileOptimization();
+  const [currentSrc, setCurrentSrc] = useState<string>('');
 
   // Use preset if provided, otherwise use individual props
   const presetConfig = preset ? IMAGE_PRESETS[preset] : null;
@@ -61,8 +62,18 @@ export default function OptimizedImage({
   const finalHeight = presetConfig ? presetConfig.height : height;
   const finalSizes = presetConfig ? presetConfig.sizes : sizes;
   
-  // Get mobile-optimized image URL
-  const optimizedSrc = getOptimizedImageUrl(src, isMobile);
+  // Initialize with mobile-optimized image URL
+  useEffect(() => {
+    const mobileSrc = getOptimizedImageUrl(src, true);
+    setCurrentSrc(mobileSrc);
+  }, [src]);
+  
+  // Switch to desktop image if on desktop and mobile image fails
+  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement>) => {
+    if (currentSrc !== src) {
+      setCurrentSrc(src);
+    }
+  };
 
   // Mobile-optimized sizes
   const mobileSizes = isMobile 
@@ -75,7 +86,7 @@ export default function OptimizedImage({
       onClick={onClick}
     >
       <img
-        src={optimizedSrc}
+        src={currentSrc || getOptimizedImageUrl(src, true)}
         alt={alt}
         width={finalWidth}
         height={finalHeight}
@@ -96,11 +107,7 @@ export default function OptimizedImage({
           backfaceVisibility: 'hidden'
         }}
         // Fallback to original image if mobile-optimized fails
-        onError={(e) => {
-          if (isMobile && e.currentTarget.src !== src) {
-            e.currentTarget.src = src;
-          }
-        }}
+        onError={handleImageError}
       />
     </div>
   );

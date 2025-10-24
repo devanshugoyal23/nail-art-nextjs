@@ -31,13 +31,14 @@ export function useMobileOptimization() {
     setLoadingStrategy(getMobileLoadingStrategy());
   }, []);
 
-  // Return default values during SSR to prevent hydration mismatch
+  // Return mobile-optimized values during SSR to prevent hydration mismatch
+  // This ensures mobile-optimized images are served by default
   if (!mounted) {
     return {
-      isMobile: false,
+      isMobile: true, // Assume mobile during SSR for better performance
       isTouch: false,
       isSlow: false,
-      itemsPerPage: 24,
+      itemsPerPage: 8, // Mobile-optimized items per page
       loadingStrategy: 'lazy' as const
     };
   }

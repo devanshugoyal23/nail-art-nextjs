@@ -9,8 +9,23 @@
  * Check if the device is mobile
  */
 export function isMobile(): boolean {
-  if (typeof window === 'undefined') return false;
-  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  if (typeof window === 'undefined') {
+    // During SSR, assume mobile for better performance
+    // This ensures mobile-optimized images are served by default
+    return true;
+  }
+  
+  // Check user agent
+  const userAgent = navigator.userAgent;
+  const isMobileUA = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
+  
+  // Check screen size
+  const isSmallScreen = window.innerWidth <= 768;
+  
+  // Check touch capability
+  const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+  
+  return isMobileUA || isSmallScreen || isTouchDevice;
 }
 
 /**
