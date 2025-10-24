@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { useMobileOptimization } from '@/lib/useMobileOptimization';
+import { getOptimizedImageUrl } from './MobileOptimizedImage';
 
 interface OptimizedImageProps {
   src: string;
@@ -60,8 +61,8 @@ export default function OptimizedImage({
   const finalHeight = presetConfig ? presetConfig.height : height;
   const finalSizes = presetConfig ? presetConfig.sizes : sizes;
   
-  // Note: Quality optimization is now handled at the R2/CDN level
-  // Direct R2 URLs provide better performance with Cloudflare CDN
+  // Get mobile-optimized image URL
+  const optimizedSrc = getOptimizedImageUrl(src, isMobile);
 
   // Mobile-optimized sizes
   const mobileSizes = isMobile 
@@ -74,7 +75,7 @@ export default function OptimizedImage({
       onClick={onClick}
     >
       <img
-        src={src}
+        src={optimizedSrc}
         alt={alt}
         width={finalWidth}
         height={finalHeight}
@@ -93,6 +94,12 @@ export default function OptimizedImage({
           // Reduce paint complexity on mobile
           transform: 'translateZ(0)',
           backfaceVisibility: 'hidden'
+        }}
+        // Fallback to original image if mobile-optimized fails
+        onError={(e) => {
+          if (isMobile && e.currentTarget.src !== src) {
+            e.currentTarget.src = src;
+          }
         }}
       />
     </div>
