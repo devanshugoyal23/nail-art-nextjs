@@ -9,8 +9,8 @@ cat > .env.local << EOF
 GEMINI_API_KEY=your_gemini_api_key_here
 
 # Supabase Configuration
-NEXT_PUBLIC_SUPABASE_URL=https://nail-art-gallery.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key_here
+NEXT_PUBLIC_SUPABASE_URL=https://uzlyuzhxayzaxmtzaslg.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV6bHl1emh4YXl6YXhtdHphc2xnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjEyMzI1MDAsImV4cCI6MjA3NjgwODUwMH0.x8VdV93ZM4xvgQ_pAoRDhtyX1_RprdnqtTlCaqcPhlc
 
 # Cloudflare R2 Configuration (Unified Bucket)
 R2_ENDPOINT=https://05b5ee1a83754aa6b4fcd974016ecde8.r2.cloudflarestorage.com
