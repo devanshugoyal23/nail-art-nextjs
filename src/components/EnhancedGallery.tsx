@@ -348,7 +348,7 @@ const EnhancedGallery = function EnhancedGallery({
             >
               <div className={`${viewMode === 'list' ? 'w-32 h-32 flex-shrink-0' : 'aspect-square'} relative`}>
                 <OptimizedImage
-                  src={item.image_url}
+                  src={item.original_image_url || item.image_url}
                   alt={item.design_name || 'Generated nail art'}
                   width={400}
                   height={400}

@@ -475,7 +475,7 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
           <div className="mb-8">
             <div className="relative bg-gray-800 rounded-xl overflow-hidden">
               <OptimizedImage
-                  src={item.image_url}
+                  src={item.original_image_url || item.image_url}
                 alt={generateImageAltText(item.design_name || 'Generated Nail Art', item.category, item.prompt)}
                 width={800}
                 height={1200}
@@ -765,7 +765,7 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
                 >
                   <div className="aspect-square relative">
                       <OptimizedImage
-                      src={categoryItem.image_url}
+                      src={categoryItem.original_image_url || categoryItem.image_url}
                         alt={generateImageAltText(categoryItem.design_name || 'Generated nail art', categoryItem.category, categoryItem.prompt)}
                       width={300}
                       height={300}

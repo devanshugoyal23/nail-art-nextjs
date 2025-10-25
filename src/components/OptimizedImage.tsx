@@ -62,13 +62,13 @@ export default function OptimizedImage({
   const finalHeight = presetConfig ? presetConfig.height : height;
   const finalSizes = presetConfig ? presetConfig.sizes : sizes;
   
-  // Initialize with mobile-optimized image URL
+  // Initialize with appropriate image URL based on device
   useEffect(() => {
-    const mobileSrc = getOptimizedImageUrl(src, true);
-    setCurrentSrc(mobileSrc);
-  }, [src]);
+    const optimizedSrc = getOptimizedImageUrl(src, isMobile);
+    setCurrentSrc(optimizedSrc);
+  }, [src, isMobile]);
   
-  // Switch to desktop image if on desktop and mobile image fails
+  // Switch to original image if optimized image fails
   const handleImageError = (e: React.SyntheticEvent<HTMLImageElement>) => {
     if (currentSrc !== src) {
       setCurrentSrc(src);
@@ -86,7 +86,7 @@ export default function OptimizedImage({
       onClick={onClick}
     >
       <img
-        src={currentSrc || getOptimizedImageUrl(src, true)}
+        src={currentSrc || getOptimizedImageUrl(src, isMobile)}
         alt={alt}
         width={finalWidth}
         height={finalHeight}
