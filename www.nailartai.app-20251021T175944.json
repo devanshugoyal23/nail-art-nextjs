@@ -1184,7 +1184,7 @@
             "entity": "nailartai.app"
           },
           {
-            "url": "https://ccrarmffjbvkggrtktyy.supabase.co/rest/v1/gallery_items?select=*&order=created_at.desc&offset=0&limit=12",
+            "url": "https://uzlyuzhxayzaxmtzaslg.supabase.co/rest/v1/gallery_items?select=*&order=created_at.desc&offset=0&limit=12",
             "sessionTargetType": "page",
             "protocol": "h3",
             "rendererStartTime": 2529.6089999973774,
@@ -1201,7 +1201,7 @@
             "entity": "supabase.co"
           },
           {
-            "url": "https://ccrarmffjbvkggrtktyy.supabase.co/rest/v1/gallery_items?select=*&order=created_at.desc&offset=0&limit=12",
+            "url": "https://uzlyuzhxayzaxmtzaslg.supabase.co/rest/v1/gallery_items?select=*&order=created_at.desc&offset=0&limit=12",
             "sessionTargetType": "page",
             "protocol": "h3",
             "rendererStartTime": 2530.32800000906,
@@ -1217,7 +1217,7 @@
             "entity": "supabase.co"
           },
           {
-            "url": "https://ccrarmffjbvkggrtktyy.supabase.co/rest/v1/gallery_items?select=category&category=not.is.null",
+            "url": "https://uzlyuzhxayzaxmtzaslg.supabase.co/rest/v1/gallery_items?select=category&category=not.is.null",
             "sessionTargetType": "page",
             "protocol": "h3",
             "rendererStartTime": 2747.3959999978542,
@@ -1234,7 +1234,7 @@
             "entity": "supabase.co"
           },
           {
-            "url": "https://ccrarmffjbvkggrtktyy.supabase.co/rest/v1/gallery_items?select=category&category=not.is.null",
+            "url": "https://uzlyuzhxayzaxmtzaslg.supabase.co/rest/v1/gallery_items?select=category&category=not.is.null",
             "sessionTargetType": "page",
             "protocol": "h3",
             "rendererStartTime": 2748,
@@ -1284,7 +1284,7 @@
             "entity": "nailartai.app"
           },
           {
-            "url": "https://ccrarmffjbvkggrtktyy.supabase.co/rest/v1/gallery_items?select=*",
+            "url": "https://uzlyuzhxayzaxmtzaslg.supabase.co/rest/v1/gallery_items?select=*",
             "sessionTargetType": "page",
             "protocol": "h3",
             "rendererStartTime": 3048.6189999878407,
@@ -1301,7 +1301,7 @@
             "entity": "supabase.co"
           },
           {
-            "url": "https://ccrarmffjbvkggrtktyy.supabase.co/rest/v1/gallery_items?select=*",
+            "url": "https://uzlyuzhxayzaxmtzaslg.supabase.co/rest/v1/gallery_items?select=*",
             "sessionTargetType": "page",
             "protocol": "h3",
             "rendererStartTime": 3049.057999998331,
@@ -1419,7 +1419,7 @@
             "entity": "nailartai.app"
           },
           {
-            "url": "https://ccrarmffjbvkggrtktyy.supabase.co/rest/v1/gallery_items?select=*&category=eq.3D&order=created_at.desc",
+            "url": "https://uzlyuzhxayzaxmtzaslg.supabase.co/rest/v1/gallery_items?select=*&category=eq.3D&order=created_at.desc",
             "sessionTargetType": "page",
             "protocol": "h3",
             "rendererStartTime": 3150.28900000453,
@@ -1436,7 +1436,7 @@
             "entity": "supabase.co"
           },
           {
-            "url": "https://ccrarmffjbvkggrtktyy.supabase.co/rest/v1/gallery_items?select=*&category=eq.3D&order=created_at.desc",
+            "url": "https://uzlyuzhxayzaxmtzaslg.supabase.co/rest/v1/gallery_items?select=*&category=eq.3D&order=created_at.desc",
             "sessionTargetType": "page",
             "protocol": "h3",
             "rendererStartTime": 3151.372999995947,
@@ -1486,7 +1486,7 @@
             "entity": "nailartai.app"
           },
           {
-            "url": "https://ccrarmffjbvkggrtktyy.supabase.co/rest/v1/gallery_items?select=*&category=eq.Abstract&order=created_at.desc",
+            "url": "https://uzlyuzhxayzaxmtzaslg.supabase.co/rest/v1/gallery_items?select=*&category=eq.Abstract&order=created_at.desc",
             "sessionTargetType": "page",
             "protocol": "h3",
             "rendererStartTime": 3152.8510000109673,
@@ -1503,7 +1503,7 @@
             "entity": "supabase.co"
           },
           {
-            "url": "https://ccrarmffjbvkggrtktyy.supabase.co/rest/v1/gallery_items?select=*&category=eq.Almond&order=created_at.desc",
+            "url": "https://uzlyuzhxayzaxmtzaslg.supabase.co/rest/v1/gallery_items?select=*&category=eq.Almond&order=created_at.desc",
             "sessionTargetType": "page",
             "protocol": "h3",
             "rendererStartTime": 3153.0810000002384,
@@ -1520,7 +1520,7 @@
             "entity": "supabase.co"
           },
           {
-            "url": "https://ccrarmffjbvkggrtktyy.supabase.co/rest/v1/gallery_items?select=*&category=eq.Almond+Length&order=created_at.desc",
+            "url": "https://uzlyuzhxayzaxmtzaslg.supabase.co/rest/v1/gallery_items?select=*&category=eq.Almond+Length&order=created_at.desc",
             "sessionTargetType": "page",
             "protocol": "h3",
             "rendererStartTime": 3153.313000023365,
@@ -1537,7 +1537,7 @@
             "entity": "supabase.co"
           },
           {
-            "url": "https://ccrarmffjbvkggrtktyy.supabase.co/rest/v1/gallery_items?select=*&category=eq.Abstract&order=created_at.desc",
+            "url": "https://uzlyuzhxayzaxmtzaslg.supabase.co/rest/v1/gallery_items?select=*&category=eq.Abstract&order=created_at.desc",
             "sessionTargetType": "page",
             "protocol": "h3",
             "rendererStartTime": 3154.0570000112057,
@@ -1553,7 +1553,7 @@
             "entity": "supabase.co"
           },
           {
-            "url": "https://ccrarmffjbvkggrtktyy.supabase.co/rest/v1/gallery_items?select=*&category=eq.Almond&order=created_at.desc",
+            "url": "https://uzlyuzhxayzaxmtzaslg.supabase.co/rest/v1/gallery_items?select=*&category=eq.Almond&order=created_at.desc",
             "sessionTargetType": "page",
             "protocol": "h3",
             "rendererStartTime": 3154.291000008583,
@@ -1569,7 +1569,7 @@
             "entity": "supabase.co"
           },
           {
-            "url": "https://ccrarmffjbvkggrtktyy.supabase.co/rest/v1/gallery_items?select=*&category=eq.Almond+Length&order=created_at.desc",
+            "url": "https://uzlyuzhxayzaxmtzaslg.supabase.co/rest/v1/gallery_items?select=*&category=eq.Almond+Length&order=created_at.desc",
             "sessionTargetType": "page",
             "protocol": "h3",
             "rendererStartTime": 3154.4970000088215,
@@ -1856,31 +1856,31 @@
             },
             {
               "type": "preflight",
-              "url": "https://ccrarmffjbvkggrtktyy.supabase.co/rest/v1/gallery_items?select=*&order=created_at.desc&offset=0&limit=12"
+              "url": "https://uzlyuzhxayzaxmtzaslg.supabase.co/rest/v1/gallery_items?select=*&order=created_at.desc&offset=0&limit=12"
             },
             {
               "type": "preflight",
-              "url": "https://ccrarmffjbvkggrtktyy.supabase.co/rest/v1/gallery_items?select=category&category=not.is.null"
+              "url": "https://uzlyuzhxayzaxmtzaslg.supabase.co/rest/v1/gallery_items?select=category&category=not.is.null"
             },
             {
               "type": "preflight",
-              "url": "https://ccrarmffjbvkggrtktyy.supabase.co/rest/v1/gallery_items?select=*"
+              "url": "https://uzlyuzhxayzaxmtzaslg.supabase.co/rest/v1/gallery_items?select=*"
             },
             {
               "type": "preflight",
-              "url": "https://ccrarmffjbvkggrtktyy.supabase.co/rest/v1/gallery_items?select=*&category=eq.3D&order=created_at.desc"
+              "url": "https://uzlyuzhxayzaxmtzaslg.supabase.co/rest/v1/gallery_items?select=*&category=eq.3D&order=created_at.desc"
             },
             {
               "type": "preflight",
-              "url": "https://ccrarmffjbvkggrtktyy.supabase.co/rest/v1/gallery_items?select=*&category=eq.Abstract&order=created_at.desc"
+              "url": "https://uzlyuzhxayzaxmtzaslg.supabase.co/rest/v1/gallery_items?select=*&category=eq.Abstract&order=created_at.desc"
             },
             {
               "type": "preflight",
-              "url": "https://ccrarmffjbvkggrtktyy.supabase.co/rest/v1/gallery_items?select=*&category=eq.Almond&order=created_at.desc"
+              "url": "https://uzlyuzhxayzaxmtzaslg.supabase.co/rest/v1/gallery_items?select=*&category=eq.Almond&order=created_at.desc"
             },
             {
               "type": "preflight",
-              "url": "https://ccrarmffjbvkggrtktyy.supabase.co/rest/v1/gallery_items?select=*&category=eq.Almond+Length&order=created_at.desc"
+              "url": "https://uzlyuzhxayzaxmtzaslg.supabase.co/rest/v1/gallery_items?select=*&category=eq.Almond+Length&order=created_at.desc"
             }
           ]
         }
@@ -1928,7 +1928,7 @@
             "rtt": 10.841000000000001
           },
           {
-            "origin": "https://ccrarmffjbvkggrtktyy.supabase.co",
+            "origin": "https://uzlyuzhxayzaxmtzaslg.supabase.co",
             "rtt": 4.301760000000002
           },
           {
@@ -1971,7 +1971,7 @@
             "serverResponseTime": 196.74378000000002
           },
           {
-            "origin": "https://ccrarmffjbvkggrtktyy.supabase.co",
+            "origin": "https://uzlyuzhxayzaxmtzaslg.supabase.co",
             "serverResponseTime": 142.95873999999998
           },
           {
@@ -2268,49 +2268,49 @@
               "type": "subitems",
               "items": [
                 {
-                  "url": "https://ccrarmffjbvkggrtktyy.supabase.co/rest/v1/gallery_items?select=*&category=eq.Abstract&order=created_at.desc",
+                  "url": "https://uzlyuzhxayzaxmtzaslg.supabase.co/rest/v1/gallery_items?select=*&category=eq.Abstract&order=created_at.desc",
                   "mainThreadTime": 0,
                   "blockingTime": 0,
                   "transferSize": 2397,
                   "tbtImpact": 0
                 },
                 {
-                  "url": "https://ccrarmffjbvkggrtktyy.supabase.co/rest/v1/gallery_items?select=category&category=not.is.null",
+                  "url": "https://uzlyuzhxayzaxmtzaslg.supabase.co/rest/v1/gallery_items?select=category&category=not.is.null",
                   "mainThreadTime": 0,
                   "blockingTime": 0,
                   "transferSize": 2136,
                   "tbtImpact": 0
                 },
                 {
-                  "url": "https://ccrarmffjbvkggrtktyy.supabase.co/rest/v1/gallery_items?select=*&order=created_at.desc&offset=0&limit=12",
+                  "url": "https://uzlyuzhxayzaxmtzaslg.supabase.co/rest/v1/gallery_items?select=*&order=created_at.desc&offset=0&limit=12",
                   "mainThreadTime": 0,
                   "blockingTime": 0,
                   "transferSize": 1985,
                   "tbtImpact": 0
                 },
                 {
-                  "url": "https://ccrarmffjbvkggrtktyy.supabase.co/rest/v1/gallery_items?select=*&category=eq.3D&order=created_at.desc",
+                  "url": "https://uzlyuzhxayzaxmtzaslg.supabase.co/rest/v1/gallery_items?select=*&category=eq.3D&order=created_at.desc",
                   "mainThreadTime": 0,
                   "blockingTime": 0,
                   "transferSize": 1877,
                   "tbtImpact": 0
                 },
                 {
-                  "url": "https://ccrarmffjbvkggrtktyy.supabase.co/rest/v1/gallery_items?select=*&category=eq.Almond&order=created_at.desc",
+                  "url": "https://uzlyuzhxayzaxmtzaslg.supabase.co/rest/v1/gallery_items?select=*&category=eq.Almond&order=created_at.desc",
                   "mainThreadTime": 0,
                   "blockingTime": 0,
                   "transferSize": 1262,
                   "tbtImpact": 0
                 },
                 {
-                  "url": "https://ccrarmffjbvkggrtktyy.supabase.co/rest/v1/gallery_items?select=*&category=eq.Almond+Length&order=created_at.desc",
+                  "url": "https://uzlyuzhxayzaxmtzaslg.supabase.co/rest/v1/gallery_items?select=*&category=eq.Almond+Length&order=created_at.desc",
                   "mainThreadTime": 0,
                   "blockingTime": 0,
                   "transferSize": 1233,
                   "tbtImpact": 0
                 },
                 {
-                  "url": "https://ccrarmffjbvkggrtktyy.supabase.co/rest/v1/gallery_items?select=*",
+                  "url": "https://uzlyuzhxayzaxmtzaslg.supabase.co/rest/v1/gallery_items?select=*",
                   "mainThreadTime": 0,
                   "blockingTime": 0,
                   "transferSize": 760,
@@ -7384,37 +7384,37 @@
               "type": "subitems",
               "items": [
                 {
-                  "url": "https://ccrarmffjbvkggrtktyy.supabase.co/rest/v1/gallery_items?select=*&category=eq.Abstract&order=created_at.desc",
+                  "url": "https://uzlyuzhxayzaxmtzaslg.supabase.co/rest/v1/gallery_items?select=*&category=eq.Abstract&order=created_at.desc",
                   "mainThreadTime": 0,
                   "transferSize": 2397
                 },
                 {
-                  "url": "https://ccrarmffjbvkggrtktyy.supabase.co/rest/v1/gallery_items?select=category&category=not.is.null",
+                  "url": "https://uzlyuzhxayzaxmtzaslg.supabase.co/rest/v1/gallery_items?select=category&category=not.is.null",
                   "mainThreadTime": 0,
                   "transferSize": 2136
                 },
                 {
-                  "url": "https://ccrarmffjbvkggrtktyy.supabase.co/rest/v1/gallery_items?select=*&order=created_at.desc&offset=0&limit=12",
+                  "url": "https://uzlyuzhxayzaxmtzaslg.supabase.co/rest/v1/gallery_items?select=*&order=created_at.desc&offset=0&limit=12",
                   "mainThreadTime": 0,
                   "transferSize": 1985
                 },
                 {
-                  "url": "https://ccrarmffjbvkggrtktyy.supabase.co/rest/v1/gallery_items?select=*&category=eq.3D&order=created_at.desc",
+                  "url": "https://uzlyuzhxayzaxmtzaslg.supabase.co/rest/v1/gallery_items?select=*&category=eq.3D&order=created_at.desc",
                   "mainThreadTime": 0,
                   "transferSize": 1877
                 },
                 {
-                  "url": "https://ccrarmffjbvkggrtktyy.supabase.co/rest/v1/gallery_items?select=*&category=eq.Almond&order=created_at.desc",
+                  "url": "https://uzlyuzhxayzaxmtzaslg.supabase.co/rest/v1/gallery_items?select=*&category=eq.Almond&order=created_at.desc",
                   "mainThreadTime": 0,
                   "transferSize": 1262
                 },
                 {
-                  "url": "https://ccrarmffjbvkggrtktyy.supabase.co/rest/v1/gallery_items?select=*&category=eq.Almond+Length&order=created_at.desc",
+                  "url": "https://uzlyuzhxayzaxmtzaslg.supabase.co/rest/v1/gallery_items?select=*&category=eq.Almond+Length&order=created_at.desc",
                   "mainThreadTime": 0,
                   "transferSize": 1233
                 },
                 {
-                  "url": "https://ccrarmffjbvkggrtktyy.supabase.co/rest/v1/gallery_items?select=*",
+                  "url": "https://uzlyuzhxayzaxmtzaslg.supabase.co/rest/v1/gallery_items?select=*",
                   "mainThreadTime": 0,
                   "transferSize": 760
                 }
@@ -8590,7 +8590,7 @@
     {
       "name": "supabase.co",
       "origins": [
-        "https://ccrarmffjbvkggrtktyy.supabase.co"
+        "https://uzlyuzhxayzaxmtzaslg.supabase.co"
       ],
       "isUnrecognized": true
     },
