@@ -133,15 +133,21 @@ export async function generateMetadata({ params }: GalleryDetailPageProps): Prom
       description: `${baseDescription}${colorKeywords}${techniqueKeywords}. Try this ${categoryKeyword} design virtually with AI-powered nail art try-on.`,
       images: [
         {
-          url: `https://nailartai.app/og-design/${resolvedParams.category}/${resolvedParams.slug}`,
-          width: 1200,
-          height: 630,
+          url: item.original_image_url || item.image_url,
+          width: 1000,
+          height: 1500,
           alt: generateImageAltText(title, item.category, item.prompt),
         },
         {
           url: item.image_url,
           width: 1000,
           height: 1500,
+          alt: generateImageAltText(title, item.category, item.prompt),
+        },
+        {
+          url: `https://nailartai.app/og-design/${resolvedParams.category}/${resolvedParams.slug}`,
+          width: 1200,
+          height: 630,
           alt: generateImageAltText(title, item.category, item.prompt),
         },
       ],
@@ -164,7 +170,7 @@ export async function generateMetadata({ params }: GalleryDetailPageProps): Prom
       card: 'summary_large_image',
       title: `${title}${categoryContext}`,
       description: `${baseDescription}${colorKeywords}${techniqueKeywords}. Try this ${categoryKeyword} design virtually with AI-powered nail art try-on.`,
-      images: [item.image_url],
+      images: [item.original_image_url || item.image_url],
     },
     alternates: {
       canonical: `https://nailartai.app/${resolvedParams.category}/${resolvedParams.slug}`,
@@ -186,7 +192,7 @@ export async function generateMetadata({ params }: GalleryDetailPageProps): Prom
       'pinterest-rich-pin': 'true',
       'pinterest:title': `${title}${categoryContext}`,
       'pinterest:description': `${baseDescription}${colorKeywords}${techniqueKeywords}. Try this ${categoryKeyword} design virtually with AI-powered nail art try-on.`,
-      'pinterest:image': item.image_url,
+      'pinterest:image': item.original_image_url || item.image_url,
       'pinterest:image:width': '1000',
       'pinterest:image:height': '1500',
       'pinterest:image:alt': generateImageAltText(title, item.category, item.prompt),
@@ -194,6 +200,12 @@ export async function generateMetadata({ params }: GalleryDetailPageProps): Prom
       'pinterest:category': 'beauty',
       'pinterest:type': 'article',
       'pinterest:url': `https://nailartai.app/${resolvedParams.category}/${resolvedParams.slug}`,
+      // Additional Pinterest image optimization
+      'pinterest:media': item.original_image_url || item.image_url,
+      'pinterest:domain': 'nailartai.app',
+      // Ensure Pinterest gets the highest quality image
+      'pinterest:image:type': 'image/jpeg',
+      'pinterest:image:secure_url': item.original_image_url || item.image_url,
     },
   };
 }

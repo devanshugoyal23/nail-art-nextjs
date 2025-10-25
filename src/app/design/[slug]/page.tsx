@@ -103,7 +103,7 @@ export async function generateMetadata({ params }: DesignDetailPageProps): Promi
       description: socialMetaTags['og:description'],
       images: [
         {
-          url: item.image_url,
+          url: item.original_image_url || item.image_url,
           width: 1000,
           height: 1500,
           alt: generateImageAltText(item.design_name || 'AI Generated', item.category, item.prompt),
