@@ -129,8 +129,8 @@ export async function generateMetadata({ params }: GalleryDetailPageProps): Prom
       ...(item.styles || [])
     ],
     openGraph: {
-      title: fullTitle,
-      description: fullDescription,
+      title: `${title}${categoryContext}`,
+      description: `${baseDescription}${colorKeywords}${techniqueKeywords}. Try this ${categoryKeyword} design virtually with AI-powered nail art try-on.`,
       images: [
         {
           url: `https://nailartai.app/og-design/${resolvedParams.category}/${resolvedParams.slug}`,
@@ -162,8 +162,8 @@ export async function generateMetadata({ params }: GalleryDetailPageProps): Prom
     },
     twitter: {
       card: 'summary_large_image',
-      title: fullTitle,
-      description: fullDescription,
+      title: `${title}${categoryContext}`,
+      description: `${baseDescription}${colorKeywords}${techniqueKeywords}. Try this ${categoryKeyword} design virtually with AI-powered nail art try-on.`,
       images: [item.image_url],
     },
     alternates: {
@@ -193,6 +193,7 @@ export async function generateMetadata({ params }: GalleryDetailPageProps): Prom
       'pinterest:board': item.category ? `${item.category} Nail Art Ideas` : 'Nail Art Ideas',
       'pinterest:category': 'beauty',
       'pinterest:type': 'article',
+      'pinterest:url': `https://nailartai.app/${resolvedParams.category}/${resolvedParams.slug}`,
     },
   };
 }
