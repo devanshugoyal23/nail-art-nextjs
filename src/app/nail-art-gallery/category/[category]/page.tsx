@@ -14,12 +14,41 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
   const resolvedParams = await params;
   const category = decodeURIComponent(resolvedParams.category);
   
+  const title = `${category} Nail Art Designs`;
+  const description = `Browse our collection of ${category} nail art designs. Discover stunning AI-generated nail art in the ${category} category.`;
+  
   return {
-    title: `${category} Nail Art Designs | AI Nail Art Studio`,
-    description: `Browse our collection of ${category} nail art designs. Discover stunning AI-generated nail art in the ${category} category.`,
+    title: `${title} | Nail Art AI`,
+    description,
     openGraph: {
-      title: `${category} Nail Art Designs`,
-      description: `Browse our collection of ${category} nail art designs. Discover stunning AI-generated nail art in the ${category} category.`,
+      title,
+      description,
+      images: [
+        {
+          url: '/og-image.jpg',
+          width: 1200,
+          height: 630,
+          alt: `${category} Nail Art Designs`,
+        },
+      ],
+      type: 'website',
+      siteName: 'Nail Art AI',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+    },
+    other: {
+      // Pinterest metadata
+      'pinterest:title': title,
+      'pinterest:description': description,
+      'pinterest:image': '/og-image.jpg',
+      'pinterest:image:width': '1200',
+      'pinterest:image:height': '630',
+      'pinterest:board': `${category} Nail Art Ideas`,
+      'pinterest:category': 'beauty',
+      'pinterest:type': 'website',
     },
   };
 }

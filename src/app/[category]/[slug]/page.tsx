@@ -184,8 +184,8 @@ export async function generateMetadata({ params }: GalleryDetailPageProps): Prom
       
       // Pinterest Article Rich Pins meta tags
       'pinterest-rich-pin': 'true',
-      'pinterest:title': fullTitle,
-      'pinterest:description': fullDescription,
+      'pinterest:title': `${title}${categoryContext}`,
+      'pinterest:description': `${baseDescription}${colorKeywords}${techniqueKeywords}. Try this ${categoryKeyword} design virtually with AI-powered nail art try-on.`,
       'pinterest:image': item.image_url,
       'pinterest:image:width': '1000',
       'pinterest:image:height': '1500',

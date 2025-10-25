@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: GalleryDetailPageProps): Prom
   const canonicalUrl = generateGalleryItemUrl(item);
 
   return {
-    title: `${title} | AI Nail Art Studio`,
+    title: `${title} | Nail Art AI`,
     description: description,
     alternates: {
       canonical: `https://nailartai.app${canonicalUrl}`,
@@ -34,6 +34,25 @@ export async function generateMetadata({ params }: GalleryDetailPageProps): Prom
       description: description,
       images: [item.image_url],
       url: `https://nailartai.app${canonicalUrl}`,
+      type: 'article',
+      siteName: 'Nail Art AI',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: title,
+      description: description,
+      images: [item.image_url],
+    },
+    other: {
+      // Pinterest metadata
+      'pinterest:title': title,
+      'pinterest:description': description,
+      'pinterest:image': item.image_url,
+      'pinterest:image:width': '1000',
+      'pinterest:image:height': '1500',
+      'pinterest:board': item.category ? `${item.category} Nail Art Ideas` : 'Nail Art Ideas',
+      'pinterest:category': 'beauty',
+      'pinterest:type': 'article',
     },
   };
 }

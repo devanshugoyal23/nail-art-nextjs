@@ -40,6 +40,17 @@ export const metadata: Metadata = {
   alternates: {
     canonical: 'https://nailartai.app/nail-art-gallery',
   },
+  other: {
+    // Pinterest metadata
+    'pinterest:title': 'Nail Art Gallery - AI Generated Designs',
+    'pinterest:description': 'Browse our extensive collection of AI-generated nail art designs. Discover unique manicure ideas, seasonal designs, and trending nail art styles.',
+    'pinterest:image': '/og-gallery.jpg',
+    'pinterest:image:width': '1200',
+    'pinterest:image:height': '630',
+    'pinterest:board': 'Nail Art Ideas',
+    'pinterest:category': 'beauty',
+    'pinterest:type': 'website',
+  },
 };
 
 // Enable ISR (Incremental Static Regeneration) - revalidate every hour
