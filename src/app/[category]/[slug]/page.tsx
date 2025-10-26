@@ -1,9 +1,11 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { getGalleryItemBySlug, getGalleryItemsByCategorySlug, generateGalleryItemUrl, getGalleryItems } from "@/lib/galleryService";
+import { generateGalleryItemUrl, getGalleryItems, getGalleryItemBySlug } from "@/lib/galleryService";
+import { getGalleryItemWithEditorialOptimized, getRelatedItemsOptimized } from "@/lib/optimizedQueries";
+import { queryCacheService } from "@/lib/queryCacheService";
 import { Metadata } from "next";
 import { generateEditorialContentForNailArt } from "@/lib/geminiService";
-import { getEditorialByItemId, upsertEditorial } from "@/lib/editorialService";
+import { upsertEditorial } from "@/lib/editorialService";
 import { getRelatedKeywords } from "@/lib/keywordMapper";
 import RelatedCategories from "@/components/RelatedCategories";
 import SocialShareButton from "@/components/SocialShareButton";
@@ -212,16 +214,23 @@ export async function generateMetadata({ params }: GalleryDetailPageProps): Prom
 
 export default async function GalleryDetailPage({ params }: GalleryDetailPageProps) {
   const resolvedParams = await params;
-  const item = await getGalleryItemBySlug(resolvedParams.category, resolvedParams.slug);
+  // Use optimized, cached fetch: item + editorial in a single query
+  const itemData = await queryCacheService.getGalleryItem(
+    resolvedParams.category,
+    resolvedParams.slug,
+    () => getGalleryItemWithEditorialOptimized(resolvedParams.category, resolvedParams.slug)
+  );
+
+  const item = itemData;
 
   if (!item) {
     notFound();
   }
 
-  // Fetch other items from the same category
-  const categoryItems = item.category ? await getGalleryItemsByCategorySlug(resolvedParams.category) : [];
-  // Filter out the current item from the category items
-  const otherCategoryItems = categoryItems.filter(categoryItem => categoryItem.id !== item.id);
+  // Fetch related items from the same category efficiently
+  const otherCategoryItems = item.category
+    ? await getRelatedItemsOptimized(item.category, item.id, 12)
+    : [];
 
 
   const parseAttributes = (text: string) => {
@@ -248,8 +257,8 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
   // Get related keywords for SEO
   const relatedKeywords = getRelatedKeywords(item.category, attrs.colors, attrs.technique);
 
-  // Fetch editorial (cache in Supabase; fallback to live Gemini)
-  let editorial = await getEditorialByItemId(item.id);
+  // Use editorial from the optimized join; fallback to generate+cache once
+  let editorial = itemData?.editorial || null;
   if (!editorial) {
     try {
       editorial = await generateEditorialContentForNailArt(
@@ -1171,7 +1180,7 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
                 )}
                 
                 {/* Color Links */}
-                {item.colors && item.colors.slice(0, 2).map((color, index) => (
+                {item.colors && item.colors.slice(0, 2).map((color: string, index: number) => (
                   <Link
                     key={index}
                     href={`/nail-colors/${color.toLowerCase().replace(/\s+/g, '-')}`}
@@ -1186,7 +1195,7 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
                 ))}
                 
                 {/* Technique Links */}
-                {item.techniques && item.techniques.slice(0, 1).map((technique, index) => (
+                {item.techniques && item.techniques.slice(0, 1).map((technique: string, index: number) => (
                   <Link
                     key={index}
                     href={`/techniques/${technique.toLowerCase().replace(/\s+/g, '-')}`}
@@ -1201,7 +1210,7 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
                 ))}
                 
                 {/* Occasion Links */}
-                {item.occasions && item.occasions.slice(0, 1).map((occasion, index) => (
+                {item.occasions && item.occasions.slice(0, 1).map((occasion: string, index: number) => (
                   <Link
                     key={index}
                     href={`/nail-art/occasion/${occasion.toLowerCase().replace(/\s+/g, '-')}`}
