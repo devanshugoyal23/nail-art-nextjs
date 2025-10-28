@@ -78,10 +78,13 @@ export function generatePinterestImageMeta(
   const pinterestTitle = `${designName} ${category ? `- ${category}` : ''} Nail Art Design`;
   const pinterestDescription = description || `Beautiful ${designName} nail art design. ${category ? `Perfect for ${category} occasions. ` : ''}Try this design virtually and get inspired!`;
   
+  // Use Pinterest-optimized image proxy
+  const pinterestImageUrl = `/api/pinterest-image?url=${encodeURIComponent(imageUrl)}`;
+  
   return {
     'pinterest:title': pinterestTitle,
     'pinterest:description': pinterestDescription,
-    'pinterest:image': imageUrl,
+    'pinterest:image': pinterestImageUrl,
     'pinterest:image:width': '1000', // Updated for 2:3 ratio
     'pinterest:image:height': '1500', // Updated for 2:3 ratio
     'pinterest:image:alt': generateImageAltText(designName, category),

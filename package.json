@@ -8,7 +8,11 @@
     "start": "next start",
     "lint": "eslint",
     "optimize": "node scripts/optimize-performance.js",
-    "analyze": "npm run build && npx @next/bundle-analyzer"
+    "analyze": "npm run build && npx @next/bundle-analyzer",
+    "pinterest:test": "node scripts/generate-pinterest-optimized.js --test --dry-run",
+    "pinterest:test-real": "node scripts/generate-pinterest-optimized.js --test",
+    "pinterest:optimize": "node scripts/generate-pinterest-optimized.js",
+    "pinterest:optimize-small": "node scripts/generate-pinterest-optimized.js --batch=5"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.906.0",

@@ -1,9 +1,10 @@
 import { supabase, GalleryItem, SaveGalleryItemRequest } from './supabase'
 import { extractTagsFromGalleryItem } from './tagService'
 import { uploadToR2, generateR2Key } from './r2Service'
-import { createPinterestOptimizedImage, getOptimalPinterestDimensions } from './imageTransformation'
+// import { getOptimalPinterestDimensions } from './imageTransformation' // Unused since optimization is server-side only
 import { updateR2DataForNewContent } from './r2DataUpdateService'
 import { generateAltText, generateImageTitle, generateImageDescription } from './seoUtils'
+import { invalidateGalleryCache, invalidateItemCache, invalidateCategoryCache } from './galleryCacheService'
 
 /**
  * Return gallery item URLs as-is (all are now R2 URLs)
@@ -91,14 +92,8 @@ export async function saveGalleryItem(item: SaveGalleryItemRequest): Promise<Gal
     const imageBuffer = dataURLtoBlob(item.imageData)
     const buffer = await imageBuffer.arrayBuffer()
     
-    // Create Pinterest-optimized image
-    const pinterestDimensions = getOptimalPinterestDimensions('nail-art')
-    const optimizedBuffer = await createPinterestOptimizedImage(
-      Buffer.from(buffer),
-      pinterestDimensions.width,
-      pinterestDimensions.height,
-      pinterestDimensions.quality
-    )
+    // Upload image directly (Pinterest optimization is now done server-side)
+    const optimizedBuffer = Buffer.from(buffer)
     
     // Upload to R2 with SEO metadata
     const imageUrl = await uploadToR2(
@@ -173,6 +168,15 @@ export async function saveGalleryItem(item: SaveGalleryItemRequest): Promise<Gal
       // Don't throw - this is non-critical
     }
 
+    // Invalidate relevant caches
+    try {
+      await invalidateGalleryCache();
+      await invalidateCategoryCache(data.category);
+    } catch (error) {
+      console.warn('Cache invalidation failed:', error);
+      // Don't throw - this is non-critical
+    }
+
     return data
   } catch (error) {
     console.error('Error saving gallery item:', error)
@@ -180,7 +184,7 @@ export async function saveGalleryItem(item: SaveGalleryItemRequest): Promise<Gal
   }
 }
 
-interface GetGalleryItemsParams {
+export interface GetGalleryItemsParams {
   page?: number;
   limit?: number;
   category?: string;
@@ -189,13 +193,17 @@ interface GetGalleryItemsParams {
   sortBy?: string;
 }
 
-interface GetGalleryItemsResult {
+export interface GetGalleryItemsResult {
   items: GalleryItem[];
   totalCount: number;
   totalPages: number;
   currentPage: number;
 }
 
+// Note: Caching has been disabled for simplicity
+// The functions below are the main exported functions
+
+// Keep original functions for internal use - export for other services
 export async function getGalleryItems(params: GetGalleryItemsParams = {}): Promise<GetGalleryItemsResult> {
   const {
     page = 1,
@@ -554,6 +562,15 @@ export async function deleteGalleryItem(id: string): Promise<boolean> {
     if (error) {
       console.error('Error deleting from database:', error)
       return false
+    }
+
+    // Invalidate relevant caches
+    try {
+      await invalidateItemCache(id);
+      await invalidateGalleryCache();
+    } catch (error) {
+      console.warn('Cache invalidation failed:', error);
+      // Don't throw - this is non-critical
     }
 
     return true

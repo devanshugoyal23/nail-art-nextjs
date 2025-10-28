@@ -3,7 +3,7 @@ import { supabase } from './supabase';
 import { getRandomPromptFromCategory, getUniquePromptsFromCategory, getAllCategories, PROMPT_CATEGORIES } from './promptGenerator';
 import { extractTagsFromGalleryItem } from './tagService';
 import { uploadToR2, generateR2Key } from './r2Service';
-import { createPinterestOptimizedImage, getOptimalPinterestDimensions } from './imageTransformation';
+// import { getOptimalPinterestDimensions } from './imageTransformation'; // Unused since optimization is server-side only
 import { updateR2DataForNewContent } from './r2DataUpdateService';
 
 let ai: GoogleGenAI | null = null;
@@ -219,14 +219,8 @@ async function uploadImageToR2(
     const imageBlob = dataURLtoBlob(imageData);
     const buffer = await imageBlob.arrayBuffer();
     
-    // Create Pinterest-optimized image
-    const pinterestDimensions = getOptimalPinterestDimensions('nail-art');
-    const optimizedBuffer = await createPinterestOptimizedImage(
-      Buffer.from(buffer),
-      pinterestDimensions.width,
-      pinterestDimensions.height,
-      pinterestDimensions.quality
-    );
+    // Upload original image (optimization will be done server-side if needed)
+    const optimizedBuffer = Buffer.from(buffer);
     
     // Generate R2 key
     const r2Key = generateR2Key('generated', 'jpg');

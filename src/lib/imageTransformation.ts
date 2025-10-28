@@ -67,67 +67,18 @@ export async function transformToPinterestRatio(
 
 /**
  * Create Pinterest-optimized image with smart cropping
- * Maintains aspect ratio while creating 2:3 output
+ * Note: Server-side only function (not available in browser)
  */
-export async function createPinterestOptimizedImage(
-  originalBuffer: Buffer,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  _targetWidth: number = PINTEREST_OPTIMIZED_DIMENSIONS.STANDARD.width,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  _targetHeight: number = PINTEREST_OPTIMIZED_DIMENSIONS.STANDARD.height,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  _quality: number = 90
-): Promise<Buffer> {
-  try {
-    // This is a placeholder implementation
-    // In production, you'd use Sharp or similar library:
-    /*
-    const sharp = require('sharp');
-    
-    return await sharp(originalBuffer)
-      .resize(targetWidth, targetHeight, {
-        fit: 'cover',
-        position: 'center'
-      })
-      .jpeg({ quality, progressive: true })
-      .toBuffer();
-    */
-    
-    // For now, return the original buffer
-    return originalBuffer;
-  } catch (error) {
-    console.error('Error creating Pinterest-optimized image:', error);
-    throw error;
-  }
+export function createPinterestOptimizedImage(): never {
+  throw new Error('Pinterest image optimization should be done server-side only. All images are now pre-optimized.');
 }
 
 /**
  * Generate multiple Pinterest-optimized sizes
+ * Note: Server-side only function (not available in browser)
  */
-export async function generatePinterestSizes(originalBuffer: Buffer): Promise<{
-  standard: Buffer;
-  thumbnail: Buffer;
-  mobile: Buffer;
-}> {
-  const standard = await createPinterestOptimizedImage(
-    originalBuffer,
-    PINTEREST_OPTIMIZED_DIMENSIONS.STANDARD.width,
-    PINTEREST_OPTIMIZED_DIMENSIONS.STANDARD.height
-  );
-  
-  const thumbnail = await createPinterestOptimizedImage(
-    originalBuffer,
-    PINTEREST_OPTIMIZED_DIMENSIONS.THUMBNAIL.width,
-    PINTEREST_OPTIMIZED_DIMENSIONS.THUMBNAIL.height
-  );
-  
-  const mobile = await createPinterestOptimizedImage(
-    originalBuffer,
-    PINTEREST_OPTIMIZED_DIMENSIONS.MOBILE.width,
-    PINTEREST_OPTIMIZED_DIMENSIONS.MOBILE.height
-  );
-  
-  return { standard, thumbnail, mobile };
+export function generatePinterestSizes(): never {
+  throw new Error('Pinterest image generation should be done server-side only. All images are now pre-optimized.');
 }
 
 /**

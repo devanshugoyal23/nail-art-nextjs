@@ -57,7 +57,12 @@ export default function SEOHead({
   const fullUrl = url || '';
   const fullImage = image || ogImage?.url || '/og-image.jpg';
   const fullTwitterImage = twitterImage || fullImage;
-  const fullPinterestImage = pinterestImage || fullImage;
+  // Generate Pinterest-optimized image URL
+  const pinterestOptimizedUrl = pinterestImage || fullImage 
+    ? `/api/pinterest-image?url=${encodeURIComponent(pinterestImage || fullImage)}`
+    : fullImage;
+  
+  const fullPinterestImage = pinterestOptimizedUrl;
 
   const metaTags = [
     // Basic meta tags
@@ -87,8 +92,8 @@ export default function SEOHead({
     { name: 'pinterest:title', content: fullTitle },
     { name: 'pinterest:description', content: fullDescription },
     { name: 'pinterest:image', content: fullPinterestImage },
-    { name: 'pinterest:image:width', content: '600' },
-    { name: 'pinterest:image:height', content: '600' },
+    { name: 'pinterest:image:width', content: '1000' },
+    { name: 'pinterest:image:height', content: '1500' },
   ];
 
   // Add article-specific meta tags

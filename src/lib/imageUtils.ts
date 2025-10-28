@@ -96,11 +96,14 @@ export function generatePinterestMetaTags(
   const pinterestTitle = `${designName} ${category ? `- ${category}` : ''} Nail Art Design`;
   const pinterestDescription = description || `Beautiful ${designName} nail art design. ${category ? `Perfect for ${category} occasions. ` : ''}Try this design virtually and get inspired!`;
   
+  // Use smart Pinterest image selection with fallback
+  const pinterestImageUrl = `/api/pinterest-image?url=${encodeURIComponent(imageUrl)}`;
+  
   return {
     // Basic Pinterest meta tags
     'pinterest:title': pinterestTitle,
     'pinterest:description': pinterestDescription,
-    'pinterest:image': imageUrl,
+    'pinterest:image': pinterestImageUrl,
     'pinterest:image:width': '1000', // Pinterest-optimized width
     'pinterest:image:height': '1500', // Pinterest-optimized height (2:3 ratio)
     'pinterest:image:alt': generateImageAltText(designName, category),
@@ -135,13 +138,16 @@ export function generateSocialMetaTags(
   const socialTitle = `${designName} ${category ? `- ${category}` : ''} Nail Art Design`;
   const socialDescription = description || `Beautiful ${designName} nail art design. ${category ? `Perfect for ${category} occasions. ` : ''}Try this design virtually and get inspired!`;
   
+  // Use Pinterest-optimized image for social sharing too
+  const socialImageUrl = `/api/pinterest-image?url=${encodeURIComponent(imageUrl)}`;
+  
   return {
     // Open Graph
     'og:title': socialTitle,
     'og:description': socialDescription,
-    'og:image': imageUrl,
-    'og:image:width': '600',
-    'og:image:height': '600',
+    'og:image': socialImageUrl,
+    'og:image:width': '1000',
+    'og:image:height': '1500',
     'og:image:alt': generateImageAltText(designName, category),
     'og:url': url,
     'og:type': 'article',

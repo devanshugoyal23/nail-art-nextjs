@@ -27,7 +27,7 @@ import {
 import { GalleryItem, SaveGalleryItemRequest } from './supabase';
 import { uploadToR2, generateR2Key } from './r2Service';
 import { extractTagsFromGalleryItem } from './tagService';
-import { createPinterestOptimizedImage, getOptimalPinterestDimensions } from './imageTransformation';
+// import { getOptimalPinterestDimensions } from './imageTransformation'; // Unused since optimization is server-side only
 
 /**
  * Get gallery items with smart loading from R2 or fallback to Supabase
@@ -231,25 +231,17 @@ export async function saveGalleryItem(item: SaveGalleryItemRequest): Promise<Gal
     const imageBuffer = dataURLtoBlob(item.imageData);
     const buffer = await imageBuffer.arrayBuffer();
     
-    // Create Pinterest-optimized image
-    const pinterestDimensions = getOptimalPinterestDimensions('nail-art');
-    const optimizedBuffer = await createPinterestOptimizedImage(
-      Buffer.from(buffer),
-      pinterestDimensions.width,
-      pinterestDimensions.height,
-      pinterestDimensions.quality
-    );
-    
-    // Upload to R2
+    // Upload to R2 (images are already Pinterest-optimized)
     const imageUrl = await uploadToR2(
-      optimizedBuffer,
+      Buffer.from(buffer),
       r2Key,
       'image/jpeg',
       {
         'pinterest-optimized': 'true',
         'aspect-ratio': '2:3',
         'design-name': item.designName || 'nail-art',
-        'category': item.category || 'general'
+        'category': item.category || 'general',
+        'uploaded-at': new Date().toISOString()
       }
     );
 
