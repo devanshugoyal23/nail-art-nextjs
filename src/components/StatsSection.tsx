@@ -67,10 +67,10 @@ export default function StatsSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
           {[...Array(4)].map((_, index) => (
-            <div key={index} className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-6 animate-pulse">
-              <div className="h-8 bg-gray-700 rounded mb-4"></div>
-              <div className="h-4 bg-gray-700 rounded mb-2"></div>
-              <div className="h-4 bg-gray-700 rounded w-3/4"></div>
+            <div key={index} className="bg-white backdrop-blur-sm rounded-2xl p-6 animate-pulse">
+              <div className="h-8 bg-gray-200 rounded mb-4"></div>
+              <div className="h-4 bg-gray-200 rounded mb-2"></div>
+              <div className="h-4 bg-gray-200 rounded w-3/4"></div>
             </div>
           ))}
         </div>
@@ -81,10 +81,10 @@ export default function StatsSection() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
       <div className="text-center mb-12">
-        <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
+        <h2 className="text-3xl sm:text-4xl font-serif font-bold text-gray-900 mb-4">
           Trusted by Thousands
         </h2>
-        <p className="text-gray-300 text-lg max-w-2xl mx-auto">
+        <p className="text-gray-600 text-lg max-w-2xl mx-auto">
           Join our growing community of nail art enthusiasts who have discovered their perfect style.
         </p>
       </div>
@@ -93,7 +93,7 @@ export default function StatsSection() {
         {statItems.map((stat, index) => (
           <div
             key={index}
-            className="group relative bg-gray-800/50 backdrop-blur-sm rounded-2xl p-6 hover:bg-gray-700/50 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-2xl border border-gray-700/50"
+            className="group relative bg-white backdrop-blur-sm rounded-2xl p-6 shadow-soft hover:bg-surface transition-all duration-300 transform hover:-translate-y-2 hover:shadow-hover shadow-soft border border-gray-100"
           >
             {/* Background Gradient */}
             <div className={`absolute inset-0 bg-gradient-to-br ${stat.color} opacity-10 rounded-2xl`}></div>
@@ -103,12 +103,12 @@ export default function StatsSection() {
               <div className="text-3xl mb-3">{stat.icon}</div>
               
               {/* Number */}
-              <div className="text-3xl sm:text-4xl font-bold text-white mb-2 group-hover:text-purple-400 transition-colors">
+              <div className="text-3xl sm:text-4xl font-serif font-bold text-gray-900 mb-2 group-hover:text-purple-400 transition-colors">
                 {stat.number.toLocaleString()}+
               </div>
               
               {/* Label */}
-              <div className="text-gray-300 text-sm font-medium">
+              <div className="text-gray-600 text-sm font-medium">
                 {stat.label}
               </div>
             </div>
@@ -122,7 +122,7 @@ export default function StatsSection() {
       {/* Additional Info */}
       <div className="text-center mt-12">
         <div className="bg-gradient-to-r from-purple-600/10 to-pink-600/10 backdrop-blur-sm rounded-2xl p-6 border border-purple-500/20">
-          <p className="text-gray-300 text-sm">
+          <p className="text-gray-600 text-sm">
             <span className="text-purple-400 font-semibold">New designs added daily</span> • 
             <span className="text-pink-400 font-semibold"> 100% Free to use</span> • 
             <span className="text-blue-400 font-semibold"> Mobile optimized</span>

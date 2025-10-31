@@ -116,18 +116,18 @@ const CategoryShowcase = React.memo(function CategoryShowcase({ initialCategorie
   if (loading) {
     return (
       <div className="flex justify-center items-center py-12">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-500"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
       </div>
     );
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
       <div className="text-center mb-12">
-        <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-gray-900 mb-4">
           Explore by Category
         </h2>
-        <p className="text-gray-300 text-lg max-w-2xl mx-auto">
+        <p className="text-gray-600 text-lg max-w-2xl mx-auto leading-relaxed">
           Discover nail art designs organized by style, occasion, and technique.
         </p>
       </div>
@@ -137,27 +137,27 @@ const CategoryShowcase = React.memo(function CategoryShowcase({ initialCategorie
           const items = categoryItems[category] || [];
           const icon = getCategoryIcon(category);
           const gradient = getCategoryGradient(category);
-          
+
           return (
             <Link
               key={category}
               href={`/categories/${category.toLowerCase().replace(/\s+/g, '-')}`}
-              className="group relative bg-gray-800/50 backdrop-blur-sm rounded-2xl overflow-hidden hover:bg-gray-700/50 transition-all duration-500 transform hover:-translate-y-3 hover:shadow-2xl border border-gray-700/50"
+              className="group relative bg-white rounded-2xl overflow-hidden hover:shadow-hover transition-all duration-300 transform hover:-translate-y-1 border border-gray-100 shadow-soft"
             >
-              {/* Background Gradient */}
-              <div className={`absolute inset-0 bg-gradient-to-br ${gradient} opacity-20`}></div>
-              
+              {/* Background Gradient - Very Subtle */}
+              <div className={`absolute inset-0 bg-gradient-to-br ${gradient} opacity-5 group-hover:opacity-10 transition-opacity`}></div>
+
               <div className="relative p-6">
                 {/* Header */}
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-3">
                     <span className="text-3xl">{icon}</span>
-                    <h3 className="text-xl font-bold text-white group-hover:text-purple-400 transition-colors">
+                    <h3 className="text-xl font-semibold text-gray-900 group-hover:text-primary transition-colors">
                       {category}
                     </h3>
                   </div>
-                  <div className="bg-white/20 backdrop-blur-sm text-white text-sm px-3 py-1 rounded-full">
-                    {items.length} designs
+                  <div className="bg-primary-lighter text-primary-dark text-sm px-3 py-1 rounded-full font-medium">
+                    {items.length}+
                   </div>
                 </div>
 
@@ -168,7 +168,7 @@ const CategoryShowcase = React.memo(function CategoryShowcase({ initialCategorie
                       {items.slice(0, 2).map((item) => (
                         <div
                           key={item.id}
-                          className="aspect-square rounded-lg overflow-hidden border border-gray-600"
+                          className="aspect-square rounded-xl overflow-hidden border border-gray-100 shadow-soft"
                           style={{ minHeight: '80px', maxHeight: '80px' }}
                         >
                           <OptimizedImage
@@ -176,7 +176,7 @@ const CategoryShowcase = React.memo(function CategoryShowcase({ initialCategorie
                             alt={item.design_name || 'Sample design'}
                             width={80}
                             height={80}
-                            className="w-full h-full object-cover"
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                             loading="lazy"
                             sizes="(max-width: 640px) 50vw, 25vw"
                           />
@@ -188,17 +188,14 @@ const CategoryShowcase = React.memo(function CategoryShowcase({ initialCategorie
 
                 {/* View Category Button */}
                 <div className="flex items-center justify-between">
-                  <span className="text-gray-300 text-sm">
-                    View all {category.toLowerCase()} designs
+                  <span className="text-gray-600 text-sm">
+                    View all designs
                   </span>
-                  <div className="bg-purple-600 text-white px-4 py-2 rounded-full text-sm font-medium group-hover:bg-purple-700 transition-colors">
+                  <div className="bg-primary text-white px-4 py-2 rounded-full text-sm font-semibold group-hover:bg-primary-dark transition-colors shadow-soft">
                     Explore →
                   </div>
                 </div>
               </div>
-
-              {/* Hover Effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-purple-600/0 to-pink-600/0 group-hover:from-purple-600/10 group-hover:to-pink-600/10 transition-all duration-500"></div>
             </Link>
           );
         })}
@@ -208,9 +205,10 @@ const CategoryShowcase = React.memo(function CategoryShowcase({ initialCategorie
       <div className="text-center mt-12">
         <Link
           href="/categories"
-          className="bg-white/10 backdrop-blur-sm text-white font-bold py-4 px-8 rounded-full hover:bg-white/20 transition-all duration-300 transform hover:scale-105 border border-white/20 inline-block"
+          className="btn btn-soft text-base px-10 py-4 inline-flex"
         >
           View All Categories
+          <span>→</span>
         </Link>
       </div>
     </div>

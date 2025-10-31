@@ -37,10 +37,10 @@ export default function TestimonialsSection() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
       <div className="text-center mb-12">
-        <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
+        <h2 className="text-3xl sm:text-4xl font-serif font-bold text-gray-900 mb-4">
           What Our Users Say
         </h2>
-        <p className="text-gray-300 text-lg max-w-2xl mx-auto">
+        <p className="text-gray-600 text-lg max-w-2xl mx-auto">
           Join thousands of satisfied users who have transformed their nail art experience.
         </p>
       </div>
@@ -49,7 +49,7 @@ export default function TestimonialsSection() {
         {testimonials.map((testimonial, index) => (
           <div
             key={index}
-            className="group relative bg-gray-800/50 backdrop-blur-sm rounded-2xl p-6 hover:bg-gray-700/50 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-2xl border border-gray-700/50"
+            className="group relative bg-white backdrop-blur-sm rounded-2xl p-6 shadow-soft hover:bg-surface transition-all duration-300 transform hover:-translate-y-2 hover:shadow-hover shadow-soft border border-gray-100"
           >
             {/* Background Gradient */}
             <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-2xl"></div>
@@ -63,7 +63,7 @@ export default function TestimonialsSection() {
               </div>
               
               {/* Content */}
-              <p className="text-gray-300 text-sm leading-relaxed mb-4 italic">
+              <p className="text-gray-600 text-sm leading-relaxed mb-4 italic">
                 &ldquo;{testimonial.content}&rdquo;
               </p>
               
@@ -71,10 +71,10 @@ export default function TestimonialsSection() {
               <div className="flex items-center gap-3">
                 <div className="text-2xl">{testimonial.avatar}</div>
                 <div>
-                  <div className="text-white font-semibold text-sm">
+                  <div className="text-gray-900 font-semibold text-sm">
                     {testimonial.name}
                   </div>
-                  <div className="text-gray-400 text-xs">
+                  <div className="text-gray-500 text-xs">
                     {testimonial.role}
                   </div>
                 </div>
@@ -89,19 +89,19 @@ export default function TestimonialsSection() {
 
       {/* Social Proof Stats */}
       <div className="mt-16 text-center">
-        <div className="bg-gradient-to-r from-purple-600/10 to-pink-600/10 backdrop-blur-sm rounded-2xl p-8 border border-purple-500/20">
+        <div className="bg-gradient-to-r from-purple-600/10 to-pink-600/10 backdrop-blur-sm rounded-2xl p-8 border border-gray-100">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
             <div>
-              <div className="text-2xl sm:text-3xl font-bold text-white mb-2">4.9/5</div>
-              <div className="text-gray-300 text-sm">Average Rating</div>
+              <div className="text-2xl sm:text-3xl font-serif font-bold text-gray-900 mb-2">4.9/5</div>
+              <div className="text-gray-600 text-sm">Average Rating</div>
             </div>
             <div>
-              <div className="text-2xl sm:text-3xl font-bold text-white mb-2">10K+</div>
-              <div className="text-gray-300 text-sm">Happy Users</div>
+              <div className="text-2xl sm:text-3xl font-serif font-bold text-gray-900 mb-2">10K+</div>
+              <div className="text-gray-600 text-sm">Happy Users</div>
             </div>
             <div>
-              <div className="text-2xl sm:text-3xl font-bold text-white mb-2">50K+</div>
-              <div className="text-gray-300 text-sm">Designs Created</div>
+              <div className="text-2xl sm:text-3xl font-serif font-bold text-gray-900 mb-2">50K+</div>
+              <div className="text-gray-600 text-sm">Designs Created</div>
             </div>
           </div>
         </div>
