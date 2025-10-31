@@ -178,7 +178,7 @@ export default function TryOnContent({ initialData, categories }: TryOnContentPr
       <div className="max-w-7xl mx-auto px-4 py-8">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+          <h1 className="text-4xl md:text-5xl font-serif font-bold text-gray-900 mb-4">
             AI Nail Art Try-On
           </h1>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
@@ -206,7 +206,7 @@ export default function TryOnContent({ initialData, categories }: TryOnContentPr
         {currentStep === 1 && (
           <div className="space-y-6">
             <div className="text-center">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">
+              <h2 className="text-2xl font-serif font-bold text-gray-900 mb-4">
                 Choose Your Nail Art Design
               </h2>
               <p className="text-gray-600">
@@ -238,7 +238,7 @@ export default function TryOnContent({ initialData, categories }: TryOnContentPr
         {currentStep === 2 && selectedDesign && (
           <div className="space-y-6">
             <div className="text-center">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">
+              <h2 className="text-2xl font-serif font-bold text-gray-900 mb-4">
                 Upload Your Hand Photo
               </h2>
               <p className="text-gray-600 mb-6">
@@ -289,7 +289,7 @@ export default function TryOnContent({ initialData, categories }: TryOnContentPr
         {currentStep === 3 && sourceImage && selectedDesign && (
           <div className="space-y-6">
             <div className="text-center">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">
+              <h2 className="text-2xl font-serif font-bold text-gray-900 mb-4">
                 Generating Your Nail Art
               </h2>
               <p className="text-gray-600">
@@ -342,7 +342,7 @@ export default function TryOnContent({ initialData, categories }: TryOnContentPr
         {currentStep === 4 && generatedImage && (
           <div className="space-y-6">
             <div className="text-center">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">
+              <h2 className="text-2xl font-serif font-bold text-gray-900 mb-4">
                 Your AI Nail Art Result
               </h2>
               <p className="text-gray-600">

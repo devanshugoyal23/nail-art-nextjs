@@ -47,7 +47,7 @@ export default function AdminLoginPage() {
     <div className="min-h-screen bg-white text-gray-900 flex items-center justify-center">
       <div className="bg-surface p-8 rounded-lg w-full max-w-md border border-gray-100">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">🔒 Admin Access</h1>
+          <h1 className="text-3xl font-serif font-bold text-gray-900 mb-2">🔒 Admin Access</h1>
           <p className="text-gray-500">Enter your admin password to continue</p>
         </div>
         

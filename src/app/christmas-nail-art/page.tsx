@@ -105,7 +105,7 @@ export default function ChristmasNailArtPage() {
         <div className="max-w-7xl mx-auto px-4 py-8">
           {/* Header */}
           <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-4">
+            <h1 className="text-4xl md:text-6xl font-serif font-bold text-gray-900 mb-4">
               🎄 Christmas Nail Art Ideas 2024
             </h1>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto mb-8">
@@ -130,7 +130,7 @@ export default function ChristmasNailArtPage() {
 
           {/* Featured Christmas Designs */}
           <div className="mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">Featured Christmas Designs</h2>
+            <h2 className="text-3xl font-serif font-bold text-gray-900 mb-8 text-center">Featured Christmas Designs</h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
               {christmasDesigns.map((design, index) => (
                 <div key={index} className="bg-surface/50 rounded-xl p-6 border border-gray-100 hover:border-red-500/50 transition-all duration-300 transform hover:-translate-y-1">
@@ -153,7 +153,7 @@ export default function ChristmasNailArtPage() {
 
           {/* Christmas Nail Art Tips */}
           <div className="mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">Christmas Nail Art Tips</h2>
+            <h2 className="text-3xl font-serif font-bold text-gray-900 mb-8 text-center">Christmas Nail Art Tips</h2>
             <div className="bg-surface/50 rounded-xl p-8 border border-gray-100">
               <div className="grid md:grid-cols-2 gap-8">
                 <div>
@@ -183,7 +183,7 @@ export default function ChristmasNailArtPage() {
 
           {/* Color Palette Section */}
           <div className="mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">Christmas Color Palette</h2>
+            <h2 className="text-3xl font-serif font-bold text-gray-900 mb-8 text-center">Christmas Color Palette</h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
               <div className="bg-red-600 rounded-xl p-6 text-center">
                 <div className="text-4xl mb-2">🔴</div>
@@ -210,7 +210,7 @@ export default function ChristmasNailArtPage() {
 
           {/* Related Content */}
           <div className="mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">More Holiday Inspiration</h2>
+            <h2 className="text-3xl font-serif font-bold text-gray-900 mb-8 text-center">More Holiday Inspiration</h2>
             <div className="grid md:grid-cols-3 gap-6">
               <Link
                 href="/halloween-nail-art"
@@ -247,7 +247,7 @@ export default function ChristmasNailArtPage() {
 
           {/* SEO Content Section */}
           <div className="bg-surface/50 rounded-xl p-8 border border-gray-100">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">Christmas Nail Art Trends 2024</h2>
+            <h2 className="text-2xl font-serif font-bold text-gray-900 mb-6">Christmas Nail Art Trends 2024</h2>
             <div className="grid md:grid-cols-2 gap-8">
               <div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-3">🎄 Popular Christmas Themes</h3>

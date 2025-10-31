@@ -116,7 +116,7 @@ export default function BlogPage() {
         <div className="max-w-7xl mx-auto px-4 py-8">
           {/* Header */}
           <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+            <h1 className="text-4xl md:text-5xl font-serif font-bold text-gray-900 mb-4">
               Nail Art Blog
             </h1>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto">
@@ -135,7 +135,7 @@ export default function BlogPage() {
               >
                 <div className="text-center">
                   <div className="text-4xl mb-3">{category.icon}</div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-purple-400 transition-colors">
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-primary transition-colors">
                     {category.title}
                   </h3>
                   <p className="text-gray-500 text-sm">
@@ -148,7 +148,7 @@ export default function BlogPage() {
 
           {/* Featured Posts */}
           <div className="mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">Featured Articles</h2>
+            <h2 className="text-3xl font-serif font-bold text-gray-900 mb-8 text-center">Featured Articles</h2>
             <div className="grid md:grid-cols-3 gap-6">
               {featuredPosts.map((post, index) => (
                 <Link
@@ -162,7 +162,7 @@ export default function BlogPage() {
                     </span>
                     <span className="text-gray-500 text-sm ml-2">{post.readTime}</span>
                   </div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-3 group-hover:text-purple-400 transition-colors">
+                  <h3 className="text-xl font-semibold text-gray-900 mb-3 group-hover:text-primary transition-colors">
                     {post.title}
                   </h3>
                   <p className="text-gray-500 text-sm leading-relaxed">
@@ -175,7 +175,7 @@ export default function BlogPage() {
 
           {/* SEO Content Section */}
           <div className="bg-surface/50 rounded-xl p-8 border border-gray-100">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">About Our Nail Art Blog</h2>
+            <h2 className="text-2xl font-serif font-bold text-gray-900 mb-6">About Our Nail Art Blog</h2>
             <div className="grid md:grid-cols-2 gap-8">
               <div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-3">🎨 Expert Tutorials</h3>

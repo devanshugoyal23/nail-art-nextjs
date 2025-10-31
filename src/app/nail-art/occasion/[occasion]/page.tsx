@@ -73,11 +73,11 @@ export default async function OccasionPage({ params }: OccasionPageProps) {
           {/* Breadcrumb */}
           <nav className="mb-6">
             <div className="flex items-center space-x-2 text-sm">
-              <Link href="/categories" className="text-purple-400 hover:text-purple-300">
+              <Link href="/categories" className="text-primary hover:text-purple-300">
                 Categories
               </Link>
               <span className="text-gray-500">/</span>
-              <Link href="/categories/occasions" className="text-purple-400 hover:text-purple-300">
+              <Link href="/categories/occasions" className="text-primary hover:text-purple-300">
                 Occasions
               </Link>
               <span className="text-gray-500">/</span>
@@ -88,7 +88,7 @@ export default async function OccasionPage({ params }: OccasionPageProps) {
           {/* Header */}
           <div className="text-center py-8">
             <div className="text-6xl mb-4">🎉</div>
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">{h1}</h1>
+            <h1 className="text-4xl font-serif font-bold text-gray-900 mb-4">{h1}</h1>
             <p className="text-xl text-gray-600 mb-6">
               Discover perfect nail art designs for {occasion} and explore related occasions!
             </p>
@@ -97,7 +97,7 @@ export default async function OccasionPage({ params }: OccasionPageProps) {
           {/* Related Occasions */}
           {relatedOccasions.length > 0 && (
             <div className="mb-12">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Related Occasions</h2>
+              <h2 className="text-2xl font-serif font-bold text-gray-900 mb-6 text-center">Related Occasions</h2>
               <div className="flex flex-wrap justify-center gap-3">
                 {relatedOccasions.map((relatedOccasion, index) => (
                   <Link
@@ -114,7 +114,7 @@ export default async function OccasionPage({ params }: OccasionPageProps) {
 
           {/* Featured Designs */}
           <div className="mb-12">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Featured Nail Art Designs</h2>
+            <h2 className="text-2xl font-serif font-bold text-gray-900 mb-6 text-center">Featured Nail Art Designs</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
               {relatedItems.map((item) => (
                 <Link
@@ -167,11 +167,11 @@ export default async function OccasionPage({ params }: OccasionPageProps) {
         {/* Breadcrumb */}
         <nav className="mb-6">
           <div className="flex items-center space-x-2 text-sm">
-            <Link href="/categories" className="text-purple-400 hover:text-purple-300">
+            <Link href="/categories" className="text-primary hover:text-purple-300">
               Categories
             </Link>
             <span className="text-gray-500">/</span>
-            <Link href="/categories/occasions" className="text-purple-400 hover:text-purple-300">
+            <Link href="/categories/occasions" className="text-primary hover:text-purple-300">
               Occasions
             </Link>
             <span className="text-gray-500">/</span>
@@ -181,14 +181,14 @@ export default async function OccasionPage({ params }: OccasionPageProps) {
 
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">{h1}</h1>
+          <h1 className="text-4xl md:text-5xl font-serif font-bold text-gray-900 mb-6">{h1}</h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">{description}</p>
         </div>
 
         {/* Tags Section */}
         {Object.values(allTags).some(tags => tags.length > 0) && (
           <div className="bg-surface rounded-xl p-8 mb-12">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Explore by Tags</h2>
+            <h2 className="text-2xl font-serif font-bold text-gray-900 mb-6 text-center">Explore by Tags</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {allTags.colors.length > 0 && (
                 <TagCollection
@@ -220,7 +220,7 @@ export default async function OccasionPage({ params }: OccasionPageProps) {
 
         {/* Gallery */}
         <div className="mb-12">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">
+          <h2 className="text-2xl font-serif font-bold text-gray-900 mb-6">
             {capitalize(occasion)} Designs ({filteredItems.length})
           </h2>
           
@@ -273,7 +273,7 @@ export default async function OccasionPage({ params }: OccasionPageProps) {
 
         {/* Related Occasions */}
         <div className="bg-surface rounded-xl p-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Explore Other Occasions</h2>
+          <h2 className="text-2xl font-serif font-bold text-gray-900 mb-6 text-center">Explore Other Occasions</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {['wedding', 'party', 'work', 'casual', 'formal', 'holiday', 'summer'].map(occ => (
               <Link

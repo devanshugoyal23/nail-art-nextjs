@@ -96,7 +96,7 @@ export default function FeaturesSection() {
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <Link
               href="/try-on"
-              className="bg-gradient-to-r from-purple-600 to-pink-600 text-gray-900 font-bold py-4 px-8 rounded-full hover:from-purple-700 hover:to-pink-700 transition-all duration-300 transform hover:scale-105 shadow-lg shadow-purple-500/50 text-lg"
+              className="btn btn-primary font-bold py-4 px-8 rounded-full hover:from-purple-700 hover:to-pink-700 transition-all duration-300 transform hover:scale-105 shadow-lg shadow-purple-500/50 text-lg"
             >
               Start Your Journey
             </Link>

@@ -103,7 +103,7 @@ export default function StatsSection() {
               <div className="text-3xl mb-3">{stat.icon}</div>
               
               {/* Number */}
-              <div className="text-3xl sm:text-4xl font-serif font-bold text-gray-900 mb-2 group-hover:text-purple-400 transition-colors">
+              <div className="text-3xl sm:text-4xl font-serif font-bold text-gray-900 mb-2 group-hover:text-primary transition-colors">
                 {stat.number.toLocaleString()}+
               </div>
               
@@ -123,7 +123,7 @@ export default function StatsSection() {
       <div className="text-center mt-12">
         <div className="bg-gradient-to-r from-purple-600/10 to-pink-600/10 backdrop-blur-sm rounded-2xl p-6 border border-purple-500/20">
           <p className="text-gray-600 text-sm">
-            <span className="text-purple-400 font-semibold">New designs added daily</span> • 
+            <span className="text-primary font-semibold">New designs added daily</span> • 
             <span className="text-pink-400 font-semibold"> 100% Free to use</span> • 
             <span className="text-blue-400 font-semibold"> Mobile optimized</span>
           </p>

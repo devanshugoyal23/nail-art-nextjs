@@ -816,7 +816,7 @@ export default function ContentManagementPage() {
                   </div>
                   
                   <div className="bg-gray-100 p-4 rounded-lg">
-                    <h4 className="text-lg font-semibold text-purple-400 mb-2">Total Items</h4>
+                    <h4 className="text-lg font-semibold text-primary mb-2">Total Items</h4>
                     <p className="text-3xl font-bold text-gray-900">
                       {Object.values(distributePreview.itemsPerCategory).reduce((sum, count) => sum + count, 0)}
                     </p>
@@ -1703,7 +1703,7 @@ export default function ContentManagementPage() {
                 </div>
                 
                 <div>
-                  <h3 className="text-xl font-semibold mb-3 text-purple-400">📊 Understanding the Data</h3>
+                  <h3 className="text-xl font-semibold mb-3 text-primary">📊 Understanding the Data</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                       <h4 className="font-semibold mb-2 text-yellow-400">Priority Levels</h4>
@@ -1745,7 +1745,7 @@ export default function ContentManagementPage() {
                       </ul>
                     </div>
                     <div>
-                      <h4 className="font-semibold mb-2 text-purple-400">Monthly</h4>
+                      <h4 className="font-semibold mb-2 text-primary">Monthly</h4>
                       <ul className="text-sm text-gray-600 space-y-1">
                         <li>• Analyze trends in content gaps</li>
                         <li>• Plan content strategy based on data</li>
@@ -1803,7 +1803,7 @@ export default function ContentManagementPage() {
                     <div className="text-sm text-gray-600">Need Editorial</div>
                   </div>
                   <div className="bg-gray-100 rounded-lg p-4">
-                    <div className="text-2xl font-bold text-purple-400">{editorialStats.percentageComplete}%</div>
+                    <div className="text-2xl font-bold text-primary">{editorialStats.percentageComplete}%</div>
                     <div className="text-sm text-gray-600">Complete</div>
                   </div>
                 </div>

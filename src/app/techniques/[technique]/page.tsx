@@ -159,7 +159,7 @@ export default async function TechniquePage({ params }: TechniquePageProps) {
           {/* Header */}
           <div className="text-center py-8">
             <div className="text-6xl mb-4">🎨</div>
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">{displayName} Nail Art</h1>
+            <h1 className="text-4xl font-serif font-bold text-gray-900 mb-4">{displayName} Nail Art</h1>
             <p className="text-xl text-gray-600 mb-6">
               Explore {displayName.toLowerCase()} techniques and discover amazing nail art designs!
             </p>
@@ -168,7 +168,7 @@ export default async function TechniquePage({ params }: TechniquePageProps) {
           {/* Related Techniques */}
           {relatedTechniques.length > 0 && (
             <div className="mb-12">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Related Techniques</h2>
+              <h2 className="text-2xl font-serif font-bold text-gray-900 mb-6 text-center">Related Techniques</h2>
               <div className="flex flex-wrap justify-center gap-3">
                 {relatedTechniques.map((relatedTechnique, index) => (
                   <Link
@@ -185,7 +185,7 @@ export default async function TechniquePage({ params }: TechniquePageProps) {
 
           {/* Featured Designs */}
           <div className="mb-12">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Featured Nail Art Designs</h2>
+            <h2 className="text-2xl font-serif font-bold text-gray-900 mb-6 text-center">Featured Nail Art Designs</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
               {relatedItems.map((item) => (
                 <Link
@@ -241,11 +241,11 @@ export default async function TechniquePage({ params }: TechniquePageProps) {
         {/* Breadcrumb */}
         <nav className="mb-6">
           <div className="flex items-center space-x-2 text-sm">
-            <Link href="/categories" className="text-purple-400 hover:text-purple-300">
+            <Link href="/categories" className="text-primary hover:text-purple-300">
               Categories
             </Link>
             <span className="text-gray-500">/</span>
-            <Link href="/categories/techniques" className="text-purple-400 hover:text-purple-300">
+            <Link href="/categories/techniques" className="text-primary hover:text-purple-300">
               Techniques
             </Link>
             <span className="text-gray-500">/</span>
@@ -260,7 +260,7 @@ export default async function TechniquePage({ params }: TechniquePageProps) {
           <div className={`w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-r ${techniqueData?.gradient || 'from-purple-500 to-pink-500'} flex items-center justify-center text-4xl`}>
             {techniqueData?.emoji || '🎨'}
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+          <h1 className="text-4xl md:text-5xl font-serif font-bold text-gray-900 mb-6">
             {techniqueData ? techniqueData.name : technique.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-6">
@@ -320,7 +320,7 @@ export default async function TechniquePage({ params }: TechniquePageProps) {
 
         {/* Gallery */}
         <div className="mb-12">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">
+          <h2 className="text-2xl font-serif font-bold text-gray-900 mb-6">
             {techniqueData.name} Designs ({filteredItems.length})
           </h2>
           
@@ -373,7 +373,7 @@ export default async function TechniquePage({ params }: TechniquePageProps) {
 
         {/* Related Techniques */}
         <div className="bg-surface rounded-xl p-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Explore Other Techniques</h2>
+          <h2 className="text-2xl font-serif font-bold text-gray-900 mb-6 text-center">Explore Other Techniques</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {Object.entries(techniqueInfo).filter(([key]) => key !== technique).map(([key, data]) => (
               <Link

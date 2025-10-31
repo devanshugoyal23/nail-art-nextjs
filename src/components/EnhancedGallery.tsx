@@ -4,7 +4,6 @@ import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { GalleryItem } from '@/lib/supabase';
 import { getAllTagsFromGalleryItems, TagItem } from '@/lib/tagService';
 import { useMobileOptimization } from '@/lib/useMobileOptimization';
-import Link from 'next/link';
 import OptimizedImage from './OptimizedImage';
 
 interface EnhancedGalleryProps {
@@ -20,7 +19,6 @@ type ViewMode = 'grid' | 'masonry' | 'list';
 
 const EnhancedGallery = function EnhancedGallery({
   onImageSelect,
-  showPrompts = true,
   showDelete = false,
   initialItems = [],
   initialTotalCount = 0

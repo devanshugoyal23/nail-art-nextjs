@@ -160,7 +160,7 @@ export default function FAQPage() {
         <div className="max-w-4xl mx-auto px-4 py-8">
           {/* Header */}
           <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+            <h1 className="text-4xl md:text-5xl font-serif font-bold text-gray-900 mb-4">
               Frequently Asked Questions
             </h1>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto">
@@ -179,7 +179,7 @@ export default function FAQPage() {
               >
                 <div className="text-center">
                   <div className="text-4xl mb-3">{category.icon}</div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-purple-400 transition-colors">
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-primary transition-colors">
                     {category.title}
                   </h3>
                   <p className="text-gray-500 text-sm">
@@ -192,7 +192,7 @@ export default function FAQPage() {
 
           {/* General FAQs */}
           <div className="mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-8">General Questions</h2>
+            <h2 className="text-3xl font-serif font-bold text-gray-900 mb-8">General Questions</h2>
             <div className="space-y-6">
               {generalFAQs.map((faq, index) => (
                 <div key={index} className="bg-surface/50 rounded-xl p-6 border border-gray-100">
@@ -205,7 +205,7 @@ export default function FAQPage() {
 
           {/* Technique FAQs */}
           <div className="mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-8">Nail Art Techniques</h2>
+            <h2 className="text-3xl font-serif font-bold text-gray-900 mb-8">Nail Art Techniques</h2>
             <div className="space-y-6">
               {techniqueFAQs.map((faq, index) => (
                 <div key={index} className="bg-surface/50 rounded-xl p-6 border border-gray-100">
@@ -218,7 +218,7 @@ export default function FAQPage() {
 
           {/* Troubleshooting FAQs */}
           <div className="mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-8">Troubleshooting</h2>
+            <h2 className="text-3xl font-serif font-bold text-gray-900 mb-8">Troubleshooting</h2>
             <div className="space-y-6">
               {troubleshootingFAQs.map((faq, index) => (
                 <div key={index} className="bg-surface/50 rounded-xl p-6 border border-gray-100">
@@ -231,7 +231,7 @@ export default function FAQPage() {
 
           {/* Contact Section */}
           <div className="bg-purple-900/30 rounded-xl p-8 border border-purple-700 text-center">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Still Have Questions?</h2>
+            <h2 className="text-2xl font-serif font-bold text-gray-900 mb-4">Still Have Questions?</h2>
             <p className="text-gray-600 mb-6">
               Can&apos;t find what you&apos;re looking for? We&apos;re here to help!
             </p>

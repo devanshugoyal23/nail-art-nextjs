@@ -35,7 +35,7 @@ export default function SocialShareButton({ title, text, url }: SocialShareButto
   return (
     <button
       onClick={handleShare}
-      className="text-purple-400 hover:text-purple-300 transition-colors"
+      className="text-primary hover:text-purple-300 transition-colors"
       title="Share this design"
     >
       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">

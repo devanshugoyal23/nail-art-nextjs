@@ -304,7 +304,7 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
         <div className="mb-6">
           <Link 
             href="/nail-art-gallery" 
-            className="inline-flex items-center text-purple-400 hover:text-purple-300 transition-colors"
+            className="inline-flex items-center text-primary hover:text-purple-300 transition-colors"
             title="Back to Gallery"
           >
             <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -334,13 +334,13 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
               <div>
                 {/* Category */}
                 {item.category && (
-                  <span className="inline-block text-sm text-purple-400 font-medium mb-3">
+                  <span className="inline-block text-sm text-primary font-medium mb-3">
                     {item.category}
                   </span>
                 )}
                 
                 {/* Title */}
-                <h1 className="text-4xl font-bold text-gray-900 mb-6">
+                <h1 className="text-4xl font-serif font-bold text-gray-900 mb-6">
                   {item.design_name || 'Generated Nail Art'}
                 </h1>
                 
@@ -470,7 +470,7 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
         {/* Same category items section */}
         {otherCategoryItems.length > 0 && (
           <div className="mt-12">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">
+            <h2 className="text-2xl font-serif font-bold text-gray-900 mb-6">
               More {item.category} Designs
             </h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
@@ -523,7 +523,7 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
         
         {/* Related designs section */}
         <div className="mt-12">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">More Designs</h2>
+          <h2 className="text-2xl font-serif font-bold text-gray-900 mb-6">More Designs</h2>
           <div className="text-center">
             <Link 
               href="/nail-art-gallery"
@@ -544,19 +544,19 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
             
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-4 p-4 bg-white/50 rounded-lg">
               <div className="text-center">
-                <div className="text-purple-400 text-sm font-medium">Who It&apos;s For</div>
+                <div className="text-primary text-sm font-medium">Who It&apos;s For</div>
                 <div className="text-gray-900 text-base mt-1">{editorial?.audience || 'All skill levels'}</div>
               </div>
               <div className="text-center">
-                <div className="text-purple-400 text-sm font-medium">Time Needed</div>
+                <div className="text-primary text-sm font-medium">Time Needed</div>
                 <div className="text-gray-900 text-base mt-1">{editorial?.timeMinutes || 45} min</div>
               </div>
               <div className="text-center">
-                <div className="text-purple-400 text-sm font-medium">Difficulty</div>
+                <div className="text-primary text-sm font-medium">Difficulty</div>
                 <div className="text-gray-900 text-base mt-1">{editorial?.difficulty || 'Medium'}</div>
               </div>
               <div className="text-center">
-                <div className="text-purple-400 text-sm font-medium">Est. Cost</div>
+                <div className="text-primary text-sm font-medium">Est. Cost</div>
                 <div className="text-gray-900 text-base mt-1">{editorial?.costEstimate || '$20-40'}</div>
               </div>
             </div>
@@ -577,7 +577,7 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
             <ul className="grid sm:grid-cols-2 gap-2 text-gray-600">
               {(editorial?.supplies || ['Base coat','Gel color polish','Detail liner brush','Top coat']).map((s, i) => (
                 <li key={i} className="flex items-start">
-                  <svg className="w-5 h-5 text-purple-400 mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <svg className="w-5 h-5 text-primary mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                   </svg>
                   {s}
@@ -603,7 +603,7 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
           {editorial?.expertTip && (
             <section className="bg-purple-900/30 rounded-lg p-6 border border-purple-700">
               <div className="flex items-start">
-                <svg className="w-6 h-6 text-purple-400 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-6 h-6 text-primary mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
                 </svg>
                 <div>
@@ -624,7 +624,7 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
                 'Use chrome instead of glitter for a metallic finish.'
               ]).map((v, i) => (
                 <li key={i} className="flex items-start">
-                  <span className="text-purple-400 mr-2">→</span>
+                  <span className="text-primary mr-2">→</span>
                   {v}
                 </li>
               ))}
@@ -664,7 +664,7 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
               <div className="grid sm:grid-cols-2 gap-3">
                 {editorial.quickFacts.map((fact, i) => (
                   <div key={i} className="flex items-start">
-                    <span className="text-purple-400 mr-2 mt-1">✨</span>
+                    <span className="text-primary mr-2 mt-1">✨</span>
                     <span className="text-gray-600">{fact}</span>
                   </div>
                 ))}

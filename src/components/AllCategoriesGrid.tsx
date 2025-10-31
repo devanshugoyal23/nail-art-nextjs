@@ -87,7 +87,7 @@ export default function AllCategoriesGrid({
           <h2 className="text-2xl font-bold text-gray-900 mb-4 text-center">Category Statistics</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="text-center">
-              <div className="text-3xl font-bold text-purple-400">{stats.totalCategories}</div>
+              <div className="text-3xl font-bold text-primary">{stats.totalCategories}</div>
               <div className="text-gray-600 text-sm">Total Categories</div>
             </div>
             <div className="text-center">
@@ -220,7 +220,7 @@ export default function AllCategoriesGrid({
               
               {/* Content */}
               <div className="p-4">
-                <h3 className="text-gray-900 font-semibold text-sm mb-2 group-hover:text-purple-400 transition-colors line-clamp-2">
+                <h3 className="text-gray-900 font-semibold text-sm mb-2 group-hover:text-primary transition-colors line-clamp-2">
                   {category.category}
                 </h3>
                 <p className="text-gray-500 text-xs">

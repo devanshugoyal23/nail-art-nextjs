@@ -23,10 +23,10 @@ export default async function AllCategoriesPage() {
     <div className="min-h-screen bg-gradient-to-br from-white via-surface to-white">
       {/* Hero Section */}
       <div className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-purple-600/20 to-pink-600/20"></div>
+        <div className="absolute inset-0 bg-white"></div>
         <div className="relative max-w-7xl mx-auto px-4 py-16">
           <div className="text-center">
-            <h1 className="text-5xl md:text-7xl font-bold text-gray-900 mb-6 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+            <h1 className="text-5xl md:text-7xl font-serif font-bold text-gray-900 mb-6 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
               All Categories
             </h1>
             <p className="text-xl md:text-2xl text-gray-600 max-w-4xl mx-auto mb-8">
@@ -36,13 +36,13 @@ export default async function AllCategoriesPage() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 href="/categories"
-                className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-gray-900 font-semibold py-4 px-8 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg"
+                className="btn btn-primary font-semibold py-4 px-8 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg"
               >
                 Browse by Type
               </Link>
               <Link
                 href="/nail-art-gallery"
-                className="bg-white/10 backdrop-blur-sm hover:bg-white/20 text-gray-900 font-semibold py-4 px-8 rounded-full transition-all duration-300 border border-white/20"
+                className="btn btn-secondary font-semibold py-4 px-8 rounded-full transition-all duration-300 border border-white/20"
               >
                 View All Designs
               </Link>
@@ -55,7 +55,7 @@ export default async function AllCategoriesPage() {
         {/* Breadcrumb */}
         <nav className="mb-6">
           <div className="flex items-center space-x-2 text-sm">
-            <Link href="/categories" className="text-purple-400 hover:text-purple-300">
+            <Link href="/categories" className="text-primary hover:text-purple-300">
               Categories
             </Link>
             <span className="text-gray-500">/</span>
@@ -71,11 +71,11 @@ export default async function AllCategoriesPage() {
 
         {/* Quick Actions */}
         <div className="mt-16 bg-surface/50 backdrop-blur-sm rounded-2xl p-8 border border-gray-100/50">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Quick Actions</h2>
+          <h2 className="text-2xl font-serif font-bold text-gray-900 mb-6 text-center">Quick Actions</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             <Link
               href="/categories"
-              className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-gray-900 font-semibold py-4 px-6 rounded-xl text-center transition-all duration-300 transform hover:scale-105"
+              className="btn btn-primary font-semibold py-4 px-6 rounded-xl text-center transition-all duration-300 transform hover:scale-105"
             >
               Browse by Type
             </Link>

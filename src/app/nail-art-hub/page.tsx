@@ -160,7 +160,7 @@ export default function NailArtHubPage() {
         <div className="max-w-7xl mx-auto px-4 py-8">
           {/* Header */}
           <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-4">
+            <h1 className="text-4xl md:text-6xl font-serif font-bold text-gray-900 mb-4">
               🎨 Nail Art Hub
             </h1>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto mb-8">
@@ -193,7 +193,7 @@ export default function NailArtHubPage() {
                 >
                   <div className="text-center">
                     <div className="text-4xl mb-3">{category.icon}</div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-purple-400 transition-colors">
+                    <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-primary transition-colors">
                       {category.title}
                     </h3>
                     <p className="text-gray-500 text-sm mb-4">
@@ -206,7 +206,7 @@ export default function NailArtHubPage() {
                         </div>
                       ))}
                       {category.subcategories.length > 2 && (
-                        <div className="text-xs text-purple-400">
+                        <div className="text-xs text-primary">
                           +{category.subcategories.length - 2} more
                         </div>
                       )}
@@ -219,7 +219,7 @@ export default function NailArtHubPage() {
 
           {/* Featured Content */}
           <div className="mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">Featured Content</h2>
+            <h2 className="text-3xl font-serif font-bold text-gray-900 mb-8 text-center">Featured Content</h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
               {featuredContent.map((content, index) => (
                 <Link
@@ -232,7 +232,7 @@ export default function NailArtHubPage() {
                     <div className="inline-block bg-primary text-gray-900 px-3 py-1 rounded-full text-xs font-medium mb-3">
                       {content.category}
                     </div>
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2 group-hover:text-purple-400 transition-colors">
+                    <h3 className="text-lg font-semibold text-gray-900 mb-2 group-hover:text-primary transition-colors">
                       {content.title}
                     </h3>
                     <p className="text-gray-500 text-sm">
@@ -246,7 +246,7 @@ export default function NailArtHubPage() {
 
           {/* Quick Links */}
           <div className="mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">Quick Links</h2>
+            <h2 className="text-3xl font-serif font-bold text-gray-900 mb-8 text-center">Quick Links</h2>
             <div className="grid md:grid-cols-3 gap-6">
               <Link
                 href="/nail-art-gallery"
@@ -283,24 +283,24 @@ export default function NailArtHubPage() {
 
           {/* SEO Content Section */}
           <div className="bg-surface/50 rounded-xl p-8 border border-gray-100">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">Complete Nail Art Guide</h2>
+            <h2 className="text-2xl font-serif font-bold text-gray-900 mb-6">Complete Nail Art Guide</h2>
             <div className="grid md:grid-cols-2 gap-8">
               <div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-3">🎨 By Category</h3>
                 <ul className="space-y-2 text-gray-600">
-                  <li>• <Link href="/nail-art-hub/seasonal-nail-art" className="text-purple-400 hover:text-purple-300">Seasonal Designs</Link> - Spring, Summer, Autumn, Winter</li>
-                  <li>• <Link href="/nail-art-hub/occasion-nail-art" className="text-purple-400 hover:text-purple-300">Occasion-Specific</Link> - Wedding, Party, Work, Date Night</li>
-                  <li>• <Link href="/nail-art-hub/technique-nail-art" className="text-purple-400 hover:text-purple-300">Techniques</Link> - French, Ombre, Marble, Glitter</li>
-                  <li>• <Link href="/nail-art-hub/color-nail-art" className="text-purple-400 hover:text-purple-300">Color Themes</Link> - Red, Blue, Pink, Black</li>
+                  <li>• <Link href="/nail-art-hub/seasonal-nail-art" className="text-primary hover:text-purple-300">Seasonal Designs</Link> - Spring, Summer, Autumn, Winter</li>
+                  <li>• <Link href="/nail-art-hub/occasion-nail-art" className="text-primary hover:text-purple-300">Occasion-Specific</Link> - Wedding, Party, Work, Date Night</li>
+                  <li>• <Link href="/nail-art-hub/technique-nail-art" className="text-primary hover:text-purple-300">Techniques</Link> - French, Ombre, Marble, Glitter</li>
+                  <li>• <Link href="/nail-art-hub/color-nail-art" className="text-primary hover:text-purple-300">Color Themes</Link> - Red, Blue, Pink, Black</li>
                 </ul>
               </div>
               <div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-3">✨ Popular Searches</h3>
                 <ul className="space-y-2 text-gray-600">
-                  <li>• <Link href="/christmas-nail-art" className="text-purple-400 hover:text-purple-300">Christmas Nail Art</Link> - Festive holiday designs</li>
-                  <li>• <Link href="/halloween-nail-art" className="text-purple-400 hover:text-purple-300">Halloween Nail Art</Link> - Spooky seasonal looks</li>
-                  <li>• <Link href="/wedding-nail-art" className="text-purple-400 hover:text-purple-300">Wedding Nail Art</Link> - Elegant bridal designs</li>
-                  <li>• <Link href="/french-nail-art" className="text-purple-400 hover:text-purple-300">French Manicure</Link> - Classic timeless style</li>
+                  <li>• <Link href="/christmas-nail-art" className="text-primary hover:text-purple-300">Christmas Nail Art</Link> - Festive holiday designs</li>
+                  <li>• <Link href="/halloween-nail-art" className="text-primary hover:text-purple-300">Halloween Nail Art</Link> - Spooky seasonal looks</li>
+                  <li>• <Link href="/wedding-nail-art" className="text-primary hover:text-purple-300">Wedding Nail Art</Link> - Elegant bridal designs</li>
+                  <li>• <Link href="/french-nail-art" className="text-primary hover:text-purple-300">French Manicure</Link> - Classic timeless style</li>
                 </ul>
               </div>
             </div>

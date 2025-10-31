@@ -97,7 +97,7 @@ export default async function ColorsPage() {
         {/* Breadcrumb */}
         <nav className="mb-6">
           <div className="flex items-center space-x-2 text-sm">
-            <Link href="/categories" className="text-purple-400 hover:text-purple-300">
+            <Link href="/categories" className="text-primary hover:text-purple-300">
               Categories
             </Link>
             <span className="text-gray-500">/</span>
@@ -107,7 +107,7 @@ export default async function ColorsPage() {
 
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+          <h1 className="text-4xl md:text-5xl font-serif font-bold text-gray-900 mb-6">
             Nail Art Colors
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
@@ -147,7 +147,7 @@ export default async function ColorsPage() {
               </div>
               
               <div className="p-6">
-                <h2 className="text-2xl font-bold text-gray-900 mb-3 group-hover:text-purple-400 transition-colors">
+                <h2 className="text-2xl font-serif font-bold text-gray-900 mb-3 group-hover:text-primary transition-colors">
                   {color.name}
                 </h2>
                 <p className="text-gray-600 mb-4">
@@ -155,7 +155,7 @@ export default async function ColorsPage() {
                 </p>
                 
                 <div className="mb-4">
-                  <h3 className="text-sm font-semibold text-purple-400 mb-2">Characteristics:</h3>
+                  <h3 className="text-sm font-semibold text-primary mb-2">Characteristics:</h3>
                   <div className="flex flex-wrap gap-2">
                     {color.characteristics.map((char, charIndex) => (
                       <span
@@ -188,7 +188,7 @@ export default async function ColorsPage() {
 
         {/* Color Combinations */}
         <div className="bg-surface rounded-xl p-8 mb-16">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Popular Color Combinations</h2>
+          <h2 className="text-2xl font-serif font-bold text-gray-900 mb-6 text-center">Popular Color Combinations</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <div className="bg-gradient-to-r from-red-500 to-pink-500 rounded-lg p-4 text-center">
               <h3 className="text-gray-900 font-semibold mb-2">Red & Pink</h3>
@@ -219,7 +219,7 @@ export default async function ColorsPage() {
 
         {/* Popular Tags */}
         <div className="bg-surface rounded-xl p-8 mb-16">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Explore by Tags</h2>
+          <h2 className="text-2xl font-serif font-bold text-gray-900 mb-6 text-center">Explore by Tags</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <TagCollection
               title="Popular Techniques"
@@ -265,7 +265,7 @@ export default async function ColorsPage() {
 
         {/* Related Categories */}
         <div className="bg-surface rounded-xl p-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Explore More Categories</h2>
+          <h2 className="text-2xl font-serif font-bold text-gray-900 mb-6 text-center">Explore More Categories</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <Link
               href="/categories/nail-shapes"

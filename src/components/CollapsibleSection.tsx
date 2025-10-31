@@ -43,7 +43,7 @@ export default function CollapsibleSection({
       >
         <div className="flex items-center gap-3">
           {icon && (
-            <div className="text-purple-400 transition-transform duration-200">
+            <div className="text-primary transition-transform duration-200">
               {icon}
             </div>
           )}

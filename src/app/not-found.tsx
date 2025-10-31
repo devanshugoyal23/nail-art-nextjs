@@ -15,7 +15,7 @@ export default function NotFound() {
         <div className="text-8xl mb-8">💅</div>
         
         {/* Error Message */}
-        <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
+        <h1 className="text-4xl md:text-6xl font-serif font-bold text-gray-900 mb-6">
           Oops! Page Not Found
         </h1>
         
@@ -77,11 +77,11 @@ export default function NotFound() {
         <div className="mt-8 text-gray-500 text-sm">
           <p>
             Can&apos;t find what you&apos;re looking for?{' '}
-            <Link href="/faq" className="text-purple-400 hover:text-purple-300">
+            <Link href="/faq" className="text-primary hover:text-purple-300">
               Check our FAQ
             </Link>
             {' '}or{' '}
-            <Link href="/" className="text-purple-400 hover:text-purple-300">
+            <Link href="/" className="text-primary hover:text-purple-300">
               go back to home
             </Link>
           </p>

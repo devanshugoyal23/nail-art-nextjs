@@ -83,7 +83,7 @@ export default function CategoryCard({
             <span className="animate-pulse">Loading...</span>
           ) : (
             <span className="flex items-center gap-2">
-              <span className="text-purple-400">✨</span>
+              <span className="text-primary">✨</span>
               {itemCount} designs
             </span>
           )}
@@ -163,7 +163,7 @@ export default function CategoryCard({
         </div>
 
         {/* Arrow indicator */}
-        <div className="absolute bottom-7 right-7 w-10 h-10 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 flex items-center justify-center text-gray-900 font-bold opacity-0 group-hover:opacity-100 transform translate-x-2 group-hover:translate-x-0 transition-all duration-300 shadow-lg">
+        <div className="absolute bottom-7 right-7 w-10 h-10 rounded-full btn btn-primary font-bold opacity-0 group-hover:opacity-100 transform translate-x-2 group-hover:translate-x-0 transition-all duration-300 shadow-lg">
           →
         </div>
       </div>

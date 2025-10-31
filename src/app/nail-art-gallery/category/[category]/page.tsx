@@ -77,7 +77,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
         {/* Breadcrumb */}
         <div className="mb-6">
           <nav className="flex items-center space-x-2 text-sm">
-            <Link href="/nail-art-gallery" className="text-purple-400 hover:text-purple-300">
+            <Link href="/nail-art-gallery" className="text-primary hover:text-purple-300">
               Gallery
             </Link>
             <span className="text-gray-500">/</span>
@@ -87,7 +87,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
 
         {/* Header */}
         <div className="mb-8 text-center">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">
+          <h1 className="text-4xl font-serif font-bold text-gray-900 mb-4">
             {category} Nail Art Designs
           </h1>
           <p className="text-gray-900 text-lg max-w-3xl mx-auto">
@@ -120,7 +120,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
               
               <div className="p-4">
                 {item.design_name && (
-                  <h3 className="text-lg font-bold text-gray-900 mb-2">{item.design_name}</h3>
+                  <h3 className="text-lg font-serif font-bold text-gray-900 mb-2">{item.design_name}</h3>
                 )}
                 <p className="text-sm text-gray-600 mb-3 line-clamp-2">{item.prompt}</p>
                 
@@ -134,7 +134,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
 
         {/* Related Categories */}
         <div className="mt-16">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">Explore Other Categories</h2>
+          <h2 className="text-2xl font-serif font-bold text-gray-900 mb-6">Explore Other Categories</h2>
           <div className="flex flex-wrap gap-4">
             {items.length > 0 && (
               <Link

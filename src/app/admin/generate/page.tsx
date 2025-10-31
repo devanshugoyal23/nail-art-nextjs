@@ -595,7 +595,7 @@ export default function GenerateGalleryPage() {
                         <p className="text-sm text-gray-500 line-clamp-3">{result.prompt}</p>
                         <a
                           href={`/${result.category.toLowerCase().replace(/\s+/g, '-')}/${result.design_name.toLowerCase().replace(/\s+/g, '-')}-${result.id.slice(-8)}`}
-                          className="inline-block mt-3 text-purple-400 hover:text-purple-300 text-sm"
+                          className="inline-block mt-3 text-primary hover:text-purple-300 text-sm"
                         >
                           View Details →
                         </a>
@@ -756,7 +756,7 @@ export default function GenerateGalleryPage() {
                 </div>
                 
                 <div className="bg-gray-100 p-4 rounded-lg">
-                  <h3 className="text-lg font-semibold text-purple-400 mb-2">Estimated Generation</h3>
+                  <h3 className="text-lg font-semibold text-primary mb-2">Estimated Generation</h3>
                   <div className="text-2xl font-bold text-gray-900">
                     {underPopulatedTags.length * 3}
                   </div>
@@ -1014,7 +1014,7 @@ export default function GenerateGalleryPage() {
 
                 {/* Impact Analysis */}
                 <div className="bg-gray-100 p-4 rounded-lg">
-                  <h3 className="text-lg font-semibold mb-3 text-purple-400">📊 Impact Analysis</h3>
+                  <h3 className="text-lg font-semibold mb-3 text-primary">📊 Impact Analysis</h3>
                   <div className="space-y-3">
                     <div>
                       <h4 className="font-medium text-gray-900">1. Category Impact</h4>

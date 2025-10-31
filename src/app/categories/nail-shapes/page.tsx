@@ -74,7 +74,7 @@ export default async function NailShapesPage() {
         {/* Breadcrumb */}
         <nav className="mb-6">
           <div className="flex items-center space-x-2 text-sm">
-            <Link href="/categories" className="text-purple-400 hover:text-purple-300">
+            <Link href="/categories" className="text-primary hover:text-purple-300">
               Categories
             </Link>
             <span className="text-gray-500">/</span>
@@ -84,7 +84,7 @@ export default async function NailShapesPage() {
 
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+          <h1 className="text-4xl md:text-5xl font-serif font-bold text-gray-900 mb-6">
             Nail Shapes
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
@@ -124,7 +124,7 @@ export default async function NailShapesPage() {
               </div>
               
               <div className="p-6">
-                <h2 className="text-2xl font-bold text-gray-900 mb-3 group-hover:text-purple-400 transition-colors">
+                <h2 className="text-2xl font-serif font-bold text-gray-900 mb-3 group-hover:text-primary transition-colors">
                   {shape.name}
                 </h2>
                 <p className="text-gray-600 mb-4">
@@ -132,7 +132,7 @@ export default async function NailShapesPage() {
                 </p>
                 
                 <div className="mb-4">
-                  <h3 className="text-sm font-semibold text-purple-400 mb-2">Characteristics:</h3>
+                  <h3 className="text-sm font-semibold text-primary mb-2">Characteristics:</h3>
                   <div className="flex flex-wrap gap-2">
                     {shape.characteristics.map((char, charIndex) => (
                       <span
@@ -165,7 +165,7 @@ export default async function NailShapesPage() {
 
         {/* Popular Tags */}
         <div className="bg-surface rounded-xl p-8 mb-16">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Explore by Tags</h2>
+          <h2 className="text-2xl font-serif font-bold text-gray-900 mb-6 text-center">Explore by Tags</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <TagCollection
               title="Popular Colors"
@@ -211,7 +211,7 @@ export default async function NailShapesPage() {
 
         {/* Related Categories */}
         <div className="bg-surface rounded-xl p-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Explore More Categories</h2>
+          <h2 className="text-2xl font-serif font-bold text-gray-900 mb-6 text-center">Explore More Categories</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <Link
               href="/categories/colors"
