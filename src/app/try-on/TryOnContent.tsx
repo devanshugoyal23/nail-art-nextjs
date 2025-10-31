@@ -175,14 +175,21 @@ export default function TryOnContent({ initialData, categories }: TryOnContentPr
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-purple-900">
-      <div className="max-w-7xl mx-auto px-4 py-8">
+      <div className="max-w-7xl mx-auto px-4 py-8 sm:py-12">
         {/* Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            AI Nail Art Try-On
+        <div className="text-center mb-10 sm:mb-12">
+          {/* Badge */}
+          <div className="inline-flex items-center gap-2 bg-purple-500/20 backdrop-blur-sm text-purple-200 px-4 py-2 rounded-full text-sm font-semibold mb-5 border border-purple-400/30">
+            <span>✨</span>
+            Virtual Try-On
+          </div>
+
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6 leading-tight">
+            See Nail Designs on <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent">Your Hands</span>
           </h1>
-          <p className="text-lg text-gray-300 max-w-2xl mx-auto">
-            Upload your hand photo and see how different nail art designs look on you instantly
+
+          <p className="text-lg sm:text-xl text-gray-200 max-w-3xl mx-auto leading-relaxed">
+            Upload a photo of your hand and instantly visualize any nail art design. No appointment, no commitment — just instant inspiration.
           </p>
         </div>
 
@@ -204,13 +211,14 @@ export default function TryOnContent({ initialData, categories }: TryOnContentPr
 
         {/* Step 1: Design Selection */}
         {currentStep === 1 && (
-          <div className="space-y-6">
-            <div className="text-center">
-              <h2 className="text-2xl font-bold text-white mb-4">
-                Choose Your Nail Art Design
+          <div className="space-y-8">
+            <div className="text-center bg-gradient-to-br from-gray-800/60 to-gray-900/60 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-gray-700/50 max-w-3xl mx-auto">
+              <div className="text-5xl mb-4">🎨</div>
+              <h2 className="text-2xl sm:text-3xl font-bold text-white mb-4">
+                Step 1: Pick Your Design
               </h2>
-              <p className="text-gray-300">
-                Browse our collection and select a design you&apos;d like to try
+              <p className="text-gray-200 text-lg leading-relaxed">
+                Browse 600+ unique nail art designs and choose one you'd like to see on your hands. From elegant French tips to bold statement nails — we've got it all!
               </p>
             </div>
 
@@ -236,14 +244,23 @@ export default function TryOnContent({ initialData, categories }: TryOnContentPr
 
         {/* Step 2: Image Upload */}
         {currentStep === 2 && selectedDesign && (
-          <div className="space-y-6">
-            <div className="text-center">
-              <h2 className="text-2xl font-bold text-white mb-4">
-                Upload Your Hand Photo
+          <div className="space-y-8">
+            <div className="text-center bg-gradient-to-br from-gray-800/60 to-gray-900/60 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-gray-700/50 max-w-3xl mx-auto">
+              <div className="text-5xl mb-4">📸</div>
+              <h2 className="text-2xl sm:text-3xl font-bold text-white mb-4">
+                Step 2: Upload Your Hand Photo
               </h2>
-              <p className="text-gray-300 mb-6">
-                Take a photo or upload an image of your hand to see how this design looks on you
+              <p className="text-gray-200 text-lg leading-relaxed mb-6">
+                For best results, take a clear photo of your hand with good lighting. Make sure your nails are visible and in focus.
               </p>
+              <div className="bg-blue-900/30 border border-blue-500/30 rounded-xl p-4 text-left">
+                <p className="text-blue-200 text-sm font-medium mb-2">💡 Pro Tips:</p>
+                <ul className="text-blue-100 text-sm space-y-1">
+                  <li>• Use natural lighting or bright indoor lights</li>
+                  <li>• Keep your hand flat and steady</li>
+                  <li>• Make sure all nails are clearly visible</li>
+                </ul>
+              </div>
             </div>
 
             {/* Selected Design Preview */}

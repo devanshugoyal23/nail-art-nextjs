@@ -138,55 +138,55 @@ const HomepageHero = React.memo(function HomepageHero({ initialItems = [] }: Hom
             {/* Left Side - Headline & Features */}
             <div className="text-center lg:text-left">
               {/* Badge */}
-              <div className="inline-flex items-center gap-2 bg-purple-600/20 backdrop-blur-sm text-purple-300 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium mb-4 sm:mb-6">
-                <span className="text-yellow-400">⭐</span>
-                #1 AI Nail Art Generator
+              <div className="inline-flex items-center gap-2 bg-purple-500/30 backdrop-blur-sm text-purple-200 px-4 py-2 sm:px-5 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold mb-5 sm:mb-6 border border-purple-400/30">
+                <span className="text-yellow-300">✨</span>
+                Powered by AI
               </div>
 
-              {/* Main Headline - Mobile Optimized, Desktop One-Liner */}
-              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-7xl font-extrabold text-white leading-tight mb-4 sm:mb-6 drop-shadow-2xl lg:whitespace-nowrap" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.8)' }}>
-                <span className="text-red-500 drop-shadow-lg" style={{ textShadow: '1px 1px 3px rgba(0,0,0,0.9)' }}>🔥</span> Fire your nail artist
+              {/* Main Headline - Welcoming & Aspirational */}
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-white leading-tight mb-5 sm:mb-7 drop-shadow-2xl" style={{ textShadow: '2px 2px 8px rgba(0,0,0,0.9)' }}>
+                <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent">Your Perfect Nails,</span>
+                <br className="hidden sm:block" />
+                <span className="text-white"> Visualized Instantly</span>
               </h1>
 
-              {/* Feature List - Mobile Optimized, Desktop Unchanged */}
+              {/* Subheadline */}
+              <p className="text-lg sm:text-xl lg:text-2xl text-gray-200 mb-6 sm:mb-8 font-medium leading-relaxed" style={{ textShadow: '1px 1px 4px rgba(0,0,0,0.8)' }}>
+                Try on hundreds of AI-generated nail designs virtually. See exactly how they look on <span className="text-purple-300 font-bold">your hands</span> before your next appointment.
+              </p>
+
+              {/* Feature List - Clear Benefits */}
               <div className="space-y-3 sm:space-y-4 text-gray-300 mb-6 sm:mb-8">
-                {/* Mobile: Show only 3 key features, Desktop: Show all 6 */}
                 <div className="flex items-start gap-3 sm:gap-4">
-                  <span className="text-purple-400 text-xl sm:text-2xl font-bold flex-shrink-0 drop-shadow-lg">✏️</span>
-                  <span className="text-base sm:text-lg lg:text-xl font-bold text-white drop-shadow-lg" style={{ textShadow: '1px 1px 3px rgba(0,0,0,0.8)' }}>
-                    Upload your hand photo → Create your AI hand model
+                  <span className="text-purple-400 text-2xl sm:text-3xl flex-shrink-0 drop-shadow-lg">📸</span>
+                  <span className="text-base sm:text-lg lg:text-xl text-gray-100 drop-shadow-lg leading-relaxed" style={{ textShadow: '1px 1px 3px rgba(0,0,0,0.8)' }}>
+                    <span className="font-bold text-white">Upload your photo</span> – See designs on your actual hands
                   </span>
                 </div>
                 <div className="flex items-start gap-3 sm:gap-4">
-                  <span className="text-pink-400 text-xl sm:text-2xl font-bold flex-shrink-0 drop-shadow-lg">💅</span>
-                  <span className="text-base sm:text-lg lg:text-xl font-bold text-white drop-shadow-lg" style={{ textShadow: '1px 1px 3px rgba(0,0,0,0.8)' }}>
-                    Try on designs instantly without creating a model
+                  <span className="text-pink-400 text-2xl sm:text-3xl flex-shrink-0 drop-shadow-lg">💅</span>
+                  <span className="text-base sm:text-lg lg:text-xl text-gray-100 drop-shadow-lg leading-relaxed" style={{ textShadow: '1px 1px 3px rgba(0,0,0,0.8)' }}>
+                    <span className="font-bold text-white">Browse 600+ designs</span> – From elegant French tips to bold holiday nails
                   </span>
                 </div>
                 <div className="flex items-start gap-3 sm:gap-4">
-                  <span className="text-blue-400 text-xl sm:text-2xl font-bold flex-shrink-0 drop-shadow-lg">📸</span>
-                  <span className="text-base sm:text-lg lg:text-xl font-bold text-white drop-shadow-lg" style={{ textShadow: '1px 1px 3px rgba(0,0,0,0.8)' }}>
-                    See nail designs on your hands in any style
+                  <span className="text-blue-400 text-2xl sm:text-3xl flex-shrink-0 drop-shadow-lg">⚡</span>
+                  <span className="text-base sm:text-lg lg:text-xl text-gray-100 drop-shadow-lg leading-relaxed" style={{ textShadow: '1px 1px 3px rgba(0,0,0,0.8)' }}>
+                    <span className="font-bold text-white">Instant results</span> – No waiting, no guessing, just confidence
                   </span>
                 </div>
-                
+
                 {/* Hidden on mobile, shown on desktop */}
                 <div className="hidden lg:flex items-start gap-3">
-                  <span className="text-green-400 text-xl font-bold flex-shrink-0 drop-shadow-lg">🎨</span>
-                  <span className="text-lg font-bold text-white drop-shadow-lg" style={{ textShadow: '1px 1px 3px rgba(0,0,0,0.8)' }}>
-                    Explore 100s of design categories like French, Glitter, or Holiday
+                  <span className="text-green-400 text-2xl flex-shrink-0 drop-shadow-lg">🎨</span>
+                  <span className="text-lg text-gray-100 drop-shadow-lg leading-relaxed" style={{ textShadow: '1px 1px 3px rgba(0,0,0,0.8)' }}>
+                    <span className="font-bold text-white">Filter by style</span> – Wedding, work, party, or everyday looks
                   </span>
                 </div>
                 <div className="hidden lg:flex items-start gap-3">
-                  <span className="text-yellow-400 text-xl font-bold flex-shrink-0 drop-shadow-lg">❤️</span>
-                  <span className="text-lg font-bold text-white drop-shadow-lg" style={{ textShadow: '1px 1px 3px rgba(0,0,0,0.8)' }}>
-                    Run design packs like Wedding, Summer, or Professional
-                  </span>
-                </div>
-                <div className="hidden lg:flex items-start gap-3">
-                  <span className="text-red-400 text-xl font-bold flex-shrink-0 drop-shadow-lg">🎁</span>
-                  <span className="text-lg font-bold text-white drop-shadow-lg" style={{ textShadow: '1px 1px 3px rgba(0,0,0,0.8)' }}>
-                    Create nail art content and share your designs on social media
+                  <span className="text-yellow-400 text-2xl flex-shrink-0 drop-shadow-lg">💖</span>
+                  <span className="text-lg text-gray-100 drop-shadow-lg leading-relaxed" style={{ textShadow: '1px 1px 3px rgba(0,0,0,0.8)' }}>
+                    <span className="font-bold text-white">Save favorites</span> – Show your nail tech exactly what you want
                   </span>
                 </div>
               </div>
@@ -195,52 +195,61 @@ const HomepageHero = React.memo(function HomepageHero({ initialItems = [] }: Hom
 
             {/* Right Side - Enhanced CTA Card */}
             <div className="flex justify-center lg:justify-end">
-              <div className="bg-gradient-to-br from-gray-900/95 to-gray-800/95 backdrop-blur-xl rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-8 max-w-md w-full shadow-2xl border border-gray-500/60 ring-2 ring-white/20 relative">
-                {/* Subtle overlay for better text contrast */}
-                <div className="absolute inset-0 bg-black/20 rounded-2xl sm:rounded-3xl pointer-events-none"></div>
+              <div className="bg-gradient-to-br from-gray-900/95 to-gray-800/95 backdrop-blur-xl rounded-3xl p-6 sm:p-8 lg:p-10 max-w-md w-full shadow-2xl border border-purple-500/30 ring-2 ring-purple-400/20 relative overflow-hidden">
+                {/* Animated gradient background */}
+                <div className="absolute inset-0 bg-gradient-to-br from-purple-600/5 via-pink-600/5 to-purple-600/5 rounded-3xl pointer-events-none"></div>
+
                 {/* Promotional Banner */}
-                <div className="bg-gradient-to-r from-green-500/20 to-emerald-500/20 text-green-200 px-4 py-2 sm:px-5 sm:py-2.5 rounded-full text-sm sm:text-base font-medium mb-5 sm:mb-6 text-center border border-green-500/20 relative z-10" style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.6)' }}>
-                  🎃 Now with free Halloween nail designs!
+                <div className="bg-gradient-to-r from-green-500/30 to-emerald-500/30 text-green-100 px-5 py-3 rounded-2xl text-sm sm:text-base font-semibold mb-6 sm:mb-8 text-center border border-green-400/30 relative z-10 shadow-lg" style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.6)' }}>
+                  🎃 Free Halloween Nail Designs Available!
                 </div>
-                
-                <div className="text-center mb-6 sm:mb-8 relative z-10">
-                  <p className="text-gray-200 text-sm sm:text-base leading-relaxed" style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.7)' }}>
-                    Upload your hand photo and see stunning nail art designs instantly. 
-                    No appointment needed - just AI magic!
+
+                <div className="text-center mb-7 sm:mb-9 relative z-10">
+                  <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight" style={{ textShadow: '1px 1px 3px rgba(0,0,0,0.7)' }}>
+                    Ready to Try It?
+                  </h2>
+                  <p className="text-gray-200 text-base sm:text-lg leading-relaxed" style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.7)' }}>
+                    Upload a photo of your hand and instantly preview any design. It's free and takes less than 30 seconds.
                   </p>
                 </div>
-                
-                <div className="space-y-4 sm:space-y-5 relative z-10">
+
+                <div className="space-y-5 sm:space-y-6 relative z-10">
                   <Link
                     href="/try-on"
-                    className="w-full bg-gradient-to-r from-purple-600 via-pink-600 to-purple-700 text-white font-bold py-4 sm:py-4 px-5 sm:px-6 rounded-full hover:from-purple-700 hover:via-pink-700 hover:to-purple-800 transition-all duration-300 transform hover:scale-105 shadow-lg shadow-purple-500/25 text-center block text-base sm:text-base"
+                    className="group w-full bg-gradient-to-r from-purple-600 via-pink-600 to-purple-600 text-white font-bold py-4 sm:py-5 px-6 sm:px-8 rounded-2xl hover:from-purple-700 hover:via-pink-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-[1.02] shadow-xl shadow-purple-500/30 hover:shadow-purple-500/50 text-center block text-lg sm:text-xl relative overflow-hidden"
                   >
-                    ✨ Start taking AI nail art now →
+                    <span className="relative z-10 flex items-center justify-center gap-2">
+                      <span>✨</span>
+                      <span>Try Virtual Nail Art Now</span>
+                      <span className="group-hover:translate-x-1 transition-transform">→</span>
+                    </span>
+                    <div className="absolute inset-0 bg-gradient-to-r from-pink-600 to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                   </Link>
-                  
-                  <div className="flex items-center justify-center gap-2 text-gray-400 text-sm sm:text-sm">
-                    <span className="text-yellow-400">🌟</span>
-                    <span>{displayItems.length > 0 ? `${displayItems.length * 50}+` : '1000+'} designs generated this month</span>
+
+                  <div className="flex items-center justify-center gap-2 text-gray-300 text-sm sm:text-base bg-gray-800/50 py-3 px-4 rounded-xl">
+                    <span className="text-yellow-400 text-lg">⭐</span>
+                    <span className="font-medium">Over {displayItems.length > 0 ? `${displayItems.length * 75}+` : '1,200+'} designs available</span>
                   </div>
-                  
+
                   <div className="relative">
                     <div className="absolute inset-0 flex items-center">
-                      <div className="w-full border-t border-gray-600"></div>
+                      <div className="w-full border-t border-gray-600/50"></div>
                     </div>
-                    <div className="relative flex justify-center text-sm sm:text-sm">
-                      <span className="px-3 bg-gray-900/95 text-gray-500">or</span>
+                    <div className="relative flex justify-center text-sm">
+                      <span className="px-4 bg-gray-900/95 text-gray-400 font-medium">or explore first</span>
                     </div>
                   </div>
-                  
+
                   <Link
                     href="/nail-art-gallery"
-                    className="w-full bg-gradient-to-r from-gray-700 to-gray-800 text-white font-semibold py-3 sm:py-3 px-5 sm:px-6 rounded-full hover:from-gray-600 hover:to-gray-700 transition-all duration-300 text-center block border border-gray-500/50 hover:border-gray-400/50 shadow-lg hover:shadow-xl transform hover:scale-105 text-base sm:text-base"
+                    className="w-full bg-gray-700/50 text-white font-semibold py-3.5 sm:py-4 px-6 rounded-2xl hover:bg-gray-600/50 transition-all duration-300 text-center block border border-gray-500/50 hover:border-gray-400/60 shadow-lg hover:shadow-xl text-base sm:text-lg flex items-center justify-center gap-2 backdrop-blur-sm"
                   >
-                    🎨 Browse Gallery
+                    <span>🎨</span>
+                    <span>Browse Design Gallery</span>
                   </Link>
-                  
-                  <p className="text-gray-500 text-sm text-center">
-                    Already have an account? We&apos;ll log you in automatically
+
+                  <p className="text-gray-400 text-sm sm:text-base text-center pt-2">
+                    100% free • No signup required • Instant results
                   </p>
                 </div>
               </div>

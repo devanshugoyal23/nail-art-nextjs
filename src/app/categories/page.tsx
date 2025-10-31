@@ -110,27 +110,39 @@ export default async function CategoriesPage() {
       {/* Hero Section */}
       <div className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-purple-600/20 to-pink-600/20"></div>
-        <div className="relative max-w-7xl mx-auto px-4 py-16">
+        <div className="relative max-w-7xl mx-auto px-4 py-12 sm:py-20">
           <div className="text-center">
-            <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-              Nail Art Categories
+            {/* Badge */}
+            <div className="inline-flex items-center gap-2 bg-purple-500/20 backdrop-blur-sm text-purple-200 px-4 py-2 rounded-full text-sm font-semibold mb-6 border border-purple-400/30">
+              <span>🎨</span>
+              {allCategoriesWithThumbnails.length} Categories Available
+            </div>
+
+            <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
+              <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent">Explore</span> Nail Art Categories
             </h1>
-            <p className="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto mb-8">
-              Discover your perfect nail art style. Browse by type or explore all {allCategoriesWithThumbnails.length} categories 
-              with thumbnails and design counts.
+
+            <p className="text-lg sm:text-xl md:text-2xl text-gray-200 max-w-4xl mx-auto mb-10 leading-relaxed">
+              From classic French tips to bold geometric designs — find your perfect nail art style among {allCategoriesWithThumbnails.length} curated categories.
             </p>
+
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 href="/categories/all"
-                className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold py-4 px-8 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg"
+                className="group bg-gradient-to-r from-purple-600 via-pink-600 to-purple-600 hover:from-purple-700 hover:via-pink-700 hover:to-purple-700 text-white font-bold py-4 sm:py-5 px-8 sm:px-10 rounded-2xl transition-all duration-300 transform hover:scale-[1.02] shadow-xl shadow-purple-500/30 hover:shadow-purple-500/50 text-lg relative overflow-hidden"
               >
-                Browse All {allCategoriesWithThumbnails.length} Categories
+                <span className="relative z-10 flex items-center justify-center gap-2">
+                  <span>Browse All Categories</span>
+                  <span className="group-hover:translate-x-1 transition-transform">→</span>
+                </span>
+                <div className="absolute inset-0 bg-gradient-to-r from-pink-600 to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity"></div>
               </Link>
               <Link
                 href="/nail-art-gallery"
-                className="bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white font-semibold py-4 px-8 rounded-full transition-all duration-300 border border-white/20"
+                className="bg-gray-700/50 backdrop-blur-sm hover:bg-gray-600/50 text-white font-semibold py-4 sm:py-5 px-8 sm:px-10 rounded-2xl transition-all duration-300 border border-gray-500/50 hover:border-gray-400/60 text-lg flex items-center justify-center gap-2"
               >
-                View All Designs
+                <span>🎨</span>
+                <span>View All Designs</span>
               </Link>
             </div>
           </div>

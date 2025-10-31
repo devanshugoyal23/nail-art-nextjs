@@ -103,16 +103,39 @@ export default async function GalleryPage() {
       />
       
       <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-purple-900">
-        <div className="max-w-7xl mx-auto px-2 sm:px-4 py-4 sm:py-6">
-          {/* SEO Header */}
-          <div className="text-center mb-6 sm:mb-8">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">
-              AI Nail Art Gallery
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+          {/* Header Section */}
+          <div className="text-center mb-10 sm:mb-12">
+            {/* Badge */}
+            <div className="inline-flex items-center gap-2 bg-purple-500/20 backdrop-blur-sm text-purple-200 px-4 py-2 rounded-full text-sm font-semibold mb-5 border border-purple-400/30">
+              <span className="text-yellow-300">✨</span>
+              600+ AI-Generated Designs
+            </div>
+
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6 leading-tight">
+              <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent">Nail Art</span>
+              {' '}Gallery
             </h1>
-            <p className="text-base sm:text-lg text-gray-300 max-w-3xl mx-auto px-2">
-              Discover hundreds of unique AI-generated nail art designs. From classic French manicures to bold artistic creations, 
-              find your perfect manicure inspiration.
+
+            <p className="text-lg sm:text-xl text-gray-200 max-w-3xl mx-auto mb-8 leading-relaxed">
+              Browse stunning nail designs for every occasion. Filter by style, color, or mood — then try them on virtually to see how they look on <span className="text-purple-300 font-semibold">your hands</span>.
             </p>
+
+            {/* Quick Stats */}
+            <div className="flex flex-wrap justify-center gap-4 sm:gap-6 text-sm sm:text-base">
+              <div className="flex items-center gap-2 bg-gray-800/50 px-4 py-2 rounded-xl backdrop-blur-sm">
+                <span className="text-purple-400 text-xl">🎨</span>
+                <span className="text-gray-300"><span className="font-bold text-white">600+</span> Designs</span>
+              </div>
+              <div className="flex items-center gap-2 bg-gray-800/50 px-4 py-2 rounded-xl backdrop-blur-sm">
+                <span className="text-pink-400 text-xl">💅</span>
+                <span className="text-gray-300"><span className="font-bold text-white">185+</span> Categories</span>
+              </div>
+              <div className="flex items-center gap-2 bg-gray-800/50 px-4 py-2 rounded-xl backdrop-blur-sm">
+                <span className="text-blue-400 text-xl">⚡</span>
+                <span className="text-gray-300"><span className="font-bold text-white">Instant</span> Try-On</span>
+              </div>
+            </div>
           </div>
           
           <EnhancedGallery 
@@ -122,35 +145,76 @@ export default async function GalleryPage() {
             initialTotalCount={initialData.totalCount}
           />
           
-          {/* SEO Content Section */}
-          <div className="mt-12 sm:mt-16 bg-gray-800/50 rounded-lg p-4 sm:p-6 lg:p-8 border border-gray-700">
-            <h2 className="text-xl sm:text-2xl font-bold text-white mb-4 sm:mb-6">About Our AI Nail Art Gallery</h2>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
-              <div>
-                <h3 className="text-lg sm:text-xl font-semibold text-white mb-3">🎨 Unique AI-Generated Designs</h3>
-                <p className="text-gray-300 mb-4 text-sm sm:text-base">
-                  Our AI creates completely unique nail art designs that you won&apos;t find anywhere else. 
-                  Each design is generated using advanced machine learning algorithms to ensure originality and creativity.
+          {/* Info Section */}
+          <div className="mt-16 sm:mt-20 bg-gradient-to-br from-gray-800/60 to-gray-900/60 backdrop-blur-sm rounded-2xl p-6 sm:p-8 lg:p-10 border border-gray-700/50">
+            <h2 className="text-2xl sm:text-3xl font-bold text-white mb-8 text-center">
+              How to Use This Gallery
+            </h2>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-10">
+              {/* Step 1 */}
+              <div className="bg-gray-900/50 rounded-xl p-6 border border-purple-500/20">
+                <div className="text-4xl mb-4">🔍</div>
+                <h3 className="text-xl font-bold text-white mb-3">1. Browse & Filter</h3>
+                <p className="text-gray-300 leading-relaxed">
+                  Explore 600+ designs by filtering by color, style, occasion, or season. Use the search to find exactly what you're looking for.
                 </p>
-                <ul className="text-gray-300 space-y-2 text-sm sm:text-base">
-                  <li>• Hundreds of unique designs</li>
-                  <li>• All shapes and styles supported</li>
-                  <li>• Seasonal and occasion-specific designs</li>
-                  <li>• High-resolution downloads</li>
-                </ul>
               </div>
-              <div>
-                <h3 className="text-lg sm:text-xl font-semibold text-white mb-3">✨ How to Use the Gallery</h3>
-                <p className="text-gray-300 mb-4 text-sm sm:text-base">
-                  Browse our collection by category, color, technique, or occasion. Each design comes with 
-                  detailed instructions and supply lists for easy recreation.
+
+              {/* Step 2 */}
+              <div className="bg-gray-900/50 rounded-xl p-6 border border-pink-500/20">
+                <div className="text-4xl mb-4">💅</div>
+                <h3 className="text-xl font-bold text-white mb-3">2. Pick Your Favorite</h3>
+                <p className="text-gray-300 leading-relaxed">
+                  Click any design to see details, color palette, and AI prompt. Each design is completely unique and AI-generated.
                 </p>
-                <ul className="text-gray-300 space-y-2 text-sm sm:text-base">
-                  <li>• Filter by category or style</li>
-                  <li>• Download high-res images</li>
-                  <li>• Get step-by-step instructions</li>
-                  <li>• Try designs virtually</li>
-                </ul>
+              </div>
+
+              {/* Step 3 */}
+              <div className="bg-gray-900/50 rounded-xl p-6 border border-blue-500/20">
+                <div className="text-4xl mb-4">✨</div>
+                <h3 className="text-xl font-bold text-white mb-3">3. Try It On Virtually</h3>
+                <p className="text-gray-300 leading-relaxed">
+                  Upload a photo of your hand to see how the design looks on you. It's free, instant, and no signup required!
+                </p>
+              </div>
+            </div>
+
+            {/* Benefits */}
+            <div className="bg-purple-900/20 border border-purple-500/30 rounded-xl p-6 sm:p-8">
+              <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                <span className="text-2xl">💎</span>
+                Why Choose Our Gallery?
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="flex items-start gap-3">
+                  <span className="text-green-400 text-xl">✓</span>
+                  <div>
+                    <p className="text-white font-semibold">100% Unique Designs</p>
+                    <p className="text-gray-300 text-sm">Every design is AI-generated and one-of-a-kind</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <span className="text-green-400 text-xl">✓</span>
+                  <div>
+                    <p className="text-white font-semibold">Free Virtual Try-On</p>
+                    <p className="text-gray-300 text-sm">See designs on your hands before committing</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <span className="text-green-400 text-xl">✓</span>
+                  <div>
+                    <p className="text-white font-semibold">All Occasions Covered</p>
+                    <p className="text-gray-300 text-sm">From weddings to everyday wear</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <span className="text-green-400 text-xl">✓</span>
+                  <div>
+                    <p className="text-white font-semibold">Updated Weekly</p>
+                    <p className="text-gray-300 text-sm">Fresh designs added regularly</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

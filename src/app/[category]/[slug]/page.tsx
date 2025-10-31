@@ -469,15 +469,19 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
           </nav>
           
           {/* 2. H1 Title + Category Badge - Above the fold */}
-          <div className="mb-6">
+          <div className="mb-8">
             {item.category && (
-              <span className="inline-block text-sm text-purple-400 font-medium mb-3 bg-purple-900/30 px-3 py-1 rounded-full">
+              <div className="inline-flex items-center gap-2 bg-purple-500/20 backdrop-blur-sm text-purple-200 px-4 py-2 rounded-full text-sm font-semibold mb-4 border border-purple-400/30">
+                <span>🎨</span>
                 {item.category}
-              </span>
+              </div>
             )}
-            <h1 className="text-4xl lg:text-5xl font-bold text-white mb-4">
+            <h1 className="text-4xl lg:text-6xl font-bold text-white mb-5 leading-tight">
               {item.design_name || 'Generated Nail Art'}
             </h1>
+            <p className="text-lg lg:text-xl text-gray-300 leading-relaxed max-w-3xl">
+              {item.prompt || `Beautiful ${item.category || 'nail art'} design perfect for any occasion.`}
+            </p>
           </div>
 
           {/* 3. Hero Image with SEO optimization */}
@@ -546,32 +550,49 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
             </div>
           </div>
 
-          {/* 5. Primary CTA Buttons - Sticky on mobile */}
-          <div className="mb-8">
-            <div className="flex flex-col sm:flex-row gap-3">
-              <Link
-                href={`/try-on?design=${item.id}`}
-                className="flex-1 bg-purple-600 text-white font-bold py-4 px-6 rounded-lg hover:bg-purple-700 transition-colors duration-200 text-center text-lg"
-              >
-                {editorial?.ctaText || 'Try This Design Virtually'}
-              </Link>
-              <a
-                href={item.image_url}
-                download={`${(item.design_name || 'nail-art').toLowerCase().replace(/\s+/g, '-')}-${item.id.slice(-8)}.jpg`}
-                className="flex-1 bg-green-600 text-white font-bold py-4 px-6 rounded-lg hover:bg-green-700 transition-colors duration-200 text-center text-lg"
-              >
-                Download Design
-              </a>
-            </div>
-            
-            {/* Social sharing */}
-            <div className="flex items-center justify-center space-x-4 mt-4 pt-4 border-t border-gray-700">
-              <span className="text-gray-400 text-sm">Share this design:</span>
-              <SocialShareButton
-                title={item.design_name || 'Nail Art Design'}
-                text={editorial?.intro || item.prompt || ''}
-                url=""
-              />
+          {/* 5. Primary CTA Buttons - More Prominent */}
+          <div className="mb-10">
+            <div className="bg-gradient-to-br from-gray-800/60 to-gray-900/60 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-gray-700/50">
+              <h2 className="text-2xl font-bold text-white mb-6 text-center">Ready to Try This Design?</h2>
+
+              <div className="grid sm:grid-cols-2 gap-4 mb-6">
+                <Link
+                  href={`/try-on?design=${item.id}`}
+                  className="group relative bg-gradient-to-r from-purple-600 via-pink-600 to-purple-600 text-white font-bold py-5 px-8 rounded-2xl hover:from-purple-700 hover:via-pink-700 hover:to-purple-700 transition-all duration-300 text-center text-lg shadow-xl shadow-purple-500/30 hover:shadow-purple-500/50 hover:scale-[1.02] overflow-hidden"
+                >
+                  <span className="relative z-10 flex items-center justify-center gap-2">
+                    <span>✨</span>
+                    <span>Try On Your Hands</span>
+                    <span className="group-hover:translate-x-1 transition-transform">→</span>
+                  </span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-pink-600 to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                </Link>
+
+                <a
+                  href={item.image_url}
+                  download={`${(item.design_name || 'nail-art').toLowerCase().replace(/\s+/g, '-')}-${item.id.slice(-8)}.jpg`}
+                  className="bg-gray-700/50 text-white font-semibold py-5 px-8 rounded-2xl hover:bg-gray-600/50 transition-all duration-300 text-center text-lg border border-gray-500/50 hover:border-gray-400/60 shadow-lg hover:shadow-xl backdrop-blur-sm flex items-center justify-center gap-2"
+                >
+                  <span>⬇️</span>
+                  <span>Save for Later</span>
+                </a>
+              </div>
+
+              <div className="text-center">
+                <p className="text-gray-300 text-sm mb-4">
+                  💡 <span className="font-semibold">Pro Tip:</span> Upload a photo of your hand to see exactly how this design looks on you!
+                </p>
+              </div>
+
+              {/* Social sharing */}
+              <div className="flex items-center justify-center space-x-4 pt-4 border-t border-gray-700/50">
+                <span className="text-gray-400 text-sm">Love it? Share:</span>
+                <SocialShareButton
+                  title={item.design_name || 'Nail Art Design'}
+                  text={editorial?.intro || item.prompt || ''}
+                  url=""
+                />
+              </div>
             </div>
           </div>
 
