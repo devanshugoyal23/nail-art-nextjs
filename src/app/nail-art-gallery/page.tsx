@@ -157,7 +157,7 @@ export default async function GalleryPage() {
                 <div className="text-4xl mb-4">🔍</div>
                 <h3 className="text-xl font-bold text-white mb-3">1. Browse & Filter</h3>
                 <p className="text-gray-300 leading-relaxed">
-                  Explore 600+ designs by filtering by color, style, occasion, or season. Use the search to find exactly what you're looking for.
+                  Explore 600+ designs by filtering by color, style, occasion, or season. Use the search to find exactly what you&apos;re looking for.
                 </p>
               </div>
 
@@ -175,7 +175,7 @@ export default async function GalleryPage() {
                 <div className="text-4xl mb-4">✨</div>
                 <h3 className="text-xl font-bold text-white mb-3">3. Try It On Virtually</h3>
                 <p className="text-gray-300 leading-relaxed">
-                  Upload a photo of your hand to see how the design looks on you. It's free, instant, and no signup required!
+                  Upload a photo of your hand to see how the design looks on you. It&apos;s free, instant, and no signup required!
                 </p>
               </div>
             </div>
