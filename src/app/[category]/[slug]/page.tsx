@@ -433,157 +433,97 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
         }}
       />
       
-      <div className="min-h-screen bg-black">
-        {/* Progress Bar */}
-        <ProgressBar />
-        
-        <div className="max-w-7xl mx-auto px-4 py-8">
-          {/* 1. Breadcrumb Navigation - SEO Critical */}
-          <nav className="mb-6" aria-label="Breadcrumb">
-            <ol className="flex items-center space-x-2 text-sm text-gray-400">
-              <li>
-                <Link href="/" className="hover:text-purple-400 transition-colors">
-                  Home
-                </Link>
-              </li>
-              <li className="text-gray-500">/</li>
-              <li>
-                <Link href="/nail-art-gallery" className="hover:text-purple-400 transition-colors">
-                  Gallery
-                </Link>
-              </li>
-              <li className="text-gray-500">/</li>
-              <li>
-                <Link 
-                  href={`/nail-art-gallery/category/${encodeURIComponent(item.category || '')}`}
-                  className="hover:text-purple-400 transition-colors"
-                >
-                  {item.category}
-                </Link>
-              </li>
-              <li className="text-gray-500">/</li>
-              <li className="text-white font-medium">
-                {item.design_name || 'Design'}
-              </li>
-            </ol>
-          </nav>
-          
-          {/* 2. H1 Title + Category Badge - Above the fold */}
-          <div className="mb-6">
-            {item.category && (
-              <span className="inline-block text-sm text-purple-400 font-medium mb-3 bg-purple-900/30 px-3 py-1 rounded-full">
-                {item.category}
-              </span>
-            )}
-            <h1 className="text-4xl lg:text-5xl font-bold text-white mb-4">
-              {item.design_name || 'Generated Nail Art'}
-            </h1>
-          </div>
+      <div className="min-h-screen bg-white">
 
-          {/* 3. Hero Image with SEO optimization */}
-          <div className="mb-8">
-            <div className="relative bg-gray-800 rounded-xl overflow-hidden">
-              <OptimizedImage
-                  src={item.original_image_url || item.image_url}
-                alt={generateImageAltText(item.design_name || 'Generated Nail Art', item.category, item.prompt)}
-                width={800}
-                height={1200}
-                  className="w-full h-[500px] lg:h-[700px] object-cover"
-                preset="detail"
-                priority={true}
-              />
-              {/* Image Caption for SEO */}
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6">
-                <p className="text-white text-sm">
-                  {generateImageAltText(item.design_name || 'Generated Nail Art', item.category, item.prompt)}
-                </p>
-              </div>
-              </div>
-            </div>
-            
-          {/* 4. Ultra-Compact Stats Bar */}
-          <div className="mb-6 bg-gray-800/30 backdrop-blur-sm rounded-xl p-4 border border-gray-700/50">
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
-              <div className="flex flex-col items-center space-y-1">
-                <div className="flex items-center gap-2 text-purple-400 text-sm font-medium">
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                  </svg>
-                  Who It&apos;s For
-                </div>
-                <div className="text-white text-sm font-semibold">{editorial?.audience || 'All skill levels'}</div>
-              </div>
-              
-              <div className="flex flex-col items-center space-y-1">
-                <div className="flex items-center gap-2 text-green-400 text-sm font-medium">
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  Time Needed
-                </div>
-                <div className="text-white text-sm font-semibold">{editorial?.timeMinutes || 45} min</div>
-              </div>
-              
-              <div className="flex flex-col items-center space-y-1">
-                <div className="flex items-center gap-2 text-blue-400 text-sm font-medium">
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  Difficulty
-                </div>
-                <div className="text-white text-sm font-semibold">{editorial?.difficulty || 'Medium'}</div>
-              </div>
-              
-              <div className="flex flex-col items-center space-y-1">
-                <div className="flex items-center gap-2 text-pink-400 text-sm font-medium">
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
-                  </svg>
-                  Est. Cost
-                </div>
-                <div className="text-white text-sm font-semibold">{editorial?.costEstimate || '$20-40'}</div>
-              </div>
-            </div>
-          </div>
+        {/* Hero Image Section - Full Width, No Container */}
+        <div className="relative">
+          <div className="relative h-[70vh] md:h-[80vh] overflow-hidden rounded-b-3xl shadow-soft-lg">
+            <OptimizedImage
+              src={item.original_image_url || item.image_url}
+              alt={generateImageAltText(item.design_name || 'Generated Nail Art', item.category, item.prompt)}
+              width={1200}
+              height={1600}
+              className="w-full h-full object-cover"
+              preset="detail"
+              priority={true}
+            />
 
-          {/* 5. Primary CTA Buttons - Sticky on mobile */}
-          <div className="mb-8">
-            <div className="flex flex-col sm:flex-row gap-3">
-              <Link
-                href={`/try-on?design=${item.id}`}
-                className="flex-1 bg-purple-600 text-white font-bold py-4 px-6 rounded-lg hover:bg-purple-700 transition-colors duration-200 text-center text-lg"
-              >
-                {editorial?.ctaText || 'Try This Design Virtually'}
-              </Link>
-              <a
-                href={item.image_url}
-                download={`${(item.design_name || 'nail-art').toLowerCase().replace(/\s+/g, '-')}-${item.id.slice(-8)}.jpg`}
-                className="flex-1 bg-green-600 text-white font-bold py-4 px-6 rounded-lg hover:bg-green-700 transition-colors duration-200 text-center text-lg"
-              >
-                Download Design
-              </a>
-            </div>
-            
-            {/* Social sharing */}
-            <div className="flex items-center justify-center space-x-4 mt-4 pt-4 border-t border-gray-700">
-              <span className="text-gray-400 text-sm">Share this design:</span>
+            {/* Floating Actions - Top Right */}
+            <div className="absolute top-6 right-6 flex gap-3">
+              <button className="bg-white/95 backdrop-blur-sm p-3 rounded-full shadow-soft hover:shadow-soft-lg transition-all hover:-translate-y-1">
+                <svg className="w-5 h-5 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                </svg>
+              </button>
               <SocialShareButton
                 title={item.design_name || 'Nail Art Design'}
                 text={editorial?.intro || item.prompt || ''}
                 url=""
               />
             </div>
-          </div>
 
-          {/* 6. Introduction with contextual links */}
-          <section className="mb-8">
-            <div className="bg-gray-800 rounded-lg p-6 border border-gray-700">
-              <h2 className="text-xl font-semibold text-white mb-3">{editorial?.title || 'About This Design'}</h2>
-              <p className="text-gray-300 leading-relaxed">
-                {editorial?.intro || `${item.design_name || 'Nail Art'} blends ${attrs.colors.length ? attrs.colors.join(', ') : 'modern'} tones with ${(attrs.finish.join(', ') || 'a glossy')} finish.`}
-              </p>
+            {/* Floating CTA Button - Bottom Right */}
+            <Link
+              href={`/try-on?design=${item.id}`}
+              className="absolute bottom-6 right-6 btn btn-primary shadow-soft-xl"
+            >
+              ✨ Try This Design
+            </Link>
+          </div>
+        </div>
+
+        {/* Content Container - Centered, Max Width */}
+        <div className="content-wrapper">
+
+          {/* Breadcrumb - Minimal */}
+          <nav className="mb-8 text-sm" aria-label="Breadcrumb">
+            <ol className="flex items-center gap-2 text-gray-500">
+              <li><Link href="/" className="hover:text-rose-500 transition-colors">Home</Link></li>
+              <li>/</li>
+              <li><Link href="/nail-art-gallery" className="hover:text-rose-500 transition-colors">Gallery</Link></li>
+              <li>/</li>
+              <li><Link href={`/nail-art-gallery/category/${encodeURIComponent(item.category || '')}`} className="hover:text-rose-500 transition-colors">{item.category}</Link></li>
+            </ol>
+          </nav>
+
+          {/* Title Section */}
+          <div className="mb-8">
+            {item.category && (
+              <span className="inline-block text-sm font-medium text-rose-600 bg-rose-50 px-4 py-1.5 rounded-full mb-4">
+                {item.category}
+              </span>
+            )}
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif text-gray-900 mb-4 leading-tight">
+              {item.design_name || 'Generated Nail Art'}
+            </h1>
+            <p className="text-lg text-gray-600 leading-relaxed">
+              {editorial?.intro || item.prompt || 'A beautiful nail art design that you can recreate at home.'}
+            </p>
+          </div>
+            
+          {/* Quick Info Cards - Clean & Minimal */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+            <div className="text-center p-4">
+              <div className="text-3xl mb-2">👤</div>
+              <div className="text-sm text-gray-500 mb-1">Skill Level</div>
+              <div className="font-semibold text-gray-900">{editorial?.audience || 'All Levels'}</div>
             </div>
-          </section>
+            <div className="text-center p-4">
+              <div className="text-3xl mb-2">⏱️</div>
+              <div className="text-sm text-gray-500 mb-1">Time</div>
+              <div className="font-semibold text-gray-900">{editorial?.timeMinutes || 45} min</div>
+            </div>
+            <div className="text-center p-4">
+              <div className="text-3xl mb-2">⭐</div>
+              <div className="text-sm text-gray-500 mb-1">Difficulty</div>
+              <div className="font-semibold text-gray-900">{editorial?.difficulty || 'Medium'}</div>
+            </div>
+            <div className="text-center p-4">
+              <div className="text-3xl mb-2">💰</div>
+              <div className="text-sm text-gray-500 mb-1">Est. Cost</div>
+              <div className="font-semibold text-gray-900">{editorial?.costEstimate || '$20-40'}</div>
+            </div>
+          </div>
 
           {/* 7. What You'll Need - Supplies with internal links */}
           <CollapsibleSection

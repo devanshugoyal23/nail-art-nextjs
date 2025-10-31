@@ -1,18 +1,39 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* PINTEREST-STYLE COLOR PALETTE - Soft & Feminine */
+  --background: #FFFFFF;
+  --surface: #FAFAFA;
+  --foreground: #424242;
 
-  /* Enhanced Design Tokens */
-  --primary: #8b5cf6;
-  --primary-hover: #7c3aed;
-  --secondary: #ec4899;
-  --secondary-hover: #db2777;
-  --accent: #06b6d4;
-  --accent-hover: #0891b2;
+  /* Primary - Soft Rose & Blush */
+  --primary: #EC407A;
+  --primary-light: #F8BBD0;
+  --primary-lighter: #FCE4EC;
+  --primary-dark: #D81B60;
 
-  /* Spacing System */
+  /* Secondary - Elegant Lavender */
+  --secondary: #CE93D8;
+  --secondary-light: #F3E5F5;
+  --secondary-dark: #AB47BC;
+
+  /* Accent - Rose Gold */
+  --accent: #E8A598;
+  --accent-dark: #D4877B;
+
+  /* Neutrals - Soft & Clean */
+  --text-primary: #424242;
+  --text-secondary: #757575;
+  --text-muted: #BDBDBD;
+  --border: #F5F5F5;
+  --border-hover: #EEEEEE;
+
+  /* Shadows - Soft & Subtle */
+  --shadow-color: rgba(0, 0, 0, 0.08);
+  --shadow-hover: rgba(236, 64, 122, 0.15);
+
+  /* Spacing System - Pinterest-like generous spacing */
   --spacing-xs: 0.25rem;
   --spacing-sm: 0.5rem;
   --spacing-md: 1rem;
@@ -20,78 +41,223 @@
   --spacing-xl: 2rem;
   --spacing-2xl: 3rem;
   --spacing-3xl: 4rem;
+  --spacing-4xl: 6rem;
 
-  /* Border Radius */
-  --radius-sm: 0.375rem;
-  --radius-md: 0.5rem;
-  --radius-lg: 0.75rem;
-  --radius-xl: 1rem;
-  --radius-2xl: 1.5rem;
+  /* Border Radius - Soft & Rounded */
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-2xl: 2rem;
   --radius-full: 9999px;
 
-  /* Shadows */
-  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
-  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
-  --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+  /* Typography Scale */
+  --font-heading: 'Playfair Display', serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 
-  /* Transitions */
-  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+  /* Transitions - Smooth & Elegant */
+  --transition-fast: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-body);
+  --font-serif: var(--font-heading);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* GLOBAL STYLES - Clean & Minimal */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 5rem;
+  height: 100%;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
+  min-height: 100%;
   background: var(--background);
-  color: var(--foreground);
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
-  font-size: 16px;
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.7;
   overflow-x: hidden;
 }
 
-/* Selection styling */
+/* Beautiful Text Selection */
 ::selection {
-  background-color: rgba(139, 92, 246, 0.3);
-  color: var(--foreground);
+  background-color: var(--primary-lighter);
+  color: var(--text-primary);
 }
 
 ::-moz-selection {
-  background-color: rgba(139, 92, 246, 0.3);
-  color: var(--foreground);
+  background-color: var(--primary-lighter);
+  color: var(--text-primary);
 }
 
-/* Enhanced UI/UX Animations */
-@keyframes ripple {
-  0% {
-    transform: scale(0);
+/* Typography - Elegant & Readable */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+}
+
+h1 {
+  font-size: 3rem;
+  font-weight: 700;
+}
+
+h2 {
+  font-size: 2.25rem;
+  font-weight: 600;
+}
+
+h3 {
+  font-size: 1.5rem;
+  font-family: var(--font-body);
+  font-weight: 600;
+}
+
+h4 {
+  font-size: 1.25rem;
+  font-family: var(--font-body);
+  font-weight: 600;
+}
+
+p {
+  margin-bottom: 1rem;
+  line-height: 1.7;
+}
+
+a {
+  color: var(--primary);
+  text-decoration: none;
+  transition: var(--transition-fast);
+}
+
+a:hover {
+  color: var(--primary-dark);
+}
+
+/* PINTEREST-STYLE MASONRY LAYOUT */
+.pinterest-masonry {
+  column-count: 2;
+  column-gap: 1rem;
+  padding: 1rem;
+}
+
+@media (min-width: 640px) {
+  .pinterest-masonry {
+    column-count: 3;
+    column-gap: 1.25rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .pinterest-masonry {
+    column-count: 4;
+    column-gap: 1.5rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .pinterest-masonry {
+    column-count: 5;
+    column-gap: 1.5rem;
+  }
+}
+
+.pinterest-item {
+  break-inside: avoid;
+  margin-bottom: 1.5rem;
+  display: inline-block;
+  width: 100%;
+  position: relative;
+  background: white;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: var(--transition-base);
+  cursor: pointer;
+}
+
+.pinterest-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px var(--shadow-hover);
+}
+
+.pinterest-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: var(--transition-base);
+}
+
+.pinterest-item:hover img {
+  filter: brightness(0.98);
+}
+
+/* SOFT ANIMATIONS */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
     opacity: 1;
   }
-  100% {
-    transform: scale(4);
+}
+
+@keyframes fadeInUp {
+  from {
     opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes softBounce {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
   }
 }
 
@@ -109,117 +275,33 @@ body {
     transform: translateY(0px);
   }
   50% {
-    transform: translateY(-10px);
+    transform: translateY(-8px);
   }
 }
 
-@keyframes glow {
-  0%, 100% {
-    box-shadow: 0 0 5px rgba(168, 85, 247, 0.5);
-  }
-  50% {
-    box-shadow: 0 0 20px rgba(168, 85, 247, 0.8);
-  }
+/* Animation Utility Classes */
+.animate-fade-in {
+  animation: fadeIn 0.4s ease-out;
 }
 
-@keyframes slideInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.animate-fade-in-up {
+  animation: fadeInUp 0.5s ease-out;
 }
 
-@keyframes fadeInScale {
-  from {
-    opacity: 0;
-    transform: scale(0.9);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+.animate-fade-in-down {
+  animation: fadeInDown 0.5s ease-out;
 }
 
-/* Modern Card Animations */
-@keyframes cardEntrance {
-  from {
-    opacity: 0;
-    transform: translateY(20px) scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
+.animate-scale-in {
+  animation: scaleIn 0.4s ease-out;
 }
 
-@keyframes slideInFromLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes slideInFromRight {
-  from {
-    opacity: 0;
-    transform: translateX(40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes bounceIn {
-  0% {
-    opacity: 0;
-    transform: scale(0.3);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1.05);
-  }
-  70% {
-    transform: scale(0.9);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-
-@keyframes pulse {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.5;
-  }
-}
-
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-/* Utility classes for animations */
-.animate-ripple {
-  animation: ripple 0.6s linear;
+.animate-soft-bounce {
+  animation: softBounce 0.6s ease-out;
 }
 
 .animate-shimmer {
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  background: linear-gradient(90deg, transparent, rgba(236, 64, 122, 0.1), transparent);
   background-size: 200% 100%;
   animation: shimmer 2s infinite;
 }
@@ -228,550 +310,321 @@ body {
   animation: float 3s ease-in-out infinite;
 }
 
-.animate-glow {
-  animation: glow 2s ease-in-out infinite;
+/* CARD STYLES - Pinterest Aesthetic */
+.card {
+  background: white;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 2px 8px var(--shadow-color);
+  transition: var(--transition-base);
+  overflow: hidden;
 }
 
-.animate-slide-in-up {
-  animation: slideInUp 0.5s ease-out;
+.card:hover {
+  box-shadow: 0 8px 24px var(--shadow-hover);
+  transform: translateY(-4px);
 }
 
-.animate-fade-in-scale {
-  animation: fadeInScale 0.3s ease-out;
+.card-minimal {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  transition: var(--transition-base);
 }
 
-.animate-card-entrance {
-  animation: cardEntrance 0.4s ease-out;
+.card-minimal:hover {
+  border-color: var(--border-hover);
+  box-shadow: 0 4px 12px var(--shadow-color);
 }
 
-.animate-slide-in-left {
-  animation: slideInFromLeft 0.5s ease-out;
+/* BUTTON STYLES - Soft & Elegant */
+.btn {
+  font-family: var(--font-body);
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius-full);
+  transition: var(--transition-base);
+  cursor: pointer;
+  border: none;
+  font-size: 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  text-decoration: none;
 }
 
-.animate-slide-in-right {
-  animation: slideInFromRight 0.5s ease-out;
+.btn-primary {
+  background: var(--primary);
+  color: white;
+  box-shadow: 0 4px 12px rgba(236, 64, 122, 0.25);
 }
 
-.animate-bounce-in {
-  animation: bounceIn 0.6s ease-out;
+.btn-primary:hover {
+  background: var(--primary-dark);
+  box-shadow: 0 6px 16px rgba(236, 64, 122, 0.35);
+  transform: translateY(-2px);
 }
 
-.animate-pulse {
-  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+.btn-secondary {
+  background: transparent;
+  color: var(--primary);
+  border: 2px solid var(--primary);
 }
 
-.animate-spin {
-  animation: spin 1s linear infinite;
+.btn-secondary:hover {
+  background: var(--primary-lighter);
+  border-color: var(--primary-dark);
 }
 
-/* Glassmorphism effects */
-.glass {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+.btn-soft {
+  background: var(--primary-lighter);
+  color: var(--primary-dark);
 }
 
-.glass-dark {
-  background: rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+.btn-soft:hover {
+  background: var(--primary-light);
 }
 
-/* Mobile-specific optimizations */
+/* INPUT STYLES - Clean & Modern */
+input, textarea, select {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: white;
+  color: var(--text-primary);
+  transition: var(--transition-fast);
+  width: 100%;
+}
+
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-lighter);
+}
+
+input::placeholder, textarea::placeholder {
+  color: var(--text-muted);
+}
+
+/* Search Input - Special Styling */
+.search-input {
+  padding: 1rem 1.5rem;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border);
+  font-size: 1rem;
+  box-shadow: 0 2px 8px var(--shadow-color);
+}
+
+.search-input:focus {
+  box-shadow: 0 4px 16px var(--shadow-hover);
+}
+
+/* TAG/BADGE STYLES - Soft Pills */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.375rem 0.875rem;
+  border-radius: var(--radius-full);
+  font-size: 0.875rem;
+  font-weight: 500;
+  background: var(--primary-lighter);
+  color: var(--primary-dark);
+  transition: var(--transition-fast);
+  border: 1px solid transparent;
+}
+
+.tag:hover {
+  background: var(--primary-light);
+  border-color: var(--primary);
+}
+
+.tag-secondary {
+  background: var(--secondary-light);
+  color: var(--secondary-dark);
+}
+
+.tag-secondary:hover {
+  background: var(--secondary);
+  color: white;
+}
+
+/* SOFT SHADOWS */
+.shadow-soft {
+  box-shadow: 0 2px 8px var(--shadow-color);
+}
+
+.shadow-soft-lg {
+  box-shadow: 0 4px 16px var(--shadow-color);
+}
+
+.shadow-soft-xl {
+  box-shadow: 0 8px 24px var(--shadow-color);
+}
+
+.shadow-hover {
+  box-shadow: 0 8px 24px var(--shadow-hover);
+}
+
+/* IMAGE STYLES - Rounded & Elegant */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.img-rounded {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.img-rounded-xl {
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+}
+
+/* SCROLLBAR - Minimal & Elegant */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--surface);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary-light);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
+
+/* MOBILE OPTIMIZATIONS */
 @media (max-width: 768px) {
-  body {
-    -webkit-text-size-adjust: 100%;
-    -webkit-tap-highlight-color: transparent;
+  html {
+    font-size: 15px;
   }
-  
-  /* Improve touch interactions */
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.75rem;
+  }
+
+  .pinterest-masonry {
+    column-count: 2;
+    column-gap: 0.75rem;
+    padding: 0.75rem;
+  }
+
+  .pinterest-item {
+    margin-bottom: 0.75rem;
+  }
+
+  /* Touch-friendly sizes */
   button, a, [role="button"] {
-    -webkit-tap-highlight-color: transparent;
-    touch-action: manipulation;
+    min-height: 44px;
+    min-width: 44px;
   }
-  
+
   /* Prevent zoom on input focus */
   input, select, textarea {
     font-size: 16px;
   }
-  
+
   /* Smooth scrolling */
-  html {
-    scroll-behavior: smooth;
+  body {
+    -webkit-overflow-scrolling: touch;
   }
 }
 
-/* Touch-friendly minimum sizes */
-button, a, [role="button"] {
-  min-height: 44px;
-  min-width: 44px;
-}
-
-/* Improve image loading performance */
-img {
-  content-visibility: auto;
-}
-
-/* Mobile-first responsive utilities */
-@media (max-width: 640px) {
-  .container {
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
-}
-
-/* Performance optimizations */
-* {
-  box-sizing: border-box;
-}
-
-/* Reduce motion for users who prefer it */
+/* ACCESSIBILITY */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-  
-  /* Disable background animations for accessibility */
-  [style*="animationName"] {
-    animation: none !important;
-  }
 }
 
-/* Pinterest-style masonry improvements - Mobile Optimized, Desktop Dense */
-.pinterest-masonry {
-  column-count: 2;
-  column-gap: 0.5rem;
-  column-fill: auto;
-  height: 100vh;
-  min-height: 100vh;
-  /* Performance optimizations - enhanced for mobile */
-  contain: layout style paint;
-  content-visibility: auto;
-  /* Reduce paint complexity on mobile */
-  transform: translateZ(0);
-  backface-visibility: hidden;
-}
-
-@media (min-width: 640px) {
-  .pinterest-masonry {
-    column-count: 4;
-    column-gap: 0.75rem;
-    height: 100vh;
-    min-height: 100vh;
-  }
-}
-
-@media (min-width: 1024px) {
-  .pinterest-masonry {
-    column-count: 6;
-    column-gap: 1rem;
-    height: 100vh;
-    min-height: 100vh;
-  }
-}
-
-@media (min-width: 1280px) {
-  .pinterest-masonry {
-    column-count: 8;
-    column-gap: 0.75rem;
-    height: 100vh;
-    min-height: 100vh;
-  }
-}
-
-.pinterest-item {
-  break-inside: avoid;
-  margin-bottom: 0.75rem;
-  display: inline-block;
-  width: 100%;
-  position: relative;
-  /* Optimize rendering performance - enhanced for mobile */
-  contain: layout style paint;
-  content-visibility: auto;
-  /* GPU acceleration for smoother rendering */
-  transform: translateZ(0);
-  backface-visibility: hidden;
-}
-
-/* Enhanced image brightness and contrast - Optimized for performance */
-.pinterest-item img {
-  filter: brightness(1.05) contrast(1.1);
-  content-visibility: auto;
-  contain: layout style paint;
-  /* Remove transitions for better performance */
-  transition: none;
-}
-
-/* Disable hover effects on mobile for performance */
-@media (hover: hover) {
-  .pinterest-item:hover img {
-    filter: brightness(1.1) contrast(1.15);
-  }
-}
-
-/* Performance optimizations for masonry layout - already defined above */
-
-/* Ensure images fill the available space better */
-.pinterest-masonry::after {
-  content: '';
-  display: block;
-  height: 100vh;
-  width: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.1) 100%);
-  pointer-events: none;
-}
-
-/* Enhanced hover effects for desktop */
-@media (hover: hover) {
-  .pinterest-item:hover {
-    transform: translateY(-4px) scale(1.02);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
-    z-index: 10;
-  }
-}
-
-/* Mobile optimizations - Enhanced for PageSpeed */
-@media (max-width: 768px) {
-  .pinterest-masonry {
-    column-count: 2;
-    column-gap: 0.5rem;
-    /* Reduce complexity for mobile - enhanced performance */
-    contain: layout style paint;
-    content-visibility: auto;
-    /* GPU acceleration for smoother scrolling */
-    transform: translateZ(0);
-    backface-visibility: hidden;
-  }
-  
-  .pinterest-item {
-    margin-bottom: 0.5rem;
-    /* Disable all animations on mobile for better performance */
-    animation: none !important;
-    transform: translateZ(0) !important;
-    transition: none !important;
-    /* Enhanced containment for mobile */
-    contain: layout style paint;
-    content-visibility: auto;
-  }
-  
-  /* Disable complex animations on mobile for performance */
-  [style*="animationName"] {
-    animation: none !important;
-  }
-  
-  /* Optimize GPU usage on mobile */
-  .gpu-accelerated {
-    transform: translateZ(0) !important;
-    backface-visibility: hidden !important;
-    perspective: none !important;
-    will-change: auto !important;
-  }
-  
-  /* Optimize images for mobile - enhanced performance */
-  .pinterest-item img {
-    filter: brightness(1.05) contrast(1.1);
-    transition: none;
-    /* Improve rendering performance */
-    image-rendering: optimizeSpeed;
-    content-visibility: auto;
-    /* GPU acceleration for images */
-    transform: translateZ(0);
-    backface-visibility: hidden;
-  }
-  
-  /* Reduce backdrop blur on mobile for performance */
-  .backdrop-blur-sm {
-    backdrop-filter: blur(2px);
-    -webkit-backdrop-filter: blur(2px);
-  }
-  
-  /* Additional mobile performance optimizations */
-  * {
-    -webkit-tap-highlight-color: transparent;
-  }
-  
-  /* Reduce paint complexity */
-  .pinterest-masonry::after {
-    display: none;
-  }
-}
-
-/* Performance optimizations for low-end devices */
-@media (prefers-reduced-data: reduce) {
-  .pinterest-item {
-    animation: none !important;
-    transform: none !important;
-  }
-  
-  .gpu-accelerated {
-    transform: none !important;
-    backface-visibility: visible;
-    perspective: none;
-  }
-}
-
-/* Custom animations for homepage */
-@keyframes fade-in-down {
-  from {
-    opacity: 0;
-    transform: translateY(-30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fade-in-up {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fade-in-left {
-  from {
-    opacity: 0;
-    transform: translateX(-30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes fade-in-right {
-  from {
-    opacity: 0;
-    transform: translateX(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes scale-in {
-  from {
-    opacity: 0;
-    transform: scale(0.9);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-@keyframes wave {
-  0%, 100% {
-    transform: translateY(0px) rotate(0deg);
-    opacity: 0.6;
-  }
-  25% {
-    transform: translateY(-3px) rotate(0.5deg);
-    opacity: 0.7;
-  }
-  50% {
-    transform: translateY(-2px) rotate(-0.3deg);
-    opacity: 0.8;
-  }
-  75% {
-    transform: translateY(-4px) rotate(0.3deg);
-    opacity: 0.7;
-  }
-}
-
-@keyframes elegantFloat {
-  0%, 100% {
-    transform: translateY(0px) scale(1);
-    opacity: 0.6;
-  }
-  50% {
-    transform: translateY(-2px) scale(1.02);
-    opacity: 0.8;
-  }
-}
-
-@keyframes pulseGlow {
-  0%, 100% {
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-  }
-  50% {
-    box-shadow: 0 8px 30px rgba(139, 92, 246, 0.2);
-  }
-}
-
-@keyframes subtleFade {
-  0%, 100% {
-    opacity: 0.6;
-  }
-  50% {
-    opacity: 0.8;
-  }
-}
-
-/* Animation utility classes */
-.animate-elegant-float {
-  animation: elegantFloat 10s ease-in-out infinite;
-}
-
-.animate-pulse-glow {
-  animation: pulseGlow 6s ease-in-out infinite;
-}
-
-.animate-subtle-fade {
-  animation: subtleFade 8s ease-in-out infinite;
-}
-
-/* GPU acceleration for smooth animations */
-.gpu-accelerated {
-  transform: translateZ(0);
-  backface-visibility: hidden;
-  perspective: 1000px;
-}
-
-/* Enhanced reduced motion support */
-@media (prefers-reduced-motion: reduce) {
-  .animate-elegant-float,
-  .animate-pulse-glow,
-  .animate-subtle-fade,
-  [style*="animationName"] {
-    animation: none !important;
-    transform: none !important;
-  }
-  
-  .pinterest-item {
-    animation: none !important;
-    transform: none !important;
-  }
-}
-
-.animate-fade-in-down {
-  animation: fade-in-down 0.6s ease-out;
-}
-
-.animate-fade-in-up {
-  animation: fade-in-up 0.6s ease-out;
-}
-
-.animate-fade-in-left {
-  animation: fade-in-left 0.6s ease-out;
-}
-
-.animate-fade-in-right {
-  animation: fade-in-right 0.6s ease-out;
-}
-
-.animate-scale-in {
-  animation: scale-in 0.6s ease-out;
-}
-
-/* Pinterest-style masonry layout */
-.masonry {
-  column-count: 1;
-  column-gap: 1.5rem;
-}
-
-@media (min-width: 640px) {
-  .masonry {
-    column-count: 2;
-  }
-}
-
-@media (min-width: 1024px) {
-  .masonry {
-    column-count: 3;
-  }
-}
-
-@media (min-width: 1280px) {
-  .masonry {
-    column-count: 4;
-  }
-}
-
-.masonry-item {
-  break-inside: avoid;
-  margin-bottom: 1.5rem;
-}
-
-/* Improved image loading */
-.image-optimized {
-  will-change: transform;
-  transform: translateZ(0);
-  backface-visibility: hidden;
-}
-
-/* Mobile touch improvements */
-@media (max-width: 768px) {
-  .touch-manipulation {
-    touch-action: manipulation;
-    -webkit-tap-highlight-color: transparent;
-  }
-  
-  /* Larger touch targets for mobile */
-  .mobile-touch {
-    min-height: 48px;
-    min-width: 48px;
-  }
-  
-  /* Prevent text selection on interactive elements */
-  .no-select {
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-  }
-}
-
-/* Loading states */
-.loading-skeleton {
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-  background-size: 200% 100%;
-  animation: loading 1.5s infinite;
-}
-
-@keyframes loading {
-  0% {
-    background-position: 200% 0;
-  }
-  100% {
-    background-position: -200% 0;
-  }
-}
-
-/* Dark mode loading skeleton */
-@media (prefers-color-scheme: dark) {
-  .loading-skeleton {
-    background: linear-gradient(90deg, #374151 25%, #4b5563 50%, #374151 75%);
-    background-size: 200% 100%;
-  }
-}
-
-/* Improved focus states for accessibility */
-.focus-visible:focus-visible {
-  outline: 2px solid #8b5cf6;
+/* Focus States - Accessible */
+:focus-visible {
+  outline: 2px solid var(--primary);
   outline-offset: 2px;
+  border-radius: var(--radius-sm);
 }
 
-/* High contrast mode support */
-@media (prefers-contrast: high) {
-  .bg-gray-800\/50 {
-    background-color: rgba(31, 41, 55, 0.8);
+/* LOADING STATES - Elegant Skeleton */
+.skeleton {
+  background: linear-gradient(90deg, #F5F5F5 25%, #EEEEEE 50%, #F5F5F5 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: var(--radius-md);
+}
+
+/* UTILITY CLASSES */
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+@media (min-width: 640px) {
+  .container {
+    padding: 0 2rem;
   }
-  
-  .text-gray-300 {
-    color: #d1d5db;
+}
+
+.content-wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+@media (min-width: 640px) {
+  .content-wrapper {
+    padding: 3rem 2rem;
   }
+}
+
+/* Responsive spacing */
+.section-padding {
+  padding: 3rem 0;
+}
+
+@media (min-width: 1024px) {
+  .section-padding {
+    padding: 6rem 0;
+  }
+}
+
+/* Text utilities */
+.text-gradient {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Hover lift effect */
+.hover-lift {
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+}
+
+/* Backdrop blur for overlays */
+.backdrop-blur {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 /* Print styles */
