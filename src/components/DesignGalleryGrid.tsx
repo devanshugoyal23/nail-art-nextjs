@@ -27,7 +27,7 @@ export default function DesignGalleryGrid({
 
   if (loading && designs.length === 0) {
     return (
-      <div className={`grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 ${className}`}>
+      <div className={`grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4 ${className}`}>
         {Array.from({ length: 8 }).map((_, index) => (
           <div key={index} className="animate-pulse">
             <div className="aspect-square bg-gray-700 rounded-lg"></div>
@@ -41,7 +41,7 @@ export default function DesignGalleryGrid({
 
   return (
     <div className={className}>
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4">
         {designs.map((design) => (
           <div
             key={design.id}

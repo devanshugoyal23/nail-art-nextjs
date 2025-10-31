@@ -153,7 +153,7 @@ const EnhancedGallery = function EnhancedGallery({
   return (
     <div className="space-y-6">
       {/* Search and Filter Bar */}
-      <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-4 sm:p-6 border border-gray-700/50">
+      <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-4 sm:p-6 lg:p-8 border border-gray-700/50">
         <div className="flex flex-col gap-4">
           {/* Search */}
           <div className="flex-1">
@@ -174,7 +174,7 @@ const EnhancedGallery = function EnhancedGallery({
           </div>
 
           {/* Controls */}
-          <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
+          <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 lg:gap-4 justify-between items-start sm:items-center">
             <div className="flex gap-2">
               <button
                 onClick={() => setShowFilters(!showFilters)}
@@ -334,8 +334,8 @@ const EnhancedGallery = function EnhancedGallery({
       {/* Gallery Grid */}
       {paginatedItems.length > 0 ? (
         <div className={`${
-          viewMode === 'grid' ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6' :
-          viewMode === 'masonry' ? 'columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 sm:gap-6' :
+          viewMode === 'grid' ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 sm:gap-6' :
+          viewMode === 'masonry' ? 'columns-1 sm:columns-2 lg:columns-3 xl:columns-4 2xl:columns-5 gap-4 sm:gap-6' :
           'space-y-4'
         }`}>
           {paginatedItems.map((item) => (
@@ -354,7 +354,7 @@ const EnhancedGallery = function EnhancedGallery({
                   height={400}
                   className="w-full h-full object-cover"
                   loading={currentPage === 1 && items.indexOf(item) < 4 ? 'eager' : 'lazy'}
-                  sizes={viewMode === 'list' ? '128px' : isMobile ? '100vw' : '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw'}
+                  sizes={viewMode === 'list' ? '128px' : isMobile ? '100vw' : '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, (max-width: 1536px) 25vw, 20vw'}
                   priority={currentPage === 1 && items.indexOf(item) < 4}
                 />
                 

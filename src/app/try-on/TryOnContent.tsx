@@ -245,15 +245,15 @@ export default function TryOnContent({ initialData, categories }: TryOnContentPr
         {/* Step 2: Image Upload */}
         {currentStep === 2 && selectedDesign && (
           <div className="space-y-8">
-            <div className="text-center bg-gradient-to-br from-gray-800/60 to-gray-900/60 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-gray-700/50 max-w-3xl mx-auto">
+            <div className="text-center bg-gradient-to-br from-gray-800/60 to-gray-900/60 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-gray-700/50">
               <div className="text-5xl mb-4">📸</div>
               <h2 className="text-2xl sm:text-3xl font-bold text-white mb-4">
                 Step 2: Upload Your Hand Photo
               </h2>
-              <p className="text-gray-200 text-lg leading-relaxed mb-6">
+              <p className="text-gray-200 text-lg leading-relaxed mb-6 max-w-4xl mx-auto">
                 For best results, take a clear photo of your hand with good lighting. Make sure your nails are visible and in focus.
               </p>
-              <div className="bg-blue-900/30 border border-blue-500/30 rounded-xl p-4 text-left">
+              <div className="bg-blue-900/30 border border-blue-500/30 rounded-xl p-4 text-left max-w-2xl mx-auto">
                 <p className="text-blue-200 text-sm font-medium mb-2">💡 Pro Tips:</p>
                 <ul className="text-blue-100 text-sm space-y-1">
                   <li>• Use natural lighting or bright indoor lights</li>
@@ -263,38 +263,53 @@ export default function TryOnContent({ initialData, categories }: TryOnContentPr
               </div>
             </div>
 
-            {/* Selected Design Preview */}
-            <div className="max-w-md mx-auto mb-6">
-              <div className="bg-gray-800 rounded-lg p-4">
-                <h3 className="text-lg font-semibold text-white mb-2">
-                  Selected Design
-                </h3>
-                <div className="aspect-square relative">
-                  <OptimizedImage
-                    src={selectedDesign.image_url}
-                    alt={selectedDesign.design_name || 'Selected nail art design'}
-                    width={300}
-                    height={300}
-                    className="w-full h-full object-cover rounded-lg"
-                    priority
+            {/* Side-by-side layout on desktop */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
+              {/* Selected Design Preview */}
+              <div className="flex flex-col">
+                <div className="bg-gray-800 rounded-2xl p-6 border border-gray-700/50 h-full">
+                  <h3 className="text-xl font-semibold text-white mb-4 flex items-center gap-2">
+                    <span className="text-2xl">💅</span>
+                    Selected Design
+                  </h3>
+                  <div className="aspect-square relative rounded-xl overflow-hidden mb-4">
+                    <OptimizedImage
+                      src={selectedDesign.image_url}
+                      alt={selectedDesign.design_name || 'Selected nail art design'}
+                      width={400}
+                      height={400}
+                      className="w-full h-full object-cover"
+                      priority
+                    />
+                  </div>
+                  <p className="text-gray-200 font-medium text-center">
+                    {selectedDesign.design_name}
+                  </p>
+                  {selectedDesign.category && (
+                    <div className="mt-2 text-center">
+                      <span className="inline-block bg-purple-500/20 text-purple-300 px-3 py-1 rounded-full text-sm">
+                        {selectedDesign.category}
+                      </span>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Upload Area */}
+              <div className="flex flex-col">
+                <div className="h-full">
+                  <EnhancedUploadArea
+                    onImageSelect={handleImageUpload}
                   />
                 </div>
-                <p className="text-gray-300 mt-2">
-                  {selectedDesign.design_name}
-                </p>
               </div>
             </div>
-
-            {/* Upload Area */}
-            <EnhancedUploadArea
-              onImageSelect={handleImageUpload}
-            />
 
             {/* Back Button */}
             <div className="text-center">
               <button
                 onClick={() => setCurrentStep(1)}
-                className="px-6 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors"
+                className="px-8 py-3 bg-gray-700 text-white rounded-xl hover:bg-gray-600 transition-colors font-semibold"
               >
                 ← Back to Designs
               </button>
@@ -304,31 +319,54 @@ export default function TryOnContent({ initialData, categories }: TryOnContentPr
 
         {/* Step 3: Generation */}
         {currentStep === 3 && sourceImage && selectedDesign && (
-          <div className="space-y-6">
-            <div className="text-center">
-              <h2 className="text-2xl font-bold text-white mb-4">
-                Generating Your Nail Art
+          <div className="space-y-8">
+            <div className="text-center bg-gradient-to-br from-gray-800/60 to-gray-900/60 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-gray-700/50">
+              <div className="text-5xl mb-4">✨</div>
+              <h2 className="text-2xl sm:text-3xl font-bold text-white mb-4">
+                Ready to Generate!
               </h2>
-              <p className="text-gray-300">
-                Our AI is creating your personalized nail art design...
+              <p className="text-gray-200 text-lg leading-relaxed max-w-3xl mx-auto">
+                Review your selections below and click Generate to see the magic happen. Our AI will apply the design to your hand photo in seconds!
               </p>
             </div>
 
-            {/* Source Image Preview */}
-            <div className="max-w-md mx-auto mb-6">
-              <div className="bg-gray-800 rounded-lg p-4">
-                <h3 className="text-lg font-semibold text-white mb-2">
+            {/* Side-by-side preview on desktop */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+              {/* Your Hand Photo */}
+              <div className="bg-gray-800 rounded-2xl p-6 border border-gray-700/50">
+                <h3 className="text-xl font-semibold text-white mb-4 flex items-center gap-2">
+                  <span className="text-2xl">📸</span>
                   Your Hand Photo
                 </h3>
-                <div className="aspect-square relative">
+                <div className="aspect-square relative rounded-xl overflow-hidden">
                   <OptimizedImage
                     src={sourceImage}
                     alt="Your hand photo"
-                    width={300}
-                    height={300}
-                    className="w-full h-full object-cover rounded-lg"
+                    width={400}
+                    height={400}
+                    className="w-full h-full object-cover"
                   />
                 </div>
+              </div>
+
+              {/* Selected Design */}
+              <div className="bg-gray-800 rounded-2xl p-6 border border-gray-700/50">
+                <h3 className="text-xl font-semibold text-white mb-4 flex items-center gap-2">
+                  <span className="text-2xl">💅</span>
+                  Design to Apply
+                </h3>
+                <div className="aspect-square relative rounded-xl overflow-hidden">
+                  <OptimizedImage
+                    src={selectedDesign.image_url}
+                    alt={selectedDesign.design_name || 'Selected design'}
+                    width={400}
+                    height={400}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <p className="text-gray-200 font-medium text-center mt-4">
+                  {selectedDesign.design_name}
+                </p>
               </div>
             </div>
 
@@ -347,7 +385,7 @@ export default function TryOnContent({ initialData, categories }: TryOnContentPr
             <div className="text-center">
               <button
                 onClick={() => setCurrentStep(2)}
-                className="px-6 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors"
+                className="px-8 py-3 bg-gray-700 text-white rounded-xl hover:bg-gray-600 transition-colors font-semibold"
               >
                 ← Back to Upload
               </button>

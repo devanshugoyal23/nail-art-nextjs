@@ -506,8 +506,8 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
             </div>
             
           {/* 4. Ultra-Compact Stats Bar */}
-          <div className="mb-6 bg-gray-800/30 backdrop-blur-sm rounded-xl p-4 border border-gray-700/50">
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+          <div className="mb-6 bg-gray-800/30 backdrop-blur-sm rounded-xl p-4 lg:p-6 border border-gray-700/50">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 lg:gap-6 text-center">
               <div className="flex flex-col items-center space-y-1">
                 <div className="flex items-center gap-2 text-purple-400 text-sm font-medium">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -555,10 +555,10 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
             <div className="bg-gradient-to-br from-gray-800/60 to-gray-900/60 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-gray-700/50">
               <h2 className="text-2xl font-bold text-white mb-6 text-center">Ready to Try This Design?</h2>
 
-              <div className="grid sm:grid-cols-2 gap-4 mb-6">
+              <div className="flex flex-col sm:flex-row gap-4 mb-6 max-w-3xl mx-auto justify-center">
                 <Link
                   href={`/try-on?design=${item.id}`}
-                  className="group relative bg-gradient-to-r from-purple-600 via-pink-600 to-purple-600 text-white font-bold py-5 px-8 rounded-2xl hover:from-purple-700 hover:via-pink-700 hover:to-purple-700 transition-all duration-300 text-center text-lg shadow-xl shadow-purple-500/30 hover:shadow-purple-500/50 hover:scale-[1.02] overflow-hidden"
+                  className="flex-1 group relative bg-gradient-to-r from-purple-600 via-pink-600 to-purple-600 text-white font-bold py-5 px-8 rounded-2xl hover:from-purple-700 hover:via-pink-700 hover:to-purple-700 transition-all duration-300 text-center text-lg shadow-xl shadow-purple-500/30 hover:shadow-purple-500/50 hover:scale-[1.02] overflow-hidden"
                 >
                   <span className="relative z-10 flex items-center justify-center gap-2">
                     <span>✨</span>
@@ -571,7 +571,7 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
                 <a
                   href={item.image_url}
                   download={`${(item.design_name || 'nail-art').toLowerCase().replace(/\s+/g, '-')}-${item.id.slice(-8)}.jpg`}
-                  className="bg-gray-700/50 text-white font-semibold py-5 px-8 rounded-2xl hover:bg-gray-600/50 transition-all duration-300 text-center text-lg border border-gray-500/50 hover:border-gray-400/60 shadow-lg hover:shadow-xl backdrop-blur-sm flex items-center justify-center gap-2"
+                  className="flex-1 bg-gray-700/50 text-white font-semibold py-5 px-8 rounded-2xl hover:bg-gray-600/50 transition-all duration-300 text-center text-lg border border-gray-500/50 hover:border-gray-400/60 shadow-lg hover:shadow-xl backdrop-blur-sm flex items-center justify-center gap-2"
                 >
                   <span>⬇️</span>
                   <span>Save for Later</span>
@@ -678,7 +678,7 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
 
           {/* 9. Design Attributes Grid - All linked */}
           <section className="mb-8">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
               {/* Colors with links */}
                     {item.colors && item.colors.length > 0 && (
                       <div className="bg-gray-800/40 rounded-lg p-4 border border-gray-700/50 hover:border-purple-500/30 transition-colors">
@@ -786,7 +786,7 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
         {otherCategoryItems.length > 0 && (
             <section className="mb-8">
               <h2 className="text-2xl font-bold text-white mb-6">Similar Designs You&apos;ll Love</h2>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 2xl:grid-cols-6 gap-4">
                 {otherCategoryItems.slice(0, 12).map((categoryItem) => (
                 <Link
                   key={categoryItem.id}
@@ -838,7 +838,7 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
               <h2 className="text-2xl font-bold text-white mb-8 text-center">Explore Similar Designs</h2>
 
               {/* Design-Specific Tags with Visual Elements */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8">
                 {/* Colors with Color Swatches */}
                 {extractedTags.colors.length > 0 && (
                   <div className="bg-gray-800/50 rounded-xl p-6 border border-gray-600">
