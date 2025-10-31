@@ -112,14 +112,14 @@ export default function BlogPage() {
         }}
       />
       
-      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-purple-900">
+      <div className="min-h-screen bg-gradient-to-br from-white via-surface to-white">
         <div className="max-w-7xl mx-auto px-4 py-8">
           {/* Header */}
           <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
               Nail Art Blog
             </h1>
-            <p className="text-lg text-gray-300 max-w-3xl mx-auto">
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
               Discover the latest nail art trends, tutorials, and techniques. Learn from expert guides, 
               seasonal inspiration, and step-by-step nail art tutorials.
             </p>
@@ -131,14 +131,14 @@ export default function BlogPage() {
               <Link
                 key={index}
                 href={category.href}
-                className="group bg-gray-800/50 rounded-xl p-6 border border-gray-700 hover:border-purple-500/50 transition-all duration-300 transform hover:-translate-y-1"
+                className="group bg-surface/50 rounded-xl p-6 border border-gray-100 hover:border-purple-500/50 transition-all duration-300 transform hover:-translate-y-1"
               >
                 <div className="text-center">
                   <div className="text-4xl mb-3">{category.icon}</div>
-                  <h3 className="text-xl font-semibold text-white mb-2 group-hover:text-purple-400 transition-colors">
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-purple-400 transition-colors">
                     {category.title}
                   </h3>
-                  <p className="text-gray-400 text-sm">
+                  <p className="text-gray-500 text-sm">
                     {category.description}
                   </p>
                 </div>
@@ -148,24 +148,24 @@ export default function BlogPage() {
 
           {/* Featured Posts */}
           <div className="mb-12">
-            <h2 className="text-3xl font-bold text-white mb-8 text-center">Featured Articles</h2>
+            <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">Featured Articles</h2>
             <div className="grid md:grid-cols-3 gap-6">
               {featuredPosts.map((post, index) => (
                 <Link
                   key={index}
                   href={post.href}
-                  className="group bg-gray-800/50 rounded-xl p-6 border border-gray-700 hover:border-purple-500/50 transition-all duration-300 transform hover:-translate-y-1"
+                  className="group bg-surface/50 rounded-xl p-6 border border-gray-100 hover:border-purple-500/50 transition-all duration-300 transform hover:-translate-y-1"
                 >
                   <div className="mb-4">
-                    <span className="inline-block bg-purple-600 text-white px-3 py-1 rounded-full text-sm font-medium">
+                    <span className="inline-block bg-primary text-gray-900 px-3 py-1 rounded-full text-sm font-medium">
                       {post.category}
                     </span>
-                    <span className="text-gray-400 text-sm ml-2">{post.readTime}</span>
+                    <span className="text-gray-500 text-sm ml-2">{post.readTime}</span>
                   </div>
-                  <h3 className="text-xl font-semibold text-white mb-3 group-hover:text-purple-400 transition-colors">
+                  <h3 className="text-xl font-semibold text-gray-900 mb-3 group-hover:text-purple-400 transition-colors">
                     {post.title}
                   </h3>
-                  <p className="text-gray-400 text-sm leading-relaxed">
+                  <p className="text-gray-500 text-sm leading-relaxed">
                     {post.excerpt}
                   </p>
                 </Link>
@@ -174,16 +174,16 @@ export default function BlogPage() {
           </div>
 
           {/* SEO Content Section */}
-          <div className="bg-gray-800/50 rounded-xl p-8 border border-gray-700">
-            <h2 className="text-2xl font-bold text-white mb-6">About Our Nail Art Blog</h2>
+          <div className="bg-surface/50 rounded-xl p-8 border border-gray-100">
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">About Our Nail Art Blog</h2>
             <div className="grid md:grid-cols-2 gap-8">
               <div>
-                <h3 className="text-xl font-semibold text-white mb-3">🎨 Expert Tutorials</h3>
-                <p className="text-gray-300 mb-4">
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">🎨 Expert Tutorials</h3>
+                <p className="text-gray-600 mb-4">
                   Our comprehensive tutorials cover everything from basic techniques to advanced nail art designs. 
                   Learn from step-by-step guides with detailed instructions and helpful tips.
                 </p>
-                <ul className="text-gray-300 space-y-2">
+                <ul className="text-gray-600 space-y-2">
                   <li>• Step-by-step photo guides</li>
                   <li>• Video tutorials for complex techniques</li>
                   <li>• Beginner-friendly explanations</li>
@@ -191,12 +191,12 @@ export default function BlogPage() {
                 </ul>
               </div>
               <div>
-                <h3 className="text-xl font-semibold text-white mb-3">📈 Trend Analysis</h3>
-                <p className="text-gray-300 mb-4">
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">📈 Trend Analysis</h3>
+                <p className="text-gray-600 mb-4">
                   Stay ahead of the curve with our seasonal trend reports and inspiration galleries. 
                   Discover what&apos;s trending in nail art and get inspired for your next manicure.
                 </p>
-                <ul className="text-gray-300 space-y-2">
+                <ul className="text-gray-600 space-y-2">
                   <li>• Seasonal trend reports</li>
                   <li>• Color palette predictions</li>
                   <li>• Technique spotlights</li>

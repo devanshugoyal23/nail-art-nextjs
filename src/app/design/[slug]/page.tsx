@@ -215,7 +215,7 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
   const extractedTags = extractTagsFromEditorial(editorial);
 
   return (
-    <div className="min-h-screen bg-black" itemScope itemType="https://schema.org/CreativeWork">
+    <div className="min-h-screen bg-white" itemScope itemType="https://schema.org/CreativeWork">
       {/* JSON-LD */}
       <script
         type="application/ld+json"
@@ -272,17 +272,17 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
       />
       <div className="max-w-7xl mx-auto px-4 py-8">
         {/* Breadcrumbs */}
-        <nav aria-label="Breadcrumb" className="mb-4 text-sm text-gray-400" itemScope itemType="https://schema.org/BreadcrumbList">
+        <nav aria-label="Breadcrumb" className="mb-4 text-sm text-gray-500" itemScope itemType="https://schema.org/BreadcrumbList">
           <ol className="flex flex-wrap gap-2">
             <li itemProp="itemListElement" itemScope itemType="https://schema.org/ListItem">
-              <Link href="/" title="Home" itemProp="item" className="hover:text-gray-200">
+              <Link href="/" title="Home" itemProp="item" className="hover:text-gray-700">
                 <span itemProp="name">Home</span>
               </Link>
               <meta itemProp="position" content="1" />
             </li>
             <span>/</span>
             <li itemProp="itemListElement" itemScope itemType="https://schema.org/ListItem">
-              <Link href="/nail-art-gallery" title="Gallery" itemProp="item" className="hover:text-gray-200">
+              <Link href="/nail-art-gallery" title="Gallery" itemProp="item" className="hover:text-gray-700">
                 <span itemProp="name">Gallery</span>
               </Link>
               <meta itemProp="position" content="2" />
@@ -291,7 +291,7 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
               <>
                 <span>/</span>
                 <li itemProp="itemListElement" itemScope itemType="https://schema.org/ListItem">
-                  <Link href={`/nail-art-gallery/category/${encodeURIComponent(item.category)}`} title={`${item.category} designs`} itemProp="item" className="hover:text-gray-200">
+                  <Link href={`/nail-art-gallery/category/${encodeURIComponent(item.category)}`} title={`${item.category} designs`} itemProp="item" className="hover:text-gray-700">
                     <span itemProp="name">{item.category}</span>
                   </Link>
                   <meta itemProp="position" content="3" />
@@ -314,7 +314,7 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
           </Link>
         </div>
 
-        <div className="bg-gray-800 rounded-xl shadow-2xl overflow-hidden">
+        <div className="bg-surface rounded-xl shadow-2xl overflow-hidden">
           <div className="flex flex-col lg:flex-row">
             {/* Left side - Image */}
             <div className="lg:w-1/2">
@@ -340,12 +340,12 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
                 )}
                 
                 {/* Title */}
-                <h1 className="text-4xl font-bold text-white mb-6">
+                <h1 className="text-4xl font-bold text-gray-900 mb-6">
                   {item.design_name || 'Generated Nail Art'}
                 </h1>
                 
                 {/* Description */}
-                <p className="text-gray-300 text-lg mb-8 leading-relaxed">
+                <p className="text-gray-600 text-lg mb-8 leading-relaxed">
                   {item.prompt}
                 </p>
                 
@@ -354,14 +354,14 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {/* Colors */}
                     {item.colors && item.colors.length > 0 && (
-                      <div className="bg-gray-800/40 rounded-lg p-4 border border-gray-700/50 hover:border-purple-500/30 transition-colors">
+                      <div className="bg-surface/40 rounded-lg p-4 border border-gray-100/50 hover:border-purple-500/30 transition-colors">
                         <div className="flex items-center mb-3">
                           <div className="w-2 h-2 bg-purple-500 rounded-full mr-2"></div>
                           <h4 className="text-sm font-semibold text-purple-300">Colors</h4>
                         </div>
                         <div className="flex flex-wrap gap-2">
                           {item.colors.map((color, index) => (
-                            <span key={index} className="bg-purple-600/80 text-white px-3 py-1.5 rounded-full text-xs font-medium shadow-sm">
+                            <span key={index} className="bg-primary/80 text-gray-900 px-3 py-1.5 rounded-full text-xs font-medium shadow-sm">
                               {color}
                             </span>
                           ))}
@@ -371,14 +371,14 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
                     
                     {/* Techniques */}
                     {item.techniques && item.techniques.length > 0 && (
-                      <div className="bg-gray-800/40 rounded-lg p-4 border border-gray-700/50 hover:border-green-500/30 transition-colors">
+                      <div className="bg-surface/40 rounded-lg p-4 border border-gray-100/50 hover:border-green-500/30 transition-colors">
                         <div className="flex items-center mb-3">
                           <div className="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
                           <h4 className="text-sm font-semibold text-green-300">Techniques</h4>
                         </div>
                         <div className="flex flex-wrap gap-2">
                           {item.techniques.map((technique, index) => (
-                            <span key={index} className="bg-green-600/80 text-white px-3 py-1.5 rounded-full text-xs font-medium shadow-sm">
+                            <span key={index} className="bg-green-600/80 text-gray-900 px-3 py-1.5 rounded-full text-xs font-medium shadow-sm">
                               {technique}
                             </span>
                           ))}
@@ -388,14 +388,14 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
                     
                     {/* Occasions */}
                     {item.occasions && item.occasions.length > 0 && (
-                      <div className="bg-gray-800/40 rounded-lg p-4 border border-gray-700/50 hover:border-blue-500/30 transition-colors">
+                      <div className="bg-surface/40 rounded-lg p-4 border border-gray-100/50 hover:border-blue-500/30 transition-colors">
                         <div className="flex items-center mb-3">
                           <div className="w-2 h-2 bg-blue-500 rounded-full mr-2"></div>
                           <h4 className="text-sm font-semibold text-blue-300">Occasions</h4>
                         </div>
                         <div className="flex flex-wrap gap-2">
                           {item.occasions.map((occasion, index) => (
-                            <span key={index} className="bg-blue-600/80 text-white px-3 py-1.5 rounded-full text-xs font-medium shadow-sm">
+                            <span key={index} className="bg-blue-600/80 text-gray-900 px-3 py-1.5 rounded-full text-xs font-medium shadow-sm">
                               {occasion}
                             </span>
                           ))}
@@ -405,14 +405,14 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
                     
                     {/* Styles */}
                     {item.styles && item.styles.length > 0 && (
-                      <div className="bg-gray-800/40 rounded-lg p-4 border border-gray-700/50 hover:border-pink-500/30 transition-colors">
+                      <div className="bg-surface/40 rounded-lg p-4 border border-gray-100/50 hover:border-pink-500/30 transition-colors">
                         <div className="flex items-center mb-3">
                           <div className="w-2 h-2 bg-pink-500 rounded-full mr-2"></div>
                           <h4 className="text-sm font-semibold text-pink-300">Styles</h4>
                         </div>
                         <div className="flex flex-wrap gap-2">
                           {item.styles.map((style, index) => (
-                            <span key={index} className="bg-pink-600/80 text-white px-3 py-1.5 rounded-full text-xs font-medium shadow-sm">
+                            <span key={index} className="bg-primary/80 text-gray-900 px-3 py-1.5 rounded-full text-xs font-medium shadow-sm">
                               {style}
                             </span>
                           ))}
@@ -424,7 +424,7 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
                 
                 {/* Created date */}
                 <div className="mb-8">
-                  <p className="text-gray-400">
+                  <p className="text-gray-500">
                     Created: {formatDate(item.created_at)}
                   </p>
                 </div>
@@ -435,7 +435,7 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
                 <div className="flex gap-3">
                   <Link
                     href={`/try-on?design=${item.id}`}
-                    className="flex-1 bg-purple-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-purple-700 transition-colors duration-200 text-center"
+                    className="flex-1 bg-primary text-gray-900 font-bold py-3 px-4 rounded-lg hover:bg-primary-dark transition-colors duration-200 text-center"
                     title={`Virtual try-on for ${item.design_name || 'this nail art'}`}
                   >
                     Try This Design Virtually
@@ -443,7 +443,7 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
                   <a
                     href={item.image_url}
                     download={`nail-art-${item.id}.jpg`}
-                    className="flex-1 bg-green-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-green-700 transition-colors duration-200 text-center"
+                    className="flex-1 bg-green-600 text-gray-900 font-bold py-3 px-4 rounded-lg hover:bg-green-700 transition-colors duration-200 text-center"
                     title={`Download ${item.design_name || 'nail art'} image`}
                   >
                     Download
@@ -452,7 +452,7 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
                 
                 {/* Social sharing buttons */}
                 <div className="flex items-center justify-center space-x-4 pt-2">
-                  <span className="text-gray-400 text-sm">Share this design:</span>
+                  <span className="text-gray-500 text-sm">Share this design:</span>
                   <SocialShareButton
                     title={item.design_name || 'Nail Art Design'}
                     text={editorial?.intro || item.prompt || ''}
@@ -470,7 +470,7 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
         {/* Same category items section */}
         {otherCategoryItems.length > 0 && (
           <div className="mt-12">
-            <h2 className="text-2xl font-bold text-white mb-6">
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">
               More {item.category} Designs
             </h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
@@ -478,7 +478,7 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
                 <Link
                   key={categoryItem.id}
                   href={generateGalleryItemUrl(categoryItem)}
-                  className="group bg-gray-800 rounded-lg overflow-hidden hover:bg-gray-700 transition-all duration-300 transform hover:-translate-y-1"
+                  className="group bg-surface rounded-lg overflow-hidden hover:bg-gray-100 transition-all duration-300 transform hover:-translate-y-1"
                   title={`${categoryItem.design_name || 'Nail art'} details`}
                 >
                   <div className="aspect-square relative">
@@ -495,11 +495,11 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
                   
                   <div className="p-3">
                     {categoryItem.design_name && (
-                      <h3 className="text-sm font-medium text-white mb-1 line-clamp-1">
+                      <h3 className="text-sm font-medium text-gray-900 mb-1 line-clamp-1">
                         {categoryItem.design_name}
                       </h3>
                     )}
-                    <p className="text-xs text-gray-400 line-clamp-2">
+                    <p className="text-xs text-gray-500 line-clamp-2">
                       {categoryItem.prompt}
                     </p>
                   </div>
@@ -511,7 +511,7 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
               <div className="text-center mt-6">
                 <Link
                   href={`/nail-art-gallery/category/${encodeURIComponent(item.category!)}`}
-                  className="inline-flex items-center bg-gray-800 text-white font-semibold py-3 px-6 rounded-lg hover:bg-gray-700 transition-colors"
+                  className="inline-flex items-center bg-surface text-gray-900 font-semibold py-3 px-6 rounded-lg hover:bg-gray-100 transition-colors"
                   title={`View all ${item.category} designs`}
                 >
                   View All {item.category} Designs ({otherCategoryItems.length})
@@ -523,11 +523,11 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
         
         {/* Related designs section */}
         <div className="mt-12">
-          <h2 className="text-2xl font-bold text-white mb-6">More Designs</h2>
+          <h2 className="text-2xl font-bold text-gray-900 mb-6">More Designs</h2>
           <div className="text-center">
             <Link 
               href="/nail-art-gallery"
-              className="inline-flex items-center bg-gray-800 text-white font-semibold py-3 px-6 rounded-lg hover:bg-gray-700 transition-colors"
+              className="inline-flex items-center bg-surface text-gray-900 font-semibold py-3 px-6 rounded-lg hover:bg-gray-100 transition-colors"
               title="Browse all gallery items"
             >
               View All Gallery Items
@@ -538,43 +538,43 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
         {/* Bottom SEO/Content section */}
         <div className="mt-12 space-y-10">
           {/* Who it's for & Quick Stats */}
-          <section className="bg-gray-800 rounded-lg p-6 border border-gray-700">
-            <h2 className="text-xl font-semibold text-white mb-3">{editorial?.title || 'About This Design'}</h2>
-            <p className="text-gray-300 leading-relaxed mb-4">{editorial?.intro || `${item.design_name || 'Nail Art'} blends ${attrs.colors.length ? attrs.colors.join(', ') : 'modern'} tones with ${(attrs.finish.join(', ') || 'a glossy')} finish.`}</p>
+          <section className="bg-surface rounded-lg p-6 border border-gray-100">
+            <h2 className="text-xl font-semibold text-gray-900 mb-3">{editorial?.title || 'About This Design'}</h2>
+            <p className="text-gray-600 leading-relaxed mb-4">{editorial?.intro || `${item.design_name || 'Nail Art'} blends ${attrs.colors.length ? attrs.colors.join(', ') : 'modern'} tones with ${(attrs.finish.join(', ') || 'a glossy')} finish.`}</p>
             
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-4 p-4 bg-gray-900/50 rounded-lg">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-4 p-4 bg-white/50 rounded-lg">
               <div className="text-center">
                 <div className="text-purple-400 text-sm font-medium">Who It&apos;s For</div>
-                <div className="text-white text-base mt-1">{editorial?.audience || 'All skill levels'}</div>
+                <div className="text-gray-900 text-base mt-1">{editorial?.audience || 'All skill levels'}</div>
               </div>
               <div className="text-center">
                 <div className="text-purple-400 text-sm font-medium">Time Needed</div>
-                <div className="text-white text-base mt-1">{editorial?.timeMinutes || 45} min</div>
+                <div className="text-gray-900 text-base mt-1">{editorial?.timeMinutes || 45} min</div>
               </div>
               <div className="text-center">
                 <div className="text-purple-400 text-sm font-medium">Difficulty</div>
-                <div className="text-white text-base mt-1">{editorial?.difficulty || 'Medium'}</div>
+                <div className="text-gray-900 text-base mt-1">{editorial?.difficulty || 'Medium'}</div>
               </div>
               <div className="text-center">
                 <div className="text-purple-400 text-sm font-medium">Est. Cost</div>
-                <div className="text-white text-base mt-1">{editorial?.costEstimate || '$20-40'}</div>
+                <div className="text-gray-900 text-base mt-1">{editorial?.costEstimate || '$20-40'}</div>
               </div>
             </div>
             
-            <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 gap-3 text-sm text-gray-300">
-              <div><span className="text-gray-400">Shape:</span> {editorial?.attributes?.shape || attrs.shape[0] || 'Any'}</div>
-              <div><span className="text-gray-400">Length:</span> {editorial?.attributes?.length || attrs.length[0] || 'Short/Medium'}</div>
-              <div><span className="text-gray-400">Finish:</span> {(editorial?.attributes?.finish && editorial.attributes.finish.join(', ')) || attrs.finish.join(', ') || 'Glossy'}</div>
-              <div><span className="text-gray-400">Colors:</span> {(editorial?.attributes?.colors && editorial.attributes.colors.join(', ')) || attrs.colors.join(', ') || 'Neutral'}</div>
-              <div><span className="text-gray-400">Technique:</span> {(editorial?.attributes?.technique && editorial.attributes.technique.join(', ')) || attrs.technique.join(', ') || 'Painted'}</div>
-              <div><span className="text-gray-400">Category:</span> {item.category}</div>
+            <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 gap-3 text-sm text-gray-600">
+              <div><span className="text-gray-500">Shape:</span> {editorial?.attributes?.shape || attrs.shape[0] || 'Any'}</div>
+              <div><span className="text-gray-500">Length:</span> {editorial?.attributes?.length || attrs.length[0] || 'Short/Medium'}</div>
+              <div><span className="text-gray-500">Finish:</span> {(editorial?.attributes?.finish && editorial.attributes.finish.join(', ')) || attrs.finish.join(', ') || 'Glossy'}</div>
+              <div><span className="text-gray-500">Colors:</span> {(editorial?.attributes?.colors && editorial.attributes.colors.join(', ')) || attrs.colors.join(', ') || 'Neutral'}</div>
+              <div><span className="text-gray-500">Technique:</span> {(editorial?.attributes?.technique && editorial.attributes.technique.join(', ')) || attrs.technique.join(', ') || 'Painted'}</div>
+              <div><span className="text-gray-500">Category:</span> {item.category}</div>
             </div>
           </section>
 
           {/* Supplies */}
-          <section className="bg-gray-800 rounded-lg p-6 border border-gray-700">
-            <h2 className="text-xl font-semibold text-white mb-3">Supplies You&apos;ll Need</h2>
-            <ul className="grid sm:grid-cols-2 gap-2 text-gray-300">
+          <section className="bg-surface rounded-lg p-6 border border-gray-100">
+            <h2 className="text-xl font-semibold text-gray-900 mb-3">Supplies You&apos;ll Need</h2>
+            <ul className="grid sm:grid-cols-2 gap-2 text-gray-600">
               {(editorial?.supplies || ['Base coat','Gel color polish','Detail liner brush','Top coat']).map((s, i) => (
                 <li key={i} className="flex items-start">
                   <svg className="w-5 h-5 text-purple-400 mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
@@ -587,9 +587,9 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
           </section>
 
           {/* How To */}
-          <section className="bg-gray-800 rounded-lg p-6 border border-gray-700">
-            <h2 className="text-xl font-semibold text-white mb-3">How To Recreate It</h2>
-            <ol className="list-decimal pl-6 space-y-3 text-gray-300">
+          <section className="bg-surface rounded-lg p-6 border border-gray-100">
+            <h2 className="text-xl font-semibold text-gray-900 mb-3">How To Recreate It</h2>
+            <ol className="list-decimal pl-6 space-y-3 text-gray-600">
               {(editorial?.steps || [
                 'Prep nails, then apply dehydrator/primer.',
                 `Apply ${attrs.colors.includes('nude') ? 'nude' : 'sheer nude'} base; cure if using gel.`,
@@ -607,17 +607,17 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
                 </svg>
                 <div>
-                  <h3 className="text-lg font-semibold text-white mb-2">Expert Tip</h3>
-                  <p className="text-gray-300">{editorial.expertTip}</p>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">Expert Tip</h3>
+                  <p className="text-gray-600">{editorial.expertTip}</p>
                 </div>
               </div>
             </section>
           )}
 
           {/* Variations */}
-          <section className="bg-gray-800 rounded-lg p-6 border border-gray-700">
-            <h2 className="text-xl font-semibold text-white mb-3">Try These Variations</h2>
-            <ul className="space-y-2 text-gray-300">
+          <section className="bg-surface rounded-lg p-6 border border-gray-100">
+            <h2 className="text-xl font-semibold text-gray-900 mb-3">Try These Variations</h2>
+            <ul className="space-y-2 text-gray-600">
               {(editorial?.variations || [
                 `Swap ${attrs.colors[0] || 'primary color'} for blue or red for a bolder look.`,
                 'Change shape to square or coffin for a sharper silhouette.',
@@ -633,9 +633,9 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
 
           {/* Aftercare & Removal */}
           <div className="grid sm:grid-cols-2 gap-6">
-            <section className="bg-gray-800 rounded-lg p-6 border border-gray-700">
-              <h3 className="text-lg font-semibold text-white mb-3">Aftercare Tips</h3>
-              <ul className="space-y-2 text-sm text-gray-300">
+            <section className="bg-surface rounded-lg p-6 border border-gray-100">
+              <h3 className="text-lg font-semibold text-gray-900 mb-3">Aftercare Tips</h3>
+              <ul className="space-y-2 text-sm text-gray-600">
                 {(editorial?.aftercare || ['Apply cuticle oil daily','Wear gloves when cleaning','Avoid prolonged water exposure']).map((tip, i) => (
                   <li key={i} className="flex items-start">
                     <span className="text-green-400 mr-2">✓</span>
@@ -644,9 +644,9 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
                 ))}
               </ul>
             </section>
-            <section className="bg-gray-800 rounded-lg p-6 border border-gray-700">
-              <h3 className="text-lg font-semibold text-white mb-3">Safe Removal</h3>
-              <ul className="space-y-2 text-sm text-gray-300">
+            <section className="bg-surface rounded-lg p-6 border border-gray-100">
+              <h3 className="text-lg font-semibold text-gray-900 mb-3">Safe Removal</h3>
+              <ul className="space-y-2 text-sm text-gray-600">
                 {(editorial?.removal || ['Soak cotton in acetone, wrap with foil','Wait 10-15 minutes','Gently push off softened polish']).map((step, i) => (
                   <li key={i} className="flex items-start">
                     <span className="text-blue-400 mr-2">{i + 1}.</span>
@@ -660,12 +660,12 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
           {/* Quick Facts */}
           {editorial?.quickFacts && editorial.quickFacts.length > 0 && (
             <section className="bg-gradient-to-r from-purple-900/30 to-indigo-900/30 rounded-lg p-6 border border-purple-700">
-              <h2 className="text-xl font-semibold text-white mb-4">Quick Facts</h2>
+              <h2 className="text-xl font-semibold text-gray-900 mb-4">Quick Facts</h2>
               <div className="grid sm:grid-cols-2 gap-3">
                 {editorial.quickFacts.map((fact, i) => (
                   <div key={i} className="flex items-start">
                     <span className="text-purple-400 mr-2 mt-1">✨</span>
-                    <span className="text-gray-300">{fact}</span>
+                    <span className="text-gray-600">{fact}</span>
                   </div>
                 ))}
               </div>
@@ -675,28 +675,28 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
           {/* Trending Now */}
           {editorial?.trendingNow && (
             <section className="bg-gradient-to-r from-pink-900/30 to-rose-900/30 rounded-lg p-6 border border-pink-700">
-              <h2 className="text-xl font-semibold text-white mb-3">Why It&apos;s Trending</h2>
-              <p className="text-gray-300">{editorial.trendingNow}</p>
+              <h2 className="text-xl font-semibold text-gray-900 mb-3">Why It&apos;s Trending</h2>
+              <p className="text-gray-600">{editorial.trendingNow}</p>
             </section>
           )}
 
           {/* Seasonal Tips */}
           {editorial?.seasonalTips && (
             <section className="bg-gradient-to-r from-green-900/30 to-emerald-900/30 rounded-lg p-6 border border-green-700">
-              <h2 className="text-xl font-semibold text-white mb-3">Seasonal Styling</h2>
-              <p className="text-gray-300">{editorial.seasonalTips}</p>
+              <h2 className="text-xl font-semibold text-gray-900 mb-3">Seasonal Styling</h2>
+              <p className="text-gray-600">{editorial.seasonalTips}</p>
             </section>
           )}
 
           {/* Color Variations */}
           {editorial?.colorVariations && editorial.colorVariations.length > 0 && (
-            <section className="bg-gray-800 rounded-lg p-6 border border-gray-700">
-              <h2 className="text-xl font-semibold text-white mb-4">Color Variations</h2>
+            <section className="bg-surface rounded-lg p-6 border border-gray-100">
+              <h2 className="text-xl font-semibold text-gray-900 mb-4">Color Variations</h2>
               <div className="grid sm:grid-cols-2 gap-3">
                 {editorial.colorVariations.map((variation, i) => (
                   <div key={i} className="flex items-start">
                     <span className="text-blue-400 mr-2 mt-1">🎨</span>
-                    <span className="text-gray-300">{variation}</span>
+                    <span className="text-gray-600">{variation}</span>
                   </div>
                 ))}
               </div>
@@ -705,11 +705,11 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
 
           {/* Best Occasions */}
           {editorial?.occasions && editorial.occasions.length > 0 && (
-            <section className="bg-gray-800 rounded-lg p-6 border border-gray-700">
-              <h2 className="text-xl font-semibold text-white mb-4">Perfect For</h2>
+            <section className="bg-surface rounded-lg p-6 border border-gray-100">
+              <h2 className="text-xl font-semibold text-gray-900 mb-4">Perfect For</h2>
               <div className="flex flex-wrap gap-2">
                 {editorial.occasions.map((occasion, i) => (
-                  <span key={i} className="bg-purple-600 text-white px-3 py-1 rounded-full text-sm">
+                  <span key={i} className="bg-primary text-gray-900 px-3 py-1 rounded-full text-sm">
                     {occasion}
                   </span>
                 ))}
@@ -720,16 +720,16 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
           {/* Social Proof */}
           {editorial?.socialProof && (
             <section className="bg-gradient-to-r from-yellow-900/30 to-orange-900/30 rounded-lg p-6 border border-yellow-700">
-              <h2 className="text-xl font-semibold text-white mb-3">Why People Love It</h2>
-              <p className="text-gray-300">{editorial.socialProof}</p>
+              <h2 className="text-xl font-semibold text-gray-900 mb-3">Why People Love It</h2>
+              <p className="text-gray-600">{editorial.socialProof}</p>
             </section>
           )}
 
           {/* Maintenance */}
           {editorial?.maintenance && editorial.maintenance.length > 0 && (
-            <section className="bg-gray-800 rounded-lg p-6 border border-gray-700">
-              <h2 className="text-xl font-semibold text-white mb-3">Daily Maintenance</h2>
-              <ul className="space-y-2 text-gray-300">
+            <section className="bg-surface rounded-lg p-6 border border-gray-100">
+              <h2 className="text-xl font-semibold text-gray-900 mb-3">Daily Maintenance</h2>
+              <ul className="space-y-2 text-gray-600">
                 {editorial.maintenance.map((tip, i) => (
                   <li key={i} className="flex items-start">
                     <span className="text-green-400 mr-2">💅</span>
@@ -742,16 +742,16 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
 
           {/* Troubleshooting */}
           {editorial?.troubleshooting && editorial.troubleshooting.length > 0 && (
-            <section className="bg-gray-800 rounded-lg p-6 border border-gray-700">
-              <h2 className="text-xl font-semibold text-white mb-3">Common Issues & Fixes</h2>
-              <ul className="space-y-2 text-gray-300">
+            <section className="bg-surface rounded-lg p-6 border border-gray-100">
+              <h2 className="text-xl font-semibold text-gray-900 mb-3">Common Issues & Fixes</h2>
+              <ul className="space-y-2 text-gray-600">
                 {editorial.troubleshooting.map((issue, i) => (
                   <li key={i} className="flex items-start">
                     <span className="text-yellow-400 mr-2">⚠</span>
                     <div>
-                      <div className="font-medium text-white">{typeof issue === 'object' ? issue.q : issue}</div>
+                      <div className="font-medium text-gray-900">{typeof issue === 'object' ? issue.q : issue}</div>
                       {typeof issue === 'object' && issue.a && (
-                        <div className="text-gray-400 text-sm mt-1">{issue.a}</div>
+                        <div className="text-gray-500 text-sm mt-1">{issue.a}</div>
                       )}
                     </div>
                   </li>
@@ -763,14 +763,14 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
           {/* Inspiration */}
           {editorial?.inspiration && (
             <section className="bg-gradient-to-r from-indigo-900/30 to-purple-900/30 rounded-lg p-6 border border-indigo-700">
-              <h2 className="text-xl font-semibold text-white mb-3">Design Inspiration</h2>
-              <p className="text-gray-300">{editorial.inspiration}</p>
+              <h2 className="text-xl font-semibold text-gray-900 mb-3">Design Inspiration</h2>
+              <p className="text-gray-600">{editorial.inspiration}</p>
             </section>
           )}
 
           {/* Tags Section */}
-          <section className="bg-gray-800 rounded-lg p-6 border border-gray-700">
-            <h2 className="text-xl font-semibold text-white mb-6">Explore Similar Designs</h2>
+          <section className="bg-surface rounded-lg p-6 border border-gray-100">
+            <h2 className="text-xl font-semibold text-gray-900 mb-6">Explore Similar Designs</h2>
             
             {/* Design-Specific Tags */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -836,8 +836,8 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
             </div>
             
             {/* Additional Related Tags */}
-            <div className="mt-8 pt-6 border-t border-gray-700">
-              <h3 className="text-lg font-semibold text-white mb-4">More Categories to Explore</h3>
+            <div className="mt-8 pt-6 border-t border-gray-100">
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">More Categories to Explore</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <TagCollection
                   title="Popular Colors"
@@ -889,8 +889,8 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
           </section>
 
           {/* FAQs */}
-          <section className="bg-gray-800 rounded-lg p-6 border border-gray-700">
-            <h2 className="text-xl font-semibold text-white mb-3">FAQs</h2>
+          <section className="bg-surface rounded-lg p-6 border border-gray-100">
+            <h2 className="text-xl font-semibold text-gray-900 mb-3">FAQs</h2>
             <div className="space-y-4">
               {(editorial?.faqs || [
                 { q: 'How long does it last?', a: 'With a gel top coat, typically 2–3 weeks depending on prep and lifestyle.' },
@@ -898,8 +898,8 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
                 { q: 'Is glitter required?', a: 'No—swap glitter for chrome or keep a clean glossy finish.' }
               ]).map((f, i) => (
                 <div key={i}>
-                  <p className="text-white font-medium mb-1">{f.q}</p>
-                  <p className="text-gray-300 text-sm">{f.a}</p>
+                  <p className="text-gray-900 font-medium mb-1">{f.q}</p>
+                  <p className="text-gray-600 text-sm">{f.a}</p>
                 </div>
               ))}
             </div>
@@ -908,13 +908,13 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
           {/* Related Links */}
           {editorial?.internalLinks && editorial.internalLinks.length > 0 && (
             <section className="bg-purple-900/20 rounded-lg p-6 border border-purple-800">
-              <h3 className="text-lg font-semibold text-white mb-4">Explore Related Styles</h3>
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">Explore Related Styles</h3>
               <div className="flex flex-wrap gap-3">
                 {editorial.internalLinks.map((link, i) => (
                   <Link
                     key={i}
                     href={link.href}
-                    className="inline-flex items-center px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors text-sm"
+                    className="inline-flex items-center px-4 py-2 bg-primary hover:bg-primary-dark text-gray-900 rounded-lg transition-colors text-sm"
                     title={link.label}
                   >
                     {link.label}

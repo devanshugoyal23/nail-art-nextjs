@@ -41,8 +41,8 @@ export default function AdminAuth() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white flex items-center justify-center">
-      <div className="bg-gray-800 p-8 rounded-lg w-full max-w-md">
+    <div className="min-h-screen bg-white text-gray-900 flex items-center justify-center">
+      <div className="bg-surface p-8 rounded-lg w-full max-w-md">
         <h1 className="text-2xl font-bold mb-6 text-center">Admin Access</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
@@ -54,7 +54,7 @@ export default function AdminAuth() {
               id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 bg-gray-100 border border-gray-200 rounded-md text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Enter admin password"
               required
             />
@@ -65,12 +65,12 @@ export default function AdminAuth() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 text-white font-bold py-2 px-4 rounded-md transition-colors"
+            className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 text-gray-900 font-bold py-2 px-4 rounded-md transition-colors"
           >
             {loading ? 'Authenticating...' : 'Login'}
           </button>
         </form>
-        <p className="text-gray-400 text-sm mt-4 text-center">
+        <p className="text-gray-500 text-sm mt-4 text-center">
           Contact the administrator if you need access
         </p>
       </div>

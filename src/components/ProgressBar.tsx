@@ -59,7 +59,7 @@ export default function ProgressBar({
 
       {/* Percentage Display */}
       {showPercentage && scrollProgress > 0 && (
-        <div className="absolute top-1 right-4 text-xs text-white bg-gray-900/80 px-2 py-1 rounded-full">
+        <div className="absolute top-1 right-4 text-xs text-gray-900 bg-white/80 px-2 py-1 rounded-full">
           {Math.round(scrollProgress)}%
         </div>
       )}

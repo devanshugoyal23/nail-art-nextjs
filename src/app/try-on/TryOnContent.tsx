@@ -174,14 +174,14 @@ export default function TryOnContent({ initialData, categories }: TryOnContentPr
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-purple-900">
+    <div className="min-h-screen bg-gradient-to-br from-white via-surface to-white">
       <div className="max-w-7xl mx-auto px-4 py-8">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
             AI Nail Art Try-On
           </h1>
-          <p className="text-lg text-gray-300 max-w-2xl mx-auto">
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             Upload your hand photo and see how different nail art designs look on you instantly
           </p>
         </div>
@@ -206,10 +206,10 @@ export default function TryOnContent({ initialData, categories }: TryOnContentPr
         {currentStep === 1 && (
           <div className="space-y-6">
             <div className="text-center">
-              <h2 className="text-2xl font-bold text-white mb-4">
+              <h2 className="text-2xl font-bold text-gray-900 mb-4">
                 Choose Your Nail Art Design
               </h2>
-              <p className="text-gray-300">
+              <p className="text-gray-600">
                 Browse our collection and select a design you&apos;d like to try
               </p>
             </div>
@@ -238,18 +238,18 @@ export default function TryOnContent({ initialData, categories }: TryOnContentPr
         {currentStep === 2 && selectedDesign && (
           <div className="space-y-6">
             <div className="text-center">
-              <h2 className="text-2xl font-bold text-white mb-4">
+              <h2 className="text-2xl font-bold text-gray-900 mb-4">
                 Upload Your Hand Photo
               </h2>
-              <p className="text-gray-300 mb-6">
+              <p className="text-gray-600 mb-6">
                 Take a photo or upload an image of your hand to see how this design looks on you
               </p>
             </div>
 
             {/* Selected Design Preview */}
             <div className="max-w-md mx-auto mb-6">
-              <div className="bg-gray-800 rounded-lg p-4">
-                <h3 className="text-lg font-semibold text-white mb-2">
+              <div className="bg-surface rounded-lg p-4">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">
                   Selected Design
                 </h3>
                 <div className="aspect-square relative">
@@ -262,7 +262,7 @@ export default function TryOnContent({ initialData, categories }: TryOnContentPr
                     priority
                   />
                 </div>
-                <p className="text-gray-300 mt-2">
+                <p className="text-gray-600 mt-2">
                   {selectedDesign.design_name}
                 </p>
               </div>
@@ -277,7 +277,7 @@ export default function TryOnContent({ initialData, categories }: TryOnContentPr
             <div className="text-center">
               <button
                 onClick={() => setCurrentStep(1)}
-                className="px-6 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors"
+                className="px-6 py-3 bg-gray-600 text-gray-900 rounded-lg hover:bg-gray-100 transition-colors"
               >
                 ← Back to Designs
               </button>
@@ -289,18 +289,18 @@ export default function TryOnContent({ initialData, categories }: TryOnContentPr
         {currentStep === 3 && sourceImage && selectedDesign && (
           <div className="space-y-6">
             <div className="text-center">
-              <h2 className="text-2xl font-bold text-white mb-4">
+              <h2 className="text-2xl font-bold text-gray-900 mb-4">
                 Generating Your Nail Art
               </h2>
-              <p className="text-gray-300">
+              <p className="text-gray-600">
                 Our AI is creating your personalized nail art design...
               </p>
             </div>
 
             {/* Source Image Preview */}
             <div className="max-w-md mx-auto mb-6">
-              <div className="bg-gray-800 rounded-lg p-4">
-                <h3 className="text-lg font-semibold text-white mb-2">
+              <div className="bg-surface rounded-lg p-4">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">
                   Your Hand Photo
                 </h3>
                 <div className="aspect-square relative">
@@ -330,7 +330,7 @@ export default function TryOnContent({ initialData, categories }: TryOnContentPr
             <div className="text-center">
               <button
                 onClick={() => setCurrentStep(2)}
-                className="px-6 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors"
+                className="px-6 py-3 bg-gray-600 text-gray-900 rounded-lg hover:bg-gray-100 transition-colors"
               >
                 ← Back to Upload
               </button>
@@ -342,10 +342,10 @@ export default function TryOnContent({ initialData, categories }: TryOnContentPr
         {currentStep === 4 && generatedImage && (
           <div className="space-y-6">
             <div className="text-center">
-              <h2 className="text-2xl font-bold text-white mb-4">
+              <h2 className="text-2xl font-bold text-gray-900 mb-4">
                 Your AI Nail Art Result
               </h2>
-              <p className="text-gray-300">
+              <p className="text-gray-600">
                 Here&apos;s how the design looks on your hand!
               </p>
             </div>
@@ -360,7 +360,7 @@ export default function TryOnContent({ initialData, categories }: TryOnContentPr
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <button
                 onClick={handleReset}
-                className="px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
+                className="px-6 py-3 bg-primary text-gray-900 rounded-lg hover:bg-primary-dark transition-colors"
               >
                 Try Another Design
               </button>
@@ -371,7 +371,7 @@ export default function TryOnContent({ initialData, categories }: TryOnContentPr
                   link.download = 'my-nail-art.jpg';
                   link.click();
                 }}
-                className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+                className="px-6 py-3 bg-green-600 text-gray-900 rounded-lg hover:bg-green-700 transition-colors"
               >
                 Download Result
               </button>
@@ -381,10 +381,10 @@ export default function TryOnContent({ initialData, categories }: TryOnContentPr
 
         {/* Loading Overlay */}
         {isLoading && (
-          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-            <div className="bg-gray-800 rounded-lg p-6 text-center">
+          <div className="fixed inset-0 bg-white/50 flex items-center justify-center z-50">
+            <div className="bg-surface rounded-lg p-6 text-center">
               <Loader />
-              <p className="text-white mt-4">Generating your nail art...</p>
+              <p className="text-gray-900 mt-4">Generating your nail art...</p>
             </div>
           </div>
         )}

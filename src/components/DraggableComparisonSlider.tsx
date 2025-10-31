@@ -144,15 +144,15 @@ export default function DraggableComparisonSlider({
       />
 
       {/* Labels */}
-      <div className="absolute top-4 left-4 bg-black/50 text-white px-3 py-1 rounded-full text-sm font-medium">
+      <div className="absolute top-4 left-4 bg-white/50 text-gray-900 px-3 py-1 rounded-full text-sm font-medium">
         Before
       </div>
-      <div className="absolute top-4 right-4 bg-black/50 text-white px-3 py-1 rounded-full text-sm font-medium">
+      <div className="absolute top-4 right-4 bg-white/50 text-gray-900 px-3 py-1 rounded-full text-sm font-medium">
         After
       </div>
 
       {/* Percentage indicator */}
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/50 text-white px-3 py-1 rounded-full text-sm font-medium">
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/50 text-gray-900 px-3 py-1 rounded-full text-sm font-medium">
         {Math.round(sliderPosition)}%
       </div>
     </div>

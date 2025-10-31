@@ -33,7 +33,7 @@ export default function ActionCard({
       case 'low':
         return 'border-green-500/30 bg-green-900/10';
       default:
-        return 'border-gray-500/30 bg-gray-900/10';
+        return 'border-gray-500/30 bg-white/10';
     }
   };
 
@@ -52,8 +52,8 @@ export default function ActionCard({
 
   const cardContent = (
     <div className={`
-      bg-gray-800/50 backdrop-blur-sm rounded-xl p-6 border transition-all duration-300
-      hover:bg-gray-800/70 hover:scale-[1.02] hover:shadow-lg
+      bg-surface/50 backdrop-blur-sm rounded-xl p-6 border transition-all duration-300
+      hover:bg-surface/70 hover:scale-[1.02] hover:shadow-lg
       ${getPriorityColor()}
       ${recommended ? 'ring-2 ring-blue-500/50 bg-blue-900/20' : ''}
       ${className}
@@ -62,29 +62,29 @@ export default function ActionCard({
       <div className="flex items-start justify-between mb-4">
         <div className="flex items-center gap-3">
           {icon && (
-            <div className="w-8 h-8 rounded-lg bg-gray-700 flex items-center justify-center text-lg">
+            <div className="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center text-lg">
               {icon}
             </div>
           )}
           <div>
-            <h3 className="text-lg font-semibold text-white flex items-center gap-2">
+            <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
               {title}
               {recommended && (
-                <span className="text-xs bg-blue-600 text-white px-2 py-1 rounded-full">
+                <span className="text-xs bg-blue-600 text-gray-900 px-2 py-1 rounded-full">
                   RECOMMENDED
                 </span>
               )}
             </h3>
             <div className="flex items-center gap-2 mt-1">
               <span className="text-sm">{getPriorityIcon()}</span>
-              <span className="text-xs text-gray-400 capitalize">{priority} priority</span>
+              <span className="text-xs text-gray-500 capitalize">{priority} priority</span>
             </div>
           </div>
         </div>
       </div>
 
       {/* Description */}
-      <p className="text-gray-300 text-sm mb-4 leading-relaxed">
+      <p className="text-gray-600 text-sm mb-4 leading-relaxed">
         {description}
       </p>
 

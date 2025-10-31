@@ -53,8 +53,8 @@ export default function ConfirmationModal({
       default:
         return {
           icon: '❓',
-          iconColor: 'text-gray-400',
-          buttonColor: 'bg-gray-600 hover:bg-gray-700',
+          iconColor: 'text-gray-500',
+          buttonColor: 'bg-gray-600 hover:bg-gray-100',
           borderColor: 'border-gray-500/30'
         };
     }
@@ -76,12 +76,12 @@ export default function ConfirmationModal({
 
   return (
     <div
-      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+      className="fixed inset-0 bg-white bg-opacity-50 flex items-center justify-center z-50"
       onClick={handleBackdropClick}
       onKeyDown={handleKeyDown}
     >
       <div className={`
-        bg-gray-800 rounded-xl p-6 max-w-md w-full mx-4 border
+        bg-surface rounded-xl p-6 max-w-md w-full mx-4 border
         ${config.borderColor}
       `}>
         {/* Header */}
@@ -89,14 +89,14 @@ export default function ConfirmationModal({
           <div className={`text-2xl ${config.iconColor}`}>
             {config.icon}
           </div>
-          <h3 className="text-xl font-bold text-white">
+          <h3 className="text-xl font-bold text-gray-900">
             {title}
           </h3>
         </div>
 
         {/* Content */}
         <div className="mb-6">
-          <p className="text-gray-300 mb-4">
+          <p className="text-gray-600 mb-4">
             {description}
           </p>
           {children}
@@ -106,13 +106,13 @@ export default function ConfirmationModal({
         <div className="flex gap-3 justify-end">
           <button
             onClick={onClose}
-            className="px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-lg transition-colors"
+            className="px-4 py-2 bg-gray-600 hover:bg-gray-100 text-gray-900 rounded-lg transition-colors"
           >
             {cancelText}
           </button>
           <button
             onClick={onConfirm}
-            className={`px-4 py-2 text-white rounded-lg transition-colors ${config.buttonColor}`}
+            className={`px-4 py-2 text-gray-900 rounded-lg transition-colors ${config.buttonColor}`}
           >
             {confirmText}
           </button>

@@ -65,7 +65,7 @@ export default function AdminLayout({
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-black text-white flex items-center justify-center">
+      <div className="min-h-screen bg-white text-gray-900 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
           <p>Loading...</p>
@@ -79,9 +79,9 @@ export default function AdminLayout({
   }
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-white text-gray-900">
       {/* Admin Header */}
-      <div className="bg-gray-800 border-b border-gray-700">
+      <div className="bg-surface border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
             <div className="flex items-center space-x-4">
@@ -89,29 +89,29 @@ export default function AdminLayout({
               <nav className="flex space-x-4">
                 <Link
                   href="/admin/generate"
-                  className="text-gray-300 hover:text-white transition-colors"
+                  className="text-gray-600 hover:text-gray-900 transition-colors"
                 >
                   Generate
                 </Link>
                 <Link
                   href="/admin/content-management"
-                  className="text-gray-300 hover:text-white transition-colors"
+                  className="text-gray-600 hover:text-gray-900 transition-colors"
                 >
                   Content
                 </Link>
                 <Link
                   href="/admin/seo-management"
-                  className="text-gray-300 hover:text-white transition-colors"
+                  className="text-gray-600 hover:text-gray-900 transition-colors"
                 >
                   SEO
                 </Link>
               </nav>
             </div>
             <div className="flex items-center space-x-4">
-              <span className="text-sm text-gray-400">Admin</span>
+              <span className="text-sm text-gray-500">Admin</span>
               <button
                 onClick={handleLogout}
-                className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-sm transition-colors"
+                className="bg-red-600 hover:bg-red-700 text-gray-900 px-3 py-1 rounded text-sm transition-colors"
               >
                 Logout
               </button>

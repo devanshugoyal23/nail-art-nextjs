@@ -68,7 +68,7 @@ export default async function OccasionPage({ params }: OccasionPageProps) {
     const relatedItems = allItems.slice(0, 12);
     
     return (
-      <div className="min-h-screen bg-black">
+      <div className="min-h-screen bg-white">
         <div className="max-w-7xl mx-auto px-4 py-8">
           {/* Breadcrumb */}
           <nav className="mb-6">
@@ -76,20 +76,20 @@ export default async function OccasionPage({ params }: OccasionPageProps) {
               <Link href="/categories" className="text-purple-400 hover:text-purple-300">
                 Categories
               </Link>
-              <span className="text-gray-400">/</span>
+              <span className="text-gray-500">/</span>
               <Link href="/categories/occasions" className="text-purple-400 hover:text-purple-300">
                 Occasions
               </Link>
-              <span className="text-gray-400">/</span>
-              <span className="text-white font-medium">{capitalize(occasion)}</span>
+              <span className="text-gray-500">/</span>
+              <span className="text-gray-900 font-medium">{capitalize(occasion)}</span>
             </div>
           </nav>
 
           {/* Header */}
           <div className="text-center py-8">
             <div className="text-6xl mb-4">🎉</div>
-            <h1 className="text-4xl font-bold text-white mb-4">{h1}</h1>
-            <p className="text-xl text-gray-300 mb-6">
+            <h1 className="text-4xl font-bold text-gray-900 mb-4">{h1}</h1>
+            <p className="text-xl text-gray-600 mb-6">
               Discover perfect nail art designs for {occasion} and explore related occasions!
             </p>
           </div>
@@ -97,13 +97,13 @@ export default async function OccasionPage({ params }: OccasionPageProps) {
           {/* Related Occasions */}
           {relatedOccasions.length > 0 && (
             <div className="mb-12">
-              <h2 className="text-2xl font-bold text-white mb-6 text-center">Related Occasions</h2>
+              <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Related Occasions</h2>
               <div className="flex flex-wrap justify-center gap-3">
                 {relatedOccasions.map((relatedOccasion, index) => (
                   <Link
                     key={index}
                     href={`/nail-art/occasion/${relatedOccasion?.toLowerCase().replace(/\s+/g, '-') || 'occasion'}`}
-                    className="bg-pink-600/20 text-pink-300 hover:bg-pink-600/40 px-4 py-2 rounded-full font-medium transition-colors"
+                    className="bg-primary/20 text-pink-300 hover:bg-primary/40 px-4 py-2 rounded-full font-medium transition-colors"
                   >
                     {relatedOccasion}
                   </Link>
@@ -114,13 +114,13 @@ export default async function OccasionPage({ params }: OccasionPageProps) {
 
           {/* Featured Designs */}
           <div className="mb-12">
-            <h2 className="text-2xl font-bold text-white mb-6 text-center">Featured Nail Art Designs</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Featured Nail Art Designs</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
               {relatedItems.map((item) => (
                 <Link
                   key={item.id}
                   href={`/${item.category?.toLowerCase().replace(/\s+/g, '-')}/${item.design_name ? `${item.design_name.toLowerCase().replace(/\s+/g, '-')}-${item.id.slice(-8)}` : `design-${item.id.slice(-8)}`}`}
-                  className="group bg-gray-800 rounded-lg overflow-hidden hover:bg-gray-700 transition-all duration-300 transform hover:-translate-y-1"
+                  className="group bg-surface rounded-lg overflow-hidden hover:bg-gray-100 transition-all duration-300 transform hover:-translate-y-1"
                 >
                   <div className="aspect-square relative">
                     <OptimizedImage
@@ -134,11 +134,11 @@ export default async function OccasionPage({ params }: OccasionPageProps) {
                   </div>
                   <div className="p-4">
                     {item.design_name && (
-                      <h3 className="text-lg font-semibold text-white mb-2 line-clamp-1">
+                      <h3 className="text-lg font-semibold text-gray-900 mb-2 line-clamp-1">
                         {item.design_name}
                       </h3>
                     )}
-                    <p className="text-sm text-gray-300 line-clamp-2">
+                    <p className="text-sm text-gray-600 line-clamp-2">
                       {item.prompt}
                     </p>
                   </div>
@@ -151,7 +151,7 @@ export default async function OccasionPage({ params }: OccasionPageProps) {
           <div className="text-center">
             <Link
               href="/nail-art-gallery"
-              className="inline-flex items-center bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors"
+              className="inline-flex items-center bg-primary hover:bg-primary-dark text-gray-900 font-semibold py-3 px-6 rounded-lg transition-colors"
             >
               Browse All Designs
             </Link>
@@ -162,7 +162,7 @@ export default async function OccasionPage({ params }: OccasionPageProps) {
   }
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-white">
       <div className="max-w-7xl mx-auto px-4 py-8">
         {/* Breadcrumb */}
         <nav className="mb-6">
@@ -170,25 +170,25 @@ export default async function OccasionPage({ params }: OccasionPageProps) {
             <Link href="/categories" className="text-purple-400 hover:text-purple-300">
               Categories
             </Link>
-            <span className="text-gray-400">/</span>
+            <span className="text-gray-500">/</span>
             <Link href="/categories/occasions" className="text-purple-400 hover:text-purple-300">
               Occasions
             </Link>
-            <span className="text-gray-400">/</span>
-            <span className="text-white font-medium">{capitalize(occasion)}</span>
+            <span className="text-gray-500">/</span>
+            <span className="text-gray-900 font-medium">{capitalize(occasion)}</span>
           </div>
         </nav>
 
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">{h1}</h1>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">{description}</p>
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">{h1}</h1>
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">{description}</p>
         </div>
 
         {/* Tags Section */}
         {Object.values(allTags).some(tags => tags.length > 0) && (
-          <div className="bg-gray-800 rounded-xl p-8 mb-12">
-            <h2 className="text-2xl font-bold text-white mb-6 text-center">Explore by Tags</h2>
+          <div className="bg-surface rounded-xl p-8 mb-12">
+            <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Explore by Tags</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {allTags.colors.length > 0 && (
                 <TagCollection
@@ -220,7 +220,7 @@ export default async function OccasionPage({ params }: OccasionPageProps) {
 
         {/* Gallery */}
         <div className="mb-12">
-          <h2 className="text-2xl font-bold text-white mb-6">
+          <h2 className="text-2xl font-bold text-gray-900 mb-6">
             {capitalize(occasion)} Designs ({filteredItems.length})
           </h2>
           
@@ -230,7 +230,7 @@ export default async function OccasionPage({ params }: OccasionPageProps) {
                 <Link
                   key={item.id}
                   href={`/${item.category?.toLowerCase().replace(/\s+/g, '-')}/${item.design_name ? `${item.design_name.toLowerCase().replace(/\s+/g, '-')}-${item.id.slice(-8)}` : `design-${item.id.slice(-8)}`}`}
-                  className="group bg-gray-800 rounded-lg overflow-hidden hover:bg-gray-700 transition-all duration-300 transform hover:-translate-y-1"
+                  className="group bg-surface rounded-lg overflow-hidden hover:bg-gray-100 transition-all duration-300 transform hover:-translate-y-1"
                 >
                   <div className="aspect-square relative">
                     <OptimizedImage
@@ -245,11 +245,11 @@ export default async function OccasionPage({ params }: OccasionPageProps) {
                   
                   <div className="p-4">
                     {item.design_name && (
-                      <h3 className="text-lg font-semibold text-white mb-2 line-clamp-1">
+                      <h3 className="text-lg font-semibold text-gray-900 mb-2 line-clamp-1">
                         {item.design_name}
                       </h3>
                     )}
-                    <p className="text-sm text-gray-300 line-clamp-2">
+                    <p className="text-sm text-gray-600 line-clamp-2">
                       {item.prompt}
                     </p>
                   </div>
@@ -259,11 +259,11 @@ export default async function OccasionPage({ params }: OccasionPageProps) {
           ) : (
             <div className="text-center py-12">
               <div className="text-6xl mb-4">💅</div>
-              <h3 className="text-xl font-semibold text-white mb-2">No designs found</h3>
-              <p className="text-gray-400 mb-6">We&apos;re working on adding more {capitalize(occasion)} designs!</p>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">No designs found</h3>
+              <p className="text-gray-500 mb-6">We&apos;re working on adding more {capitalize(occasion)} designs!</p>
               <Link
                 href="/nail-art-gallery"
-                className="inline-flex items-center bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors"
+                className="inline-flex items-center bg-primary hover:bg-primary-dark text-gray-900 font-semibold py-3 px-6 rounded-lg transition-colors"
               >
                 Browse All Designs
               </Link>
@@ -272,8 +272,8 @@ export default async function OccasionPage({ params }: OccasionPageProps) {
         </div>
 
         {/* Related Occasions */}
-        <div className="bg-gray-800 rounded-xl p-8">
-          <h2 className="text-2xl font-bold text-white mb-6 text-center">Explore Other Occasions</h2>
+        <div className="bg-surface rounded-xl p-8">
+          <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Explore Other Occasions</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {['wedding', 'party', 'work', 'casual', 'formal', 'holiday', 'summer'].map(occ => (
               <Link
@@ -281,7 +281,7 @@ export default async function OccasionPage({ params }: OccasionPageProps) {
                 href={`/nail-art/occasion/${occ}`}
                 className={`bg-gradient-to-r from-pink-500 to-purple-600 rounded-lg p-4 text-center hover:scale-105 transition-transform ${occ === occasion ? 'ring-2 ring-purple-400' : ''}`}
               >
-                <div className="text-white font-semibold">{capitalize(occ)}</div>
+                <div className="text-gray-900 font-semibold">{capitalize(occ)}</div>
               </Link>
             ))}
           </div>

@@ -145,7 +145,7 @@ export default function MobileOptimizedImage({
       
       {/* Debug info in development */}
       {process.env.NODE_ENV === 'development' && (
-        <div className="absolute top-0 left-0 bg-black bg-opacity-75 text-white text-xs p-1 rounded-br">
+        <div className="absolute top-0 left-0 bg-white bg-opacity-75 text-gray-900 text-xs p-1 rounded-br">
           {isMobile ? 'Mobile' : 'Desktop'} • {imageSrc.includes('mobile-optimized') ? 'WebP' : 'JPG'}
         </div>
       )}

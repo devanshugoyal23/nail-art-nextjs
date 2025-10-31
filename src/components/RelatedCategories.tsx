@@ -102,7 +102,7 @@ export default function RelatedCategories({
 
   return (
     <div className="mt-12">
-      <h2 className="text-2xl font-bold text-white mb-6">
+      <h2 className="text-2xl font-bold text-gray-900 mb-6">
         {currentCategory ? 'Explore Other Categories' : 'Browse by Category'}
       </h2>
       
@@ -114,7 +114,7 @@ export default function RelatedCategories({
             <Link
               key={category}
               href={`/nail-art-gallery/category/${encodeURIComponent(category)}`}
-              className="group bg-gray-800 rounded-lg overflow-hidden hover:bg-gray-700 transition-all duration-300 transform hover:-translate-y-1"
+              className="group bg-surface rounded-lg overflow-hidden hover:bg-gray-100 transition-all duration-300 transform hover:-translate-y-1"
             >
               <div className="aspect-square relative">
                 {previewItem ? (
@@ -127,14 +127,14 @@ export default function RelatedCategories({
                     loading="lazy"
                   />
                 ) : (
-                  <div className="w-full h-full bg-gray-700 flex items-center justify-center">
-                    <span className="text-gray-400 text-sm">No preview</span>
+                  <div className="w-full h-full bg-gray-100 flex items-center justify-center">
+                    <span className="text-gray-500 text-sm">No preview</span>
                   </div>
                 )}
               </div>
               
               <div className="p-3">
-                <h3 className="text-sm font-medium text-white text-center truncate">
+                <h3 className="text-sm font-medium text-gray-900 text-center truncate">
                   {category}
                 </h3>
               </div>

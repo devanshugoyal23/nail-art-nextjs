@@ -39,16 +39,16 @@ export default function FloatingActionBar({
 
   return (
     <div className={`fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50 transition-all duration-300 ${className}`}>
-      <div className="bg-gray-900/95 backdrop-blur-md border border-gray-700/50 rounded-2xl shadow-2xl p-4 min-w-[320px]">
+      <div className="bg-white/95 backdrop-blur-md border border-gray-100/50 rounded-2xl shadow-2xl p-4 min-w-[320px]">
         {/* Progress Bar */}
         <div className="flex items-center gap-3 mb-3">
-          <div className="flex-1 bg-gray-700 rounded-full h-1.5 overflow-hidden">
+          <div className="flex-1 bg-gray-100 rounded-full h-1.5 overflow-hidden">
             <div 
               className="bg-gradient-to-r from-purple-500 to-pink-500 h-full transition-all duration-300 ease-out"
               style={{ width: `${scrollProgress}%` }}
             />
           </div>
-          <span className="text-xs text-gray-400 font-medium">
+          <span className="text-xs text-gray-500 font-medium">
             {Math.round(scrollProgress)}%
           </span>
         </div>
@@ -57,7 +57,7 @@ export default function FloatingActionBar({
         <div className="flex gap-2">
           <Link
             href={`/try-on?design=${designId}`}
-            className="flex-1 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white font-semibold py-3 px-4 rounded-xl transition-all duration-200 transform hover:scale-105 active:scale-95 flex items-center justify-center gap-2 shadow-lg"
+            className="flex-1 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-gray-900 font-semibold py-3 px-4 rounded-xl transition-all duration-200 transform hover:scale-105 active:scale-95 flex items-center justify-center gap-2 shadow-lg"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -69,7 +69,7 @@ export default function FloatingActionBar({
           <a
             href={imageUrl}
             download={`${designName.toLowerCase().replace(/\s+/g, '-')}-${designId.slice(-8)}.jpg`}
-            className="flex-1 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-semibold py-3 px-4 rounded-xl transition-all duration-200 transform hover:scale-105 active:scale-95 flex items-center justify-center gap-2 shadow-lg"
+            className="flex-1 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-gray-900 font-semibold py-3 px-4 rounded-xl transition-all duration-200 transform hover:scale-105 active:scale-95 flex items-center justify-center gap-2 shadow-lg"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -79,7 +79,7 @@ export default function FloatingActionBar({
           
           <button
             onClick={onShare}
-            className="bg-gray-700 hover:bg-gray-600 text-white p-3 rounded-xl transition-all duration-200 transform hover:scale-105 active:scale-95 flex items-center justify-center shadow-lg"
+            className="bg-gray-100 hover:bg-gray-600 text-gray-900 p-3 rounded-xl transition-all duration-200 transform hover:scale-105 active:scale-95 flex items-center justify-center shadow-lg"
             aria-label="Share design"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

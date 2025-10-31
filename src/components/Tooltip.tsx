@@ -129,13 +129,13 @@ export default function Tooltip({
           className={`absolute z-50 ${getPositionClasses()}`}
           role="tooltip"
         >
-          <div className="bg-gray-800 border border-gray-700 rounded-lg shadow-xl p-3 max-w-xs">
+          <div className="bg-surface border border-gray-100 rounded-lg shadow-xl p-3 max-w-xs">
             {title && (
-              <div className="font-semibold text-white mb-1 text-sm">
+              <div className="font-semibold text-gray-900 mb-1 text-sm">
                 {title}
               </div>
             )}
-            <div className="text-gray-300 text-sm">
+            <div className="text-gray-600 text-sm">
               {content}
             </div>
             {/* Arrow */}

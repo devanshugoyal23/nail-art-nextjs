@@ -82,9 +82,9 @@ export default function StatusBadge({
       default:
         return {
           icon: '❓',
-          bgColor: 'bg-gray-900/20',
+          bgColor: 'bg-white/20',
           borderColor: 'border-gray-500/30',
-          textColor: 'text-gray-400',
+          textColor: 'text-gray-500',
           label: 'Unknown'
         };
     }

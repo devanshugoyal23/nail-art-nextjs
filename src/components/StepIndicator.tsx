@@ -25,10 +25,10 @@ export default function StepIndicator({ currentStep, onStepClick, className = ''
               onClick={() => onStepClick?.(step.id)}
               className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-300 ${
                 currentStep === step.id
-                  ? 'bg-indigo-600 text-white shadow-lg'
+                  ? 'bg-indigo-600 text-gray-900 shadow-lg'
                   : currentStep > step.id
-                  ? 'bg-green-600 text-white shadow-lg'
-                  : 'bg-gray-700 text-gray-400 hover:bg-gray-600'
+                  ? 'bg-green-600 text-gray-900 shadow-lg'
+                  : 'bg-gray-100 text-gray-500 hover:bg-gray-600'
               }`}
             >
               <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${
@@ -62,7 +62,7 @@ export default function StepIndicator({ currentStep, onStepClick, className = ''
               currentStep >= step.id ? 'bg-indigo-600' : 'bg-gray-400'
             }`} />
             <span className={`text-xs mt-1 ${
-              currentStep >= step.id ? 'text-indigo-600 font-semibold' : 'text-gray-400'
+              currentStep >= step.id ? 'text-indigo-600 font-semibold' : 'text-gray-500'
             }`}>
               {step.id}
             </span>
@@ -80,16 +80,16 @@ export default function StepIndicator({ currentStep, onStepClick, className = ''
                 ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-900/20'
                 : currentStep > step.id
                 ? 'border-green-500 bg-green-50 dark:bg-green-900/20'
-                : 'border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800'
+                : 'border-gray-300 dark:border-gray-200 bg-gray-50 dark:bg-surface'
             }`}
           >
             <div className="flex items-center gap-3">
               <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${
                 currentStep > step.id
-                  ? 'bg-green-500 text-white'
+                  ? 'bg-green-500 text-gray-900'
                   : currentStep === step.id
-                  ? 'bg-indigo-600 text-white'
-                  : 'bg-gray-400 text-white'
+                  ? 'bg-indigo-600 text-gray-900'
+                  : 'bg-gray-400 text-gray-900'
               }`}>
                 {currentStep > step.id ? '✓' : step.id}
               </div>

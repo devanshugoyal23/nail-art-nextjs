@@ -55,7 +55,7 @@ function ColorSwatch({ color, name, onCopy }: ColorSwatchProps) {
     <div className="group relative">
       <button
         onClick={handleClick}
-        className="w-12 h-12 rounded-lg border-2 border-gray-600 hover:border-gray-400 transition-all duration-200 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-purple-500/50"
+        className="w-12 h-12 rounded-lg border-2 border-gray-200 hover:border-gray-400 transition-all duration-200 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-purple-500/50"
         style={{ backgroundColor: color }}
         title={`${getColorName(color)} - Click to copy ${color}`}
         aria-label={`Color ${getColorName(color)}`}
@@ -67,13 +67,13 @@ function ColorSwatch({ color, name, onCopy }: ColorSwatchProps) {
       </button>
       
       {/* Color name tooltip */}
-      <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap z-10">
+      <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-white text-gray-900 text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap z-10">
         {getColorName(color)}
       </div>
       
       {/* Copied feedback */}
       {copied && (
-        <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-green-600 text-white text-xs px-2 py-1 rounded whitespace-nowrap z-20">
+        <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-green-600 text-gray-900 text-xs px-2 py-1 rounded whitespace-nowrap z-20">
           Copied!
         </div>
       )}
@@ -98,8 +98,8 @@ export default function ColorPalette({
   }
 
   return (
-    <div className={`bg-gray-800/40 backdrop-blur-sm rounded-xl p-4 border border-gray-700/50 ${className}`}>
-      <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+    <div className={`bg-surface/40 backdrop-blur-sm rounded-xl p-4 border border-gray-100/50 ${className}`}>
+      <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
         <svg className="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v12a4 4 0 004 4h4a2 2 0 002-2V5z" />
         </svg>

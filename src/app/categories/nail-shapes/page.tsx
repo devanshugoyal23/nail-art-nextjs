@@ -69,7 +69,7 @@ export default async function NailShapesPage() {
   );
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-white">
       <div className="max-w-7xl mx-auto px-4 py-8">
         {/* Breadcrumb */}
         <nav className="mb-6">
@@ -77,17 +77,17 @@ export default async function NailShapesPage() {
             <Link href="/categories" className="text-purple-400 hover:text-purple-300">
               Categories
             </Link>
-            <span className="text-gray-400">/</span>
-            <span className="text-white font-medium">Nail Shapes</span>
+            <span className="text-gray-500">/</span>
+            <span className="text-gray-900 font-medium">Nail Shapes</span>
           </div>
         </nav>
 
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
             Nail Shapes
           </h1>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             Discover the perfect nail shape for your style. Each shape has its own personality and works best with different nail art designs.
           </p>
         </div>
@@ -98,7 +98,7 @@ export default async function NailShapesPage() {
             <Link
               key={index}
               href={`/nail-art/${shape.slug}`}
-              className="group bg-gray-800 rounded-xl overflow-hidden hover:bg-gray-700 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-2xl"
+              className="group bg-surface rounded-xl overflow-hidden hover:bg-gray-100 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-2xl"
             >
               <div className="relative h-48">
                 {shape.sampleImage ? (
@@ -115,7 +115,7 @@ export default async function NailShapesPage() {
                     <div className="text-6xl opacity-80">💅</div>
                   </div>
                 )}
-                <div className="absolute inset-0 bg-black/20"></div>
+                <div className="absolute inset-0 bg-white/20"></div>
                 <div className="absolute inset-0 flex items-center justify-center">
                   {!shape.sampleImage && (
                     <div className="text-6xl opacity-80">💅</div>
@@ -124,10 +124,10 @@ export default async function NailShapesPage() {
               </div>
               
               <div className="p-6">
-                <h2 className="text-2xl font-bold text-white mb-3 group-hover:text-purple-400 transition-colors">
+                <h2 className="text-2xl font-bold text-gray-900 mb-3 group-hover:text-purple-400 transition-colors">
                   {shape.name}
                 </h2>
-                <p className="text-gray-300 mb-4">
+                <p className="text-gray-600 mb-4">
                   {shape.description}
                 </p>
                 
@@ -137,7 +137,7 @@ export default async function NailShapesPage() {
                     {shape.characteristics.map((char, charIndex) => (
                       <span
                         key={charIndex}
-                        className="bg-purple-600/20 text-purple-300 px-2 py-1 rounded text-xs"
+                        className="bg-primary/20 text-purple-300 px-2 py-1 rounded text-xs"
                       >
                         {char}
                       </span>
@@ -164,8 +164,8 @@ export default async function NailShapesPage() {
         </div>
 
         {/* Popular Tags */}
-        <div className="bg-gray-800 rounded-xl p-8 mb-16">
-          <h2 className="text-2xl font-bold text-white mb-6 text-center">Explore by Tags</h2>
+        <div className="bg-surface rounded-xl p-8 mb-16">
+          <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Explore by Tags</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <TagCollection
               title="Popular Colors"
@@ -210,30 +210,30 @@ export default async function NailShapesPage() {
         </div>
 
         {/* Related Categories */}
-        <div className="bg-gray-800 rounded-xl p-8">
-          <h2 className="text-2xl font-bold text-white mb-6 text-center">Explore More Categories</h2>
+        <div className="bg-surface rounded-xl p-8">
+          <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Explore More Categories</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <Link
               href="/categories/colors"
-              className="bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-4 rounded-lg text-center transition-colors"
+              className="bg-red-600 hover:bg-red-700 text-gray-900 font-semibold py-3 px-4 rounded-lg text-center transition-colors"
             >
               Colors
             </Link>
             <Link
               href="/categories/techniques"
-              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg text-center transition-colors"
+              className="bg-blue-600 hover:bg-blue-700 text-gray-900 font-semibold py-3 px-4 rounded-lg text-center transition-colors"
             >
               Techniques
             </Link>
             <Link
               href="/categories/occasions"
-              className="bg-pink-600 hover:bg-pink-700 text-white font-semibold py-3 px-4 rounded-lg text-center transition-colors"
+              className="bg-primary hover:bg-primary-dark text-gray-900 font-semibold py-3 px-4 rounded-lg text-center transition-colors"
             >
               Occasions
             </Link>
             <Link
               href="/categories/styles"
-              className="bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-4 rounded-lg text-center transition-colors"
+              className="bg-green-600 hover:bg-green-700 text-gray-900 font-semibold py-3 px-4 rounded-lg text-center transition-colors"
             >
               Styles
             </Link>

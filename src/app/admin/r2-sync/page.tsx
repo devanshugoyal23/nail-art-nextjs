@@ -69,27 +69,27 @@ export default function R2SyncPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-8">
+    <div className="min-h-screen bg-white text-gray-900 p-8">
       <div className="max-w-4xl mx-auto">
         <h1 className="text-3xl font-bold mb-8">R2 Sync Management</h1>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Sync Actions */}
-          <div className="bg-gray-800 p-6 rounded-lg">
+          <div className="bg-surface p-6 rounded-lg">
             <h2 className="text-xl font-semibold mb-4">Sync Actions</h2>
             
             <div className="space-y-4">
               <button
                 onClick={handleSync}
                 disabled={isLoading}
-                className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 text-white font-bold py-2 px-4 rounded"
+                className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 text-gray-900 font-bold py-2 px-4 rounded"
               >
                 {isLoading ? 'Syncing...' : 'Sync Supabase to R2'}
               </button>
               
               <button
                 onClick={handleCheckStatus}
-                className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                className="w-full bg-green-600 hover:bg-green-700 text-gray-900 font-bold py-2 px-4 rounded"
               >
                 Check R2 Status
               </button>
@@ -97,7 +97,7 @@ export default function R2SyncPage() {
           </div>
 
           {/* Status Display */}
-          <div className="bg-gray-800 p-6 rounded-lg">
+          <div className="bg-surface p-6 rounded-lg">
             <h2 className="text-xl font-semibold mb-4">R2 Status</h2>
             
             {status && (
@@ -144,7 +144,7 @@ export default function R2SyncPage() {
 
         {/* Results */}
         {result && (
-          <div className="mt-8 bg-gray-800 p-6 rounded-lg">
+          <div className="mt-8 bg-surface p-6 rounded-lg">
             <h2 className="text-xl font-semibold mb-4">Sync Result</h2>
             
             <div className={`p-4 rounded ${result.success ? 'bg-green-900' : 'bg-red-900'}`}>
@@ -159,7 +159,7 @@ export default function R2SyncPage() {
               )}
               
               {result.timestamp && (
-                <p className="text-xs text-gray-400">
+                <p className="text-xs text-gray-500">
                   {new Date(result.timestamp).toLocaleString()}
                 </p>
               )}

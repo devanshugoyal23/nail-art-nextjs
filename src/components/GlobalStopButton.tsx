@@ -58,7 +58,7 @@ export default function GlobalStopButton({
               <span className="text-red-400 font-bold">🚨 STOPPED</span>
               <button
                 onClick={handleClear}
-                className="bg-green-600 hover:bg-green-700 text-white px-2 py-1 rounded text-xs"
+                className="bg-green-600 hover:bg-green-700 text-gray-900 px-2 py-1 rounded text-xs"
               >
                 Clear
               </button>
@@ -80,10 +80,10 @@ export default function GlobalStopButton({
             disabled={isLoading}
             className={`px-4 py-2 rounded-lg font-bold transition-all duration-200 ${
               isConfirming
-                ? 'bg-red-800 hover:bg-red-900 text-white animate-pulse'
+                ? 'bg-red-800 hover:bg-red-900 text-gray-900 animate-pulse'
                 : isStopped
-                ? 'bg-green-600 hover:bg-green-700 text-white'
-                : 'bg-red-600 hover:bg-red-700 text-white'
+                ? 'bg-green-600 hover:bg-green-700 text-gray-900'
+                : 'bg-red-600 hover:bg-red-700 text-gray-900'
             } ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
           >
             {isLoading ? '⏳' : isConfirming ? '⚠️ Confirm Stop' : isStopped ? '🔄 Resume' : '⏹️ Hard Stop'}
@@ -93,7 +93,7 @@ export default function GlobalStopButton({
           <button
             onClick={handleEmergencyStop}
             disabled={isLoading}
-            className={`bg-red-800 hover:bg-red-900 text-white px-4 py-2 rounded-lg font-bold transition-colors ${
+            className={`bg-red-800 hover:bg-red-900 text-gray-900 px-4 py-2 rounded-lg font-bold transition-colors ${
               isLoading ? 'opacity-50 cursor-not-allowed' : ''
             }`}
             title="Emergency Stop - Stops everything immediately"
@@ -106,7 +106,7 @@ export default function GlobalStopButton({
             <button
               onClick={handleClear}
               disabled={isLoading}
-              className={`bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-bold transition-colors ${
+              className={`bg-blue-600 hover:bg-blue-700 text-gray-900 px-4 py-2 rounded-lg font-bold transition-colors ${
                 isLoading ? 'opacity-50 cursor-not-allowed' : ''
               }`}
               title="Clear all stop signals"
@@ -119,7 +119,7 @@ export default function GlobalStopButton({
           {showStatus && (
             <button
               onClick={() => setShowDetails(!showDetails)}
-              className="bg-gray-600 hover:bg-gray-700 text-white px-3 py-2 rounded-lg text-sm"
+              className="bg-gray-600 hover:bg-gray-100 text-gray-900 px-3 py-2 rounded-lg text-sm"
             >
               {showDetails ? '📊' : 'ℹ️'}
             </button>
@@ -128,9 +128,9 @@ export default function GlobalStopButton({
 
         {/* Status Details */}
         {showDetails && (
-          <div className="bg-gray-800 border border-gray-600 rounded-lg p-3 max-w-sm text-xs">
-            <div className="font-bold text-gray-300 mb-2">Stop Status</div>
-            <div className="space-y-1 text-gray-400">
+          <div className="bg-surface border border-gray-200 rounded-lg p-3 max-w-sm text-xs">
+            <div className="font-bold text-gray-600 mb-2">Stop Status</div>
+            <div className="space-y-1 text-gray-500">
               <div>Status: {isStopped ? '🛑 STOPPED' : '✅ RUNNING'}</div>
               {stopSignal && (
                 <>
@@ -174,10 +174,10 @@ export function CompactGlobalStopButton({ className = '' }: { className?: string
       disabled={isLoading}
       className={`px-3 py-1 rounded text-sm font-bold transition-all ${
         isConfirming
-          ? 'bg-red-800 text-white animate-pulse'
+          ? 'bg-red-800 text-gray-900 animate-pulse'
           : isStopped
-          ? 'bg-green-600 text-white'
-          : 'bg-red-600 text-white'
+          ? 'bg-green-600 text-gray-900'
+          : 'bg-red-600 text-gray-900'
       } ${isLoading ? 'opacity-50 cursor-not-allowed' : ''} ${className}`}
     >
       {isLoading ? '⏳' : isConfirming ? '⚠️' : isStopped ? '🔄' : '⏹️'}

@@ -27,16 +27,16 @@ export default function DesignPreviewModal({ design, isOpen, onClose, onSelect }
 
   return (
     <div
-      className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
+      className="fixed inset-0 bg-white/50 flex items-center justify-center z-50 p-4"
       onClick={handleBackdropClick}
     >
-      <div className="bg-white dark:bg-gray-800 rounded-xl max-w-2xl w-full max-h-[90vh] overflow-hidden shadow-2xl">
+      <div className="bg-white dark:bg-surface rounded-xl max-w-2xl w-full max-h-[90vh] overflow-hidden shadow-2xl">
         {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
-          <h2 className="text-xl font-bold text-gray-900 dark:text-white">Design Preview</h2>
+        <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-100">
+          <h2 className="text-xl font-bold text-gray-900 dark:text-gray-900">Design Preview</h2>
           <button
             onClick={onClose}
-            className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
+            className="p-2 hover:bg-gray-100 dark:hover:bg-gray-100 rounded-lg transition-colors"
           >
             <svg className="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -47,7 +47,7 @@ export default function DesignPreviewModal({ design, isOpen, onClose, onSelect }
         {/* Content */}
         <div className="p-6 overflow-y-auto max-h-[calc(90vh-80px)]">
           {/* Large Image */}
-          <div className="relative aspect-square mb-6 rounded-lg overflow-hidden bg-gray-100 dark:bg-gray-700">
+          <div className="relative aspect-square mb-6 rounded-lg overflow-hidden bg-gray-100 dark:bg-gray-100">
             <OptimizedImage
               src={design.image_url}
               alt={design.design_name || 'Nail Art Design'}
@@ -61,7 +61,7 @@ export default function DesignPreviewModal({ design, isOpen, onClose, onSelect }
           {/* Design Details */}
           <div className="space-y-4">
             <div>
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-900 mb-2">
                 {design.design_name || 'Untitled Design'}
               </h3>
               <div className="flex items-center gap-2">
@@ -74,8 +74,8 @@ export default function DesignPreviewModal({ design, isOpen, onClose, onSelect }
             {/* Prompt/Description */}
             {design.prompt && (
               <div>
-                <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Design Description</h4>
-                <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+                <h4 className="text-lg font-semibold text-gray-900 dark:text-gray-900 mb-2">Design Description</h4>
+                <p className="text-gray-600 dark:text-gray-600 leading-relaxed">
                   {design.prompt}
                 </p>
               </div>
@@ -84,7 +84,7 @@ export default function DesignPreviewModal({ design, isOpen, onClose, onSelect }
             {/* Tags */}
             {(design.colors || design.techniques || design.occasions || design.seasons || design.styles || design.shapes) && (
               <div>
-                <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Tags</h4>
+                <h4 className="text-lg font-semibold text-gray-900 dark:text-gray-900 mb-2">Tags</h4>
                 <div className="flex flex-wrap gap-2">
                   {design.colors?.map((color, index) => (
                     <span key={index} className="px-2 py-1 bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 rounded text-sm">
@@ -123,16 +123,16 @@ export default function DesignPreviewModal({ design, isOpen, onClose, onSelect }
         </div>
 
         {/* Footer */}
-        <div className="flex gap-3 p-4 border-t border-gray-200 dark:border-gray-700">
+        <div className="flex gap-3 p-4 border-t border-gray-200 dark:border-gray-100">
           <button
             onClick={onClose}
-            className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+            className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-200 text-gray-700 dark:text-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-100 transition-colors"
           >
             Cancel
           </button>
           <button
             onClick={handleSelect}
-            className="flex-1 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors font-semibold"
+            className="flex-1 px-4 py-2 bg-indigo-600 text-gray-900 rounded-lg hover:bg-indigo-700 transition-colors font-semibold"
           >
             Select This Design
           </button>

@@ -17,18 +17,18 @@ export default function DesignPreviewPanel({
 }: DesignPreviewPanelProps) {
   if (!selectedDesign) {
     return (
-      <div className={`p-6 bg-gray-50 dark:bg-gray-800 rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-600 ${className}`}>
+      <div className={`p-6 bg-gray-50 dark:bg-surface rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-200 ${className}`}>
         <div className="text-center">
-          <div className="w-16 h-16 mx-auto mb-4 bg-gray-200 dark:bg-gray-700 rounded-full flex items-center justify-center">
-            <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="w-16 h-16 mx-auto mb-4 bg-gray-200 dark:bg-gray-100 rounded-full flex items-center justify-center">
+            <svg className="w-8 h-8 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
             </svg>
           </div>
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">No Design Selected</h3>
-          <p className="text-gray-500 dark:text-gray-400 mb-4">Choose a design from the gallery to see it here</p>
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-900 mb-2">No Design Selected</h3>
+          <p className="text-gray-500 dark:text-gray-500 mb-4">Choose a design from the gallery to see it here</p>
           <button
             onClick={onChangeDesign}
-            className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
+            className="px-4 py-2 bg-indigo-600 text-gray-900 rounded-lg hover:bg-indigo-700 transition-colors"
           >
             Browse Designs
           </button>
@@ -38,11 +38,11 @@ export default function DesignPreviewPanel({
   }
 
   return (
-    <div className={`p-6 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm ${className}`}>
+    <div className={`p-6 bg-white dark:bg-surface rounded-lg border border-gray-200 dark:border-gray-100 shadow-sm ${className}`}>
       <div className="space-y-4">
         {/* Header */}
         <div className="flex items-center justify-between">
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Selected Design</h3>
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-900">Selected Design</h3>
           <button
             onClick={onChangeDesign}
             className="text-sm text-indigo-600 hover:text-indigo-700 font-medium transition-colors"
@@ -52,7 +52,7 @@ export default function DesignPreviewPanel({
         </div>
 
         {/* Design Image */}
-        <div className="relative aspect-square rounded-lg overflow-hidden bg-gray-100 dark:bg-gray-700">
+        <div className="relative aspect-square rounded-lg overflow-hidden bg-gray-100 dark:bg-gray-100">
           <OptimizedImage
             src={selectedDesign.image_url}
             alt={selectedDesign.design_name || 'Selected Design'}
@@ -66,7 +66,7 @@ export default function DesignPreviewPanel({
         {/* Design Info */}
         <div className="space-y-3">
           <div>
-            <h4 className="font-semibold text-gray-900 dark:text-white mb-1">
+            <h4 className="font-semibold text-gray-900 dark:text-gray-900 mb-1">
               {selectedDesign.design_name || 'Untitled Design'}
             </h4>
             <div className="flex items-center gap-2">
@@ -79,8 +79,8 @@ export default function DesignPreviewPanel({
           {/* Prompt Preview */}
           {selectedDesign.prompt && (
             <div>
-              <h5 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Description</h5>
-              <p className="text-sm text-gray-600 dark:text-gray-400 line-clamp-3">
+              <h5 className="text-sm font-medium text-gray-700 dark:text-gray-600 mb-1">Description</h5>
+              <p className="text-sm text-gray-600 dark:text-gray-500 line-clamp-3">
                 {selectedDesign.prompt}
               </p>
             </div>
@@ -89,7 +89,7 @@ export default function DesignPreviewPanel({
           {/* Tags Preview */}
           {(selectedDesign.colors || selectedDesign.techniques || selectedDesign.occasions) && (
             <div>
-              <h5 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Tags</h5>
+              <h5 className="text-sm font-medium text-gray-700 dark:text-gray-600 mb-2">Tags</h5>
               <div className="flex flex-wrap gap-1">
                 {selectedDesign.colors?.slice(0, 3).map((color, index) => (
                   <span key={index} className="px-2 py-1 bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 rounded text-xs">
@@ -107,7 +107,7 @@ export default function DesignPreviewPanel({
                   </span>
                 ))}
                 {((selectedDesign.colors?.length || 0) + (selectedDesign.techniques?.length || 0) + (selectedDesign.occasions?.length || 0)) > 7 && (
-                  <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 rounded text-xs">
+                  <span className="px-2 py-1 bg-gray-100 dark:bg-gray-100 text-gray-600 dark:text-gray-500 rounded text-xs">
                     +more
                   </span>
                 )}

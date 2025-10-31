@@ -83,7 +83,7 @@ export default async function SeasonsPage() {
   );
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-white">
       <div className="max-w-7xl mx-auto px-4 py-8">
         {/* Breadcrumb */}
         <nav className="mb-6">
@@ -91,17 +91,17 @@ export default async function SeasonsPage() {
             <Link href="/categories" className="text-purple-400 hover:text-purple-300">
               Categories
             </Link>
-            <span className="text-gray-400">/</span>
-            <span className="text-white font-medium">Seasons</span>
+            <span className="text-gray-500">/</span>
+            <span className="text-gray-900 font-medium">Seasons</span>
           </div>
         </nav>
 
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
             Seasonal Nail Art
           </h1>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             Discover nail art that celebrates every season. From fresh spring florals to cozy autumn leaves, 
             find inspiration for year-round beauty.
           </p>
@@ -113,7 +113,7 @@ export default async function SeasonsPage() {
             <Link
               key={index}
               href={`/nail-art/season/${season.slug}`}
-              className="group bg-gray-800 rounded-xl overflow-hidden hover:bg-gray-700 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-2xl"
+              className="group bg-surface rounded-xl overflow-hidden hover:bg-gray-100 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-2xl"
             >
               <div className="relative h-48">
                 {season.sampleImage ? (
@@ -130,7 +130,7 @@ export default async function SeasonsPage() {
                     <div className="text-6xl opacity-80">{season.emoji}</div>
                   </div>
                 )}
-                <div className="absolute inset-0 bg-black/20"></div>
+                <div className="absolute inset-0 bg-white/20"></div>
                 <div className="absolute inset-0 flex items-center justify-center">
                   {!season.sampleImage && (
                     <div className="text-6xl opacity-80">{season.emoji}</div>
@@ -139,10 +139,10 @@ export default async function SeasonsPage() {
               </div>
               
               <div className="p-6">
-                <h2 className="text-2xl font-bold text-white mb-3 group-hover:text-purple-400 transition-colors">
+                <h2 className="text-2xl font-bold text-gray-900 mb-3 group-hover:text-purple-400 transition-colors">
                   {season.name}
                 </h2>
-                <p className="text-gray-300 mb-4">
+                <p className="text-gray-600 mb-4">
                   {season.description}
                 </p>
                 
@@ -152,7 +152,7 @@ export default async function SeasonsPage() {
                     {season.characteristics.map((char, charIndex) => (
                       <span
                         key={charIndex}
-                        className="bg-purple-600/20 text-purple-300 px-2 py-1 rounded text-xs"
+                        className="bg-primary/20 text-purple-300 px-2 py-1 rounded text-xs"
                       >
                         {char}
                       </span>
@@ -193,75 +193,75 @@ export default async function SeasonsPage() {
         </div>
 
         {/* Seasonal Color Guide */}
-        <div className="bg-gray-800 rounded-xl p-8 mb-16">
-          <h2 className="text-2xl font-bold text-white mb-6 text-center">Seasonal Color Guide</h2>
+        <div className="bg-surface rounded-xl p-8 mb-16">
+          <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Seasonal Color Guide</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <div className="bg-gradient-to-r from-pink-400 to-purple-500 rounded-lg p-6">
-              <h3 className="text-white font-semibold mb-3">Spring Colors</h3>
-              <p className="text-white/80 text-sm mb-3">Fresh and blooming</p>
+              <h3 className="text-gray-900 font-semibold mb-3">Spring Colors</h3>
+              <p className="text-gray-900/80 text-sm mb-3">Fresh and blooming</p>
               <div className="flex flex-wrap gap-2">
-                <span className="bg-white/20 text-white px-2 py-1 rounded text-xs">Pink</span>
-                <span className="bg-white/20 text-white px-2 py-1 rounded text-xs">Lavender</span>
-                <span className="bg-white/20 text-white px-2 py-1 rounded text-xs">Mint</span>
-                <span className="bg-white/20 text-white px-2 py-1 rounded text-xs">Yellow</span>
+                <span className="bg-white/20 text-gray-900 px-2 py-1 rounded text-xs">Pink</span>
+                <span className="bg-white/20 text-gray-900 px-2 py-1 rounded text-xs">Lavender</span>
+                <span className="bg-white/20 text-gray-900 px-2 py-1 rounded text-xs">Mint</span>
+                <span className="bg-white/20 text-gray-900 px-2 py-1 rounded text-xs">Yellow</span>
               </div>
             </div>
             <div className="bg-gradient-to-r from-orange-400 to-red-500 rounded-lg p-6">
-              <h3 className="text-white font-semibold mb-3">Summer Colors</h3>
-              <p className="text-white/80 text-sm mb-3">Bright and vibrant</p>
+              <h3 className="text-gray-900 font-semibold mb-3">Summer Colors</h3>
+              <p className="text-gray-900/80 text-sm mb-3">Bright and vibrant</p>
               <div className="flex flex-wrap gap-2">
-                <span className="bg-white/20 text-white px-2 py-1 rounded text-xs">Orange</span>
-                <span className="bg-white/20 text-white px-2 py-1 rounded text-xs">Coral</span>
-                <span className="bg-white/20 text-white px-2 py-1 rounded text-xs">Turquoise</span>
-                <span className="bg-white/20 text-white px-2 py-1 rounded text-xs">Yellow</span>
+                <span className="bg-white/20 text-gray-900 px-2 py-1 rounded text-xs">Orange</span>
+                <span className="bg-white/20 text-gray-900 px-2 py-1 rounded text-xs">Coral</span>
+                <span className="bg-white/20 text-gray-900 px-2 py-1 rounded text-xs">Turquoise</span>
+                <span className="bg-white/20 text-gray-900 px-2 py-1 rounded text-xs">Yellow</span>
               </div>
             </div>
             <div className="bg-gradient-to-r from-yellow-600 to-orange-600 rounded-lg p-6">
-              <h3 className="text-white font-semibold mb-3">Autumn Colors</h3>
-              <p className="text-white/80 text-sm mb-3">Warm and cozy</p>
+              <h3 className="text-gray-900 font-semibold mb-3">Autumn Colors</h3>
+              <p className="text-gray-900/80 text-sm mb-3">Warm and cozy</p>
               <div className="flex flex-wrap gap-2">
-                <span className="bg-white/20 text-white px-2 py-1 rounded text-xs">Orange</span>
-                <span className="bg-white/20 text-white px-2 py-1 rounded text-xs">Brown</span>
-                <span className="bg-white/20 text-white px-2 py-1 rounded text-xs">Burgundy</span>
-                <span className="bg-white/20 text-white px-2 py-1 rounded text-xs">Gold</span>
+                <span className="bg-white/20 text-gray-900 px-2 py-1 rounded text-xs">Orange</span>
+                <span className="bg-white/20 text-gray-900 px-2 py-1 rounded text-xs">Brown</span>
+                <span className="bg-white/20 text-gray-900 px-2 py-1 rounded text-xs">Burgundy</span>
+                <span className="bg-white/20 text-gray-900 px-2 py-1 rounded text-xs">Gold</span>
               </div>
             </div>
             <div className="bg-gradient-to-r from-blue-400 to-purple-500 rounded-lg p-6">
-              <h3 className="text-white font-semibold mb-3">Winter Colors</h3>
-              <p className="text-white/80 text-sm mb-3">Cool and elegant</p>
+              <h3 className="text-gray-900 font-semibold mb-3">Winter Colors</h3>
+              <p className="text-gray-900/80 text-sm mb-3">Cool and elegant</p>
               <div className="flex flex-wrap gap-2">
-                <span className="bg-white/20 text-white px-2 py-1 rounded text-xs">White</span>
-                <span className="bg-white/20 text-white px-2 py-1 rounded text-xs">Silver</span>
-                <span className="bg-white/20 text-white px-2 py-1 rounded text-xs">Blue</span>
-                <span className="bg-white/20 text-white px-2 py-1 rounded text-xs">Gray</span>
+                <span className="bg-white/20 text-gray-900 px-2 py-1 rounded text-xs">White</span>
+                <span className="bg-white/20 text-gray-900 px-2 py-1 rounded text-xs">Silver</span>
+                <span className="bg-white/20 text-gray-900 px-2 py-1 rounded text-xs">Blue</span>
+                <span className="bg-white/20 text-gray-900 px-2 py-1 rounded text-xs">Gray</span>
               </div>
             </div>
             <div className="bg-gradient-to-r from-red-500 to-green-500 rounded-lg p-6">
-              <h3 className="text-white font-semibold mb-3">Christmas Colors</h3>
-              <p className="text-white/80 text-sm mb-3">Festive and joyful</p>
+              <h3 className="text-gray-900 font-semibold mb-3">Christmas Colors</h3>
+              <p className="text-gray-900/80 text-sm mb-3">Festive and joyful</p>
               <div className="flex flex-wrap gap-2">
-                <span className="bg-white/20 text-white px-2 py-1 rounded text-xs">Red</span>
-                <span className="bg-white/20 text-white px-2 py-1 rounded text-xs">Green</span>
-                <span className="bg-white/20 text-white px-2 py-1 rounded text-xs">Gold</span>
-                <span className="bg-white/20 text-white px-2 py-1 rounded text-xs">Silver</span>
+                <span className="bg-white/20 text-gray-900 px-2 py-1 rounded text-xs">Red</span>
+                <span className="bg-white/20 text-gray-900 px-2 py-1 rounded text-xs">Green</span>
+                <span className="bg-white/20 text-gray-900 px-2 py-1 rounded text-xs">Gold</span>
+                <span className="bg-white/20 text-gray-900 px-2 py-1 rounded text-xs">Silver</span>
               </div>
             </div>
             <div className="bg-gradient-to-r from-purple-600 to-orange-500 rounded-lg p-6">
-              <h3 className="text-white font-semibold mb-3">Halloween Colors</h3>
-              <p className="text-white/80 text-sm mb-3">Spooky and fun</p>
+              <h3 className="text-gray-900 font-semibold mb-3">Halloween Colors</h3>
+              <p className="text-gray-900/80 text-sm mb-3">Spooky and fun</p>
               <div className="flex flex-wrap gap-2">
-                <span className="bg-white/20 text-white px-2 py-1 rounded text-xs">Black</span>
-                <span className="bg-white/20 text-white px-2 py-1 rounded text-xs">Orange</span>
-                <span className="bg-white/20 text-white px-2 py-1 rounded text-xs">Purple</span>
-                <span className="bg-white/20 text-white px-2 py-1 rounded text-xs">Green</span>
+                <span className="bg-white/20 text-gray-900 px-2 py-1 rounded text-xs">Black</span>
+                <span className="bg-white/20 text-gray-900 px-2 py-1 rounded text-xs">Orange</span>
+                <span className="bg-white/20 text-gray-900 px-2 py-1 rounded text-xs">Purple</span>
+                <span className="bg-white/20 text-gray-900 px-2 py-1 rounded text-xs">Green</span>
               </div>
             </div>
           </div>
         </div>
 
         {/* Popular Tags */}
-        <div className="bg-gray-800 rounded-xl p-8 mb-16">
-          <h2 className="text-2xl font-bold text-white mb-6 text-center">Explore by Tags</h2>
+        <div className="bg-surface rounded-xl p-8 mb-16">
+          <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Explore by Tags</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <TagCollection
               title="Popular Colors"
@@ -306,30 +306,30 @@ export default async function SeasonsPage() {
         </div>
 
         {/* Related Categories */}
-        <div className="bg-gray-800 rounded-xl p-8">
-          <h2 className="text-2xl font-bold text-white mb-6 text-center">Explore More Categories</h2>
+        <div className="bg-surface rounded-xl p-8">
+          <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Explore More Categories</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <Link
               href="/categories/nail-shapes"
-              className="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-4 rounded-lg text-center transition-colors"
+              className="bg-primary hover:bg-primary-dark text-gray-900 font-semibold py-3 px-4 rounded-lg text-center transition-colors"
             >
               Nail Shapes
             </Link>
             <Link
               href="/categories/colors"
-              className="bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-4 rounded-lg text-center transition-colors"
+              className="bg-red-600 hover:bg-red-700 text-gray-900 font-semibold py-3 px-4 rounded-lg text-center transition-colors"
             >
               Colors
             </Link>
             <Link
               href="/categories/techniques"
-              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg text-center transition-colors"
+              className="bg-blue-600 hover:bg-blue-700 text-gray-900 font-semibold py-3 px-4 rounded-lg text-center transition-colors"
             >
               Techniques
             </Link>
             <Link
               href="/categories/occasions"
-              className="bg-pink-600 hover:bg-pink-700 text-white font-semibold py-3 px-4 rounded-lg text-center transition-colors"
+              className="bg-primary hover:bg-primary-dark text-gray-900 font-semibold py-3 px-4 rounded-lg text-center transition-colors"
             >
               Occasions
             </Link>

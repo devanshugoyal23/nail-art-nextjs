@@ -96,13 +96,13 @@ export default function ImageLightbox({
 
   return (
     <div 
-      className={`fixed inset-0 z-50 bg-black/90 backdrop-blur-sm flex items-center justify-center ${className}`}
+      className={`fixed inset-0 z-50 bg-white/90 backdrop-blur-sm flex items-center justify-center ${className}`}
       onClick={onClose}
     >
       {/* Close Button */}
       <button
         onClick={onClose}
-        className="absolute top-4 right-4 z-10 bg-gray-900/80 hover:bg-gray-800 text-white p-3 rounded-full transition-all duration-200 hover:scale-110"
+        className="absolute top-4 right-4 z-10 bg-white/80 hover:bg-surface text-gray-900 p-3 rounded-full transition-all duration-200 hover:scale-110"
         aria-label="Close lightbox"
       >
         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -113,7 +113,7 @@ export default function ImageLightbox({
       {/* Download Button */}
       <button
         onClick={downloadImage}
-        className="absolute top-4 right-16 z-10 bg-gray-900/80 hover:bg-gray-800 text-white p-3 rounded-full transition-all duration-200 hover:scale-110"
+        className="absolute top-4 right-16 z-10 bg-white/80 hover:bg-surface text-gray-900 p-3 rounded-full transition-all duration-200 hover:scale-110"
         aria-label="Download image"
       >
         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -125,7 +125,7 @@ export default function ImageLightbox({
       {scale > 1 && (
         <button
           onClick={resetZoom}
-          className="absolute top-4 right-28 z-10 bg-gray-900/80 hover:bg-gray-800 text-white p-3 rounded-full transition-all duration-200 hover:scale-110"
+          className="absolute top-4 right-28 z-10 bg-white/80 hover:bg-surface text-gray-900 p-3 rounded-full transition-all duration-200 hover:scale-110"
           aria-label="Reset zoom"
         >
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -164,10 +164,10 @@ export default function ImageLightbox({
         </div>
 
         {/* Zoom Controls */}
-        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-gray-900/80 rounded-full px-4 py-2 flex items-center gap-4">
+        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-white/80 rounded-full px-4 py-2 flex items-center gap-4">
           <button
             onClick={() => setScale(prev => Math.max(0.5, prev - 0.2))}
-            className="text-white hover:text-gray-300 transition-colors"
+            className="text-gray-900 hover:text-gray-600 transition-colors"
             aria-label="Zoom out"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -175,13 +175,13 @@ export default function ImageLightbox({
             </svg>
           </button>
           
-          <span className="text-white text-sm font-medium">
+          <span className="text-gray-900 text-sm font-medium">
             {Math.round(scale * 100)}%
           </span>
           
           <button
             onClick={() => setScale(prev => Math.min(3, prev + 0.2))}
-            className="text-white hover:text-gray-300 transition-colors"
+            className="text-gray-900 hover:text-gray-600 transition-colors"
             aria-label="Zoom in"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -194,7 +194,7 @@ export default function ImageLightbox({
       {/* Title */}
       {title && (
         <div className="absolute bottom-4 left-4 right-4 text-center">
-          <p className="text-white text-lg font-medium bg-gray-900/80 rounded-lg px-4 py-2 inline-block">
+          <p className="text-gray-900 text-lg font-medium bg-white/80 rounded-lg px-4 py-2 inline-block">
             {title}
           </p>
         </div>

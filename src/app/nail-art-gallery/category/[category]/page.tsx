@@ -72,7 +72,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
   }
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-white">
       <div className="max-w-7xl mx-auto px-4 py-8">
         {/* Breadcrumb */}
         <div className="mb-6">
@@ -80,21 +80,21 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
             <Link href="/nail-art-gallery" className="text-purple-400 hover:text-purple-300">
               Gallery
             </Link>
-            <span className="text-gray-400">/</span>
-            <span className="text-white font-medium">{category}</span>
+            <span className="text-gray-500">/</span>
+            <span className="text-gray-900 font-medium">{category}</span>
           </nav>
         </div>
 
         {/* Header */}
         <div className="mb-8 text-center">
-          <h1 className="text-4xl font-bold text-white mb-4">
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">
             {category} Nail Art Designs
           </h1>
-          <p className="text-white text-lg max-w-3xl mx-auto">
+          <p className="text-gray-900 text-lg max-w-3xl mx-auto">
             Discover our curated collection of stunning {category.toLowerCase()} nail art designs. 
             Each design is carefully crafted to inspire your next manicure.
           </p>
-          <p className="text-gray-400 mt-2">
+          <p className="text-gray-500 mt-2">
             {items.length} design{items.length !== 1 ? 's' : ''} found
           </p>
         </div>
@@ -105,7 +105,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
             <Link 
               key={item.id} 
               href={generateGalleryItemUrl(item)}
-              className="bg-gray-800 rounded-lg shadow-lg overflow-hidden hover:shadow-purple-500/20 transition-all duration-300 transform hover:-translate-y-1 block"
+              className="bg-surface rounded-lg shadow-lg overflow-hidden hover:shadow-purple-500/20 transition-all duration-300 transform hover:-translate-y-1 block"
             >
               <div className="aspect-square relative">
                 <OptimizedImage
@@ -120,11 +120,11 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
               
               <div className="p-4">
                 {item.design_name && (
-                  <h3 className="text-lg font-bold text-white mb-2">{item.design_name}</h3>
+                  <h3 className="text-lg font-bold text-gray-900 mb-2">{item.design_name}</h3>
                 )}
-                <p className="text-sm text-gray-300 mb-3 line-clamp-2">{item.prompt}</p>
+                <p className="text-sm text-gray-600 mb-3 line-clamp-2">{item.prompt}</p>
                 
-                <div className="w-full bg-purple-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-purple-700 transition duration-300 text-center">
+                <div className="w-full bg-primary text-gray-900 font-bold py-2 px-4 rounded-lg hover:bg-primary-dark transition duration-300 text-center">
                   View Design
                 </div>
               </div>
@@ -134,12 +134,12 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
 
         {/* Related Categories */}
         <div className="mt-16">
-          <h2 className="text-2xl font-bold text-white mb-6">Explore Other Categories</h2>
+          <h2 className="text-2xl font-bold text-gray-900 mb-6">Explore Other Categories</h2>
           <div className="flex flex-wrap gap-4">
             {items.length > 0 && (
               <Link
                 href="/nail-art-gallery"
-                className="bg-gray-800 text-white px-6 py-3 rounded-lg hover:bg-gray-700 transition-colors"
+                className="bg-surface text-gray-900 px-6 py-3 rounded-lg hover:bg-gray-100 transition-colors"
               >
                 All Designs
               </Link>

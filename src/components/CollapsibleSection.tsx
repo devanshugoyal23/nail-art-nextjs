@@ -33,11 +33,11 @@ export default function CollapsibleSection({
   };
 
   return (
-    <div className={`bg-gray-800/40 backdrop-blur-sm rounded-xl border border-gray-700/50 overflow-hidden ${className}`}>
+    <div className={`bg-surface/40 backdrop-blur-sm rounded-xl border border-gray-100/50 overflow-hidden ${className}`}>
       {/* Header */}
       <button
         onClick={toggleExpanded}
-        className="w-full flex items-center justify-between p-4 text-left hover:bg-gray-700/30 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-purple-500/50 rounded-t-xl"
+        className="w-full flex items-center justify-between p-4 text-left hover:bg-gray-100/30 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-purple-500/50 rounded-t-xl"
         aria-expanded={isExpanded}
         aria-controls={`collapsible-content-${title.replace(/\s+/g, '-').toLowerCase()}`}
       >
@@ -47,7 +47,7 @@ export default function CollapsibleSection({
               {icon}
             </div>
           )}
-          <h3 className="text-lg font-semibold text-white">
+          <h3 className="text-lg font-semibold text-gray-900">
             {title}
           </h3>
         </div>
@@ -58,7 +58,7 @@ export default function CollapsibleSection({
           ${isExpanded ? 'rotate-180' : 'rotate-0'}
         `}>
           <svg 
-            className="w-5 h-5 text-gray-400" 
+            className="w-5 h-5 text-gray-500" 
             fill="none" 
             stroke="currentColor" 
             viewBox="0 0 24 24"

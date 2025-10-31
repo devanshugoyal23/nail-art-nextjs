@@ -101,7 +101,7 @@ export default async function StylesPage() {
   );
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-white">
       <div className="max-w-7xl mx-auto px-4 py-8">
         {/* Breadcrumb */}
         <nav className="mb-6">
@@ -109,17 +109,17 @@ export default async function StylesPage() {
             <Link href="/categories" className="text-purple-400 hover:text-purple-300">
               Categories
             </Link>
-            <span className="text-gray-400">/</span>
-            <span className="text-white font-medium">Styles</span>
+            <span className="text-gray-500">/</span>
+            <span className="text-gray-900 font-medium">Styles</span>
           </div>
         </nav>
 
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
             Nail Art Styles
           </h1>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             Discover different nail art styles and aesthetics. From minimalist elegance to bold glamour, 
             find the style that matches your personality.
           </p>
@@ -131,7 +131,7 @@ export default async function StylesPage() {
             <Link
               key={index}
               href={`/nail-art/style/${style.slug}`}
-              className="group bg-gray-800 rounded-xl overflow-hidden hover:bg-gray-700 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-2xl"
+              className="group bg-surface rounded-xl overflow-hidden hover:bg-gray-100 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-2xl"
             >
               <div className="relative h-48">
                 {style.sampleImage ? (
@@ -148,7 +148,7 @@ export default async function StylesPage() {
                     <div className="text-6xl opacity-80">{style.emoji}</div>
                   </div>
                 )}
-                <div className="absolute inset-0 bg-black/20"></div>
+                <div className="absolute inset-0 bg-white/20"></div>
                 <div className="absolute inset-0 flex items-center justify-center">
                   {!style.sampleImage && (
                     <div className="text-6xl opacity-80">{style.emoji}</div>
@@ -157,10 +157,10 @@ export default async function StylesPage() {
               </div>
               
               <div className="p-6">
-                <h2 className="text-2xl font-bold text-white mb-3 group-hover:text-purple-400 transition-colors">
+                <h2 className="text-2xl font-bold text-gray-900 mb-3 group-hover:text-purple-400 transition-colors">
                   {style.name}
                 </h2>
-                <p className="text-gray-300 mb-4">
+                <p className="text-gray-600 mb-4">
                   {style.description}
                 </p>
                 
@@ -170,7 +170,7 @@ export default async function StylesPage() {
                     {style.characteristics.map((char, charIndex) => (
                       <span
                         key={charIndex}
-                        className="bg-purple-600/20 text-purple-300 px-2 py-1 rounded text-xs"
+                        className="bg-primary/20 text-purple-300 px-2 py-1 rounded text-xs"
                       >
                         {char}
                       </span>
@@ -211,8 +211,8 @@ export default async function StylesPage() {
         </div>
 
         {/* Style Personality Guide */}
-        <div className="bg-gray-800 rounded-xl p-8 mb-16">
-          <h2 className="text-2xl font-bold text-white mb-6 text-center">Find Your Style</h2>
+        <div className="bg-surface rounded-xl p-8 mb-16">
+          <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Find Your Style</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <div className="bg-gradient-to-br from-gray-100 to-gray-300 rounded-lg p-6 text-center">
               <div className="text-4xl mb-3">🤍</div>
@@ -221,45 +221,45 @@ export default async function StylesPage() {
             </div>
             <div className="bg-gradient-to-br from-yellow-400 to-pink-500 rounded-lg p-6 text-center">
               <div className="text-4xl mb-3">✨</div>
-              <h3 className="text-white font-semibold mb-2">Glamour</h3>
-              <p className="text-white/80 text-sm">Sparkly, luxurious, bold</p>
+              <h3 className="text-gray-900 font-semibold mb-2">Glamour</h3>
+              <p className="text-gray-900/80 text-sm">Sparkly, luxurious, bold</p>
             </div>
             <div className="bg-gradient-to-br from-purple-500 to-blue-500 rounded-lg p-6 text-center">
               <div className="text-4xl mb-3">🎨</div>
-              <h3 className="text-white font-semibold mb-2">Abstract</h3>
-              <p className="text-white/80 text-sm">Artistic, creative, unique</p>
+              <h3 className="text-gray-900 font-semibold mb-2">Abstract</h3>
+              <p className="text-gray-900/80 text-sm">Artistic, creative, unique</p>
             </div>
             <div className="bg-gradient-to-br from-green-400 to-teal-500 rounded-lg p-6 text-center">
               <div className="text-4xl mb-3">🌿</div>
-              <h3 className="text-white font-semibold mb-2">Nature</h3>
-              <p className="text-white/80 text-sm">Natural, organic, calming</p>
+              <h3 className="text-gray-900 font-semibold mb-2">Nature</h3>
+              <p className="text-gray-900/80 text-sm">Natural, organic, calming</p>
             </div>
             <div className="bg-gradient-to-br from-cyan-400 to-purple-500 rounded-lg p-6 text-center">
               <div className="text-4xl mb-3">💫</div>
-              <h3 className="text-white font-semibold mb-2">Modern</h3>
-              <p className="text-white/80 text-sm">Contemporary, trendy, sharp</p>
+              <h3 className="text-gray-900 font-semibold mb-2">Modern</h3>
+              <p className="text-gray-900/80 text-sm">Contemporary, trendy, sharp</p>
             </div>
             <div className="bg-gradient-to-br from-red-400 to-pink-500 rounded-lg p-6 text-center">
               <div className="text-4xl mb-3">💄</div>
-              <h3 className="text-white font-semibold mb-2">Vintage</h3>
-              <p className="text-white/80 text-sm">Classic, timeless, retro</p>
+              <h3 className="text-gray-900 font-semibold mb-2">Vintage</h3>
+              <p className="text-gray-900/80 text-sm">Classic, timeless, retro</p>
             </div>
             <div className="bg-gradient-to-br from-gray-600 to-black rounded-lg p-6 text-center">
               <div className="text-4xl mb-3">🖤</div>
-              <h3 className="text-white font-semibold mb-2">Gothic</h3>
-              <p className="text-white/80 text-sm">Dark, edgy, bold</p>
+              <h3 className="text-gray-900 font-semibold mb-2">Gothic</h3>
+              <p className="text-gray-900/80 text-sm">Dark, edgy, bold</p>
             </div>
             <div className="bg-gradient-to-br from-pink-400 to-purple-500 rounded-lg p-6 text-center">
               <div className="text-4xl mb-3">💖</div>
-              <h3 className="text-white font-semibold mb-2">Cute</h3>
-              <p className="text-white/80 text-sm">Playful, adorable, fun</p>
+              <h3 className="text-gray-900 font-semibold mb-2">Cute</h3>
+              <p className="text-gray-900/80 text-sm">Playful, adorable, fun</p>
             </div>
           </div>
         </div>
 
         {/* Popular Tags */}
-        <div className="bg-gray-800 rounded-xl p-8 mb-16">
-          <h2 className="text-2xl font-bold text-white mb-6 text-center">Explore by Tags</h2>
+        <div className="bg-surface rounded-xl p-8 mb-16">
+          <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Explore by Tags</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <TagCollection
               title="Popular Colors"
@@ -304,30 +304,30 @@ export default async function StylesPage() {
         </div>
 
         {/* Related Categories */}
-        <div className="bg-gray-800 rounded-xl p-8">
-          <h2 className="text-2xl font-bold text-white mb-6 text-center">Explore More Categories</h2>
+        <div className="bg-surface rounded-xl p-8">
+          <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Explore More Categories</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <Link
               href="/categories/nail-shapes"
-              className="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-4 rounded-lg text-center transition-colors"
+              className="bg-primary hover:bg-primary-dark text-gray-900 font-semibold py-3 px-4 rounded-lg text-center transition-colors"
             >
               Nail Shapes
             </Link>
             <Link
               href="/categories/colors"
-              className="bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-4 rounded-lg text-center transition-colors"
+              className="bg-red-600 hover:bg-red-700 text-gray-900 font-semibold py-3 px-4 rounded-lg text-center transition-colors"
             >
               Colors
             </Link>
             <Link
               href="/categories/techniques"
-              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg text-center transition-colors"
+              className="bg-blue-600 hover:bg-blue-700 text-gray-900 font-semibold py-3 px-4 rounded-lg text-center transition-colors"
             >
               Techniques
             </Link>
             <Link
               href="/categories/occasions"
-              className="bg-pink-600 hover:bg-pink-700 text-white font-semibold py-3 px-4 rounded-lg text-center transition-colors"
+              className="bg-primary hover:bg-primary-dark text-gray-900 font-semibold py-3 px-4 rounded-lg text-center transition-colors"
             >
               Occasions
             </Link>

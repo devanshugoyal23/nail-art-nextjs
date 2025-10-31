@@ -91,7 +91,7 @@ export default function AnimatedStatCard({
     <div
       ref={cardRef}
       className={`
-        relative bg-gray-800/40 backdrop-blur-sm rounded-xl p-4 border transition-all duration-300
+        relative bg-surface/40 backdrop-blur-sm rounded-xl p-4 border transition-all duration-300
         hover:scale-105 hover:shadow-lg hover:shadow-${color}-500/20
         ${borderColorClasses[color]}
         ${isHovered ? 'shadow-lg' : 'shadow-md'}
@@ -108,7 +108,7 @@ export default function AnimatedStatCard({
         ${isHovered ? 'opacity-100' : ''}
         bg-gradient-to-r ${colorClasses[color]} p-[1px]
       `}>
-        <div className="bg-gray-800/40 rounded-xl h-full w-full" />
+        <div className="bg-surface/40 rounded-xl h-full w-full" />
       </div>
 
       {/* Content */}
@@ -125,7 +125,7 @@ export default function AnimatedStatCard({
         )}
 
         {/* Label */}
-        <div className="text-sm font-medium text-gray-300 mb-1">
+        <div className="text-sm font-medium text-gray-600 mb-1">
           {label}
         </div>
 

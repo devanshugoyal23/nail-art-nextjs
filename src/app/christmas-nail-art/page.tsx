@@ -105,23 +105,23 @@ export default function ChristmasNailArtPage() {
         <div className="max-w-7xl mx-auto px-4 py-8">
           {/* Header */}
           <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">
+            <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-4">
               🎄 Christmas Nail Art Ideas 2024
             </h1>
-            <p className="text-lg text-gray-300 max-w-3xl mx-auto mb-8">
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto mb-8">
               Get into the holiday spirit with these stunning Christmas nail art designs. 
               From classic red and gold to winter wonderland themes, find your perfect festive look.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 href="/try-on"
-                className="bg-red-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-red-700 transition-colors"
+                className="bg-red-600 text-gray-900 font-bold py-3 px-8 rounded-lg hover:bg-red-700 transition-colors"
               >
                 Try Christmas Designs Virtually
               </Link>
               <Link
                 href="/nail-art-gallery"
-                className="bg-green-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-green-700 transition-colors"
+                className="bg-green-600 text-gray-900 font-bold py-3 px-8 rounded-lg hover:bg-green-700 transition-colors"
               >
                 Browse Christmas Gallery
               </Link>
@@ -130,18 +130,18 @@ export default function ChristmasNailArtPage() {
 
           {/* Featured Christmas Designs */}
           <div className="mb-12">
-            <h2 className="text-3xl font-bold text-white mb-8 text-center">Featured Christmas Designs</h2>
+            <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">Featured Christmas Designs</h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
               {christmasDesigns.map((design, index) => (
-                <div key={index} className="bg-gray-800/50 rounded-xl p-6 border border-gray-700 hover:border-red-500/50 transition-all duration-300 transform hover:-translate-y-1">
-                  <div className="aspect-square bg-gray-700 rounded-lg mb-4 flex items-center justify-center">
+                <div key={index} className="bg-surface/50 rounded-xl p-6 border border-gray-100 hover:border-red-500/50 transition-all duration-300 transform hover:-translate-y-1">
+                  <div className="aspect-square bg-gray-100 rounded-lg mb-4 flex items-center justify-center">
                     <span className="text-4xl">🎄</span>
                   </div>
-                  <h3 className="text-lg font-semibold text-white mb-2">{design.name}</h3>
-                  <p className="text-gray-400 text-sm mb-3">{design.description}</p>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">{design.name}</h3>
+                  <p className="text-gray-500 text-sm mb-3">{design.description}</p>
                   <div className="flex flex-wrap gap-1">
                     {design.tags.map((tag, tagIndex) => (
-                      <span key={tagIndex} className="bg-red-600/80 text-white px-2 py-1 rounded text-xs">
+                      <span key={tagIndex} className="bg-red-600/80 text-gray-900 px-2 py-1 rounded text-xs">
                         {tag}
                       </span>
                     ))}
@@ -153,23 +153,23 @@ export default function ChristmasNailArtPage() {
 
           {/* Christmas Nail Art Tips */}
           <div className="mb-12">
-            <h2 className="text-3xl font-bold text-white mb-8 text-center">Christmas Nail Art Tips</h2>
-            <div className="bg-gray-800/50 rounded-xl p-8 border border-gray-700">
+            <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">Christmas Nail Art Tips</h2>
+            <div className="bg-surface/50 rounded-xl p-8 border border-gray-100">
               <div className="grid md:grid-cols-2 gap-8">
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-4">🎨 Design Tips</h3>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-4">🎨 Design Tips</h3>
                   <ul className="space-y-3">
                     {christmasTips.map((tip, index) => (
                       <li key={index} className="flex items-start">
                         <span className="text-red-400 mr-2">•</span>
-                        <span className="text-gray-300">{tip}</span>
+                        <span className="text-gray-600">{tip}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-4">✨ Pro Tips</h3>
-                  <ul className="space-y-3 text-gray-300">
+                  <h3 className="text-xl font-semibold text-gray-900 mb-4">✨ Pro Tips</h3>
+                  <ul className="space-y-3 text-gray-600">
                     <li>• Use a white base for better color payoff</li>
                     <li>• Apply glitter over wet polish for better adhesion</li>
                     <li>• Use striping tape for clean lines</li>
@@ -183,26 +183,26 @@ export default function ChristmasNailArtPage() {
 
           {/* Color Palette Section */}
           <div className="mb-12">
-            <h2 className="text-3xl font-bold text-white mb-8 text-center">Christmas Color Palette</h2>
+            <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">Christmas Color Palette</h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
               <div className="bg-red-600 rounded-xl p-6 text-center">
                 <div className="text-4xl mb-2">🔴</div>
-                <h3 className="text-lg font-semibold text-white">Classic Red</h3>
+                <h3 className="text-lg font-semibold text-gray-900">Classic Red</h3>
                 <p className="text-red-200 text-sm">Perfect for candy canes and Santa themes</p>
               </div>
               <div className="bg-green-600 rounded-xl p-6 text-center">
                 <div className="text-4xl mb-2">🟢</div>
-                <h3 className="text-lg font-semibold text-white">Forest Green</h3>
+                <h3 className="text-lg font-semibold text-gray-900">Forest Green</h3>
                 <p className="text-green-200 text-sm">Ideal for Christmas trees and holly</p>
               </div>
               <div className="bg-yellow-500 rounded-xl p-6 text-center">
                 <div className="text-4xl mb-2">🟡</div>
-                <h3 className="text-lg font-semibold text-white">Gold</h3>
+                <h3 className="text-lg font-semibold text-gray-900">Gold</h3>
                 <p className="text-yellow-200 text-sm">Adds luxury and festive sparkle</p>
               </div>
               <div className="bg-blue-600 rounded-xl p-6 text-center">
                 <div className="text-4xl mb-2">🔵</div>
-                <h3 className="text-lg font-semibold text-white">Winter Blue</h3>
+                <h3 className="text-lg font-semibold text-gray-900">Winter Blue</h3>
                 <p className="text-blue-200 text-sm">Perfect for snow and ice themes</p>
               </div>
             </div>
@@ -210,48 +210,48 @@ export default function ChristmasNailArtPage() {
 
           {/* Related Content */}
           <div className="mb-12">
-            <h2 className="text-3xl font-bold text-white mb-8 text-center">More Holiday Inspiration</h2>
+            <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">More Holiday Inspiration</h2>
             <div className="grid md:grid-cols-3 gap-6">
               <Link
                 href="/halloween-nail-art"
-                className="bg-gray-800/50 rounded-xl p-6 border border-gray-700 hover:border-orange-500/50 transition-all duration-300 transform hover:-translate-y-1"
+                className="bg-surface/50 rounded-xl p-6 border border-gray-100 hover:border-orange-500/50 transition-all duration-300 transform hover:-translate-y-1"
               >
                 <div className="text-center">
                   <div className="text-4xl mb-3">🎃</div>
-                  <h3 className="text-lg font-semibold text-white mb-2">Halloween Nail Art</h3>
-                  <p className="text-gray-400 text-sm">Spooky designs for Halloween</p>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">Halloween Nail Art</h3>
+                  <p className="text-gray-500 text-sm">Spooky designs for Halloween</p>
                 </div>
               </Link>
               <Link
                 href="/winter-nail-art"
-                className="bg-gray-800/50 rounded-xl p-6 border border-gray-700 hover:border-blue-500/50 transition-all duration-300 transform hover:-translate-y-1"
+                className="bg-surface/50 rounded-xl p-6 border border-gray-100 hover:border-blue-500/50 transition-all duration-300 transform hover:-translate-y-1"
               >
                 <div className="text-center">
                   <div className="text-4xl mb-3">❄️</div>
-                  <h3 className="text-lg font-semibold text-white mb-2">Winter Nail Art</h3>
-                  <p className="text-gray-400 text-sm">Frosty winter designs</p>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">Winter Nail Art</h3>
+                  <p className="text-gray-500 text-sm">Frosty winter designs</p>
                 </div>
               </Link>
               <Link
                 href="/wedding-nail-art"
-                className="bg-gray-800/50 rounded-xl p-6 border border-gray-700 hover:border-pink-500/50 transition-all duration-300 transform hover:-translate-y-1"
+                className="bg-surface/50 rounded-xl p-6 border border-gray-100 hover:border-pink-500/50 transition-all duration-300 transform hover:-translate-y-1"
               >
                 <div className="text-center">
                   <div className="text-4xl mb-3">💍</div>
-                  <h3 className="text-lg font-semibold text-white mb-2">Wedding Nail Art</h3>
-                  <p className="text-gray-400 text-sm">Elegant bridal designs</p>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">Wedding Nail Art</h3>
+                  <p className="text-gray-500 text-sm">Elegant bridal designs</p>
                 </div>
               </Link>
             </div>
           </div>
 
           {/* SEO Content Section */}
-          <div className="bg-gray-800/50 rounded-xl p-8 border border-gray-700">
-            <h2 className="text-2xl font-bold text-white mb-6">Christmas Nail Art Trends 2024</h2>
+          <div className="bg-surface/50 rounded-xl p-8 border border-gray-100">
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">Christmas Nail Art Trends 2024</h2>
             <div className="grid md:grid-cols-2 gap-8">
               <div>
-                <h3 className="text-xl font-semibold text-white mb-3">🎄 Popular Christmas Themes</h3>
-                <ul className="space-y-2 text-gray-300">
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">🎄 Popular Christmas Themes</h3>
+                <ul className="space-y-2 text-gray-600">
                   <li>• Classic red and green combinations</li>
                   <li>• Snowflake and winter wonderland designs</li>
                   <li>• Candy cane stripes and patterns</li>
@@ -261,8 +261,8 @@ export default function ChristmasNailArtPage() {
                 </ul>
               </div>
               <div>
-                <h3 className="text-xl font-semibold text-white mb-3">✨ Trending Techniques</h3>
-                <ul className="space-y-2 text-gray-300">
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">✨ Trending Techniques</h3>
+                <ul className="space-y-2 text-gray-600">
                   <li>• Ombre red to green gradients</li>
                   <li>• Glitter placement and chunky glitter</li>
                   <li>• Stamping with Christmas plates</li>
