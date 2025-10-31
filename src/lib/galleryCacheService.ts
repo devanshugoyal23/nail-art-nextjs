@@ -13,6 +13,7 @@ export function invalidateGalleryCache(): void {
 /**
  * Invalidate item cache (no-op)
  */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function invalidateItemCache(_itemId?: string): void {
   // No-op since caching is disabled
 }
@@ -20,6 +21,7 @@ export function invalidateItemCache(_itemId?: string): void {
 /**
  * Invalidate category cache (no-op)
  */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function invalidateCategoryCache(_category?: string): void {
   // No-op since caching is disabled
 }

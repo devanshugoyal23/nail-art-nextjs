@@ -69,7 +69,7 @@ export default function OptimizedImage({
   }, [src, isMobile]);
   
   // Switch to original image if optimized image fails
-  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement>) => {
+  const handleImageError = () => {
     if (currentSrc !== src) {
       setCurrentSrc(src);
     }
@@ -81,10 +81,11 @@ export default function OptimizedImage({
     : finalSizes || '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw';
 
   return (
-    <div 
+    <div
       className={`relative overflow-hidden ${onClick ? 'cursor-pointer' : ''} ${className}`}
       onClick={onClick}
     >
+      {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={currentSrc || getOptimizedImageUrl(src, isMobile)}
         alt={alt}

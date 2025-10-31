@@ -9,13 +9,8 @@ import { upsertEditorial } from "@/lib/editorialService";
 import { getRelatedKeywords } from "@/lib/keywordMapper";
 import RelatedCategories from "@/components/RelatedCategories";
 import SocialShareButton from "@/components/SocialShareButton";
-import { extractTagsFromEditorial } from "@/lib/tagService";
 import OptimizedImage from "@/components/OptimizedImage";
 import { generateImageAltText, generateImageStructuredData } from "@/lib/imageUtils";
-import FloatingActionBar from "@/components/FloatingActionBar";
-import CollapsibleSection from "@/components/CollapsibleSection";
-import ProgressBar from "@/components/ProgressBar";
-import ColorPalette from "@/components/ColorPalette";
 
 interface GalleryDetailPageProps {
   params: Promise<{
@@ -334,9 +329,6 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
     }
   }
 
-  // Extract tags from editorial content
-  const extractedTags = extractTagsFromEditorial(editorial);
-
   return (
     <>
       {/* Enhanced Structured Data */}
@@ -562,7 +554,7 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
 
           {/* What You'll Need - Clean List */}
           <section className="mb-12">
-            <h3 className="text-2xl font-serif font-semibold text-gray-900 mb-6">What You'll Need</h3>
+            <h3 className="text-2xl font-serif font-semibold text-gray-900 mb-6">What You&apos;ll Need</h3>
             <div className="bg-rose-50/50 rounded-2xl p-8">
               <ul className="grid sm:grid-cols-2 gap-4">
                 {(editorial?.supplies || ['Base coat','Gel color polish','Detail liner brush','Top coat']).map((supply, i) => (
@@ -679,7 +671,7 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
           {/* Similar Designs - Pinterest Masonry */}
           {otherCategoryItems.length > 0 && (
             <section className="mb-12">
-              <h2 className="text-3xl font-serif font-semibold text-gray-900 mb-8 text-center">More Designs You'll Love</h2>
+              <h2 className="text-3xl font-serif font-semibold text-gray-900 mb-8 text-center">More Designs You&apos;ll Love</h2>
               <div className="pinterest-masonry">
                 {otherCategoryItems.slice(0, 12).map((categoryItem) => (
                   <Link
