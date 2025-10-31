@@ -87,25 +87,25 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes" />
-        <meta name="theme-color" content="#7c3aed" />
+        <meta name="theme-color" content="#EC407A" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="apple-mobile-web-app-title" content="Nail Art AI" />
         <link rel="manifest" href="/manifest.json" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-        {/* Critical CSS for faster initial render - enhanced for mobile performance */}
+        {/* Critical CSS for faster initial render - Light Pinterest theme */}
         <style dangerouslySetInnerHTML={{
           __html: `
             html{height:100%;font-size:16px}
-            body{min-height:100%;background:#0a0a0a;color:#ededed;margin:0;font-family:system-ui,-apple-system,sans-serif}
+            body{min-height:100%;background:#FFFFFF;color:#424242;margin:0;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
             img{content-visibility:auto;max-width:100%;height:auto}
             *{box-sizing:border-box}
-            .pinterest-masonry{column-count:2;column-gap:0.5rem;height:100vh;contain:layout style paint;content-visibility:auto}
-            .pinterest-item{break-inside:avoid;margin-bottom:0.75rem;display:inline-block;width:100%;position:relative;contain:layout style paint;content-visibility:auto}
-            @media(min-width:640px){.pinterest-masonry{column-count:4;column-gap:0.75rem}}
-            @media(min-width:1024px){.pinterest-masonry{column-count:6;column-gap:1rem}}
-            @media(min-width:1280px){.pinterest-masonry{column-count:8;column-gap:0.75rem}}
+            .pinterest-masonry{column-count:2;column-gap:1rem;contain:layout style paint;content-visibility:auto}
+            .pinterest-item{break-inside:avoid;margin-bottom:1.5rem;display:inline-block;width:100%;position:relative;background:white;border-radius:1rem;overflow:hidden;contain:layout style paint;content-visibility:auto}
+            @media(min-width:640px){.pinterest-masonry{column-count:3;column-gap:1.25rem}}
+            @media(min-width:1024px){.pinterest-masonry{column-count:4;column-gap:1.5rem}}
+            @media(min-width:1280px){.pinterest-masonry{column-count:5;column-gap:1.5rem}}
           `
         }} />
         {/* Preconnect to critical domains for better performance - Enhanced for mobile */}
@@ -169,7 +169,7 @@ export default function RootLayout({
           `
         }} />
       </head>
-      <body className="min-h-screen bg-black text-gray-100 flex flex-col">
+      <body className="min-h-screen bg-white text-gray-900 flex flex-col">
         <Header />
         <main className="flex-grow pb-20 md:pb-0">
           {children}

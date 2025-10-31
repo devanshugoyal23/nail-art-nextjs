@@ -36,7 +36,7 @@ const MobileBottomNav: React.FC = () => {
   ];
 
   return (
-    <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-gray-900/95 backdrop-blur-xl border-t border-gray-800/50 shadow-2xl pb-safe">
+    <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-xl border-t border-gray-100 shadow-soft-xl pb-safe">
       <div className="flex items-center justify-around px-2 py-2">
         {navItems.map((item) => (
           <Link
@@ -45,12 +45,12 @@ const MobileBottomNav: React.FC = () => {
             className={`flex flex-col items-center justify-center gap-1 py-2 px-4 rounded-2xl transition-all duration-300 min-w-[70px] ${
               item.active
                 ? item.highlight
-                  ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-lg shadow-purple-500/30 scale-105'
-                  : 'bg-white/10 text-white'
-                : 'text-gray-400 hover:text-white hover:bg-white/5'
+                  ? 'bg-gradient-to-r from-rose-500 to-pink-500 text-white shadow-soft scale-105'
+                  : 'bg-primary-lighter text-primary-dark'
+                : 'text-gray-500 hover:text-primary hover:bg-primary-lighter/50'
             }`}
           >
-            <span className={`text-xl ${item.active && item.highlight ? 'animate-bounce' : ''}`}>
+            <span className={`text-xl ${item.active && item.highlight ? 'animate-soft-bounce' : ''}`}>
               {item.icon}
             </span>
             <span className={`text-xs font-semibold ${item.active ? 'font-bold' : 'font-medium'}`}>
@@ -58,7 +58,7 @@ const MobileBottomNav: React.FC = () => {
             </span>
             {item.active && (
               <div className={`absolute bottom-0 left-1/2 transform -translate-x-1/2 w-1 h-1 rounded-full ${
-                item.highlight ? 'bg-white' : 'bg-purple-500'
+                item.highlight ? 'bg-white' : 'bg-primary'
               }`}></div>
             )}
           </Link>

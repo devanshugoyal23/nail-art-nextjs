@@ -10,19 +10,14 @@ interface HomepageHeroProps {
   initialItems?: GalleryItem[];
 }
 
-// Prevent CLS by using consistent height
-const HERO_HEIGHT = '100vh';
-const HERO_CONTENT_HEIGHT = '85vh';
-
 const HomepageHero = React.memo(function HomepageHero({ initialItems = [] }: HomepageHeroProps) {
   const [featuredItems, setFeaturedItems] = useState<GalleryItem[]>(initialItems);
   const [loading, setLoading] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
 
-  // Prevent hydration mismatch by ensuring client-side only logic
   useEffect(() => {
     setMounted(true);
-    // Only fetch if no initial items provided - prevents duplicate API call
     if (!initialItems.length && featuredItems.length === 0) {
       setLoading(true);
       fetchFeaturedItems();
@@ -32,8 +27,7 @@ const HomepageHero = React.memo(function HomepageHero({ initialItems = [] }: Hom
   const fetchFeaturedItems = async () => {
     try {
       setLoading(true);
-      // Reduced to 8 items for better performance - 6x less data to load
-      const result = await getGalleryItems({ limit: 8, sortBy: 'newest' });
+      const result = await getGalleryItems({ limit: 12, sortBy: 'newest' });
       setFeaturedItems(result.items);
     } catch (error) {
       console.error('Error fetching featured items:', error);
@@ -42,37 +36,33 @@ const HomepageHero = React.memo(function HomepageHero({ initialItems = [] }: Hom
     }
   };
 
-  // Use initialItems if provided, otherwise use fetched items
   const displayItems = initialItems.length > 0 ? initialItems : featuredItems;
 
-  // Prevent hydration mismatch by not rendering loading state on server
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      window.location.href = `/search?q=${encodeURIComponent(searchQuery.trim())}`;
+    }
+  };
+
   if (!mounted || loading) {
     return (
-      <div className="min-h-screen bg-black relative overflow-hidden" style={{ height: HERO_HEIGHT }}>
-        {/* Background - same structure as loaded state to prevent CLS */}
-        <div className="absolute inset-0 opacity-60 z-10">
-          <div className="absolute inset-0 bg-gradient-to-br from-gray-800 via-gray-900 to-gray-700"></div>
+      <div className="bg-white">
+        {/* Hero Section Skeleton */}
+        <div className="container mx-auto px-4 pt-12 pb-8">
+          <div className="max-w-4xl mx-auto text-center space-y-6">
+            <div className="h-16 bg-gray-100 rounded-lg animate-shimmer"></div>
+            <div className="h-24 bg-gray-100 rounded-lg animate-shimmer"></div>
+            <div className="h-14 bg-gray-100 rounded-full animate-shimmer"></div>
+          </div>
         </div>
-        <div className="absolute inset-0 bg-gradient-to-br from-black/50 via-black/40 to-black/50 z-20"></div>
-        
-        {/* Content skeleton - matching exact layout to prevent CLS */}
-        <div className="relative z-30 flex items-center justify-center px-4" style={{ minHeight: HERO_CONTENT_HEIGHT }}>
-          <div className="max-w-7xl w-full" style={{ maxWidth: '80rem' }}>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-16 items-center">
-              <div className="text-center lg:text-left space-y-4">
-                {/* Skeleton matching actual content dimensions */}
-                <div className="h-8 w-56 bg-purple-600/20 rounded-full mx-auto lg:mx-0 animate-pulse"></div>
-                <div className="h-16 sm:h-20 bg-gray-800/50 rounded-lg animate-pulse"></div>
-                <div className="space-y-3">
-                  <div className="h-6 bg-gray-800/50 rounded animate-pulse"></div>
-                  <div className="h-6 bg-gray-800/50 rounded animate-pulse"></div>
-                  <div className="h-6 bg-gray-800/50 rounded animate-pulse"></div>
-                </div>
-              </div>
-              <div className="flex justify-center lg:justify-end">
-                <div className="h-96 w-full max-w-md bg-gray-800/50 rounded-3xl animate-pulse"></div>
-              </div>
-            </div>
+
+        {/* Gallery Skeleton */}
+        <div className="container mx-auto px-4 py-12">
+          <div className="pinterest-masonry">
+            {[...Array(8)].map((_, i) => (
+              <div key={i} className="skeleton h-64 mb-4 rounded-xl"></div>
+            ))}
           </div>
         </div>
       </div>
@@ -80,199 +70,181 @@ const HomepageHero = React.memo(function HomepageHero({ initialItems = [] }: Hom
   }
 
   return (
-    <div className="min-h-screen bg-black relative overflow-hidden" style={{ height: HERO_HEIGHT }}>
-      {/* Background Gallery - Optimized for Mobile */}
-      <div className="absolute inset-0 opacity-85 z-10 backdrop-blur-sm">
-        {/* Fallback background pattern */}
-        <div className="absolute inset-0 bg-gradient-to-br from-gray-800 via-gray-900 to-gray-700"></div>
-        <div 
-          className="pinterest-masonry p-2 sm:p-4 w-full min-h-screen relative z-10"
-          style={{ height: HERO_HEIGHT }}
-        >
-          {displayItems.slice(0, 8).map((item, index) => {
-            // Simplified height variations for mobile - reduced for better performance
-            const heightVariations = [
-              'aspect-[3/4]', 'aspect-[4/5]', 'aspect-[2/3]', 'aspect-square'
-            ];
-            const randomHeight = heightVariations[index % heightVariations.length];
-            
-            return (
-            <div
-              key={item.id}
-              className={`pinterest-item ${randomHeight} rounded-2xl overflow-hidden shadow-2xl transition-all duration-300 cursor-pointer`}
-              style={{
-                // Disable complex animations on mobile for performance
-                animation: 'none',
-                willChange: 'auto',
-                transform: 'none',
-                backfaceVisibility: 'visible',
-                // Prevent layout shift by setting explicit dimensions
-                minHeight: '120px',
-                maxHeight: '200px'
-              }}
-            >
-              <OptimizedImage
-                src={item.image_url}
-                alt={item.design_name || 'AI nail art'}
-                width={120}
-                height={160}
-                className="w-full h-full object-cover brightness-105 contrast-110"
-                loading={index < 1 ? "eager" : "lazy"}
-                priority={index === 0}
-                sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 12vw"
-              />
-            </div>
-            );
-          })}
-        </div>
-      </div>
+    <div className="bg-white">
+      {/* Hero Section - Clean & Elegant */}
+      <section className="relative overflow-hidden">
+        {/* Soft Background Decoration */}
+        <div className="absolute inset-0 bg-gradient-to-br from-rose-50 via-white to-lavender-50 opacity-60"></div>
+        <div className="absolute top-0 right-0 w-1/2 h-1/2 bg-gradient-to-bl from-primary-lighter to-transparent rounded-full blur-3xl opacity-30"></div>
+        <div className="absolute bottom-0 left-0 w-1/2 h-1/2 bg-gradient-to-tr from-secondary-light to-transparent rounded-full blur-3xl opacity-30"></div>
 
-      {/* Enhanced Dark Overlay for Better Text Contrast */}
-      <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-black/50 to-black/60 z-20"></div>
+        <div className="container relative z-10 mx-auto px-4 pt-16 md:pt-24 pb-12 md:pb-16">
+          <div className="max-w-4xl mx-auto text-center">
 
-      {/* Main Hero Section - Mobile Optimized */}
-      <div className="relative z-30 flex items-center justify-center px-4" style={{ minHeight: HERO_CONTENT_HEIGHT }}>
-        <div className="max-w-7xl w-full" style={{ maxWidth: '80rem' }}>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-16 items-center">
-            
-            {/* Left Side - Headline & Features */}
-            <div className="text-center lg:text-left">
-              {/* Badge */}
-              <div className="inline-flex items-center gap-2 bg-gradient-to-r from-purple-600/30 to-pink-600/30 backdrop-blur-sm text-white px-4 py-2 sm:px-5 sm:py-2.5 rounded-full text-xs sm:text-sm font-bold mb-4 sm:mb-6 border border-purple-500/30 shadow-lg shadow-purple-500/20 animate-pulse">
-                <span className="text-yellow-400 text-base sm:text-lg">⭐</span>
-                <span className="bg-gradient-to-r from-yellow-200 to-pink-200 bg-clip-text text-transparent">#1 AI Nail Art Generator</span>
-              </div>
-
-              {/* Main Headline - Mobile Optimized, Desktop One-Liner */}
-              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black text-white leading-tight mb-4 sm:mb-6 drop-shadow-2xl animate-fade-in-up" style={{ textShadow: '3px 3px 6px rgba(0,0,0,0.9)' }}>
-                <span className="inline-block bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent animate-pulse">
-                  Transform Your Nails
-                </span>
-                <br className="block sm:hidden" />
-                <span className="block mt-2 bg-gradient-to-r from-pink-300 to-purple-300 bg-clip-text text-transparent">
-                  with AI Magic ✨
-                </span>
-              </h1>
-
-              {/* Subheading */}
-              <p className="text-lg sm:text-xl lg:text-2xl text-gray-300 mb-8 sm:mb-10 max-w-2xl mx-auto lg:mx-0 leading-relaxed" style={{ textShadow: '1px 1px 3px rgba(0,0,0,0.8)' }}>
-                Try on <span className="text-purple-400 font-bold">1000+ stunning nail designs</span> instantly with AI.
-                Upload your photo and see yourself in any style – from elegant to bold.
-              </p>
-
-              {/* Feature Stats - Compact Modern Design */}
-              <div className="grid grid-cols-3 gap-4 sm:gap-6 mb-8 sm:mb-10 max-w-2xl mx-auto lg:mx-0">
-                <div className="text-center lg:text-left">
-                  <div className="text-2xl sm:text-3xl lg:text-4xl font-black text-transparent bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text mb-1">
-                    1000+
-                  </div>
-                  <div className="text-xs sm:text-sm text-gray-400 font-medium">Designs</div>
-                </div>
-                <div className="text-center lg:text-left">
-                  <div className="text-2xl sm:text-3xl lg:text-4xl font-black text-transparent bg-gradient-to-r from-pink-400 to-purple-400 bg-clip-text mb-1">
-                    Instant
-                  </div>
-                  <div className="text-xs sm:text-sm text-gray-400 font-medium">Try-On</div>
-                </div>
-                <div className="text-center lg:text-left">
-                  <div className="text-2xl sm:text-3xl lg:text-4xl font-black text-transparent bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text mb-1">
-                    100%
-                  </div>
-                  <div className="text-xs sm:text-sm text-gray-400 font-medium">Free</div>
-                </div>
-              </div>
-
+            {/* Badge */}
+            <div className="inline-flex items-center gap-2 bg-white px-5 py-2.5 rounded-full text-sm font-semibold mb-6 shadow-soft border border-rose-100 animate-fade-in-down">
+              <span className="text-lg">✨</span>
+              <span className="bg-gradient-to-r from-rose-600 to-pink-600 bg-clip-text text-transparent">
+                AI-Powered Virtual Try-On
+              </span>
             </div>
 
-            {/* Right Side - Modern CTA Card */}
-            <div className="flex justify-center lg:justify-end">
+            {/* Main Heading - Elegant Serif */}
+            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-serif font-bold text-gray-900 mb-6 leading-tight animate-fade-in-up">
+              Discover Your Perfect
+              <span className="block text-gradient mt-2">
+                Nail Design
+              </span>
+            </h1>
+
+            {/* Subheading */}
+            <p className="text-lg sm:text-xl md:text-2xl text-gray-600 mb-10 max-w-2xl mx-auto leading-relaxed animate-fade-in-up">
+              Explore 1000+ stunning nail art designs. Try them on virtually or get inspired for your next manicure.
+            </p>
+
+            {/* Search Bar - Prominent */}
+            <form onSubmit={handleSearch} className="max-w-2xl mx-auto mb-10 animate-fade-in-up">
               <div className="relative group">
-                {/* Glow effect */}
-                <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 via-pink-600 to-purple-600 rounded-3xl blur-xl opacity-30 group-hover:opacity-50 transition-opacity duration-500 animate-pulse"></div>
-
-                {/* Main card */}
-                <div className="relative bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-gray-900/95 backdrop-blur-xl rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl border border-purple-500/30">
-
-                  {/* Promotional Banner */}
-                  <div className="bg-gradient-to-r from-amber-500/20 via-yellow-500/20 to-amber-500/20 text-amber-200 px-5 py-2.5 rounded-2xl text-sm font-bold mb-6 text-center border border-amber-500/30 shadow-lg shadow-amber-500/10">
-                    <span className="text-base mr-1">🎃</span>
-                    Free Halloween Designs Available!
-                  </div>
-
-                  {/* Main CTA Button */}
-                  <Link
-                    href="/try-on"
-                    className="group/btn relative w-full bg-gradient-to-r from-purple-600 via-pink-600 to-purple-600 text-white font-bold py-5 px-6 rounded-2xl overflow-hidden transition-all duration-300 transform hover:scale-[1.02] shadow-2xl shadow-purple-500/30 hover:shadow-purple-500/50 text-center block text-lg mb-5 animate-pulse hover:animate-none"
+                <div className="absolute inset-0 bg-gradient-to-r from-rose-300 to-pink-300 rounded-full blur-xl opacity-20 group-hover:opacity-40 transition-opacity"></div>
+                <div className="relative flex items-center bg-white rounded-full shadow-soft-lg border border-gray-100 overflow-hidden transition-all duration-300 hover:shadow-soft-xl">
+                  <span className="pl-6 text-gray-400 text-xl">🔍</span>
+                  <input
+                    type="text"
+                    placeholder="Search for designs, colors, occasions..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="flex-1 px-4 py-5 text-base bg-transparent border-none outline-none text-gray-900 placeholder-gray-400"
+                  />
+                  <button
+                    type="submit"
+                    className="m-2 px-8 py-3 bg-gradient-to-r from-rose-500 to-pink-500 text-white font-semibold rounded-full hover:from-rose-600 hover:to-pink-600 transition-all duration-300 shadow-soft hover:shadow-hover hover:-translate-y-0.5"
                   >
-                    <div className="absolute inset-0 bg-gradient-to-r from-pink-600 via-purple-600 to-pink-600 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300"></div>
-                    <span className="relative z-10 flex items-center justify-center gap-2">
-                      <span className="text-xl">✨</span>
-                      Try Virtual Nail Art Now
-                      <span className="text-xl">→</span>
-                    </span>
-                  </Link>
-
-                  {/* Features List */}
-                  <div className="space-y-3 mb-6">
-                    <div className="flex items-center gap-3 text-gray-300">
-                      <div className="bg-purple-600/20 p-2 rounded-lg">
-                        <span className="text-lg">⚡</span>
-                      </div>
-                      <span className="text-sm font-medium">Instant AI-powered results</span>
-                    </div>
-                    <div className="flex items-center gap-3 text-gray-300">
-                      <div className="bg-pink-600/20 p-2 rounded-lg">
-                        <span className="text-lg">💅</span>
-                      </div>
-                      <span className="text-sm font-medium">1000+ professional designs</span>
-                    </div>
-                    <div className="flex items-center gap-3 text-gray-300">
-                      <div className="bg-purple-600/20 p-2 rounded-lg">
-                        <span className="text-lg">📱</span>
-                      </div>
-                      <span className="text-sm font-medium">Works on any device</span>
-                    </div>
-                  </div>
-
-                  {/* Divider */}
-                  <div className="relative my-6">
-                    <div className="absolute inset-0 flex items-center">
-                      <div className="w-full border-t border-gray-700"></div>
-                    </div>
-                    <div className="relative flex justify-center">
-                      <span className="px-4 bg-gray-900 text-gray-500 text-sm font-medium">or explore</span>
-                    </div>
-                  </div>
-
-                  {/* Secondary CTA */}
-                  <Link
-                    href="/nail-art-gallery"
-                    className="w-full bg-white/5 hover:bg-white/10 text-white font-semibold py-4 px-6 rounded-2xl transition-all duration-300 text-center block border border-white/10 hover:border-white/20 shadow-lg text-base backdrop-blur-sm"
-                  >
-                    <span className="flex items-center justify-center gap-2">
-                      <span className="text-lg">🎨</span>
-                      Browse Design Gallery
-                    </span>
-                  </Link>
-
-                  {/* Social Proof */}
-                  <div className="mt-6 flex items-center justify-center gap-2 text-gray-400 text-sm">
-                    <div className="flex -space-x-2">
-                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 border-2 border-gray-900"></div>
-                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-pink-500 to-purple-500 border-2 border-gray-900"></div>
-                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 border-2 border-gray-900"></div>
-                    </div>
-                    <span className="font-medium">
-                      Join <span className="text-purple-400">10,000+</span> happy users
-                    </span>
-                  </div>
+                    Search
+                  </button>
                 </div>
               </div>
+            </form>
+
+            {/* Quick CTAs */}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in-up">
+              <Link
+                href="/try-on"
+                className="btn btn-primary text-base px-8 py-4"
+              >
+                <span className="text-lg">💅</span>
+                Try Virtual Nail Art
+                <span>→</span>
+              </Link>
+              <Link
+                href="/nail-art-gallery"
+                className="btn btn-secondary text-base px-8 py-4"
+              >
+                <span className="text-lg">🎨</span>
+                Browse Gallery
+              </Link>
+            </div>
+
+            {/* Quick Links / Categories */}
+            <div className="mt-10 flex flex-wrap items-center justify-center gap-3 text-sm">
+              <span className="text-gray-500 font-medium">Popular:</span>
+              {['Wedding Nails', 'French Tips', 'Summer Designs', 'Minimalist', 'Ombre'].map((tag) => (
+                <Link
+                  key={tag}
+                  href={`/search?q=${encodeURIComponent(tag)}`}
+                  className="tag"
+                >
+                  {tag}
+                </Link>
+              ))}
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
+      {/* Featured Designs - Pinterest Masonry */}
+      <section className="section-padding bg-surface">
+        <div className="container mx-auto px-4">
+
+          {/* Section Header */}
+          <div className="text-center mb-12">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-semibold text-gray-900 mb-4">
+              Trending Designs
+            </h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Get inspired by our most popular nail art designs, loved by thousands of users.
+            </p>
+          </div>
+
+          {/* Pinterest Masonry Grid */}
+          <div className="pinterest-masonry">
+            {displayItems.map((item, index) => (
+              <Link
+                key={item.id}
+                href={`/nail-art-gallery/${item.id}`}
+                className="pinterest-item group"
+              >
+                <div className="relative overflow-hidden">
+                  <OptimizedImage
+                    src={item.image_url}
+                    alt={item.design_name || 'Nail art design'}
+                    width={400}
+                    height={500}
+                    className="w-full h-auto"
+                    loading={index < 2 ? "eager" : "lazy"}
+                    priority={index < 2}
+                    sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                  />
+
+                  {/* Hover Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
+                    {item.design_name && (
+                      <h3 className="text-white font-semibold text-base mb-1 line-clamp-2">
+                        {item.design_name}
+                      </h3>
+                    )}
+                    {item.colors && item.colors.length > 0 && (
+                      <div className="flex gap-1.5 mt-2">
+                        {item.colors.slice(0, 3).map((color, idx) => (
+                          <div
+                            key={idx}
+                            className="w-5 h-5 rounded-full border-2 border-white shadow-soft"
+                            style={{ backgroundColor: color }}
+                            title={color}
+                          />
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Save Button */}
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      // Handle save functionality
+                    }}
+                    className="absolute top-3 right-3 bg-white p-2.5 rounded-full shadow-soft-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:scale-110"
+                  >
+                    <svg className="w-4 h-4 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                    </svg>
+                  </button>
+                </div>
+              </Link>
+            ))}
+          </div>
+
+          {/* View More */}
+          <div className="text-center mt-12">
+            <Link
+              href="/nail-art-gallery"
+              className="btn btn-soft text-base px-10 py-4 inline-flex"
+            >
+              View All Designs
+              <span>→</span>
+            </Link>
+          </div>
+        </div>
+      </section>
     </div>
   );
 });
