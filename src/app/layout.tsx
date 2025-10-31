@@ -3,6 +3,7 @@ import Script from "next/script";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import MobileBottomNav from "@/components/MobileBottomNav";
 import { Analytics } from '@vercel/analytics/react';
 
 export const metadata: Metadata = {
@@ -170,10 +171,11 @@ export default function RootLayout({
       </head>
       <body className="min-h-screen bg-black text-gray-100 flex flex-col">
         <Header />
-        <main className="flex-grow">
+        <main className="flex-grow pb-20 md:pb-0">
           {children}
         </main>
         <Footer />
+        <MobileBottomNav />
         <Analytics />
       </body>
     </html>
