@@ -218,7 +218,7 @@ export default function TryOnContent({ initialData, categories }: TryOnContentPr
                 Step 1: Pick Your Design
               </h2>
               <p className="text-gray-200 text-lg leading-relaxed">
-                Browse 600+ unique nail art designs and choose one you'd like to see on your hands. From elegant French tips to bold statement nails — we've got it all!
+                Browse 600+ unique nail art designs and choose one you&apos;d like to see on your hands. From elegant French tips to bold statement nails — we&apos;ve got it all!
               </p>
             </div>
 

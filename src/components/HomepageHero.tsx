@@ -209,7 +209,7 @@ const HomepageHero = React.memo(function HomepageHero({ initialItems = [] }: Hom
                     Ready to Try It?
                   </h2>
                   <p className="text-gray-200 text-base sm:text-lg leading-relaxed" style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.7)' }}>
-                    Upload a photo of your hand and instantly preview any design. It's free and takes less than 30 seconds.
+                    Upload a photo of your hand and instantly preview any design. It&apos;s free and takes less than 30 seconds.
                   </p>
                 </div>
 
