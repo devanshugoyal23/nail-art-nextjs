@@ -3,16 +3,20 @@ import { GoogleGenAI, Modality } from '@google/genai';
 import { rateLimiters, checkRateLimit } from '@/lib/rateLimiter';
 import { validateAIGeneration } from '@/lib/inputValidation';
 
-const API_KEY = process.env.GEMINI_API_KEY;
-
-if (!API_KEY) {
-  throw new Error('GEMINI_API_KEY environment variable is not set.');
-}
-
-const ai = new GoogleGenAI({ apiKey: API_KEY });
-
 export async function POST(request: NextRequest) {
   try {
+    // Check for API key at runtime, not build time
+    const API_KEY = process.env.GEMINI_API_KEY;
+
+    if (!API_KEY) {
+      return NextResponse.json(
+        { error: 'GEMINI_API_KEY environment variable is not set.' },
+        { status: 500 }
+      );
+    }
+
+    const ai = new GoogleGenAI({ apiKey: API_KEY });
+
     // Note: Removed admin authentication requirement for public virtual try-on
     // The rate limiting will handle abuse prevention
 

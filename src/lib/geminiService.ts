@@ -6,11 +6,12 @@ let ai: GoogleGenAI | null = null;
 function getAI() {
   if (!ai) {
     const API_KEY = process.env.GEMINI_API_KEY;
-    
+
     if (!API_KEY) {
-      throw new Error("GEMINI_API_KEY environment variable is not set.");
+      console.error("GEMINI_API_KEY environment variable is not set.");
+      return null;
     }
-    
+
     ai = new GoogleGenAI({ apiKey: API_KEY });
   }
   return ai;
@@ -23,6 +24,10 @@ export async function applyNailArt(
 ): Promise<string | null> {
   try {
     const aiInstance = getAI();
+    if (!aiInstance) {
+      console.error("AI instance is not available. GEMINI_API_KEY may not be set.");
+      return null;
+    }
     const response = await aiInstance.models.generateContent({
       model: 'gemini-2.5-flash-image-preview',
       contents: {
@@ -109,6 +114,11 @@ export async function generateEditorialContentForNailArt(
   relatedKeywords?: string[]
 ): Promise<NailArtEditorial> {
   const aiInstance = getAI();
+  if (!aiInstance) {
+    console.error("AI instance is not available. GEMINI_API_KEY may not be set.");
+    // Return a fallback editorial
+    throw new Error("AI service is not available");
+  }
 
   const keywordHint = relatedKeywords && relatedKeywords.length > 0 
     ? `Use these keywords naturally (1-2 times total, NO stuffing): ${relatedKeywords.slice(0, 3).join(', ')}.` 

@@ -48,11 +48,12 @@ function isGloballyStopped(): boolean {
 function getAI() {
   if (!ai) {
     const API_KEY = process.env.GEMINI_API_KEY;
-    
+
     if (!API_KEY) {
-      throw new Error("GEMINI_API_KEY environment variable is not set.");
+      console.error("GEMINI_API_KEY environment variable is not set.");
+      return null;
     }
-    
+
     ai = new GoogleGenAI({ apiKey: API_KEY });
   }
   return ai;
@@ -148,16 +149,20 @@ export interface GeneratedNailArt {
 export async function generateNailArtImage(prompt: string): Promise<string | null> {
   try {
     const aiInstance = getAI();
-    
+    if (!aiInstance) {
+      console.error("AI instance is not available. GEMINI_API_KEY may not be set.");
+      return null;
+    }
+
     // Enhanced prompt for better nail art generation
-    const enhancedPrompt = `Create a high-quality nail art design: ${prompt}. 
+    const enhancedPrompt = `Create a high-quality nail art design: ${prompt}.
     The image should show:
     - Clean, well-manicured nails
     - Professional nail art application
     - High resolution and detailed work
     - Beautiful lighting and composition
     - Focus on the nail design as the main subject`;
-    
+
     const response = await aiInstance.models.generateContent({
       model: 'gemini-2.5-flash-image-preview',
       contents: {
