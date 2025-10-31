@@ -102,59 +102,83 @@ export default async function GalleryPage() {
         }}
       />
       
-      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-purple-900">
-        <div className="max-w-7xl mx-auto px-2 sm:px-4 py-4 sm:py-6">
+      <div className="min-h-screen bg-white">
+        <div className="max-w-7xl mx-auto px-2 sm:px-4 py-8 sm:py-12">
           {/* SEO Header */}
-          <div className="text-center mb-6 sm:mb-8">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">
-              AI Nail Art Gallery
+          <div className="text-center mb-8 sm:mb-12">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-serif font-bold text-gray-900 mb-4">
+              Nail Art Gallery
             </h1>
-            <p className="text-base sm:text-lg text-gray-300 max-w-3xl mx-auto px-2">
-              Discover hundreds of unique AI-generated nail art designs. From classic French manicures to bold artistic creations, 
+            <p className="text-base sm:text-lg text-gray-600 max-w-3xl mx-auto px-2 leading-relaxed">
+              Discover hundreds of unique AI-generated nail art designs. From classic French manicures to bold artistic creations,
               find your perfect manicure inspiration.
             </p>
           </div>
-          
-          <EnhancedGallery 
-            showPrompts={true} 
-            showDelete={false} 
+
+          <EnhancedGallery
+            showPrompts={true}
+            showDelete={false}
             initialItems={initialData.items}
             initialTotalCount={initialData.totalCount}
           />
-          
+
           {/* SEO Content Section */}
-          <div className="mt-12 sm:mt-16 bg-gray-800/50 rounded-lg p-4 sm:p-6 lg:p-8 border border-gray-700">
-            <h2 className="text-xl sm:text-2xl font-bold text-white mb-4 sm:mb-6">About Our AI Nail Art Gallery</h2>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
+          <div className="mt-16 sm:mt-20 bg-surface rounded-2xl p-6 sm:p-8 lg:p-10 border border-gray-100 shadow-soft">
+            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-gray-900 mb-6 sm:mb-8">About Our AI Nail Art Gallery</h2>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10">
               <div>
-                <h3 className="text-lg sm:text-xl font-semibold text-white mb-3">🎨 Unique AI-Generated Designs</h3>
-                <p className="text-gray-300 mb-4 text-sm sm:text-base">
-                  Our AI creates completely unique nail art designs that you won&apos;t find anywhere else. 
+                <h3 className="text-xl sm:text-2xl font-semibold text-gray-900 mb-4">🎨 Unique AI-Generated Designs</h3>
+                <p className="text-gray-600 mb-4 text-sm sm:text-base leading-relaxed">
+                  Our AI creates completely unique nail art designs that you won&apos;t find anywhere else.
                   Each design is generated using advanced machine learning algorithms to ensure originality and creativity.
                 </p>
-                <ul className="text-gray-300 space-y-2 text-sm sm:text-base">
-                  <li>• Hundreds of unique designs</li>
-                  <li>• All shapes and styles supported</li>
-                  <li>• Seasonal and occasion-specific designs</li>
-                  <li>• High-resolution downloads</li>
+                <ul className="text-gray-600 space-y-2 text-sm sm:text-base">
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary">•</span>
+                    <span>Hundreds of unique designs</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary">•</span>
+                    <span>All shapes and styles supported</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary">•</span>
+                    <span>Seasonal and occasion-specific designs</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary">•</span>
+                    <span>High-resolution downloads</span>
+                  </li>
                 </ul>
               </div>
               <div>
-                <h3 className="text-lg sm:text-xl font-semibold text-white mb-3">✨ How to Use the Gallery</h3>
-                <p className="text-gray-300 mb-4 text-sm sm:text-base">
-                  Browse our collection by category, color, technique, or occasion. Each design comes with 
+                <h3 className="text-xl sm:text-2xl font-semibold text-gray-900 mb-4">✨ How to Use the Gallery</h3>
+                <p className="text-gray-600 mb-4 text-sm sm:text-base leading-relaxed">
+                  Browse our collection by category, color, technique, or occasion. Each design comes with
                   detailed instructions and supply lists for easy recreation.
                 </p>
-                <ul className="text-gray-300 space-y-2 text-sm sm:text-base">
-                  <li>• Filter by category or style</li>
-                  <li>• Download high-res images</li>
-                  <li>• Get step-by-step instructions</li>
-                  <li>• Try designs virtually</li>
+                <ul className="text-gray-600 space-y-2 text-sm sm:text-base">
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary">•</span>
+                    <span>Filter by category or style</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary">•</span>
+                    <span>Download high-res images</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary">•</span>
+                    <span>Get step-by-step instructions</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary">•</span>
+                    <span>Try designs virtually</span>
+                  </li>
                 </ul>
               </div>
             </div>
           </div>
-          
+
           {/* Related Categories Section */}
           <div className="mt-16">
             <RelatedCategories />
