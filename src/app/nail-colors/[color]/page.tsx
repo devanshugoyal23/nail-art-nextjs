@@ -126,20 +126,20 @@ export default async function ColorPage({ params }: ColorPageProps) {
   const allTags = getAllTagsFromGalleryItems(filteredItems);
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-[#f8f6f7]">
       <div className="max-w-7xl mx-auto px-4 py-8">
         {/* Breadcrumb */}
         <nav className="mb-6">
           <div className="flex items-center space-x-2 text-sm">
-            <Link href="/categories" className="text-purple-400 hover:text-purple-300">
+            <Link href="/categories" className="text-[#ee2b8c] hover:underline">
               Categories
             </Link>
-            <span className="text-gray-400">/</span>
-            <Link href="/categories/colors" className="text-purple-400 hover:text-purple-300">
+            <span className="text-[#1b0d14]/50">/</span>
+            <Link href="/categories/colors" className="text-[#ee2b8c] hover:underline">
               Colors
             </Link>
-            <span className="text-gray-400">/</span>
-            <span className="text-white font-medium">{colorData.name}</span>
+            <span className="text-[#1b0d14]/50">/</span>
+            <span className="text-[#1b0d14] font-medium">{colorData.name}</span>
           </div>
         </nav>
 
@@ -148,10 +148,10 @@ export default async function ColorPage({ params }: ColorPageProps) {
           <div className={`w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-r ${colorData.gradient} flex items-center justify-center text-4xl`}>
             {colorData.emoji}
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
+          <h1 className="text-4xl md:text-5xl font-bold text-[#1b0d14] mb-6">
             {colorData.name}
           </h1>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+          <p className="text-xl text-[#1b0d14]/70 max-w-3xl mx-auto">
             {colorData.description}
           </p>
         </div>
@@ -188,7 +188,7 @@ export default async function ColorPage({ params }: ColorPageProps) {
 
         {/* Gallery */}
         <div className="mb-12">
-          <h2 className="text-2xl font-bold text-white mb-6">
+          <h2 className="text-2xl font-bold mb-6">
             {colorData.name} Designs ({filteredItems.length})
           </h2>
           
@@ -198,7 +198,7 @@ export default async function ColorPage({ params }: ColorPageProps) {
                 <Link
                   key={item.id}
                   href={`/${item.category?.toLowerCase().replace(/\s+/g, '-')}/${item.design_name ? `${item.design_name.toLowerCase().replace(/\s+/g, '-')}-${item.id.slice(-8)}` : `design-${item.id.slice(-8)}`}`}
-                  className="group bg-gray-800 rounded-lg overflow-hidden hover:bg-gray-700 transition-all duration-300 transform hover:-translate-y-1"
+                  className="group bg-white ring-1 ring-[#ee2b8c]/15 rounded-lg overflow-hidden hover:shadow-md transition-all duration-300 transform hover:-translate-y-1"
                 >
                   <div className="aspect-square relative">
                     <OptimizedImage
@@ -213,11 +213,11 @@ export default async function ColorPage({ params }: ColorPageProps) {
                   
                   <div className="p-4">
                     {item.design_name && (
-                      <h3 className="text-lg font-semibold text-white mb-2 line-clamp-1">
+                      <h3 className="text-lg font-semibold text-[#1b0d14] mb-2 line-clamp-1">
                         {item.design_name}
                       </h3>
                     )}
-                    <p className="text-sm text-gray-300 line-clamp-2">
+                    <p className="text-sm text-[#1b0d14]/70 line-clamp-2">
                       {item.prompt}
                     </p>
                   </div>
@@ -227,11 +227,11 @@ export default async function ColorPage({ params }: ColorPageProps) {
           ) : (
             <div className="text-center py-12">
               <div className="text-6xl mb-4">🎨</div>
-              <h3 className="text-xl font-semibold text-white mb-2">No designs found</h3>
-              <p className="text-gray-400 mb-6">We&apos;re working on adding more {colorData.name.toLowerCase()} designs!</p>
+              <h3 className="text-xl font-semibold text-[#1b0d14] mb-2">No designs found</h3>
+              <p className="text-[#1b0d14]/60 mb-6">We&apos;re working on adding more {colorData.name.toLowerCase()} designs!</p>
               <Link
                 href="/nail-art-gallery"
-                className="inline-flex items-center bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors"
+                className="inline-flex items-center bg-[#ee2b8c] hover:brightness-95 text-white font-semibold py-3 px-6 rounded-full transition-colors"
               >
                 Browse All Designs
               </Link>
@@ -240,17 +240,17 @@ export default async function ColorPage({ params }: ColorPageProps) {
         </div>
 
         {/* Related Colors */}
-        <div className="bg-gray-800 rounded-xl p-8">
-          <h2 className="text-2xl font-bold text-white mb-6 text-center">Explore Other Colors</h2>
+        <div className="bg-white rounded-xl p-8 ring-1 ring-[#ee2b8c]/15">
+          <h2 className="text-2xl font-bold mb-6 text-center">Explore Other Colors</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {Object.entries(colorInfo).filter(([key]) => key !== color).map(([key, data]) => (
               <Link
                 key={key}
                 href={`/nail-colors/${key}`}
-                className={`bg-gradient-to-r ${data.gradient} rounded-lg p-4 text-center hover:scale-105 transition-transform`}
+                className={`bg-white ring-1 ring-[#ee2b8c]/20 rounded-lg p-4 text-center hover:scale-105 transition-transform`}
               >
                 <div className="text-2xl mb-2">{data.emoji}</div>
-                <div className="text-white font-semibold">{data.name}</div>
+                <div className="text-[#1b0d14] font-semibold">{data.name}</div>
               </Link>
             ))}
           </div>

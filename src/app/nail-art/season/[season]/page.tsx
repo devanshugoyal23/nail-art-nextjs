@@ -42,33 +42,33 @@ export default async function SeasonPage({ params }: SeasonPageProps) {
   const allTags = getAllTagsFromGalleryItems(filteredItems);
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-[#f8f6f7]">
       <div className="max-w-7xl mx-auto px-4 py-8">
         {/* Breadcrumb */}
         <nav className="mb-6">
           <div className="flex items-center space-x-2 text-sm">
-            <Link href="/categories" className="text-purple-400 hover:text-purple-300">
+            <Link href="/categories" className="text-[#ee2b8c] hover:underline">
               Categories
             </Link>
-            <span className="text-gray-400">/</span>
-            <Link href="/categories/seasons" className="text-purple-400 hover:text-purple-300">
+            <span className="text-[#1b0d14]/50">/</span>
+            <Link href="/categories/seasons" className="text-[#ee2b8c] hover:underline">
               Seasons
             </Link>
-            <span className="text-gray-400">/</span>
-            <span className="text-white font-medium">{capitalize(season)}</span>
+            <span className="text-[#1b0d14]/50">/</span>
+            <span className="text-[#1b0d14] font-medium">{capitalize(season)}</span>
           </div>
         </nav>
 
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">{h1}</h1>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">{description}</p>
+          <h1 className="text-4xl md:text-5xl font-bold text-[#1b0d14] mb-6">{h1}</h1>
+          <p className="text-xl text-[#1b0d14]/70 max-w-3xl mx-auto">{description}</p>
         </div>
 
         {/* Tags Section */}
         {Object.values(allTags).some(tags => tags.length > 0) && (
-          <div className="bg-gray-800 rounded-xl p-8 mb-12">
-            <h2 className="text-2xl font-bold text-white mb-6 text-center">Explore by Tags</h2>
+          <div className="bg-white rounded-xl p-8 mb-12 ring-1 ring-[#ee2b8c]/15">
+            <h2 className="text-2xl font-bold mb-6 text-center">Explore by Tags</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {allTags.colors.length > 0 && (
                 <TagCollection
@@ -100,7 +100,7 @@ export default async function SeasonPage({ params }: SeasonPageProps) {
 
         {/* Gallery */}
         <div className="mb-12">
-          <h2 className="text-2xl font-bold text-white mb-6">
+          <h2 className="text-2xl font-bold mb-6">
             {capitalize(season)} Designs ({filteredItems.length})
           </h2>
           
@@ -110,7 +110,7 @@ export default async function SeasonPage({ params }: SeasonPageProps) {
                 <Link
                   key={item.id}
                   href={`/${item.category?.toLowerCase().replace(/\s+/g, '-')}/${item.design_name ? `${item.design_name.toLowerCase().replace(/\s+/g, '-')}-${item.id.slice(-8)}` : `design-${item.id.slice(-8)}`}`}
-                  className="group bg-gray-800 rounded-lg overflow-hidden hover:bg-gray-700 transition-all duration-300 transform hover:-translate-y-1"
+                  className="group bg-white ring-1 ring-[#ee2b8c]/15 rounded-lg overflow-hidden hover:shadow-md transition-all duration-300 transform hover:-translate-y-1"
                 >
                   <div className="aspect-square relative">
                     <OptimizedImage
@@ -125,11 +125,11 @@ export default async function SeasonPage({ params }: SeasonPageProps) {
                   
                   <div className="p-4">
                     {item.design_name && (
-                      <h3 className="text-lg font-semibold text-white mb-2 line-clamp-1">
+                      <h3 className="text-lg font-semibold text-[#1b0d14] mb-2 line-clamp-1">
                         {item.design_name}
                       </h3>
                     )}
-                    <p className="text-sm text-gray-300 line-clamp-2">
+                    <p className="text-sm text-[#1b0d14]/70 line-clamp-2">
                       {item.prompt}
                     </p>
                   </div>
@@ -139,11 +139,11 @@ export default async function SeasonPage({ params }: SeasonPageProps) {
           ) : (
             <div className="text-center py-12">
               <div className="text-6xl mb-4">💅</div>
-              <h3 className="text-xl font-semibold text-white mb-2">No designs found</h3>
-              <p className="text-gray-400 mb-6">We&apos;re working on adding more {capitalize(season)} designs!</p>
+              <h3 className="text-xl font-semibold text-[#1b0d14] mb-2">No designs found</h3>
+              <p className="text-[#1b0d14]/60 mb-6">We&apos;re working on adding more {capitalize(season)} designs!</p>
               <Link
                 href="/nail-art-gallery"
-                className="inline-flex items-center bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors"
+                className="inline-flex items-center bg-[#ee2b8c] hover:brightness-95 text-white font-semibold py-3 px-6 rounded-full transition-colors"
               >
                 Browse All Designs
               </Link>
@@ -152,16 +152,16 @@ export default async function SeasonPage({ params }: SeasonPageProps) {
         </div>
 
         {/* Related Seasons */}
-        <div className="bg-gray-800 rounded-xl p-8">
-          <h2 className="text-2xl font-bold text-white mb-6 text-center">Explore Other Seasons</h2>
+        <div className="bg-white rounded-xl p-8 ring-1 ring-[#ee2b8c]/15">
+          <h2 className="text-2xl font-bold mb-6 text-center">Explore Other Seasons</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             {['spring', 'summer', 'autumn', 'winter', 'christmas', 'halloween'].map(seas => (
               <Link
                 key={seas}
                 href={`/nail-art/season/${seas}`}
-                className={`bg-gradient-to-r from-green-500 to-blue-600 rounded-lg p-4 text-center hover:scale-105 transition-transform ${seas === season ? 'ring-2 ring-blue-400' : ''}`}
+                className={`bg-white ring-1 ring-[#ee2b8c]/20 rounded-lg p-4 text-center hover:scale-105 transition-transform ${seas === season ? 'ring-2 ring-[#ee2b8c]' : ''}`}
               >
-                <div className="text-white font-semibold">{capitalize(seas)}</div>
+                <div className="text-[#1b0d14] font-semibold">{capitalize(seas)}</div>
               </Link>
             ))}
           </div>

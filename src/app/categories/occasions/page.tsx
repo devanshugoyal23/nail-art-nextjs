@@ -101,25 +101,25 @@ export default async function OccasionsPage() {
   );
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-[#f8f6f7]">
       <div className="max-w-7xl mx-auto px-4 py-8">
         {/* Breadcrumb */}
         <nav className="mb-6">
           <div className="flex items-center space-x-2 text-sm">
-            <Link href="/categories" className="text-purple-400 hover:text-purple-300">
+            <Link href="/categories" className="text-[#ee2b8c] hover:underline">
               Categories
             </Link>
-            <span className="text-gray-400">/</span>
-            <span className="text-white font-medium">Occasions</span>
+            <span className="text-[#1b0d14]/50">/</span>
+            <span className="text-[#1b0d14] font-medium">Occasions</span>
           </div>
         </nav>
 
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
+          <h1 className="text-4xl md:text-5xl font-bold text-[#1b0d14] mb-6">
             Nail Art for Every Occasion
           </h1>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+          <p className="text-xl text-[#1b0d14]/70 max-w-3xl mx-auto">
             Find the perfect nail art for any occasion. From elegant wedding nails to fun party designs, 
             we have inspiration for every event.
           </p>
@@ -131,7 +131,7 @@ export default async function OccasionsPage() {
             <Link
               key={index}
               href={`/nail-art/occasion/${occasion.slug}`}
-              className="group bg-gray-800 rounded-xl overflow-hidden hover:bg-gray-700 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-2xl"
+              className="group bg-white ring-1 ring-[#ee2b8c]/15 rounded-xl overflow-hidden hover:shadow-md transition-all duration-300 transform hover:-translate-y-2"
             >
               <div className="relative h-48">
                 {occasion.sampleImage ? (
@@ -144,11 +144,11 @@ export default async function OccasionsPage() {
                     priority={index < 3}
                   />
                 ) : (
-                  <div className="w-full h-full bg-gradient-to-br from-purple-600 to-indigo-600 flex items-center justify-center">
+                  <div className="w-full h-full bg-[#f8f6f7] flex items-center justify-center">
                     <div className="text-6xl opacity-80">{occasion.emoji}</div>
                   </div>
                 )}
-                <div className="absolute inset-0 bg-black/20"></div>
+                <div className="absolute inset-0 bg-black/10"></div>
                 <div className="absolute inset-0 flex items-center justify-center">
                   {!occasion.sampleImage && (
                     <div className="text-6xl opacity-80">{occasion.emoji}</div>
@@ -157,20 +157,20 @@ export default async function OccasionsPage() {
               </div>
               
               <div className="p-6">
-                <h2 className="text-2xl font-bold text-white mb-3 group-hover:text-purple-400 transition-colors">
+                <h2 className="text-2xl font-bold text-[#1b0d14] mb-3 group-hover:text-[#ee2b8c] transition-colors">
                   {occasion.name}
                 </h2>
-                <p className="text-gray-300 mb-4">
+                <p className="text-[#1b0d14]/70 mb-4">
                   {occasion.description}
                 </p>
                 
                 <div className="mb-4">
-                  <h3 className="text-sm font-semibold text-purple-400 mb-2">Characteristics:</h3>
+                  <h3 className="text-sm font-semibold text-[#ee2b8c] mb-2">Characteristics:</h3>
                   <div className="flex flex-wrap gap-2">
                     {occasion.characteristics.map((char, charIndex) => (
                       <span
                         key={charIndex}
-                        className="bg-purple-600/20 text-purple-300 px-2 py-1 rounded text-xs"
+                        className="bg-white ring-1 ring-[#ee2b8c]/20 text-[#1b0d14] px-2 py-1 rounded-full text-xs"
                       >
                         {char}
                       </span>
@@ -179,12 +179,12 @@ export default async function OccasionsPage() {
                 </div>
                 
                 <div className="mb-4">
-                  <h3 className="text-sm font-semibold text-blue-400 mb-2">Popular Colors:</h3>
+                  <h3 className="text-sm font-semibold text-[#1b0d14] mb-2">Popular Colors:</h3>
                   <div className="flex flex-wrap gap-2">
                     {occasion.colors.map((color, colorIndex) => (
                       <span
                         key={colorIndex}
-                        className="bg-blue-600/20 text-blue-300 px-2 py-1 rounded text-xs"
+                        className="bg-white ring-1 ring-[#ee2b8c]/20 text-[#1b0d14] px-2 py-1 rounded-full text-xs"
                       >
                         {color}
                       </span>
@@ -193,12 +193,12 @@ export default async function OccasionsPage() {
                 </div>
                 
                 <div>
-                  <h3 className="text-sm font-semibold text-green-400 mb-2">Best Styles:</h3>
+                  <h3 className="text-sm font-semibold text-[#1b0d14] mb-2">Best Styles:</h3>
                   <div className="flex flex-wrap gap-2">
                     {occasion.styles.map((style, styleIndex) => (
                       <span
                         key={styleIndex}
-                        className="bg-green-600/20 text-green-300 px-2 py-1 rounded text-xs"
+                        className="bg-white ring-1 ring-[#ee2b8c]/20 text-[#1b0d14] px-2 py-1 rounded-full text-xs"
                       >
                         {style}
                       </span>
@@ -211,32 +211,32 @@ export default async function OccasionsPage() {
         </div>
 
         {/* Occasion Guide */}
-        <div className="bg-gray-800 rounded-xl p-8 mb-16">
-          <h2 className="text-2xl font-bold text-white mb-6 text-center">Occasion Guide</h2>
+        <div className="bg-white rounded-xl p-8 mb-16 ring-1 ring-[#ee2b8c]/15">
+          <h2 className="text-2xl font-bold mb-6 text-center">Occasion Guide</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div>
-              <h3 className="text-lg font-semibold text-purple-400 mb-4">Professional Settings</h3>
+              <h3 className="text-lg font-semibold text-[#ee2b8c] mb-4">Professional Settings</h3>
               <div className="space-y-3">
-                <div className="bg-gray-700 rounded-lg p-4">
-                  <h4 className="text-white font-medium mb-2">Work/Office</h4>
-                  <p className="text-gray-300 text-sm">Keep it subtle with nude, pink, or classic red. Avoid glitter and bold patterns.</p>
+                <div className="bg-white rounded-lg p-4 ring-1 ring-[#ee2b8c]/15">
+                  <h4 className="text-[#1b0d14] font-medium mb-2">Work/Office</h4>
+                  <p className="text-[#1b0d14]/70 text-sm">Keep it subtle with nude, pink, or classic red. Avoid glitter and bold patterns.</p>
                 </div>
-                <div className="bg-gray-700 rounded-lg p-4">
-                  <h4 className="text-white font-medium mb-2">Business Meetings</h4>
-                  <p className="text-gray-300 text-sm">Opt for French manicure or solid colors in professional tones.</p>
+                <div className="bg-white rounded-lg p-4 ring-1 ring-[#ee2b8c]/15">
+                  <h4 className="text-[#1b0d14] font-medium mb-2">Business Meetings</h4>
+                  <p className="text-[#1b0d14]/70 text-sm">Opt for French manicure or solid colors in professional tones.</p>
                 </div>
               </div>
             </div>
             <div>
-              <h3 className="text-lg font-semibold text-pink-400 mb-4">Social Events</h3>
+              <h3 className="text-lg font-semibold text-[#ee2b8c] mb-4">Social Events</h3>
               <div className="space-y-3">
-                <div className="bg-gray-700 rounded-lg p-4">
-                  <h4 className="text-white font-medium mb-2">Parties & Celebrations</h4>
-                  <p className="text-gray-300 text-sm">Go bold with glitter, ombre, or bright colors. Have fun with your design!</p>
+                <div className="bg-white rounded-lg p-4 ring-1 ring-[#ee2b8c]/15">
+                  <h4 className="text-[#1b0d14] font-medium mb-2">Parties & Celebrations</h4>
+                  <p className="text-[#1b0d14]/70 text-sm">Go bold with glitter, ombre, or bright colors. Have fun with your design!</p>
                 </div>
-                <div className="bg-gray-700 rounded-lg p-4">
-                  <h4 className="text-white font-medium mb-2">Date Nights</h4>
-                  <p className="text-gray-300 text-sm">Choose romantic colors like red, pink, or rose gold with elegant styles.</p>
+                <div className="bg-white rounded-lg p-4 ring-1 ring-[#ee2b8c]/15">
+                  <h4 className="text-[#1b0d14] font-medium mb-2">Date Nights</h4>
+                  <p className="text-[#1b0d14]/70 text-sm">Choose romantic colors like red, pink, or rose gold with elegant styles.</p>
                 </div>
               </div>
             </div>
@@ -244,8 +244,8 @@ export default async function OccasionsPage() {
         </div>
 
         {/* Popular Tags */}
-        <div className="bg-gray-800 rounded-xl p-8 mb-16">
-          <h2 className="text-2xl font-bold text-white mb-6 text-center">Explore by Tags</h2>
+        <div className="bg-white rounded-xl p-8 mb-16 ring-1 ring-[#ee2b8c]/15">
+          <h2 className="text-2xl font-bold mb-6 text-center">Explore by Tags</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <TagCollection
               title="Popular Colors"
@@ -290,30 +290,30 @@ export default async function OccasionsPage() {
         </div>
 
         {/* Related Categories */}
-        <div className="bg-gray-800 rounded-xl p-8">
-          <h2 className="text-2xl font-bold text-white mb-6 text-center">Explore More Categories</h2>
+        <div className="bg-white rounded-xl p-8 ring-1 ring-[#ee2b8c]/15">
+          <h2 className="text-2xl font-bold mb-6 text-center">Explore More Categories</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <Link
               href="/categories/nail-shapes"
-              className="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-4 rounded-lg text-center transition-colors"
+              className="bg-[#ee2b8c] hover:brightness-95 text-white font-semibold py-3 px-4 rounded-full text-center transition-colors"
             >
               Nail Shapes
             </Link>
             <Link
               href="/categories/colors"
-              className="bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-4 rounded-lg text-center transition-colors"
+              className="bg-white ring-1 ring-[#ee2b8c]/20 text-[#1b0d14] font-semibold py-3 px-4 rounded-full text-center transition-colors hover:bg-[#f8f6f7]"
             >
               Colors
             </Link>
             <Link
               href="/categories/techniques"
-              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg text-center transition-colors"
+              className="bg-white ring-1 ring-[#ee2b8c]/20 text-[#1b0d14] font-semibold py-3 px-4 rounded-full text-center transition-colors hover:bg-[#f8f6f7]"
             >
               Techniques
             </Link>
             <Link
               href="/categories/styles"
-              className="bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-4 rounded-lg text-center transition-colors"
+              className="bg-white ring-1 ring-[#ee2b8c]/20 text-[#1b0d14] font-semibold py-3 px-4 rounded-full text-center transition-colors hover:bg-[#f8f6f7]"
             >
               Styles
             </Link>

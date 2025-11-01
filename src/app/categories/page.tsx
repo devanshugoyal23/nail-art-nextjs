@@ -107,29 +107,28 @@ export default async function CategoriesPage() {
   // const categoriesWithContent = tagStats.filter(stat => stat.count > 0);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-purple-900">
+    <div className="min-h-screen bg-[#f8f6f7]">
       {/* Hero Section */}
       <div className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-purple-600/20 to-pink-600/20"></div>
         <div className="relative max-w-7xl mx-auto px-4 py-16">
           <div className="text-center">
-            <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+            <h1 className="text-5xl md:text-7xl font-bold text-[#1b0d14] mb-6">
               Nail Art Categories
             </h1>
-            <p className="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto mb-8">
+            <p className="text-xl md:text-2xl text-[#1b0d14]/70 max-w-4xl mx-auto mb-8">
               Discover your perfect nail art style. Browse by type or explore all {allCategoriesWithThumbnails.length} categories 
               with thumbnails and design counts.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 href="/categories/all"
-                className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold py-4 px-8 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg"
+                className="bg-[#ee2b8c] hover:brightness-95 text-white font-semibold py-4 px-8 rounded-full transition-all duration-300 transform hover:scale-105 shadow-sm"
               >
                 Browse All {allCategoriesWithThumbnails.length} Categories
               </Link>
               <Link
                 href="/nail-art-gallery"
-                className="bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white font-semibold py-4 px-8 rounded-full transition-all duration-300 border border-white/20"
+                className="bg-white ring-1 ring-[#ee2b8c]/20 hover:bg-[#f8f6f7] text-[#1b0d14] font-semibold py-4 px-8 rounded-full transition-all duration-300"
               >
                 View All Designs
               </Link>
@@ -142,21 +141,21 @@ export default async function CategoriesPage() {
         {/* Quick Stats */}
         <div className="mb-12">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="bg-gradient-to-r from-purple-600/20 to-pink-600/20 rounded-xl p-4 text-center border border-purple-500/20">
-              <div className="text-2xl font-bold text-purple-400">{allCategoriesWithThumbnails.length}</div>
-              <div className="text-gray-300 text-sm">Categories</div>
+            <div className="bg-white rounded-xl p-4 text-center ring-1 ring-[#ee2b8c]/15">
+              <div className="text-2xl font-bold text-[#1b0d14]">{allCategoriesWithThumbnails.length}</div>
+              <div className="text-[#1b0d14]/60 text-sm">Categories</div>
             </div>
-            <div className="bg-gradient-to-r from-blue-600/20 to-cyan-600/20 rounded-xl p-4 text-center border border-blue-500/20">
-              <div className="text-2xl font-bold text-blue-400">{categoryStats?.totalItems || 0}</div>
-              <div className="text-gray-300 text-sm">Total Designs</div>
+            <div className="bg-white rounded-xl p-4 text-center ring-1 ring-[#ee2b8c]/15">
+              <div className="text-2xl font-bold text-[#1b0d14]">{categoryStats?.totalItems || 0}</div>
+              <div className="text-[#1b0d14]/60 text-sm">Total Designs</div>
             </div>
-            <div className="bg-gradient-to-r from-green-600/20 to-emerald-600/20 rounded-xl p-4 text-center border border-green-500/20">
-              <div className="text-2xl font-bold text-green-400">{categoryStats?.categoriesWithContent || 0}</div>
-              <div className="text-gray-300 text-sm">Well Stocked</div>
+            <div className="bg-white rounded-xl p-4 text-center ring-1 ring-[#ee2b8c]/15">
+              <div className="text-2xl font-bold text-[#1b0d14]">{categoryStats?.categoriesWithContent || 0}</div>
+              <div className="text-[#1b0d14]/60 text-sm">Well Stocked</div>
             </div>
-            <div className="bg-gradient-to-r from-orange-600/20 to-red-600/20 rounded-xl p-4 text-center border border-orange-500/20">
-              <div className="text-2xl font-bold text-orange-400">{categoryStats?.categoriesNeedingContent || 0}</div>
-              <div className="text-gray-300 text-sm">Need Content</div>
+            <div className="bg-white rounded-xl p-4 text-center ring-1 ring-[#ee2b8c]/15">
+              <div className="text-2xl font-bold text-[#1b0d14]">{categoryStats?.categoriesNeedingContent || 0}</div>
+              <div className="text-[#1b0d14]/60 text-sm">Need Content</div>
             </div>
           </div>
         </div>
@@ -165,49 +164,49 @@ export default async function CategoriesPage() {
         <div className="mb-12">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Browse by Type */}
-            <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-8 border border-gray-700/50">
-              <h2 className="text-2xl font-bold text-white mb-4">Browse by Type</h2>
-              <p className="text-gray-300 mb-6">Explore categories organized by nail art types and styles</p>
+            <div className="bg-white rounded-2xl p-8 ring-1 ring-[#ee2b8c]/15">
+              <h2 className="text-2xl font-bold mb-4">Browse by Type</h2>
+              <p className="text-[#1b0d14]/70 mb-6">Explore categories organized by nail art types and styles</p>
               <div className="grid grid-cols-1 gap-4">
                 {categories.map((category, index) => (
                   <Link
                     key={index}
                     href={category.href}
-                    className="group flex items-center space-x-4 p-4 bg-gray-700/50 rounded-xl hover:bg-gray-600/50 transition-all duration-300"
+                    className="group flex items-center space-x-4 p-4 bg-white rounded-xl ring-1 ring-[#ee2b8c]/15 hover:ring-[#ee2b8c]/30 transition-all duration-300"
                   >
                     <div className="text-2xl">{category.icon}</div>
                     <div className="flex-1">
-                      <h3 className="text-white font-semibold group-hover:text-purple-400 transition-colors">
+                      <h3 className="text-[#1b0d14] font-semibold group-hover:text-[#ee2b8c] transition-colors">
                         {category.title}
                       </h3>
-                      <p className="text-gray-400 text-sm">{category.description}</p>
+                      <p className="text-[#1b0d14]/70 text-sm">{category.description}</p>
                     </div>
-                    <div className="text-purple-400">→</div>
+                    <div className="text-[#ee2b8c]">→</div>
                   </Link>
                 ))}
               </div>
             </div>
 
             {/* Browse All Categories */}
-            <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-8 border border-gray-700/50">
+            <div className="bg-white rounded-2xl p-8 ring-1 ring-[#ee2b8c]/15">
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-2xl font-bold text-white">Browse All Categories</h2>
-                <div className="bg-purple-600/20 text-purple-300 text-xs px-2 py-1 rounded-full">
+                <h2 className="text-2xl font-bold">Browse All Categories</h2>
+                <div className="bg-[#ee2b8c]/10 text-[#ee2b8c] text-xs px-2 py-1 rounded-full">
                   {allCategoriesWithThumbnails.length} total
                 </div>
               </div>
-              <p className="text-gray-300 mb-6">Explore our complete collection with thumbnails and design counts</p>
+              <p className="text-[#1b0d14]/70 mb-6">Explore our complete collection with thumbnails and design counts</p>
               
               {/* Quick Stats */}
               <div className="mb-6">
                 <div className="grid grid-cols-2 gap-3">
-                  <div className="bg-gradient-to-br from-purple-600/20 to-purple-500/20 rounded-xl p-4 text-center border border-purple-500/20">
-                    <div className="text-2xl font-bold text-purple-400">{allCategoriesWithThumbnails.length}</div>
-                    <div className="text-gray-300 text-xs">Categories</div>
+                  <div className="bg-white rounded-xl p-4 text-center ring-1 ring-[#ee2b8c]/15">
+                    <div className="text-2xl font-bold text-[#1b0d14]">{allCategoriesWithThumbnails.length}</div>
+                    <div className="text-[#1b0d14]/60 text-xs">Categories</div>
                   </div>
-                  <div className="bg-gradient-to-br from-blue-600/20 to-blue-500/20 rounded-xl p-4 text-center border border-blue-500/20">
-                    <div className="text-2xl font-bold text-blue-400">{categoryStats?.totalItems || 0}</div>
-                    <div className="text-gray-300 text-xs">Designs</div>
+                  <div className="bg-white rounded-xl p-4 text-center ring-1 ring-[#ee2b8c]/15">
+                    <div className="text-2xl font-bold text-[#1b0d14]">{categoryStats?.totalItems || 0}</div>
+                    <div className="text-[#1b0d14]/60 text-xs">Designs</div>
                   </div>
                 </div>
               </div>
@@ -215,8 +214,8 @@ export default async function CategoriesPage() {
               {/* Popular Categories */}
               <div className="mb-6">
                 <div className="flex items-center justify-between mb-3">
-                  <h3 className="text-white font-semibold text-sm">🔥 Popular</h3>
-                  <Link href="/categories/all?sort=count" className="text-purple-400 hover:text-purple-300 text-xs">
+                  <h3 className="text-sm font-semibold">🔥 Popular</h3>
+                  <Link href="/categories/all?sort=count" className="text-[#ee2b8c] hover:underline text-xs">
                     View All →
                   </Link>
                 </div>
@@ -225,7 +224,7 @@ export default async function CategoriesPage() {
                     <Link
                       key={index}
                       href={categoryUrl(category.category)}
-                      className="group flex items-center space-x-3 bg-gray-700/50 rounded-lg p-3 hover:bg-gray-600/50 transition-all duration-300 hover:scale-[1.02]"
+                      className="group flex items-center space-x-3 bg-white ring-1 ring-[#ee2b8c]/15 rounded-lg p-3 hover:ring-[#ee2b8c]/30 transition-all duration-300 hover:scale-[1.02]"
                     >
                       <div className="w-10 h-10 rounded-lg overflow-hidden flex-shrink-0">
                         {category.thumbnail ? (
@@ -237,18 +236,18 @@ export default async function CategoriesPage() {
                             className="w-full h-full object-cover"
                           />
                         ) : (
-                          <div className="w-full h-full bg-gradient-to-br from-purple-600 to-pink-600 flex items-center justify-center">
+                          <div className="w-full h-full bg-[#fde7f2] flex items-center justify-center">
                             <span className="text-sm">💅</span>
                           </div>
                         )}
                       </div>
                       <div className="flex-1 min-w-0">
-                        <h4 className="text-white font-medium text-sm group-hover:text-purple-400 transition-colors line-clamp-1">
+                        <h4 className="text-[#1b0d14] font-medium text-sm group-hover:text-[#ee2b8c] transition-colors line-clamp-1">
                           {category.category}
                         </h4>
-                        <p className="text-gray-400 text-xs">{category.count} designs</p>
+                        <p className="text-[#1b0d14]/60 text-xs">{category.count} designs</p>
                       </div>
-                      <div className="text-purple-400 text-xs font-medium">
+                      <div className="text-[#ee2b8c] text-xs font-medium">
                         #{index + 1}
                       </div>
                     </Link>
@@ -259,8 +258,8 @@ export default async function CategoriesPage() {
               {/* Trending Categories */}
               <div className="mb-6">
                 <div className="flex items-center justify-between mb-3">
-                  <h3 className="text-white font-semibold text-sm">⭐ Trending</h3>
-                  <Link href="/categories/all?sort=recent" className="text-blue-400 hover:text-blue-300 text-xs">
+                  <h3 className="text-sm font-semibold">⭐ Trending</h3>
+                  <Link href="/categories/all?sort=recent" className="text-[#ee2b8c] hover:underline text-xs">
                     View All →
                   </Link>
                 </div>
@@ -269,7 +268,7 @@ export default async function CategoriesPage() {
                     <Link
                       key={index}
                       href={categoryUrl(category.category)}
-                      className="group flex items-center space-x-3 bg-gray-700/50 rounded-lg p-3 hover:bg-gray-600/50 transition-all duration-300 hover:scale-[1.02]"
+                      className="group flex items-center space-x-3 bg-white ring-1 ring-[#ee2b8c]/15 rounded-lg p-3 hover:ring-[#ee2b8c]/30 transition-all duration-300 hover:scale-[1.02]"
                     >
                       <div className="w-10 h-10 rounded-lg overflow-hidden flex-shrink-0">
                         {category.thumbnail ? (
@@ -281,18 +280,18 @@ export default async function CategoriesPage() {
                             className="w-full h-full object-cover"
                           />
                         ) : (
-                          <div className="w-full h-full bg-gradient-to-br from-blue-600 to-cyan-600 flex items-center justify-center">
+                          <div className="w-full h-full bg-[#e8f2ff] flex items-center justify-center">
                             <span className="text-sm">✨</span>
                           </div>
                         )}
                       </div>
                       <div className="flex-1 min-w-0">
-                        <h4 className="text-white font-medium text-sm group-hover:text-blue-400 transition-colors line-clamp-1">
+                        <h4 className="text-[#1b0d14] font-medium text-sm group-hover:text-[#ee2b8c] transition-colors line-clamp-1">
                           {category.category}
                         </h4>
-                        <p className="text-gray-400 text-xs">{category.count} designs</p>
+                        <p className="text-[#1b0d14]/60 text-xs">{category.count} designs</p>
                       </div>
-                      <div className="text-blue-400 text-xs font-medium">
+                      <div className="text-[#ee2b8c] text-xs font-medium">
                         New
                       </div>
                     </Link>
@@ -304,20 +303,20 @@ export default async function CategoriesPage() {
               <div className="space-y-3">
                 <Link
                   href="/categories/all"
-                  className="block bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold py-3 px-4 rounded-xl text-center transition-all duration-300 transform hover:scale-105 text-sm shadow-lg"
+                  className="block bg-[#ee2b8c] hover:brightness-95 text-white font-semibold py-3 px-4 rounded-xl text-center transition-all duration-300 transform hover:scale-105 text-sm shadow-sm"
                 >
                   View All {allCategoriesWithThumbnails.length} Categories
                 </Link>
                 <div className="grid grid-cols-2 gap-2">
                   <Link
                     href="/categories/all?sort=count"
-                    className="bg-blue-600/20 hover:bg-blue-600/30 text-blue-300 py-2 px-3 rounded-lg text-center text-xs transition-colors font-medium"
+                    className="bg-white ring-1 ring-[#ee2b8c]/20 hover:bg-[#f8f6f7] text-[#1b0d14] py-2 px-3 rounded-lg text-center text-xs transition-colors font-medium"
                   >
                     Most Popular
                   </Link>
                   <Link
                     href="/categories/all?sort=name"
-                    className="bg-green-600/20 hover:bg-green-600/30 text-green-300 py-2 px-3 rounded-lg text-center text-xs transition-colors font-medium"
+                    className="bg-white ring-1 ring-[#ee2b8c]/20 hover:bg-[#f8f6f7] text-[#1b0d14] py-2 px-3 rounded-lg text-center text-xs transition-colors font-medium"
                   >
                     A-Z
                   </Link>
@@ -329,35 +328,35 @@ export default async function CategoriesPage() {
 
         {/* Popular Tags Section */}
         <div className="mb-12">
-          <h2 className="text-3xl font-bold text-white mb-6 text-center">Explore by Tags</h2>
+          <h2 className="text-3xl font-bold mb-6 text-center">Explore by Tags</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <TagCollection
               title="Colors"
               tags={popularColors}
               variant="color"
               size="lg"
-              className="bg-gradient-to-br from-pink-500/10 to-red-500/10 p-6 rounded-xl border border-pink-500/20"
+              className="bg-white p-6 rounded-xl ring-1 ring-[#ee2b8c]/15"
             />
             <TagCollection
               title="Techniques"
               tags={popularTechniques}
               variant="technique"
               size="lg"
-              className="bg-gradient-to-br from-blue-500/10 to-cyan-500/10 p-6 rounded-xl border border-blue-500/20"
+              className="bg-white p-6 rounded-xl ring-1 ring-[#ee2b8c]/15"
             />
             <TagCollection
               title="Occasions"
               tags={popularOccasions}
               variant="occasion"
               size="lg"
-              className="bg-gradient-to-br from-yellow-500/10 to-orange-500/10 p-6 rounded-xl border border-yellow-500/20"
+              className="bg-white p-6 rounded-xl ring-1 ring-[#ee2b8c]/15"
             />
             <TagCollection
               title="Styles"
               tags={popularStyles}
               variant="style"
               size="lg"
-              className="bg-gradient-to-br from-purple-500/10 to-pink-500/10 p-6 rounded-xl border border-purple-500/20"
+              className="bg-white p-6 rounded-xl ring-1 ring-[#ee2b8c]/15"
             />
           </div>
         </div>
@@ -365,10 +364,10 @@ export default async function CategoriesPage() {
         {/* Featured Categories Preview */}
         <div className="mb-12">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-3xl font-bold text-white">Featured Categories</h2>
+            <h2 className="text-3xl font-bold">Featured Categories</h2>
             <Link
               href="/categories/all"
-              className="text-purple-400 hover:text-purple-300 text-sm font-medium"
+              className="text-[#ee2b8c] hover:underline text-sm font-medium"
             >
               View All →
             </Link>
@@ -378,7 +377,7 @@ export default async function CategoriesPage() {
               <Link
                 key={index}
                 href={categoryUrl(category.category)}
-                className="group bg-gray-800/50 backdrop-blur-sm rounded-xl overflow-hidden hover:bg-gray-700/50 transition-all duration-300 transform hover:-translate-y-1 border border-gray-700/50"
+                className="group bg-white rounded-xl overflow-hidden hover:shadow-md transition-all duration-300 transform hover:-translate-y-1 ring-1 ring-[#ee2b8c]/15"
               >
                 <div className="relative h-24 overflow-hidden">
                   {category.thumbnail ? (
@@ -394,13 +393,12 @@ export default async function CategoriesPage() {
                       <span className="text-2xl">💅</span>
                     </div>
                   )}
-                  <div className="absolute inset-0 bg-black/20"></div>
-                  <div className="absolute top-1 right-1 bg-white/20 backdrop-blur-sm text-white text-xs px-1 py-0.5 rounded">
+                  <div className="absolute top-1 right-1 bg-white/80 text-[#1b0d14] text-xs px-1 py-0.5 rounded ring-1 ring-[#ee2b8c]/20">
                     {category.count}
                   </div>
                 </div>
                 <div className="p-2">
-                  <h3 className="text-white font-medium text-xs group-hover:text-purple-400 transition-colors line-clamp-2">
+                  <h3 className="text-[#1b0d14] font-medium text-xs group-hover:text-[#ee2b8c] transition-colors line-clamp-2">
                     {category.category}
                   </h3>
                 </div>
@@ -410,30 +408,30 @@ export default async function CategoriesPage() {
         </div>
 
         {/* Quick Actions */}
-        <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-8 border border-gray-700/50">
-          <h2 className="text-2xl font-bold text-white mb-6 text-center">Quick Actions</h2>
+        <div className="bg-white rounded-2xl p-8 ring-1 ring-[#ee2b8c]/15">
+          <h2 className="text-2xl font-bold mb-6 text-center">Quick Actions</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             <Link
               href="/categories/all"
-              className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold py-4 px-6 rounded-xl text-center transition-all duration-300 transform hover:scale-105"
+              className="bg-[#ee2b8c] hover:brightness-95 text-white font-semibold py-4 px-6 rounded-xl text-center transition-all duration-300 transform hover:scale-105"
             >
               All Categories
             </Link>
             <Link
               href="/nail-art-gallery"
-              className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white font-semibold py-4 px-6 rounded-xl text-center transition-all duration-300 transform hover:scale-105"
+              className="bg-white ring-1 ring-[#ee2b8c]/20 text-[#1b0d14] hover:bg-[#f8f6f7] font-semibold py-4 px-6 rounded-xl text-center transition-all duration-300 transform hover:scale-105"
             >
               All Designs
             </Link>
             <Link
               href="/try-on"
-              className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-semibold py-4 px-6 rounded-xl text-center transition-all duration-300 transform hover:scale-105"
+              className="bg-white ring-1 ring-[#ee2b8c]/20 text-[#1b0d14] hover:bg-[#f8f6f7] font-semibold py-4 px-6 rounded-xl text-center transition-all duration-300 transform hover:scale-105"
             >
               Virtual Try-On
             </Link>
             <Link
               href="/nail-art/trending"
-              className="bg-gradient-to-r from-yellow-600 to-orange-600 hover:from-yellow-700 hover:to-orange-700 text-white font-semibold py-4 px-6 rounded-xl text-center transition-all duration-300 transform hover:scale-105"
+              className="bg-white ring-1 ring-[#ee2b8c]/20 text-[#1b0d14] hover:bg-[#f8f6f7] font-semibold py-4 px-6 rounded-xl text-center transition-all duration-300 transform hover:scale-105"
             >
               Trending Now
             </Link>

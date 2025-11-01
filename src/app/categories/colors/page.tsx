@@ -92,25 +92,25 @@ export default async function ColorsPage() {
   );
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-[#f8f6f7]">
       <div className="max-w-7xl mx-auto px-4 py-8">
         {/* Breadcrumb */}
         <nav className="mb-6">
           <div className="flex items-center space-x-2 text-sm">
-            <Link href="/categories" className="text-purple-400 hover:text-purple-300">
+            <Link href="/categories" className="text-[#ee2b8c] hover:underline">
               Categories
             </Link>
-            <span className="text-gray-400">/</span>
-            <span className="text-white font-medium">Colors</span>
+            <span className="text-[#1b0d14]/50">/</span>
+            <span className="text-[#1b0d14] font-medium">Colors</span>
           </div>
         </nav>
 
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
+          <h1 className="text-4xl md:text-5xl font-bold text-[#1b0d14] mb-6">
             Nail Art Colors
           </h1>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+          <p className="text-xl text-[#1b0d14]/70 max-w-3xl mx-auto">
             Discover nail art designs by color. From classic reds to trendy glitters, find the perfect color for your mood and style.
           </p>
         </div>
@@ -121,7 +121,7 @@ export default async function ColorsPage() {
             <Link
               key={index}
               href={`/nail-colors/${color.slug}`}
-              className="group bg-gray-800 rounded-xl overflow-hidden hover:bg-gray-700 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-2xl"
+              className="group bg-white ring-1 ring-[#ee2b8c]/15 rounded-xl overflow-hidden hover:shadow-md transition-all duration-300 transform hover:-translate-y-2"
             >
               <div className="relative h-48">
                 {color.sampleImage ? (
@@ -138,7 +138,7 @@ export default async function ColorsPage() {
                     <div className="text-6xl opacity-80">{color.emoji}</div>
                   </div>
                 )}
-                <div className="absolute inset-0 bg-black/20"></div>
+                <div className="absolute inset-0 bg-black/10"></div>
                 <div className="absolute inset-0 flex items-center justify-center">
                   {!color.sampleImage && (
                     <div className="text-6xl opacity-80">{color.emoji}</div>
@@ -147,20 +147,20 @@ export default async function ColorsPage() {
               </div>
               
               <div className="p-6">
-                <h2 className="text-2xl font-bold text-white mb-3 group-hover:text-purple-400 transition-colors">
+                <h2 className="text-2xl font-bold text-[#1b0d14] mb-3 group-hover:text-[#ee2b8c] transition-colors">
                   {color.name}
                 </h2>
-                <p className="text-gray-300 mb-4">
+                <p className="text-[#1b0d14]/70 mb-4">
                   {color.description}
                 </p>
                 
                 <div className="mb-4">
-                  <h3 className="text-sm font-semibold text-purple-400 mb-2">Characteristics:</h3>
+                  <h3 className="text-sm font-semibold text-[#ee2b8c] mb-2">Characteristics:</h3>
                   <div className="flex flex-wrap gap-2">
                     {color.characteristics.map((char, charIndex) => (
                       <span
                         key={charIndex}
-                        className="bg-purple-600/20 text-purple-300 px-2 py-1 rounded text-xs"
+                        className="bg-white ring-1 ring-[#ee2b8c]/20 text-[#1b0d14] px-2 py-1 rounded-full text-xs"
                       >
                         {char}
                       </span>
@@ -169,12 +169,12 @@ export default async function ColorsPage() {
                 </div>
                 
                 <div>
-                  <h3 className="text-sm font-semibold text-green-400 mb-2">Best For:</h3>
+                  <h3 className="text-sm font-semibold text-[#1b0d14] mb-2">Best For:</h3>
                   <div className="flex flex-wrap gap-2">
                     {color.bestFor.map((use, useIndex) => (
                       <span
                         key={useIndex}
-                        className="bg-green-600/20 text-green-300 px-2 py-1 rounded text-xs"
+                        className="bg-white ring-1 ring-[#ee2b8c]/20 text-[#1b0d14] px-2 py-1 rounded-full text-xs"
                       >
                         {use}
                       </span>
@@ -187,39 +187,39 @@ export default async function ColorsPage() {
         </div>
 
         {/* Color Combinations */}
-        <div className="bg-gray-800 rounded-xl p-8 mb-16">
-          <h2 className="text-2xl font-bold text-white mb-6 text-center">Popular Color Combinations</h2>
+        <div className="bg-white rounded-xl p-8 mb-16 ring-1 ring-[#ee2b8c]/15">
+          <h2 className="text-2xl font-bold mb-6 text-center">Popular Color Combinations</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div className="bg-gradient-to-r from-red-500 to-pink-500 rounded-lg p-4 text-center">
-              <h3 className="text-white font-semibold mb-2">Red & Pink</h3>
-              <p className="text-white/80 text-sm">Romantic and feminine</p>
+            <div className="bg-white ring-1 ring-[#ee2b8c]/20 rounded-lg p-4 text-center">
+              <h3 className="text-[#1b0d14] font-semibold mb-2">Red & Pink</h3>
+              <p className="text-[#1b0d14]/70 text-sm">Romantic and feminine</p>
             </div>
-            <div className="bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg p-4 text-center">
-              <h3 className="text-white font-semibold mb-2">Blue & Purple</h3>
-              <p className="text-white/80 text-sm">Cool and sophisticated</p>
+            <div className="bg-white ring-1 ring-[#ee2b8c]/20 rounded-lg p-4 text-center">
+              <h3 className="text-[#1b0d14] font-semibold mb-2">Blue & Purple</h3>
+              <p className="text-[#1b0d14]/70 text-sm">Cool and sophisticated</p>
             </div>
-            <div className="bg-gradient-to-r from-green-500 to-teal-500 rounded-lg p-4 text-center">
-              <h3 className="text-white font-semibold mb-2">Green & Teal</h3>
-              <p className="text-white/80 text-sm">Fresh and natural</p>
+            <div className="bg-white ring-1 ring-[#ee2b8c]/20 rounded-lg p-4 text-center">
+              <h3 className="text-[#1b0d14] font-semibold mb-2">Green & Teal</h3>
+              <p className="text-[#1b0d14]/70 text-sm">Fresh and natural</p>
             </div>
-            <div className="bg-gradient-to-r from-yellow-400 to-orange-500 rounded-lg p-4 text-center">
-              <h3 className="text-white font-semibold mb-2">Yellow & Orange</h3>
-              <p className="text-white/80 text-sm">Warm and energetic</p>
+            <div className="bg-white ring-1 ring-[#ee2b8c]/20 rounded-lg p-4 text-center">
+              <h3 className="text-[#1b0d14] font-semibold mb-2">Yellow & Orange</h3>
+              <p className="text-[#1b0d14]/70 text-sm">Warm and energetic</p>
             </div>
-            <div className="bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg p-4 text-center">
-              <h3 className="text-white font-semibold mb-2">Purple & Pink</h3>
-              <p className="text-white/80 text-sm">Elegant and playful</p>
+            <div className="bg-white ring-1 ring-[#ee2b8c]/20 rounded-lg p-4 text-center">
+              <h3 className="text-[#1b0d14] font-semibold mb-2">Purple & Pink</h3>
+              <p className="text-[#1b0d14]/70 text-sm">Elegant and playful</p>
             </div>
-            <div className="bg-gradient-to-r from-gray-600 to-black rounded-lg p-4 text-center">
-              <h3 className="text-white font-semibold mb-2">Gray & Black</h3>
-              <p className="text-white/80 text-sm">Edgy and sophisticated</p>
+            <div className="bg-white ring-1 ring-[#ee2b8c]/20 rounded-lg p-4 text-center">
+              <h3 className="text-[#1b0d14] font-semibold mb-2">Gray & Black</h3>
+              <p className="text-[#1b0d14]/70 text-sm">Edgy and sophisticated</p>
             </div>
           </div>
         </div>
 
         {/* Popular Tags */}
-        <div className="bg-gray-800 rounded-xl p-8 mb-16">
-          <h2 className="text-2xl font-bold text-white mb-6 text-center">Explore by Tags</h2>
+        <div className="bg-white rounded-xl p-8 mb-16 ring-1 ring-[#ee2b8c]/15">
+          <h2 className="text-2xl font-bold mb-6 text-center">Explore by Tags</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <TagCollection
               title="Popular Techniques"
@@ -264,30 +264,30 @@ export default async function ColorsPage() {
         </div>
 
         {/* Related Categories */}
-        <div className="bg-gray-800 rounded-xl p-8">
-          <h2 className="text-2xl font-bold text-white mb-6 text-center">Explore More Categories</h2>
+        <div className="bg-white rounded-xl p-8 ring-1 ring-[#ee2b8c]/15">
+          <h2 className="text-2xl font-bold mb-6 text-center">Explore More Categories</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <Link
               href="/categories/nail-shapes"
-              className="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-4 rounded-lg text-center transition-colors"
+              className="bg-[#ee2b8c] hover:brightness-95 text-white font-semibold py-3 px-4 rounded-full text-center transition-colors"
             >
               Nail Shapes
             </Link>
             <Link
               href="/categories/techniques"
-              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg text-center transition-colors"
+              className="bg-white ring-1 ring-[#ee2b8c]/20 text-[#1b0d14] font-semibold py-3 px-4 rounded-full text-center transition-colors hover:bg-[#f8f6f7]"
             >
               Techniques
             </Link>
             <Link
               href="/categories/occasions"
-              className="bg-pink-600 hover:bg-pink-700 text-white font-semibold py-3 px-4 rounded-lg text-center transition-colors"
+              className="bg-white ring-1 ring-[#ee2b8c]/20 text-[#1b0d14] font-semibold py-3 px-4 rounded-full text-center transition-colors hover:bg-[#f8f6f7]"
             >
               Occasions
             </Link>
             <Link
               href="/categories/styles"
-              className="bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-4 rounded-lg text-center transition-colors"
+              className="bg-white ring-1 ring-[#ee2b8c]/20 text-[#1b0d14] font-semibold py-3 px-4 rounded-full text-center transition-colors hover:bg-[#f8f6f7]"
             >
               Styles
             </Link>

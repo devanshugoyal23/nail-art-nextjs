@@ -22,7 +22,7 @@ export default function TagCollection({
   title,
   tags,
   variant = 'default',
-  size = 'md',
+  size = 'sm',
   maxTags,
   showTitle = true,
   className = ''
@@ -33,7 +33,7 @@ export default function TagCollection({
   return (
     <div className={`space-y-3 ${className}`}>
       {showTitle && title && (
-        <h3 className="text-sm font-semibold text-gray-300 mb-2">{title}</h3>
+        <h3 className="text-sm font-semibold text-[#1b0d14] mb-2">{title}</h3>
       )}
       <div className="flex flex-wrap gap-2">
         {displayTags.map((tag, index) => (
@@ -47,7 +47,7 @@ export default function TagCollection({
           />
         ))}
         {remainingCount > 0 && (
-          <span className="text-gray-400 text-sm px-2 py-1">
+          <span className="text-[#1b0d14]/60 text-sm px-2 py-1">
             +{remainingCount} more
           </span>
         )}

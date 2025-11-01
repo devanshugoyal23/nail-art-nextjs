@@ -256,6 +256,22 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
 
   const attrs = parseAttributes(item.prompt || '');
   
+  const getColorChipBg = (color: string) => {
+    const c = (color || '').toLowerCase();
+    if (c.includes('red') || c.includes('rose')) return 'bg-[#ffe5ec]';
+    if (c.includes('pink')) return 'bg-[#fde7f2]';
+    if (c.includes('blue') || c.includes('navy') || c.includes('cyan')) return 'bg-[#e8f2ff]';
+    if (c.includes('green') || c.includes('emerald') || c.includes('mint')) return 'bg-[#eaf7ef]';
+    if (c.includes('purple') || c.includes('lavender') || c.includes('violet')) return 'bg-[#f1e9ff]';
+    if (c.includes('gold')) return 'bg-[#fff6da]';
+    if (c.includes('silver') || c.includes('gray') || c.includes('grey')) return 'bg-[#eef2f6]';
+    if (c.includes('black')) return 'bg-[#f0eef2]';
+    if (c.includes('white') || c.includes('nude')) return 'bg-[#f6eff3]';
+    if (c.includes('orange') || c.includes('coral')) return 'bg-[#ffe9dc]';
+    if (c.includes('yellow')) return 'bg-[#fff6cf]';
+    return 'bg-[#fde7f2]';
+  };
+  
   // Get related keywords for SEO
   const relatedKeywords = getRelatedKeywords(item.category, attrs.colors, attrs.technique);
 
@@ -518,7 +534,7 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
                   <Link
                     key={`chip-color-${idx}`}
                     href={`/nail-colors/${color.toLowerCase().replace(/\s+/g, '-')}`}
-                    className="inline-flex items-center h-9 px-3 lg:h-10 lg:px-4 rounded-full bg-white text-[#1b0d14] text-sm lg:text-base font-medium lg:font-semibold ring-1 ring-[#ee2b8c]/25 hover:ring-[#ee2b8c]/40 hover:-translate-y-0.5 shadow-sm transition"
+                    className={`inline-flex items-center h-8 px-3 lg:h-9 lg:px-3 rounded-full ${getColorChipBg(color)} text-[#1b0d14] text-sm lg:text-sm font-medium lg:font-medium ring-1 ring-[#ee2b8c]/25 hover:ring-[#ee2b8c]/40 hover:-translate-y-0.5 shadow-sm transition`}
                     title={`${color} Nail Art`}
                   >
                     {color}
@@ -528,7 +544,7 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
                   <Link
                     key={`chip-style-${idx}`}
                     href={`/nail-art-gallery/category/${style.toLowerCase().replace(/\s+/g, '-')}`}
-                    className="inline-flex items-center h-9 px-3 lg:h-10 lg:px-4 rounded-full bg-white text-[#1b0d14] text-sm lg:text-base font-medium lg:font-semibold ring-1 ring-[#ee2b8c]/25 hover:ring-[#ee2b8c]/40 hover:-translate-y-0.5 shadow-sm transition"
+                    className="inline-flex items-center h-8 px-3 lg:h-9 lg:px-3 rounded-full bg-[#f1e9ff] text-[#1b0d14] text-sm lg:text-sm font-medium lg:font-medium ring-1 ring-[#ee2b8c]/25 hover:ring-[#ee2b8c]/40 hover:-translate-y-0.5 shadow-sm transition"
                     title={`${style} Style`}
                   >
                     {style}
@@ -538,7 +554,7 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
                   <Link
                     key={`chip-occ-${idx}`}
                     href={`/nail-art/occasion/${occ.toLowerCase().replace(/\s+/g, '-')}`}
-                    className="inline-flex items-center h-9 px-3 lg:h-10 lg:px-4 rounded-full bg-white text-[#1b0d14] text-sm lg:text-base font-medium lg:font-semibold ring-1 ring-[#ee2b8c]/25 hover:ring-[#ee2b8c]/40 hover:-translate-y-0.5 shadow-sm transition"
+                    className="inline-flex items-center h-8 px-3 lg:h-9 lg:px-3 rounded-full bg-[#fde7f2] text-[#1b0d14] text-sm lg:text-sm font-medium lg:font-medium ring-1 ring-[#ee2b8c]/25 hover:ring-[#ee2b8c]/40 hover:-translate-y-0.5 shadow-sm transition"
                     title={`${occ} Nail Art`}
                   >
                     {occ}
