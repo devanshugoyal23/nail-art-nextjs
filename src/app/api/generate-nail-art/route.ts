@@ -3,13 +3,22 @@ import { GoogleGenAI, Modality } from '@google/genai';
 import { rateLimiters, checkRateLimit } from '@/lib/rateLimiter';
 import { validateAIGeneration } from '@/lib/inputValidation';
 
-const API_KEY = process.env.GEMINI_API_KEY;
+// Lazy initialize to avoid build-time errors
+let ai: GoogleGenAI | null = null;
 
-if (!API_KEY) {
-  throw new Error('GEMINI_API_KEY environment variable is not set.');
+function getAIClient() {
+  const API_KEY = process.env.GEMINI_API_KEY;
+
+  if (!API_KEY) {
+    throw new Error('GEMINI_API_KEY environment variable is not set.');
+  }
+
+  if (!ai) {
+    ai = new GoogleGenAI({ apiKey: API_KEY });
+  }
+
+  return ai;
 }
-
-const ai = new GoogleGenAI({ apiKey: API_KEY });
 
 export async function POST(request: NextRequest) {
   try {
@@ -43,11 +52,12 @@ export async function POST(request: NextRequest) {
     const { base64ImageData, mimeType, prompt } = validation.sanitizedData!;
 
     // Extract base64 data from data URL if needed
-    const cleanBase64Data = base64ImageData.includes(',') 
-      ? base64ImageData.split(',')[1] 
+    const cleanBase64Data = base64ImageData.includes(',')
+      ? base64ImageData.split(',')[1]
       : base64ImageData;
 
-    const response = await ai.models.generateContent({
+    const aiClient = getAIClient();
+    const response = await aiClient.models.generateContent({
       model: 'gemini-2.0-flash-exp',
       contents: {
         parts: [
