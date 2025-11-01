@@ -6,15 +6,19 @@ export function middleware(request: NextRequest) {
   const url = request.nextUrl;
   const { pathname } = url;
 
-  // Canonical host redirect (www -> apex)
-  const configuredOrigin = (process.env.NEXT_PUBLIC_SITE_URL || 'https://nailartai.app')
-    .replace(/^https?:\/\//, '')
-    .replace(/\/$/, '');
-  const apexHost = configuredOrigin;
-  if (url.hostname === `www.${apexHost}`) {
-    const redirectUrl = new URL(url.toString());
-    redirectUrl.hostname = apexHost;
-    return NextResponse.redirect(redirectUrl, 308);
+  // Optional canonical host redirect (disabled by default to avoid platform loops)
+  // Enable by setting ENABLE_HOST_REDIRECT=1 and NEXT_PUBLIC_SITE_URL to your canonical origin
+  if (process.env.ENABLE_HOST_REDIRECT === '1' && process.env.NEXT_PUBLIC_SITE_URL) {
+    try {
+      const canonicalHost = new URL(process.env.NEXT_PUBLIC_SITE_URL).hostname;
+      if (url.hostname !== canonicalHost && !url.hostname.endsWith('.vercel.app')) {
+        const redirectUrl = new URL(url.toString());
+        redirectUrl.hostname = canonicalHost;
+        return NextResponse.redirect(redirectUrl, 308);
+      }
+    } catch {
+      // ignore malformed URL
+    }
   }
 
   // Skip normalization for assets/system routes
