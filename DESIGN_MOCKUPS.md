@@ -254,3 +254,295 @@ Notes for the AI tool:
 - For each page: desktop, tablet, mobile light/dark mockups; UI kit updates for any new components; interaction notes annotated.
 
 
+
+
+---
+
+## Detailed Field‑Level Specs (for Mockup Generation)
+
+Use the structure below for every page: Sections → Components → Fields. “Type” hints input and visual treatment. All images should use 3:4 aspect unless stated; include graceful blur‑up placeholders.
+
+### Home (`/`)
+- Section: Hero Banner
+  - Component: Headline
+    - fields: text (H1), max 2 lines; emphasis span optional
+  - Component: Subcopy
+    - fields: text (body), 1–3 lines
+  - Component: Search Bar
+    - fields: input (placeholder text), prefix icon (search), recent chips (0–5), submit button
+  - Component: CTAs
+    - fields: primary button “Try On”, secondary button “Explore Gallery”
+  - Component: Background
+    - fields: image (desktop), image (tablet), image (mobile), overlay gradient (start/stop rgba)
+
+- Section: Trending Now (Carousel)
+  - Component: Card (repeated)
+    - fields: image, title (design_name), meta chips (0–3: color/style), quick actions (save, share, try-on), badge (optional “Trending”)
+  - Component: Controls
+    - fields: prev/next arrows (desktop), scroll-snap (mobile)
+
+- Section: Seasonal Spotlight (Carousel)
+  - Component: Seasonal Card
+    - fields: image, label (season name), subtitle (short promo), badge (e.g., “Fall 2025”), CTA chevron
+
+- Section: Category Tiles (4 up)
+  - Component: Tile (Colors / Occasions / Styles / Shapes)
+    - fields: background image, title, subline, hover overlay
+
+- Section: Try‑On Studio Promo
+  - Component: Copy Block
+    - fields: title, description, feature badges (3: text + icon), primary CTA, secondary CTA
+  - Component: Device Mockup
+    - fields: device frame style, screenshot image, border color, shadow
+
+- Section: Editorial/Blog Highlights
+  - Component: Article Card (x3)
+    - fields: image 16:9, tag chip, title, excerpt, author/date (optional)
+
+- Section: Newsletter
+  - Component: Signup strip
+    - fields: title, body, email input (placeholder), submit button, consent text (small)
+
+Interactions: Card hover lift (desktop 200ms), swipe on carousels, focus rings on inputs/buttons.
+
+---
+
+### Gallery Index (`/nail-art-gallery`)
+- Section: Header Strip
+  - fields: title, result count integer, view toggle (grid/dense), sort dropdown (options: Trending/Newest/Most Saved)
+- Section: Filters
+  - Component: Pills row
+    - fields: selected chips for Colors, Season, Occasion, Style, Shape, Finish, Length; “More filters” button
+  - Component: Advanced Drawer
+    - fields: multi‑select lists per facet, range controls (e.g., complexity), clear‑all button, apply button
+- Section: Grid
+  - Component: Design Card (repeated)
+    - fields: image 3:4, title, chips (0–4), action buttons (save/share/try-on), hover secondary bar
+- Section: Pagination
+  - fields: infinite scroll flag, “Load more” button fallback
+- States: loading skeleton cards (count), empty state (title, body, CTA link)
+
+---
+
+### Gallery by Category (`/nail-art-gallery/category/[category]`)
+- Section: Hero/Intro
+  - fields: category title, short description (1–2 lines), banner image (optional), breadcrumb
+- Section: Related Subcategories
+  - Component: Chips (0–8)
+    - fields: label, link
+- Section: Grid
+  - same as Gallery Index grid
+- Section: SEO FAQ
+  - Component: Accordion (0–5)
+    - fields: question, answer rich text
+
+---
+
+### Design Detail (`/design/[slug]`)
+- Section: Above the Fold
+  - Component: Large Image 3:4
+    - fields: primary image, zoom enable (bool)
+  - Component: Title & Meta
+    - fields: title, chips (color/style/occasion), save count, share menu
+  - Component: Primary CTAs
+    - fields: try‑on button, save button
+- Section: Description & Specs
+  - fields: rich text description, technique notes, difficulty (enum), time estimate (mins), length/shape (chips)
+- Section: Tools/Products
+  - Component: Product Card (0–6)
+    - fields: thumbnail, name, link, price (optional)
+- Section: Related
+  - Component: “Similar styles” grid (8–12 cards)
+  - Component: “Pairs well with” rail (chips/cards)
+
+---
+
+### Categories Overview (`/categories`)
+- Section: Page Title + Subline
+  - fields: title, body text
+- Section: Top‑level Groups (grid tiles)
+  - tiles: Colors, Seasons, Occasions, Styles, Nail Shapes, Techniques
+  - fields per tile: title, 3–4 image thumbs (swatches/cards), CTA chevron
+  - optional: search within categories (input)
+
+---
+
+### Categories — All (`/categories/all`)
+- Section: A–Z Index
+  - fields: alphabet nav, anchor list of categories (link, count)
+- Section: Compact Tile Grid
+  - fields: chip tiles (label, icon/emoji), filter input
+
+---
+
+### Categories — Colors (`/categories/colors`)
+- Section: Palette Wall
+  - Component: Swatch
+    - fields: color hex, label, count, contrast border toggle
+- Section: Spotlight
+  - fields: featured color (image 3:2), CTA
+
+---
+
+### Categories — Nail Shapes (`/categories/nail-shapes`)
+- Section: Shape Gallery
+  - Component: Shape Card (Almond, Coffin, Square, Oval, Stiletto…)
+    - fields: illustration, label, example thumbnails (0–3), CTA link
+
+---
+
+### Categories — Occasions (`/categories/occasions`)
+- Section: Occasion Cards
+  - fields: card image, label (Wedding/Date Night/Office/Party/Holiday…), count, CTA
+
+---
+
+### Categories — Seasons (`/categories/seasons`)
+- Section: Seasonal Banners
+  - fields: banner image, season name, subcopy, CTA
+
+---
+
+### Categories — Styles (`/categories/styles`)
+- Section: Style Chips Grid
+  - fields: chip label (Minimal/Abstract/French/Glitter/3D/etc.), example thumbnail, CTA when selected
+
+---
+
+### Nail Art Hub (`/nail-art-hub`)
+- Sections: Quick Search (input, suggestions), Featured Collections (cards), Build Your Look (link to Try‑On), Guides (article cards), Community Saves (masonry)
+- Fields per collection card: image, title, count badge, CTA
+
+---
+
+### FAQ (`/faq`)
+- Section: Search Bar
+  - fields: input with suggestions
+- Section: Accordion List
+  - fields: category filter tabs, Q/A pairs
+- Section: Contact CTA
+  - fields: “Didn’t find an answer?” copy, button to Contact page
+
+---
+
+### Blog Index (`/blog`)
+- Section: Masthead
+  - fields: featured image 16:9, featured tag, title, excerpt, author/date
+- Section: Article List
+  - Component: Blog Card
+    - fields: image, tags (chips), title, excerpt, read time, author avatar
+- Sidebar (desktop): topics list, popular posts (mini cards), newsletter box
+
+---
+
+### Seasonal Landing — Christmas (`/christmas-nail-art`)
+- Section: Festive Hero
+  - fields: banner image, headline, subcopy, primary/secondary CTAs
+- Section: Curated Blocks
+  - blocks: Minimal Christmas / Red & Gold / Snowflakes / Gift Guides
+  - fields per block: title, description, 4–8 design cards
+- Section: Trending This Week
+  - fields: carousel of 10–16 items
+
+---
+
+### Technique Detail (`/techniques/[technique]`)
+- Section: Technique Hero
+  - fields: name, difficulty (Easy/Medium/Advanced), typical time, tools list
+- Section: Steps
+  - fields: step title, description, optional image/video
+- Section: Products & Tools
+  - fields: product cards (image, name, link)
+- Section: Designs Using this Technique
+  - fields: grid cards
+
+---
+
+### Color Detail (`/nail-colors/[color]`)
+- Section: Swatch Hero
+  - fields: large swatch, color name, hex code, gradient suggestion chips
+- Section: Popular Pairings
+  - fields: color chips (paired), small examples
+- Section: Top Designs Grid
+  - fields: cards 12–24
+
+---
+
+### Nail Art by Occasion (`/nail-art/occasion/[occasion]`) & Season (`/nail-art/season/[season]`)
+- Section: Context Hero
+  - fields: title, guidance text, banner (optional)
+- Section: Scoped Grid
+  - fields: design cards
+- Section: Tips Sidebar (desktop)
+  - fields: bullet tips, related links
+
+---
+
+### Try‑On Studio (`/try-on`)
+- Section: Preview Area
+  - fields: camera stream placeholder, model hand toggle, permission states (allow/deny), flash/guide overlay
+- Section: Design Selector Rail
+  - fields: horizontal thumbnails (snap), filter by category/style/color
+- Section: Controls
+  - fields: color/finish selector, shape/length, capture button, compare toggle, save/share buttons
+- Section: Messages
+  - fields: low light warning, permission denied copy + CTA
+
+---
+
+### Dynamic Editorial/Guide (`/[category]/[slug]`)
+- Section: Article Hero
+  - fields: cover image, headline, subhead, author/date, reading time
+- Section: Body
+  - fields: rich text, images, pull quotes, callouts, inline galleries, anchor links
+- Section: TOC (desktop)
+  - fields: headings list with anchors
+- Section: CTAs
+  - fields: links to gallery/try‑on
+
+---
+
+### Not Found (`/not-found`)
+- Section: Illustration & Copy
+  - fields: friendly image, title, body, search input, quick links (Gallery, Home, Categories, Try‑On)
+
+---
+
+### Admin — Login (`/admin/login`)
+- Section: Auth Card
+  - fields: logo, email input, password input, SSO buttons (optional), submit, error text, forgot‑password link
+
+### Admin — Content Management (`/admin/content-management`)
+- Section: Left Nav
+  - fields: menu items (Designs, Categories, Editorial)
+- Section: Table
+  - fields: columns (thumbnail, name, status, date, actions), filters row, bulk actions, pagination
+- Section: Edit Modal
+  - tabs: Details (title, description, images), Media (upload area), SEO (title/description/canonical), Relations (categories/tags)
+
+### Admin — Generate (`/admin/generate`)
+- Section: Prompt Builder
+  - fields: prompt textarea, preset dropdown, seed/variations, constraints (style/length/finish), generate button
+- Section: Preview Pane
+  - fields: grid of generated images with select/save
+- Section: History
+  - fields: list with status chips
+
+### Admin — SEO Management (`/admin/seo-management`)
+- Section: Entity Selector
+  - fields: dropdown (Design/Category/Page), search
+- Section: Form
+  - fields: title, description, canonical, noindex toggle, preview snippet, validations
+- Section: Bulk Ops
+  - fields: sitemap trigger, rich pins status, indexnow submission
+
+### Admin — R2 Sync (`/admin/r2-sync`)
+- Section: Controls
+  - fields: sync now, queue stats, purge cache
+- Section: Status Cards
+  - fields: queued/success/failed counts, logs table (time, job, message)
+
+---
+
+Global Accessibility fields
+- focus outlines for all buttons/inputs, skip‑to‑content link, semantic landmarks (header/main/nav/footer), keyboard operability, and live regions for async ops.

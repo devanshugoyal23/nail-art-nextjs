@@ -33,21 +33,21 @@ export default function CollapsibleSection({
   };
 
   return (
-    <div className={`bg-gray-800/40 backdrop-blur-sm rounded-xl border border-gray-700/50 overflow-hidden ${className}`}>
+    <div className={`bg-white rounded-xl ring-1 ring-[#ee2b8c]/15 shadow-sm overflow-hidden ${className}`}>
       {/* Header */}
       <button
         onClick={toggleExpanded}
-        className="w-full flex items-center justify-between p-4 text-left hover:bg-gray-700/30 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-purple-500/50 rounded-t-xl"
+        className="w-full flex items-center justify-between p-4 text-left hover:bg-[#f8f6f7] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#ee2b8c]/40 rounded-t-xl"
         aria-expanded={isExpanded}
         aria-controls={`collapsible-content-${title.replace(/\s+/g, '-').toLowerCase()}`}
       >
         <div className="flex items-center gap-3">
           {icon && (
-            <div className="text-purple-400 transition-transform duration-200">
+            <div className="text-[#ee2b8c] transition-transform duration-200">
               {icon}
             </div>
           )}
-          <h3 className="text-lg font-semibold text-white">
+          <h3 className="text-lg font-semibold text-[#1b0d14]">
             {title}
           </h3>
         </div>
@@ -58,7 +58,7 @@ export default function CollapsibleSection({
           ${isExpanded ? 'rotate-180' : 'rotate-0'}
         `}>
           <svg 
-            className="w-5 h-5 text-gray-400" 
+            className="w-5 h-5 text-[#1b0d14]/40" 
             fill="none" 
             stroke="currentColor" 
             viewBox="0 0 24 24"
@@ -76,17 +76,14 @@ export default function CollapsibleSection({
       {/* Content */}
       <div
         id={`collapsible-content-${title.replace(/\s+/g, '-').toLowerCase()}`}
-        className={`
-          transition-all duration-300 ease-in-out overflow-hidden
-          ${isExpanded ? 'opacity-100' : 'opacity-0'}
-        `}
+        className="transition-all duration-300 ease-in-out overflow-hidden opacity-100"
         style={{
           maxHeight: isExpanded ? `${contentHeight}px` : '0px'
         }}
       >
         <div 
           ref={contentRef}
-          className="p-4 pt-0"
+          className="p-4 pt-0 text-[#1b0d14]"
         >
           {children}
         </div>

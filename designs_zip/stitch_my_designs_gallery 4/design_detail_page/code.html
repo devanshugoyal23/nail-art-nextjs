@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NailArtAI - Design Playground</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#ee2b8c",
+            "background-light": "#fcf8fa",
+            "background-dark": "#221019",
+            "accent-light": "#fdd5e4","accent-dark": "#3a1a2b",},
+          fontFamily: {
+            "display": ["Spline Sans", "Noto Sans", "sans-serif"]
+          },
+          borderRadius: {
+            "DEFAULT": "1rem",
+            "lg": "1.5rem",
+            "xl": "2rem",
+            "full": "9999px"
+          },
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings:
+      'FILL' 0,
+      'wght' 400,
+      'GRAD' 0,
+      'opsz' 24
+    }
+  </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#1b0d14] dark:text-[#fcf8fa]">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<header class="sticky top-0 z-50 flex items-center justify-center whitespace-nowrap border-b border-solid border-primary/20 dark:border-primary/30 px-4 sm:px-10 py-3 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-sm">
+<div class="flex items-center justify-between w-full max-w-7xl">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-4 text-primary">
+<div class="size-6">
+<svg fill="currentColor" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M24 4H6V17.3333V30.6667H24V44H42V30.6667V17.3333H24V4Z" fill-rule="evenodd"></path>
+</svg>
+</div>
+<h2 class="text-[#1b0d14] dark:text-[#fcf8fa] text-xl font-bold leading-tight tracking-[-0.015em]">NailArtAI</h2>
+</div>
+<nav class="hidden md:flex items-center gap-9">
+<a class="text-[#1b0d14] dark:text-[#fcf8fa] text-sm font-medium leading-normal" href="#">Designs</a>
+<a class="text-[#1b0d14] dark:text-[#fcf8fa] text-sm font-medium leading-normal" href="#">Inspiration</a>
+<a class="text-[#1b0d14] dark:text-[#fcf8fa] text-sm font-medium leading-normal" href="#">Tools</a>
+<a class="text-[#1b0d14] dark:text-[#fcf8fa] text-sm font-medium leading-normal" href="#">Community</a>
+</nav>
+</div>
+<div class="flex flex-1 justify-end items-center gap-4">
+<label class="hidden sm:flex flex-col min-w-40 !h-10 max-w-64">
+<div class="flex w-full flex-1 items-stretch rounded-full h-full">
+<div class="text-[#9a4c73] flex border-none bg-primary/10 dark:bg-primary/20 items-center justify-center pl-4 rounded-l-full border-r-0">
+<span class="material-symbols-outlined">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-full text-[#1b0d14] dark:text-[#fcf8fa] focus:outline-0 focus:ring-0 border-none bg-primary/10 dark:bg-primary/20 h-full placeholder:text-[#9a4c73] dark:placeholder:text-primary/70 px-4 rounded-l-none border-l-0 pl-2 text-base font-normal leading-normal" placeholder="Search" value=""/>
+</div>
+</label>
+<div class="flex gap-2">
+<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em]">
+<span class="truncate">Upload</span>
+</button>
+<button class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 bg-primary/10 dark:bg-primary/20 text-[#1b0d14] dark:text-[#fcf8fa] gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+</div>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="User avatar image" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAroVJkSaKUkGDJIWAPeRYNwXkSai74IsA_9k_kH_hKQPYcecqg5idEuU_Vu8EW8ZbLlJ3BLYw9N2W0bD3HJlCFfy9pjqNkPJb1xe9XEJcZfIi_4V-KYEpV6BYV6r4p28yfcR2AHo31TrlcZP2CfPnow_G0u8QUcJNDIrWHw00ySZbDqSdMWMY6Qh1GeW-JDwOyoc04SIMZMoQ6g8C3mAmFL--D5iQicg9XLz_m7QxOZ7LHl6kXtRhIo5_QUWev9DrvoRD02TZ_32w");'></div>
+</div>
+</div>
+</header>
+<main class="layout-container flex h-full grow flex-col items-center">
+<div class="layout-content-container flex flex-col w-full max-w-7xl flex-1 px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+<div class="flex flex-wrap gap-2 px-4 pb-4 opacity-70">
+<a class="text-primary/70 dark:text-primary/80 text-sm font-medium leading-normal hover:text-primary" href="#">Home</a>
+<span class="text-primary/50 dark:text-primary/60 text-sm font-medium leading-normal">/</span>
+<a class="text-primary/70 dark:text-primary/80 text-sm font-medium leading-normal hover:text-primary" href="#">Designs</a>
+<span class="text-primary/50 dark:text-primary/60 text-sm font-medium leading-normal">/</span>
+<span class="text-[#1b0d14] dark:text-[#fcf8fa] text-sm font-medium leading-normal">Cherry Blossom Dreams</span>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-8 lg:gap-12">
+<div class="relative w-full min-h-[600px] bg-accent-light/30 dark:bg-accent-dark/30 rounded-xl p-6 border-2 border-dashed border-primary/40 flex flex-col items-center justify-center">
+<h1 class="absolute top-6 left-6 text-3xl md:text-4xl font-black leading-tight tracking-[-0.033em] z-10">Cherry Blossom Dreams</h1>
+<div class="relative w-[85%] max-w-[500px] aspect-[4/5] bg-center bg-no-repeat bg-cover rounded-xl overflow-hidden shadow-2xl shadow-primary/30" data-alt="A close-up shot of nails with a delicate cherry blossom art design on a light pink base." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBEFvl6pfB9pCUEo2o74OIxR05gLZySks3TxGhg1CzbzG63HYTVZmYW7jyLtFFJkIgwUzehzj6vSN5yAMNj7R4pbqJRGtsU7HOXs6N69rkhXLft7HSOXXgFZfzPOZGX8mYwbiilbn94wyxjf9YrBd2HhxwGtEVVYPbRthoXKyLaaFmGQvDna0Svu0GTGuUProF9IDyIKlNT70z8y8ELk-5tSQ9kc8bCasCtwpBX1MixEr-BcTXXwdJQWXbnRPsldLwKMFBQnxbOKvo");'>
+<div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent flex justify-end p-4">
+<button class="flex items-center justify-center size-10 rounded-full bg-white/80 dark:bg-black/50 text-[#1b0d14] dark:text-white backdrop-blur-sm">
+<span class="material-symbols-outlined">zoom_in</span>
+</button>
+</div>
+<div class="absolute top-2 -left-2 w-10 h-6 bg-yellow-300 transform -rotate-12 shadow-sm"></div>
+<div class="absolute -bottom-2 right-4 w-10 h-6 bg-pink-300 transform rotate-12 shadow-sm"></div>
+</div>
+<div class="absolute top-1/4 -left-10 flex flex-col gap-2 p-3 bg-white/70 dark:bg-black/40 backdrop-blur-sm rounded-xl shadow-lg border border-primary/20">
+<p class="text-sm font-bold text-primary mb-1">Colors</p>
+<div class="size-8 rounded-full bg-[#fce4ec] border-2 border-primary cursor-pointer shadow-md" title="Base Pink"></div>
+<div class="size-8 rounded-full bg-[#ffffff] border-2 border-primary/50 cursor-pointer shadow-md" title="Petal White"></div>
+<div class="size-8 rounded-full bg-[#f06292] border-2 border-primary/50 cursor-pointer shadow-md" title="Petal Highlight"></div>
+</div>
+<div class="absolute top-[60%] -right-12 flex flex-col items-center gap-2 p-3 bg-white/70 dark:bg-black/40 backdrop-blur-sm rounded-xl shadow-lg border border-primary/20">
+<p class="text-sm font-bold text-primary mb-1">Texture</p>
+<button class="size-10 rounded-lg bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-primary/80 text-xs shadow-md border border-primary/50">Matte</button>
+<button class="size-10 rounded-lg bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-primary/80 text-xs shadow-md border border-primary/50">Gloss</button>
+</div>
+<div class="absolute bottom-6 left-6 flex items-center gap-3 p-3 bg-white/70 dark:bg-black/40 backdrop-blur-sm rounded-xl shadow-lg border border-primary/20">
+<p class="text-sm font-bold text-primary">Shape:</p>
+<button class="size-10 rounded-full bg-primary/10 dark:bg-primary/20 flex items-center justify-center text-primary font-medium text-xs shadow-md border border-primary/50">
+<span class="material-symbols-outlined text-base">square</span>
+</button>
+<button class="size-10 rounded-full bg-primary/10 dark:bg-primary/20 flex items-center justify-center text-primary font-medium text-xs shadow-md border border-primary/50">
+<span class="material-symbols-outlined text-base">orbit</span>
+</button>
+<button class="size-10 rounded-full bg-primary/30 dark:bg-primary/40 flex items-center justify-center text-white font-medium text-xs shadow-md border border-primary">
+<span class="material-symbols-outlined text-base">diamond</span> 
+</button>
+</div>
+</div>
+<div class="flex flex-col gap-6">
+<div class="flex items-center justify-between opacity-70">
+<div class="flex items-center gap-2 text-gray-600 dark:text-gray-300">
+<span class="material-symbols-outlined text-primary">favorite</span>
+<span class="text-sm font-medium">Saved 1.2k times</span>
+</div>
+<button class="flex items-center gap-2 h-10 px-4 rounded-full bg-primary/10 dark:bg-primary/20 text-[#1b0d14] dark:text-primary/90 text-sm font-medium">
+<span class="material-symbols-outlined text-base">ios_share</span>
+<span>Share</span>
+</button>
+</div>
+<div class="flex flex-col sm:flex-row gap-4 pt-4">
+<button class="flex flex-1 min-w-[160px] cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-full h-14 px-6 bg-primary text-white text-base font-bold leading-normal tracking-[0.015em] shadow-lg shadow-primary/30">
+<span class="material-symbols-outlined text-2xl">palette</span>
+<span class="truncate">Customize &amp; Remix</span>
+</button>
+<button class="flex flex-1 min-w-[160px] cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-full h-14 px-6 bg-primary/10 dark:bg-primary/20 text-[#1b0d14] dark:text-primary/90 text-base font-bold leading-normal tracking-[0.015em] border border-primary/30">
+<span class="material-symbols-outlined text-2xl">lightbulb</span>
+<span class="truncate">Add to Inspiration Board</span>
+</button>
+</div>
+<div class="flex flex-col gap-4 border-t border-primary/20 dark:border-primary/30 pt-6 opacity-60">
+<h2 class="text-lg font-bold">About This Design</h2>
+<p class="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">Inspired by the fleeting beauty of spring, this design captures the delicate elegance of cherry blossoms. A soft pink base provides the perfect canvas for intricate floral details, making it ideal for weddings, special occasions, or simply to celebrate the season.</p>
+<ul class="list-disc list-inside text-gray-700 dark:text-gray-300 space-y-1 text-sm">
+<li>Fine-line detailing for petals</li>
+<li>Dotting tool for flower centers</li>
+<li>Matte top coat for a soft finish</li>
+</ul>
+<div class="grid grid-cols-2 gap-4 text-xs">
+<div class="flex items-center gap-2"><span class="material-symbols-outlined text-primary/80 text-base">signal_cellular_alt</span><span class="font-medium">Difficulty:</span><span>Intermediate</span></div>
+<div class="flex items-center gap-2"><span class="material-symbols-outlined text-primary/80 text-base">timer</span><span class="font-medium">Time:</span><span>~45 mins</span></div>
+<div class="flex items-center gap-2"><span class="material-symbols-outlined text-primary/80 text-base">straighten</span><span class="font-medium">Length:</span><span>Medium</span></div>
+</div>
+</div>
+<div class="flex flex-col gap-6 mt-6 pt-6 border-t border-primary/20 dark:border-primary/30 opacity-60">
+<h2 class="text-lg font-bold">Tools &amp; Products Used</h2>
+<div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-4">
+<div class="flex flex-col gap-3 p-3 rounded-lg bg-primary/5 dark:bg-primary/10">
+<div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded bg-white" data-alt="A bottle of light pink nail polish." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAyG26bVeq1xb07UWO1mK7yIhaYGQimM542cTwygI-SeZDnb8PUUB-N8u11KFdNECq9bG_uFFkCkQ7eA8TJR7IJLbxp-I9AOrMnLdVq-ZV7hKrqtaDA1_0kYcLa5wLgOSHnTXqnBgzojj-2hGpLLv1x9BzuZPzvGrSJO4OVYbNW0HK8DKn7Me-AzTt8sK0KHAutlN104nOus_9n5nVZAsHiGZj3VCZO5CmukvSqfY47EbRZxrzxJ3stcyJNgU8CET57N8176IVYd9Y");'></div>
+<div class="flex flex-col">
+<p class="font-bold text-sm">Ballet Slippers Polish</p>
+<a class="flex items-center gap-1 text-primary/80 dark:text-primary/90 text-xs hover:text-primary" href="#"><span>Essie</span> <span class="material-symbols-outlined text-xs">open_in_new</span></a>
+</div>
+</div>
+<div class="flex flex-col gap-3 p-3 rounded-lg bg-primary/5 dark:bg-primary/10">
+<div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded bg-white" data-alt="A bottle of white nail polish for art." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCImLE85W_eYuPwR8iiuV3SpNzKTuTaIe2gUosESm-mJJOea-zoZVG67PBX_JLadGvapKjsi7VLfUQGg5BVTcphzFMLTxQ-P-p08rzBs0s6g0-PVIvAfVyr15xQniEYotjDHn9D-58f0afhExgiPU_oD0o1nCM242e1HUBCWOB8iXflwzR8CfND1vi0_N5yVI27wGeNR12OYpllpOZ3h5psr05riLW2B2DDHvhja-G_8Hl0UMhm7ixzBi55kQORk1R3qiRsvU-hC0g");'></div>
+<div class="flex flex-col">
+<p class="font-bold text-sm">Alpine Snow Art Polish</p>
+<a class="flex items-center gap-1 text-primary/80 dark:text-primary/90 text-xs hover:text-primary" href="#"><span>OPI</span> <span class="material-symbols-outlined text-xs">open_in_new</span></a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-6 mt-12 pt-12 border-t border-primary/20 dark:border-primary/30 overflow-hidden">
+<h2 class="text-2xl font-bold">Infinite Inspiration Stream</h2>
+<div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 overflow-x-auto pb-4 scrollbar-hide">
+<div class="flex flex-col gap-2 group cursor-pointer min-w-[150px]">
+<div class="w-full bg-center bg-no-repeat aspect-[4/5] bg-cover rounded-lg overflow-hidden bg-primary/10 shadow-md transform hover:scale-105 transition-transform duration-200" data-alt="Nail art with simple white daisies." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAPPJaKsBmLyQTcZ9qWMoMspD6moW25dEkD1MeGe8S0Sxxcs3wG8kzdZDZuqUusMGo_Rso3J7iD8wdjJji0-NShavsgMYcuEomdtyksPEAWHLRFIL5LN2v74EOU9RbDu4wa3XANWAwa39EWtPIY5pmK08Te0RWpak7XcN0qcm7adyPwBcGj9XM_DkNc48uZZ7qYTAIoPmdwYQ1f9nY3lxY31xxHrw7FBipZldhKtTSUSK0MbQ0VDoIgnPw7_QZ-0fCjHql2P78Y0IQ");'></div>
+<p class="font-medium text-sm group-hover:text-primary">Daisy Fields</p>
+</div>
+<div class="flex flex-col gap-2 group cursor-pointer min-w-[150px]">
+<div class="w-full bg-center bg-no-repeat aspect-[4/5] bg-cover rounded-lg overflow-hidden bg-primary/10 shadow-md transform hover:scale-105 transition-transform duration-200" data-alt="Nail art with watercolor-style pink roses." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCXalgU5xkCVqP4QdMSK4FPRJtpbo4Di0iubx1v67t0NKQ63XnnqstecDkGoirgGJOmlre_nCc-OmIEgKu37hqgeQn2l0--sbMHClR8-_yLeLtk_fYBlZ2AIcxdNvHV_on6HtCLJnX_Ei6YISQMmOYa2HvNzyyowsP4bYGyRPLo9kI66des78LsrWz7fg5fNUmeKsEbGpcJqxXUG-XJ7II1DrqzgAmf4OgUvTRu0LXUzpy8fXmB9CWXRNwo_qYPcxdiHmaXL1f6Mwg");'></div>
+<p class="font-medium text-sm group-hover:text-primary">Watercolor Rose</p>
+</div>
+<div class="flex flex-col gap-2 group cursor-pointer min-w-[150px]">
+<div class="w-full bg-center bg-no-repeat aspect-[4/5] bg-cover rounded-lg overflow-hidden bg-primary/10 shadow-md transform hover:scale-105 transition-transform duration-200" data-alt="Nail art with lavender sprigs." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCPnWjOFLfM6f9Ok2HiBiqJx-Ed7QraMaXTkqcvL_-CT8ejxf-GmY3sjpl4ZuEiFw44V7ZuNpEZqDwsA5S6yODnpsy6Utm0S0UKCd6wlowvubIbgrlGknnWKO2roleqxoCspMidFM9NMSf5nv3bwGOTeM17rUmdectzj7Q2dfV0n4OHA1meRqZpYiZ7jUbw3QKW3L-FOo0TNSxMezVs5ceyF3BOpbJSZnOCueVAetgKaOdc-_5I7DarYmfkiJkoInyIEU9KcZOQgKk");'></div>
+<p class="font-medium text-sm group-hover:text-primary">Lavender Haze</p>
+</div>
+<div class="flex flex-col gap-2 group cursor-pointer min-w-[150px]">
+<div class="w-full bg-center bg-no-repeat aspect-[4/5] bg-cover rounded-lg overflow-hidden bg-primary/10 shadow-md transform hover:scale-105 transition-transform duration-200" data-alt="Subtle nail art with gold foil flakes on a nude base." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuARhe8z7V7sZGGXr6ollQ9xovkA2jhtxT1BbqF4VLXZgvmgVasIknTvW1xK3wNEnWbxfCwwEPXGCkh3MjMl1acGPYxkFC8GbX2JgsrhhgsnUnxYlbyV7BTXFzKfKLNKz9OKGLcR0JEdAUt6Ui_-UazJxIuBOxQ2TQ6scvc5y0DF74pV7PwWCKgJvrRjTNYescj1yZ38xQsl0b-JQxaO9OQMdOtJEHTSdc8TXyGaEInaXR3zjmEq7vmYxbOC6PhTI5trAVYIGY-w-kE");'></div>
+<p class="font-medium text-sm group-hover:text-primary">Golden Touch</p>
+</div>
+<div class="flex flex-col gap-2 group cursor-pointer min-w-[150px]">
+<div class="w-full bg-center bg-no-repeat aspect-[4/5] bg-cover rounded-lg overflow-hidden bg-primary/10 shadow-md transform hover:scale-105 transition-transform duration-200" data-alt="Elegant French manicure with a floral accent nail." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDdJsrNKEUUbYKN6icL8zmyt6shrOMzHHXJwUB2tMEg2DQUi5LqLf2q_brPlwsaE5eUWxNtNnAqvVyEQ6rukjQBMWIXgVymZM5JpEW2OWeTeM5zCTsEA3KdGQRzSOJ2iEKWhTzayR0hoCzhGgwIaq_1SBaWFKgEzDCCNPf515JRUAv2b9QSbyXc8dkqxLuSL-3QiB_h726oTwo2030ypEziHoVumWQH8NCu-i2vn7Zbm4G4_d8Uak0EZWZ-psFNl90P7VMSrS2hPyg");'></div>
+<p class="font-medium text-sm group-hover:text-primary">Blooming French</p>
+</div>
+<div class="flex flex-col gap-2 group cursor-pointer min-w-[150px]">
+<div class="w-full bg-center bg-no-repeat aspect-[4/5] bg-cover rounded-lg overflow-hidden bg-primary/10 shadow-md transform hover:scale-105 transition-transform duration-200" data-alt="Peony nail art on a clear base." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB29fByxIU4RY_GA1GGu34wz_XbOfd_z2UGd74iHcdWvR8Mc0zbFGWhDsfl7QnFB4FzQ65NNsum9pRR2spmyj3eMWH3kqqGZfSC_prw_9QuzbBmsNwWGLBBhKQi69H0VB_8B02YxoUu5uI8i35X-ylDBq-K2cblBlRv_n7e2D8Xpw40dErkg3dlDAxLaJnBX_O1NYVoTC4IhatifrcwJi8B2FaG8G-h_-LGRNwTFrPn_NVdyc3Oehay2zZmmEX8TipEc-im_ZiHF8k");'></div>
+<p class="font-medium text-sm group-hover:text-primary">Peony Garden</p>
+</div>
+<div class="flex flex-col gap-2 group cursor-pointer min-w-[150px]">
+<div class="w-full bg-center bg-no-repeat aspect-[4/5] bg-cover rounded-lg overflow-hidden bg-primary/10 shadow-md transform hover:scale-105 transition-transform duration-200" data-alt="Minimalist nail art with a single leaf design." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA0ceJx0AamFcSRFLwwtyQ96-vFjgxGfXmHljvzP6rL_mjI0br9CFWL-hUd5qW4G4meo5b2sJCK-SGWnowAdLbTlywaISSPxWFbgazKBHuawRW9-G93lpBA2svpzWFINgieL1xpgKIHrcJnnJ9k2nb3yoQ224GS9-5o7t-NNHVmun4HUD0NhP4pHNiTL0NCsuElEa6-IqnFw65jejzmMi9cPzms7d1PLmDlXcRS15T-n9rUD8qpoAm3AsElCbeLnKSi5l-HjeWHnwk");'></div>
+<p class="font-medium text-sm group-hover:text-primary">Botanical Line</p>
+</div>
+<div class="flex flex-col gap-2 group cursor-pointer min-w-[150px]">
+<div class="w-full bg-center bg-no-repeat aspect-[4/5] bg-cover rounded-lg overflow-hidden bg-primary/10 shadow-md transform hover:scale-105 transition-transform duration-200" data-alt="Pastel pink ombre nails." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAhRbhj-BLZMnB255zEPVi2D3fKlYZi9-Lyw8hIiHnNhNYEKuNXnIiVDXei4QdjPSwJmfTBIksZV5q2_Peqi9fPKSuMqMmAt1g8KwY_R-uVvTA13QYGfse8xPmmtUzZAiXiCPkYHmiF6GG-g0fJV1aSLqTWnNji4QXLvzViaI9L1mZv0ZG6a43lLt8CZxteGs141eqIa7LS2SkCfn4cu_PdwnYXA7GON_qTm3A2I0s1h8boLPLpYz6w3vuK_Du3NMa24Ze-4MqyzT4");'></div>
+<p class="font-medium text-sm group-hover:text-primary">Pastel Ombre</p>
+</div>
+<div class="flex flex-col gap-2 group cursor-pointer min-w-[150px]">
+<div class="w-full bg-center bg-no-repeat aspect-[4/5] bg-cover rounded-lg overflow-hidden bg-primary/10 shadow-md transform hover:scale-105 transition-transform duration-200" data-alt="Nail art with simple white daisies." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAPPJaKsBmLyQTcZ9qWMoMspD6moW25dEkD1MeGe8S0Sxxcs3wG8kzdZDZuqUusMGo_Rso3J7iD8wdjJji0-NShavsgMYcuEomdtyksPEAWHLRFIL5LN2v74EOU9RbDu4wa3XANWAwa39EWtPIY5pmK08Te0RWpak7XcN0qcm7adyPwBcGj9XM_DkNc48uZZ7qYTAIoPmdwYQ1f9nY3lxY31xxHrw7FBipZldhKtTSUSK0MbQ0VDoIgnPw7_QZ-0fCjHql2P78Y0IQ");'></div>
+<p class="font-medium text-sm group-hover:text-primary">Daisy Fields</p>
+</div>
+<div class="flex flex-col gap-2 group cursor-pointer min-w-[150px]">
+<div class="w-full bg-center bg-no-repeat aspect-[4/5] bg-cover rounded-lg overflow-hidden bg-primary/10 shadow-md transform hover:scale-105 transition-transform duration-200" data-alt="Nail art with watercolor-style pink roses." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCXalgU5xkCVqP4QdMSK4FPRJtpbo4Di0iubx1v67t0NKQ63XnnqstecDkGoirgGJOmlre_nCc-OmIEgKu37hqgeQn2l0--sbMHClR8-_yLeLtk_fYBlZ2AIcxdNvHV_on6HtCLJnX_Ei6YISQMmOYa2HvNzyyowsP4bYGyRPLo9kI66des78LsrWz7fg5fNUmeKsEbGpcJqxXUG-XJ7II1DrqzgAmf4OgUvTRu0LXUzpy8fXmB9CWXRNwo_qYPcxdiHmaXL1f6Mwg");'></div>
+<p class="font-medium text-sm group-hover:text-primary">Watercolor Rose</p>
+</div>
+<div class="flex flex-col gap-2 group cursor-pointer min-w-[150px]">
+<div class="w-full bg-center bg-no-repeat aspect-[4/5] bg-cover rounded-lg overflow-hidden bg-primary/10 shadow-md transform hover:scale-105 transition-transform duration-200" data-alt="Nail art with lavender sprigs." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCPnWjOFLfM6f9Ok2HiBiqJx-Ed7QraMaXTkqcvL_-CT8ejxf-GmY3sjpl4ZuEiFw44V7ZuNpEZqDwsA5S6yODnpsy6Utm0S0UKCd6wlowvubIbgrlGknnWKO2roleqxoCspMidFM9NMSf5nv3bwGOTeM17rUmdectzj7Q2dfV0n4OHA1meRqZpYiZ7jUbw3QKW3L-FOo0TNSxMezVs5ceyF3BOpbJSZnOCueVAetgKaOdc-_5I7DarYmfkiJkoInyIEU9KcZOQgKk");'></div>
+<p class="font-medium text-sm group-hover:text-primary">Lavender Haze</p>
+</div>
+<div class="flex flex-col gap-2 group cursor-pointer min-w-[150px]">
+<div class="w-full bg-center bg-no-repeat aspect-[4/5] bg-cover rounded-lg overflow-hidden bg-primary/10 shadow-md transform hover:scale-105 transition-transform duration-200" data-alt="Subtle nail art with gold foil flakes on a nude base." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuARhe8z7V7sZGGXr6ollQ9xovkA2jhtxT1BbqF4VLXZgvmgVasIknTvW1xK3wNEnWbxfCwwEPXGCkh3MjMl1acGPYxkFC8GbX2JgsrhhgsnUnxYlbyV7BTXFzKfKLNKz9OKGLcR0JEdAUt6Ui_-UazJxIuBOxQ2TQ6scvc5y0DF74pV7PwWCKgJvrRjTNYescj1yZ38xQsl0b-JQxaO9OQMdOtJEHTSdc8TXyGaEInaXR3zjmEq7vmYxbOC6PhTI5trAVYIGY-w-kE");'></div>
+<p class="font-medium text-sm group-hover:text-primary">Golden Touch</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+
+</body></html>

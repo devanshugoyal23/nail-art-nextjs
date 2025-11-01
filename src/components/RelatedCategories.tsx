@@ -103,7 +103,7 @@ export default function RelatedCategories({
 
   return (
     <div className="mt-12">
-      <h2 className="text-2xl font-bold text-white mb-6">
+      <h2 className="text-2xl font-bold mb-6">
         {currentCategory ? 'Explore Other Categories' : 'Browse by Category'}
       </h2>
       
@@ -115,7 +115,7 @@ export default function RelatedCategories({
             <Link
               key={category}
               href={categoryUrl(category)}
-              className="group bg-gray-800 rounded-lg overflow-hidden hover:bg-gray-700 transition-all duration-300 transform hover:-translate-y-1"
+              className="group bg-white ring-1 ring-[#ee2b8c]/10 rounded-lg overflow-hidden hover:shadow-md transition-all duration-300 transform hover:-translate-y-1"
             >
               <div className="aspect-square relative">
                 {previewItem ? (
@@ -135,7 +135,7 @@ export default function RelatedCategories({
               </div>
               
               <div className="p-3">
-                <h3 className="text-sm font-medium text-white text-center truncate">
+                <h3 className="text-sm font-medium text-center truncate">
                   {category}
                 </h3>
               </div>
