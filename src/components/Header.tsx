@@ -12,16 +12,16 @@ const Header: React.FC = () => {
   const linkClass = (path: string) =>
     `px-3 py-2 rounded-md text-sm font-medium transition-colors duration-300 ${
       pathname === path
-        ? 'bg-indigo-500 text-white'
-        : 'text-gray-300 hover:bg-gray-700 hover:text-white'
+        ? 'text-[#ee2b8c]'
+        : 'text-[#1b0d14] hover:text-[#ee2b8c]'
     }`;
 
   return (
-    <header className="bg-gray-800/50 backdrop-blur-sm shadow-lg sticky top-0 z-50">
+    <header className="bg-[#f8f6f7]/80 backdrop-blur-sm shadow sticky top-0 z-50">
       <div className="container mx-auto px-2 sm:px-4 lg:px-8">
         <div className="flex items-center justify-between h-14 sm:h-16">
           <div className="flex-shrink-0">
-             <Link href="/" className="text-white text-lg sm:text-xl font-bold tracking-wider">
+             <Link href="/" className="text-[#1b0d14] text-lg sm:text-xl font-bold tracking-wider">
               Nail Art AI
             </Link>
           </div>
@@ -37,7 +37,7 @@ const Header: React.FC = () => {
             <button
               onClick={() => setIsOpen(!isOpen)}
               type="button"
-              className="bg-gray-800 inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white touch-manipulation"
+              className="bg-white inline-flex items-center justify-center p-2 rounded-md text-[#1b0d14] hover:text-[#ee2b8c] hover:bg-white/70 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#ee2b8c] touch-manipulation"
               aria-controls="mobile-menu"
               aria-expanded={isOpen}
             >
@@ -58,31 +58,31 @@ const Header: React.FC = () => {
 
       {isOpen && (
         <div className="md:hidden" id="mobile-menu">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-gray-800/90 backdrop-blur-sm">
+          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white/95 backdrop-blur-sm shadow">
             <Link 
               href="/" 
-              className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700 transition-colors duration-200 touch-manipulation" 
+              className="block px-3 py-2 rounded-md text-base font-medium text-[#1b0d14] hover:text-[#ee2b8c] transition-colors duration-200 touch-manipulation" 
               onClick={() => setIsOpen(false)}
             >
               Home
             </Link>
             <Link 
               href="/categories" 
-              className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700 transition-colors duration-200 touch-manipulation" 
+              className="block px-3 py-2 rounded-md text-base font-medium text-[#1b0d14] hover:text-[#ee2b8c] transition-colors duration-200 touch-manipulation" 
               onClick={() => setIsOpen(false)}
             >
               Categories
             </Link>
             <Link 
               href="/try-on" 
-              className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700 transition-colors duration-200 touch-manipulation" 
+              className="block px-3 py-2 rounded-md text-base font-medium text-[#1b0d14] hover:text-[#ee2b8c] transition-colors duration-200 touch-manipulation" 
               onClick={() => setIsOpen(false)}
             >
               Virtual Try-On
             </Link>
             <Link 
               href="/nail-art-gallery" 
-              className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700 transition-colors duration-200 touch-manipulation" 
+              className="block px-3 py-2 rounded-md text-base font-medium text-[#1b0d14] hover:text-[#ee2b8c] transition-colors duration-200 touch-manipulation" 
               onClick={() => setIsOpen(false)}
             >
               Gallery

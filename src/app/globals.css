@@ -12,12 +12,7 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+/* Force light theme only */
 
 body {
   background: var(--background);
@@ -598,13 +593,7 @@ img {
   }
 }
 
-/* Dark mode loading skeleton */
-@media (prefers-color-scheme: dark) {
-  .loading-skeleton {
-    background: linear-gradient(90deg, #374151 25%, #4b5563 50%, #374151 75%);
-    background-size: 200% 100%;
-  }
-}
+/* Dark mode removed */
 
 /* Improved focus states for accessibility */
 .focus-visible:focus-visible {

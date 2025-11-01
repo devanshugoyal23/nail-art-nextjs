@@ -86,7 +86,7 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes" />
-        <meta name="theme-color" content="#7c3aed" />
+        <meta name="theme-color" content="#ee2b8c" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -97,7 +97,7 @@ export default function RootLayout({
         <style dangerouslySetInnerHTML={{
           __html: `
             html{height:100%;font-size:16px}
-            body{min-height:100%;background:#0a0a0a;color:#ededed;margin:0;font-family:system-ui,-apple-system,sans-serif}
+            body{min-height:100%;background:#f8f6f7;color:#1b0d14;margin:0;font-family:system-ui,-apple-system,sans-serif}
             img{content-visibility:auto;max-width:100%;height:auto}
             *{box-sizing:border-box}
             .pinterest-masonry{column-count:2;column-gap:0.5rem;height:100vh;contain:layout style paint;content-visibility:auto}
@@ -167,7 +167,7 @@ export default function RootLayout({
           `
         }} />
       </head>
-      <body className="min-h-screen bg-black text-gray-100 flex flex-col">
+      <body className="min-h-screen bg-[#f8f6f7] text-[#1b0d14] flex flex-col">
         <Header />
         <main className="flex-grow">
           {children}

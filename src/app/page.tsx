@@ -1,7 +1,8 @@
 import { Metadata } from "next";
-import HomepageHero from "@/components/HomepageHero";
-import LazyHomepageSections from "@/components/LazyHomepageSections";
+import LightHomepage from "@/components/LightHomepage";
 import { getGalleryItems } from "@/lib/optimizedGalleryService";
+import { getAllCategoriesWithThumbnails } from "@/lib/categoryService";
+import { getPopularTags } from "@/lib/tagService";
 
 export const metadata: Metadata = {
   title: "Nail Art AI - Virtual Try-On & Design Generator",
@@ -44,8 +45,11 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
-  // Fetch initial gallery data server-side for faster homepage load
-  const { items } = await getGalleryItems({ limit: 8, sortBy: 'newest' });
+  // Fetch real data for homepage sections
+  const { items: trendingItems } = await getGalleryItems({ limit: 12, sortBy: 'newest' });
+  const categories = await getAllCategoriesWithThumbnails();
+  const popularTags = getPopularTags(trendingItems, 12);
+
   return (
     <>
       {/* Structured Data */}
@@ -75,12 +79,7 @@ export default async function Home() {
           })
         }}
       />
-      
-      {/* Hero Section with Featured Designs */}
-      <HomepageHero initialItems={items} />
-      
-      {/* Lazy-loaded sections for better performance */}
-      <LazyHomepageSections />
+      <LightHomepage trendingItems={trendingItems} categories={categories} popularTags={popularTags} />
     </>
   );
 }
