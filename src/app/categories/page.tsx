@@ -106,107 +106,108 @@ export default async function CategoriesPage() {
   // const categoriesWithContent = tagStats.filter(stat => stat.count > 0);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-white via-surface to-white">
+    <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <div className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-white"></div>
-        <div className="relative max-w-7xl mx-auto px-4 py-16">
+      <section className="relative overflow-hidden bg-gradient-to-br from-rose-50 via-white to-lavender-50">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-secondary/10 rounded-full blur-3xl"></div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 py-16 md:py-24">
           <div className="text-center">
-            <h1 className="text-5xl md:text-7xl font-serif font-bold text-gray-900 mb-6">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-serif font-bold text-gray-900 mb-6">
               Nail Art Categories
             </h1>
-            <p className="text-xl md:text-2xl text-gray-600 max-w-4xl mx-auto mb-8 leading-relaxed">
+            <p className="text-lg sm:text-xl md:text-2xl text-gray-600 max-w-3xl mx-auto mb-8 leading-relaxed">
               Discover your perfect nail art style. Browse by type or explore all {allCategoriesWithThumbnails.length} categories
               with thumbnails and design counts.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 href="/categories/all"
-                className="btn btn-primary text-base px-10 py-4 md:px-12 md:py-5"
+                className="btn btn-primary text-base px-8 py-4"
               >
                 Browse All {allCategoriesWithThumbnails.length} Categories
               </Link>
               <Link
                 href="/nail-art-gallery"
-                className="btn btn-secondary text-base px-10 py-4 md:px-12 md:py-5"
+                className="btn btn-secondary text-base px-8 py-4"
               >
                 View All Designs
               </Link>
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      <div className="max-w-7xl mx-auto px-4 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 py-12 md:py-16">
         {/* Quick Stats */}
-        <div className="mb-12">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="bg-white rounded-xl p-6 md:p-8 lg:p-10 text-center border border-gray-100 shadow-soft">
-              <div className="text-3xl font-bold text-primary">{allCategoriesWithThumbnails.length}</div>
-              <div className="text-gray-600 text-sm mt-1">Categories</div>
+        <div className="mb-12 md:mb-16">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+            <div className="bg-white rounded-2xl p-6 md:p-8 text-center border-2 border-gray-100 shadow-soft hover:shadow-hover hover:border-primary/30 transition-all duration-300">
+              <div className="text-3xl md:text-4xl font-bold text-primary mb-2">{allCategoriesWithThumbnails.length}</div>
+              <div className="text-gray-600 text-sm font-medium">Categories</div>
             </div>
-            <div className="bg-white rounded-xl p-6 md:p-8 lg:p-10 text-center border border-gray-100 shadow-soft">
-              <div className="text-3xl font-bold text-secondary">{categoryStats?.totalItems || 0}</div>
-              <div className="text-gray-600 text-sm mt-1">Total Designs</div>
+            <div className="bg-white rounded-2xl p-6 md:p-8 text-center border-2 border-gray-100 shadow-soft hover:shadow-hover hover:border-secondary/30 transition-all duration-300">
+              <div className="text-3xl md:text-4xl font-bold text-secondary mb-2">{categoryStats?.totalItems || 0}</div>
+              <div className="text-gray-600 text-sm font-medium">Total Designs</div>
             </div>
-            <div className="bg-white rounded-xl p-6 md:p-8 lg:p-10 text-center border border-gray-100 shadow-soft">
-              <div className="text-3xl font-bold text-accent">{categoryStats?.categoriesWithContent || 0}</div>
-              <div className="text-gray-600 text-sm mt-1">Well Stocked</div>
+            <div className="bg-white rounded-2xl p-6 md:p-8 text-center border-2 border-gray-100 shadow-soft hover:shadow-hover hover:border-accent/30 transition-all duration-300">
+              <div className="text-3xl md:text-4xl font-bold text-accent mb-2">{categoryStats?.categoriesWithContent || 0}</div>
+              <div className="text-gray-600 text-sm font-medium">Well Stocked</div>
             </div>
-            <div className="bg-white rounded-xl p-6 md:p-8 lg:p-10 text-center border border-gray-100 shadow-soft">
-              <div className="text-3xl font-bold text-gray-500">{categoryStats?.categoriesNeedingContent || 0}</div>
-              <div className="text-gray-600 text-sm mt-1">Need Content</div>
+            <div className="bg-white rounded-2xl p-6 md:p-8 text-center border-2 border-gray-100 shadow-soft hover:shadow-hover hover:border-gray-300 transition-all duration-300">
+              <div className="text-3xl md:text-4xl font-bold text-gray-700 mb-2">{categoryStats?.categoriesNeedingContent || 0}</div>
+              <div className="text-gray-600 text-sm font-medium">Need Content</div>
             </div>
           </div>
         </div>
 
         {/* Main Navigation */}
-        <div className="mb-12">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="mb-12 md:mb-16">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
             {/* Browse by Type */}
-            <div className="bg-white rounded-2xl p-8 border border-gray-100 shadow-soft">
-              <h2 className="text-2xl font-serif font-bold text-gray-900 mb-4">Browse by Type</h2>
-              <p className="text-gray-600 mb-6">Explore categories organized by nail art types and styles</p>
+            <div className="bg-white rounded-2xl p-6 md:p-8 border-2 border-gray-100 shadow-soft">
+              <h2 className="text-2xl md:text-3xl font-serif font-bold text-gray-900 mb-3">Browse by Type</h2>
+              <p className="text-gray-600 mb-6 text-base">Explore categories organized by nail art types and styles</p>
               <div className="grid grid-cols-1 gap-3">
                 {categories.map((category, index) => (
                   <Link
                     key={index}
                     href={category.href}
-                    className="group flex items-center space-x-4 p-6 md:p-8 lg:p-10 md:p-8 bg-surface rounded-xl hover:bg-primary-lighter hover:shadow-soft transition-all duration-300"
+                    className="group flex items-center space-x-4 p-4 md:p-5 bg-surface rounded-xl hover:bg-primary-lighter hover:shadow-soft border-2 border-transparent hover:border-primary/20 transition-all duration-300"
                   >
-                    <div className="text-2xl">{category.icon}</div>
-                    <div className="flex-1">
-                      <h3 className="text-gray-900 font-semibold group-hover:text-primary transition-colors">
+                    <div className="text-2xl flex-shrink-0">{category.icon}</div>
+                    <div className="flex-1 min-w-0">
+                      <h3 className="text-gray-900 font-semibold text-base group-hover:text-primary transition-colors">
                         {category.title}
                       </h3>
-                      <p className="text-gray-500 text-sm">{category.description}</p>
+                      <p className="text-gray-500 text-sm line-clamp-1">{category.description}</p>
                     </div>
-                    <div className="text-primary">→</div>
+                    <div className="text-primary flex-shrink-0">→</div>
                   </Link>
                 ))}
               </div>
             </div>
 
             {/* Browse All Categories */}
-            <div className="bg-surface/50 backdrop-blur-sm rounded-2xl p-8 border border-gray-100/50">
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="text-2xl font-bold text-gray-900">Browse All Categories</h2>
-                <div className="bg-primary/20 text-purple-300 text-xs px-2 py-1 rounded-full">
-                  {allCategoriesWithThumbnails.length} total
+            <div className="bg-white rounded-2xl p-6 md:p-8 border-2 border-gray-100 shadow-soft">
+              <div className="flex items-center justify-between mb-3">
+                <h2 className="text-2xl md:text-3xl font-serif font-bold text-gray-900">Browse All</h2>
+                <div className="bg-primary/10 text-primary text-xs font-semibold px-3 py-1 rounded-full border border-primary/20">
+                  {allCategoriesWithThumbnails.length}
                 </div>
               </div>
-              <p className="text-gray-600 mb-6">Explore our complete collection with thumbnails and design counts</p>
-              
+              <p className="text-gray-600 mb-6 text-base">Explore our complete collection with thumbnails and design counts</p>
+
               {/* Quick Stats */}
               <div className="mb-6">
                 <div className="grid grid-cols-2 gap-3">
-                  <div className="bg-gradient-to-br from-purple-600/20 to-purple-500/20 rounded-xl p-6 md:p-8 lg:p-10 md:p-8 text-center border border-purple-500/20">
-                    <div className="text-2xl font-bold text-primary">{allCategoriesWithThumbnails.length}</div>
-                    <div className="text-gray-600 text-xs">Categories</div>
+                  <div className="bg-gradient-to-br from-primary/10 to-primary/5 rounded-xl p-4 text-center border-2 border-primary/20">
+                    <div className="text-2xl md:text-3xl font-bold text-primary mb-1">{allCategoriesWithThumbnails.length}</div>
+                    <div className="text-gray-600 text-xs font-medium">Categories</div>
                   </div>
-                  <div className="bg-gradient-to-br from-blue-600/20 to-blue-500/20 rounded-xl p-6 md:p-8 lg:p-10 md:p-8 text-center border border-blue-500/20">
-                    <div className="text-2xl font-bold text-blue-400">{categoryStats?.totalItems || 0}</div>
-                    <div className="text-gray-600 text-xs">Designs</div>
+                  <div className="bg-gradient-to-br from-secondary/10 to-secondary/5 rounded-xl p-4 text-center border-2 border-secondary/20">
+                    <div className="text-2xl md:text-3xl font-bold text-secondary mb-1">{categoryStats?.totalItems || 0}</div>
+                    <div className="text-gray-600 text-xs font-medium">Designs</div>
                   </div>
                 </div>
               </div>
@@ -215,7 +216,7 @@ export default async function CategoriesPage() {
               <div className="mb-6">
                 <div className="flex items-center justify-between mb-3">
                   <h3 className="text-gray-900 font-semibold text-sm">🔥 Popular</h3>
-                  <Link href="/categories/all?sort=count" className="text-primary hover:text-purple-300 text-xs">
+                  <Link href="/categories/all?sort=count" className="text-primary hover:text-primary-dark text-xs font-medium">
                     View All →
                   </Link>
                 </div>
@@ -224,9 +225,9 @@ export default async function CategoriesPage() {
                     <Link
                       key={index}
                       href={`/nail-art-gallery/category/${encodeURIComponent(category.category)}`}
-                      className="group flex items-center space-x-3 bg-gray-100/50 rounded-lg p-3 hover:bg-primary-lighter hover:shadow-soft transition-all duration-300 hover:scale-[1.02]"
+                      className="group flex items-center space-x-3 bg-surface rounded-lg p-3 hover:bg-primary-lighter hover:shadow-soft border-2 border-transparent hover:border-primary/20 transition-all duration-300"
                     >
-                      <div className="w-10 h-10 rounded-lg overflow-hidden flex-shrink-0">
+                      <div className="w-10 h-10 rounded-lg overflow-hidden flex-shrink-0 border-2 border-gray-100">
                         {category.thumbnail ? (
                           <OptimizedImage
                             src={category.thumbnail}
@@ -236,7 +237,7 @@ export default async function CategoriesPage() {
                             className="w-full h-full object-cover"
                           />
                         ) : (
-                          <div className="w-full h-full bg-gradient-to-br from-purple-600 to-pink-600 flex items-center justify-center">
+                          <div className="w-full h-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
                             <span className="text-sm">💅</span>
                           </div>
                         )}
@@ -247,7 +248,7 @@ export default async function CategoriesPage() {
                         </h4>
                         <p className="text-gray-500 text-xs">{category.count} designs</p>
                       </div>
-                      <div className="text-primary text-xs font-medium">
+                      <div className="text-primary text-xs font-semibold bg-primary/10 px-2 py-1 rounded-full">
                         #{index + 1}
                       </div>
                     </Link>
@@ -259,7 +260,7 @@ export default async function CategoriesPage() {
               <div className="mb-6">
                 <div className="flex items-center justify-between mb-3">
                   <h3 className="text-gray-900 font-semibold text-sm">⭐ Trending</h3>
-                  <Link href="/categories/all?sort=recent" className="text-blue-400 hover:text-blue-300 text-xs">
+                  <Link href="/categories/all?sort=recent" className="text-secondary hover:text-secondary-dark text-xs font-medium">
                     View All →
                   </Link>
                 </div>
@@ -268,9 +269,9 @@ export default async function CategoriesPage() {
                     <Link
                       key={index}
                       href={`/nail-art-gallery/category/${encodeURIComponent(category.category)}`}
-                      className="group flex items-center space-x-3 bg-gray-100/50 rounded-lg p-3 hover:bg-primary-lighter hover:shadow-soft transition-all duration-300 hover:scale-[1.02]"
+                      className="group flex items-center space-x-3 bg-surface rounded-lg p-3 hover:bg-secondary-light hover:shadow-soft border-2 border-transparent hover:border-secondary/20 transition-all duration-300"
                     >
-                      <div className="w-10 h-10 rounded-lg overflow-hidden flex-shrink-0">
+                      <div className="w-10 h-10 rounded-lg overflow-hidden flex-shrink-0 border-2 border-gray-100">
                         {category.thumbnail ? (
                           <OptimizedImage
                             src={category.thumbnail}
@@ -280,18 +281,18 @@ export default async function CategoriesPage() {
                             className="w-full h-full object-cover"
                           />
                         ) : (
-                          <div className="w-full h-full bg-gradient-to-br from-blue-600 to-cyan-600 flex items-center justify-center">
+                          <div className="w-full h-full bg-gradient-to-br from-secondary to-primary flex items-center justify-center">
                             <span className="text-sm">✨</span>
                           </div>
                         )}
                       </div>
                       <div className="flex-1 min-w-0">
-                        <h4 className="text-gray-900 font-medium text-sm group-hover:text-blue-400 transition-colors line-clamp-1">
+                        <h4 className="text-gray-900 font-medium text-sm group-hover:text-secondary transition-colors line-clamp-1">
                           {category.category}
                         </h4>
                         <p className="text-gray-500 text-xs">{category.count} designs</p>
                       </div>
-                      <div className="text-blue-400 text-xs font-medium">
+                      <div className="text-secondary text-xs font-semibold bg-secondary/10 px-2 py-1 rounded-full">
                         New
                       </div>
                     </Link>
@@ -303,20 +304,20 @@ export default async function CategoriesPage() {
               <div className="space-y-3">
                 <Link
                   href="/categories/all"
-                  className="block btn btn-primary font-semibold py-3 px-4 rounded-xl text-center transition-all duration-300 transform hover:scale-105 text-sm shadow-lg"
+                  className="block btn btn-primary text-sm text-center w-full"
                 >
                   View All {allCategoriesWithThumbnails.length} Categories
                 </Link>
                 <div className="grid grid-cols-2 gap-2">
                   <Link
                     href="/categories/all?sort=count"
-                    className="bg-blue-600/20 hover:bg-blue-600/30 text-blue-300 py-2 px-3 rounded-lg text-center text-xs transition-colors font-medium"
+                    className="bg-primary/10 hover:bg-primary/20 text-primary border-2 border-primary/20 hover:border-primary/30 py-2.5 px-3 rounded-lg text-center text-xs transition-all font-semibold"
                   >
                     Most Popular
                   </Link>
                   <Link
                     href="/categories/all?sort=name"
-                    className="bg-green-600/20 hover:bg-green-600/30 text-green-300 py-2 px-3 rounded-lg text-center text-xs transition-colors font-medium"
+                    className="bg-secondary/10 hover:bg-secondary/20 text-secondary border-2 border-secondary/20 hover:border-secondary/30 py-2.5 px-3 rounded-lg text-center text-xs transition-all font-semibold"
                   >
                     A-Z
                   </Link>
@@ -327,59 +328,59 @@ export default async function CategoriesPage() {
         </div>
 
         {/* Popular Tags Section */}
-        <div className="mb-12">
-          <h2 className="text-3xl font-serif font-bold text-gray-900 mb-6 text-center">Explore by Tags</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="mb-12 md:mb-16">
+          <h2 className="text-3xl md:text-4xl font-serif font-bold text-gray-900 mb-8 text-center">Explore by Tags</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
             <TagCollection
               title="Colors"
               tags={popularColors}
               variant="color"
               size="lg"
-              className="bg-gradient-to-br from-pink-500/10 to-red-500/10 p-6 md:p-8 lg:p-10 rounded-xl border border-pink-500/20"
+              className="bg-white p-6 rounded-2xl border-2 border-primary/20 shadow-soft hover:shadow-hover hover:border-primary/40 transition-all duration-300"
             />
             <TagCollection
               title="Techniques"
               tags={popularTechniques}
               variant="technique"
               size="lg"
-              className="bg-gradient-to-br from-blue-500/10 to-cyan-500/10 p-6 md:p-8 lg:p-10 rounded-xl border border-blue-500/20"
+              className="bg-white p-6 rounded-2xl border-2 border-secondary/20 shadow-soft hover:shadow-hover hover:border-secondary/40 transition-all duration-300"
             />
             <TagCollection
               title="Occasions"
               tags={popularOccasions}
               variant="occasion"
               size="lg"
-              className="bg-gradient-to-br from-yellow-500/10 to-orange-500/10 p-6 md:p-8 lg:p-10 rounded-xl border border-yellow-500/20"
+              className="bg-white p-6 rounded-2xl border-2 border-accent/20 shadow-soft hover:shadow-hover hover:border-accent/40 transition-all duration-300"
             />
             <TagCollection
               title="Styles"
               tags={popularStyles}
               variant="style"
               size="lg"
-              className="bg-gradient-to-br from-purple-500/10 to-pink-500/10 p-6 md:p-8 lg:p-10 rounded-xl border border-purple-500/20"
+              className="bg-white p-6 rounded-2xl border-2 border-primary/20 shadow-soft hover:shadow-hover hover:border-primary/40 transition-all duration-300"
             />
           </div>
         </div>
 
         {/* Featured Categories Preview */}
-        <div className="mb-12">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-3xl font-bold text-gray-900">Featured Categories</h2>
+        <div className="mb-12 md:mb-16">
+          <div className="flex items-center justify-between mb-6 md:mb-8">
+            <h2 className="text-3xl md:text-4xl font-serif font-bold text-gray-900">Featured Categories</h2>
             <Link
               href="/categories/all"
-              className="text-primary hover:text-purple-300 text-sm font-medium"
+              className="text-primary hover:text-primary-dark text-sm font-semibold"
             >
               View All →
             </Link>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 md:gap-4">
             {allCategoriesWithThumbnails.slice(0, 12).map((category, index) => (
               <Link
                 key={index}
                 href={`/nail-art-gallery/category/${encodeURIComponent(category.category)}`}
-                className="group bg-surface/50 backdrop-blur-sm rounded-xl overflow-hidden hover:bg-gray-100/50 transition-all duration-300 transform hover:-translate-y-1 border border-gray-100/50"
+                className="group bg-white rounded-xl overflow-hidden hover:shadow-hover transition-all duration-300 transform hover:-translate-y-1 border-2 border-gray-100 hover:border-primary/30"
               >
-                <div className="relative h-24 overflow-hidden">
+                <div className="relative h-24 overflow-hidden bg-surface">
                   {category.thumbnail ? (
                     <OptimizedImage
                       src={category.thumbnail}
@@ -389,17 +390,16 @@ export default async function CategoriesPage() {
                       className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                     />
                   ) : (
-                    <div className="w-full h-full bg-gradient-to-br from-purple-600 to-pink-600 flex items-center justify-center">
+                    <div className="w-full h-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
                       <span className="text-2xl">💅</span>
                     </div>
                   )}
-                  <div className="absolute inset-0 bg-white/20"></div>
-                  <div className="absolute top-1 right-1 bg-white/20 backdrop-blur-sm text-gray-900 text-xs px-1 py-0.5 rounded">
+                  <div className="absolute top-2 right-2 bg-white/90 backdrop-blur-sm text-gray-900 text-xs font-semibold px-2 py-1 rounded-full shadow-soft">
                     {category.count}
                   </div>
                 </div>
-                <div className="p-2">
-                  <h3 className="text-gray-900 font-medium text-xs group-hover:text-primary transition-colors line-clamp-2">
+                <div className="p-3 bg-white">
+                  <h3 className="text-gray-900 font-semibold text-xs group-hover:text-primary transition-colors line-clamp-2">
                     {category.category}
                   </h3>
                 </div>
@@ -409,30 +409,30 @@ export default async function CategoriesPage() {
         </div>
 
         {/* Quick Actions */}
-        <div className="bg-surface/50 backdrop-blur-sm rounded-2xl p-8 border border-gray-100/50">
-          <h2 className="text-2xl font-serif font-bold text-gray-900 mb-6 text-center">Quick Actions</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="bg-gradient-to-br from-rose-50 via-white to-lavender-50 rounded-2xl p-8 md:p-10 border-2 border-gray-100 shadow-soft">
+          <h2 className="text-2xl md:text-3xl font-serif font-bold text-gray-900 mb-6 md:mb-8 text-center">Quick Actions</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <Link
               href="/categories/all"
-              className="btn btn-primary font-semibold py-4 px-6 rounded-xl text-center transition-all duration-300 transform hover:scale-105"
+              className="btn btn-primary text-sm py-4 px-6 rounded-xl text-center transition-all duration-300 hover:shadow-hover"
             >
               All Categories
             </Link>
             <Link
               href="/nail-art-gallery"
-              className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-gray-900 font-semibold py-4 px-6 rounded-xl text-center transition-all duration-300 transform hover:scale-105"
+              className="bg-white text-secondary border-2 border-secondary/30 hover:bg-secondary-light hover:border-secondary/50 font-semibold text-sm py-4 px-6 rounded-xl text-center transition-all duration-300 hover:shadow-hover"
             >
               All Designs
             </Link>
             <Link
               href="/try-on"
-              className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-gray-900 font-semibold py-4 px-6 rounded-xl text-center transition-all duration-300 transform hover:scale-105"
+              className="bg-gradient-to-r from-primary to-secondary text-white hover:from-primary-dark hover:to-secondary-dark font-semibold text-sm py-4 px-6 rounded-xl text-center transition-all duration-300 hover:shadow-hover"
             >
               Virtual Try-On
             </Link>
             <Link
               href="/nail-art/trending"
-              className="bg-gradient-to-r from-yellow-600 to-orange-600 hover:from-yellow-700 hover:to-orange-700 text-gray-900 font-semibold py-4 px-6 rounded-xl text-center transition-all duration-300 transform hover:scale-105"
+              className="bg-white text-accent border-2 border-accent/30 hover:bg-accent/10 hover:border-accent/50 font-semibold text-sm py-4 px-6 rounded-xl text-center transition-all duration-300 hover:shadow-hover"
             >
               Trending Now
             </Link>

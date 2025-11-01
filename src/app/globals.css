@@ -156,7 +156,7 @@ a:hover {
 .pinterest-masonry {
   column-count: 2;
   column-gap: 1rem;
-  padding: 1rem;
+  padding: 0;
 }
 
 @media (min-width: 640px) {
@@ -180,22 +180,43 @@ a:hover {
   }
 }
 
+@media (min-width: 1536px) {
+  .pinterest-masonry {
+    column-count: 6;
+    column-gap: 1.5rem;
+  }
+}
+
 .pinterest-item {
   break-inside: avoid;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
   display: inline-block;
   width: 100%;
   position: relative;
   background: white;
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-xl);
   overflow: hidden;
   transition: var(--transition-base);
   cursor: pointer;
+  border: 2px solid transparent;
+}
+
+@media (min-width: 640px) {
+  .pinterest-item {
+    margin-bottom: 1.25rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .pinterest-item {
+    margin-bottom: 1.5rem;
+  }
 }
 
 .pinterest-item:hover {
   transform: translateY(-4px);
   box-shadow: 0 12px 24px var(--shadow-hover);
+  border-color: var(--primary);
 }
 
 .pinterest-item img {
@@ -313,7 +334,8 @@ a:hover {
 /* CARD STYLES - Pinterest Aesthetic */
 .card {
   background: white;
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-xl);
+  border: 2px solid var(--border);
   box-shadow: 0 2px 8px var(--shadow-color);
   transition: var(--transition-base);
   overflow: hidden;
@@ -322,17 +344,18 @@ a:hover {
 .card:hover {
   box-shadow: 0 8px 24px var(--shadow-hover);
   transform: translateY(-4px);
+  border-color: var(--primary);
 }
 
 .card-minimal {
   background: white;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-xl);
   transition: var(--transition-base);
 }
 
 .card-minimal:hover {
-  border-color: var(--border-hover);
+  border-color: var(--primary);
   box-shadow: 0 4px 12px var(--shadow-color);
 }
 
@@ -519,18 +542,30 @@ img {
 
   .pinterest-masonry {
     column-count: 2;
-    column-gap: 0.75rem;
-    padding: 0.75rem;
+    column-gap: 1rem;
+    padding: 0;
   }
 
   .pinterest-item {
-    margin-bottom: 0.75rem;
+    margin-bottom: 1rem;
+    border-width: 2px;
   }
 
   /* Touch-friendly sizes */
   button, a, [role="button"] {
     min-height: 44px;
     min-width: 44px;
+  }
+
+  .btn {
+    padding: 0.875rem 1.5rem;
+    font-size: 1rem;
+  }
+
+  /* Better mobile card spacing */
+  .card, .card-minimal {
+    margin-bottom: 1rem;
+    border-width: 2px;
   }
 
   /* Prevent zoom on input focus */
@@ -541,6 +576,11 @@ img {
   /* Smooth scrolling */
   body {
     -webkit-overflow-scrolling: touch;
+  }
+
+  /* Mobile container padding */
+  .container {
+    padding: 0 1rem;
   }
 }
 
@@ -570,14 +610,26 @@ img {
 
 /* UTILITY CLASSES */
 .container {
-  max-width: 1400px;
+  max-width: 1536px;
   margin: 0 auto;
   padding: 0 1rem;
 }
 
 @media (min-width: 640px) {
   .container {
+    padding: 0 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
     padding: 0 2rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container {
+    padding: 0 3rem;
   }
 }
 
@@ -589,13 +641,25 @@ img {
 
 @media (min-width: 640px) {
   .content-wrapper {
-    padding: 3rem 2rem;
+    padding: 3rem 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .content-wrapper {
+    padding: 4rem 2rem;
   }
 }
 
 /* Responsive spacing */
 .section-padding {
   padding: 3rem 0;
+}
+
+@media (min-width: 640px) {
+  .section-padding {
+    padding: 4rem 0;
+  }
 }
 
 @media (min-width: 1024px) {
