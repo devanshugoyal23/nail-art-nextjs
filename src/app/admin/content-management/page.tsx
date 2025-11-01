@@ -571,7 +571,7 @@ export default function ContentManagementPage() {
     <div className="min-h-screen bg-white text-gray-900">
       {/* Sticky Header */}
       <div className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-8 py-4">
+        <div className="max-w-7xl mx-auto px-10 py-4 md:px-12 md:py-5">
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-4">
               {/* Breadcrumb */}
@@ -638,7 +638,7 @@ export default function ContentManagementPage() {
 
         {/* Help Panel */}
         {showHelp && (
-          <div className="bg-blue-900/20 border border-blue-700 rounded-lg p-6 mb-8">
+          <div className="bg-blue-900/20 border border-blue-700 rounded-lg p-6 md:p-8 lg:p-10 mb-8">
             <h2 className="text-2xl font-bold mb-4 text-blue-300">📚 How to Use This Dashboard</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
@@ -729,7 +729,7 @@ export default function ContentManagementPage() {
 
         {/* Enhanced Progress Display */}
         {distributeProgress.isGenerating && (
-          <div className="bg-gradient-to-r from-gray-800 to-gray-700 p-6 rounded-xl mb-8 border border-gray-200">
+          <div className="bg-gradient-to-r from-gray-800 to-gray-700 p-6 md:p-8 lg:p-10 rounded-xl mb-8 border border-gray-200">
             <div className="flex justify-between items-center mb-4">
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center animate-pulse">
@@ -790,7 +790,7 @@ export default function ContentManagementPage() {
         {/* Distribute Preview Modal */}
         {showDistributePreview && distributePreview && (
           <div className="fixed inset-0 bg-white bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-surface rounded-lg p-6 max-w-4xl w-full mx-4 max-h-[80vh] overflow-y-auto">
+            <div className="bg-surface rounded-lg p-6 md:p-8 lg:p-10 max-w-4xl w-full mx-4 max-h-[80vh] overflow-y-auto">
               <div className="flex justify-between items-center mb-4">
                 <h3 className="text-2xl font-bold text-green-400">🔍 Distribute Content Preview</h3>
                 <button
@@ -803,19 +803,19 @@ export default function ContentManagementPage() {
               
               <div className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div className="bg-gray-100 p-4 rounded-lg">
+                  <div className="bg-gray-100 p-6 md:p-8 lg:p-10 md:p-8 rounded-lg">
                     <h4 className="text-lg font-semibold text-blue-400 mb-2">Total Pages</h4>
                     <p className="text-3xl font-bold text-gray-900">{distributePreview.totalPages}</p>
                     <p className="text-sm text-gray-500">Categories to be updated</p>
                   </div>
                   
-                  <div className="bg-gray-100 p-4 rounded-lg">
+                  <div className="bg-gray-100 p-6 md:p-8 lg:p-10 md:p-8 rounded-lg">
                     <h4 className="text-lg font-semibold text-green-400 mb-2">Estimated Time</h4>
                     <p className="text-2xl font-bold text-gray-900">{distributePreview.estimatedTime}</p>
                     <p className="text-sm text-gray-500">Expected duration</p>
                   </div>
                   
-                  <div className="bg-gray-100 p-4 rounded-lg">
+                  <div className="bg-gray-100 p-6 md:p-8 lg:p-10 md:p-8 rounded-lg">
                     <h4 className="text-lg font-semibold text-primary mb-2">Total Items</h4>
                     <p className="text-3xl font-bold text-gray-900">
                       {Object.values(distributePreview.itemsPerCategory).reduce((sum, count) => sum + count, 0)}
@@ -1355,7 +1355,7 @@ export default function ContentManagementPage() {
             {/* Category Detail Modal */}
             {selectedCategoryDetail && (
               <div className="fixed inset-0 bg-white bg-opacity-50 flex items-center justify-center z-50">
-                <div className="bg-surface rounded-lg p-6 max-w-2xl w-full mx-4 max-h-[80vh] overflow-y-auto">
+                <div className="bg-surface rounded-lg p-6 md:p-8 lg:p-10 max-w-2xl w-full mx-4 max-h-[80vh] overflow-y-auto">
                   <div className="flex justify-between items-center mb-4">
                     <h3 className="text-2xl font-bold">{selectedCategoryDetail.category}</h3>
                     <button
@@ -1855,7 +1855,7 @@ export default function ContentManagementPage() {
 
               {/* Status Messages */}
               {editorialLoading && (
-                <div className="mt-4 p-4 bg-blue-900/20 border border-blue-700 rounded-lg">
+                <div className="mt-4 p-6 md:p-8 lg:p-10 md:p-8 bg-blue-900/20 border border-blue-700 rounded-lg">
                   <div className="flex items-center">
                     <span className="text-blue-400 text-xl mr-2">🔄</span>
                     <span className="text-blue-300">Generating editorial content... Click &quot;Stop Generation&quot; to halt the process.</span>
@@ -1864,7 +1864,7 @@ export default function ContentManagementPage() {
               )}
 
               {editorialStopped && (
-                <div className="mt-4 p-4 bg-red-900/20 border border-red-700 rounded-lg">
+                <div className="mt-4 p-6 md:p-8 lg:p-10 md:p-8 bg-red-900/20 border border-red-700 rounded-lg">
                   <div className="flex items-center">
                     <span className="text-red-400 text-xl mr-2">🛑</span>
                     <span className="text-red-300">Editorial generation has been stopped.</span>
@@ -1873,7 +1873,7 @@ export default function ContentManagementPage() {
               )}
 
               {!editorialLoading && !editorialStopped && editorialStats && editorialStats.itemsNeedingEditorial === 0 && (
-                <div className="mt-4 p-4 bg-green-900/20 border border-green-700 rounded-lg">
+                <div className="mt-4 p-6 md:p-8 lg:p-10 md:p-8 bg-green-900/20 border border-green-700 rounded-lg">
                   <div className="flex items-center">
                     <span className="text-green-400 text-xl mr-2">✅</span>
                     <span className="text-green-300">All items have editorial content!</span>
@@ -1882,7 +1882,7 @@ export default function ContentManagementPage() {
               )}
 
               {!editorialLoading && !editorialStopped && editorialStats && editorialStats.itemsNeedingEditorial > 0 && (
-                <div className="mt-4 p-4 bg-yellow-900/20 border border-yellow-700 rounded-lg">
+                <div className="mt-4 p-6 md:p-8 lg:p-10 md:p-8 bg-yellow-900/20 border border-yellow-700 rounded-lg">
                   <div className="flex items-center">
                     <span className="text-yellow-400 text-xl mr-2">⚠️</span>
                     <span className="text-yellow-300">

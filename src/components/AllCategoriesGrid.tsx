@@ -83,7 +83,7 @@ export default function AllCategoriesGrid({
     <div className="space-y-8">
       {/* Statistics */}
       {stats && (
-        <div className="bg-surface/50 backdrop-blur-sm rounded-2xl p-6 border border-gray-100/50">
+        <div className="bg-surface/50 backdrop-blur-sm rounded-2xl p-6 md:p-8 lg:p-10 border border-gray-100/50">
           <h2 className="text-2xl font-bold text-gray-900 mb-4 text-center">Category Statistics</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="text-center">
@@ -169,7 +169,7 @@ export default function AllCategoriesGrid({
       {loading ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {Array.from({ length: 12 }).map((_, index) => (
-            <div key={index} className="bg-surface/50 rounded-xl p-4 animate-pulse">
+            <div key={index} className="bg-surface/50 rounded-xl p-6 md:p-8 lg:p-10 md:p-8 animate-pulse">
               <div className="w-full h-32 bg-gray-100 rounded-lg mb-3"></div>
               <div className="h-4 bg-gray-100 rounded mb-2"></div>
               <div className="h-3 bg-gray-100 rounded w-2/3"></div>

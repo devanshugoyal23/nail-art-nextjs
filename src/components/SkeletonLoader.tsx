@@ -20,7 +20,7 @@ export default function SkeletonLoader({
   const getSkeletonClasses = () => {
     switch (type) {
       case 'card':
-        return `${baseClasses} p-4 space-y-3`;
+        return `${baseClasses} p-6 md:p-8 lg:p-10 md:p-8 space-y-3`;
       case 'text':
         return `${baseClasses} h-4`;
       case 'image':
@@ -85,7 +85,7 @@ export default function SkeletonLoader({
 // Specialized skeleton components for common use cases
 export function CardSkeleton({ className = '' }: { className?: string }) {
   return (
-    <div className={`bg-surface/40 rounded-xl p-4 space-y-4 ${className}`}>
+    <div className={`bg-surface/40 rounded-xl p-6 md:p-8 lg:p-10 md:p-8 space-y-4 ${className}`}>
       <SkeletonLoader type="image" className="w-full h-48" />
       <div className="space-y-2">
         <SkeletonLoader type="text" lines={2} />
@@ -97,7 +97,7 @@ export function CardSkeleton({ className = '' }: { className?: string }) {
 
 export function StatCardSkeleton({ className = '' }: { className?: string }) {
   return (
-    <div className={`bg-surface/40 rounded-xl p-4 space-y-3 ${className}`}>
+    <div className={`bg-surface/40 rounded-xl p-6 md:p-8 lg:p-10 md:p-8 space-y-3 ${className}`}>
       <div className="flex items-center gap-3">
         <SkeletonLoader type="avatar" />
         <SkeletonLoader type="text" lines={1} className="w-20" />

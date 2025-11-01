@@ -63,7 +63,7 @@ export function EmergencyStopButton({ position = 'fixed', showStatus = true }: E
 
   return (
     <div className={`${position === 'fixed' ? 'fixed top-4 right-4 z-50' : ''}`}>
-      <div className="bg-red-900 border-2 border-red-600 rounded-lg p-4 shadow-lg">
+      <div className="bg-red-900 border-2 border-red-600 rounded-lg p-6 md:p-8 lg:p-10 md:p-8 shadow-lg">
         <div className="flex flex-col gap-2">
           <h3 className="text-red-200 font-bold text-sm">🚨 EMERGENCY STOP</h3>
           

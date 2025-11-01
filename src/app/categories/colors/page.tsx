@@ -190,27 +190,27 @@ export default async function ColorsPage() {
         <div className="bg-surface rounded-xl p-8 mb-16">
           <h2 className="text-2xl font-serif font-bold text-gray-900 mb-6 text-center">Popular Color Combinations</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div className="bg-gradient-to-r from-red-500 to-pink-500 rounded-lg p-4 text-center">
+            <div className="bg-gradient-to-r from-red-500 to-pink-500 rounded-lg p-6 md:p-8 lg:p-10 md:p-8 text-center">
               <h3 className="text-gray-900 font-semibold mb-2">Red & Pink</h3>
               <p className="text-gray-900/80 text-sm">Romantic and feminine</p>
             </div>
-            <div className="bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg p-4 text-center">
+            <div className="bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg p-6 md:p-8 lg:p-10 md:p-8 text-center">
               <h3 className="text-gray-900 font-semibold mb-2">Blue & Purple</h3>
               <p className="text-gray-900/80 text-sm">Cool and sophisticated</p>
             </div>
-            <div className="bg-gradient-to-r from-green-500 to-teal-500 rounded-lg p-4 text-center">
+            <div className="bg-gradient-to-r from-green-500 to-teal-500 rounded-lg p-6 md:p-8 lg:p-10 md:p-8 text-center">
               <h3 className="text-gray-900 font-semibold mb-2">Green & Teal</h3>
               <p className="text-gray-900/80 text-sm">Fresh and natural</p>
             </div>
-            <div className="bg-gradient-to-r from-yellow-400 to-orange-500 rounded-lg p-4 text-center">
+            <div className="bg-gradient-to-r from-yellow-400 to-orange-500 rounded-lg p-6 md:p-8 lg:p-10 md:p-8 text-center">
               <h3 className="text-gray-900 font-semibold mb-2">Yellow & Orange</h3>
               <p className="text-gray-900/80 text-sm">Warm and energetic</p>
             </div>
-            <div className="bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg p-4 text-center">
+            <div className="bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg p-6 md:p-8 lg:p-10 md:p-8 text-center">
               <h3 className="text-gray-900 font-semibold mb-2">Purple & Pink</h3>
               <p className="text-gray-900/80 text-sm">Elegant and playful</p>
             </div>
-            <div className="bg-gradient-to-r from-gray-600 to-black rounded-lg p-4 text-center">
+            <div className="bg-gradient-to-r from-gray-600 to-black rounded-lg p-6 md:p-8 lg:p-10 md:p-8 text-center">
               <h3 className="text-gray-900 font-semibold mb-2">Gray & Black</h3>
               <p className="text-gray-900/80 text-sm">Edgy and sophisticated</p>
             </div>

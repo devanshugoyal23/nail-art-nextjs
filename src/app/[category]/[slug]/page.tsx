@@ -689,7 +689,7 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
                       preset="thumbnail"
                     />
                     {categoryItem.design_name && (
-                      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6 md:p-8 lg:p-10 md:p-8 opacity-0 group-hover:opacity-100 transition-opacity">
                         <h3 className="text-white font-semibold text-sm line-clamp-2">
                           {categoryItem.design_name}
                         </h3>
@@ -721,7 +721,7 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
               <h3 className="text-2xl font-serif font-semibold text-gray-900 mb-6">Frequently Asked Questions</h3>
               <div className="space-y-4">
                 {editorial.faqs.map((faq, i) => (
-                  <div key={i} className="bg-white p-6 rounded-xl shadow-soft">
+                  <div key={i} className="bg-white p-6 md:p-8 lg:p-10 rounded-xl shadow-soft">
                     <h4 className="font-semibold text-gray-900 mb-2">{faq.q}</h4>
                     <p className="text-gray-600 leading-relaxed">{faq.a}</p>
                   </div>

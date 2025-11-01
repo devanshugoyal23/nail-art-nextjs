@@ -379,7 +379,7 @@ export default async function TechniquePage({ params }: TechniquePageProps) {
               <Link
                 key={key}
                 href={`/techniques/${key}`}
-                className={`bg-gradient-to-r ${data.gradient} rounded-lg p-4 text-center hover:scale-105 transition-transform`}
+                className={`bg-gradient-to-r ${data.gradient} rounded-lg p-6 md:p-8 lg:p-10 md:p-8 text-center hover:scale-105 transition-transform`}
               >
                 <div className="text-2xl mb-2">{data.emoji}</div>
                 <div className="text-gray-900 font-semibold">{data.name}</div>

@@ -214,42 +214,42 @@ export default async function StylesPage() {
         <div className="bg-surface rounded-xl p-8 mb-16">
           <h2 className="text-2xl font-serif font-bold text-gray-900 mb-6 text-center">Find Your Style</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="bg-gradient-to-br from-gray-100 to-gray-300 rounded-lg p-6 text-center">
+            <div className="bg-gradient-to-br from-gray-100 to-gray-300 rounded-lg p-6 md:p-8 lg:p-10 text-center">
               <div className="text-4xl mb-3">🤍</div>
               <h3 className="text-gray-800 font-semibold mb-2">Minimalist</h3>
               <p className="text-gray-600 text-sm">Clean, simple, elegant</p>
             </div>
-            <div className="bg-gradient-to-br from-yellow-400 to-pink-500 rounded-lg p-6 text-center">
+            <div className="bg-gradient-to-br from-yellow-400 to-pink-500 rounded-lg p-6 md:p-8 lg:p-10 text-center">
               <div className="text-4xl mb-3">✨</div>
               <h3 className="text-gray-900 font-semibold mb-2">Glamour</h3>
               <p className="text-gray-900/80 text-sm">Sparkly, luxurious, bold</p>
             </div>
-            <div className="bg-gradient-to-br from-purple-500 to-blue-500 rounded-lg p-6 text-center">
+            <div className="bg-gradient-to-br from-purple-500 to-blue-500 rounded-lg p-6 md:p-8 lg:p-10 text-center">
               <div className="text-4xl mb-3">🎨</div>
               <h3 className="text-gray-900 font-semibold mb-2">Abstract</h3>
               <p className="text-gray-900/80 text-sm">Artistic, creative, unique</p>
             </div>
-            <div className="bg-gradient-to-br from-green-400 to-teal-500 rounded-lg p-6 text-center">
+            <div className="bg-gradient-to-br from-green-400 to-teal-500 rounded-lg p-6 md:p-8 lg:p-10 text-center">
               <div className="text-4xl mb-3">🌿</div>
               <h3 className="text-gray-900 font-semibold mb-2">Nature</h3>
               <p className="text-gray-900/80 text-sm">Natural, organic, calming</p>
             </div>
-            <div className="bg-gradient-to-br from-cyan-400 to-purple-500 rounded-lg p-6 text-center">
+            <div className="bg-gradient-to-br from-cyan-400 to-purple-500 rounded-lg p-6 md:p-8 lg:p-10 text-center">
               <div className="text-4xl mb-3">💫</div>
               <h3 className="text-gray-900 font-semibold mb-2">Modern</h3>
               <p className="text-gray-900/80 text-sm">Contemporary, trendy, sharp</p>
             </div>
-            <div className="bg-gradient-to-br from-red-400 to-pink-500 rounded-lg p-6 text-center">
+            <div className="bg-gradient-to-br from-red-400 to-pink-500 rounded-lg p-6 md:p-8 lg:p-10 text-center">
               <div className="text-4xl mb-3">💄</div>
               <h3 className="text-gray-900 font-semibold mb-2">Vintage</h3>
               <p className="text-gray-900/80 text-sm">Classic, timeless, retro</p>
             </div>
-            <div className="bg-gradient-to-br from-gray-600 to-black rounded-lg p-6 text-center">
+            <div className="bg-gradient-to-br from-gray-600 to-black rounded-lg p-6 md:p-8 lg:p-10 text-center">
               <div className="text-4xl mb-3">🖤</div>
               <h3 className="text-gray-900 font-semibold mb-2">Gothic</h3>
               <p className="text-gray-900/80 text-sm">Dark, edgy, bold</p>
             </div>
-            <div className="bg-gradient-to-br from-pink-400 to-purple-500 rounded-lg p-6 text-center">
+            <div className="bg-gradient-to-br from-pink-400 to-purple-500 rounded-lg p-6 md:p-8 lg:p-10 text-center">
               <div className="text-4xl mb-3">💖</div>
               <h3 className="text-gray-900 font-semibold mb-2">Cute</h3>
               <p className="text-gray-900/80 text-sm">Playful, adorable, fun</p>

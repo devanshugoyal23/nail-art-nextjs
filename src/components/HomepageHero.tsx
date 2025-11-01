@@ -129,7 +129,7 @@ const HomepageHero = React.memo(function HomepageHero({ initialItems = [] }: Hom
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in-up">
               <Link
                 href="/try-on"
-                className="btn btn-primary text-base px-8 py-4"
+                className="btn btn-primary text-base px-10 py-4 md:px-12 md:py-5"
               >
                 <span className="text-lg">💅</span>
                 Try Virtual Nail Art
@@ -137,7 +137,7 @@ const HomepageHero = React.memo(function HomepageHero({ initialItems = [] }: Hom
               </Link>
               <Link
                 href="/nail-art-gallery"
-                className="btn btn-secondary text-base px-8 py-4"
+                className="btn btn-secondary text-base px-10 py-4 md:px-12 md:py-5"
               >
                 <span className="text-lg">🎨</span>
                 Browse Gallery

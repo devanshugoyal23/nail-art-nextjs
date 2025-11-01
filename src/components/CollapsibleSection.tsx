@@ -37,7 +37,7 @@ export default function CollapsibleSection({
       {/* Header */}
       <button
         onClick={toggleExpanded}
-        className="w-full flex items-center justify-between p-4 text-left hover:bg-gray-100/30 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-purple-500/50 rounded-t-xl"
+        className="w-full flex items-center justify-between p-6 md:p-8 lg:p-10 md:p-8 text-left hover:bg-gray-100/30 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-purple-500/50 rounded-t-xl"
         aria-expanded={isExpanded}
         aria-controls={`collapsible-content-${title.replace(/\s+/g, '-').toLowerCase()}`}
       >

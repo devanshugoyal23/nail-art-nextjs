@@ -52,7 +52,7 @@ export default function ActionCard({
 
   const cardContent = (
     <div className={`
-      bg-surface/50 backdrop-blur-sm rounded-xl p-6 border transition-all duration-300
+      bg-surface/50 backdrop-blur-sm rounded-xl p-6 md:p-8 lg:p-10 border transition-all duration-300
       hover:bg-surface/70 hover:scale-[1.02] hover:shadow-lg
       ${getPriorityColor()}
       ${recommended ? 'ring-2 ring-blue-500/50 bg-blue-900/20' : ''}

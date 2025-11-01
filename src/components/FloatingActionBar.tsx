@@ -39,7 +39,7 @@ export default function FloatingActionBar({
 
   return (
     <div className={`fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50 transition-all duration-300 ${className}`}>
-      <div className="bg-white/95 backdrop-blur-md border border-gray-100/50 rounded-2xl shadow-2xl p-4 min-w-[320px]">
+      <div className="bg-white/95 backdrop-blur-md border border-gray-100/50 rounded-2xl shadow-2xl p-6 md:p-8 lg:p-10 md:p-8 min-w-[320px]">
         {/* Progress Bar */}
         <div className="flex items-center gap-3 mb-3">
           <div className="flex-1 bg-gray-100 rounded-full h-1.5 overflow-hidden">

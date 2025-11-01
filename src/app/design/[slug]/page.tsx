@@ -354,7 +354,7 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {/* Colors */}
                     {item.colors && item.colors.length > 0 && (
-                      <div className="bg-surface/40 rounded-lg p-4 border border-gray-100/50 hover:border-purple-500/30 transition-colors">
+                      <div className="bg-surface/40 rounded-lg p-6 md:p-8 lg:p-10 md:p-8 border border-gray-100/50 hover:border-purple-500/30 transition-colors">
                         <div className="flex items-center mb-3">
                           <div className="w-2 h-2 bg-purple-500 rounded-full mr-2"></div>
                           <h4 className="text-sm font-semibold text-purple-300">Colors</h4>
@@ -371,7 +371,7 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
                     
                     {/* Techniques */}
                     {item.techniques && item.techniques.length > 0 && (
-                      <div className="bg-surface/40 rounded-lg p-4 border border-gray-100/50 hover:border-green-500/30 transition-colors">
+                      <div className="bg-surface/40 rounded-lg p-6 md:p-8 lg:p-10 md:p-8 border border-gray-100/50 hover:border-green-500/30 transition-colors">
                         <div className="flex items-center mb-3">
                           <div className="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
                           <h4 className="text-sm font-semibold text-green-300">Techniques</h4>
@@ -388,7 +388,7 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
                     
                     {/* Occasions */}
                     {item.occasions && item.occasions.length > 0 && (
-                      <div className="bg-surface/40 rounded-lg p-4 border border-gray-100/50 hover:border-blue-500/30 transition-colors">
+                      <div className="bg-surface/40 rounded-lg p-6 md:p-8 lg:p-10 md:p-8 border border-gray-100/50 hover:border-blue-500/30 transition-colors">
                         <div className="flex items-center mb-3">
                           <div className="w-2 h-2 bg-blue-500 rounded-full mr-2"></div>
                           <h4 className="text-sm font-semibold text-blue-300">Occasions</h4>
@@ -405,7 +405,7 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
                     
                     {/* Styles */}
                     {item.styles && item.styles.length > 0 && (
-                      <div className="bg-surface/40 rounded-lg p-4 border border-gray-100/50 hover:border-pink-500/30 transition-colors">
+                      <div className="bg-surface/40 rounded-lg p-6 md:p-8 lg:p-10 md:p-8 border border-gray-100/50 hover:border-pink-500/30 transition-colors">
                         <div className="flex items-center mb-3">
                           <div className="w-2 h-2 bg-pink-500 rounded-full mr-2"></div>
                           <h4 className="text-sm font-semibold text-pink-300">Styles</h4>
@@ -538,11 +538,11 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
         {/* Bottom SEO/Content section */}
         <div className="mt-12 space-y-10">
           {/* Who it's for & Quick Stats */}
-          <section className="bg-surface rounded-lg p-6 border border-gray-100">
+          <section className="bg-surface rounded-lg p-6 md:p-8 lg:p-10 border border-gray-100">
             <h2 className="text-xl font-semibold text-gray-900 mb-3">{editorial?.title || 'About This Design'}</h2>
             <p className="text-gray-600 leading-relaxed mb-4">{editorial?.intro || `${item.design_name || 'Nail Art'} blends ${attrs.colors.length ? attrs.colors.join(', ') : 'modern'} tones with ${(attrs.finish.join(', ') || 'a glossy')} finish.`}</p>
             
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-4 p-4 bg-white/50 rounded-lg">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-4 p-6 md:p-8 lg:p-10 md:p-8 bg-white/50 rounded-lg">
               <div className="text-center">
                 <div className="text-primary text-sm font-medium">Who It&apos;s For</div>
                 <div className="text-gray-900 text-base mt-1">{editorial?.audience || 'All skill levels'}</div>
@@ -572,7 +572,7 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
           </section>
 
           {/* Supplies */}
-          <section className="bg-surface rounded-lg p-6 border border-gray-100">
+          <section className="bg-surface rounded-lg p-6 md:p-8 lg:p-10 border border-gray-100">
             <h2 className="text-xl font-semibold text-gray-900 mb-3">Supplies You&apos;ll Need</h2>
             <ul className="grid sm:grid-cols-2 gap-2 text-gray-600">
               {(editorial?.supplies || ['Base coat','Gel color polish','Detail liner brush','Top coat']).map((s, i) => (
@@ -587,7 +587,7 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
           </section>
 
           {/* How To */}
-          <section className="bg-surface rounded-lg p-6 border border-gray-100">
+          <section className="bg-surface rounded-lg p-6 md:p-8 lg:p-10 border border-gray-100">
             <h2 className="text-xl font-semibold text-gray-900 mb-3">How To Recreate It</h2>
             <ol className="list-decimal pl-6 space-y-3 text-gray-600">
               {(editorial?.steps || [
@@ -601,7 +601,7 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
 
           {/* Expert Tip */}
           {editorial?.expertTip && (
-            <section className="bg-purple-900/30 rounded-lg p-6 border border-purple-700">
+            <section className="bg-purple-900/30 rounded-lg p-6 md:p-8 lg:p-10 border border-purple-700">
               <div className="flex items-start">
                 <svg className="w-6 h-6 text-primary mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
@@ -615,7 +615,7 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
           )}
 
           {/* Variations */}
-          <section className="bg-surface rounded-lg p-6 border border-gray-100">
+          <section className="bg-surface rounded-lg p-6 md:p-8 lg:p-10 border border-gray-100">
             <h2 className="text-xl font-semibold text-gray-900 mb-3">Try These Variations</h2>
             <ul className="space-y-2 text-gray-600">
               {(editorial?.variations || [
@@ -633,7 +633,7 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
 
           {/* Aftercare & Removal */}
           <div className="grid sm:grid-cols-2 gap-6">
-            <section className="bg-surface rounded-lg p-6 border border-gray-100">
+            <section className="bg-surface rounded-lg p-6 md:p-8 lg:p-10 border border-gray-100">
               <h3 className="text-lg font-semibold text-gray-900 mb-3">Aftercare Tips</h3>
               <ul className="space-y-2 text-sm text-gray-600">
                 {(editorial?.aftercare || ['Apply cuticle oil daily','Wear gloves when cleaning','Avoid prolonged water exposure']).map((tip, i) => (
@@ -644,7 +644,7 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
                 ))}
               </ul>
             </section>
-            <section className="bg-surface rounded-lg p-6 border border-gray-100">
+            <section className="bg-surface rounded-lg p-6 md:p-8 lg:p-10 border border-gray-100">
               <h3 className="text-lg font-semibold text-gray-900 mb-3">Safe Removal</h3>
               <ul className="space-y-2 text-sm text-gray-600">
                 {(editorial?.removal || ['Soak cotton in acetone, wrap with foil','Wait 10-15 minutes','Gently push off softened polish']).map((step, i) => (
@@ -659,7 +659,7 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
 
           {/* Quick Facts */}
           {editorial?.quickFacts && editorial.quickFacts.length > 0 && (
-            <section className="bg-gradient-to-r from-purple-900/30 to-indigo-900/30 rounded-lg p-6 border border-purple-700">
+            <section className="bg-gradient-to-r from-purple-900/30 to-indigo-900/30 rounded-lg p-6 md:p-8 lg:p-10 border border-purple-700">
               <h2 className="text-xl font-semibold text-gray-900 mb-4">Quick Facts</h2>
               <div className="grid sm:grid-cols-2 gap-3">
                 {editorial.quickFacts.map((fact, i) => (
@@ -674,7 +674,7 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
 
           {/* Trending Now */}
           {editorial?.trendingNow && (
-            <section className="bg-gradient-to-r from-pink-900/30 to-rose-900/30 rounded-lg p-6 border border-pink-700">
+            <section className="bg-gradient-to-r from-pink-900/30 to-rose-900/30 rounded-lg p-6 md:p-8 lg:p-10 border border-pink-700">
               <h2 className="text-xl font-semibold text-gray-900 mb-3">Why It&apos;s Trending</h2>
               <p className="text-gray-600">{editorial.trendingNow}</p>
             </section>
@@ -682,7 +682,7 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
 
           {/* Seasonal Tips */}
           {editorial?.seasonalTips && (
-            <section className="bg-gradient-to-r from-green-900/30 to-emerald-900/30 rounded-lg p-6 border border-green-700">
+            <section className="bg-gradient-to-r from-green-900/30 to-emerald-900/30 rounded-lg p-6 md:p-8 lg:p-10 border border-green-700">
               <h2 className="text-xl font-semibold text-gray-900 mb-3">Seasonal Styling</h2>
               <p className="text-gray-600">{editorial.seasonalTips}</p>
             </section>
@@ -690,7 +690,7 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
 
           {/* Color Variations */}
           {editorial?.colorVariations && editorial.colorVariations.length > 0 && (
-            <section className="bg-surface rounded-lg p-6 border border-gray-100">
+            <section className="bg-surface rounded-lg p-6 md:p-8 lg:p-10 border border-gray-100">
               <h2 className="text-xl font-semibold text-gray-900 mb-4">Color Variations</h2>
               <div className="grid sm:grid-cols-2 gap-3">
                 {editorial.colorVariations.map((variation, i) => (
@@ -705,7 +705,7 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
 
           {/* Best Occasions */}
           {editorial?.occasions && editorial.occasions.length > 0 && (
-            <section className="bg-surface rounded-lg p-6 border border-gray-100">
+            <section className="bg-surface rounded-lg p-6 md:p-8 lg:p-10 border border-gray-100">
               <h2 className="text-xl font-semibold text-gray-900 mb-4">Perfect For</h2>
               <div className="flex flex-wrap gap-2">
                 {editorial.occasions.map((occasion, i) => (
@@ -719,7 +719,7 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
 
           {/* Social Proof */}
           {editorial?.socialProof && (
-            <section className="bg-gradient-to-r from-yellow-900/30 to-orange-900/30 rounded-lg p-6 border border-yellow-700">
+            <section className="bg-gradient-to-r from-yellow-900/30 to-orange-900/30 rounded-lg p-6 md:p-8 lg:p-10 border border-yellow-700">
               <h2 className="text-xl font-semibold text-gray-900 mb-3">Why People Love It</h2>
               <p className="text-gray-600">{editorial.socialProof}</p>
             </section>
@@ -727,7 +727,7 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
 
           {/* Maintenance */}
           {editorial?.maintenance && editorial.maintenance.length > 0 && (
-            <section className="bg-surface rounded-lg p-6 border border-gray-100">
+            <section className="bg-surface rounded-lg p-6 md:p-8 lg:p-10 border border-gray-100">
               <h2 className="text-xl font-semibold text-gray-900 mb-3">Daily Maintenance</h2>
               <ul className="space-y-2 text-gray-600">
                 {editorial.maintenance.map((tip, i) => (
@@ -742,7 +742,7 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
 
           {/* Troubleshooting */}
           {editorial?.troubleshooting && editorial.troubleshooting.length > 0 && (
-            <section className="bg-surface rounded-lg p-6 border border-gray-100">
+            <section className="bg-surface rounded-lg p-6 md:p-8 lg:p-10 border border-gray-100">
               <h2 className="text-xl font-semibold text-gray-900 mb-3">Common Issues & Fixes</h2>
               <ul className="space-y-2 text-gray-600">
                 {editorial.troubleshooting.map((issue, i) => (
@@ -762,14 +762,14 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
 
           {/* Inspiration */}
           {editorial?.inspiration && (
-            <section className="bg-gradient-to-r from-indigo-900/30 to-purple-900/30 rounded-lg p-6 border border-indigo-700">
+            <section className="bg-gradient-to-r from-indigo-900/30 to-purple-900/30 rounded-lg p-6 md:p-8 lg:p-10 border border-indigo-700">
               <h2 className="text-xl font-semibold text-gray-900 mb-3">Design Inspiration</h2>
               <p className="text-gray-600">{editorial.inspiration}</p>
             </section>
           )}
 
           {/* Tags Section */}
-          <section className="bg-surface rounded-lg p-6 border border-gray-100">
+          <section className="bg-surface rounded-lg p-6 md:p-8 lg:p-10 border border-gray-100">
             <h2 className="text-xl font-semibold text-gray-900 mb-6">Explore Similar Designs</h2>
             
             {/* Design-Specific Tags */}
@@ -889,7 +889,7 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
           </section>
 
           {/* FAQs */}
-          <section className="bg-surface rounded-lg p-6 border border-gray-100">
+          <section className="bg-surface rounded-lg p-6 md:p-8 lg:p-10 border border-gray-100">
             <h2 className="text-xl font-semibold text-gray-900 mb-3">FAQs</h2>
             <div className="space-y-4">
               {(editorial?.faqs || [
@@ -907,7 +907,7 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
 
           {/* Related Links */}
           {editorial?.internalLinks && editorial.internalLinks.length > 0 && (
-            <section className="bg-purple-900/20 rounded-lg p-6 border border-purple-800">
+            <section className="bg-purple-900/20 rounded-lg p-6 md:p-8 lg:p-10 border border-purple-800">
               <h3 className="text-lg font-semibold text-gray-900 mb-4">Explore Related Styles</h3>
               <div className="flex flex-wrap gap-3">
                 {editorial.internalLinks.map((link, i) => (

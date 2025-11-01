@@ -112,7 +112,7 @@ export default function CategoryCard({
         <h3 className="text-2xl font-bold text-gray-900 mb-3 group-hover:bg-gradient-to-r group-hover:from-purple-400 group-hover:to-pink-400 group-hover:bg-clip-text group-hover:text-transparent transition-all duration-300">
           {title}
         </h3>
-        <p className="text-gray-600 mb-5 text-sm leading-relaxed line-clamp-2">
+        <p className="text-gray-600 mb-5 text-base leading-relaxed line-clamp-2">
           {description}
         </p>
 

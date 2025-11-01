@@ -103,9 +103,9 @@ export default async function GalleryPage() {
       />
       
       <div className="min-h-screen bg-white">
-        <div className="max-w-7xl mx-auto px-2 sm:px-4 py-8 sm:py-12">
+        <div className="max-w-7xl mx-auto px-2 sm:px-4 py-16 sm:py-20 md:py-24">
           {/* SEO Header */}
-          <div className="text-center mb-8 sm:mb-12">
+          <div className="text-center mb-12 sm:mb-16 md:mb-20">
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-serif font-bold text-gray-900 mb-4">
               Nail Art Gallery
             </h1>
@@ -123,8 +123,8 @@ export default async function GalleryPage() {
           />
 
           {/* SEO Content Section */}
-          <div className="mt-16 sm:mt-20 bg-surface rounded-2xl p-6 sm:p-8 lg:p-10 border border-gray-100 shadow-soft">
-            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-gray-900 mb-6 sm:mb-8">About Our AI Nail Art Gallery</h2>
+          <div className="mt-16 sm:mt-20 bg-surface rounded-2xl p-6 md:p-8 lg:p-10 sm:p-8 lg:p-10 border border-gray-100 shadow-soft">
+            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-gray-900 mb-8 sm:mb-10 md:mb-12">About Our AI Nail Art Gallery</h2>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10">
               <div>
                 <h3 className="text-xl sm:text-2xl font-semibold text-gray-900 mb-4">🎨 Unique AI-Generated Designs</h3>

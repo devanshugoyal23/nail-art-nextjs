@@ -191,7 +191,7 @@ export default function TryOnContent({ initialData, categories }: TryOnContentPr
 
         {/* Error Display */}
         {error && (
-          <div className="bg-red-500/20 border border-red-500/50 rounded-lg p-4 mb-6">
+          <div className="bg-red-500/20 border border-red-500/50 rounded-lg p-6 md:p-8 lg:p-10 md:p-8 mb-6">
             <p className="text-red-200">{error}</p>
             <button
               onClick={() => setError(null)}
@@ -382,7 +382,7 @@ export default function TryOnContent({ initialData, categories }: TryOnContentPr
         {/* Loading Overlay */}
         {isLoading && (
           <div className="fixed inset-0 bg-white/50 flex items-center justify-center z-50">
-            <div className="bg-surface rounded-lg p-6 text-center">
+            <div className="bg-surface rounded-lg p-6 md:p-8 lg:p-10 text-center">
               <Loader />
               <p className="text-gray-900 mt-4">Generating your nail art...</p>
             </div>

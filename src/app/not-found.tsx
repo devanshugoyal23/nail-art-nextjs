@@ -27,7 +27,7 @@ export default function NotFound() {
         <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
           <Link
             href="/nail-art-gallery"
-            className="inline-flex items-center justify-center px-8 py-4 bg-primary hover:bg-primary-dark text-gray-900 font-semibold rounded-lg transition-colors duration-300 transform hover:-translate-y-1"
+            className="inline-flex items-center justify-center px-10 py-4 md:px-12 md:py-5 bg-primary hover:bg-primary-dark text-gray-900 font-semibold rounded-lg transition-colors duration-300 transform hover:-translate-y-1"
           >
             <span className="mr-2">🖼️</span>
             Browse Gallery
@@ -35,7 +35,7 @@ export default function NotFound() {
           
           <Link
             href="/try-on"
-            className="inline-flex items-center justify-center px-8 py-4 bg-green-600 hover:bg-green-700 text-gray-900 font-semibold rounded-lg transition-colors duration-300 transform hover:-translate-y-1"
+            className="inline-flex items-center justify-center px-10 py-4 md:px-12 md:py-5 bg-green-600 hover:bg-green-700 text-gray-900 font-semibold rounded-lg transition-colors duration-300 transform hover:-translate-y-1"
           >
             <span className="mr-2">📱</span>
             Virtual Try-On
@@ -43,7 +43,7 @@ export default function NotFound() {
         </div>
         
         {/* Popular Categories */}
-        <div className="bg-surface/50 rounded-xl p-6 border border-gray-100">
+        <div className="bg-surface/50 rounded-xl p-6 md:p-8 lg:p-10 border border-gray-100">
           <h2 className="text-xl font-semibold text-gray-900 mb-4">Popular Categories</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             <Link

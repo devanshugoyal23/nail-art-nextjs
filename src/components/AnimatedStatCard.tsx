@@ -91,7 +91,7 @@ export default function AnimatedStatCard({
     <div
       ref={cardRef}
       className={`
-        relative bg-surface/40 backdrop-blur-sm rounded-xl p-4 border transition-all duration-300
+        relative bg-surface/40 backdrop-blur-sm rounded-xl p-6 md:p-8 lg:p-10 md:p-8 border transition-all duration-300
         hover:scale-105 hover:shadow-lg hover:shadow-${color}-500/20
         ${borderColorClasses[color]}
         ${isHovered ? 'shadow-lg' : 'shadow-md'}

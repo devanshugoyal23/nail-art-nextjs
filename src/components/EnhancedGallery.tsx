@@ -152,7 +152,7 @@ const EnhancedGallery = function EnhancedGallery({
   return (
     <div className="space-y-6">
       {/* Search and Filter Bar */}
-      <div className="bg-white rounded-2xl p-4 sm:p-6 border border-gray-100 shadow-soft">
+      <div className="bg-white rounded-2xl p-6 md:p-8 lg:p-10 border border-gray-100 shadow-soft">
         <div className="flex flex-col gap-4">
           {/* Search */}
           <div className="flex-1">
@@ -333,7 +333,7 @@ const EnhancedGallery = function EnhancedGallery({
       {/* Gallery Grid */}
       {paginatedItems.length > 0 ? (
         <div className={`${
-          viewMode === 'grid' ? 'grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6' :
+          viewMode === 'grid' ? 'grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-8 sm:gap-10 lg:gap-12' :
           viewMode === 'masonry' ? 'pinterest-masonry' :
           'space-y-4'
         }`}>

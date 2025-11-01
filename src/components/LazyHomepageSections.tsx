@@ -5,8 +5,8 @@ import { Suspense } from "react";
 
 // Loading component for better UX
 const LoadingSpinner = () => (
-  <div className="flex justify-center items-center py-12">
-    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-500"></div>
+  <div className="flex justify-center items-center py-16">
+    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
   </div>
 );
 
@@ -34,33 +34,25 @@ const TestimonialsSection = dynamic(() => import("@/components/TestimonialsSecti
 export default function LazyHomepageSections() {
   return (
     <>
-      {/* Category Showcase */}
-      <div className="container mx-auto px-2 sm:px-4 py-4 sm:py-8">
-        <Suspense fallback={<LoadingSpinner />}>
-          <CategoryShowcase />
-        </Suspense>
-      </div>
-      
-      {/* Stats Section */}
-      <div className="container mx-auto px-2 sm:px-4 py-4 sm:py-8">
-        <Suspense fallback={<LoadingSpinner />}>
-          <StatsSection />
-        </Suspense>
-      </div>
-      
-      {/* Testimonials Section */}
-      <div className="container mx-auto px-2 sm:px-4 py-4 sm:py-8">
-        <Suspense fallback={<LoadingSpinner />}>
-          <TestimonialsSection />
-        </Suspense>
-      </div>
-      
+      {/* Category Showcase - No wrapper, section has its own container */}
+      <Suspense fallback={<LoadingSpinner />}>
+        <CategoryShowcase />
+      </Suspense>
+
       {/* Features Section */}
-      <div className="container mx-auto px-2 sm:px-4 py-4 sm:py-8">
-        <Suspense fallback={<LoadingSpinner />}>
-          <FeaturesSection />
-        </Suspense>
-      </div>
+      <Suspense fallback={<LoadingSpinner />}>
+        <FeaturesSection />
+      </Suspense>
+
+      {/* Stats Section */}
+      <Suspense fallback={<LoadingSpinner />}>
+        <StatsSection />
+      </Suspense>
+
+      {/* Testimonials Section */}
+      <Suspense fallback={<LoadingSpinner />}>
+        <TestimonialsSection />
+      </Suspense>
     </>
   );
 }

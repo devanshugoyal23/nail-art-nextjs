@@ -75,7 +75,7 @@ export default function R2SyncPage() {
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Sync Actions */}
-          <div className="bg-surface p-6 rounded-lg">
+          <div className="bg-surface p-6 md:p-8 lg:p-10 rounded-lg">
             <h2 className="text-xl font-semibold mb-4">Sync Actions</h2>
             
             <div className="space-y-4">
@@ -97,7 +97,7 @@ export default function R2SyncPage() {
           </div>
 
           {/* Status Display */}
-          <div className="bg-surface p-6 rounded-lg">
+          <div className="bg-surface p-6 md:p-8 lg:p-10 rounded-lg">
             <h2 className="text-xl font-semibold mb-4">R2 Status</h2>
             
             {status && (
@@ -144,7 +144,7 @@ export default function R2SyncPage() {
 
         {/* Results */}
         {result && (
-          <div className="mt-8 bg-surface p-6 rounded-lg">
+          <div className="mt-8 bg-surface p-6 md:p-8 lg:p-10 rounded-lg">
             <h2 className="text-xl font-semibold mb-4">Sync Result</h2>
             
             <div className={`p-4 rounded ${result.success ? 'bg-green-900' : 'bg-red-900'}`}>
@@ -172,7 +172,7 @@ export default function R2SyncPage() {
         )}
 
         {/* Instructions */}
-        <div className="mt-8 bg-blue-900 p-6 rounded-lg">
+        <div className="mt-8 bg-blue-900 p-6 md:p-8 lg:p-10 rounded-lg">
           <h2 className="text-xl font-semibold mb-4">How It Works</h2>
           
           <div className="space-y-2 text-sm">

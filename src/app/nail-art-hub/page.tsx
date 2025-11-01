@@ -189,7 +189,7 @@ export default function NailArtHubPage() {
               <div key={index} className="group">
                 <Link
                   href={category.href}
-                  className="block bg-surface/50 rounded-xl p-6 border border-gray-100 hover:border-purple-500/50 transition-all duration-300 transform hover:-translate-y-1"
+                  className="block bg-surface/50 rounded-xl p-6 md:p-8 lg:p-10 border border-gray-100 hover:border-purple-500/50 transition-all duration-300 transform hover:-translate-y-1"
                 >
                   <div className="text-center">
                     <div className="text-4xl mb-3">{category.icon}</div>
@@ -225,7 +225,7 @@ export default function NailArtHubPage() {
                 <Link
                   key={index}
                   href={content.href}
-                  className="group bg-surface/50 rounded-xl p-6 border border-gray-100 hover:border-purple-500/50 transition-all duration-300 transform hover:-translate-y-1"
+                  className="group bg-surface/50 rounded-xl p-6 md:p-8 lg:p-10 border border-gray-100 hover:border-purple-500/50 transition-all duration-300 transform hover:-translate-y-1"
                 >
                   <div className="text-center">
                     <div className="text-4xl mb-3">{content.image}</div>
@@ -250,7 +250,7 @@ export default function NailArtHubPage() {
             <div className="grid md:grid-cols-3 gap-6">
               <Link
                 href="/nail-art-gallery"
-                className="bg-surface/50 rounded-xl p-6 border border-gray-100 hover:border-blue-500/50 transition-all duration-300 transform hover:-translate-y-1"
+                className="bg-surface/50 rounded-xl p-6 md:p-8 lg:p-10 border border-gray-100 hover:border-blue-500/50 transition-all duration-300 transform hover:-translate-y-1"
               >
                 <div className="text-center">
                   <div className="text-4xl mb-3">🖼️</div>
@@ -260,7 +260,7 @@ export default function NailArtHubPage() {
               </Link>
               <Link
                 href="/try-on"
-                className="bg-surface/50 rounded-xl p-6 border border-gray-100 hover:border-green-500/50 transition-all duration-300 transform hover:-translate-y-1"
+                className="bg-surface/50 rounded-xl p-6 md:p-8 lg:p-10 border border-gray-100 hover:border-green-500/50 transition-all duration-300 transform hover:-translate-y-1"
               >
                 <div className="text-center">
                   <div className="text-4xl mb-3">📱</div>
@@ -270,7 +270,7 @@ export default function NailArtHubPage() {
               </Link>
               <Link
                 href="/blog"
-                className="bg-surface/50 rounded-xl p-6 border border-gray-100 hover:border-pink-500/50 transition-all duration-300 transform hover:-translate-y-1"
+                className="bg-surface/50 rounded-xl p-6 md:p-8 lg:p-10 border border-gray-100 hover:border-pink-500/50 transition-all duration-300 transform hover:-translate-y-1"
               >
                 <div className="text-center">
                   <div className="text-4xl mb-3">📚</div>

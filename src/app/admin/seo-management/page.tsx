@@ -174,23 +174,23 @@ export default function SEOManagementPage() {
       )}
 
       {/* Sitemap Statistics */}
-      <div className="bg-white rounded-lg shadow p-6 mb-8">
+      <div className="bg-white rounded-lg shadow p-6 md:p-8 lg:p-10 mb-8">
         <h2 className="text-xl font-semibold mb-4">Sitemap Statistics</h2>
         {sitemapStats ? (
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <div className="bg-blue-50 p-4 rounded">
+            <div className="bg-blue-50 p-6 md:p-8 lg:p-10 md:p-8 rounded">
               <h3 className="font-semibold text-blue-800">Total Pages</h3>
               <p className="text-2xl font-bold text-blue-600">{sitemapStats.totalPages}</p>
             </div>
-            <div className="bg-green-50 p-4 rounded">
+            <div className="bg-green-50 p-6 md:p-8 lg:p-10 md:p-8 rounded">
               <h3 className="font-semibold text-green-800">Static Pages</h3>
               <p className="text-2xl font-bold text-green-600">{sitemapStats.staticPages}</p>
             </div>
-            <div className="bg-purple-50 p-4 rounded">
+            <div className="bg-purple-50 p-6 md:p-8 lg:p-10 md:p-8 rounded">
               <h3 className="font-semibold text-purple-800">Dynamic Pages</h3>
               <p className="text-2xl font-bold text-purple-600">{sitemapStats.dynamicPages}</p>
             </div>
-            <div className="bg-orange-50 p-4 rounded">
+            <div className="bg-orange-50 p-6 md:p-8 lg:p-10 md:p-8 rounded">
               <h3 className="font-semibold text-orange-800">Last Updated</h3>
               <p className="text-sm text-orange-600">
                 {new Date(sitemapStats.lastUpdated).toLocaleString()}
@@ -203,7 +203,7 @@ export default function SEOManagementPage() {
       </div>
 
       {/* SEO Configuration */}
-      <div className="bg-white rounded-lg shadow p-6 mb-8">
+      <div className="bg-white rounded-lg shadow p-6 md:p-8 lg:p-10 mb-8">
         <h2 className="text-xl font-semibold mb-4">SEO Configuration</h2>
         {seoConfig ? (
           <div className="space-y-4">
@@ -280,14 +280,14 @@ export default function SEOManagementPage() {
       </div>
 
       {/* Quick Links */}
-      <div className="bg-white rounded-lg shadow p-6 mt-8">
+      <div className="bg-white rounded-lg shadow p-6 md:p-8 lg:p-10 mt-8">
         <h2 className="text-xl font-semibold mb-4">Quick Links</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <a
             href="/sitemap.xml"
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-gray-100 hover:bg-gray-200 p-4 rounded text-center"
+            className="bg-gray-100 hover:bg-gray-200 p-6 md:p-8 lg:p-10 md:p-8 rounded text-center"
           >
             <h3 className="font-medium">View Sitemap</h3>
             <p className="text-sm text-gray-600">Open sitemap.xml</p>
@@ -297,7 +297,7 @@ export default function SEOManagementPage() {
             href="/robots.txt"
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-gray-100 hover:bg-gray-200 p-4 rounded text-center"
+            className="bg-gray-100 hover:bg-gray-200 p-6 md:p-8 lg:p-10 md:p-8 rounded text-center"
           >
             <h3 className="font-medium">View Robots.txt</h3>
             <p className="text-sm text-gray-600">Open robots.txt</p>
@@ -307,7 +307,7 @@ export default function SEOManagementPage() {
             href="https://search.google.com/search-console"
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-gray-100 hover:bg-gray-200 p-4 rounded text-center"
+            className="bg-gray-100 hover:bg-gray-200 p-6 md:p-8 lg:p-10 md:p-8 rounded text-center"
           >
             <h3 className="font-medium">Google Search Console</h3>
             <p className="text-sm text-gray-600">Monitor site performance</p>

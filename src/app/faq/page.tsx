@@ -175,7 +175,7 @@ export default function FAQPage() {
               <Link
                 key={index}
                 href={category.href}
-                className="group bg-surface/50 rounded-xl p-6 border border-gray-100 hover:border-purple-500/50 transition-all duration-300 transform hover:-translate-y-1"
+                className="group bg-surface/50 rounded-xl p-6 md:p-8 lg:p-10 border border-gray-100 hover:border-purple-500/50 transition-all duration-300 transform hover:-translate-y-1"
               >
                 <div className="text-center">
                   <div className="text-4xl mb-3">{category.icon}</div>
@@ -195,7 +195,7 @@ export default function FAQPage() {
             <h2 className="text-3xl font-serif font-bold text-gray-900 mb-8">General Questions</h2>
             <div className="space-y-6">
               {generalFAQs.map((faq, index) => (
-                <div key={index} className="bg-surface/50 rounded-xl p-6 border border-gray-100">
+                <div key={index} className="bg-surface/50 rounded-xl p-6 md:p-8 lg:p-10 border border-gray-100">
                   <h3 className="text-lg font-semibold text-gray-900 mb-3">{faq.question}</h3>
                   <p className="text-gray-600 leading-relaxed">{faq.answer}</p>
                 </div>
@@ -208,7 +208,7 @@ export default function FAQPage() {
             <h2 className="text-3xl font-serif font-bold text-gray-900 mb-8">Nail Art Techniques</h2>
             <div className="space-y-6">
               {techniqueFAQs.map((faq, index) => (
-                <div key={index} className="bg-surface/50 rounded-xl p-6 border border-gray-100">
+                <div key={index} className="bg-surface/50 rounded-xl p-6 md:p-8 lg:p-10 border border-gray-100">
                   <h3 className="text-lg font-semibold text-gray-900 mb-3">{faq.question}</h3>
                   <p className="text-gray-600 leading-relaxed">{faq.answer}</p>
                 </div>
@@ -221,7 +221,7 @@ export default function FAQPage() {
             <h2 className="text-3xl font-serif font-bold text-gray-900 mb-8">Troubleshooting</h2>
             <div className="space-y-6">
               {troubleshootingFAQs.map((faq, index) => (
-                <div key={index} className="bg-surface/50 rounded-xl p-6 border border-gray-100">
+                <div key={index} className="bg-surface/50 rounded-xl p-6 md:p-8 lg:p-10 border border-gray-100">
                   <h3 className="text-lg font-semibold text-gray-900 mb-3">{faq.question}</h3>
                   <p className="text-gray-600 leading-relaxed">{faq.answer}</p>
                 </div>

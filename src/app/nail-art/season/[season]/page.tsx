@@ -159,7 +159,7 @@ export default async function SeasonPage({ params }: SeasonPageProps) {
               <Link
                 key={seas}
                 href={`/nail-art/season/${seas}`}
-                className={`bg-gradient-to-r from-green-500 to-blue-600 rounded-lg p-4 text-center hover:scale-105 transition-transform ${seas === season ? 'ring-2 ring-blue-400' : ''}`}
+                className={`bg-gradient-to-r from-green-500 to-blue-600 rounded-lg p-6 md:p-8 lg:p-10 md:p-8 text-center hover:scale-105 transition-transform ${seas === season ? 'ring-2 ring-blue-400' : ''}`}
               >
                 <div className="text-gray-900 font-semibold">{capitalize(seas)}</div>
               </Link>

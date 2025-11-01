@@ -131,7 +131,7 @@ export default function BlogPage() {
               <Link
                 key={index}
                 href={category.href}
-                className="group bg-surface/50 rounded-xl p-6 border border-gray-100 hover:border-purple-500/50 transition-all duration-300 transform hover:-translate-y-1"
+                className="group bg-surface/50 rounded-xl p-6 md:p-8 lg:p-10 border border-gray-100 hover:border-purple-500/50 transition-all duration-300 transform hover:-translate-y-1"
               >
                 <div className="text-center">
                   <div className="text-4xl mb-3">{category.icon}</div>
@@ -154,7 +154,7 @@ export default function BlogPage() {
                 <Link
                   key={index}
                   href={post.href}
-                  className="group bg-surface/50 rounded-xl p-6 border border-gray-100 hover:border-purple-500/50 transition-all duration-300 transform hover:-translate-y-1"
+                  className="group bg-surface/50 rounded-xl p-6 md:p-8 lg:p-10 border border-gray-100 hover:border-purple-500/50 transition-all duration-300 transform hover:-translate-y-1"
                 >
                   <div className="mb-4">
                     <span className="inline-block bg-primary text-gray-900 px-3 py-1 rounded-full text-sm font-medium">
@@ -165,7 +165,7 @@ export default function BlogPage() {
                   <h3 className="text-xl font-semibold text-gray-900 mb-3 group-hover:text-primary transition-colors">
                     {post.title}
                   </h3>
-                  <p className="text-gray-500 text-sm leading-relaxed">
+                  <p className="text-gray-500 text-base leading-relaxed">
                     {post.excerpt}
                   </p>
                 </Link>

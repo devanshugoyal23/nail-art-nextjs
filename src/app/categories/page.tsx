@@ -122,13 +122,13 @@ export default async function CategoriesPage() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 href="/categories/all"
-                className="btn btn-primary text-base px-8 py-4"
+                className="btn btn-primary text-base px-10 py-4 md:px-12 md:py-5"
               >
                 Browse All {allCategoriesWithThumbnails.length} Categories
               </Link>
               <Link
                 href="/nail-art-gallery"
-                className="btn btn-secondary text-base px-8 py-4"
+                className="btn btn-secondary text-base px-10 py-4 md:px-12 md:py-5"
               >
                 View All Designs
               </Link>
@@ -141,19 +141,19 @@ export default async function CategoriesPage() {
         {/* Quick Stats */}
         <div className="mb-12">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="bg-white rounded-xl p-6 text-center border border-gray-100 shadow-soft">
+            <div className="bg-white rounded-xl p-6 md:p-8 lg:p-10 text-center border border-gray-100 shadow-soft">
               <div className="text-3xl font-bold text-primary">{allCategoriesWithThumbnails.length}</div>
               <div className="text-gray-600 text-sm mt-1">Categories</div>
             </div>
-            <div className="bg-white rounded-xl p-6 text-center border border-gray-100 shadow-soft">
+            <div className="bg-white rounded-xl p-6 md:p-8 lg:p-10 text-center border border-gray-100 shadow-soft">
               <div className="text-3xl font-bold text-secondary">{categoryStats?.totalItems || 0}</div>
               <div className="text-gray-600 text-sm mt-1">Total Designs</div>
             </div>
-            <div className="bg-white rounded-xl p-6 text-center border border-gray-100 shadow-soft">
+            <div className="bg-white rounded-xl p-6 md:p-8 lg:p-10 text-center border border-gray-100 shadow-soft">
               <div className="text-3xl font-bold text-accent">{categoryStats?.categoriesWithContent || 0}</div>
               <div className="text-gray-600 text-sm mt-1">Well Stocked</div>
             </div>
-            <div className="bg-white rounded-xl p-6 text-center border border-gray-100 shadow-soft">
+            <div className="bg-white rounded-xl p-6 md:p-8 lg:p-10 text-center border border-gray-100 shadow-soft">
               <div className="text-3xl font-bold text-gray-500">{categoryStats?.categoriesNeedingContent || 0}</div>
               <div className="text-gray-600 text-sm mt-1">Need Content</div>
             </div>
@@ -172,7 +172,7 @@ export default async function CategoriesPage() {
                   <Link
                     key={index}
                     href={category.href}
-                    className="group flex items-center space-x-4 p-4 bg-surface rounded-xl hover:bg-primary-lighter hover:shadow-soft transition-all duration-300"
+                    className="group flex items-center space-x-4 p-6 md:p-8 lg:p-10 md:p-8 bg-surface rounded-xl hover:bg-primary-lighter hover:shadow-soft transition-all duration-300"
                   >
                     <div className="text-2xl">{category.icon}</div>
                     <div className="flex-1">
@@ -200,11 +200,11 @@ export default async function CategoriesPage() {
               {/* Quick Stats */}
               <div className="mb-6">
                 <div className="grid grid-cols-2 gap-3">
-                  <div className="bg-gradient-to-br from-purple-600/20 to-purple-500/20 rounded-xl p-4 text-center border border-purple-500/20">
+                  <div className="bg-gradient-to-br from-purple-600/20 to-purple-500/20 rounded-xl p-6 md:p-8 lg:p-10 md:p-8 text-center border border-purple-500/20">
                     <div className="text-2xl font-bold text-primary">{allCategoriesWithThumbnails.length}</div>
                     <div className="text-gray-600 text-xs">Categories</div>
                   </div>
-                  <div className="bg-gradient-to-br from-blue-600/20 to-blue-500/20 rounded-xl p-4 text-center border border-blue-500/20">
+                  <div className="bg-gradient-to-br from-blue-600/20 to-blue-500/20 rounded-xl p-6 md:p-8 lg:p-10 md:p-8 text-center border border-blue-500/20">
                     <div className="text-2xl font-bold text-blue-400">{categoryStats?.totalItems || 0}</div>
                     <div className="text-gray-600 text-xs">Designs</div>
                   </div>
@@ -335,28 +335,28 @@ export default async function CategoriesPage() {
               tags={popularColors}
               variant="color"
               size="lg"
-              className="bg-gradient-to-br from-pink-500/10 to-red-500/10 p-6 rounded-xl border border-pink-500/20"
+              className="bg-gradient-to-br from-pink-500/10 to-red-500/10 p-6 md:p-8 lg:p-10 rounded-xl border border-pink-500/20"
             />
             <TagCollection
               title="Techniques"
               tags={popularTechniques}
               variant="technique"
               size="lg"
-              className="bg-gradient-to-br from-blue-500/10 to-cyan-500/10 p-6 rounded-xl border border-blue-500/20"
+              className="bg-gradient-to-br from-blue-500/10 to-cyan-500/10 p-6 md:p-8 lg:p-10 rounded-xl border border-blue-500/20"
             />
             <TagCollection
               title="Occasions"
               tags={popularOccasions}
               variant="occasion"
               size="lg"
-              className="bg-gradient-to-br from-yellow-500/10 to-orange-500/10 p-6 rounded-xl border border-yellow-500/20"
+              className="bg-gradient-to-br from-yellow-500/10 to-orange-500/10 p-6 md:p-8 lg:p-10 rounded-xl border border-yellow-500/20"
             />
             <TagCollection
               title="Styles"
               tags={popularStyles}
               variant="style"
               size="lg"
-              className="bg-gradient-to-br from-purple-500/10 to-pink-500/10 p-6 rounded-xl border border-purple-500/20"
+              className="bg-gradient-to-br from-purple-500/10 to-pink-500/10 p-6 md:p-8 lg:p-10 rounded-xl border border-purple-500/20"
             />
           </div>
         </div>

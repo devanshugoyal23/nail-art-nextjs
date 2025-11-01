@@ -6,7 +6,7 @@ const Footer: React.FC = () => {
 
   return (
     <footer className="bg-surface border-t border-gray-100 mt-20">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 py-16 sm:py-20 md:py-24">
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 mb-12">
 
@@ -20,7 +20,7 @@ const Footer: React.FC = () => {
                 Nail Art AI
               </span>
             </Link>
-            <p className="text-gray-600 text-sm leading-relaxed max-w-xs">
+            <p className="text-gray-600 text-base leading-relaxed max-w-xs">
               Transform your nails with AI-powered virtual try-on. Discover 1000+ stunning nail art designs instantly.
             </p>
             {/* Social Links */}

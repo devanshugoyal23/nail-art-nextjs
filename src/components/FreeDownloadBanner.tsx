@@ -16,7 +16,7 @@ export default function FreeDownloadBanner({
   className = ''
 }: FreeDownloadBannerProps) {
   return (
-    <div className={`bg-gradient-to-r from-purple-600 to-pink-600 text-white p-4 rounded-lg shadow-lg ${className}`}>
+    <div className={`bg-gradient-to-r from-purple-600 to-pink-600 text-white p-6 md:p-8 lg:p-10 md:p-8 rounded-lg shadow-lg ${className}`}>
       <div className="flex items-center justify-between flex-wrap gap-4">
         <div className="flex-1">
           <h3 className="text-lg font-bold mb-2">
@@ -56,7 +56,7 @@ export default function FreeDownloadBanner({
 
 export function FreeDownloadInfo() {
   return (
-    <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
+    <div className="bg-green-50 border border-green-200 rounded-lg p-6 md:p-8 lg:p-10 md:p-8 mb-6">
       <div className="flex items-start gap-3">
         <div className="text-green-600 text-2xl">🎨</div>
         <div>
@@ -92,7 +92,7 @@ export function FreeDownloadInfo() {
 
 export function LicenseInfo() {
   return (
-    <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 text-sm">
+    <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 md:p-8 lg:p-10 md:p-8 text-sm">
       <div className="flex items-start gap-2">
         <span className="text-blue-600 text-lg">ℹ️</span>
         <div>

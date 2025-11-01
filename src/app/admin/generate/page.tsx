@@ -322,7 +322,7 @@ export default function GenerateGalleryPage() {
 
         {/* Progress Display */}
         {generationProgress.isGenerating && (
-          <div className="bg-surface p-6 rounded-lg mb-8">
+          <div className="bg-surface p-6 md:p-8 lg:p-10 rounded-lg mb-8">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-xl font-semibold text-blue-400">🔄 Generation Progress</h2>
               <div className="flex gap-2">
@@ -739,7 +739,7 @@ export default function GenerateGalleryPage() {
             <div className="bg-surface rounded-lg p-6">
               <h2 className="text-2xl font-semibold mb-4">📊 Content Statistics</h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="bg-gray-100 p-4 rounded-lg">
+                <div className="bg-gray-100 p-6 md:p-8 lg:p-10 md:p-8 rounded-lg">
                   <h3 className="text-lg font-semibold text-blue-400 mb-2">Current Content</h3>
                   <div className="text-2xl font-bold text-gray-900">
                     {underPopulatedTags.reduce((sum, tag) => sum + tag.count, 0)}
@@ -747,7 +747,7 @@ export default function GenerateGalleryPage() {
                   <p className="text-sm text-gray-500">Total items across all tags</p>
                 </div>
                 
-                <div className="bg-gray-100 p-4 rounded-lg">
+                <div className="bg-gray-100 p-6 md:p-8 lg:p-10 md:p-8 rounded-lg">
                   <h3 className="text-lg font-semibold text-green-400 mb-2">Under-Populated Tags</h3>
                   <div className="text-2xl font-bold text-gray-900">
                     {underPopulatedTags.length}
@@ -755,7 +755,7 @@ export default function GenerateGalleryPage() {
                   <p className="text-sm text-gray-500">Tags needing more content</p>
                 </div>
                 
-                <div className="bg-gray-100 p-4 rounded-lg">
+                <div className="bg-gray-100 p-6 md:p-8 lg:p-10 md:p-8 rounded-lg">
                   <h3 className="text-lg font-semibold text-primary mb-2">Estimated Generation</h3>
                   <div className="text-2xl font-bold text-gray-900">
                     {underPopulatedTags.length * 3}
@@ -952,7 +952,7 @@ export default function GenerateGalleryPage() {
         {/* Guide Tab */}
         {activeTab === 'guide' && (
           <div className="space-y-8">
-            <div className="bg-surface p-6 rounded-lg">
+            <div className="bg-surface p-6 md:p-8 lg:p-10 rounded-lg">
               <h2 className="text-2xl font-bold mb-4">📖 How to Use the Generate Page</h2>
               <p className="text-gray-500 mb-6">
                 Complete guide to using all features of the nail art generation system.
@@ -960,7 +960,7 @@ export default function GenerateGalleryPage() {
               
               <div className="space-y-6">
                 {/* Basic Generation */}
-                <div className="bg-gray-100 p-4 rounded-lg">
+                <div className="bg-gray-100 p-6 md:p-8 lg:p-10 md:p-8 rounded-lg">
                   <h3 className="text-lg font-semibold mb-3 text-blue-400">🎨 Basic Content Generation</h3>
                   <div className="space-y-3">
                     <div>
@@ -988,7 +988,7 @@ export default function GenerateGalleryPage() {
                 </div>
 
                 {/* Tag Management */}
-                <div className="bg-gray-100 p-4 rounded-lg">
+                <div className="bg-gray-100 p-6 md:p-8 lg:p-10 md:p-8 rounded-lg">
                   <h3 className="text-lg font-semibold mb-3 text-green-400">🏷️ Tag Management</h3>
                   <div className="space-y-3">
                     <div>
@@ -1013,7 +1013,7 @@ export default function GenerateGalleryPage() {
                 </div>
 
                 {/* Impact Analysis */}
-                <div className="bg-gray-100 p-4 rounded-lg">
+                <div className="bg-gray-100 p-6 md:p-8 lg:p-10 md:p-8 rounded-lg">
                   <h3 className="text-lg font-semibold mb-3 text-primary">📊 Impact Analysis</h3>
                   <div className="space-y-3">
                     <div>
@@ -1032,7 +1032,7 @@ export default function GenerateGalleryPage() {
                 </div>
 
                 {/* Best Practices */}
-                <div className="bg-gray-100 p-4 rounded-lg">
+                <div className="bg-gray-100 p-6 md:p-8 lg:p-10 md:p-8 rounded-lg">
                   <h3 className="text-lg font-semibold mb-3 text-yellow-400">⭐ Best Practices</h3>
                   <div className="space-y-3">
                     <div>
@@ -1055,7 +1055,7 @@ export default function GenerateGalleryPage() {
                 </div>
 
                 {/* Quick Actions */}
-                <div className="bg-gray-100 p-4 rounded-lg">
+                <div className="bg-gray-100 p-6 md:p-8 lg:p-10 md:p-8 rounded-lg">
                   <h3 className="text-lg font-semibold mb-3 text-red-400">⚡ Quick Actions</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="bg-gray-600 p-3 rounded">
@@ -1070,7 +1070,7 @@ export default function GenerateGalleryPage() {
                 </div>
 
                 {/* Troubleshooting */}
-                <div className="bg-gray-100 p-4 rounded-lg">
+                <div className="bg-gray-100 p-6 md:p-8 lg:p-10 md:p-8 rounded-lg">
                   <h3 className="text-lg font-semibold mb-3 text-orange-400">🔧 Troubleshooting</h3>
                   <div className="space-y-3">
                     <div>

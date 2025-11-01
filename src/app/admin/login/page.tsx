@@ -96,7 +96,7 @@ export default function AdminLoginPage() {
           </p>
         </div>
         
-        <div className="mt-4 p-4 bg-blue-900/20 border border-blue-500/30 rounded-lg">
+        <div className="mt-4 p-6 md:p-8 lg:p-10 md:p-8 bg-blue-900/20 border border-blue-500/30 rounded-lg">
           <h3 className="text-blue-300 font-semibold mb-2">🔐 Security Notice</h3>
           <p className="text-blue-200 text-sm">
             This admin panel is protected by authentication. Only authorized personnel should have access.

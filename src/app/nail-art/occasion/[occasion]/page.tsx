@@ -279,7 +279,7 @@ export default async function OccasionPage({ params }: OccasionPageProps) {
               <Link
                 key={occ}
                 href={`/nail-art/occasion/${occ}`}
-                className={`bg-gradient-to-r from-pink-500 to-purple-600 rounded-lg p-4 text-center hover:scale-105 transition-transform ${occ === occasion ? 'ring-2 ring-purple-400' : ''}`}
+                className={`bg-gradient-to-r from-pink-500 to-purple-600 rounded-lg p-6 md:p-8 lg:p-10 md:p-8 text-center hover:scale-105 transition-transform ${occ === occasion ? 'ring-2 ring-purple-400' : ''}`}
               >
                 <div className="text-gray-900 font-semibold">{capitalize(occ)}</div>
               </Link>

@@ -81,7 +81,7 @@ export default function ConfirmationModal({
       onKeyDown={handleKeyDown}
     >
       <div className={`
-        bg-surface rounded-xl p-6 max-w-md w-full mx-4 border
+        bg-surface rounded-xl p-6 md:p-8 lg:p-10 max-w-md w-full mx-4 border
         ${config.borderColor}
       `}>
         {/* Header */}

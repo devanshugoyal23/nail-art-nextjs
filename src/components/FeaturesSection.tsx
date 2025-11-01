@@ -44,71 +44,70 @@ export default function FeaturesSection() {
   ];
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-      <div className="text-center mb-16">
-        <h2 className="text-3xl sm:text-4xl font-serif font-bold text-gray-900 mb-4">
-          Why Choose Nail Art AI?
-        </h2>
-        <p className="text-gray-600 text-lg max-w-3xl mx-auto">
-          Experience the future of nail art with our cutting-edge AI technology that brings your wildest nail design dreams to life.
-        </p>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {features.map((feature, index) => (
-          <div
-            key={index}
-            className="group relative bg-white backdrop-blur-sm rounded-2xl p-6 shadow-soft hover:bg-surface transition-all duration-300 transform hover:-translate-y-2 hover:shadow-hover shadow-soft border border-gray-100"
-          >
-            {/* Background Gradient */}
-            <div className={`absolute inset-0 bg-gradient-to-br ${feature.color} opacity-10 rounded-2xl`}></div>
-            
-            <div className="relative">
-              {/* Icon */}
-              <div className="text-4xl mb-4">{feature.icon}</div>
-              
-              {/* Title */}
-              <h3 className="text-xl font-serif font-bold text-gray-900 mb-3 group-hover:text-primary transition-colors">
-                {feature.title}
-              </h3>
-              
-              {/* Description */}
-              <p className="text-gray-600 text-sm leading-relaxed">
-                {feature.description}
-              </p>
-            </div>
-
-            {/* Hover Effect */}
-            <div className="absolute inset-0 bg-gradient-to-r from-purple-600/0 to-pink-600/0 group-hover:from-purple-600/5 group-hover:to-pink-600/5 transition-all duration-500 rounded-2xl"></div>
-          </div>
-        ))}
-      </div>
-
-      {/* CTA Section */}
-      <div className="text-center mt-16">
-        <div className="bg-gradient-to-r from-rose-50 to-lavender-50 backdrop-blur-sm rounded-3xl p-8 sm:p-12 border border-gray-100">
-          <h3 className="text-2xl sm:text-3xl font-serif font-bold text-gray-900 mb-4">
-            Ready to Transform Your Nails?
-          </h3>
-          <p className="text-gray-600 text-lg mb-8 max-w-2xl mx-auto">
-            Join thousands of users who have discovered their perfect nail art style with our AI-powered virtual try-on experience.
+    <section className="py-16 md:py-24 bg-surface">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-gray-900 mb-6">
+            Why Choose Nail Art AI?
+          </h2>
+          <p className="text-gray-600 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
+            Experience the future of nail art with our cutting-edge AI technology that brings your wildest nail design dreams to life.
           </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <Link
-              href="/try-on"
-              className="btn btn-primary font-bold py-4 px-8 rounded-full hover:from-purple-700 hover:to-pink-700 transition-all duration-300 transform hover:scale-105 shadow-lg shadow-purple-500/50 text-lg"
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+          {features.map((feature, index) => (
+            <div
+              key={index}
+              className="group relative bg-white rounded-2xl p-8 shadow-soft hover:shadow-hover transition-all duration-300 transform hover:-translate-y-1 border border-gray-100"
             >
-              Start Your Journey
-            </Link>
-            <Link
-              href="/nail-art-gallery"
-              className="bg-white/10 backdrop-blur-sm text-gray-900 font-bold py-4 px-8 rounded-full hover:bg-white/20 transition-all duration-300 transform hover:scale-105 border border-white/20 text-lg"
-            >
-              Browse Gallery
-            </Link>
+              {/* Background Gradient */}
+              <div className={`absolute inset-0 bg-gradient-to-br ${feature.color} opacity-5 rounded-2xl transition-opacity group-hover:opacity-10`}></div>
+
+              <div className="relative">
+                {/* Icon */}
+                <div className="text-5xl mb-6">{feature.icon}</div>
+
+                {/* Title */}
+                <h3 className="text-xl md:text-2xl font-serif font-bold text-gray-900 mb-4 group-hover:text-primary transition-colors">
+                  {feature.title}
+                </h3>
+
+                {/* Description */}
+                <p className="text-gray-600 text-base leading-relaxed">
+                  {feature.description}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* CTA Section */}
+        <div className="text-center mt-20">
+          <div className="bg-gradient-to-r from-rose-50 to-lavender-50 rounded-3xl p-10 sm:p-16 border border-gray-100 shadow-soft">
+            <h3 className="text-3xl sm:text-4xl font-serif font-bold text-gray-900 mb-6">
+              Ready to Transform Your Nails?
+            </h3>
+            <p className="text-gray-600 text-lg md:text-xl mb-10 max-w-2xl mx-auto leading-relaxed">
+              Join thousands of users who have discovered their perfect nail art style with our AI-powered virtual try-on experience.
+            </p>
+            <div className="flex flex-col sm:flex-row justify-center gap-4">
+              <Link
+                href="/try-on"
+                className="btn btn-primary text-base px-10 py-4"
+              >
+                Start Your Journey
+              </Link>
+              <Link
+                href="/nail-art-gallery"
+                className="btn btn-secondary text-base px-10 py-4"
+              >
+                Browse Gallery
+              </Link>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }

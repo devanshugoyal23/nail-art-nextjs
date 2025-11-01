@@ -98,7 +98,7 @@ export default function ColorPalette({
   }
 
   return (
-    <div className={`bg-surface/40 backdrop-blur-sm rounded-xl p-4 border border-gray-100/50 ${className}`}>
+    <div className={`bg-surface/40 backdrop-blur-sm rounded-xl p-6 md:p-8 lg:p-10 md:p-8 border border-gray-100/50 ${className}`}>
       <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
         <svg className="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v12a4 4 0 004 4h4a2 2 0 002-2V5z" />

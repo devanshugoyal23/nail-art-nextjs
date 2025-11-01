@@ -133,7 +133,7 @@ export default function ChristmasNailArtPage() {
             <h2 className="text-3xl font-serif font-bold text-gray-900 mb-8 text-center">Featured Christmas Designs</h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
               {christmasDesigns.map((design, index) => (
-                <div key={index} className="bg-surface/50 rounded-xl p-6 border border-gray-100 hover:border-red-500/50 transition-all duration-300 transform hover:-translate-y-1">
+                <div key={index} className="bg-surface/50 rounded-xl p-6 md:p-8 lg:p-10 border border-gray-100 hover:border-red-500/50 transition-all duration-300 transform hover:-translate-y-1">
                   <div className="aspect-square bg-gray-100 rounded-lg mb-4 flex items-center justify-center">
                     <span className="text-4xl">🎄</span>
                   </div>
@@ -185,22 +185,22 @@ export default function ChristmasNailArtPage() {
           <div className="mb-12">
             <h2 className="text-3xl font-serif font-bold text-gray-900 mb-8 text-center">Christmas Color Palette</h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <div className="bg-red-600 rounded-xl p-6 text-center">
+              <div className="bg-red-600 rounded-xl p-6 md:p-8 lg:p-10 text-center">
                 <div className="text-4xl mb-2">🔴</div>
                 <h3 className="text-lg font-semibold text-gray-900">Classic Red</h3>
                 <p className="text-red-200 text-sm">Perfect for candy canes and Santa themes</p>
               </div>
-              <div className="bg-green-600 rounded-xl p-6 text-center">
+              <div className="bg-green-600 rounded-xl p-6 md:p-8 lg:p-10 text-center">
                 <div className="text-4xl mb-2">🟢</div>
                 <h3 className="text-lg font-semibold text-gray-900">Forest Green</h3>
                 <p className="text-green-200 text-sm">Ideal for Christmas trees and holly</p>
               </div>
-              <div className="bg-yellow-500 rounded-xl p-6 text-center">
+              <div className="bg-yellow-500 rounded-xl p-6 md:p-8 lg:p-10 text-center">
                 <div className="text-4xl mb-2">🟡</div>
                 <h3 className="text-lg font-semibold text-gray-900">Gold</h3>
                 <p className="text-yellow-200 text-sm">Adds luxury and festive sparkle</p>
               </div>
-              <div className="bg-blue-600 rounded-xl p-6 text-center">
+              <div className="bg-blue-600 rounded-xl p-6 md:p-8 lg:p-10 text-center">
                 <div className="text-4xl mb-2">🔵</div>
                 <h3 className="text-lg font-semibold text-gray-900">Winter Blue</h3>
                 <p className="text-blue-200 text-sm">Perfect for snow and ice themes</p>
@@ -214,7 +214,7 @@ export default function ChristmasNailArtPage() {
             <div className="grid md:grid-cols-3 gap-6">
               <Link
                 href="/halloween-nail-art"
-                className="bg-surface/50 rounded-xl p-6 border border-gray-100 hover:border-orange-500/50 transition-all duration-300 transform hover:-translate-y-1"
+                className="bg-surface/50 rounded-xl p-6 md:p-8 lg:p-10 border border-gray-100 hover:border-orange-500/50 transition-all duration-300 transform hover:-translate-y-1"
               >
                 <div className="text-center">
                   <div className="text-4xl mb-3">🎃</div>
@@ -224,7 +224,7 @@ export default function ChristmasNailArtPage() {
               </Link>
               <Link
                 href="/winter-nail-art"
-                className="bg-surface/50 rounded-xl p-6 border border-gray-100 hover:border-blue-500/50 transition-all duration-300 transform hover:-translate-y-1"
+                className="bg-surface/50 rounded-xl p-6 md:p-8 lg:p-10 border border-gray-100 hover:border-blue-500/50 transition-all duration-300 transform hover:-translate-y-1"
               >
                 <div className="text-center">
                   <div className="text-4xl mb-3">❄️</div>
@@ -234,7 +234,7 @@ export default function ChristmasNailArtPage() {
               </Link>
               <Link
                 href="/wedding-nail-art"
-                className="bg-surface/50 rounded-xl p-6 border border-gray-100 hover:border-pink-500/50 transition-all duration-300 transform hover:-translate-y-1"
+                className="bg-surface/50 rounded-xl p-6 md:p-8 lg:p-10 border border-gray-100 hover:border-pink-500/50 transition-all duration-300 transform hover:-translate-y-1"
               >
                 <div className="text-center">
                   <div className="text-4xl mb-3">💍</div>

@@ -32,7 +32,7 @@ export default function DesignPreviewModal({ design, isOpen, onClose, onSelect }
     >
       <div className="bg-white dark:bg-surface rounded-xl max-w-2xl w-full max-h-[90vh] overflow-hidden shadow-2xl">
         {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-100">
+        <div className="flex items-center justify-between p-6 md:p-8 lg:p-10 md:p-8 border-b border-gray-200 dark:border-gray-100">
           <h2 className="text-xl font-bold text-gray-900 dark:text-gray-900">Design Preview</h2>
           <button
             onClick={onClose}
@@ -123,7 +123,7 @@ export default function DesignPreviewModal({ design, isOpen, onClose, onSelect }
         </div>
 
         {/* Footer */}
-        <div className="flex gap-3 p-4 border-t border-gray-200 dark:border-gray-100">
+        <div className="flex gap-3 p-6 md:p-8 lg:p-10 md:p-8 border-t border-gray-200 dark:border-gray-100">
           <button
             onClick={onClose}
             className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-200 text-gray-700 dark:text-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-100 transition-colors"
