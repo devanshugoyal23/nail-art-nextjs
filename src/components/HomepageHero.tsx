@@ -47,9 +47,9 @@ const HomepageHero = React.memo(function HomepageHero({ initialItems = [] }: Hom
 
   if (!mounted || loading) {
     return (
-      <div className="bg-white">
+      <div className="bg-white w-full overflow-hidden">
         {/* Hero Section Skeleton */}
-        <div className="container mx-auto px-4 pt-12 pb-8">
+        <div className="page-container pt-12 pb-8">
           <div className="max-w-4xl mx-auto text-center space-y-6">
             <div className="h-16 bg-gray-100 rounded-lg animate-shimmer"></div>
             <div className="h-24 bg-gray-100 rounded-lg animate-shimmer"></div>
@@ -58,7 +58,7 @@ const HomepageHero = React.memo(function HomepageHero({ initialItems = [] }: Hom
         </div>
 
         {/* Gallery Skeleton */}
-        <div className="container mx-auto px-4 py-12">
+        <div className="page-container py-12">
           <div className="pinterest-masonry">
             {[...Array(8)].map((_, i) => (
               <div key={i} className="skeleton h-64 mb-4 rounded-xl"></div>
@@ -70,15 +70,15 @@ const HomepageHero = React.memo(function HomepageHero({ initialItems = [] }: Hom
   }
 
   return (
-    <div className="bg-white">
+    <div className="bg-white w-full overflow-hidden">
       {/* Hero Section - Clean & Elegant */}
-      <section className="relative overflow-hidden">
+      <section className="relative overflow-hidden w-full">
         {/* Soft Background Decoration */}
         <div className="absolute inset-0 bg-gradient-to-br from-rose-50 via-white to-lavender-50 opacity-60"></div>
-        <div className="absolute top-0 right-0 w-1/2 h-1/2 bg-gradient-to-bl from-primary-lighter to-transparent rounded-full blur-3xl opacity-30"></div>
-        <div className="absolute bottom-0 left-0 w-1/2 h-1/2 bg-gradient-to-tr from-secondary-light to-transparent rounded-full blur-3xl opacity-30"></div>
+        <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-primary-lighter to-transparent rounded-full blur-3xl opacity-30"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-secondary-light to-transparent rounded-full blur-3xl opacity-30"></div>
 
-        <div className="container relative z-10 mx-auto px-4 pt-16 md:pt-24 pb-12 md:pb-16">
+        <div className="page-container relative z-10 pt-16 md:pt-24 pb-12 md:pb-16">
           <div className="max-w-4xl mx-auto text-center">
 
             {/* Badge */}
@@ -162,15 +162,15 @@ const HomepageHero = React.memo(function HomepageHero({ initialItems = [] }: Hom
       </section>
 
       {/* Featured Designs - Pinterest Masonry */}
-      <section className="section-padding bg-surface">
-        <div className="container mx-auto px-4">
+      <section className="section-wrapper bg-surface w-full overflow-hidden">
+        <div className="page-container">
 
           {/* Section Header */}
           <div className="text-center mb-12">
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-semibold text-gray-900 mb-4">
               Trending Designs
             </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
               Get inspired by our most popular nail art designs, loved by thousands of users.
             </p>
           </div>

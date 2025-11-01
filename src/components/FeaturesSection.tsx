@@ -44,9 +44,9 @@ export default function FeaturesSection() {
   ];
 
   return (
-    <section className="py-16 md:py-24 bg-surface">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
-        <div className="text-center mb-16">
+    <section className="section-wrapper bg-surface w-full overflow-hidden">
+      <div className="page-container">
+        <div className="text-center mb-12 md:mb-16">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-gray-900 mb-6">
             Why Choose Nail Art AI?
           </h2>

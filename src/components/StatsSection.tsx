@@ -64,11 +64,11 @@ export default function StatsSection() {
 
   if (loading) {
     return (
-      <section className="py-16 md:py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
+      <section className="section-wrapper bg-white w-full overflow-hidden">
+        <div className="page-container">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
             {[...Array(4)].map((_, index) => (
-              <div key={index} className="bg-white backdrop-blur-sm rounded-2xl p-6 md:p-8 lg:p-10 animate-pulse">
+              <div key={index} className="bg-white backdrop-blur-sm rounded-2xl p-6 md:p-8 animate-pulse border-2 border-gray-100">
                 <div className="h-8 bg-gray-200 rounded mb-4"></div>
                 <div className="h-4 bg-gray-200 rounded mb-2"></div>
                 <div className="h-4 bg-gray-200 rounded w-3/4"></div>
@@ -81,9 +81,9 @@ export default function StatsSection() {
   }
 
   return (
-    <section className="py-16 md:py-24 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
-        <div className="text-center mb-16">
+    <section className="section-wrapper bg-white w-full overflow-hidden">
+      <div className="page-container">
+        <div className="text-center mb-12 md:mb-16">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-gray-900 mb-6">
             Trusted by Thousands
           </h2>
@@ -96,10 +96,10 @@ export default function StatsSection() {
           {statItems.map((stat, index) => (
             <div
               key={index}
-              className="group relative bg-white backdrop-blur-sm rounded-2xl p-6 md:p-8 lg:p-10 shadow-soft hover:bg-surface transition-all duration-300 transform hover:-translate-y-2 hover:shadow-hover shadow-soft border border-gray-100"
+              className="group relative bg-white backdrop-blur-sm rounded-2xl p-6 md:p-8 shadow-soft hover:bg-surface transition-all duration-300 transform hover:-translate-y-2 hover:shadow-hover border-2 border-gray-100 hover:border-primary/30"
             >
               {/* Background Gradient */}
-              <div className={`absolute inset-0 bg-gradient-to-br ${stat.color} opacity-10 rounded-2xl`}></div>
+              <div className={`absolute inset-0 bg-gradient-to-br ${stat.color} opacity-5 rounded-2xl group-hover:opacity-10 transition-opacity`}></div>
 
               <div className="relative text-center">
                 {/* Icon */}
@@ -117,18 +117,18 @@ export default function StatsSection() {
               </div>
 
               {/* Hover Effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-purple-600/0 to-pink-600/0 group-hover:from-purple-600/5 group-hover:to-pink-600/5 transition-all duration-500 rounded-2xl"></div>
+              <div className="absolute inset-0 bg-gradient-to-r from-primary/0 to-secondary/0 group-hover:from-primary/5 group-hover:to-secondary/5 transition-all duration-500 rounded-2xl"></div>
             </div>
           ))}
         </div>
 
         {/* Additional Info */}
         <div className="text-center mt-12">
-          <div className="bg-gradient-to-r from-purple-600/10 to-pink-600/10 backdrop-blur-sm rounded-2xl p-6 md:p-8 lg:p-10 border border-purple-500/20">
+          <div className="bg-gradient-to-r from-rose-50 to-lavender-50 backdrop-blur-sm rounded-2xl p-6 md:p-8 border-2 border-gray-100">
             <p className="text-gray-600 text-base">
               <span className="text-primary font-semibold">New designs added daily</span> •
-              <span className="text-pink-400 font-semibold"> 100% Free to use</span> •
-              <span className="text-blue-400 font-semibold"> Mobile optimized</span>
+              <span className="text-secondary font-semibold"> 100% Free to use</span> •
+              <span className="text-accent font-semibold"> Mobile optimized</span>
             </p>
           </div>
         </div>

@@ -82,6 +82,8 @@ html {
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  width: 100%;
 }
 
 body {
@@ -92,6 +94,8 @@ body {
   font-size: 1rem;
   line-height: 1.7;
   overflow-x: hidden;
+  width: 100%;
+  position: relative;
 }
 
 /* Beautiful Text Selection */
@@ -609,27 +613,116 @@ img {
 }
 
 /* UTILITY CLASSES */
+
+/* Main container with max-width and centered */
+.page-container {
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  width: 100%;
+}
+
+@media (min-width: 640px) {
+  .page-container {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .page-container {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+@media (min-width: 1536px) {
+  .page-container {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+}
+
+/* Narrower container for content */
+.content-container {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  width: 100%;
+}
+
+@media (min-width: 640px) {
+  .content-container {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .content-container {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+/* Section wrapper - vertical padding only */
+.section-wrapper {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+@media (min-width: 768px) {
+  .section-wrapper {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .section-wrapper {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
+}
+
+/* Legacy container class - for backward compatibility */
 .container {
-  max-width: 1536px;
-  margin: 0 auto;
-  padding: 0 1rem;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 @media (min-width: 640px) {
   .container {
-    padding: 0 1.5rem;
+    max-width: 640px;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 768px;
   }
 }
 
 @media (min-width: 1024px) {
   .container {
-    padding: 0 2rem;
+    max-width: 1024px;
   }
 }
 
 @media (min-width: 1280px) {
   .container {
-    padding: 0 3rem;
+    max-width: 1280px;
+  }
+}
+
+@media (min-width: 1536px) {
+  .container {
+    max-width: 1400px;
   }
 }
 
@@ -651,7 +744,7 @@ img {
   }
 }
 
-/* Responsive spacing */
+/* Responsive spacing - DEPRECATED, use section-wrapper instead */
 .section-padding {
   padding: 3rem 0;
 }

@@ -35,9 +35,9 @@ export default function TestimonialsSection() {
   ];
 
   return (
-    <section className="py-16 md:py-24 bg-surface">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
-        <div className="text-center mb-16">
+    <section className="section-wrapper bg-surface w-full overflow-hidden">
+      <div className="page-container">
+        <div className="text-center mb-12 md:mb-16">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-gray-900 mb-6">
             What Our Users Say
           </h2>
@@ -50,10 +50,10 @@ export default function TestimonialsSection() {
           {testimonials.map((testimonial, index) => (
             <div
               key={index}
-              className="group relative bg-white backdrop-blur-sm rounded-2xl p-6 md:p-8 lg:p-10 shadow-soft hover:bg-surface transition-all duration-300 transform hover:-translate-y-2 hover:shadow-hover shadow-soft border border-gray-100"
+              className="group relative bg-white backdrop-blur-sm rounded-2xl p-6 md:p-8 shadow-soft hover:bg-surface transition-all duration-300 transform hover:-translate-y-2 hover:shadow-hover border-2 border-gray-100 hover:border-primary/30"
             >
               {/* Background Gradient */}
-              <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-2xl"></div>
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-secondary/5 rounded-2xl group-hover:from-primary/10 group-hover:to-secondary/10 transition-all"></div>
 
               <div className="relative">
                 {/* Rating */}
@@ -83,14 +83,14 @@ export default function TestimonialsSection() {
               </div>
 
               {/* Hover Effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-purple-600/0 to-pink-600/0 group-hover:from-purple-600/5 group-hover:to-pink-600/5 transition-all duration-500 rounded-2xl"></div>
+              <div className="absolute inset-0 bg-gradient-to-r from-primary/0 to-secondary/0 group-hover:from-primary/5 group-hover:to-secondary/5 transition-all duration-500 rounded-2xl"></div>
             </div>
           ))}
         </div>
 
         {/* Social Proof Stats */}
-        <div className="mt-16 text-center">
-          <div className="bg-gradient-to-r from-purple-600/10 to-pink-600/10 backdrop-blur-sm rounded-2xl p-6 md:p-8 lg:p-10 border border-gray-100">
+        <div className="mt-12 md:mt-16 text-center">
+          <div className="bg-gradient-to-r from-rose-50 to-lavender-50 backdrop-blur-sm rounded-2xl p-6 md:p-8 border-2 border-gray-100">
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 lg:gap-8">
               <div>
                 <div className="text-2xl sm:text-3xl font-serif font-bold text-gray-900 mb-2">4.9/5</div>
