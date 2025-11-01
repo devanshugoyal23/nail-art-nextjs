@@ -1,4 +1,4 @@
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import Link from "next/link";
 import OptimizedImage from "@/components/OptimizedImage";
 import React from "react";
@@ -164,6 +164,12 @@ export default async function DesignDetailPage({ params }: DesignDetailPageProps
     if (!item) {
       notFound();
     }
+
+    // Redirect to canonical design URL: /{category}/{design-name}-{idSuffix}
+    const canonicalPath = generateGalleryItemUrl(item);
+    permanentRedirect(canonicalPath);
+    // Unreachable
+    return null as any;
 
   // Fetch other items from the same category if available
   const categoryItems = item.category ? await getGalleryItemsByCategorySlug(item.category) : [];

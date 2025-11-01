@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import Link from 'next/link';
+import { categoryUrl } from '@/lib/urlBuilder';
 import { GalleryItem } from '@/lib/supabase';
 import { getGalleryItemsByCategory, getAllCategories } from '@/lib/galleryService';
 import OptimizedImage from './OptimizedImage';
@@ -141,7 +142,7 @@ const CategoryShowcase = React.memo(function CategoryShowcase({ initialCategorie
           return (
             <Link
               key={category}
-              href={`/categories/${category.toLowerCase().replace(/\s+/g, '-')}`}
+              href={categoryUrl(category)}
               className="group relative bg-gray-800/50 backdrop-blur-sm rounded-2xl overflow-hidden hover:bg-gray-700/50 transition-all duration-500 transform hover:-translate-y-3 hover:shadow-2xl border border-gray-700/50"
             >
               {/* Background Gradient */}

@@ -5,6 +5,7 @@ import { getAllTagsFromGalleryItems } from '@/lib/tagService';
 import { getGalleryItems } from '@/lib/galleryService';
 import { getAllCategoriesWithThumbnails, getCategoryStatistics } from '@/lib/categoryService';
 import TagCollection from '@/components/TagCollection';
+import { categoryUrl } from '@/lib/urlBuilder';
 
 export const metadata: Metadata = {
   title: 'Nail Art Categories | AI Nail Art Studio',
@@ -223,7 +224,7 @@ export default async function CategoriesPage() {
                   {allCategoriesWithThumbnails.slice(0, 3).map((category, index) => (
                     <Link
                       key={index}
-                      href={`/nail-art-gallery/category/${encodeURIComponent(category.category)}`}
+                      href={categoryUrl(category.category)}
                       className="group flex items-center space-x-3 bg-gray-700/50 rounded-lg p-3 hover:bg-gray-600/50 transition-all duration-300 hover:scale-[1.02]"
                     >
                       <div className="w-10 h-10 rounded-lg overflow-hidden flex-shrink-0">
@@ -267,7 +268,7 @@ export default async function CategoriesPage() {
                   {allCategoriesWithThumbnails.slice(3, 6).map((category, index) => (
                     <Link
                       key={index}
-                      href={`/nail-art-gallery/category/${encodeURIComponent(category.category)}`}
+                      href={categoryUrl(category.category)}
                       className="group flex items-center space-x-3 bg-gray-700/50 rounded-lg p-3 hover:bg-gray-600/50 transition-all duration-300 hover:scale-[1.02]"
                     >
                       <div className="w-10 h-10 rounded-lg overflow-hidden flex-shrink-0">
@@ -376,7 +377,7 @@ export default async function CategoriesPage() {
             {allCategoriesWithThumbnails.slice(0, 12).map((category, index) => (
               <Link
                 key={index}
-                href={`/nail-art-gallery/category/${encodeURIComponent(category.category)}`}
+                href={categoryUrl(category.category)}
                 className="group bg-gray-800/50 backdrop-blur-sm rounded-xl overflow-hidden hover:bg-gray-700/50 transition-all duration-300 transform hover:-translate-y-1 border border-gray-700/50"
               >
                 <div className="relative h-24 overflow-hidden">

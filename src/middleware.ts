@@ -1,8 +1,70 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { slugify } from './lib/slugify';
 
 // Simple admin authentication middleware
 export function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl;
+  const url = request.nextUrl;
+  const { pathname } = url;
+
+  // Canonical host redirect (www -> apex)
+  const configuredOrigin = (process.env.NEXT_PUBLIC_SITE_URL || 'https://nailartai.app')
+    .replace(/^https?:\/\//, '')
+    .replace(/\/$/, '');
+  const apexHost = configuredOrigin;
+  if (url.hostname === `www.${apexHost}`) {
+    const redirectUrl = new URL(url.toString());
+    redirectUrl.hostname = apexHost;
+    return NextResponse.redirect(redirectUrl, 308);
+  }
+
+  // Skip normalization for assets/system routes
+  const isSystemOrAsset =
+    pathname.startsWith('/_next') ||
+    pathname.startsWith('/api') ||
+    pathname.startsWith('/admin') ||
+    pathname === '/favicon.ico' ||
+    pathname.startsWith('/sitemap') ||
+    pathname === '/robots.txt' ||
+    pathname === '/manifest.json' ||
+    pathname === '/sw.js';
+
+  // Trailing slash normalization (remove, except root)
+  if (!isSystemOrAsset && pathname.length > 1 && pathname.endsWith('/')) {
+    const normalized = pathname.replace(/\/+$/, '');
+    const redirectUrl = new URL(url.toString());
+    redirectUrl.pathname = normalized;
+    return NextResponse.redirect(redirectUrl, 308);
+  }
+
+  // Slug normalization for known patterns
+  if (!isSystemOrAsset) {
+    // /nail-art-gallery/category/:name
+    if (pathname.startsWith('/nail-art-gallery/category/')) {
+      const base = '/nail-art-gallery/category/';
+      const raw = decodeURIComponent(pathname.slice(base.length));
+      const normalizedName = slugify(raw);
+      const targetPath = `${base}${normalizedName}`;
+      if (targetPath !== pathname) {
+        const redirectUrl = new URL(url.toString());
+        redirectUrl.pathname = targetPath;
+        return NextResponse.redirect(redirectUrl, 308);
+      }
+    }
+
+    // Design canonical URLs: /:category/:slug(-idSuffix)
+    const parts = pathname.split('/').filter(Boolean);
+    const reserved = new Set(['categories', 'nail-art-gallery', 'try-on', 'faq', 'nail-art-hub', 'christmas-nail-art', 'nail-colors', 'techniques', 'nail-art']);
+    if (parts.length === 2 && !reserved.has(parts[0])) {
+      const normCategory = slugify(decodeURIComponent(parts[0]));
+      const normSlug = slugify(decodeURIComponent(parts[1]));
+      const targetPath = `/${normCategory}/${normSlug}`;
+      if (targetPath !== pathname) {
+        const redirectUrl = new URL(url.toString());
+        redirectUrl.pathname = targetPath;
+        return NextResponse.redirect(redirectUrl, 308);
+      }
+    }
+  }
   
   // Check if accessing admin routes (except login page)
   if (pathname.startsWith('/admin') && pathname !== '/admin/login') {
@@ -68,6 +130,7 @@ export function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
+    '/((?!_next/static|_next/image|favicon.ico|robots.txt|sitemap|manifest.json|sw.js).*)',
     '/admin/:path*',
     '/api/:path*'
   ]

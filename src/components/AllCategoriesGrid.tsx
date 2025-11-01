@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 import OptimizedImage from "./OptimizedImage";
 import Link from 'next/link';
 import { CategoryWithThumbnail, getCategoriesWithPagination, getCategoryStatistics } from '@/lib/categoryService';
+import { categoryUrl } from '@/lib/urlBuilder';
 
 interface AllCategoriesGridProps {
   initialCategories?: CategoryWithThumbnail[];
@@ -181,7 +182,7 @@ export default function AllCategoriesGrid({
           {categories.map((category, index) => (
             <Link
               key={index}
-              href={`/nail-art-gallery/category/${encodeURIComponent(category.category)}`}
+              href={categoryUrl(category.category)}
               className="group bg-gray-800/50 backdrop-blur-sm rounded-xl overflow-hidden hover:bg-gray-700/50 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-2xl border border-gray-700/50"
             >
               {/* Thumbnail */}

@@ -113,7 +113,6 @@ export default function RootLayout({
         {/* Preconnect to Google Analytics - delayed for LCP optimization */}
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
         {/* Additional performance hints */}
-        <link rel="preload" as="font" href="/fonts/inter-var.woff2" type="font/woff2" crossOrigin="anonymous" />
         <link rel="preload" as="style" href="/globals.css" />
         {/* Google Analytics - Lazy loaded to improve LCP */}
         <Script

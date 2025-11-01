@@ -1,8 +1,10 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import OptimizedImage from "@/components/OptimizedImage";
-import { getGalleryItemsByCategory, getCategoriesWithMinimumContent, generateGalleryItemUrl } from "@/lib/galleryService";
+import { getGalleryItemsByCategorySlug, getCategoriesWithMinimumContent, generateGalleryItemUrl } from "@/lib/galleryService";
 import { Metadata } from "next";
+import { absoluteUrl } from "@/lib/absoluteUrl";
+import { slugify } from "@/lib/slugify";
 
 interface CategoryPageProps {
   params: Promise<{
@@ -12,7 +14,7 @@ interface CategoryPageProps {
 
 export async function generateMetadata({ params }: CategoryPageProps): Promise<Metadata> {
   const resolvedParams = await params;
-  const category = decodeURIComponent(resolvedParams.category);
+  const category = decodeURIComponent(resolvedParams.category).replace(/-/g, ' ');
   
   const title = `${category} Nail Art Designs`;
   const description = `Browse our collection of ${category} nail art designs. Discover stunning AI-generated nail art in the ${category} category.`;
@@ -20,6 +22,9 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
   return {
     title: `${title} | Nail Art AI`,
     description,
+    alternates: {
+      canonical: absoluteUrl(`/nail-art-gallery/category/${slugify(category)}`)
+    },
     openGraph: {
       title,
       description,
@@ -64,8 +69,9 @@ export async function generateStaticParams() {
 
 export default async function CategoryPage({ params }: CategoryPageProps) {
   const resolvedParams = await params;
-  const category = decodeURIComponent(resolvedParams.category);
-  const items = await getGalleryItemsByCategory(category);
+  const categorySlug = decodeURIComponent(resolvedParams.category);
+  const category = categorySlug.replace(/-/g, ' ');
+  const items = await getGalleryItemsByCategorySlug(categorySlug);
 
   if (items.length === 0) {
     notFound();

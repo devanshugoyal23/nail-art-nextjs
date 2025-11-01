@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
+import { categoryUrl } from '@/lib/urlBuilder'
 import OptimizedImage from './OptimizedImage'
 import { getGalleryItemsByCategory } from '@/lib/galleryService'
 import { GalleryItem } from '@/lib/supabase'
@@ -113,7 +114,7 @@ export default function RelatedCategories({
           return (
             <Link
               key={category}
-              href={`/nail-art-gallery/category/${encodeURIComponent(category)}`}
+              href={categoryUrl(category)}
               className="group bg-gray-800 rounded-lg overflow-hidden hover:bg-gray-700 transition-all duration-300 transform hover:-translate-y-1"
             >
               <div className="aspect-square relative">

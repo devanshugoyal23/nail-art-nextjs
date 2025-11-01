@@ -1,6 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import { routeForTag } from '@/lib/urlBuilder';
 import { useState, useRef } from 'react';
 
 interface TagProps {
@@ -70,32 +71,7 @@ export default function Tag({
     setIsLoading(true);
     
     try {
-      // Create the appropriate URL based on tag type
-      let url = '';
-      
-      switch (type) {
-        case 'color':
-          url = `/nail-colors/${value}`;
-          break;
-        case 'technique':
-          url = `/techniques/${value}`;
-          break;
-        case 'occasion':
-          url = `/nail-art/occasion/${value}`;
-          break;
-        case 'season':
-          url = `/nail-art/season/${value}`;
-          break;
-        case 'style':
-          url = `/nail-art/style/${value}`;
-          break;
-        case 'shape':
-          url = `/nail-art/${value}`;
-          break;
-        default:
-          url = `/categories?filter=${type}&value=${value}`;
-      }
-      
+      const url = routeForTag(type, String(value));
       router.push(url);
     } catch (error) {
       console.error('Error navigating to tag page:', error);
