@@ -30,9 +30,9 @@ export default function DesignGalleryGrid({
       <div className={`grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 ${className}`}>
         {Array.from({ length: 8 }).map((_, index) => (
           <div key={index} className="animate-pulse">
-            <div className="aspect-square bg-gray-700 rounded-lg"></div>
-            <div className="mt-2 h-4 bg-gray-700 rounded w-3/4"></div>
-            <div className="mt-1 h-3 bg-gray-700 rounded w-1/2"></div>
+            <div className="aspect-square bg-white ring-1 ring-[#ee2b8c]/15 rounded-lg"></div>
+            <div className="mt-2 h-4 bg-[#f1e2ea] rounded w-3/4"></div>
+            <div className="mt-1 h-3 bg-[#f1e2ea] rounded w-1/2"></div>
           </div>
         ))}
       </div>
@@ -46,14 +46,14 @@ export default function DesignGalleryGrid({
           <div
             key={design.id}
             className={`relative group cursor-pointer transition-all duration-300 transform hover:scale-105 ${
-              selectedId === design.id ? 'ring-2 ring-indigo-500' : ''
+              selectedId === design.id ? 'ring-2 ring-[#ee2b8c]' : ''
             }`}
             onClick={() => onSelect(design)}
             onMouseEnter={() => setHoveredId(design.id)}
             onMouseLeave={() => setHoveredId(null)}
           >
             {/* Design Image */}
-            <div className="aspect-square relative overflow-hidden rounded-lg bg-gray-700">
+            <div className="aspect-square relative overflow-hidden rounded-lg bg-white">
               <OptimizedImage
                 src={design.image_url}
                 alt={design.design_name || 'Nail Art Design'}
@@ -76,7 +76,7 @@ export default function DesignGalleryGrid({
 
               {/* Hover Overlay */}
               {hoveredId === design.id && selectedId !== design.id && (
-                <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <div className="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   <div className="text-white text-sm font-semibold">Click to select</div>
                 </div>
               )}
@@ -84,10 +84,10 @@ export default function DesignGalleryGrid({
 
             {/* Design Info */}
             <div className="mt-2 space-y-1">
-              <h3 className="font-semibold text-sm text-gray-900 dark:text-white truncate">
+              <h3 className="font-semibold text-sm text-[#1b0d14] truncate">
                 {design.design_name || 'Untitled Design'}
               </h3>
-              <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
+              <p className="text-xs text-[#1b0d14]/60 truncate">
                 {design.category || 'Uncategorized'}
               </p>
             </div>
@@ -110,7 +110,7 @@ export default function DesignGalleryGrid({
           <button
             onClick={onLoadMore}
             disabled={loading}
-            className="px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 disabled:bg-gray-500 disabled:cursor-not-allowed transition-colors duration-300"
+            className="px-6 py-3 bg-[#ee2b8c] text-white rounded-full hover:brightness-95 disabled:opacity-60 disabled:cursor-not-allowed transition-colors duration-300"
           >
             {loading ? (
               <div className="flex items-center gap-2">
@@ -127,13 +127,13 @@ export default function DesignGalleryGrid({
       {/* Empty State */}
       {designs.length === 0 && !loading && (
         <div className="text-center py-12">
-          <div className="w-16 h-16 mx-auto mb-4 bg-gray-200 dark:bg-gray-700 rounded-full flex items-center justify-center">
-            <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="w-16 h-16 mx-auto mb-4 bg-[#f1e2ea] rounded-full flex items-center justify-center">
+            <svg className="w-8 h-8 text-[#1b0d14]/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
             </svg>
           </div>
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">No designs found</h3>
-          <p className="text-gray-500 dark:text-gray-400">Try adjusting your search or filters</p>
+          <h3 className="text-lg font-semibold text-[#1b0d14] mb-2">No designs found</h3>
+          <p className="text-[#1b0d14]/60">Try adjusting your search or filters</p>
         </div>
       )}
     </div>

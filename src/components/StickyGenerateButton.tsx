@@ -26,10 +26,10 @@ export default function StickyGenerateButton({
       <button
         onClick={onGenerate}
         disabled={disabled}
-        className={`px-6 py-4 rounded-full font-bold text-lg shadow-2xl transition-all duration-300 transform ${
+        className={`px-6 py-4 rounded-full font-bold text-lg shadow-lg transition-all duration-300 transform ${
           isReady
-            ? 'bg-indigo-600 hover:bg-indigo-700 hover:scale-105 text-white animate-pulse'
-            : 'bg-gray-500 text-gray-300 cursor-not-allowed'
+            ? 'bg-[#ee2b8c] hover:brightness-95 hover:scale-105 text-white'
+            : 'bg-white ring-1 ring-[#ee2b8c]/20 text-[#1b0d14]/60 cursor-not-allowed'
         }`}
       >
         <div className="flex items-center gap-3">
@@ -51,7 +51,7 @@ export default function StickyGenerateButton({
       
       {/* Status indicator */}
       <div className="mt-2 text-center">
-        <div className="text-xs text-gray-500">
+        <div className="text-xs text-[#1b0d14]/60">
           {!sourceImage && !selectedDesign && 'Upload hand + Select design'}
           {sourceImage && !selectedDesign && 'Select a design'}
           {!sourceImage && selectedDesign && 'Upload your hand'}

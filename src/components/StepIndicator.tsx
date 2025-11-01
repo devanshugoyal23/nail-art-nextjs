@@ -23,32 +23,30 @@ export default function StepIndicator({ currentStep, onStepClick, className = ''
           <div key={step.id} className="flex items-center">
             <button
               onClick={() => onStepClick?.(step.id)}
-              className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-300 ${
+              className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 ring-1 ${
                 currentStep === step.id
-                  ? 'bg-indigo-600 text-white shadow-lg'
+                  ? 'bg-[#ee2b8c] text-white ring-[#ee2b8c]/30'
                   : currentStep > step.id
-                  ? 'bg-green-600 text-white shadow-lg'
-                  : 'bg-gray-700 text-gray-400 hover:bg-gray-600'
+                  ? 'bg-white text-[#1b0d14] ring-[#22c55e]/30'
+                  : 'bg-white text-[#1b0d14]/70 hover:bg-[#f8f6f7] ring-[#ee2b8c]/15'
               }`}
             >
               <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${
                 currentStep > step.id
-                  ? 'bg-green-500'
+                  ? 'bg-green-500 text-white'
                   : currentStep === step.id
-                  ? 'bg-white text-indigo-600'
-                  : 'bg-gray-600'
+                  ? 'bg-white text-[#ee2b8c]'
+                  : 'bg-[#f1f1f3] text-[#1b0d14]'
               }`}>
                 {currentStep > step.id ? '✓' : step.id}
               </div>
               <div className="text-left">
                 <div className="font-semibold">{step.title}</div>
-                <div className="text-xs opacity-80">{step.description}</div>
+                <div className="text-xs opacity-70">{step.description}</div>
               </div>
             </button>
             {index < steps.length - 1 && (
-              <div className={`w-8 h-0.5 mx-2 ${
-                currentStep > step.id ? 'bg-indigo-600' : 'bg-gray-600'
-              }`} />
+              <div className={`w-8 h-0.5 mx-2 bg-[#ee2b8c]/20`} />
             )}
           </div>
         ))}
@@ -59,10 +57,10 @@ export default function StepIndicator({ currentStep, onStepClick, className = ''
         {steps.map((step) => (
           <div key={step.id} className="flex flex-col items-center">
             <div className={`w-3 h-3 rounded-full transition-all duration-300 ${
-              currentStep >= step.id ? 'bg-indigo-600' : 'bg-gray-400'
+              currentStep >= step.id ? 'bg-[#ee2b8c]' : 'bg-[#e5d0db]'
             }`} />
             <span className={`text-xs mt-1 ${
-              currentStep >= step.id ? 'text-indigo-600 font-semibold' : 'text-gray-400'
+              currentStep >= step.id ? 'text-[#ee2b8c] font-semibold' : 'text-[#1b0d14]/50'
             }`}>
               {step.id}
             </span>
@@ -75,12 +73,12 @@ export default function StepIndicator({ currentStep, onStepClick, className = ''
         {steps.map((step) => (
           <div
             key={step.id}
-            className={`p-4 rounded-lg border-2 transition-all duration-300 ${
+            className={`p-4 rounded-xl border transition-all duration-300 ${
               currentStep === step.id
-                ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-900/20'
+                ? 'border-[#ee2b8c]/40 bg-white'
                 : currentStep > step.id
-                ? 'border-green-500 bg-green-50 dark:bg-green-900/20'
-                : 'border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800'
+                ? 'border-green-500/40 bg-white'
+                : 'border-[#ee2b8c]/15 bg-white'
             }`}
           >
             <div className="flex items-center gap-3">
@@ -88,18 +86,18 @@ export default function StepIndicator({ currentStep, onStepClick, className = ''
                 currentStep > step.id
                   ? 'bg-green-500 text-white'
                   : currentStep === step.id
-                  ? 'bg-indigo-600 text-white'
-                  : 'bg-gray-400 text-white'
+                  ? 'bg-[#ee2b8c] text-white'
+                  : 'bg-[#f1f1f3] text-[#1b0d14]'
               }`}>
                 {currentStep > step.id ? '✓' : step.id}
               </div>
               <div>
                 <div className={`font-semibold ${
-                  currentStep >= step.id ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-500'
+                  currentStep >= step.id ? 'text-[#ee2b8c]' : 'text-[#1b0d14]'
                 }`}>
                   {step.title}
                 </div>
-                <div className="text-sm text-gray-500">{step.description}</div>
+                <div className="text-sm text-[#1b0d14]/70">{step.description}</div>
               </div>
             </div>
           </div>

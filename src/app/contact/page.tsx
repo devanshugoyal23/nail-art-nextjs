@@ -33,6 +33,23 @@ export default function ContactPage() {
         </div>
         <p className="text-xs text-[#1b0d14]/60 mt-4">This simple form is non-functional in this demo. Use your preferred form handler in production.</p>
       </div>
+
+      <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl">
+        <div className="rounded-xl bg-white shadow-sm ring-1 ring-black/5 p-5">
+          <h2 className="text-base font-semibold text-[#1b0d14] mb-2">Email</h2>
+          <p className="text-sm text-[#1b0d14]/80">
+            Reach us at <a href="mailto:support@nailartai.app" className="text-[#ee2b8c] underline">support@nailartai.app</a>
+          </p>
+        </div>
+        <div className="rounded-xl bg-white shadow-sm ring-1 ring-black/5 p-5">
+          <h2 className="text-base font-semibold text-[#1b0d14] mb-2">Response Time</h2>
+          <p className="text-sm text-[#1b0d14]/80">We reply to most messages within 1–2 business days.</p>
+        </div>
+        <div className="rounded-xl bg-white shadow-sm ring-1 ring-black/5 p-5">
+          <h2 className="text-base font-semibold text-[#1b0d14] mb-2">Partnerships</h2>
+          <p className="text-sm text-[#1b0d14]/80">Salons, artists, or brands—contact us to collaborate.</p>
+        </div>
+      </div>
     </div>
   );
 }

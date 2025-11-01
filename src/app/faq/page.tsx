@@ -156,14 +156,14 @@ export default function FAQPage() {
         }}
       />
       
-      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-purple-900">
+      <div className="min-h-screen bg-gradient-to-br from-white to-pink-50">
         <div className="max-w-4xl mx-auto px-4 py-8">
           {/* Header */}
           <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+            <h1 className="text-4xl md:text-5xl font-bold text-[#1b0d14] mb-4">
               Frequently Asked Questions
             </h1>
-            <p className="text-lg text-gray-300 max-w-3xl mx-auto">
+            <p className="text-lg text-[#1b0d14]/80 max-w-3xl mx-auto">
               Find answers to common questions about AI nail art, virtual try-on, 
               nail art techniques, and more. Get help with your nail art journey.
             </p>
@@ -175,14 +175,14 @@ export default function FAQPage() {
               <Link
                 key={index}
                 href={category.href}
-                className="group bg-gray-800/50 rounded-xl p-6 border border-gray-700 hover:border-purple-500/50 transition-all duration-300 transform hover:-translate-y-1"
+                className="group bg-white rounded-xl p-6 border border-black/5 hover:shadow-md transition-all duration-300 transform hover:-translate-y-1"
               >
                 <div className="text-center">
                   <div className="text-4xl mb-3">{category.icon}</div>
-                  <h3 className="text-xl font-semibold text-white mb-2 group-hover:text-purple-400 transition-colors">
+                  <h3 className="text-xl font-semibold text-[#1b0d14] mb-2 group-hover:text-[#ee2b8c] transition-colors">
                     {category.title}
                   </h3>
-                  <p className="text-gray-400 text-sm">
+                  <p className="text-[#1b0d14]/70 text-sm">
                     {category.description}
                   </p>
                 </div>
@@ -192,12 +192,12 @@ export default function FAQPage() {
 
           {/* General FAQs */}
           <div className="mb-12">
-            <h2 className="text-3xl font-bold text-white mb-8">General Questions</h2>
+            <h2 className="text-3xl font-bold text-[#1b0d14] mb-8">General Questions</h2>
             <div className="space-y-6">
               {generalFAQs.map((faq, index) => (
-                <div key={index} className="bg-gray-800/50 rounded-xl p-6 border border-gray-700">
-                  <h3 className="text-lg font-semibold text-white mb-3">{faq.question}</h3>
-                  <p className="text-gray-300 leading-relaxed">{faq.answer}</p>
+                <div key={index} className="bg-white rounded-xl p-6 border border-black/5">
+                  <h3 className="text-lg font-semibold text-[#1b0d14] mb-3">{faq.question}</h3>
+                  <p className="text-[#1b0d14]/80 leading-relaxed">{faq.answer}</p>
                 </div>
               ))}
             </div>
@@ -205,12 +205,12 @@ export default function FAQPage() {
 
           {/* Technique FAQs */}
           <div className="mb-12">
-            <h2 className="text-3xl font-bold text-white mb-8">Nail Art Techniques</h2>
+            <h2 className="text-3xl font-bold text-[#1b0d14] mb-8">Nail Art Techniques</h2>
             <div className="space-y-6">
               {techniqueFAQs.map((faq, index) => (
-                <div key={index} className="bg-gray-800/50 rounded-xl p-6 border border-gray-700">
-                  <h3 className="text-lg font-semibold text-white mb-3">{faq.question}</h3>
-                  <p className="text-gray-300 leading-relaxed">{faq.answer}</p>
+                <div key={index} className="bg-white rounded-xl p-6 border border-black/5">
+                  <h3 className="text-lg font-semibold text-[#1b0d14] mb-3">{faq.question}</h3>
+                  <p className="text-[#1b0d14]/80 leading-relaxed">{faq.answer}</p>
                 </div>
               ))}
             </div>
@@ -218,33 +218,33 @@ export default function FAQPage() {
 
           {/* Troubleshooting FAQs */}
           <div className="mb-12">
-            <h2 className="text-3xl font-bold text-white mb-8">Troubleshooting</h2>
+            <h2 className="text-3xl font-bold text-[#1b0d14] mb-8">Troubleshooting</h2>
             <div className="space-y-6">
               {troubleshootingFAQs.map((faq, index) => (
-                <div key={index} className="bg-gray-800/50 rounded-xl p-6 border border-gray-700">
-                  <h3 className="text-lg font-semibold text-white mb-3">{faq.question}</h3>
-                  <p className="text-gray-300 leading-relaxed">{faq.answer}</p>
+                <div key={index} className="bg-white rounded-xl p-6 border border-black/5">
+                  <h3 className="text-lg font-semibold text-[#1b0d14] mb-3">{faq.question}</h3>
+                  <p className="text-[#1b0d14]/80 leading-relaxed">{faq.answer}</p>
                 </div>
               ))}
             </div>
           </div>
 
           {/* Contact Section */}
-          <div className="bg-purple-900/30 rounded-xl p-8 border border-purple-700 text-center">
-            <h2 className="text-2xl font-bold text-white mb-4">Still Have Questions?</h2>
-            <p className="text-gray-300 mb-6">
+          <div className="bg-white rounded-xl p-8 border border-black/5 text-center">
+            <h2 className="text-2xl font-bold text-[#1b0d14] mb-4">Still Have Questions?</h2>
+            <p className="text-[#1b0d14]/80 mb-6">
               Can&apos;t find what you&apos;re looking for? We&apos;re here to help!
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 href="/contact"
-                className="bg-purple-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-purple-700 transition-colors"
+                className="bg-[#ee2b8c] text-white font-bold py-3 px-6 rounded-lg hover:opacity-90 transition-colors"
               >
                 Contact Us
               </Link>
               <Link
                 href="/try-on"
-                className="bg-gray-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-gray-700 transition-colors"
+                className="bg-white text-[#1b0d14] font-bold py-3 px-6 rounded-lg border border-black/10 hover:bg-black/5 transition-colors"
               >
                 Try Virtual Try-On
               </Link>

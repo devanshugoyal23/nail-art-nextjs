@@ -40,7 +40,7 @@ const Footer: React.FC = () => {
           <p className="text-sm text-[#1b0d14]/70">© 2025 NailArt AI. All rights reserved.</p>
           <div className="flex space-x-4 text-[#1b0d14]/70">
             <a className="hover:text-[#ee2b8c]" href="https://instagram.com" target="_blank" rel="noopener noreferrer">Instagram</a>
-            <a className="hover:text-[#ee2b8c]" href="https://pinterest.com" target="_blank" rel="noopener noreferrer">Pinterest</a>
+            <a className="hover:text-[#ee2b8c]" href="https://www.pinterest.com/nailartaiapp/" target="_blank" rel="noopener noreferrer">Pinterest</a>
             <a className="hover:text-[#ee2b8c]" href="https://tiktok.com" target="_blank" rel="noopener noreferrer">TikTok</a>
           </div>
         </div>
