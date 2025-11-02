@@ -130,23 +130,27 @@ export default function TryOnContent({ initialData, categories }: TryOnContentPr
     setError(null);
 
     try {
+      // Extract MIME type from data URL
+      const mimeType = sourceImage.split(',')[0].match(/:(.*?);/)?.[1] || 'image/jpeg';
+      
       const response = await fetch('/api/generate-nail-art', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          sourceImage,
-          designId: selectedDesign.id,
-          designName: selectedDesign.design_name,
-          prompt: selectedDesign.prompt
+          base64ImageData: sourceImage,
+          mimeType: mimeType,
+          prompt: selectedDesign.prompt || selectedDesign.design_name
         }),
       });
 
       const data = await response.json();
 
-      if (data.success) {
-        setGeneratedImage(data.imageUrl);
+      if (data.success && data.imageData) {
+        // Convert base64 data back to data URL for display
+        const imageUrl = `data:image/png;base64,${data.imageData}`;
+        setGeneratedImage(imageUrl);
         setCurrentStep(4);
       } else {
         setError(data.error || 'Failed to generate nail art');

@@ -86,8 +86,22 @@ export async function POST(request: NextRequest) {
 
   } catch (error) {
     console.error('Error calling Gemini API:', error);
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    const errorDetails = error instanceof Error ? error.stack : undefined;
+    
+    // Log detailed error information
+    console.error('Error details:', {
+      message: errorMessage,
+      details: errorDetails,
+      body: body ? { ...body, base64ImageData: body.base64ImageData?.substring(0, 50) + '...' } : null
+    });
+    
     return NextResponse.json(
-      { error: 'Failed to generate image' },
+      { 
+        error: 'Failed to generate image',
+        details: errorMessage,
+        debug: process.env.NODE_ENV === 'development' ? errorDetails : undefined
+      },
       { status: 500 }
     );
   }
