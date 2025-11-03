@@ -15,8 +15,14 @@ if (!API_KEY) {
 
 const ai = new GoogleGenAI({ apiKey: API_KEY });
 
+type TryOnRequestBody = {
+  base64ImageData?: string;
+  mimeType?: string;
+  prompt?: string;
+};
+
 export async function POST(request: NextRequest) {
-  let body: any = null;
+  let body: TryOnRequestBody | null = null;
   
   try {
     // Note: Removed admin authentication requirement for public virtual try-on
