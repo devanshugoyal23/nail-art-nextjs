@@ -9,6 +9,7 @@
     "lint": "eslint",
     "optimize": "node scripts/optimize-performance.js",
     "analyze": "npm run build && npx @next/bundle-analyzer",
+    "test:gemini": "node scripts/test-gemini-api.js",
     "pinterest:test": "node scripts/generate-pinterest-optimized.js --test --dry-run",
     "pinterest:test-real": "node scripts/generate-pinterest-optimized.js --test",
     "pinterest:optimize": "node scripts/generate-pinterest-optimized.js",

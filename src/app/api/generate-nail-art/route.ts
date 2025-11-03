@@ -1,8 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
+import dotenv from 'dotenv';
 import { GoogleGenAI, Modality } from '@google/genai';
 import { rateLimiters, checkRateLimit } from '@/lib/rateLimiter';
 import { validateAIGeneration } from '@/lib/inputValidation';
 
+// Force-load .env.local to ensure we only use the key from the file,
+// even if a system-level env var is present.
+dotenv.config({ path: '.env.local', override: true });
 const API_KEY = process.env.GEMINI_API_KEY;
 
 if (!API_KEY) {
@@ -12,6 +16,8 @@ if (!API_KEY) {
 const ai = new GoogleGenAI({ apiKey: API_KEY });
 
 export async function POST(request: NextRequest) {
+  let body: any = null;
+  
   try {
     // Note: Removed admin authentication requirement for public virtual try-on
     // The rate limiting will handle abuse prevention
@@ -29,7 +35,7 @@ export async function POST(request: NextRequest) {
       return response;
     }
 
-    const body = await request.json();
+    body = await request.json();
     
     // Validate AI generation request
     const validation = validateAIGeneration(body);
@@ -47,23 +53,27 @@ export async function POST(request: NextRequest) {
       ? base64ImageData.split(',')[1] 
       : base64ImageData;
 
+    // Note: gemini-2.5-flash-image is being used for multimodal image generation
+    // This is an experimental feature for image editing/generation
     const response = await ai.models.generateContent({
-      model: 'gemini-2.0-flash-exp',
-      contents: {
-        parts: [
-          {
-            inlineData: {
-              data: cleanBase64Data,
-              mimeType: mimeType,
+      model: 'gemini-2.5-flash-image',
+      contents: [
+        {
+          parts: [
+            {
+              inlineData: {
+                data: cleanBase64Data,
+                mimeType: mimeType,
+              },
             },
-          },
-          {
-            text: `Apply this nail art design to the nails in the image: ${prompt}. Only change the nails.`,
-          },
-        ],
-      },
+            {
+              text: `Apply this nail art design to the nails in the image: ${prompt}. Only change the nails. Keep the hand and background exactly the same.`,
+            },
+          ],
+        }
+      ],
       config: {
-        responseModalities: [Modality.IMAGE, Modality.TEXT],
+        responseModalities: [Modality.IMAGE],
       },
     });
 
@@ -80,7 +90,7 @@ export async function POST(request: NextRequest) {
     }
 
     return NextResponse.json(
-      { error: 'No image generated' },
+      { error: 'No image generated in response' },
       { status: 500 }
     );
 
