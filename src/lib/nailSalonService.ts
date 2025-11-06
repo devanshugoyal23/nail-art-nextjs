@@ -216,7 +216,7 @@ export async function getNailSalonsForLocation(
       // Process photos if available
       const photos = place.photos ? place.photos.slice(0, 5).map((photo: any) => ({
         name: photo.name || '',
-        url: getPhotoUrl(photo.name, GOOGLE_MAPS_API_KEY),
+        url: getPhotoUrl(photo.name),
         width: photo.widthPx || undefined,
         height: photo.heightPx || undefined,
         authorAttributions: photo.authorAttributions || undefined,
@@ -547,7 +547,7 @@ export async function getNailSalonBySlug(
         // Process photos if available
         const photos = place.photos ? place.photos.slice(0, 5).map((photo: any) => ({
           name: photo.name || '',
-          url: getPhotoUrl(photo.name, GOOGLE_MAPS_API_KEY),
+          url: getPhotoUrl(photo.name),
           width: photo.widthPx || undefined,
           height: photo.heightPx || undefined,
           authorAttributions: photo.authorAttributions || undefined,
@@ -597,7 +597,7 @@ export async function getNailSalonBySlug(
       
       const photos = firstPlace.photos ? firstPlace.photos.slice(0, 5).map((photo: any) => ({
         name: photo.name || '',
-        url: getPhotoUrl(photo.name, GOOGLE_MAPS_API_KEY),
+        url: getPhotoUrl(photo.name),
         width: photo.widthPx || undefined,
         height: photo.heightPx || undefined,
         authorAttributions: photo.authorAttributions || undefined,
@@ -1208,11 +1208,11 @@ export async function getPlaceDetails(placeId: string): Promise<any> {
  * Get photo URL from Places API photo reference
  * Photo name format: places/{placeId}/photos/{photoId}
  */
-function getPhotoUrl(photoName: string, apiKey: string, maxWidth: number = 800): string {
+export function getPhotoUrl(photoName: string, maxWidth: number = 800, maxHeight: number = 600): string {
   if (!photoName) return '';
   // Places API photo URL format
   // https://places.googleapis.com/v1/{photoName}/media?maxWidthPx={maxWidth}&key={apiKey}
-  return `https://places.googleapis.com/v1/${photoName}/media?maxWidthPx=${maxWidth}&key=${apiKey}`;
+  return `https://places.googleapis.com/v1/${photoName}/media?maxWidthPx=${maxWidth}&key=${GOOGLE_MAPS_API_KEY}`;
 }
 
 /**
@@ -1246,7 +1246,7 @@ export async function getSalonAdditionalData(
     if (details.photos && details.photos.length > 0) {
       additionalData.photos = details.photos.slice(0, 10).map((photo: any) => ({
         name: photo.name || '',
-        url: getPhotoUrl(photo.name, GOOGLE_MAPS_API_KEY),
+        url: getPhotoUrl(photo.name),
         width: photo.widthPx || undefined,
         height: photo.heightPx || undefined,
         authorAttributions: photo.authorAttributions || undefined,

@@ -7,7 +7,10 @@ import NailArtGallerySection from '@/components/NailArtGallerySection';
 import SeasonalTrendsSection from '@/components/SeasonalTrendsSection';
 import NailCareTipsSection from '@/components/NailCareTipsSection';
 import BrowseByTagsSection from '@/components/BrowseByTagsSection';
-import { getGalleryItems } from '@/lib/galleryService';
+import DesignCollectionsSection from '@/components/DesignCollectionsSection';
+import ColorPaletteSection from '@/components/ColorPaletteSection';
+import TechniqueShowcaseSection from '@/components/TechniqueShowcaseSection';
+import { getGalleryItems, getGalleryItemsByOccasion, getGalleryItemsByColor, getGalleryItemsByTechnique } from '@/lib/galleryService';
 
 interface SalonDetailPageProps {
   params: Promise<{
@@ -91,6 +94,9 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
   let salonDetails = null;
   let relatedSalons: NailSalon[] = [];
   let galleryDesigns: any[] = [];
+  let designCollections: any[] = [];
+  let colorPalettes: any[] = [];
+  let techniqueShowcases: any[] = [];
   
   try {
     salon = await getNailSalonBySlug(formattedState, formattedCity, resolvedParams.slug);
@@ -105,11 +111,37 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
       // ✅ CRITICAL OPTIMIZATION: Don't wait for Gemini calls!
       // Show page immediately with Places API data, skip slow Gemini content
       // Fetch only fast data: additional data (photos), related salons, and gallery designs
-      const [additionalData, salons, galleryData] = await Promise.all([
+      const [additionalData, salons, galleryData, bridalDesigns, weddingDesigns, holidayDesigns, redDesigns, goldDesigns, pinkDesigns, frenchDesigns1, frenchDesigns2, frenchDesigns3, ombreDesigns1, ombreDesigns2, glitterDesigns1, glitterDesigns2, chromeDesigns1, chromeDesigns2, marbleDesigns1, marbleDesigns2, geometricDesigns1, geometricDesigns2, watercolorDesigns1, watercolorDesigns2, stampingDesigns1, stampingDesigns2] = await Promise.all([
         getSalonAdditionalData(salon, placeDetails),
         getNailSalonsForLocation(formattedState, formattedCity, 6),
-        // Fetch 20 random designs and pick 8 (for variety on each page load)
-        getGalleryItems({ page: 1, limit: 20, sortBy: 'random' }).catch(() => ({ items: [], total: 0 }))
+        // Fetch 20 designs and shuffle for variety (for variety on each page load)
+        getGalleryItems({ page: 1, limit: 20, sortBy: 'newest' }).catch(() => ({ items: [], total: 0 })),
+        // Design Collections
+        getGalleryItemsByOccasion('Bridal', 4).catch(() => []),
+        getGalleryItemsByOccasion('Wedding', 4).catch(() => []),
+        getGalleryItemsByOccasion('Holiday', 4).catch(() => []),
+        // Color Palettes
+        getGalleryItemsByColor('Red', 4).catch(() => []),
+        getGalleryItemsByColor('Gold', 4).catch(() => []),
+        getGalleryItemsByColor('Pink', 4).catch(() => []),
+        // Techniques - try multiple variations to ensure we get matches
+        getGalleryItemsByTechnique('French', 4).catch(() => []),
+        getGalleryItemsByTechnique('French Manicure', 4).catch(() => []),
+        getGalleryItemsByTechnique('french-manicure', 4).catch(() => []),
+        getGalleryItemsByTechnique('Ombre', 4).catch(() => []),
+        getGalleryItemsByTechnique('ombre', 4).catch(() => []),
+        getGalleryItemsByTechnique('Glitter', 4).catch(() => []),
+        getGalleryItemsByTechnique('glitter', 4).catch(() => []),
+        getGalleryItemsByTechnique('Chrome', 4).catch(() => []),
+        getGalleryItemsByTechnique('chrome', 4).catch(() => []),
+        getGalleryItemsByTechnique('Marble', 4).catch(() => []),
+        getGalleryItemsByTechnique('marble', 4).catch(() => []),
+        getGalleryItemsByTechnique('Geometric', 4).catch(() => []),
+        getGalleryItemsByTechnique('geometric', 4).catch(() => []),
+        getGalleryItemsByTechnique('Watercolor', 4).catch(() => []),
+        getGalleryItemsByTechnique('watercolor', 4).catch(() => []),
+        getGalleryItemsByTechnique('Stamping', 4).catch(() => []),
+        getGalleryItemsByTechnique('stamping', 4).catch(() => [])
       ]);
       
       // ✅ Create rich details from Places API data (instant and accurate!)
@@ -196,6 +228,219 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
         const shuffled = [...galleryData.items].sort(() => Math.random() - 0.5);
         galleryDesigns = shuffled.slice(0, 8);
       }
+
+      // Prepare Design Collections
+      // Use gallery items as fallback if specific occasion searches return empty
+      const allGalleryItems = galleryData?.items || [];
+      
+      // Helper to get designs by searching in all items
+      const getDesignsByOccasion = (occasion: string, fallbackItems: any[]) => {
+        if (fallbackItems.length === 0) return [];
+        return fallbackItems.filter((item: any) => 
+          item.occasions?.some((occ: string) => 
+            occ.toLowerCase().includes(occasion.toLowerCase())
+          )
+        ).slice(0, 4);
+      };
+
+      const bridalItems = bridalDesigns.length > 0 ? bridalDesigns : 
+                         weddingDesigns.length > 0 ? weddingDesigns :
+                         getDesignsByOccasion('bridal', allGalleryItems);
+      
+      const holidayItems = holidayDesigns.length > 0 ? holidayDesigns :
+                          getDesignsByOccasion('holiday', allGalleryItems);
+
+      designCollections = [
+        ...(bridalItems.length > 0 ? [{
+          title: 'Bridal Collection',
+          description: 'Elegant designs perfect for your special day',
+          icon: '👰',
+          designs: bridalItems,
+          href: '/nail-art/occasion/wedding'
+        }] : []),
+        ...(holidayItems.length > 0 ? [{
+          title: 'Holiday Collection',
+          description: 'Festive designs for every celebration',
+          icon: '🎉',
+          designs: holidayItems,
+          href: '/nail-art/occasion/holiday'
+        }] : [])
+      ];
+
+      // Prepare Color Palettes
+      const colorEmojis: { [key: string]: string } = {
+        'Red': '❤️',
+        'Gold': '✨',
+        'Pink': '💗',
+        'Blue': '💙',
+        'Purple': '💜',
+        'Black': '🖤',
+        'White': '🤍',
+        'Green': '💚'
+      };
+
+      // Prepare Color Palettes with fallback - Ensure exactly 3 colors
+      const getDesignsByColor = (color: string, fallbackItems: any[]) => {
+        if (fallbackItems.length === 0) return [];
+        return fallbackItems.filter((item: any) => 
+          item.colors?.some((c: string) => 
+            c.toLowerCase().includes(color.toLowerCase())
+          )
+        ).slice(0, 4);
+      };
+
+      // Try multiple colors to ensure we get 3
+      const colorOptions = [
+        { name: 'Red', designs: redDesigns },
+        { name: 'Gold', designs: goldDesigns },
+        { name: 'Pink', designs: pinkDesigns },
+        { name: 'Blue', designs: getDesignsByColor('blue', allGalleryItems) },
+        { name: 'Purple', designs: getDesignsByColor('purple', allGalleryItems) },
+        { name: 'Black', designs: getDesignsByColor('black', allGalleryItems) }
+      ];
+
+      // Get first 3 colors that have designs
+      colorPalettes = colorOptions
+        .map(option => ({
+          color: option.name,
+          designs: option.designs.length > 0 ? option.designs : getDesignsByColor(option.name.toLowerCase(), allGalleryItems)
+        }))
+        .filter(palette => palette.designs && palette.designs.length > 0)
+        .slice(0, 3) // Ensure exactly 3
+        .map(palette => ({
+          ...palette,
+          emoji: colorEmojis[palette.color] || '🎨'
+        }));
+
+      // Prepare Technique Showcases
+      const techniqueInfo: { [key: string]: { description: string; icon: string; difficulty: string } } = {
+        'French': {
+          description: 'Classic and timeless French manicure style',
+          icon: '💅',
+          difficulty: 'Easy'
+        },
+        'Ombre': {
+          description: 'Beautiful gradient color transitions',
+          icon: '🌈',
+          difficulty: 'Medium'
+        },
+        'Glitter': {
+          description: 'Sparkly and glamorous designs',
+          icon: '✨',
+          difficulty: 'Easy'
+        },
+        'Chrome': {
+          description: 'Metallic finish with mirror-like shine',
+          icon: '🔮',
+          difficulty: 'Medium'
+        },
+        'Marble': {
+          description: 'Elegant marble effect patterns',
+          icon: '🏛️',
+          difficulty: 'Advanced'
+        },
+        'Geometric': {
+          description: 'Sharp lines and modern shapes',
+          icon: '🔷',
+          difficulty: 'Medium'
+        }
+      };
+
+      // Prepare Technique Showcases with fallback - Ensure exactly 3 techniques
+      const getDesignsByTechnique = (technique: string, fallbackItems: any[]) => {
+        if (fallbackItems.length === 0) return [];
+        // More flexible matching - check if technique name appears anywhere in the techniques array
+        return fallbackItems.filter((item: any) => {
+          if (!item.techniques || !Array.isArray(item.techniques)) return false;
+          return item.techniques.some((t: string) => {
+            const techLower = t.toLowerCase();
+            const searchLower = technique.toLowerCase();
+            return techLower.includes(searchLower) || searchLower.includes(techLower);
+          });
+        }).slice(0, 4);
+      };
+
+      // Combine all technique variations and deduplicate
+      const frenchAll = [...frenchDesigns1, ...frenchDesigns2, ...frenchDesigns3].filter((item, index, self) => 
+        index === self.findIndex(t => t.id === item.id)
+      );
+      const ombreAll = [...ombreDesigns1, ...ombreDesigns2].filter((item, index, self) => 
+        index === self.findIndex(t => t.id === item.id)
+      );
+      const glitterAll = [...glitterDesigns1, ...glitterDesigns2].filter((item, index, self) => 
+        index === self.findIndex(t => t.id === item.id)
+      );
+      const chromeAll = [...chromeDesigns1, ...chromeDesigns2].filter((item, index, self) => 
+        index === self.findIndex(t => t.id === item.id)
+      );
+      const marbleAll = [...marbleDesigns1, ...marbleDesigns2].filter((item, index, self) => 
+        index === self.findIndex(t => t.id === item.id)
+      );
+      const geometricAll = [...geometricDesigns1, ...geometricDesigns2].filter((item, index, self) => 
+        index === self.findIndex(t => t.id === item.id)
+      );
+      const watercolorAll = [...watercolorDesigns1, ...watercolorDesigns2].filter((item, index, self) => 
+        index === self.findIndex(t => t.id === item.id)
+      );
+      const stampingAll = [...stampingDesigns1, ...stampingDesigns2].filter((item, index, self) => 
+        index === self.findIndex(t => t.id === item.id)
+      );
+
+      // Try multiple techniques to ensure we get 3 - check all gallery items for each
+      const allTechniques = [
+        { name: 'French', designs: frenchAll.length > 0 ? frenchAll : getDesignsByTechnique('french', allGalleryItems) },
+        { name: 'Ombre', designs: ombreAll.length > 0 ? ombreAll : getDesignsByTechnique('ombre', allGalleryItems) },
+        { name: 'Glitter', designs: glitterAll.length > 0 ? glitterAll : getDesignsByTechnique('glitter', allGalleryItems) },
+        { name: 'Chrome', designs: chromeAll.length > 0 ? chromeAll : getDesignsByTechnique('chrome', allGalleryItems) },
+        { name: 'Marble', designs: marbleAll.length > 0 ? marbleAll : getDesignsByTechnique('marble', allGalleryItems) },
+        { name: 'Geometric', designs: geometricAll.length > 0 ? geometricAll : getDesignsByTechnique('geometric', allGalleryItems) },
+        { name: 'Watercolor', designs: watercolorAll.length > 0 ? watercolorAll : getDesignsByTechnique('watercolor', allGalleryItems) },
+        { name: 'Stamping', designs: stampingAll.length > 0 ? stampingAll : getDesignsByTechnique('stamping', allGalleryItems) }
+      ];
+
+      // Get first 3 techniques that have designs, prioritizing API results
+      const techniquesWithDesigns = allTechniques.filter(tech => tech.designs && tech.designs.length > 0);
+      
+      // If we have less than 3, try to get more from general gallery
+      if (techniquesWithDesigns.length < 3 && allGalleryItems.length > 0) {
+        // Get all unique techniques from gallery items
+        const allAvailableTechniques = new Set<string>();
+        allGalleryItems.forEach((item: any) => {
+          if (item.techniques && Array.isArray(item.techniques)) {
+            item.techniques.forEach((t: string) => allAvailableTechniques.add(t));
+          }
+        });
+
+        // Try to find techniques we haven't tried yet
+        const triedNames = new Set(techniquesWithDesigns.map(t => t.name.toLowerCase()));
+        for (const tech of Array.from(allAvailableTechniques)) {
+          if (techniquesWithDesigns.length >= 3) break;
+          const techLower = tech.toLowerCase();
+          if (!triedNames.has(techLower)) {
+            const designs = getDesignsByTechnique(tech, allGalleryItems);
+            if (designs.length > 0) {
+              techniquesWithDesigns.push({
+                name: tech.charAt(0).toUpperCase() + tech.slice(1).toLowerCase(),
+                designs
+              });
+              triedNames.add(techLower);
+            }
+          }
+        }
+      }
+
+      // Take exactly 3
+      techniqueShowcases = techniquesWithDesigns
+        .slice(0, 3)
+        .map(technique => ({
+          name: technique.name,
+          designs: technique.designs,
+          ...(techniqueInfo[technique.name] || {
+            description: `Professional ${technique.name.toLowerCase()} nail art technique`,
+            icon: '✨',
+            difficulty: 'Medium'
+          })
+        }));
     }
   } catch (error) {
     console.error(`Error fetching salon:`, error);
@@ -206,31 +451,49 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
     notFound();
   }
 
+  // Get hero image (use first salon photo or fallback)
+  const heroImage = salon.photos && salon.photos.length > 0 
+    ? salon.photos[0].url 
+    : `https://images.unsplash.com/photo-1604654894610-df63bc536371?w=1200&h=500&fit=crop&q=80`;
+
   return (
     <div className="min-h-screen bg-[#f8f6f7]">
-        {/* Hero Section */}
-        <div className="relative overflow-hidden bg-gradient-to-br from-[#ee2b8c]/10 to-[#f8f6f7]">
-          <div className="relative max-w-7xl mx-auto px-4 py-16">
+        {/* Hero Section with Image */}
+        <div className="relative overflow-hidden">
+          {/* Hero Background Image */}
+          <div className="absolute inset-0">
+            <OptimizedImage
+              src={heroImage}
+              alt={salon.name}
+              width={1200}
+              height={500}
+              className="w-full h-full object-cover"
+              priority
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/70"></div>
+          </div>
+
+          <div className="relative max-w-7xl mx-auto px-4 py-20">
             <div className="text-center">
               <div className="mb-4">
                 <Link
                   href={`/nail-salons/${stateSlug}/${citySlug}`}
-                  className="text-[#ee2b8c] hover:text-[#ee2b8c]/80 text-sm font-medium inline-flex items-center gap-2"
+                  className="text-white/90 hover:text-white text-sm font-medium inline-flex items-center gap-2 bg-black/30 backdrop-blur-sm px-4 py-2 rounded-full"
                 >
                   ← Back to {formattedCity} Salons
                 </Link>
               </div>
-              <h1 className="text-5xl md:text-7xl font-bold text-[#1b0d14] mb-6">
+              <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 drop-shadow-lg">
                 {salon.name}
               </h1>
               {salon.rating && (
                 <div className="flex items-center justify-center gap-3 mb-4">
-                  <div className="flex items-center gap-1">
+                  <div className="flex items-center gap-2 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full">
                     <span className="text-yellow-500 text-2xl">⭐</span>
                     <span className="text-2xl font-bold text-[#1b0d14]">{salon.rating}</span>
                     {salon.reviewCount && (
-                      <span className="text-lg text-[#1b0d14]/60 ml-2">
-                        ({salon.reviewCount} {salon.reviewCount === 1 ? 'review' : 'reviews'})
+                      <span className="text-lg text-[#1b0d14]/70 ml-2">
+                        ({salon.reviewCount.toLocaleString()} {salon.reviewCount === 1 ? 'review' : 'reviews'})
                       </span>
                     )}
                   </div>
@@ -238,31 +501,31 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
               )}
               
               {/* Business Status & Open Now */}
-              <div className="flex items-center justify-center gap-4 mb-4">
+              <div className="flex flex-wrap items-center justify-center gap-3 mb-4">
                 {salon.currentOpeningHours?.openNow !== undefined && (
-                  <div className={`px-4 py-2 rounded-full text-sm font-semibold ${
+                  <div className={`px-4 py-2 rounded-full text-sm font-semibold backdrop-blur-sm ${
                     salon.currentOpeningHours.openNow 
-                      ? 'bg-green-100 text-green-700' 
-                      : 'bg-red-100 text-red-700'
+                      ? 'bg-green-500/90 text-white' 
+                      : 'bg-red-500/90 text-white'
                   }`}>
                     {salon.currentOpeningHours.openNow ? '🟢 Open Now' : '🔴 Closed'}
                   </div>
                 )}
                 {salon.businessStatus && salon.businessStatus !== 'OPERATIONAL' && (
-                  <div className="px-4 py-2 rounded-full text-sm font-semibold bg-yellow-100 text-yellow-700">
+                  <div className="px-4 py-2 rounded-full text-sm font-semibold bg-yellow-500/90 text-white backdrop-blur-sm">
                     {salon.businessStatus === 'CLOSED_TEMPORARILY' ? '⚠️ Temporarily Closed' : '❌ Permanently Closed'}
                   </div>
                 )}
                 {salon.priceLevel && (
-                  <div className="px-4 py-2 rounded-full text-sm font-semibold bg-blue-100 text-blue-700">
+                  <div className="px-4 py-2 rounded-full text-sm font-semibold bg-blue-500/90 text-white backdrop-blur-sm">
                     {salon.priceLevel === 'INEXPENSIVE' && '💰 Budget-Friendly'}
-                    {salon.priceLevel === 'MODERATE' && '💰 Moderate'}
-                    {salon.priceLevel === 'EXPENSIVE' && '💰 Expensive'}
-                    {salon.priceLevel === 'VERY_EXPENSIVE' && '💰 Very Expensive'}
+                    {salon.priceLevel === 'MODERATE' && '💰💰 Moderate'}
+                    {salon.priceLevel === 'EXPENSIVE' && '💰💰💰 Expensive'}
+                    {salon.priceLevel === 'VERY_EXPENSIVE' && '💰💰💰💰 Very Expensive'}
                   </div>
                 )}
               </div>
-              <p className="text-xl text-[#1b0d14]/70">
+              <p className="text-xl text-white/90 drop-shadow-md">
                 {formattedCity}, {formattedState}
               </p>
             </div>
@@ -273,14 +536,17 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
         <div className="max-w-7xl mx-auto px-4 py-12">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Left Column - Salon Details */}
-            <div className="lg:col-span-2 space-y-6">
+            <div className="lg:col-span-2 space-y-8">
               {/* Photo Gallery */}
               {salon.photos && salon.photos.length > 0 && (
-                <div className="bg-white rounded-xl p-6 ring-1 ring-[#ee2b8c]/15">
-                  <h2 className="text-2xl font-bold text-[#1b0d14] mb-4">Photos</h2>
+                <div className="bg-white rounded-xl p-6 ring-1 ring-[#ee2b8c]/15 shadow-sm">
+                  <h2 className="text-2xl font-bold text-[#1b0d14] mb-6 flex items-center gap-2">
+                    <span>📸</span>
+                    <span>Photo Gallery</span>
+                  </h2>
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                     {salon.photos.slice(0, 6).map((photo, index) => (
-                      <div key={index} className="relative aspect-square rounded-lg overflow-hidden group cursor-pointer">
+                      <div key={index} className="relative aspect-square rounded-lg overflow-hidden group cursor-pointer ring-1 ring-gray-200 hover:ring-[#ee2b8c]/50 transition-all">
                         <OptimizedImage
                           src={photo.url}
                           alt={`${salon.name} - Photo ${index + 1}`}
@@ -289,7 +555,7 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
                           className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                         />
                         {photo.authorAttributions && photo.authorAttributions[0] && (
-                          <div className="absolute bottom-0 left-0 right-0 bg-black/60 text-white text-xs p-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent text-white text-xs p-2 opacity-0 group-hover:opacity-100 transition-opacity">
                             {photo.authorAttributions[0].displayName && (
                               <p>Photo by {photo.authorAttributions[0].displayName}</p>
                             )}
@@ -326,88 +592,147 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
                 </div>
               )}
 
-              {/* Contact Information */}
-              <div className="bg-white rounded-xl p-6 ring-1 ring-[#ee2b8c]/15">
-                <h2 className="text-2xl font-bold text-[#1b0d14] mb-4">Contact Information</h2>
-                <div className="space-y-4">
-                  {salon.address && (
-                    <div className="flex items-start gap-3">
-                      <span className="text-2xl">📍</span>
-                      <div>
-                        <p className="font-semibold text-[#1b0d14] mb-1">Address</p>
-                        <p className="text-[#1b0d14]/70">{salon.address}</p>
-                        {salon.uri && (
-                          <a
-                            href={salon.uri}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-[#ee2b8c] hover:underline text-sm mt-1 inline-block"
+
+              {/* Opening Hours - Enhanced Visual Design (Full Width) */}
+              {(salon.openingHours || salon.currentOpeningHours?.weekdayDescriptions) && (() => {
+                const hoursList = salon.currentOpeningHours?.weekdayDescriptions || salon.openingHours || [];
+                const currentDay = new Date().getDay(); // 0 = Sunday, 1 = Monday, etc.
+                const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+                
+                // Parse hours to extract day and time
+                const parseHours = (hoursString: string) => {
+                  // Format: "Monday: 9:00 AM – 7:00 PM" or "Monday: Closed"
+                  const match = hoursString.match(/^([^:]+):\s*(.+)$/);
+                  if (match) {
+                    return {
+                      day: match[1].trim(),
+                      time: match[2].trim(),
+                      isToday: false
+                    };
+                  }
+                  return {
+                    day: '',
+                    time: hoursString,
+                    isToday: false
+                  };
+                };
+
+                const parsedHours = hoursList.map((hours, index) => {
+                  const parsed = parseHours(hours);
+                  // Try to match day name
+                  const dayIndex = dayNames.findIndex(day => 
+                    parsed.day.toLowerCase().includes(day.toLowerCase()) ||
+                    day.toLowerCase().includes(parsed.day.toLowerCase())
+                  );
+                  parsed.isToday = dayIndex === currentDay;
+                  return { ...parsed, original: hours, index };
+                });
+
+                return (
+                  <div className="bg-white rounded-xl p-6 ring-1 ring-[#ee2b8c]/15 shadow-sm">
+                    <div className="flex items-center justify-between mb-6">
+                      <h2 className="text-2xl font-bold text-[#1b0d14] flex items-center gap-2">
+                        <span>🕐</span>
+                        <span>Opening Hours</span>
+                      </h2>
+                      {salon.currentOpeningHours?.openNow !== undefined && (
+                        <span className={`px-3 py-1.5 rounded-md text-sm font-semibold ${
+                          salon.currentOpeningHours.openNow 
+                            ? 'bg-green-50 text-green-700 ring-1 ring-green-200' 
+                            : 'bg-red-50 text-red-700 ring-1 ring-red-200'
+                        }`}>
+                          {salon.currentOpeningHours.openNow ? 'Open Now' : 'Closed'}
+                        </span>
+                      )}
+                    </div>
+                    
+                    <div className="space-y-0">
+                      {parsedHours.map((item, index) => {
+                        const isToday = item.isToday;
+                        const isClosed = item.time.toLowerCase().includes('closed');
+                        
+                        return (
+                          <div 
+                            key={index} 
+                            className={`flex items-center justify-between py-3 px-2 rounded-lg transition-colors ${
+                              isToday 
+                                ? 'bg-[#ee2b8c]/5 ring-1 ring-[#ee2b8c]/20' 
+                                : 'hover:bg-[#f8f6f7]'
+                            } ${index < parsedHours.length - 1 ? 'border-b border-gray-100' : ''}`}
                           >
-                            View on Google Maps →
-                          </a>
-                        )}
-                      </div>
+                            <div className="flex items-center gap-3 flex-1">
+                              <span className={`text-sm font-medium min-w-[100px] ${
+                                isToday 
+                                  ? 'text-[#ee2b8c] font-semibold' 
+                                  : 'text-[#1b0d14]/60'
+                              }`}>
+                                {item.day || `Day ${index + 1}`}
+                              </span>
+                              {isToday && (
+                                <span className="px-2 py-0.5 bg-[#ee2b8c]/10 text-[#ee2b8c] text-xs font-semibold rounded">
+                                  Today
+                                </span>
+                              )}
+                            </div>
+                            <span className={`text-sm ${
+                              isClosed 
+                                ? 'text-gray-400' 
+                                : isToday 
+                                  ? 'text-[#1b0d14] font-semibold' 
+                                  : 'text-[#1b0d14]/80'
+                            }`}>
+                              {item.time}
+                            </span>
+                          </div>
+                        );
+                      })}
                     </div>
-                  )}
 
-                  {salon.phone && (
-                    <div className="flex items-center gap-3">
-                      <span className="text-2xl">📞</span>
-                      <div>
-                        <p className="font-semibold text-[#1b0d14] mb-1">Phone</p>
-                        <a
-                          href={`tel:${salon.phone}`}
-                          className="text-[#ee2b8c] hover:underline"
-                        >
-                          {salon.phone}
-                        </a>
+                    {/* Visual Hours Chart */}
+                    {parsedHours.length > 0 && (
+                      <div className="mt-6 pt-6 border-t border-gray-100">
+                        <h3 className="text-sm font-semibold text-[#1b0d14]/70 mb-4">Weekly Schedule</h3>
+                        <div className="grid grid-cols-7 gap-2">
+                          {dayNames.map((day, dayIndex) => {
+                            const hoursForDay = parsedHours.find(h => 
+                              h.day.toLowerCase().includes(day.toLowerCase()) ||
+                              day.toLowerCase().includes(h.day.toLowerCase())
+                            );
+                            const isTodayDay = dayIndex === currentDay;
+                            const isOpen = hoursForDay && !hoursForDay.time.toLowerCase().includes('closed');
+                            
+                            return (
+                              <div 
+                                key={dayIndex}
+                                className={`text-center p-2 rounded-lg ${
+                                  isTodayDay 
+                                    ? 'bg-[#ee2b8c]/10 ring-1 ring-[#ee2b8c]/30' 
+                                    : 'bg-gray-50'
+                                }`}
+                              >
+                                <div className={`text-xs font-medium mb-1 ${
+                                  isTodayDay ? 'text-[#ee2b8c]' : 'text-[#1b0d14]/60'
+                                }`}>
+                                  {day.slice(0, 3)}
+                                </div>
+                                <div className={`text-xs ${
+                                  isOpen 
+                                    ? isTodayDay 
+                                      ? 'text-[#1b0d14] font-semibold' 
+                                      : 'text-green-600'
+                                    : 'text-gray-400'
+                                }`}>
+                                  {isOpen ? '✓' : '—'}
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </div>
                       </div>
-                    </div>
-                  )}
-
-                  {salon.website && (
-                    <div className="flex items-center gap-3">
-                      <span className="text-2xl">🌐</span>
-                      <div>
-                        <p className="font-semibold text-[#1b0d14] mb-1">Website</p>
-                        <a
-                          href={salon.website}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-[#ee2b8c] hover:underline"
-                        >
-                          Visit Website →
-                        </a>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              {/* Opening Hours */}
-              {(salon.openingHours || salon.currentOpeningHours?.weekdayDescriptions) && (
-                <div className="bg-white rounded-xl p-6 ring-1 ring-[#ee2b8c]/15">
-                  <div className="flex items-center justify-between mb-4">
-                    <h2 className="text-2xl font-bold text-[#1b0d14]">Opening Hours</h2>
-                    {salon.currentOpeningHours?.openNow !== undefined && (
-                      <span className={`px-3 py-1 rounded-full text-sm font-semibold ${
-                        salon.currentOpeningHours.openNow 
-                          ? 'bg-green-100 text-green-700' 
-                          : 'bg-red-100 text-red-700'
-                      }`}>
-                        {salon.currentOpeningHours.openNow ? 'Open Now' : 'Closed'}
-                      </span>
                     )}
                   </div>
-                  <div className="space-y-2">
-                    {(salon.currentOpeningHours?.weekdayDescriptions || salon.openingHours || []).map((hours, index) => (
-                      <div key={index} className="flex items-center justify-between py-2 border-b border-[#ee2b8c]/10 last:border-0">
-                        <p className="text-[#1b0d14]/70">{hours}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
+                );
+              })()}
 
               {/* Services & Pricing */}
               {(salonDetails?.services && salonDetails.services.length > 0) || (salon.types && salon.types.length > 0) ? (
@@ -743,6 +1068,30 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
                 salonName={salon.name}
               />
 
+              {/* Design Collections Section */}
+              {designCollections && designCollections.length > 0 && (
+                <DesignCollectionsSection
+                  salonName={salon.name}
+                  collections={designCollections}
+                />
+              )}
+
+              {/* Color Palette Recommendations Section */}
+              {colorPalettes && colorPalettes.length > 0 && (
+                <ColorPaletteSection
+                  salonName={salon.name}
+                  palettes={colorPalettes}
+                />
+              )}
+
+              {/* Technique Showcase Section */}
+              {techniqueShowcases && techniqueShowcases.length > 0 && (
+                <TechniqueShowcaseSection
+                  salonName={salon.name}
+                  techniques={techniqueShowcases}
+                />
+              )}
+
               {/* Related Salons */}
               {relatedSalons.length > 0 && (
                 <div className="bg-white rounded-xl p-6 ring-1 ring-[#ee2b8c]/15">
@@ -791,32 +1140,122 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
               )}
             </div>
 
-            {/* Right Column - Map */}
+            {/* Right Column - Sidebar */}
             <div className="lg:col-span-1">
-              {(salon.address || salon.name) && (
-                <div className="bg-white rounded-xl p-6 ring-1 ring-[#ee2b8c]/15 sticky top-4">
-                  <h2 className="text-xl font-bold text-[#1b0d14] mb-4">Location</h2>
-                  <div className="aspect-video rounded-lg overflow-hidden">
-                    <iframe
-                      width="100%"
-                      height="100%"
-                      style={{ border: 0 }}
-                      loading="lazy"
-                      allowFullScreen
-                      referrerPolicy="no-referrer-when-downgrade"
-                      src={
-                        salon.placeId
-                          ? `https://www.google.com/maps/embed/v1/place?key=AIzaSyCTHR85j_npmq4XJwEwGB7JXWZDAtGC3HE&q=place_id:${salon.placeId}`
-                          : salon.address
-                          ? `https://www.google.com/maps?q=${encodeURIComponent(salon.address)}&output=embed`
-                          : salon.name
-                          ? `https://www.google.com/maps?q=${encodeURIComponent(`${salon.name}, ${salon.city}, ${salon.state}`)}&output=embed`
-                          : ''
-                      }
-                    />
+              <div className="sticky top-4 space-y-6">
+                {/* Map Section */}
+                {(salon.address || salon.name) && (
+                  <div className="bg-white rounded-xl p-6 ring-1 ring-[#ee2b8c]/15 shadow-sm">
+                    <h2 className="text-xl font-bold text-[#1b0d14] mb-4 flex items-center gap-2">
+                      <span>📍</span>
+                      <span>Location</span>
+                    </h2>
+                    <div className="aspect-video rounded-lg overflow-hidden ring-1 ring-gray-200 mb-4">
+                      <iframe
+                        width="100%"
+                        height="100%"
+                        style={{ border: 0 }}
+                        loading="lazy"
+                        allowFullScreen
+                        referrerPolicy="no-referrer-when-downgrade"
+                        src={
+                          salon.placeId
+                            ? `https://www.google.com/maps/embed/v1/place?key=AIzaSyCTHR85j_npmq4XJwEwGB7JXWZDAtGC3HE&q=place_id:${salon.placeId}`
+                            : salon.address
+                            ? `https://www.google.com/maps?q=${encodeURIComponent(salon.address)}&output=embed`
+                            : salon.name
+                            ? `https://www.google.com/maps?q=${encodeURIComponent(`${salon.name}, ${salon.city}, ${salon.state}`)}&output=embed`
+                            : ''
+                        }
+                      />
+                    </div>
+                    {salon.address && (
+                      <div className="space-y-2">
+                        <p className="text-sm text-[#1b0d14]/70">{salon.shortFormattedAddress || salon.address}</p>
+                        {salon.uri && (
+                          <a
+                            href={salon.uri}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2 text-[#ee2b8c] hover:text-[#ee2b8c]/80 text-sm font-medium transition-colors"
+                          >
+                            <span>View on Google Maps</span>
+                            <span>→</span>
+                          </a>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* Quick Contact Card */}
+                <div className="bg-white rounded-xl p-6 ring-1 ring-[#ee2b8c]/15 shadow-sm">
+                  <h3 className="text-lg font-bold text-[#1b0d14] mb-4">Quick Contact</h3>
+                  <div className="space-y-3">
+                    {salon.phone && (
+                      <a
+                        href={`tel:${salon.phone}`}
+                        className="flex items-center gap-3 p-3 rounded-lg bg-[#f8f6f7] hover:bg-[#ee2b8c]/5 transition-colors group"
+                      >
+                        <span className="text-2xl">📞</span>
+                        <div className="flex-1">
+                          <p className="text-xs text-[#1b0d14]/60">Phone</p>
+                          <p className="text-sm font-semibold text-[#1b0d14] group-hover:text-[#ee2b8c] transition-colors">
+                            {salon.phone}
+                          </p>
+                        </div>
+                      </a>
+                    )}
+                    {salon.website && (
+                      <a
+                        href={salon.website}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-3 p-3 rounded-lg bg-[#f8f6f7] hover:bg-[#ee2b8c]/5 transition-colors group"
+                      >
+                        <span className="text-2xl">🌐</span>
+                        <div className="flex-1">
+                          <p className="text-xs text-[#1b0d14]/60">Website</p>
+                          <p className="text-sm font-semibold text-[#1b0d14] group-hover:text-[#ee2b8c] transition-colors line-clamp-1">
+                            Visit Website
+                          </p>
+                        </div>
+                      </a>
+                    )}
+                    {salon.rating && (
+                      <div className="flex items-center gap-3 p-3 rounded-lg bg-gradient-to-r from-yellow-50 to-orange-50">
+                        <span className="text-2xl">⭐</span>
+                        <div className="flex-1">
+                          <p className="text-xs text-[#1b0d14]/60">Rating</p>
+                          <p className="text-sm font-bold text-[#1b0d14]">
+                            {salon.rating} {salon.reviewCount ? `(${salon.reviewCount.toLocaleString()} reviews)` : ''}
+                          </p>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
-              )}
+
+                {/* Opening Hours Summary */}
+                {salon.currentOpeningHours?.weekdayDescriptions && salon.currentOpeningHours.weekdayDescriptions.length > 0 && (
+                  <div className="bg-white rounded-xl p-6 ring-1 ring-[#ee2b8c]/15 shadow-sm">
+                    <h3 className="text-lg font-bold text-[#1b0d14] mb-3 flex items-center gap-2">
+                      <span>🕐</span>
+                      <span>Today's Hours</span>
+                    </h3>
+                    <p className="text-sm font-semibold text-[#1b0d14]">
+                      {salon.currentOpeningHours.weekdayDescriptions[0]}
+                    </p>
+                    {salon.currentOpeningHours.openNow !== undefined && (
+                      <p className={`text-xs mt-2 ${
+                        salon.currentOpeningHours.openNow ? 'text-green-600' : 'text-red-600'
+                      }`}>
+                        {salon.currentOpeningHours.openNow ? '✓ Currently Open' : '✗ Currently Closed'}
+                      </p>
+                    )}
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>

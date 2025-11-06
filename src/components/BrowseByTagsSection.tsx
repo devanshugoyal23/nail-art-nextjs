@@ -139,16 +139,6 @@ export default function BrowseByTagsSection({ salonName }: BrowseByTagsSectionPr
           </Link>
         </div>
       </div>
-
-      {/* SEO content */}
-      <div className="mt-6 pt-6 border-t border-[#ee2b8c]/10">
-        <p className="text-xs text-[#1b0d14]/60 leading-relaxed">
-          <strong>Find Your Perfect Nail Design:</strong> Browse thousands of nail art ideas organized by colors, techniques, occasions, and styles. 
-          Whether you're looking for elegant formal nails, festive holiday designs, or trendy everyday looks, our gallery has inspiration for every taste. 
-          Save your favorite designs and bring them to {salonName} for expert recreation. Our tags make it easy to discover designs that match your style, 
-          from minimalist and modern to glamorous and gothic. Explore seasonal trends, special occasion nails, and timeless classics all in one place.
-        </p>
-      </div>
     </div>
   );
 }
