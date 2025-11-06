@@ -321,7 +321,7 @@ export default async function TechniquePage({ params }: TechniquePageProps) {
         {/* Gallery */}
         <div className="mb-12">
           <h2 className="text-2xl font-bold mb-6">
-            {techniqueData.name} Designs ({filteredItems.length})
+            {techniqueData ? techniqueData.name : technique.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())} Designs ({filteredItems.length})
           </h2>
           
           {filteredItems.length > 0 ? (

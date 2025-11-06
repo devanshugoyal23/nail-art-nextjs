@@ -2,6 +2,7 @@
   "name": "nail-art-nextjs",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -13,7 +14,10 @@
     "pinterest:test": "node scripts/generate-pinterest-optimized.js --test --dry-run",
     "pinterest:test-real": "node scripts/generate-pinterest-optimized.js --test",
     "pinterest:optimize": "node scripts/generate-pinterest-optimized.js",
-    "pinterest:optimize-small": "node scripts/generate-pinterest-optimized.js --batch=5"
+    "pinterest:optimize-small": "node scripts/generate-pinterest-optimized.js --batch=5",
+    "generate-cities": "node scripts/generate-cities-json.js",
+    "generate-cities:dry-run": "node scripts/generate-cities-json.js --dry-run",
+    "generate-cities:fast": "node scripts/generate-cities-json.js --batch-size=15"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.906.0",

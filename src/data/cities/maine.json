@@ -1,0 +1,888 @@
+{
+  "state": "Maine",
+  "stateCode": "ME",
+  "generatedAt": "2025-11-06T10:23:41.407Z",
+  "citiesCount": 176,
+  "cities": [
+    {
+      "name": "Portland",
+      "slug": "portland",
+      "salonCount": 0
+    },
+    {
+      "name": "Lewiston",
+      "slug": "lewiston",
+      "salonCount": 0
+    },
+    {
+      "name": "Bangor",
+      "slug": "bangor",
+      "salonCount": 0
+    },
+    {
+      "name": "South Portland",
+      "slug": "south-portland",
+      "salonCount": 0
+    },
+    {
+      "name": "Auburn",
+      "slug": "auburn",
+      "salonCount": 0
+    },
+    {
+      "name": "Biddeford",
+      "slug": "biddeford",
+      "salonCount": 0
+    },
+    {
+      "name": "Sanford",
+      "slug": "sanford",
+      "salonCount": 0
+    },
+    {
+      "name": "Saco",
+      "slug": "saco",
+      "salonCount": 0
+    },
+    {
+      "name": "Westbrook",
+      "slug": "westbrook",
+      "salonCount": 0
+    },
+    {
+      "name": "Augusta",
+      "slug": "augusta",
+      "salonCount": 0
+    },
+    {
+      "name": "Waterville",
+      "slug": "waterville",
+      "salonCount": 0
+    },
+    {
+      "name": "Brunswick",
+      "slug": "brunswick",
+      "salonCount": 0
+    },
+    {
+      "name": "Scarborough",
+      "slug": "scarborough",
+      "salonCount": 0
+    },
+    {
+      "name": "Windham",
+      "slug": "windham",
+      "salonCount": 0
+    },
+    {
+      "name": "Gorham",
+      "slug": "gorham",
+      "salonCount": 0
+    },
+    {
+      "name": "Falmouth",
+      "slug": "falmouth",
+      "salonCount": 0
+    },
+    {
+      "name": "Kennebunk",
+      "slug": "kennebunk",
+      "salonCount": 0
+    },
+    {
+      "name": "Wells",
+      "slug": "wells",
+      "salonCount": 0
+    },
+    {
+      "name": "York",
+      "slug": "york",
+      "salonCount": 0
+    },
+    {
+      "name": "Topsham",
+      "slug": "topsham",
+      "salonCount": 0
+    },
+    {
+      "name": "Brewer",
+      "slug": "brewer",
+      "salonCount": 0
+    },
+    {
+      "name": "Presque Isle",
+      "slug": "presque-isle",
+      "salonCount": 0
+    },
+    {
+      "name": "Orono",
+      "slug": "orono",
+      "salonCount": 0
+    },
+    {
+      "name": "Bath",
+      "slug": "bath",
+      "salonCount": 0
+    },
+    {
+      "name": "Freeport",
+      "slug": "freeport",
+      "salonCount": 0
+    },
+    {
+      "name": "Old Town",
+      "slug": "old-town",
+      "salonCount": 0
+    },
+    {
+      "name": "Ellsworth",
+      "slug": "ellsworth",
+      "salonCount": 0
+    },
+    {
+      "name": "Lisbon",
+      "slug": "lisbon",
+      "salonCount": 0
+    },
+    {
+      "name": "Caribou",
+      "slug": "caribou",
+      "salonCount": 0
+    },
+    {
+      "name": "Standish",
+      "slug": "standish",
+      "salonCount": 0
+    },
+    {
+      "name": "Buxton",
+      "slug": "buxton",
+      "salonCount": 0
+    },
+    {
+      "name": "Hampden",
+      "slug": "hampden",
+      "salonCount": 0
+    },
+    {
+      "name": "Oakland",
+      "slug": "oakland",
+      "salonCount": 0
+    },
+    {
+      "name": "Gardiner",
+      "slug": "gardiner",
+      "salonCount": 0
+    },
+    {
+      "name": "Yarmouth",
+      "slug": "yarmouth",
+      "salonCount": 0
+    },
+    {
+      "name": "Skowhegan",
+      "slug": "skowhegan",
+      "salonCount": 0
+    },
+    {
+      "name": "Kittery",
+      "slug": "kittery",
+      "salonCount": 0
+    },
+    {
+      "name": "Newport",
+      "slug": "newport",
+      "salonCount": 0
+    },
+    {
+      "name": "Winslow",
+      "slug": "winslow",
+      "salonCount": 0
+    },
+    {
+      "name": "Farmington",
+      "slug": "farmington",
+      "salonCount": 0
+    },
+    {
+      "name": "Lebanon",
+      "slug": "lebanon",
+      "salonCount": 0
+    },
+    {
+      "name": "Old Orchard Beach",
+      "slug": "old-orchard-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "Gray",
+      "slug": "gray",
+      "salonCount": 0
+    },
+    {
+      "name": "Arundel",
+      "slug": "arundel",
+      "salonCount": 0
+    },
+    {
+      "name": "Belfast",
+      "slug": "belfast",
+      "salonCount": 0
+    },
+    {
+      "name": "Berwick",
+      "slug": "berwick",
+      "salonCount": 0
+    },
+    {
+      "name": "Turner",
+      "slug": "turner",
+      "salonCount": 0
+    },
+    {
+      "name": "Richmond",
+      "slug": "richmond",
+      "salonCount": 0
+    },
+    {
+      "name": "Winthrop",
+      "slug": "winthrop",
+      "salonCount": 0
+    },
+    {
+      "name": "Cornish",
+      "slug": "cornish",
+      "salonCount": 0
+    },
+    {
+      "name": "Limington",
+      "slug": "limington",
+      "salonCount": 0
+    },
+    {
+      "name": "Waterboro",
+      "slug": "waterboro",
+      "salonCount": 0
+    },
+    {
+      "name": "Shapleigh",
+      "slug": "shapleigh",
+      "salonCount": 0
+    },
+    {
+      "name": "Alfred",
+      "slug": "alfred",
+      "salonCount": 0
+    },
+    {
+      "name": "Limerick",
+      "slug": "limerick",
+      "salonCount": 0
+    },
+    {
+      "name": "Parsonsfield",
+      "slug": "parsonsfield",
+      "salonCount": 0
+    },
+    {
+      "name": "Eliot",
+      "slug": "eliot",
+      "salonCount": 0
+    },
+    {
+      "name": "North Berwick",
+      "slug": "north-berwick",
+      "salonCount": 0
+    },
+    {
+      "name": "Kennebunkport",
+      "slug": "kennebunkport",
+      "salonCount": 0
+    },
+    {
+      "name": "Cape Elizabeth",
+      "slug": "cape-elizabeth",
+      "salonCount": 0
+    },
+    {
+      "name": "Cumberland",
+      "slug": "cumberland",
+      "salonCount": 0
+    },
+    {
+      "name": "Raymond",
+      "slug": "raymond",
+      "salonCount": 0
+    },
+    {
+      "name": "Naples",
+      "slug": "naples",
+      "salonCount": 0
+    },
+    {
+      "name": "Bridgton",
+      "slug": "bridgton",
+      "salonCount": 0
+    },
+    {
+      "name": "Fryeburg",
+      "slug": "fryeburg",
+      "salonCount": 0
+    },
+    {
+      "name": "Harrison",
+      "slug": "harrison",
+      "salonCount": 0
+    },
+    {
+      "name": "Casco",
+      "slug": "casco",
+      "salonCount": 0
+    },
+    {
+      "name": "New Gloucester",
+      "slug": "new-gloucester",
+      "salonCount": 0
+    },
+    {
+      "name": "Mechanic Falls",
+      "slug": "mechanic-falls",
+      "salonCount": 0
+    },
+    {
+      "name": "Sabattus",
+      "slug": "sabattus",
+      "salonCount": 0
+    },
+    {
+      "name": "Greene",
+      "slug": "greene",
+      "salonCount": 0
+    },
+    {
+      "name": "Monmouth",
+      "slug": "monmouth",
+      "salonCount": 0
+    },
+    {
+      "name": "Wayne",
+      "slug": "wayne",
+      "salonCount": 0
+    },
+    {
+      "name": "Readfield",
+      "slug": "readfield",
+      "salonCount": 0
+    },
+    {
+      "name": "Manchester",
+      "slug": "manchester",
+      "salonCount": 0
+    },
+    {
+      "name": "Vassalboro",
+      "slug": "vassalboro",
+      "salonCount": 0
+    },
+    {
+      "name": "China",
+      "slug": "china",
+      "salonCount": 0
+    },
+    {
+      "name": "Benton",
+      "slug": "benton",
+      "salonCount": 0
+    },
+    {
+      "name": "Albion",
+      "slug": "albion",
+      "salonCount": 0
+    },
+    {
+      "name": "Unity",
+      "slug": "unity",
+      "salonCount": 0
+    },
+    {
+      "name": "Pittsfield",
+      "slug": "pittsfield",
+      "salonCount": 0
+    },
+    {
+      "name": "Dexter",
+      "slug": "dexter",
+      "salonCount": 0
+    },
+    {
+      "name": "Dover-Foxcroft",
+      "slug": "dover-foxcroft",
+      "salonCount": 0
+    },
+    {
+      "name": "Milo",
+      "slug": "milo",
+      "salonCount": 0
+    },
+    {
+      "name": "Corinna",
+      "slug": "corinna",
+      "salonCount": 0
+    },
+    {
+      "name": "Hartland",
+      "slug": "hartland",
+      "salonCount": 0
+    },
+    {
+      "name": "St. Albans",
+      "slug": "st-albans",
+      "salonCount": 0
+    },
+    {
+      "name": "Guilford",
+      "slug": "guilford",
+      "salonCount": 0
+    },
+    {
+      "name": "Sangerville",
+      "slug": "sangerville",
+      "salonCount": 0
+    },
+    {
+      "name": "Greenville",
+      "slug": "greenville",
+      "salonCount": 0
+    },
+    {
+      "name": "Jackman",
+      "slug": "jackman",
+      "salonCount": 0
+    },
+    {
+      "name": "Rangeley",
+      "slug": "rangeley",
+      "salonCount": 0
+    },
+    {
+      "name": "Wilton",
+      "slug": "wilton",
+      "salonCount": 0
+    },
+    {
+      "name": "Jay",
+      "slug": "jay",
+      "salonCount": 0
+    },
+    {
+      "name": "Livermore Falls",
+      "slug": "livermore-falls",
+      "salonCount": 0
+    },
+    {
+      "name": "Livermore",
+      "slug": "livermore",
+      "salonCount": 0
+    },
+    {
+      "name": "Strong",
+      "slug": "strong",
+      "salonCount": 0
+    },
+    {
+      "name": "Phillips",
+      "slug": "phillips",
+      "salonCount": 0
+    },
+    {
+      "name": "Kingfield",
+      "slug": "kingfield",
+      "salonCount": 0
+    },
+    {
+      "name": "Belgrade",
+      "slug": "belgrade",
+      "salonCount": 0
+    },
+    {
+      "name": "Windsor",
+      "slug": "windsor",
+      "salonCount": 0
+    },
+    {
+      "name": "Chelsea",
+      "slug": "chelsea",
+      "salonCount": 0
+    },
+    {
+      "name": "Randolph",
+      "slug": "randolph",
+      "salonCount": 0
+    },
+    {
+      "name": "Litchfield",
+      "slug": "litchfield",
+      "salonCount": 0
+    },
+    {
+      "name": "Waldoboro",
+      "slug": "waldoboro",
+      "salonCount": 0
+    },
+    {
+      "name": "Thomaston",
+      "slug": "thomaston",
+      "salonCount": 0
+    },
+    {
+      "name": "Warren",
+      "slug": "warren",
+      "salonCount": 0
+    },
+    {
+      "name": "Union",
+      "slug": "union",
+      "salonCount": 0
+    },
+    {
+      "name": "Hope",
+      "slug": "hope",
+      "salonCount": 0
+    },
+    {
+      "name": "Camden",
+      "slug": "camden",
+      "salonCount": 0
+    },
+    {
+      "name": "Rockport",
+      "slug": "rockport",
+      "salonCount": 0
+    },
+    {
+      "name": "Vinalhaven",
+      "slug": "vinalhaven",
+      "salonCount": 0
+    },
+    {
+      "name": "Damariscotta",
+      "slug": "damariscotta",
+      "salonCount": 0
+    },
+    {
+      "name": "Boothbay Harbor",
+      "slug": "boothbay-harbor",
+      "salonCount": 0
+    },
+    {
+      "name": "Boothbay",
+      "slug": "boothbay",
+      "salonCount": 0
+    },
+    {
+      "name": "Wiscasset",
+      "slug": "wiscasset",
+      "salonCount": 0
+    },
+    {
+      "name": "Jefferson",
+      "slug": "jefferson",
+      "salonCount": 0
+    },
+    {
+      "name": "Newcastle",
+      "slug": "newcastle",
+      "salonCount": 0
+    },
+    {
+      "name": "Bristol",
+      "slug": "bristol",
+      "salonCount": 0
+    },
+    {
+      "name": "Blue Hill",
+      "slug": "blue-hill",
+      "salonCount": 0
+    },
+    {
+      "name": "Bucksport",
+      "slug": "bucksport",
+      "salonCount": 0
+    },
+    {
+      "name": "Castine",
+      "slug": "castine",
+      "salonCount": 0
+    },
+    {
+      "name": "Deer Isle",
+      "slug": "deer-isle",
+      "salonCount": 0
+    },
+    {
+      "name": "Stonington",
+      "slug": "stonington",
+      "salonCount": 0
+    },
+    {
+      "name": "Trenton",
+      "slug": "trenton",
+      "salonCount": 0
+    },
+    {
+      "name": "Gouldsboro",
+      "slug": "gouldsboro",
+      "salonCount": 0
+    },
+    {
+      "name": "Sullivan",
+      "slug": "sullivan",
+      "salonCount": 0
+    },
+    {
+      "name": "Winter Harbor",
+      "slug": "winter-harbor",
+      "salonCount": 0
+    },
+    {
+      "name": "Steuben",
+      "slug": "steuben",
+      "salonCount": 0
+    },
+    {
+      "name": "Milbridge",
+      "slug": "milbridge",
+      "salonCount": 0
+    },
+    {
+      "name": "Cherryfield",
+      "slug": "cherryfield",
+      "salonCount": 0
+    },
+    {
+      "name": "Harrington",
+      "slug": "harrington",
+      "salonCount": 0
+    },
+    {
+      "name": "Addison",
+      "slug": "addison",
+      "salonCount": 0
+    },
+    {
+      "name": "Jonesport",
+      "slug": "jonesport",
+      "salonCount": 0
+    },
+    {
+      "name": "Columbia Falls",
+      "slug": "columbia-falls",
+      "salonCount": 0
+    },
+    {
+      "name": "Machias",
+      "slug": "machias",
+      "salonCount": 0
+    },
+    {
+      "name": "East Machias",
+      "slug": "east-machias",
+      "salonCount": 0
+    },
+    {
+      "name": "Calais",
+      "slug": "calais",
+      "salonCount": 0
+    },
+    {
+      "name": "Eastport",
+      "slug": "eastport",
+      "salonCount": 0
+    },
+    {
+      "name": "Lubec",
+      "slug": "lubec",
+      "salonCount": 0
+    },
+    {
+      "name": "Pembroke",
+      "slug": "pembroke",
+      "salonCount": 0
+    },
+    {
+      "name": "Perry",
+      "slug": "perry",
+      "salonCount": 0
+    },
+    {
+      "name": "Princeton",
+      "slug": "princeton",
+      "salonCount": 0
+    },
+    {
+      "name": "Houlton",
+      "slug": "houlton",
+      "salonCount": 0
+    },
+    {
+      "name": "Mars Hill",
+      "slug": "mars-hill",
+      "salonCount": 0
+    },
+    {
+      "name": "Easton",
+      "slug": "easton",
+      "salonCount": 0
+    },
+    {
+      "name": "Fort Fairfield",
+      "slug": "fort-fairfield",
+      "salonCount": 0
+    },
+    {
+      "name": "Limestone",
+      "slug": "limestone",
+      "salonCount": 0
+    },
+    {
+      "name": "Madawaska",
+      "slug": "madawaska",
+      "salonCount": 0
+    },
+    {
+      "name": "Fort Kent",
+      "slug": "fort-kent",
+      "salonCount": 0
+    },
+    {
+      "name": "Van Buren",
+      "slug": "van-buren",
+      "salonCount": 0
+    },
+    {
+      "name": "Grand Isle",
+      "slug": "grand-isle",
+      "salonCount": 0
+    },
+    {
+      "name": "St. Agatha",
+      "slug": "st-agatha",
+      "salonCount": 0
+    },
+    {
+      "name": "Frenchville",
+      "slug": "frenchville",
+      "salonCount": 0
+    },
+    {
+      "name": "Eagle Lake",
+      "slug": "eagle-lake",
+      "salonCount": 0
+    },
+    {
+      "name": "Ashland",
+      "slug": "ashland",
+      "salonCount": 0
+    },
+    {
+      "name": "Mapleton",
+      "slug": "mapleton",
+      "salonCount": 0
+    },
+    {
+      "name": "Washburn",
+      "slug": "washburn",
+      "salonCount": 0
+    },
+    {
+      "name": "Island Falls",
+      "slug": "island-falls",
+      "salonCount": 0
+    },
+    {
+      "name": "Patten",
+      "slug": "patten",
+      "salonCount": 0
+    },
+    {
+      "name": "Sherman",
+      "slug": "sherman",
+      "salonCount": 0
+    },
+    {
+      "name": "Millinocket",
+      "slug": "millinocket",
+      "salonCount": 0
+    },
+    {
+      "name": "East Millinocket",
+      "slug": "east-millinocket",
+      "salonCount": 0
+    },
+    {
+      "name": "Medway",
+      "slug": "medway",
+      "salonCount": 0
+    },
+    {
+      "name": "Lincoln",
+      "slug": "lincoln",
+      "salonCount": 0
+    },
+    {
+      "name": "Howland",
+      "slug": "howland",
+      "salonCount": 0
+    },
+    {
+      "name": "Lee",
+      "slug": "lee",
+      "salonCount": 0
+    },
+    {
+      "name": "Rumford",
+      "slug": "rumford",
+      "salonCount": 0
+    },
+    {
+      "name": "Norway",
+      "slug": "norway",
+      "salonCount": 0
+    },
+    {
+      "name": "Paris",
+      "slug": "paris",
+      "salonCount": 0
+    },
+    {
+      "name": "Oxford",
+      "slug": "oxford",
+      "salonCount": 0
+    },
+    {
+      "name": "Dixfield",
+      "slug": "dixfield",
+      "salonCount": 0
+    },
+    {
+      "name": "Bethel",
+      "slug": "bethel",
+      "salonCount": 0
+    },
+    {
+      "name": "Mexico",
+      "slug": "mexico",
+      "salonCount": 0
+    },
+    {
+      "name": "Lovell",
+      "slug": "lovell",
+      "salonCount": 0
+    },
+    {
+      "name": "Waterford",
+      "slug": "waterford",
+      "salonCount": 0
+    }
+  ]
+}

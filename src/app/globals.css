@@ -618,3 +618,23 @@ img {
     display: none !important;
   }
 }
+
+/* Google Maps Attribution Styles */
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+.font-roboto {
+  font-family: Roboto, Sans-Serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1rem;
+  letter-spacing: normal;
+  white-space: nowrap;
+  color: #5e5e5e;
+}
+
+/* Google Maps Widget Container */
+gmp-place-contextual {
+  display: block;
+  width: 100%;
+  height: 100%;
+}

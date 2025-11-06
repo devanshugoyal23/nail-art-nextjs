@@ -1,0 +1,733 @@
+{
+  "state": "Connecticut",
+  "stateCode": "CT",
+  "generatedAt": "2025-11-06T10:19:15.526Z",
+  "citiesCount": 145,
+  "cities": [
+    {
+      "name": "Bridgeport",
+      "slug": "bridgeport",
+      "salonCount": 0
+    },
+    {
+      "name": "Stamford",
+      "slug": "stamford",
+      "salonCount": 0
+    },
+    {
+      "name": "New Haven",
+      "slug": "new-haven",
+      "salonCount": 0
+    },
+    {
+      "name": "Hartford",
+      "slug": "hartford",
+      "salonCount": 0
+    },
+    {
+      "name": "Waterbury",
+      "slug": "waterbury",
+      "salonCount": 0
+    },
+    {
+      "name": "Norwalk",
+      "slug": "norwalk",
+      "salonCount": 0
+    },
+    {
+      "name": "Danbury",
+      "slug": "danbury",
+      "salonCount": 0
+    },
+    {
+      "name": "New Britain",
+      "slug": "new-britain",
+      "salonCount": 0
+    },
+    {
+      "name": "Bristol",
+      "slug": "bristol",
+      "salonCount": 0
+    },
+    {
+      "name": "Meriden",
+      "slug": "meriden",
+      "salonCount": 0
+    },
+    {
+      "name": "West Haven",
+      "slug": "west-haven",
+      "salonCount": 0
+    },
+    {
+      "name": "Milford",
+      "slug": "milford",
+      "salonCount": 0
+    },
+    {
+      "name": "Middletown",
+      "slug": "middletown",
+      "salonCount": 0
+    },
+    {
+      "name": "Norwich",
+      "slug": "norwich",
+      "salonCount": 0
+    },
+    {
+      "name": "Shelton",
+      "slug": "shelton",
+      "salonCount": 0
+    },
+    {
+      "name": "Torrington",
+      "slug": "torrington",
+      "salonCount": 0
+    },
+    {
+      "name": "East Hartford",
+      "slug": "east-hartford",
+      "salonCount": 0
+    },
+    {
+      "name": "Wallingford",
+      "slug": "wallingford",
+      "salonCount": 0
+    },
+    {
+      "name": "Stratford",
+      "slug": "stratford",
+      "salonCount": 0
+    },
+    {
+      "name": "Enfield",
+      "slug": "enfield",
+      "salonCount": 0
+    },
+    {
+      "name": "Groton",
+      "slug": "groton",
+      "salonCount": 0
+    },
+    {
+      "name": "Naugatuck",
+      "slug": "naugatuck",
+      "salonCount": 0
+    },
+    {
+      "name": "Vernon",
+      "slug": "vernon",
+      "salonCount": 0
+    },
+    {
+      "name": "Manchester",
+      "slug": "manchester",
+      "salonCount": 0
+    },
+    {
+      "name": "Newington",
+      "slug": "newington",
+      "salonCount": 0
+    },
+    {
+      "name": "Trumbull",
+      "slug": "trumbull",
+      "salonCount": 0
+    },
+    {
+      "name": "Glastonbury",
+      "slug": "glastonbury",
+      "salonCount": 0
+    },
+    {
+      "name": "Fairfield",
+      "slug": "fairfield",
+      "salonCount": 0
+    },
+    {
+      "name": "Greenwich",
+      "slug": "greenwich",
+      "salonCount": 0
+    },
+    {
+      "name": "Westport",
+      "slug": "westport",
+      "salonCount": 0
+    },
+    {
+      "name": "Southington",
+      "slug": "southington",
+      "salonCount": 0
+    },
+    {
+      "name": "Hamden",
+      "slug": "hamden",
+      "salonCount": 0
+    },
+    {
+      "name": "North Haven",
+      "slug": "north-haven",
+      "salonCount": 0
+    },
+    {
+      "name": "Branford",
+      "slug": "branford",
+      "salonCount": 0
+    },
+    {
+      "name": "East Haven",
+      "slug": "east-haven",
+      "salonCount": 0
+    },
+    {
+      "name": "Cheshire",
+      "slug": "cheshire",
+      "salonCount": 0
+    },
+    {
+      "name": "Berlin",
+      "slug": "berlin",
+      "salonCount": 0
+    },
+    {
+      "name": "Rocky Hill",
+      "slug": "rocky-hill",
+      "salonCount": 0
+    },
+    {
+      "name": "Wethersfield",
+      "slug": "wethersfield",
+      "salonCount": 0
+    },
+    {
+      "name": "South Windsor",
+      "slug": "south-windsor",
+      "salonCount": 0
+    },
+    {
+      "name": "Windsor",
+      "slug": "windsor",
+      "salonCount": 0
+    },
+    {
+      "name": "Bloomfield",
+      "slug": "bloomfield",
+      "salonCount": 0
+    },
+    {
+      "name": "Simsbury",
+      "slug": "simsbury",
+      "salonCount": 0
+    },
+    {
+      "name": "Avon",
+      "slug": "avon",
+      "salonCount": 0
+    },
+    {
+      "name": "Farmington",
+      "slug": "farmington",
+      "salonCount": 0
+    },
+    {
+      "name": "Canton",
+      "slug": "canton",
+      "salonCount": 0
+    },
+    {
+      "name": "Burlington",
+      "slug": "burlington",
+      "salonCount": 0
+    },
+    {
+      "name": "Plainville",
+      "slug": "plainville",
+      "salonCount": 0
+    },
+    {
+      "name": "New Milford",
+      "slug": "new-milford",
+      "salonCount": 0
+    },
+    {
+      "name": "Brookfield",
+      "slug": "brookfield",
+      "salonCount": 0
+    },
+    {
+      "name": "Newtown",
+      "slug": "newtown",
+      "salonCount": 0
+    },
+    {
+      "name": "Bethel",
+      "slug": "bethel",
+      "salonCount": 0
+    },
+    {
+      "name": "Ridgefield",
+      "slug": "ridgefield",
+      "salonCount": 0
+    },
+    {
+      "name": "Wilton",
+      "slug": "wilton",
+      "salonCount": 0
+    },
+    {
+      "name": "Monroe",
+      "slug": "monroe",
+      "salonCount": 0
+    },
+    {
+      "name": "Southbury",
+      "slug": "southbury",
+      "salonCount": 0
+    },
+    {
+      "name": "Oxford",
+      "slug": "oxford",
+      "salonCount": 0
+    },
+    {
+      "name": "Middlebury",
+      "slug": "middlebury",
+      "salonCount": 0
+    },
+    {
+      "name": "Wolcott",
+      "slug": "wolcott",
+      "salonCount": 0
+    },
+    {
+      "name": "Watertown",
+      "slug": "watertown",
+      "salonCount": 0
+    },
+    {
+      "name": "Plymouth",
+      "slug": "plymouth",
+      "salonCount": 0
+    },
+    {
+      "name": "Thomaston",
+      "slug": "thomaston",
+      "salonCount": 0
+    },
+    {
+      "name": "Litchfield",
+      "slug": "litchfield",
+      "salonCount": 0
+    },
+    {
+      "name": "Winchester",
+      "slug": "winchester",
+      "salonCount": 0
+    },
+    {
+      "name": "Harwinton",
+      "slug": "harwinton",
+      "salonCount": 0
+    },
+    {
+      "name": "Cromwell",
+      "slug": "cromwell",
+      "salonCount": 0
+    },
+    {
+      "name": "Portland",
+      "slug": "portland",
+      "salonCount": 0
+    },
+    {
+      "name": "East Hampton",
+      "slug": "east-hampton",
+      "salonCount": 0
+    },
+    {
+      "name": "Colchester",
+      "slug": "colchester",
+      "salonCount": 0
+    },
+    {
+      "name": "Hebron",
+      "slug": "hebron",
+      "salonCount": 0
+    },
+    {
+      "name": "Marlborough",
+      "slug": "marlborough",
+      "salonCount": 0
+    },
+    {
+      "name": "Andover",
+      "slug": "andover",
+      "salonCount": 0
+    },
+    {
+      "name": "Bolton",
+      "slug": "bolton",
+      "salonCount": 0
+    },
+    {
+      "name": "Coventry",
+      "slug": "coventry",
+      "salonCount": 0
+    },
+    {
+      "name": "Tolland",
+      "slug": "tolland",
+      "salonCount": 0
+    },
+    {
+      "name": "Willington",
+      "slug": "willington",
+      "salonCount": 0
+    },
+    {
+      "name": "Stafford",
+      "slug": "stafford",
+      "salonCount": 0
+    },
+    {
+      "name": "Killingly",
+      "slug": "killingly",
+      "salonCount": 0
+    },
+    {
+      "name": "Putnam",
+      "slug": "putnam",
+      "salonCount": 0
+    },
+    {
+      "name": "Thompson",
+      "slug": "thompson",
+      "salonCount": 0
+    },
+    {
+      "name": "Woodstock",
+      "slug": "woodstock",
+      "salonCount": 0
+    },
+    {
+      "name": "Brooklyn",
+      "slug": "brooklyn",
+      "salonCount": 0
+    },
+    {
+      "name": "Plainfield",
+      "slug": "plainfield",
+      "salonCount": 0
+    },
+    {
+      "name": "Canterbury",
+      "slug": "canterbury",
+      "salonCount": 0
+    },
+    {
+      "name": "Griswold",
+      "slug": "griswold",
+      "salonCount": 0
+    },
+    {
+      "name": "Sterling",
+      "slug": "sterling",
+      "salonCount": 0
+    },
+    {
+      "name": "Voluntown",
+      "slug": "voluntown",
+      "salonCount": 0
+    },
+    {
+      "name": "Lisbon",
+      "slug": "lisbon",
+      "salonCount": 0
+    },
+    {
+      "name": "Sprague",
+      "slug": "sprague",
+      "salonCount": 0
+    },
+    {
+      "name": "Preston",
+      "slug": "preston",
+      "salonCount": 0
+    },
+    {
+      "name": "Ledyard",
+      "slug": "ledyard",
+      "salonCount": 0
+    },
+    {
+      "name": "North Stonington",
+      "slug": "north-stonington",
+      "salonCount": 0
+    },
+    {
+      "name": "Stonington",
+      "slug": "stonington",
+      "salonCount": 0
+    },
+    {
+      "name": "Waterford",
+      "slug": "waterford",
+      "salonCount": 0
+    },
+    {
+      "name": "East Lyme",
+      "slug": "east-lyme",
+      "salonCount": 0
+    },
+    {
+      "name": "Montville",
+      "slug": "montville",
+      "salonCount": 0
+    },
+    {
+      "name": "Old Lyme",
+      "slug": "old-lyme",
+      "salonCount": 0
+    },
+    {
+      "name": "Lyme",
+      "slug": "lyme",
+      "salonCount": 0
+    },
+    {
+      "name": "Salem",
+      "slug": "salem",
+      "salonCount": 0
+    },
+    {
+      "name": "East Haddam",
+      "slug": "east-haddam",
+      "salonCount": 0
+    },
+    {
+      "name": "Chester",
+      "slug": "chester",
+      "salonCount": 0
+    },
+    {
+      "name": "Deep River",
+      "slug": "deep-river",
+      "salonCount": 0
+    },
+    {
+      "name": "Essex",
+      "slug": "essex",
+      "salonCount": 0
+    },
+    {
+      "name": "Old Saybrook",
+      "slug": "old-saybrook",
+      "salonCount": 0
+    },
+    {
+      "name": "Westbrook",
+      "slug": "westbrook",
+      "salonCount": 0
+    },
+    {
+      "name": "Clinton",
+      "slug": "clinton",
+      "salonCount": 0
+    },
+    {
+      "name": "Madison",
+      "slug": "madison",
+      "salonCount": 0
+    },
+    {
+      "name": "Guilford",
+      "slug": "guilford",
+      "salonCount": 0
+    },
+    {
+      "name": "Durham",
+      "slug": "durham",
+      "salonCount": 0
+    },
+    {
+      "name": "Haddam",
+      "slug": "haddam",
+      "salonCount": 0
+    },
+    {
+      "name": "Killingworth",
+      "slug": "killingworth",
+      "salonCount": 0
+    },
+    {
+      "name": "Bethany",
+      "slug": "bethany",
+      "salonCount": 0
+    },
+    {
+      "name": "Orange",
+      "slug": "orange",
+      "salonCount": 0
+    },
+    {
+      "name": "Woodbridge",
+      "slug": "woodbridge",
+      "salonCount": 0
+    },
+    {
+      "name": "Prospect",
+      "slug": "prospect",
+      "salonCount": 0
+    },
+    {
+      "name": "Seymour",
+      "slug": "seymour",
+      "salonCount": 0
+    },
+    {
+      "name": "Ansonia",
+      "slug": "ansonia",
+      "salonCount": 0
+    },
+    {
+      "name": "Derby",
+      "slug": "derby",
+      "salonCount": 0
+    },
+    {
+      "name": "Beacon Falls",
+      "slug": "beacon-falls",
+      "salonCount": 0
+    },
+    {
+      "name": "Windsor Locks",
+      "slug": "windsor-locks",
+      "salonCount": 0
+    },
+    {
+      "name": "Suffield",
+      "slug": "suffield",
+      "salonCount": 0
+    },
+    {
+      "name": "Granby",
+      "slug": "granby",
+      "salonCount": 0
+    },
+    {
+      "name": "New Canaan",
+      "slug": "new-canaan",
+      "salonCount": 0
+    },
+    {
+      "name": "Weston",
+      "slug": "weston",
+      "salonCount": 0
+    },
+    {
+      "name": "Easton",
+      "slug": "easton",
+      "salonCount": 0
+    },
+    {
+      "name": "Salisbury",
+      "slug": "salisbury",
+      "salonCount": 0
+    },
+    {
+      "name": "Sharon",
+      "slug": "sharon",
+      "salonCount": 0
+    },
+    {
+      "name": "Kent",
+      "slug": "kent",
+      "salonCount": 0
+    },
+    {
+      "name": "Washington",
+      "slug": "washington",
+      "salonCount": 0
+    },
+    {
+      "name": "Goshen",
+      "slug": "goshen",
+      "salonCount": 0
+    },
+    {
+      "name": "Cornwall",
+      "slug": "cornwall",
+      "salonCount": 0
+    },
+    {
+      "name": "Canaan",
+      "slug": "canaan",
+      "salonCount": 0
+    },
+    {
+      "name": "North Canaan",
+      "slug": "north-canaan",
+      "salonCount": 0
+    },
+    {
+      "name": "Colebrook",
+      "slug": "colebrook",
+      "salonCount": 0
+    },
+    {
+      "name": "Hartland",
+      "slug": "hartland",
+      "salonCount": 0
+    },
+    {
+      "name": "New Hartford",
+      "slug": "new-hartford",
+      "salonCount": 0
+    },
+    {
+      "name": "Union",
+      "slug": "union",
+      "salonCount": 0
+    },
+    {
+      "name": "Ashford",
+      "slug": "ashford",
+      "salonCount": 0
+    },
+    {
+      "name": "Chaplin",
+      "slug": "chaplin",
+      "salonCount": 0
+    },
+    {
+      "name": "Scotland",
+      "slug": "scotland",
+      "salonCount": 0
+    },
+    {
+      "name": "Lebanon",
+      "slug": "lebanon",
+      "salonCount": 0
+    },
+    {
+      "name": "Bozrah",
+      "slug": "bozrah",
+      "salonCount": 0
+    },
+    {
+      "name": "Franklin",
+      "slug": "franklin",
+      "salonCount": 0
+    },
+    {
+      "name": "Middlefield",
+      "slug": "middlefield",
+      "salonCount": 0
+    },
+    {
+      "name": "Mansfield",
+      "slug": "mansfield",
+      "salonCount": 0
+    }
+  ]
+}

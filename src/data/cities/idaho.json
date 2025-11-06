@@ -1,0 +1,533 @@
+{
+  "state": "Idaho",
+  "stateCode": "ID",
+  "generatedAt": "2025-11-06T10:19:23.032Z",
+  "citiesCount": 105,
+  "cities": [
+    {
+      "name": "Boise",
+      "slug": "boise",
+      "salonCount": 0
+    },
+    {
+      "name": "Meridian",
+      "slug": "meridian",
+      "salonCount": 0
+    },
+    {
+      "name": "Nampa",
+      "slug": "nampa",
+      "salonCount": 0
+    },
+    {
+      "name": "Caldwell",
+      "slug": "caldwell",
+      "salonCount": 0
+    },
+    {
+      "name": "Idaho Falls",
+      "slug": "idaho-falls",
+      "salonCount": 0
+    },
+    {
+      "name": "Pocatello",
+      "slug": "pocatello",
+      "salonCount": 0
+    },
+    {
+      "name": "Coeur d'Alene",
+      "slug": "coeur-d-alene",
+      "salonCount": 0
+    },
+    {
+      "name": "Twin Falls",
+      "slug": "twin-falls",
+      "salonCount": 0
+    },
+    {
+      "name": "Lewiston",
+      "slug": "lewiston",
+      "salonCount": 0
+    },
+    {
+      "name": "Rexburg",
+      "slug": "rexburg",
+      "salonCount": 0
+    },
+    {
+      "name": "Post Falls",
+      "slug": "post-falls",
+      "salonCount": 0
+    },
+    {
+      "name": "Moscow",
+      "slug": "moscow",
+      "salonCount": 0
+    },
+    {
+      "name": "Eagle",
+      "slug": "eagle",
+      "salonCount": 0
+    },
+    {
+      "name": "Chubbuck",
+      "slug": "chubbuck",
+      "salonCount": 0
+    },
+    {
+      "name": "Ammon",
+      "slug": "ammon",
+      "salonCount": 0
+    },
+    {
+      "name": "Star",
+      "slug": "star",
+      "salonCount": 0
+    },
+    {
+      "name": "Kuna",
+      "slug": "kuna",
+      "salonCount": 0
+    },
+    {
+      "name": "Mountain Home",
+      "slug": "mountain-home",
+      "salonCount": 0
+    },
+    {
+      "name": "Hayden",
+      "slug": "hayden",
+      "salonCount": 0
+    },
+    {
+      "name": "Jerome",
+      "slug": "jerome",
+      "salonCount": 0
+    },
+    {
+      "name": "Blackfoot",
+      "slug": "blackfoot",
+      "salonCount": 0
+    },
+    {
+      "name": "Sandpoint",
+      "slug": "sandpoint",
+      "salonCount": 0
+    },
+    {
+      "name": "Rathdrum",
+      "slug": "rathdrum",
+      "salonCount": 0
+    },
+    {
+      "name": "Grangeville",
+      "slug": "grangeville",
+      "salonCount": 0
+    },
+    {
+      "name": "Emmett",
+      "slug": "emmett",
+      "salonCount": 0
+    },
+    {
+      "name": "Burley",
+      "slug": "burley",
+      "salonCount": 0
+    },
+    {
+      "name": "Kimberly",
+      "slug": "kimberly",
+      "salonCount": 0
+    },
+    {
+      "name": "McCall",
+      "slug": "mccall",
+      "salonCount": 0
+    },
+    {
+      "name": "Rigby",
+      "slug": "rigby",
+      "salonCount": 0
+    },
+    {
+      "name": "Buhl",
+      "slug": "buhl",
+      "salonCount": 0
+    },
+    {
+      "name": "Preston",
+      "slug": "preston",
+      "salonCount": 0
+    },
+    {
+      "name": "Payette",
+      "slug": "payette",
+      "salonCount": 0
+    },
+    {
+      "name": "Filer",
+      "slug": "filer",
+      "salonCount": 0
+    },
+    {
+      "name": "Shelley",
+      "slug": "shelley",
+      "salonCount": 0
+    },
+    {
+      "name": "Gooding",
+      "slug": "gooding",
+      "salonCount": 0
+    },
+    {
+      "name": "Rupert",
+      "slug": "rupert",
+      "salonCount": 0
+    },
+    {
+      "name": "Fruitland",
+      "slug": "fruitland",
+      "salonCount": 0
+    },
+    {
+      "name": "Weiser",
+      "slug": "weiser",
+      "salonCount": 0
+    },
+    {
+      "name": "St. Maries",
+      "slug": "st-maries",
+      "salonCount": 0
+    },
+    {
+      "name": "Orofino",
+      "slug": "orofino",
+      "salonCount": 0
+    },
+    {
+      "name": "Bonners Ferry",
+      "slug": "bonners-ferry",
+      "salonCount": 0
+    },
+    {
+      "name": "Soda Springs",
+      "slug": "soda-springs",
+      "salonCount": 0
+    },
+    {
+      "name": "Ketchum",
+      "slug": "ketchum",
+      "salonCount": 0
+    },
+    {
+      "name": "Hailey",
+      "slug": "hailey",
+      "salonCount": 0
+    },
+    {
+      "name": "Bellevue",
+      "slug": "bellevue",
+      "salonCount": 0
+    },
+    {
+      "name": "Driggs",
+      "slug": "driggs",
+      "salonCount": 0
+    },
+    {
+      "name": "Victor",
+      "slug": "victor",
+      "salonCount": 0
+    },
+    {
+      "name": "Ponderay",
+      "slug": "ponderay",
+      "salonCount": 0
+    },
+    {
+      "name": "Spirit Lake",
+      "slug": "spirit-lake",
+      "salonCount": 0
+    },
+    {
+      "name": "Priest River",
+      "slug": "priest-river",
+      "salonCount": 0
+    },
+    {
+      "name": "Kellogg",
+      "slug": "kellogg",
+      "salonCount": 0
+    },
+    {
+      "name": "Wallace",
+      "slug": "wallace",
+      "salonCount": 0
+    },
+    {
+      "name": "Osburn",
+      "slug": "osburn",
+      "salonCount": 0
+    },
+    {
+      "name": "Smelterville",
+      "slug": "smelterville",
+      "salonCount": 0
+    },
+    {
+      "name": "Dalton Gardens",
+      "slug": "dalton-gardens",
+      "salonCount": 0
+    },
+    {
+      "name": "Garden City",
+      "slug": "garden-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Sun Valley",
+      "slug": "sun-valley",
+      "salonCount": 0
+    },
+    {
+      "name": "Shoshone",
+      "slug": "shoshone",
+      "salonCount": 0
+    },
+    {
+      "name": "Malad City",
+      "slug": "malad-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Declo",
+      "slug": "declo",
+      "salonCount": 0
+    },
+    {
+      "name": "Aberdeen",
+      "slug": "aberdeen",
+      "salonCount": 0
+    },
+    {
+      "name": "Ashton",
+      "slug": "ashton",
+      "salonCount": 0
+    },
+    {
+      "name": "Montpelier",
+      "slug": "montpelier",
+      "salonCount": 0
+    },
+    {
+      "name": "Genesee",
+      "slug": "genesee",
+      "salonCount": 0
+    },
+    {
+      "name": "Potlatch",
+      "slug": "potlatch",
+      "salonCount": 0
+    },
+    {
+      "name": "Lapwai",
+      "slug": "lapwai",
+      "salonCount": 0
+    },
+    {
+      "name": "Kamiah",
+      "slug": "kamiah",
+      "salonCount": 0
+    },
+    {
+      "name": "Kooskia",
+      "slug": "kooskia",
+      "salonCount": 0
+    },
+    {
+      "name": "Cottonwood",
+      "slug": "cottonwood",
+      "salonCount": 0
+    },
+    {
+      "name": "Craigmont",
+      "slug": "craigmont",
+      "salonCount": 0
+    },
+    {
+      "name": "Nezperce",
+      "slug": "nezperce",
+      "salonCount": 0
+    },
+    {
+      "name": "Riggins",
+      "slug": "riggins",
+      "salonCount": 0
+    },
+    {
+      "name": "Salmon",
+      "slug": "salmon",
+      "salonCount": 0
+    },
+    {
+      "name": "Stanley",
+      "slug": "stanley",
+      "salonCount": 0
+    },
+    {
+      "name": "Donnelly",
+      "slug": "donnelly",
+      "salonCount": 0
+    },
+    {
+      "name": "Horseshoe Bend",
+      "slug": "horseshoe-bend",
+      "salonCount": 0
+    },
+    {
+      "name": "Idaho City",
+      "slug": "idaho-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Garden Valley",
+      "slug": "garden-valley",
+      "salonCount": 0
+    },
+    {
+      "name": "Arco",
+      "slug": "arco",
+      "salonCount": 0
+    },
+    {
+      "name": "Dubois",
+      "slug": "dubois",
+      "salonCount": 0
+    },
+    {
+      "name": "Menan",
+      "slug": "menan",
+      "salonCount": 0
+    },
+    {
+      "name": "Sugar City",
+      "slug": "sugar-city",
+      "salonCount": 0
+    },
+    {
+      "name": "St. Anthony",
+      "slug": "st-anthony",
+      "salonCount": 0
+    },
+    {
+      "name": "Parker",
+      "slug": "parker",
+      "salonCount": 0
+    },
+    {
+      "name": "Iona",
+      "slug": "iona",
+      "salonCount": 0
+    },
+    {
+      "name": "Ucon",
+      "slug": "ucon",
+      "salonCount": 0
+    },
+    {
+      "name": "Roberts",
+      "slug": "roberts",
+      "salonCount": 0
+    },
+    {
+      "name": "Ririe",
+      "slug": "ririe",
+      "salonCount": 0
+    },
+    {
+      "name": "Hansen",
+      "slug": "hansen",
+      "salonCount": 0
+    },
+    {
+      "name": "Eden",
+      "slug": "eden",
+      "salonCount": 0
+    },
+    {
+      "name": "Paul",
+      "slug": "paul",
+      "salonCount": 0
+    },
+    {
+      "name": "Hagerman",
+      "slug": "hagerman",
+      "salonCount": 0
+    },
+    {
+      "name": "Wendell",
+      "slug": "wendell",
+      "salonCount": 0
+    },
+    {
+      "name": "Glenns Ferry",
+      "slug": "glenns-ferry",
+      "salonCount": 0
+    },
+    {
+      "name": "Richfield",
+      "slug": "richfield",
+      "salonCount": 0
+    },
+    {
+      "name": "Dietrich",
+      "slug": "dietrich",
+      "salonCount": 0
+    },
+    {
+      "name": "Fairfield",
+      "slug": "fairfield",
+      "salonCount": 0
+    },
+    {
+      "name": "Carey",
+      "slug": "carey",
+      "salonCount": 0
+    },
+    {
+      "name": "Challis",
+      "slug": "challis",
+      "salonCount": 0
+    },
+    {
+      "name": "Mackay",
+      "slug": "mackay",
+      "salonCount": 0
+    },
+    {
+      "name": "Middleton",
+      "slug": "middleton",
+      "salonCount": 0
+    },
+    {
+      "name": "Teton City",
+      "slug": "teton-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Georgetown",
+      "slug": "georgetown",
+      "salonCount": 0
+    },
+    {
+      "name": "Grace",
+      "slug": "grace",
+      "salonCount": 0
+    },
+    {
+      "name": "Lava Hot Springs",
+      "slug": "lava-hot-springs",
+      "salonCount": 0
+    }
+  ]
+}
