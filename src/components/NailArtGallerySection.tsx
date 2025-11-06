@@ -107,16 +107,6 @@ export default function NailArtGallerySection({
           </Link>
         </div>
       </div>
-
-      {/* SEO-rich content */}
-      <div className="mt-6 pt-6 border-t border-[#ee2b8c]/10">
-        <p className="text-xs text-[#1b0d14]/60 leading-relaxed">
-          <strong>Bring Your Vision to Life:</strong> These AI-generated nail art designs showcase the latest trends in manicure artistry. 
-          Whether you're looking for elegant French tips, bold geometric patterns, seasonal themes, or custom nail art, 
-          the professional nail technicians at {salonName} in {city}, {state} can bring any design to life. 
-          Save your favorite designs and bring them to your next appointment for a personalized consultation.
-        </p>
-      </div>
     </div>
   );
 }

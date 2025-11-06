@@ -124,15 +124,6 @@ export default function SeasonalTrendsSection({ salonName, city }: SeasonalTrend
           </Link>
         </div>
       </div>
-
-      {/* SEO content */}
-      <div className="mt-6 pt-6 border-t border-[#ee2b8c]/10">
-        <p className="text-xs text-[#1b0d14]/60 leading-relaxed">
-          <strong>Seasonal Nail Art in {city}:</strong> Stay fashionable year-round with {seasonData.name.toLowerCase()}-inspired nail designs. 
-          From classic seasonal colors to trendy patterns, professional nail artists can customize any look to match your style and the season. 
-          {seasonData.name} is the perfect time to refresh your manicure with designs that celebrate the beauty of the season.
-        </p>
-      </div>
     </div>
   );
 }

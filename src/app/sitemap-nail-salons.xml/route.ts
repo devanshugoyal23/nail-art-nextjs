@@ -2,97 +2,83 @@ import { NextResponse } from 'next/server';
 import { getAllStatesWithSalons, getCitiesInState, getNailSalonsForLocation, generateStateSlug, generateCitySlug, generateSlug } from '@/lib/nailSalonService';
 
 /**
- * Nail Salons Sitemap
- * Generates sitemap for all nail salon pages (states, cities, and individual salons)
+ * Nail Salons Sitemap - All salon directory pages
+ * Includes: state pages, city pages, and individual salon pages
  */
 export async function GET() {
   try {
     const baseUrl = 'https://nailartai.app';
     const currentDate = new Date().toISOString();
-    
     const urls: Array<{
-      loc: string;
-      lastmod: string;
-      changefreq: string;
-      priority: string;
+      url: string;
+      lastModified: string;
+      changeFrequency: string;
+      priority: number;
     }> = [];
-
-    // Main nail salons page
-    urls.push({
-      loc: `${baseUrl}/nail-salons`,
-      lastmod: currentDate,
-      changefreq: 'weekly',
-      priority: '0.9',
-    });
 
     // Get all states
     const states = await getAllStatesWithSalons();
+    console.log(`Generating salon sitemap for ${states.length} states...`);
 
-    // For each state, get cities and salons
-    // Note: This might be slow for all states, so we'll process a subset or cache results
-    const statesToProcess = states.slice(0, 50); // Limit to first 50 states for performance
-
-    for (const state of statesToProcess) {
-      const stateSlug = generateStateSlug(state.name);
-      
-      // State page
+    // Add state pages
+    for (const state of states) {
       urls.push({
-        loc: `${baseUrl}/nail-salons/${stateSlug}`,
-        lastmod: currentDate,
-        changefreq: 'weekly',
-        priority: '0.8',
+        url: `${baseUrl}/nail-salons/${generateStateSlug(state.name)}`,
+        lastModified: currentDate,
+        changeFrequency: 'weekly',
+        priority: 0.8,
       });
 
       try {
         // Get cities for this state
         const cities = await getCitiesInState(state.name);
-        const citiesToProcess = cities.slice(0, 20); // Limit cities per state
+        console.log(`  Found ${cities.length} cities in ${state.name}`);
 
-        for (const city of citiesToProcess) {
-          const citySlug = generateCitySlug(city.name);
-          
-          // City page
+        // Add city pages
+        for (const city of cities) {
           urls.push({
-            loc: `${baseUrl}/nail-salons/${stateSlug}/${citySlug}`,
-            lastmod: currentDate,
-            changefreq: 'weekly',
-            priority: '0.7',
+            url: `${baseUrl}/nail-salons/${generateStateSlug(state.name)}/${generateCitySlug(city.name)}`,
+            lastModified: currentDate,
+            changeFrequency: 'weekly',
+            priority: 0.7,
           });
 
           try {
-            // Get salons for this city
-            const salons = await getNailSalonsForLocation(state.name, city.name, 20);
-            
-            for (const salon of salons) {
-              const salonSlug = generateSlug(salon.name);
-              
-              // Individual salon page
+            // Get salons for this city (limit to 50 per city to avoid timeout and keep sitemap manageable)
+            // Note: We can increase this later if needed, but 50 salons per city is a good starting point
+            const salons = await getNailSalonsForLocation(state.name, city.name, 50);
+            console.log(`    Found ${salons.length} salons in ${city.name}, ${state.name}`);
+
+            // Add individual salon pages (limit to top 50 to keep sitemap size reasonable)
+            for (const salon of salons.slice(0, 50)) {
               urls.push({
-                loc: `${baseUrl}/nail-salons/${stateSlug}/${citySlug}/${salonSlug}`,
-                lastmod: currentDate,
-                changefreq: 'monthly',
-                priority: '0.6',
+                url: `${baseUrl}/nail-salons/${generateStateSlug(state.name)}/${generateCitySlug(city.name)}/${generateSlug(salon.name)}`,
+                lastModified: currentDate,
+                changeFrequency: 'weekly',
+                priority: 0.8, // High priority for individual salon pages
               });
             }
           } catch (error) {
-            console.error(`Error fetching salons for ${city.name}, ${state.name}:`, error);
+            console.error(`    Error fetching salons for ${city.name}, ${state.name}:`, error);
             // Continue with next city
           }
         }
       } catch (error) {
-        console.error(`Error fetching cities for ${state.name}:`, error);
+        console.error(`  Error fetching cities for ${state.name}:`, error);
         // Continue with next state
       }
     }
 
-    // Generate XML
+    console.log(`Generated salon sitemap with ${urls.length} URLs`);
+
+    // Generate XML sitemap
     const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${urls.map(url => `  <url>
-    <loc>${url.loc}</loc>
-    <lastmod>${url.lastmod}</lastmod>
-    <changefreq>${url.changefreq}</changefreq>
-    <priority>${url.priority}</priority>
+${urls.map(page => `  <url>
+    <loc>${page.url}</loc>
+    <lastmod>${page.lastModified}</lastmod>
+    <changefreq>${page.changeFrequency}</changefreq>
+    <priority>${page.priority}</priority>
   </url>`).join('\n')}
 </urlset>`;
 
@@ -100,30 +86,11 @@ ${urls.map(url => `  <url>
       status: 200,
       headers: {
         'Content-Type': 'application/xml',
-        'Cache-Control': 'public, max-age=86400, s-maxage=86400', // Cache for 24 hours
+        'Cache-Control': 'public, max-age=3600, s-maxage=3600', // Cache for 1 hour
       },
     });
   } catch (error) {
-    console.error('Error generating nail salons sitemap:', error);
-    
-    // Return minimal sitemap on error
-    const minimalSitemap = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://nailartai.app/nail-salons</loc>
-    <lastmod>${new Date().toISOString()}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-</urlset>`;
-
-    return new NextResponse(minimalSitemap, {
-      status: 200,
-      headers: {
-        'Content-Type': 'application/xml',
-        'Cache-Control': 'public, max-age=3600, s-maxage=3600', // Cache for 1 hour on error
-      },
-    });
+    console.error('Error generating salon sitemap:', error);
+    return new NextResponse('Error generating sitemap', { status: 500 });
   }
 }
-

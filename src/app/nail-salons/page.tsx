@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import { getAllStatesWithSalons, generateStateSlug, getCitiesInState } from '@/lib/nailSalonService';
 import OptimizedImage from '@/components/OptimizedImage';
+import { DirectoryStructuredData } from '@/components/DirectoryStructuredData';
 
 export const metadata: Metadata = {
   title: 'Nail Salons Near You | Find Best Nail Salons by State',
@@ -20,7 +21,35 @@ export const metadata: Metadata = {
     title: 'Nail Salons Near You | Find Best Nail Salons by State',
     description: 'Discover the best nail salons, nail spas, and nail art studios in your state.',
     type: 'website',
+    url: 'https://nailartai.app/nail-salons',
+    siteName: 'Nail Art AI',
+    images: [
+      {
+        url: 'https://images.unsplash.com/photo-1604654894610-df63bc536371?w=1200&h=630&fit=crop&q=80',
+        width: 1200,
+        height: 630,
+        alt: 'Nail Salons Directory - Browse by State'
+      }
+    ]
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Nail Salons Near You | Find Best Nail Salons by State',
+    description: 'Discover the best nail salons in your state',
+    images: ['https://images.unsplash.com/photo-1604654894610-df63bc536371?w=1200&h=630&fit=crop&q=80'],
+    creator: '@nailartai'
+  },
+  alternates: {
+    canonical: 'https://nailartai.app/nail-salons'
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true
+    }
+  }
 };
 
 // State-specific information for SEO and visual enhancement
@@ -106,6 +135,12 @@ export default async function NailSalonsPage() {
 
   return (
     <div className="min-h-screen bg-[#f8f6f7]">
+      {/* Structured Data for SEO */}
+      <DirectoryStructuredData 
+        type="states" 
+        itemCount={states.length}
+      />
+      
       {/* Hero Section */}
       <div className="relative overflow-hidden bg-gradient-to-br from-[#ee2b8c]/10 to-[#f8f6f7]">
         <div className="relative max-w-7xl mx-auto px-4 py-16">
@@ -291,6 +326,51 @@ export default async function NailSalonsPage() {
                   <span className="text-[#1b0d14]/70">Browse by state, city, or salon name</span>
                 </li>
               </ul>
+            </div>
+          </div>
+        </div>
+
+        {/* FAQ Section */}
+        <div className="bg-white rounded-2xl p-8 ring-1 ring-[#ee2b8c]/15 mt-8">
+          <h2 className="text-2xl font-bold text-[#1b0d14] mb-6">Frequently Asked Questions</h2>
+          <div className="space-y-6">
+            <div>
+              <h3 className="text-lg font-semibold text-[#1b0d14] mb-2">How do I find the best nail salon in my state?</h3>
+              <p className="text-[#1b0d14]/70">
+                Browse our directory by selecting your state above. Each salon listing includes ratings, reviews, 
+                photos, and contact information to help you make an informed decision. Look for salons with high 
+                ratings (4.5+ stars) and positive customer reviews.
+              </p>
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold text-[#1b0d14] mb-2">What information is included for each salon?</h3>
+              <p className="text-[#1b0d14]/70">
+                Each salon listing includes the salon name, address, phone number, website, ratings, customer reviews, 
+                opening hours, photos, and current open/closed status. All information is sourced from Google Places API 
+                to ensure accuracy.
+              </p>
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold text-[#1b0d14] mb-2">How often is the directory updated?</h3>
+              <p className="text-[#1b0d14]/70">
+                Our directory pulls real-time information from Google Places API, ensuring that salon details, ratings, 
+                and reviews are always up-to-date. Business hours and open/closed status are updated in real-time.
+              </p>
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold text-[#1b0d14] mb-2">Can I book appointments through this directory?</h3>
+              <p className="text-[#1b0d14]/70">
+                While we don't offer direct booking, each salon listing includes phone numbers and website links where 
+                you can contact the salon directly to book your appointment. Many salons also accept walk-ins.
+              </p>
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold text-[#1b0d14] mb-2">What services do nail salons typically offer?</h3>
+              <p className="text-[#1b0d14]/70">
+                Most nail salons offer manicures, pedicures, gel polish, acrylic nails, nail art, nail repairs, 
+                and extensions. Many also provide luxury spa treatments, massage services, and special packages for 
+                weddings and events. Check individual salon listings for specific services.
+              </p>
             </div>
           </div>
         </div>

@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { getCitiesInState, generateStateSlug, generateCitySlug } from '@/lib/nailSalonService';
 import OptimizedImage from '@/components/OptimizedImage';
+import { DirectoryStructuredData } from '@/components/DirectoryStructuredData';
 
 interface StatePageProps {
   params: Promise<{
@@ -12,18 +13,60 @@ interface StatePageProps {
 
 export async function generateMetadata({ params }: StatePageProps): Promise<Metadata> {
   const resolvedParams = await params;
-  const stateName = decodeURIComponent(resolvedParams.state).replace(/-/g, ' ');
+  const stateSlug = resolvedParams.state;
+  const stateName = decodeURIComponent(stateSlug).replace(/-/g, ' ');
   const formattedState = stateName.split(' ').map(word => 
     word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
   ).join(' ');
 
+  // Get state image URL
+  const stateImageUrl = `https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=1200&h=630&fit=crop&q=80`;
+
   return {
     title: `Nail Salons in ${formattedState} | Find Best Nail Salons by City`,
     description: `Discover the best nail salons, nail spas, and nail art studios in ${formattedState}. Browse by city to find top-rated nail salons with reviews, ratings, and contact information.`,
+    keywords: [
+      `nail salons ${formattedState}`,
+      `nail spas ${formattedState}`,
+      `nail art studios ${formattedState}`,
+      `best nail salons ${formattedState}`,
+      `manicure ${formattedState}`,
+      `pedicure ${formattedState}`,
+      `nail salon near me ${formattedState}`,
+    ],
     openGraph: {
       title: `Nail Salons in ${formattedState}`,
       description: `Find the best nail salons in ${formattedState}. Browse by city to discover top-rated salons.`,
+      type: 'website',
+      url: `https://nailartai.app/nail-salons/${stateSlug}`,
+      siteName: 'Nail Art AI',
+      images: [
+        {
+          url: stateImageUrl,
+          width: 1200,
+          height: 630,
+          alt: `Nail salons in ${formattedState}`
+        }
+      ]
     },
+    twitter: {
+      card: 'summary_large_image',
+      title: `Nail Salons in ${formattedState}`,
+      description: `Find the best nail salons in ${formattedState}`,
+      images: [stateImageUrl],
+      creator: '@nailartai'
+    },
+    alternates: {
+      canonical: `https://nailartai.app/nail-salons/${stateSlug}`
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true
+      }
+    }
   };
 }
 
@@ -58,6 +101,14 @@ export default async function StatePage({ params }: StatePageProps) {
 
   return (
     <div className="min-h-screen bg-[#f8f6f7]">
+      {/* Structured Data for SEO */}
+      <DirectoryStructuredData 
+        type="state" 
+        stateName={formattedState}
+        stateSlug={stateSlug}
+        itemCount={cities.length}
+      />
+      
       {/* Hero Section with State Image */}
       <div className="relative overflow-hidden">
         {/* State Background Image */}
@@ -299,6 +350,41 @@ export default async function StatePage({ params }: StatePageProps) {
                 </div>
               </div>
             )}
+
+            {/* FAQ Section */}
+            <div className="bg-white rounded-2xl p-6 ring-1 ring-[#ee2b8c]/15 mt-6">
+              <h3 className="text-xl font-bold text-[#1b0d14] mb-4">Frequently Asked Questions</h3>
+              <div className="space-y-4">
+                <div>
+                  <h4 className="text-base font-semibold text-[#1b0d14] mb-1">How do I choose a nail salon in {formattedState}?</h4>
+                  <p className="text-sm text-[#1b0d14]/70">
+                    Look for salons with high ratings (4.5+ stars), read customer reviews, check their photos, 
+                    and verify they offer the services you need. Our directory provides all this information to help you decide.
+                  </p>
+                </div>
+                <div>
+                  <h4 className="text-base font-semibold text-[#1b0d14] mb-1">What are typical nail salon prices in {formattedState}?</h4>
+                  <p className="text-sm text-[#1b0d14]/70">
+                    Prices vary by location and service. Basic manicures typically range from $20-$40, pedicures from $30-$60, 
+                    and specialty services like gel nails or nail art can range from $40-$100+. Check individual salon listings for pricing.
+                  </p>
+                </div>
+                <div>
+                  <h4 className="text-base font-semibold text-[#1b0d14] mb-1">Do I need an appointment?</h4>
+                  <p className="text-sm text-[#1b0d14]/70">
+                    While many salons accept walk-ins, appointments are recommended, especially during peak times (weekends and evenings). 
+                    Call ahead using the phone numbers provided in our listings.
+                  </p>
+                </div>
+                <div>
+                  <h4 className="text-base font-semibold text-[#1b0d14] mb-1">What services do nail salons in {formattedState} offer?</h4>
+                  <p className="text-sm text-[#1b0d14]/70">
+                    Most salons offer manicures, pedicures, gel polish, acrylic nails, nail art, nail repairs, extensions, 
+                    and spa treatments. Some also offer waxing, massage, and special event packages.
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

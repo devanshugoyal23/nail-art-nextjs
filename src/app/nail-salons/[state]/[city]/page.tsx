@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { getNailSalonsForLocation, generateStateSlug, generateCitySlug, generateSlug, getPhotoUrl } from '@/lib/nailSalonService';
 import OptimizedImage from '@/components/OptimizedImage';
+import { DirectoryStructuredData } from '@/components/DirectoryStructuredData';
 
 interface CityPageProps {
   params: Promise<{
@@ -13,8 +14,10 @@ interface CityPageProps {
 
 export async function generateMetadata({ params }: CityPageProps): Promise<Metadata> {
   const resolvedParams = await params;
-  const stateName = decodeURIComponent(resolvedParams.state).replace(/-/g, ' ');
-  const cityName = decodeURIComponent(resolvedParams.city).replace(/-/g, ' ');
+  const stateSlug = resolvedParams.state;
+  const citySlug = resolvedParams.city;
+  const stateName = decodeURIComponent(stateSlug).replace(/-/g, ' ');
+  const cityName = decodeURIComponent(citySlug).replace(/-/g, ' ');
   const formattedState = stateName.split(' ').map(word => 
     word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
   ).join(' ');
@@ -22,13 +25,54 @@ export async function generateMetadata({ params }: CityPageProps): Promise<Metad
     word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
   ).join(' ');
 
+  // Get city image URL
+  const cityImageUrl = `https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1200&h=630&fit=crop&q=80`;
+
   return {
     title: `Nail Salons in ${formattedCity}, ${formattedState} | Best Nail Salons Near You`,
     description: `Find the best nail salons, nail spas, and nail art studios in ${formattedCity}, ${formattedState}. Browse top-rated salons with reviews, ratings, phone numbers, and addresses.`,
+    keywords: [
+      `nail salons ${formattedCity} ${formattedState}`,
+      `nail spas ${formattedCity}`,
+      `nail art studios ${formattedCity}`,
+      `best nail salons ${formattedCity}`,
+      `manicure ${formattedCity}`,
+      `pedicure ${formattedCity}`,
+      `nail salon near me ${formattedCity}`,
+    ],
     openGraph: {
       title: `Nail Salons in ${formattedCity}, ${formattedState}`,
       description: `Discover top-rated nail salons in ${formattedCity}, ${formattedState}.`,
+      type: 'website',
+      url: `https://nailartai.app/nail-salons/${stateSlug}/${citySlug}`,
+      siteName: 'Nail Art AI',
+      images: [
+        {
+          url: cityImageUrl,
+          width: 1200,
+          height: 630,
+          alt: `Nail salons in ${formattedCity}, ${formattedState}`
+        }
+      ]
     },
+    twitter: {
+      card: 'summary_large_image',
+      title: `Nail Salons in ${formattedCity}, ${formattedState}`,
+      description: `Discover top-rated nail salons in ${formattedCity}`,
+      images: [cityImageUrl],
+      creator: '@nailartai'
+    },
+    alternates: {
+      canonical: `https://nailartai.app/nail-salons/${stateSlug}/${citySlug}`
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true
+      }
+    }
   };
 }
 
@@ -69,6 +113,16 @@ export default async function CityPage({ params }: CityPageProps) {
 
   return (
     <div className="min-h-screen bg-[#f8f6f7]">
+      {/* Structured Data for SEO */}
+      <DirectoryStructuredData 
+        type="city" 
+        stateName={formattedState}
+        cityName={formattedCity}
+        stateSlug={stateSlug}
+        citySlug={citySlug}
+        itemCount={salons.length}
+      />
+      
       {/* Hero Section with City Image */}
       <div className="relative overflow-hidden">
         {/* City Background Image */}
@@ -380,6 +434,49 @@ export default async function CityPage({ params }: CityPageProps) {
                 </div>
               </div>
             )}
+
+            {/* FAQ Section */}
+            <div className="bg-white rounded-2xl p-6 ring-1 ring-[#ee2b8c]/15 mt-6">
+              <h3 className="text-xl font-bold text-[#1b0d14] mb-4">Frequently Asked Questions</h3>
+              <div className="space-y-4">
+                <div>
+                  <h4 className="text-base font-semibold text-[#1b0d14] mb-1">What are the best nail salons in {formattedCity}?</h4>
+                  <p className="text-sm text-[#1b0d14]/70">
+                    The best nail salons in {formattedCity} are those with ratings of 4.5+ stars and positive customer reviews. 
+                    Check our "Top Rated Salons" section above to see the highest-rated options in your area.
+                  </p>
+                </div>
+                <div>
+                  <h4 className="text-base font-semibold text-[#1b0d14] mb-1">How much does a manicure cost in {formattedCity}?</h4>
+                  <p className="text-sm text-[#1b0d14]/70">
+                    Manicure prices in {formattedCity} typically range from $20-$40 for basic services, $40-$60 for gel manicures, 
+                    and $50-$100+ for specialty nail art. Check the price level indicators (💰) on each salon card for guidance.
+                  </p>
+                </div>
+                <div>
+                  <h4 className="text-base font-semibold text-[#1b0d14] mb-1">Are walk-ins accepted at nail salons in {formattedCity}?</h4>
+                  <p className="text-sm text-[#1b0d14]/70">
+                    Many salons in {formattedCity} accept walk-ins, but appointments are recommended during busy times. 
+                    Call ahead using the phone numbers in our listings to check availability and book your appointment.
+                  </p>
+                </div>
+                <div>
+                  <h4 className="text-base font-semibold text-[#1b0d14] mb-1">What nail services are available in {formattedCity}?</h4>
+                  <p className="text-sm text-[#1b0d14]/70">
+                    Salons in {formattedCity} offer a wide range of services including manicures, pedicures, gel polish, 
+                    acrylic nails, dip powder, nail art, nail repairs, extensions, and spa treatments. Some also offer 
+                    waxing, massage, and special packages for weddings and events.
+                  </p>
+                </div>
+                <div>
+                  <h4 className="text-base font-semibold text-[#1b0d14] mb-1">How can I find nail salons open now in {formattedCity}?</h4>
+                  <p className="text-sm text-[#1b0d14]/70">
+                    Look for the "Open Now" badge (green) on salon cards above. Our directory shows real-time open/closed 
+                    status for all salons. You can also check the "Today's hours" preview on each card to see when they close.
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
