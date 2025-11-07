@@ -327,12 +327,12 @@ export async function getSalonsForCity(
   cityName: string
 ): Promise<NailSalon[]> {
   try {
-    const cityData = await getCityDataFromR2(stateName, cityName);
-    
-    if (cityData && cityData.salons && cityData.salons.length > 0) {
-      console.log(`✅ Using R2 data for ${cityName}, ${stateName} (${cityData.salons.length} salons)`);
-      return cityData.salons;
-    }
+      const cityData = await getCityDataFromR2(stateName, cityName);
+      
+      if (cityData && cityData.salons && cityData.salons.length > 0) {
+        console.log(`✅ Using R2 data for ${cityName}, ${stateName} (${cityData.salons.length} salons)`);
+        return cityData.salons;
+      }
     
     // No R2 data available
     console.log(`⚠️ No R2 data available for ${cityName}, ${stateName}`);

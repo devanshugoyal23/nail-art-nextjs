@@ -148,7 +148,7 @@ export async function fetchNailSalonsFromAPI(
   // Wait for all requests and combine results
   const results = await Promise.all(requestPromises);
   results.forEach(places => {
-    places.forEach((place: any) => {
+    places.forEach((place) => {
       const placeId = place.id || place.placeId;
       if (placeId && !seenPlaceIds.has(placeId)) {
         seenPlaceIds.add(placeId);
@@ -159,7 +159,7 @@ export async function fetchNailSalonsFromAPI(
 
   // Filter to ensure we only get nail salons/beauty salons
   const beautyTypes = ['beauty_salon', 'hair_salon', 'spa', 'nail_salon'];
-  let places = allPlaces.filter((place: any) => {
+  const places = allPlaces.filter((place) => {
     const placeTypes = place.types || [];
     const displayName = (typeof place.displayName === 'string' 
       ? place.displayName 
@@ -185,7 +185,7 @@ export async function fetchSalonBySlugFromAPI(
   state: string,
   city: string,
   slug: string
-): Promise<any | null> {
+): Promise<GooglePlace | null> {
   if (!GOOGLE_MAPS_API_KEY) {
     throw new Error('NEXT_PUBLIC_GOOGLE_MAPS_API_KEY is not configured');
   }
@@ -238,7 +238,7 @@ export async function fetchSalonBySlugFromAPI(
  * @param placeId - Google Place ID
  * @returns Place details or null
  */
-export async function fetchPlaceDetailsFromAPI(placeId: string): Promise<any | null> {
+export async function fetchPlaceDetailsFromAPI(placeId: string): Promise<GooglePlace | null> {
   if (!GOOGLE_MAPS_API_KEY) {
     throw new Error('NEXT_PUBLIC_GOOGLE_MAPS_API_KEY is not configured');
   }
@@ -272,7 +272,7 @@ export async function fetchPlaceDetailsFromAPI(placeId: string): Promise<any | n
  * @param maxHeight - Maximum height (default: 600)
  * @returns Photo URL
  */
-export function getPhotoUrl(photoName: string, maxWidth: number = 800, maxHeight: number = 600): string {
+export function getPhotoUrl(photoName: string, maxWidth: number = 800, _maxHeight: number = 600): string {
   if (!photoName) return '';
   if (!GOOGLE_MAPS_API_KEY) {
     console.warn('NEXT_PUBLIC_GOOGLE_MAPS_API_KEY is not configured. Cannot generate photo URL.');
@@ -286,7 +286,7 @@ export function getPhotoUrl(photoName: string, maxWidth: number = 800, maxHeight
  * Get approximate coordinates for a location
  * Used for location bias in API calls
  */
-async function getLocationCoordinates(state: string, city?: string): Promise<{ latitude: number; longitude: number } | null> {
+async function getLocationCoordinates(state: string, _city?: string): Promise<{ latitude: number; longitude: number } | null> {
   const coordinates: Record<string, { latitude: number; longitude: number }> = {
     'California': { latitude: 36.7783, longitude: -119.4179 },
     'New York': { latitude: 40.7128, longitude: -74.0060 },
@@ -312,7 +312,7 @@ async function getLocationCoordinates(state: string, city?: string): Promise<{ l
  * @param city - City name (optional)
  * @returns NailSalon object
  */
-export function convertPlaceToSalon(place: any, state: string, city?: string): any {
+export function convertPlaceToSalon(place: GooglePlace, state: string, city?: string): NailSalon {
   const address = place.formattedAddress || '';
   const addressParts = address.split(',');
   const salonCity = city || (addressParts.length > 1 ? addressParts[addressParts.length - 2].trim() : '');
@@ -320,15 +320,15 @@ export function convertPlaceToSalon(place: any, state: string, city?: string): a
   const displayName = typeof place.displayName === 'string' 
     ? place.displayName 
     : place.displayName?.text || 'Nail Salon';
-  
-  // Process photos if available
-  const photos = place.photos ? place.photos.slice(0, 5).map((photo: any) => ({
-    name: photo.name || '',
-    url: getPhotoUrl(photo.name),
-    width: photo.widthPx || undefined,
-    height: photo.heightPx || undefined,
-    authorAttributions: photo.authorAttributions || undefined,
-  })) : undefined;
+    
+    // Process photos if available
+    const photos = place.photos ? place.photos.slice(0, 5).map((photo) => ({
+      name: photo.name || '',
+      url: getPhotoUrl(photo.name || ''),
+      width: photo.widthPx || undefined,
+      height: photo.heightPx || undefined,
+      authorAttributions: photo.authorAttributions || undefined,
+    })) : undefined;
 
   return {
     name: displayName,

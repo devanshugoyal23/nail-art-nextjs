@@ -49,8 +49,8 @@ export async function generateMetadata({ params }: SalonDetailPageProps): Promis
   
   // Enhanced description with rating, services, and CTA (no dependency on salonDetails)
   const enhancedDescription = salon?.address 
-    ? `${salonName} in ${formattedCity}, ${formattedState}. ${salon?.rating ? `Rated ${salon.rating}/5 stars` : ''}${salon?.reviewCount ? ` with ${salon.reviewCount} reviews.` : '.'} ${salon.address}. Professional nail services including manicures, pedicures, and nail art. Book your appointment today!`
-    : `Find ${salonName} in ${formattedCity}, ${formattedState}. ${salon?.rating ? `Rated ${salon.rating}/5 stars` : ''}${salon?.reviewCount ? ` with ${salon.reviewCount} reviews.` : ''} Get contact information, ratings, and reviews for this nail salon.`;
+      ? `${salonName} in ${formattedCity}, ${formattedState}. ${salon?.rating ? `Rated ${salon.rating}/5 stars` : ''}${salon?.reviewCount ? ` with ${salon.reviewCount} reviews.` : '.'} ${salon.address}. Professional nail services including manicures, pedicures, and nail art. Book your appointment today!`
+      : `Find ${salonName} in ${formattedCity}, ${formattedState}. ${salon?.rating ? `Rated ${salon.rating}/5 stars` : ''}${salon?.reviewCount ? ` with ${salon.reviewCount} reviews.` : ''} Get contact information, ratings, and reviews for this nail salon.`;
 
   // Optimized title (55-60 chars)
   const optimizedTitle = `${salonName} | ${formattedCity}, ${formattedState} Nail Salon`;
@@ -614,9 +614,9 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
               {salonDetails?.description && (
                 <div className="bg-white rounded-xl p-6 ring-1 ring-[#ee2b8c]/15 shadow-sm">
                   <h2 className="text-2xl font-bold text-[#1b0d14] mb-4">About {salon.name}</h2>
-                  <div className="prose prose-lg text-[#1b0d14]/70 max-w-none">
-                    <p className="leading-relaxed">{salonDetails.description}</p>
-                  </div>
+                    <div className="prose prose-lg text-[#1b0d14]/70 max-w-none">
+                      <p className="leading-relaxed">{salonDetails.description}</p>
+                    </div>
                 </div>
               )}
 
