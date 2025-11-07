@@ -4,6 +4,8 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Analytics } from '@vercel/analytics/react';
+import ViewportHeightFix from "@/components/ViewportHeightFix";
+import ServiceWorkerRegistration from "@/components/ServiceWorkerRegistration";
 
 export const metadata: Metadata = {
   title: {
@@ -112,8 +114,6 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://cdn.nailartai.app" />
         {/* Preconnect to Google Analytics - delayed for LCP optimization */}
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
-        {/* Additional performance hints */}
-        <link rel="preload" as="style" href="/globals.css" />
         {/* Google Analytics - Lazy loaded to improve LCP */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-F2H0CBYDGF"
@@ -127,47 +127,10 @@ export default function RootLayout({
             gtag('config', 'G-F2H0CBYDGF');
           `}
         </Script>
-        <script dangerouslySetInnerHTML={{
-          __html: `
-            // Mobile viewport height fix
-            (function() {
-              if (typeof window === 'undefined') return;
-              
-              const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-              if (isMobile) {
-                const setVH = () => {
-                  if (document && document.documentElement) {
-                    document.documentElement.style.setProperty('--vh', window.innerHeight * 0.01 + 'px');
-                  }
-                };
-                
-                // Set initial value
-                setVH();
-                
-                // Update on resize
-                window.addEventListener('resize', setVH);
-              }
-            })();
-            
-            // Register service worker for caching - delayed to not block LCP
-            if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
-              window.addEventListener('load', () => {
-                // Wait 2 seconds after load to register SW
-                setTimeout(() => {
-                  navigator.serviceWorker.register('/sw.js')
-                    .then((registration) => {
-                      console.log('Service Worker registered successfully:', registration.scope);
-                    })
-                    .catch((error) => {
-                      console.log('Service Worker registration failed:', error);
-                    });
-                }, 2000);
-              });
-            }
-          `
-        }} />
       </head>
       <body className="min-h-screen bg-[#f8f6f7] text-[#1b0d14] flex flex-col">
+        <ViewportHeightFix />
+        <ServiceWorkerRegistration />
         <Header />
         <main className="flex-grow">
           {children}
