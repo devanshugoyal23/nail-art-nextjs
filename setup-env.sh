@@ -32,8 +32,7 @@ RATE_LIMIT_WINDOW_MS=900000
 
 # Google Maps API Key (Required for Places API integration)
 # Get your key from: https://console.cloud.google.com/
-# Default key provided for faster salon data fetching
-NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=AIzaSyCTHR85j_npmq4XJwEwGB7JXWZDAtGC3HE
+NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=your_google_maps_api_key_here
 EOF
 
 echo "✅ Created .env.local file"

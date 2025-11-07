@@ -132,7 +132,17 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
   let techniqueShowcases: any[] = [];
   
   try {
+    // ✅ OPTIMIZATION: Try R2 first (fast!), fallback to API
+    const { getSalonFromR2 } = await import('@/lib/salonDataService');
+    salon = await getSalonFromR2(formattedState, formattedCity, resolvedParams.slug);
+    
+    if (!salon) {
+      // Fallback to API if not in R2 yet
+      console.log(`⚠️ Salon not in R2, fetching from API for ${resolvedParams.slug}`);
     salon = await getNailSalonBySlug(formattedState, formattedCity, resolvedParams.slug);
+    } else {
+      console.log(`✅ Using R2 data for salon ${resolvedParams.slug}`);
+    }
     if (salon) {
       // ✅ OPTIMIZATION: Fetch place details ONCE and share it
       let placeDetails = null;
@@ -1180,8 +1190,8 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
                         allowFullScreen
                         referrerPolicy="no-referrer-when-downgrade"
                         src={
-                          salon.placeId
-                            ? `https://www.google.com/maps/embed/v1/place?key=AIzaSyCTHR85j_npmq4XJwEwGB7JXWZDAtGC3HE&q=place_id:${salon.placeId}`
+                          salon.placeId && process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY
+                            ? `https://www.google.com/maps/embed/v1/place?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&q=place_id:${salon.placeId}`
                             : salon.address
                             ? `https://www.google.com/maps?q=${encodeURIComponent(salon.address)}&output=embed`
                             : salon.name

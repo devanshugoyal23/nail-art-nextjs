@@ -8,7 +8,7 @@ import dotenv from 'dotenv';
 dotenv.config({ path: '.env.local', override: true });
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
-const GOOGLE_MAPS_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || 'AIzaSyCTHR85j_npmq4XJwEwGB7JXWZDAtGC3HE';
+const GOOGLE_MAPS_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ;
 const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent';
 const PLACES_API_URL = 'https://places.googleapis.com/v1/places:searchText';
 

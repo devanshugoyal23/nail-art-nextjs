@@ -2,14 +2,34 @@ import { S3Client, PutObjectCommand, GetObjectCommand, HeadObjectCommand } from 
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 
 // Cloudflare R2 configuration
-const r2Client = new S3Client({
+// Validate credentials before creating client
+function getR2Credentials() {
+  const accessKeyId = process.env.R2_ACCESS_KEY_ID;
+  const secretAccessKey = process.env.R2_SECRET_ACCESS_KEY;
+  
+  if (!accessKeyId || !secretAccessKey) {
+    throw new Error('R2 credentials are missing! Please set R2_ACCESS_KEY_ID and R2_SECRET_ACCESS_KEY in .env.local');
+  }
+  
+  return {
+    accessKeyId,
+    secretAccessKey,
+  };
+}
+
+// Lazy-load R2 client to ensure env vars are loaded first
+let r2Client: S3Client | null = null;
+
+function getR2Client(): S3Client {
+  if (!r2Client) {
+    r2Client = new S3Client({
   region: 'auto',
   endpoint: process.env.R2_ENDPOINT || `https://05b5ee1a83754aa6b4fcd974016ecde8.r2.cloudflarestorage.com`,
-  credentials: {
-    accessKeyId: process.env.R2_ACCESS_KEY_ID!,
-    secretAccessKey: process.env.R2_SECRET_ACCESS_KEY!,
-  },
+      credentials: getR2Credentials(),
 });
+  }
+  return r2Client;
+}
 
 // Unified bucket configuration
 const UNIFIED_BUCKET = 'nail-art-unified';
@@ -78,7 +98,7 @@ export async function uploadToR2(
       CacheControl: 'public, max-age=31536000, immutable',
     });
     
-    await r2Client.send(command);
+    await getR2Client().send(command);
     // Return URL with the prefixed key
     return `${PUBLIC_URL}/${prefixedKey}`;
   } catch (error) {
@@ -100,7 +120,7 @@ export async function getFromR2(key: string): Promise<Buffer | null> {
       Key: prefixedKey,
     });
     
-    const response = await r2Client.send(command);
+    const response = await getR2Client().send(command);
     const chunks: Uint8Array[] = [];
     
     if (response.Body) {
@@ -129,7 +149,7 @@ export async function imageExistsInR2(key: string): Promise<boolean> {
       Key: prefixedKey,
     });
     
-    await r2Client.send(command);
+    await getR2Client().send(command);
     return true;
   } catch {
     return false;
@@ -215,7 +235,7 @@ export async function uploadDataToR2(
       }
     });
     
-    await r2Client.send(command);
+    await getR2Client().send(command);
     return `${PUBLIC_URL}/${prefixedKey}`;
   } catch (error) {
     console.error('Error uploading data to R2:', error);
@@ -236,7 +256,7 @@ export async function getDataFromR2(key: string): Promise<unknown | null> {
       Key: prefixedKey,
     });
     
-    const response = await r2Client.send(command);
+    const response = await getR2Client().send(command);
     const chunks: Uint8Array[] = [];
     
     if (response.Body) {
@@ -267,7 +287,7 @@ export async function dataExistsInR2(key: string): Promise<boolean> {
       Key: prefixedKey,
     });
     
-    await r2Client.send(command);
+    await getR2Client().send(command);
     return true;
   } catch {
     return false;
@@ -289,7 +309,7 @@ export async function listDataFiles(prefix: string = ''): Promise<string[]> {
       Prefix: searchPrefix,
     });
     
-    const response = await r2Client.send(command);
+    const response = await getR2Client().send(command);
     return response.Contents?.map(obj => obj.Key || '') || [];
   } catch (error) {
     console.error('Error listing data files:', error);
@@ -312,7 +332,7 @@ export async function deleteDataFromR2(key: string): Promise<boolean> {
       Key: prefixedKey,
     });
     
-    await r2Client.send(command);
+    await getR2Client().send(command);
     return true;
   } catch (error) {
     console.error('Error deleting data from R2:', error);

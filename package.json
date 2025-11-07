@@ -17,7 +17,9 @@
     "pinterest:optimize-small": "node scripts/generate-pinterest-optimized.js --batch=5",
     "generate-cities": "node scripts/generate-cities-json.js",
     "generate-cities:dry-run": "node scripts/generate-cities-json.js --dry-run",
-    "generate-cities:fast": "node scripts/generate-cities-json.js --batch-size=15"
+    "generate-cities:fast": "node scripts/generate-cities-json.js --batch-size=15",
+    "collect-salon-data": "tsx scripts/collect-salon-data.ts",
+    "recollect-failed-states": "tsx scripts/recollect-failed-states.ts"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.906.0",
@@ -43,6 +45,7 @@
     "eslint": "^9",
     "eslint-config-next": "15.5.4",
     "tailwindcss": "^4",
+    "tsx": "^4.20.6",
     "typescript": "^5"
   }
 }

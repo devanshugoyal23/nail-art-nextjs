@@ -13,14 +13,16 @@ export async function GET(request: NextRequest) {
     // Test with a single URL
     const success = await submitToIndexNow([testUrl]);
     
+    const apiKey = process.env.INDEXNOW_API_KEY || '';
+    
     return NextResponse.json({
       success,
       message: success 
         ? 'IndexNow submission successful' 
         : 'IndexNow submission failed',
       testUrl,
-      apiKey: '16c58702ade8484b9f5557f3f8d07e8e',
-      keyLocation: 'https://nailartai.app/16c58702ade8484b9f5557f3f8d07e8e.txt'
+      apiKeyConfigured: !!apiKey,
+      keyLocation: apiKey ? `https://nailartai.app/${apiKey}.txt` : 'Not configured'
     });
   } catch (error) {
     console.error('IndexNow test error:', error);

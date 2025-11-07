@@ -15,7 +15,12 @@ if (!API_KEY) {
 }
 
 const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent';
-const GOOGLE_MAPS_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || 'AIzaSyCTHR85j_npmq4XJwEwGB7JXWZDAtGC3HE';
+const GOOGLE_MAPS_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
+
+if (!GOOGLE_MAPS_API_KEY) {
+  console.warn('NEXT_PUBLIC_GOOGLE_MAPS_API_KEY environment variable is not set. Google Maps features will not work.');
+}
+
 const PLACES_API_URL = 'https://places.googleapis.com/v1/places:searchText';
 
 export interface NailSalon {
@@ -109,6 +114,10 @@ export async function getNailSalonsForLocation(
   limit: number = 20
 ): Promise<NailSalon[]> {
   try {
+    if (!GOOGLE_MAPS_API_KEY) {
+      throw new Error('NEXT_PUBLIC_GOOGLE_MAPS_API_KEY is not configured');
+    }
+    
     // Get location coordinates for bias
     const locationCoords = await getLocationCoordinates(state, city);
 
@@ -167,6 +176,27 @@ export async function getNailSalonsForLocation(
         if (placesResponse.ok) {
           const placesData = await placesResponse.json();
           return placesData.places || [];
+        } else {
+          // Log non-OK responses for debugging
+          const errorText = await placesResponse.text();
+          
+          // Check for rate limit (429) or quota exceeded
+          if (placesResponse.status === 429 || placesResponse.status === 403) {
+            try {
+              const errorObj = JSON.parse(errorText);
+              const errorMessage = errorObj.error?.message || errorObj.message || errorText;
+              if (errorMessage.includes('quota') || errorMessage.includes('rate limit') || errorMessage.includes('exceeded')) {
+                throw new Error(`RATE_LIMIT_EXCEEDED: ${errorMessage}`);
+              }
+            } catch (parseError) {
+              // If not JSON, check error text directly
+              if (errorText.includes('quota') || errorText.includes('rate limit') || errorText.includes('exceeded')) {
+                throw new Error(`RATE_LIMIT_EXCEEDED: ${errorText.substring(0, 200)}`);
+              }
+            }
+          }
+          
+          console.error(`Places API error for "${searchQuery}": ${placesResponse.status} ${placesResponse.statusText} - ${errorText.substring(0, 200)}`);
         }
       } catch (error) {
         console.error(`Error in Places API request for "${searchQuery}":`, error);
@@ -502,6 +532,10 @@ export async function getNailSalonBySlug(
   slug: string
 ): Promise<NailSalon | null> {
   try {
+    if (!GOOGLE_MAPS_API_KEY) {
+      throw new Error('NEXT_PUBLIC_GOOGLE_MAPS_API_KEY is not configured');
+    }
+    
     // ✅ OPTIMIZATION: Direct salon lookup instead of fetching 100 salons
     // Convert slug back to approximate name for search
     const approximateName = slug.replace(/-/g, ' ');
@@ -1184,6 +1218,10 @@ function parseFAQ(text: string): Array<{ question: string; answer: string }> {
  */
 export async function getPlaceDetails(placeId: string): Promise<any> {
   try {
+    if (!GOOGLE_MAPS_API_KEY) {
+      throw new Error('NEXT_PUBLIC_GOOGLE_MAPS_API_KEY is not configured');
+    }
+    
     const response = await fetch(`https://places.googleapis.com/v1/places/${placeId}`, {
       method: 'GET',
       headers: {
@@ -1210,6 +1248,10 @@ export async function getPlaceDetails(placeId: string): Promise<any> {
  */
 export function getPhotoUrl(photoName: string, maxWidth: number = 800, maxHeight: number = 600): string {
   if (!photoName) return '';
+  if (!GOOGLE_MAPS_API_KEY) {
+    console.warn('NEXT_PUBLIC_GOOGLE_MAPS_API_KEY is not configured. Cannot generate photo URL.');
+    return '';
+  }
   // Places API photo URL format
   // https://places.googleapis.com/v1/{photoName}/media?maxWidthPx={maxWidth}&key={apiKey}
   return `https://places.googleapis.com/v1/${photoName}/media?maxWidthPx=${maxWidth}&key=${GOOGLE_MAPS_API_KEY}`;

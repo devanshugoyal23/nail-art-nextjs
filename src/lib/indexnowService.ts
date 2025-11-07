@@ -10,7 +10,7 @@ interface IndexNowConfig {
 }
 
 const INDEXNOW_CONFIG: IndexNowConfig = {
-  apiKey: process.env.INDEXNOW_API_KEY || '16c58702ade8484b9f5557f3f8d07e8e',
+  apiKey: process.env.INDEXNOW_API_KEY || '',
   baseUrl: 'https://nailartai.app',
   searchEngines: [
     'https://api.indexnow.org/indexnow',
@@ -31,7 +31,7 @@ interface IndexNowRequest {
  */
 export async function submitToIndexNow(urls: string[]): Promise<boolean> {
   try {
-    if (!INDEXNOW_CONFIG.apiKey || INDEXNOW_CONFIG.apiKey === 'your-indexnow-api-key') {
+    if (!INDEXNOW_CONFIG.apiKey || INDEXNOW_CONFIG.apiKey === 'your-indexnow-api-key' || INDEXNOW_CONFIG.apiKey === '') {
       console.warn('IndexNow API key not configured. Skipping IndexNow submission.');
       return false;
     }

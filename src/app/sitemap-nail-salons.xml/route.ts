@@ -1,9 +1,14 @@
 import { NextResponse } from 'next/server';
-import { getAllStatesWithSalons, getCitiesInState, getNailSalonsForLocation, generateStateSlug, generateCitySlug, generateSlug } from '@/lib/nailSalonService';
+import { getAllStatesWithSalons, getCitiesInState, generateStateSlug, generateCitySlug } from '@/lib/nailSalonService';
 
 /**
- * Nail Salons Sitemap - All salon directory pages
- * Includes: state pages, city pages, and individual salon pages
+ * Nail Salons Sitemap - SAFE MODE
+ * Includes: state pages and city pages only (no individual salons)
+ * 
+ * Individual salon pages will be discovered by Google through internal links
+ * and will work on-demand (fetched from R2 or API fallback)
+ * 
+ * This prevents sitemap timeout issues while maintaining full functionality
  */
 export async function GET() {
   try {
@@ -18,10 +23,11 @@ export async function GET() {
 
     // Get all states
     const states = await getAllStatesWithSalons();
-    console.log(`Generating salon sitemap for ${states.length} states...`);
+    console.log(`Generating salon sitemap for ${states.length} states (SAFE MODE - states + cities only)...`);
 
-    // Add state pages
+    // Add state pages and city pages
     for (const state of states) {
+      // Add state page
       urls.push({
         url: `${baseUrl}/nail-salons/${generateStateSlug(state.name)}`,
         lastModified: currentDate,
@@ -30,11 +36,11 @@ export async function GET() {
       });
 
       try {
-        // Get cities for this state
+        // Get cities for this state (from local JSON - fast!)
         const cities = await getCitiesInState(state.name);
         console.log(`  Found ${cities.length} cities in ${state.name}`);
 
-        // Add city pages
+        // Add city pages only (no individual salons to avoid timeout)
         for (const city of cities) {
           urls.push({
             url: `${baseUrl}/nail-salons/${generateStateSlug(state.name)}/${generateCitySlug(city.name)}`,
@@ -42,26 +48,6 @@ export async function GET() {
             changeFrequency: 'weekly',
             priority: 0.7,
           });
-
-          try {
-            // Get salons for this city (limit to 50 per city to avoid timeout and keep sitemap manageable)
-            // Note: We can increase this later if needed, but 50 salons per city is a good starting point
-            const salons = await getNailSalonsForLocation(state.name, city.name, 50);
-            console.log(`    Found ${salons.length} salons in ${city.name}, ${state.name}`);
-
-            // Add individual salon pages (limit to top 50 to keep sitemap size reasonable)
-            for (const salon of salons.slice(0, 50)) {
-              urls.push({
-                url: `${baseUrl}/nail-salons/${generateStateSlug(state.name)}/${generateCitySlug(city.name)}/${generateSlug(salon.name)}`,
-                lastModified: currentDate,
-                changeFrequency: 'weekly',
-                priority: 0.8, // High priority for individual salon pages
-              });
-            }
-          } catch (error) {
-            console.error(`    Error fetching salons for ${city.name}, ${state.name}:`, error);
-            // Continue with next city
-          }
         }
       } catch (error) {
         console.error(`  Error fetching cities for ${state.name}:`, error);
@@ -69,7 +55,7 @@ export async function GET() {
       }
     }
 
-    console.log(`Generated salon sitemap with ${urls.length} URLs`);
+    console.log(`Generated salon sitemap with ${urls.length} URLs (states + cities only - SAFE MODE)`);
 
     // Generate XML sitemap
     const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
