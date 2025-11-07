@@ -103,12 +103,15 @@ export function SalonStructuredData({
     "worstRating": "1"
   } : undefined;
 
+  // Filter valid photos (with non-empty URLs)
+  const validPhotos = salon.photos?.filter(photo => photo.url && photo.url.trim() !== '') || [];
+
   // Main LocalBusiness schema
   const localBusinessSchema = {
     "@context": "https://schema.org",
     "@type": "BeautySalon",
     "name": salon.name,
-    "image": salon.photos && salon.photos.length > 0 ? salon.photos[0].url : undefined,
+    "image": validPhotos.length > 0 ? validPhotos[0].url : undefined,
     "address": address,
     "geo": geo,
     "url": salon.website || `https://nailartai.app/nail-salons/${stateSlug}/${citySlug}/${slug}`,
@@ -180,9 +183,9 @@ export function SalonStructuredData({
     "datePublished": review.publishTime || undefined
   })).filter((review: any) => review.reviewBody || review.reviewRating) || [];
 
-  // Build ImageObject schemas for salon photos
-  const imageSchemas = salon.photos && salon.photos.length > 0 
-    ? salon.photos.slice(0, 6).map((photo: any, index: number) => {
+  // Build ImageObject schemas for salon photos (only valid photos with URLs)
+  const imageSchemas = validPhotos.length > 0 
+    ? validPhotos.slice(0, 6).map((photo: any, index: number) => {
         const photoTypes = ['exterior', 'interior', 'service area', 'nail art station', 'waiting area', 'treatment room'];
         const photoType = photoTypes[index] || 'interior';
         
