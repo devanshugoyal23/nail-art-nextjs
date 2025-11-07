@@ -11,37 +11,26 @@ interface StatePageProps {
   }>;
 }
 
-// Generate static params for all states
+// Generate static params for top states only (optimized for Vercel Free/Blend)
+// Only pre-generate the most popular states to avoid build timeouts
 export async function generateStaticParams() {
-  try {
-    const fs = await import('fs/promises');
-    const path = await import('path');
-    const citiesDir = path.join(process.cwd(), 'src', 'data', 'cities');
-    
-    const files = await fs.readdir(citiesDir);
-    const stateFiles = files.filter(file => file.endsWith('.json'));
-    
-    return stateFiles.map(file => ({
-      state: file.replace('.json', ''),
-    }));
-  } catch (error) {
-    console.error('Error generating static params for states:', error);
-    // Fallback to common states
-    return [
-      { state: 'california' },
-      { state: 'texas' },
-      { state: 'florida' },
-      { state: 'new-york' },
-      { state: 'arizona' },
-    ];
-  }
+  // Top 15 most populous/popular states for nail salons
+  // This limits build time while still covering most traffic
+  const topStates = [
+    'california', 'texas', 'florida', 'new-york', 'pennsylvania',
+    'illinois', 'ohio', 'georgia', 'north-carolina', 'michigan',
+    'new-jersey', 'virginia', 'washington', 'arizona', 'massachusetts'
+  ];
+  
+  return topStates.map(state => ({ state }));
 }
 
 // Enable dynamic params for states not in generateStaticParams
 export const dynamicParams = true;
 
-// Enable ISR - revalidate every hour
-export const revalidate = 3600;
+// Enable ISR - revalidate every 6 hours (optimized for Vercel Free/Blend)
+// This allows pages to be generated on-demand without blocking builds
+export const revalidate = 21600;
 
 export async function generateMetadata({ params }: StatePageProps): Promise<Metadata> {
   const resolvedParams = await params;

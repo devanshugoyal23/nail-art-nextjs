@@ -159,23 +159,66 @@ export async function uploadIndexToR2(
 
 /**
  * Get city data from R2
+ * @param stateName - State name (e.g., "Arizona")
+ * @param cityName - City name (e.g., "Phoenix") OR city slug (e.g., "phoenix")
+ * @param citySlug - Optional: If provided, use this slug directly instead of generating from cityName
  */
 export async function getCityDataFromR2(
   stateName: string,
-  cityName: string
+  cityName: string,
+  citySlug?: string
 ): Promise<CityData | null> {
   try {
     const stateSlug = generateStateSlug(stateName);
-    const citySlug = generateCitySlug(cityName);
+    // Use provided slug if available, otherwise generate from city name
+    const finalCitySlug = citySlug || generateCitySlug(cityName);
     
-    const path = SALON_DATA_PATHS.city(stateSlug, citySlug);
-    const data = await getDataFromR2(path);
+    const path = SALON_DATA_PATHS.city(stateSlug, finalCitySlug);
+    console.log(`🔍 Looking for R2 data at path: ${path} (full R2 path: data/${path})`);
     
-    if (!data) {
-      console.log(`⚠️ No R2 data found for ${cityName}, ${stateName}`);
+    // First check if the file exists
+    const exists = await dataExistsInR2(path);
+    if (!exists) {
+      console.log(`⚠️ R2 file does not exist at: data/${path}`);
+      
+      // Try to list available files in the city directory for debugging
+      try {
+        const { listDataFiles } = await import('./r2Service');
+        const cityDir = `nail-salons/cities/${stateSlug}/`;
+        const availableFiles = await listDataFiles(cityDir);
+        console.log(`📁 Available files in R2 for ${stateSlug}:`, availableFiles.slice(0, 10).map(f => f.replace('data/', '')));
+      } catch (listError) {
+        console.warn('Could not list R2 files:', listError);
+      }
+      
+      // Try alternative: maybe the city name format is different
+      if (!citySlug) {
+        // Try with the city name as-is (in case it's already a slug)
+        const altSlug = cityName.toLowerCase().replace(/\s+/g, '-');
+        if (altSlug !== finalCitySlug) {
+          console.log(`🔄 Trying alternative slug: ${altSlug}`);
+          const altPath = SALON_DATA_PATHS.city(stateSlug, altSlug);
+          const altExists = await dataExistsInR2(altPath);
+          if (altExists) {
+            const altData = await getDataFromR2(altPath);
+            if (altData) {
+              console.log(`✅ Found data with alternative slug!`);
+              return altData as CityData;
+            }
+          }
+        }
+      }
       return null;
     }
     
+    const data = await getDataFromR2(path);
+    
+    if (!data) {
+      console.log(`⚠️ R2 file exists but could not read data for ${cityName}, ${stateName} at path: data/${path}`);
+      return null;
+    }
+    
+    console.log(`✅ Found R2 data for ${cityName}, ${stateName}`);
     return data as CityData;
   } catch (error) {
     console.error(`❌ Error fetching city data from R2:`, error);
@@ -318,16 +361,19 @@ export async function checkDataFreshness(
  * Note: API fallback removed to eliminate Google Maps API dependency.
  * If you need to fetch fresh data from API, use googleMapsApiService.ts
  * 
- * @param stateName - State name
- * @param cityName - City name
+ * @param stateName - State name (e.g., "Arizona")
+ * @param cityName - City name (e.g., "Phoenix")
+ * @param citySlug - Optional: City slug from URL (e.g., "phoenix") - use this for more accurate lookup
  * @returns Array of nail salons from R2, or empty array if not found
  */
 export async function getSalonsForCity(
   stateName: string,
-  cityName: string
+  cityName: string,
+  citySlug?: string
 ): Promise<NailSalon[]> {
   try {
-    const cityData = await getCityDataFromR2(stateName, cityName);
+    console.log(`🔍 Fetching salons for: ${cityName}, ${stateName}${citySlug ? ` (slug: ${citySlug})` : ''}`);
+    const cityData = await getCityDataFromR2(stateName, cityName, citySlug);
     
     if (cityData && cityData.salons && cityData.salons.length > 0) {
       console.log(`✅ Using R2 data for ${cityName}, ${stateName} (${cityData.salons.length} salons)`);
