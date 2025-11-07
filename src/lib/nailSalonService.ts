@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * Nail Salon Service
  * Uses Google Gemini API with Google Maps Grounding to fetch nail salon data
@@ -218,18 +219,18 @@ export async function getNailSalonsForLocation(
     // Wait for all requests and combine results
     const results = await Promise.all(requestPromises);
     results.forEach(places => {
-      places.forEach(place => {
+      places.forEach((place: { id?: string; placeId?: string; [key: string]: unknown }) => {
         const placeId = place.id || place.placeId;
         if (placeId && !seenPlaceIds.has(placeId)) {
           seenPlaceIds.add(placeId);
-          allPlaces.push(place);
+          allPlaces.push(place as typeof allPlaces[0]);
         }
       });
     });
 
     // Filter to ensure we only get nail salons/beauty salons
     const beautyTypes = ['beauty_salon', 'hair_salon', 'spa', 'nail_salon'];
-    const places = allPlaces.filter(place => {
+    const filteredPlaces = allPlaces.filter(place => {
       const placeTypes = place.types || [];
       const displayName = (typeof place.displayName === 'string' 
         ? place.displayName 
@@ -242,7 +243,7 @@ export async function getNailSalonsForLocation(
     });
 
     // Limit to requested amount
-    places = places.slice(0, limit);
+    const places = filteredPlaces.slice(0, limit);
 
     // Convert Places API results to NailSalon format
     const salons: NailSalon[] = places.map(place => {
@@ -257,7 +258,7 @@ export async function getNailSalonsForLocation(
       // Process photos if available
       const photos = place.photos ? place.photos.slice(0, 5).map((photo: { name?: string; widthPx?: number; heightPx?: number; authorAttributions?: Array<{ displayName?: string; uri?: string }> }) => ({
         name: photo.name || '',
-        url: getPhotoUrl(photo.name),
+        url: getPhotoUrl(photo.name || ''),
         width: photo.widthPx || undefined,
         height: photo.heightPx || undefined,
         authorAttributions: photo.authorAttributions || undefined,
@@ -279,8 +280,8 @@ export async function getNailSalonsForLocation(
         openingHours: place.regularOpeningHours?.weekdayDescriptions || undefined,
         types: place.types || undefined,
         photos: photos,
-        priceLevel: place.priceLevel || undefined,
-        businessStatus: place.businessStatus || undefined,
+        priceLevel: (place.priceLevel as "INEXPENSIVE" | "MODERATE" | "EXPENSIVE" | "VERY_EXPENSIVE") || undefined,
+        businessStatus: (place.businessStatus as "OPERATIONAL" | "CLOSED_TEMPORARILY" | "CLOSED_PERMANENTLY") || undefined,
         currentOpeningHours: place.currentOpeningHours ? {
           openNow: place.currentOpeningHours.openNow,
           weekdayDescriptions: place.currentOpeningHours.weekdayDescriptions,
@@ -607,7 +608,7 @@ export async function getNailSalonBySlug(
         // Process photos if available
         const photos = place.photos ? place.photos.slice(0, 5).map((photo: { name?: string; widthPx?: number; heightPx?: number; authorAttributions?: Array<{ displayName?: string; uri?: string }> }) => ({
           name: photo.name || '',
-          url: getPhotoUrl(photo.name),
+          url: getPhotoUrl(photo.name || ''),
           width: photo.widthPx || undefined,
           height: photo.heightPx || undefined,
           authorAttributions: photo.authorAttributions || undefined,
@@ -629,8 +630,8 @@ export async function getNailSalonBySlug(
           openingHours: place.regularOpeningHours?.weekdayDescriptions || undefined,
           types: place.types || undefined,
           photos: photos,
-          priceLevel: place.priceLevel || undefined,
-          businessStatus: place.businessStatus || undefined,
+          priceLevel: (place.priceLevel as "INEXPENSIVE" | "MODERATE" | "EXPENSIVE" | "VERY_EXPENSIVE") || undefined,
+          businessStatus: (place.businessStatus as "OPERATIONAL" | "CLOSED_TEMPORARILY" | "CLOSED_PERMANENTLY") || undefined,
           currentOpeningHours: place.currentOpeningHours ? {
             openNow: place.currentOpeningHours.openNow,
             weekdayDescriptions: place.currentOpeningHours.weekdayDescriptions,
@@ -657,7 +658,7 @@ export async function getNailSalonBySlug(
       
       const photos = firstPlace.photos ? firstPlace.photos.slice(0, 5).map((photo: { name?: string; widthPx?: number; heightPx?: number; authorAttributions?: Array<{ displayName?: string; uri?: string }> }) => ({
         name: photo.name || '',
-        url: getPhotoUrl(photo.name),
+        url: getPhotoUrl(photo.name || ''),
         width: photo.widthPx || undefined,
         height: photo.heightPx || undefined,
         authorAttributions: photo.authorAttributions || undefined,
@@ -718,19 +719,20 @@ function parseSalonDataFromResponse(
   const salons: NailSalon[] = [];
   
   // First, try to use grounding chunks from Google Maps if available
-  const groundingChunks = groundingMetadata?.groundingChunks || [];
+  const groundingChunks = (groundingMetadata as { groundingChunks?: unknown[] })?.groundingChunks || [];
   
   if (groundingChunks.length > 0) {
     // We have real Google Maps data!
     for (const chunk of groundingChunks) {
-      if (chunk.maps) {
+      const typedChunk = chunk as { maps?: { title?: string; placeId?: string; uri?: string } };
+      if (typedChunk.maps) {
         salons.push({
-          name: chunk.maps.title || 'Nail Salon',
+          name: typedChunk.maps.title || 'Nail Salon',
           address: '', // Will be in the text response
           city: city || '',
           state,
-          placeId: chunk.maps.placeId,
-          uri: chunk.maps.uri,
+          placeId: typedChunk.maps.placeId,
+          uri: typedChunk.maps.uri,
         });
       }
     }
@@ -953,7 +955,7 @@ export async function getSalonDetails(
     let placesDetails = placeDetails;
     if (!placesDetails && salon.placeId) {
       try {
-        placesDetails = await getPlaceDetails(salon.placeId);
+        placesDetails = await getPlaceDetails(salon.placeId) || undefined;
       } catch (error) {
         console.error('Error fetching place details:', error);
       }
@@ -963,7 +965,7 @@ export async function getSalonDetails(
     const prompts = [];
     
     // Only generate description if Places API didn't provide one
-    if (!placesDetails?.generativeSummary?.overview && !placesDetails?.editorialSummary?.overview) {
+    if (!(placesDetails as { generativeSummary?: { overview?: string } })?.generativeSummary?.overview && !placesDetails?.editorialSummary?.text) {
       prompts.push({
         section: 'description',
         prompt: `Provide a detailed 150-200 word description of ${salon.name} located at ${locationQuery}. Include information about the salon's atmosphere, specialties, reputation, and what makes it stand out.`
@@ -1038,21 +1040,22 @@ Format each section clearly with headers.`
     // ✅ OPTIMIZATION: Prioritize Places API data (free and instant!)
     if (placesDetails) {
       // Priority 1: Use AI-powered place summary from Places API (most accurate)
-      if (placesDetails.generativeSummary?.overview) {
-        details.placeSummary = placesDetails.generativeSummary.overview;
+      const typedPlacesDetails = placesDetails as { generativeSummary?: { overview?: string }; editorialSummary?: { text?: string; overview?: string } };
+      if (typedPlacesDetails.generativeSummary?.overview) {
+        details.placeSummary = typedPlacesDetails.generativeSummary.overview;
         // Use as primary description if available
         if (!details.description) {
-          details.description = placesDetails.generativeSummary.overview;
+          details.description = typedPlacesDetails.generativeSummary.overview;
         }
       }
       // Priority 2: Use editorial summary if no generative summary
-      else if (placesDetails.editorialSummary?.overview) {
-        details.description = placesDetails.editorialSummary.overview;
+      else if (typedPlacesDetails.editorialSummary?.overview || placesDetails.editorialSummary?.text) {
+        details.description = typedPlacesDetails.editorialSummary?.overview || placesDetails.editorialSummary?.text;
       }
       
       // Use AI-powered review summary if available
-      if (placesDetails.generativeSummary?.description) {
-        details.reviewSummary = placesDetails.generativeSummary.description;
+      if ((placesDetails as { generativeSummary?: { description?: string } }).generativeSummary?.description) {
+        details.reviewSummary = (placesDetails as { generativeSummary: { description: string } }).generativeSummary.description;
       }
       
       // Use reviews from Places API
@@ -1061,7 +1064,7 @@ Format each section clearly with headers.`
         details.placeReviews = placesDetails.reviews.slice(0, 10).map((review: { rating?: number; text?: { text: string }; authorDisplayName?: string; publishTime?: string }) => ({
           rating: review.rating || undefined,
           text: review.text?.text || '',
-          authorName: review.authorAttribution?.displayName || undefined,
+          authorName: review.authorDisplayName || undefined,
           publishTime: review.publishTime || undefined,
         }));
 
@@ -1319,10 +1322,11 @@ export async function getSalonAdditionalData(
     const additionalData: Partial<NailSalon> = {};
 
     // Get photos
-    if (details.photos && details.photos.length > 0) {
-      additionalData.photos = details.photos.slice(0, 10).map((photo: { name?: string; widthPx?: number; heightPx?: number; authorAttributions?: Array<{ displayName?: string; uri?: string }> }) => ({
+    const detailsWithPhotos = details as { photos?: Array<{ name?: string; widthPx?: number; heightPx?: number; authorAttributions?: Array<{ displayName?: string; uri?: string }> }> };
+    if (detailsWithPhotos.photos && detailsWithPhotos.photos.length > 0) {
+      additionalData.photos = detailsWithPhotos.photos.slice(0, 10).map((photo: { name?: string; widthPx?: number; heightPx?: number; authorAttributions?: Array<{ displayName?: string; uri?: string }> }) => ({
         name: photo.name || '',
-        url: getPhotoUrl(photo.name),
+        url: getPhotoUrl(photo.name || ''),
         width: photo.widthPx || undefined,
         height: photo.heightPx || undefined,
         authorAttributions: photo.authorAttributions || undefined,
@@ -1330,13 +1334,15 @@ export async function getSalonAdditionalData(
     }
 
     // Get price level
-    if (details.priceLevel) {
-      additionalData.priceLevel = details.priceLevel;
+    const detailsWithPrice = details as { priceLevel?: "INEXPENSIVE" | "MODERATE" | "EXPENSIVE" | "VERY_EXPENSIVE" };
+    if (detailsWithPrice.priceLevel) {
+      additionalData.priceLevel = detailsWithPrice.priceLevel;
     }
 
     // Get business status
-    if (details.businessStatus) {
-      additionalData.businessStatus = details.businessStatus;
+    const detailsWithStatus = details as { businessStatus?: "OPERATIONAL" | "CLOSED_TEMPORARILY" | "CLOSED_PERMANENTLY" };
+    if (detailsWithStatus.businessStatus) {
+      additionalData.businessStatus = detailsWithStatus.businessStatus;
     }
 
     // Get current opening hours
@@ -1348,28 +1354,29 @@ export async function getSalonAdditionalData(
     }
 
     // Get accessibility options
-    if (details.accessibilityOptions) {
+    const detailsAny = details as any;
+    if (detailsAny.accessibilityOptions) {
       additionalData.accessibilityOptions = {
-        wheelchairAccessibleParking: details.accessibilityOptions.wheelchairAccessibleParking || false,
-        wheelchairAccessibleEntrance: details.accessibilityOptions.wheelchairAccessibleEntrance || false,
-        wheelchairAccessibleRestroom: details.accessibilityOptions.wheelchairAccessibleRestroom || false,
-        wheelchairAccessibleSeating: details.accessibilityOptions.wheelchairAccessibleSeating || false,
+        wheelchairAccessibleParking: detailsAny.accessibilityOptions.wheelchairAccessibleParking || false,
+        wheelchairAccessibleEntrance: detailsAny.accessibilityOptions.wheelchairAccessibleEntrance || false,
+        wheelchairAccessibleRestroom: detailsAny.accessibilityOptions.wheelchairAccessibleRestroom || false,
+        wheelchairAccessibleSeating: detailsAny.accessibilityOptions.wheelchairAccessibleSeating || false,
       };
     }
 
     // Get plus code
-    if (details.plusCode?.globalCode) {
-      additionalData.plusCode = details.plusCode.globalCode;
+    if (detailsAny.plusCode?.globalCode) {
+      additionalData.plusCode = detailsAny.plusCode.globalCode;
     }
 
     // Get short formatted address
-    if (details.shortFormattedAddress) {
-      additionalData.shortFormattedAddress = details.shortFormattedAddress;
+    if (detailsAny.shortFormattedAddress) {
+      additionalData.shortFormattedAddress = detailsAny.shortFormattedAddress;
     }
 
     // Get primary type
-    if (details.primaryType) {
-      additionalData.primaryType = details.primaryType;
+    if (detailsAny.primaryType) {
+      additionalData.primaryType = detailsAny.primaryType;
     }
 
     return additionalData;

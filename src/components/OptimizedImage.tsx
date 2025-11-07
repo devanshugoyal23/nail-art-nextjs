@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { useMobileOptimization } from '@/lib/useMobileOptimization';
 import { getOptimizedImageUrl } from './MobileOptimizedImage';
 
@@ -48,7 +49,6 @@ export default function OptimizedImage({
   height,
   className = '',
   priority = false,
-  loading = 'lazy',
   sizes,
   onClick,
   preset
@@ -85,17 +85,15 @@ export default function OptimizedImage({
       className={`relative overflow-hidden ${onClick ? 'cursor-pointer' : ''} ${className}`}
       onClick={onClick}
     >
-      <img
+      <Image
         src={currentSrc || getOptimizedImageUrl(src, isMobile)}
         alt={alt}
         width={finalWidth}
         height={finalHeight}
         className="w-full h-full object-cover transition-transform duration-300 hover:scale-105 image-optimized"
-        loading={priority ? 'eager' : loading}
+        priority={priority}
         sizes={mobileSizes}
         // Core Web Vitals optimizations - enhanced for mobile performance
-        fetchPriority={priority ? 'high' : 'low'}
-        decoding={priority ? 'sync' : 'async'}
         data-priority={priority ? "true" : "false"}
         // Additional mobile optimizations
         style={{

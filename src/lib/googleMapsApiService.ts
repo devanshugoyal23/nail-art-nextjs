@@ -138,11 +138,11 @@ export async function fetchNailSalonsFromAPI(
   // Wait for all requests and combine results
   const results = await Promise.all(requestPromises);
   results.forEach(places => {
-    places.forEach((place: any) => {
+    places.forEach((place: { id?: string; placeId?: string; [key: string]: unknown }) => {
       const placeId = place.id || place.placeId;
       if (placeId && !seenPlaceIds.has(placeId)) {
         seenPlaceIds.add(placeId);
-        allPlaces.push(place);
+        allPlaces.push(place as typeof allPlaces[0]);
       }
     });
   });
@@ -314,7 +314,7 @@ export function convertPlaceToSalon(place: { id?: string; displayName?: string |
   // Process photos if available
   const photos = place.photos ? place.photos.slice(0, 5).map((photo: { name?: string; widthPx?: number; heightPx?: number; authorAttributions?: Array<{ displayName?: string; uri?: string }> }) => ({
     name: photo.name || '',
-    url: getPhotoUrl(photo.name),
+    url: getPhotoUrl(photo.name || ''),
     width: photo.widthPx || undefined,
     height: photo.heightPx || undefined,
     authorAttributions: photo.authorAttributions || undefined,
