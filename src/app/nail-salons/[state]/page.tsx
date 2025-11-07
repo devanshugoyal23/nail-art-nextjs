@@ -11,6 +11,38 @@ interface StatePageProps {
   }>;
 }
 
+// Generate static params for all states
+export async function generateStaticParams() {
+  try {
+    const fs = await import('fs/promises');
+    const path = await import('path');
+    const citiesDir = path.join(process.cwd(), 'src', 'data', 'cities');
+    
+    const files = await fs.readdir(citiesDir);
+    const stateFiles = files.filter(file => file.endsWith('.json'));
+    
+    return stateFiles.map(file => ({
+      state: file.replace('.json', ''),
+    }));
+  } catch (error) {
+    console.error('Error generating static params for states:', error);
+    // Fallback to common states
+    return [
+      { state: 'california' },
+      { state: 'texas' },
+      { state: 'florida' },
+      { state: 'new-york' },
+      { state: 'arizona' },
+    ];
+  }
+}
+
+// Enable dynamic params for states not in generateStaticParams
+export const dynamicParams = true;
+
+// Enable ISR - revalidate every hour
+export const revalidate = 3600;
+
 export async function generateMetadata({ params }: StatePageProps): Promise<Metadata> {
   const resolvedParams = await params;
   const stateSlug = resolvedParams.state;

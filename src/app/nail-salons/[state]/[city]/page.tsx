@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { generateSlug, getPhotoUrl } from '@/lib/nailSalonService';
+import { generateSlug, getPhotoUrl, generateCitySlug } from '@/lib/nailSalonService';
 import { getSalonsForCity } from '@/lib/salonDataService';
 import OptimizedImage from '@/components/OptimizedImage';
 import { DirectoryStructuredData } from '@/components/DirectoryStructuredData';
@@ -12,6 +12,61 @@ interface CityPageProps {
     city: string;
   }>;
 }
+
+// Generate static params for cities
+export async function generateStaticParams() {
+  try {
+    const fs = await import('fs/promises');
+    const path = await import('path');
+    const citiesDir = path.join(process.cwd(), 'src', 'data', 'cities');
+    
+    const files = await fs.readdir(citiesDir);
+    const stateFiles = files.filter(file => file.endsWith('.json'));
+    
+    const params: Array<{ state: string; city: string }> = [];
+    
+    // Read each state file and extract cities
+    for (const stateFile of stateFiles) {
+      const stateSlug = stateFile.replace('.json', '');
+      const filePath = path.join(citiesDir, stateFile);
+      
+      try {
+        const fileContent = await fs.readFile(filePath, 'utf-8');
+        const data = JSON.parse(fileContent);
+        
+        if (data.cities && Array.isArray(data.cities)) {
+          // Use all cities, but use the slug from JSON if available, otherwise generate it
+          const cities = data.cities.map((city: { name: string; slug?: string }) => ({
+            state: stateSlug,
+            city: city.slug || generateCitySlug(city.name),
+          }));
+          
+          params.push(...cities);
+        }
+      } catch (error) {
+        console.error(`Error reading ${stateFile}:`, error);
+      }
+    }
+    
+    return params;
+  } catch (error) {
+    console.error('Error generating static params for cities:', error);
+    // Fallback to common cities
+    return [
+      { state: 'arizona', city: 'phoenix' },
+      { state: 'california', city: 'los-angeles' },
+      { state: 'texas', city: 'houston' },
+      { state: 'florida', city: 'miami' },
+      { state: 'new-york', city: 'new-york' },
+    ];
+  }
+}
+
+// Enable dynamic params for cities not in generateStaticParams
+export const dynamicParams = true;
+
+// Enable ISR - revalidate every hour
+export const revalidate = 3600;
 
 export async function generateMetadata({ params }: CityPageProps): Promise<Metadata> {
   const resolvedParams = await params;
