@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { getSalonAdditionalData, generateStateSlug, generateCitySlug, generateSlug, NailSalon } from '@/lib/nailSalonService';
+import { getSalonAdditionalData, generateSlug, NailSalon } from '@/lib/nailSalonService';
 import { getSalonsForCity } from '@/lib/salonDataService';
 import OptimizedImage from '@/components/OptimizedImage';
 import NailArtGallerySection from '@/components/NailArtGallerySection';
@@ -121,10 +121,10 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
   let salon: NailSalon | null = null;
   let salonDetails = null;
   let relatedSalons: NailSalon[] = [];
-  let galleryDesigns: any[] = [];
-  let designCollections: any[] = [];
-  let colorPalettes: any[] = [];
-  let techniqueShowcases: any[] = [];
+  let galleryDesigns: Array<{ id: string; imageUrl: string; title?: string; description?: string; colors?: string[]; techniques?: string[]; occasions?: string[] }> = [];
+  let designCollections: Array<{ title: string; description: string; icon: string; designs: Array<{ id: string; imageUrl: string; title?: string; colors?: string[]; techniques?: string[]; occasions?: string[] }>; href: string }> = [];
+  let colorPalettes: Array<{ color: string; designs: Array<{ id: string; imageUrl: string; title?: string; colors?: string[]; techniques?: string[]; occasions?: string[] }>; emoji: string }> = [];
+  let techniqueShowcases: Array<{ name: string; designs: Array<{ id: string; imageUrl: string; title?: string; colors?: string[]; techniques?: string[]; occasions?: string[] }>; description: string; icon: string; difficulty: string }> = [];
   
   try {
     // ✅ Fetch from R2 only (no API dependency)
@@ -222,9 +222,9 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
       const allGalleryItems = galleryData?.items || [];
       
       // Helper to get designs by searching in all items
-      const getDesignsByOccasion = (occasion: string, fallbackItems: any[]) => {
+      const getDesignsByOccasion = (occasion: string, fallbackItems: Array<{ id: string; imageUrl: string; title?: string; colors?: string[]; techniques?: string[]; occasions?: string[] }>) => {
         if (fallbackItems.length === 0) return [];
-        return fallbackItems.filter((item: any) => 
+        return fallbackItems.filter(item => 
           item.occasions?.some((occ: string) => 
             occ.toLowerCase().includes(occasion.toLowerCase())
           )
@@ -268,9 +268,9 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
       };
 
       // Prepare Color Palettes with fallback - Ensure exactly 3 colors
-      const getDesignsByColor = (color: string, fallbackItems: any[]) => {
+      const getDesignsByColor = (color: string, fallbackItems: Array<{ id: string; imageUrl: string; title?: string; colors?: string[]; techniques?: string[]; occasions?: string[] }>) => {
         if (fallbackItems.length === 0) return [];
-        return fallbackItems.filter((item: any) => 
+        return fallbackItems.filter(item => 
           item.colors?.some((c: string) => 
             c.toLowerCase().includes(color.toLowerCase())
           )
@@ -335,10 +335,10 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
       };
 
       // Prepare Technique Showcases with fallback - Ensure exactly 3 techniques
-      const getDesignsByTechnique = (technique: string, fallbackItems: any[]) => {
+      const getDesignsByTechnique = (technique: string, fallbackItems: Array<{ id: string; imageUrl: string; title?: string; colors?: string[]; techniques?: string[]; occasions?: string[] }>) => {
         if (fallbackItems.length === 0) return [];
         // More flexible matching - check if technique name appears anywhere in the techniques array
-        return fallbackItems.filter((item: any) => {
+        return fallbackItems.filter(item => {
           if (!item.techniques || !Array.isArray(item.techniques)) return false;
           return item.techniques.some((t: string) => {
             const techLower = t.toLowerCase();
@@ -393,7 +393,7 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
       if (techniquesWithDesigns.length < 3 && allGalleryItems.length > 0) {
         // Get all unique techniques from gallery items
         const allAvailableTechniques = new Set<string>();
-        allGalleryItems.forEach((item: any) => {
+        allGalleryItems.forEach(item => {
           if (item.techniques && Array.isArray(item.techniques)) {
             item.techniques.forEach((t: string) => allAvailableTechniques.add(t));
           }
@@ -589,7 +589,7 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
                     </div>
                     {salon.photos && salon.photos.length > 6 && (
                       <p className="text-sm text-[#1b0d14]/60 mt-4 text-center">
-                        +{salon.photos.length - 6} more photos available on Google Maps
+                        +{salon.photos!.length - 6} more photos available on Google Maps
                       </p>
                     )}
                   </div>
@@ -718,23 +718,23 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
               })()}
 
               {/* Services & Pricing - MEDIUM PRIORITY */}
-              {((salonDetails as any)?.services && (salonDetails as any).services.length > 0) || (salon.types && salon.types.length > 0) ? (
+              {((salonDetails as { services?: Array<{ name: string; description?: string; price?: string }> })?.services && (salonDetails as { services?: Array<{ name: string; description?: string; price?: string }> }).services!.length > 0) || (salon.types && salon.types.length > 0) ? (
                 <div className="bg-white rounded-xl p-6 ring-1 ring-[#ee2b8c]/15 shadow-sm">
                   <h2 className="text-xl font-bold text-[#1b0d14] mb-4 flex items-center gap-2">
                     <span>💅</span>
                     <span>Services & Pricing</span>
                   </h2>
-                  {(salonDetails as any)?.services && (salonDetails as any).services.length > 0 ? (
+                  {(salonDetails as { services?: Array<{ name: string; description?: string; price?: string }> })?.services && (salonDetails as { services?: Array<{ name: string; description?: string; price?: string }> }).services!.length > 0 ? (
                     <div className="space-y-3">
                       {/* Group services by type for better structure */}
                       <div>
                         <h3 className="text-lg font-semibold text-[#1b0d14] mb-3">Manicure Services</h3>
                         <div className="space-y-3">
-                          {((salonDetails as any).services as any[]).filter((s: any) => 
+                          {((salonDetails as { services: Array<{ name: string; description?: string; price?: string }> }).services).filter((s) => 
                             s.name?.toLowerCase().includes('manicure') || 
                             s.name?.toLowerCase().includes('nail art') ||
                             s.name?.toLowerCase().includes('gel')
-                          ).map((service: any, index: number) => (
+                          ).map((service, index: number) => (
                             <div key={index} className="border-b border-[#ee2b8c]/10 pb-3 last:border-0 last:pb-0">
                               <div className="flex items-start justify-between gap-4">
                                 <div className="flex-1">
@@ -754,10 +754,10 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
                       <div>
                         <h3 className="text-lg font-semibold text-[#1b0d14] mb-3">Pedicure Services</h3>
                         <div className="space-y-3">
-                          {((salonDetails as any).services as any[]).filter((s: any) => 
+                          {((salonDetails as { services: Array<{ name: string; description?: string; price?: string }> }).services).filter((s) => 
                             s.name?.toLowerCase().includes('pedicure') || 
                             s.name?.toLowerCase().includes('foot')
-                          ).map((service: any, index: number) => (
+                          ).map((service, index: number) => (
                             <div key={index} className="border-b border-[#ee2b8c]/10 pb-3 last:border-0 last:pb-0">
                               <div className="flex items-start justify-between gap-4">
                                 <div className="flex-1">
@@ -775,7 +775,7 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
                         </div>
                       </div>
                       {/* Other services */}
-                      {((salonDetails as any).services as any[]).filter((s: any) => 
+                      {((salonDetails as { services: Array<{ name: string; description?: string; price?: string }> }).services).filter((s) => 
                         !s.name?.toLowerCase().includes('manicure') && 
                         !s.name?.toLowerCase().includes('pedicure') &&
                         !s.name?.toLowerCase().includes('nail art') &&
@@ -785,13 +785,13 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
                         <div>
                           <h3 className="text-lg font-semibold text-[#1b0d14] mb-3">Additional Services</h3>
                           <div className="space-y-3">
-                            {((salonDetails as any).services as any[]).filter((s: any) => 
+                            {((salonDetails as { services: Array<{ name: string; description?: string; price?: string }> }).services).filter((s) => 
                               !s.name?.toLowerCase().includes('manicure') && 
                               !s.name?.toLowerCase().includes('pedicure') &&
                               !s.name?.toLowerCase().includes('nail art') &&
                               !s.name?.toLowerCase().includes('gel') &&
                               !s.name?.toLowerCase().includes('foot')
-                            ).map((service: any, index: number) => (
+                            ).map((service, index: number) => (
                               <div key={index} className="border-b border-[#ee2b8c]/10 pb-3 last:border-0 last:pb-0">
                                 <div className="flex items-start justify-between gap-4">
                                   <div className="flex-1">
@@ -854,7 +854,7 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
               )}
 
               {/* Parking & Transportation - Compact */}
-              {(salonDetails?.parkingInfo || (salonDetails as any)?.transportation) && (
+              {(salonDetails?.parkingInfo || (salonDetails as { transportation?: string | string[] })?.transportation) && (
                 <div className="bg-white rounded-xl p-6 ring-1 ring-[#ee2b8c]/15 shadow-sm">
                   <h2 className="text-xl font-bold text-[#1b0d14] mb-4 flex items-center gap-2">
                     <span>🅿️</span>
@@ -870,18 +870,18 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
                         <p className="text-[#1b0d14]/70 text-sm ml-7">{salonDetails.parkingInfo}</p>
                       </div>
                     )}
-                    {(salonDetails as any)?.transportation && (
+                    {(salonDetails as { transportation?: string | string[] })?.transportation && (
                       <div>
                         <h3 className="text-lg font-semibold text-[#1b0d14] mb-2 flex items-center gap-2">
                           <span className="text-xl">🚇</span>
                           <span>Public Transportation</span>
                         </h3>
                         <div className="text-[#1b0d14]/70 text-sm ml-7">
-                          {typeof (salonDetails as any).transportation === 'string' ? (
-                            <p>{(salonDetails as any).transportation}</p>
+                          {typeof (salonDetails as { transportation: string | string[] }).transportation === 'string' ? (
+                            <p>{(salonDetails as { transportation: string }).transportation}</p>
                           ) : (
                             <ul className="list-disc list-inside space-y-1">
-                              {((salonDetails as any).transportation as any[]).map((transport: any, index: number) => (
+                              {((salonDetails as { transportation: string[] }).transportation).map((transport: string, index: number) => (
                                 <li key={index}>{transport}</li>
                               ))}
                             </ul>
@@ -901,7 +901,7 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
                   icon={<span>❓</span>}
                 >
                   <div className="space-y-4">
-                    {salonDetails.faq.map((item: any, index: number) => (
+                    {salonDetails.faq.map((item: { question: string; answer: string }, index: number) => (
                       <div key={index} className="border-b border-[#ee2b8c]/10 pb-3 last:border-0 last:pb-0">
                         <h3 className="font-semibold text-[#1b0d14] mb-1 text-sm">Q: {item.question}</h3>
                         <p className="text-[#1b0d14]/70 leading-relaxed text-sm">A: {item.answer}</p>
@@ -1111,7 +1111,7 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
                   <div className="bg-white rounded-xl p-6 ring-1 ring-[#ee2b8c]/15 shadow-sm">
                     <h3 className="text-lg font-bold text-[#1b0d14] mb-3 flex items-center gap-2">
                       <span>🕐</span>
-                      <span>Today's Hours</span>
+                      <span>Today&apos;s Hours</span>
                     </h3>
                     <p className="text-sm font-semibold text-[#1b0d14]">
                       {salon.currentOpeningHours.weekdayDescriptions[0]}

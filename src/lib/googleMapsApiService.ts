@@ -36,7 +36,7 @@ export async function fetchNailSalonsFromAPI(
   state: string,
   city?: string,
   limit: number = 20
-): Promise<any[]> {
+): Promise<Array<{ id: string; displayName?: string | { text: string }; formattedAddress?: string; nationalPhoneNumber?: string; rating?: number; userRatingCount?: number; websiteUri?: string; location?: { latitude: number; longitude: number }; businessStatus?: string; regularOpeningHours?: { weekdayDescriptions: string[] }; types?: string[]; priceLevel?: string; currentOpeningHours?: { openNow?: boolean; weekdayDescriptions?: string[] }; photos?: Array<{ name?: string; widthPx?: number; heightPx?: number; authorAttributions?: Array<{ displayName?: string; uri?: string }> }> }>> {
   if (!GOOGLE_MAPS_API_KEY) {
     throw new Error('NEXT_PUBLIC_GOOGLE_MAPS_API_KEY is not configured');
   }
@@ -59,12 +59,23 @@ export async function fetchNailSalonsFromAPI(
         `nail art studio in ${state}`
       ];
 
-  const allPlaces: any[] = [];
+  const allPlaces: Array<{ id: string; displayName?: string | { text: string }; formattedAddress?: string; nationalPhoneNumber?: string; rating?: number; userRatingCount?: number; websiteUri?: string; location?: { latitude: number; longitude: number }; businessStatus?: string; regularOpeningHours?: { weekdayDescriptions: string[] }; types?: string[]; priceLevel?: string; currentOpeningHours?: { openNow?: boolean; weekdayDescriptions?: string[] }; photos?: Array<{ name?: string; widthPx?: number; heightPx?: number; authorAttributions?: Array<{ displayName?: string; uri?: string }> }> }> = [];
   const seenPlaceIds = new Set<string>();
 
   // Make multiple requests with different queries
   const requestPromises = searchQueries.slice(0, Math.ceil(limit / 20)).map(async (searchQuery) => {
-    const placesRequest: any = {
+    const placesRequest: {
+      textQuery: string;
+      maxResultCount: number;
+      languageCode: string;
+      regionCode: string;
+      locationBias?: {
+        circle: {
+          center: { latitude: number; longitude: number };
+          radius: number;
+        };
+      };
+    } = {
       textQuery: searchQuery,
       maxResultCount: 20,
       languageCode: 'en',
@@ -127,7 +138,7 @@ export async function fetchNailSalonsFromAPI(
   // Wait for all requests and combine results
   const results = await Promise.all(requestPromises);
   results.forEach(places => {
-    places.forEach((place: any) => {
+    places.forEach(place => {
       const placeId = place.id || place.placeId;
       if (placeId && !seenPlaceIds.has(placeId)) {
         seenPlaceIds.add(placeId);
@@ -138,7 +149,7 @@ export async function fetchNailSalonsFromAPI(
 
   // Filter to ensure we only get nail salons/beauty salons
   const beautyTypes = ['beauty_salon', 'hair_salon', 'spa', 'nail_salon'];
-  let places = allPlaces.filter((place: any) => {
+  const places = allPlaces.filter(place => {
     const placeTypes = place.types || [];
     const displayName = (typeof place.displayName === 'string' 
       ? place.displayName 
@@ -164,7 +175,7 @@ export async function fetchSalonBySlugFromAPI(
   state: string,
   city: string,
   slug: string
-): Promise<any | null> {
+): Promise<{ id: string; displayName?: string | { text: string }; formattedAddress?: string; nationalPhoneNumber?: string; rating?: number; userRatingCount?: number; websiteUri?: string; location?: { latitude: number; longitude: number }; businessStatus?: string; regularOpeningHours?: { weekdayDescriptions: string[] }; types?: string[]; priceLevel?: string; currentOpeningHours?: any; photos?: any[] } | null> {
   if (!GOOGLE_MAPS_API_KEY) {
     throw new Error('NEXT_PUBLIC_GOOGLE_MAPS_API_KEY is not configured');
   }
@@ -217,7 +228,7 @@ export async function fetchSalonBySlugFromAPI(
  * @param placeId - Google Place ID
  * @returns Place details or null
  */
-export async function fetchPlaceDetailsFromAPI(placeId: string): Promise<any | null> {
+export async function fetchPlaceDetailsFromAPI(placeId: string): Promise<{ id?: string; displayName?: string | { text: string }; formattedAddress?: string; nationalPhoneNumber?: string; rating?: number; userRatingCount?: number; websiteUri?: string; reviews?: any[]; regularOpeningHours?: any; types?: string[]; photos?: any[]; editorialSummary?: any; priceLevel?: string; businessStatus?: string; currentOpeningHours?: any; } | null> {
   if (!GOOGLE_MAPS_API_KEY) {
     throw new Error('NEXT_PUBLIC_GOOGLE_MAPS_API_KEY is not configured');
   }
@@ -291,7 +302,7 @@ async function getLocationCoordinates(state: string, city?: string): Promise<{ l
  * @param city - City name (optional)
  * @returns NailSalon object
  */
-export function convertPlaceToSalon(place: any, state: string, city?: string): any {
+export function convertPlaceToSalon(place: { id?: string; displayName?: string | { text: string }; formattedAddress?: string; nationalPhoneNumber?: string; rating?: number; userRatingCount?: number; websiteUri?: string; location?: { latitude: number; longitude: number }; businessStatus?: string; regularOpeningHours?: { weekdayDescriptions: string[] }; types?: string[]; priceLevel?: string; currentOpeningHours?: any; photos?: any[] }, state: string, city?: string): { name: string; address: string; city: string; state: string; phone?: string; website?: string; rating?: number; reviewCount?: number; placeId?: string; uri?: string; latitude?: number; longitude?: number; openingHours?: string[]; types?: string[]; photos?: any[]; priceLevel?: string; businessStatus?: string; currentOpeningHours?: any } {
   const address = place.formattedAddress || '';
   const addressParts = address.split(',');
   const salonCity = city || (addressParts.length > 1 ? addressParts[addressParts.length - 2].trim() : '');
@@ -301,7 +312,7 @@ export function convertPlaceToSalon(place: any, state: string, city?: string): a
     : place.displayName?.text || 'Nail Salon';
   
   // Process photos if available
-  const photos = place.photos ? place.photos.slice(0, 5).map((photo: any) => ({
+  const photos = place.photos ? place.photos.slice(0, 5).map((photo: { name?: string; widthPx?: number; heightPx?: number; authorAttributions?: any[] }) => ({
     name: photo.name || '',
     url: getPhotoUrl(photo.name),
     width: photo.widthPx || undefined,

@@ -8,7 +8,6 @@ import { generateEditorialContentForNailArt } from "@/lib/geminiService";
 import { upsertEditorial } from "@/lib/editorialService";
 import { getRelatedKeywords } from "@/lib/keywordMapper";
 import RelatedCategories from "@/components/RelatedCategories";
-import SocialShareButton from "@/components/SocialShareButton";
 import { extractTagsFromEditorial } from "@/lib/tagService";
 import OptimizedImage from "@/components/OptimizedImage";
 import { generateImageAltText, generateImageStructuredData } from "@/lib/imageUtils";
