@@ -6,9 +6,7 @@
 import { uploadDataToR2, getDataFromR2, dataExistsInR2 } from './r2Service';
 import { 
   getAllStatesWithSalons, 
-  getCitiesInState, 
-  getNailSalonsForLocation,
-  getPlaceDetails,
+  getCitiesInState,
   generateStateSlug,
   generateCitySlug,
   generateSlug,
@@ -319,29 +317,30 @@ export async function checkDataFreshness(
 }
 
 /**
- * Get all salons for a city (from R2 or API fallback)
+ * Get all salons for a city from R2
+ * 
+ * Note: API fallback removed to eliminate Google Maps API dependency.
+ * If you need to fetch fresh data from API, use googleMapsApiService.ts
+ * 
+ * @param stateName - State name
+ * @param cityName - City name
+ * @returns Array of nail salons from R2, or empty array if not found
  */
 export async function getSalonsForCity(
   stateName: string,
-  cityName: string,
-  forceRefresh: boolean = false
+  cityName: string
 ): Promise<NailSalon[]> {
   try {
-    // Check if we should use R2 data
-    if (!forceRefresh) {
-      const cityData = await getCityDataFromR2(stateName, cityName);
-      
-      if (cityData && cityData.salons && cityData.salons.length > 0) {
-        console.log(`✅ Using R2 data for ${cityName}, ${stateName} (${cityData.salons.length} salons)`);
-        return cityData.salons;
-      }
+    const cityData = await getCityDataFromR2(stateName, cityName);
+    
+    if (cityData && cityData.salons && cityData.salons.length > 0) {
+      console.log(`✅ Using R2 data for ${cityName}, ${stateName} (${cityData.salons.length} salons)`);
+      return cityData.salons;
     }
     
-    // Fallback to API
-    console.log(`⚠️ Fetching from API for ${cityName}, ${stateName}`);
-    const salons = await getNailSalonsForLocation(stateName, cityName, 50);
-    
-    return salons;
+    // No R2 data available
+    console.log(`⚠️ No R2 data available for ${cityName}, ${stateName}`);
+    return [];
   } catch (error) {
     console.error(`❌ Error getting salons for city:`, error);
     return [];

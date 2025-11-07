@@ -1,7 +1,8 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { getNailSalonBySlug, getSalonDetails, getSalonAdditionalData, getNailSalonsForLocation, generateStateSlug, generateCitySlug, generateSlug, NailSalon } from '@/lib/nailSalonService';
+import { getSalonAdditionalData, generateStateSlug, generateCitySlug, generateSlug, NailSalon } from '@/lib/nailSalonService';
+import { getSalonsForCity } from '@/lib/salonDataService';
 import OptimizedImage from '@/components/OptimizedImage';
 import NailArtGallerySection from '@/components/NailArtGallerySection';
 import SeasonalTrendsSection from '@/components/SeasonalTrendsSection';
@@ -34,26 +35,21 @@ export async function generateMetadata({ params }: SalonDetailPageProps): Promis
     word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
   ).join(' ');
 
-  // Fetch salon data and details for metadata
+  // Fetch salon data for metadata from R2
   let salon: NailSalon | null = null;
-  let salonDetails = null;
   try {
-    salon = await getNailSalonBySlug(formattedState, formattedCity, resolvedParams.slug);
-    if (salon) {
-      salonDetails = await getSalonDetails(salon);
-    }
+    const { getSalonFromR2 } = await import('@/lib/salonDataService');
+    salon = await getSalonFromR2(formattedState, formattedCity, resolvedParams.slug);
   } catch (error) {
     console.error('Error fetching salon for metadata:', error);
   }
 
   const salonName = salon?.name || 'Nail Salon';
   
-  // Enhanced description with rating, services, and CTA
-  const enhancedDescription = salonDetails?.description 
-    ? `${salonDetails.description.substring(0, 120)}${salon?.rating ? ` Rated ${salon.rating}/5 stars` : ''}${salon?.reviewCount ? ` with ${salon.reviewCount} reviews.` : '.'} Professional manicure, pedicure, and nail art services. Book your appointment today!`
-    : salon?.address 
-      ? `${salonName} in ${formattedCity}, ${formattedState}. ${salon?.rating ? `Rated ${salon.rating}/5 stars` : ''}${salon?.reviewCount ? ` with ${salon.reviewCount} reviews.` : '.'} ${salon.address}. Professional nail services including manicures, pedicures, and nail art. Book your appointment today!`
-      : `Find ${salonName} in ${formattedCity}, ${formattedState}. ${salon?.rating ? `Rated ${salon.rating}/5 stars` : ''}${salon?.reviewCount ? ` with ${salon.reviewCount} reviews.` : ''} Get contact information, ratings, and reviews for this nail salon.`;
+  // Enhanced description with rating, services, and CTA (no dependency on salonDetails)
+  const enhancedDescription = salon?.address 
+    ? `${salonName} in ${formattedCity}, ${formattedState}. ${salon?.rating ? `Rated ${salon.rating}/5 stars` : ''}${salon?.reviewCount ? ` with ${salon.reviewCount} reviews.` : '.'} ${salon.address}. Professional nail services including manicures, pedicures, and nail art. Book your appointment today!`
+    : `Find ${salonName} in ${formattedCity}, ${formattedState}. ${salon?.rating ? `Rated ${salon.rating}/5 stars` : ''}${salon?.reviewCount ? ` with ${salon.reviewCount} reviews.` : ''} Get contact information, ratings, and reviews for this nail salon.`;
 
   // Optimized title (55-60 chars)
   const optimizedTitle = `${salonName} | ${formattedCity}, ${formattedState} Nail Salon`;
@@ -132,31 +128,24 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
   let techniqueShowcases: any[] = [];
   
   try {
-    // ✅ OPTIMIZATION: Try R2 first (fast!), fallback to API
+    // ✅ Fetch from R2 only (no API dependency)
     const { getSalonFromR2 } = await import('@/lib/salonDataService');
     salon = await getSalonFromR2(formattedState, formattedCity, resolvedParams.slug);
     
     if (!salon) {
-      // Fallback to API if not in R2 yet
-      console.log(`⚠️ Salon not in R2, fetching from API for ${resolvedParams.slug}`);
-    salon = await getNailSalonBySlug(formattedState, formattedCity, resolvedParams.slug);
+      // No R2 data available - show 404 instead of falling back to API
+      console.log(`⚠️ Salon not found in R2 for ${resolvedParams.slug}`);
+      notFound();
     } else {
       console.log(`✅ Using R2 data for salon ${resolvedParams.slug}`);
     }
     if (salon) {
-      // ✅ OPTIMIZATION: Fetch place details ONCE and share it
-      let placeDetails = null;
-      if (salon.placeId) {
-        const { getPlaceDetails } = await import('@/lib/nailSalonService');
-        placeDetails = await getPlaceDetails(salon.placeId);
-      }
-      
-      // ✅ CRITICAL OPTIMIZATION: Don't wait for Gemini calls!
-      // Show page immediately with Places API data, skip slow Gemini content
-      // Fetch only fast data: additional data (photos), related salons, and gallery designs
-      const [additionalData, salons, galleryData, bridalDesigns, weddingDesigns, holidayDesigns, redDesigns, goldDesigns, pinkDesigns, frenchDesigns1, frenchDesigns2, frenchDesigns3, ombreDesigns1, ombreDesigns2, glitterDesigns1, glitterDesigns2, chromeDesigns1, chromeDesigns2, marbleDesigns1, marbleDesigns2, geometricDesigns1, geometricDesigns2, watercolorDesigns1, watercolorDesigns2, stampingDesigns1, stampingDesigns2] = await Promise.all([
-        getSalonAdditionalData(salon, placeDetails),
-        getNailSalonsForLocation(formattedState, formattedCity, 6),
+      // ✅ OPTIMIZATION: Fetch related salons from R2 and gallery designs
+      // Note: Removed getPlaceDetails() call to reduce Google Maps API dependency
+      // Photos should already be available from R2 data
+      const [additionalData, citySalons, galleryData, bridalDesigns, weddingDesigns, holidayDesigns, redDesigns, goldDesigns, pinkDesigns, frenchDesigns1, frenchDesigns2, frenchDesigns3, ombreDesigns1, ombreDesigns2, glitterDesigns1, glitterDesigns2, chromeDesigns1, chromeDesigns2, marbleDesigns1, marbleDesigns2, geometricDesigns1, geometricDesigns2, watercolorDesigns1, watercolorDesigns2, stampingDesigns1, stampingDesigns2] = await Promise.all([
+        getSalonAdditionalData(salon, undefined).catch(() => ({})),
+        getSalonsForCity(formattedState, formattedCity).catch(() => []),
         // Fetch 20 designs and shuffle for variety (for variety on each page load)
         getGalleryItems({ page: 1, limit: 20, sortBy: 'newest' }).catch(() => ({ items: [], total: 0 })),
         // Design Collections
@@ -187,75 +176,32 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
         getGalleryItemsByTechnique('stamping', 4).catch(() => [])
       ]);
       
-      // ✅ Create rich details from Places API data (instant and accurate!)
+      // ✅ Create salon details with fallback data (no Google Places API dependency)
       salonDetails = {
-        // AI-generated description from Places API
-        description: placeDetails?.generativeSummary?.overview || 
-                     placeDetails?.editorialSummary?.overview || 
-                     `${salon.name} is a professional nail salon located in ${salon.city}, ${salon.state}.`,
+        // Simple fallback description
+        description: `${salon.name} is a professional nail salon located in ${salon.city}, ${salon.state}.`,
         
-        // AI-generated review summary from Places API
-        reviewSummary: placeDetails?.generativeSummary?.description,
+        // Default parking info
+        parkingInfo: 'Street parking and nearby parking lots are typically available.',
         
-        // Real customer reviews from Places API
-        placeReviews: placeDetails?.reviews?.slice(0, 10).map((review: any) => ({
-          rating: review.rating || undefined,
-          text: review.text?.text || '',
-          authorName: review.authorAttribution?.displayName || undefined,
-          publishTime: review.publishTime || undefined,
-        })),
+        // Default payment options
+        paymentOptions: ['Cash', 'Credit Cards', 'Debit Cards'],
         
-        // Neighborhood info from Places API
-        neighborhoodInfo: placeDetails?.editorialSummary?.text,
-        
-        // ✅ NEW: Real parking info from Places API
-        parkingInfo: placeDetails?.parkingOptions ? 
-          `Parking: ${Object.entries(placeDetails.parkingOptions)
-            .filter(([_, value]) => value === true)
-            .map(([key]) => key.replace(/([A-Z])/g, ' $1').trim())
-            .join(', ') || 'Contact salon for parking details'}` :
-          'Street parking and nearby parking lots are typically available.',
-        
-        // ✅ NEW: Real payment options from Places API
-        paymentOptions: placeDetails?.paymentOptions ? 
-          Object.entries(placeDetails.paymentOptions)
-            .filter(([_, value]) => value === true)
-            .map(([key]) => key.replace(/([A-Z])/g, ' $1').trim()) :
-          ['Cash', 'Credit Cards', 'Debit Cards'],
-        
-        // ✅ NEW: Amenities from Places API
-        amenities: {
-          goodForChildren: placeDetails?.goodForChildren,
-          restroom: placeDetails?.restroom,
-          allowsDogs: placeDetails?.allowsDogs,
-          reservable: placeDetails?.reservable,
-          outdoorSeating: placeDetails?.outdoorSeating,
-        },
-        
-        // FAQ with ONLY dynamic answers based on real Places API data
+        // Default FAQ
         faq: [
           { 
             question: 'Do I need an appointment?', 
-            answer: placeDetails?.reservable ? 
-              'Yes, this salon accepts reservations. Appointments are recommended.' :
-              'Walk-ins are welcome, but appointments are recommended to ensure availability.' 
+            answer: 'Walk-ins are welcome, but appointments are recommended to ensure availability.' 
           },
           { 
             question: 'What payment methods do you accept?', 
-            answer: placeDetails?.paymentOptions ? 
-              `Accepts: ${Object.entries(placeDetails.paymentOptions)
-                .filter(([_, value]) => value === true)
-                .map(([key]) => key.replace(/([A-Z])/g, ' $1').trim())
-                .join(', ')}` :
-              'Most nail salons accept cash, credit cards, and mobile payments.' 
+            answer: 'Most nail salons accept cash, credit cards, and mobile payments.' 
           },
           { 
             question: 'Is this salon family-friendly?', 
-            answer: placeDetails?.goodForChildren ? 
-              'Yes, this salon is good for children and families.' :
-              'Please contact the salon to inquire about services for children.' 
+            answer: 'Please contact the salon to inquire about services for children.' 
           },
-        ].filter(item => item.answer), // Only show FAQs with real answers
+        ],
       };
       
       // Merge additional data (photos, etc.) into salon
@@ -263,8 +209,8 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
         salon = { ...salon, ...additionalData };
       }
       
-      // Filter out current salon and limit to 5
-      relatedSalons = salons.filter(s => s.name !== salon!.name).slice(0, 5);
+      // Filter out current salon and limit to 5 (get related salons from R2 city data)
+      relatedSalons = citySalons.filter(s => generateSlug(s.name) !== resolvedParams.slug).slice(0, 5);
       
       // Get 8 random designs from the fetched 20 (shuffle for variety)
       if (galleryData && galleryData.items && galleryData.items.length > 0) {
@@ -641,96 +587,12 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
               )}
 
               {/* About Section - HIGH PRIORITY: Key information */}
-              {(salonDetails?.description || (salonDetails as any)?.placeSummary) && (
+              {salonDetails?.description && (
                 <div className="bg-white rounded-xl p-6 ring-1 ring-[#ee2b8c]/15 shadow-sm">
                   <h2 className="text-2xl font-bold text-[#1b0d14] mb-4">About {salon.name}</h2>
-                  {(salonDetails as any)?.placeSummary && (
-                    <div className="mb-4 p-4 bg-gradient-to-r from-[#ee2b8c]/5 to-[#ee2b8c]/10 rounded-lg border-l-4 border-[#ee2b8c]">
-                      <p className="text-sm font-semibold text-[#ee2b8c] mb-2">✨ AI-Powered Summary</p>
-                      <div className="prose prose-lg text-[#1b0d14]/70 max-w-none">
-                        <p className="leading-relaxed">{(salonDetails as any).placeSummary}</p>
-                      </div>
-                    </div>
-                  )}
-                  {salonDetails?.description && !(salonDetails as any)?.placeSummary && (
-                    <div className="prose prose-lg text-[#1b0d14]/70 max-w-none">
-                      <p className="leading-relaxed">{salonDetails.description}</p>
-                    </div>
-                  )}
-                </div>
-              )}
-
-              {/* Customer Reviews - HIGH PRIORITY: Social proof */}
-              {salonDetails?.placeReviews && salonDetails.placeReviews.length > 0 && (
-                <div className="bg-white rounded-xl p-6 ring-1 ring-[#ee2b8c]/15 shadow-sm">
-                  <h2 className="text-2xl font-bold text-[#1b0d14] mb-4 flex items-center gap-2">
-                    <span>⭐</span>
-                    <span>Customer Reviews</span>
-                  </h2>
-                  <h3 className="text-lg font-semibold text-[#1b0d14]/70 mb-4">Recent Reviews</h3>
-                  <div className="space-y-4">
-                    {salonDetails.placeReviews.slice(0, 3).map((review: any, index: number) => (
-                      <div key={index} className="border-b border-[#ee2b8c]/10 pb-4 last:border-0 last:pb-0">
-                        <div className="flex items-start justify-between mb-2">
-                          <div className="flex items-center gap-2">
-                            {review.rating && (
-                              <div className="flex items-center gap-1">
-                                <span className="text-yellow-500">⭐</span>
-                                <span className="font-semibold text-[#1b0d14]">{review.rating}</span>
-                              </div>
-                            )}
-                            {review.authorName && (
-                              <span className="text-sm text-[#1b0d14]/60">by {review.authorName}</span>
-                            )}
-                          </div>
-                          {review.publishTime && (
-                            <span className="text-xs text-[#1b0d14]/50">
-                              {new Date(review.publishTime).toLocaleDateString()}
-                            </span>
-                          )}
-                        </div>
-                        {review.text && (
-                          <p className="text-[#1b0d14]/70 leading-relaxed line-clamp-3">{review.text}</p>
-                        )}
-                      </div>
-                    ))}
+                  <div className="prose prose-lg text-[#1b0d14]/70 max-w-none">
+                    <p className="leading-relaxed">{salonDetails.description}</p>
                   </div>
-                  {salon.uri && (
-                    <div className="mt-4 text-center">
-                      <a
-                        href={salon.uri}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-[#ee2b8c] hover:underline text-sm font-medium"
-                      >
-                        Read all {salon.reviewCount ? `${salon.reviewCount.toLocaleString()} ` : ''}reviews on Google Maps →
-                      </a>
-                    </div>
-                  )}
-                </div>
-              )}
-
-              {/* Review Summary - HIGH PRIORITY: Social proof */}
-              {(salonDetails?.reviewSummary) && (
-                <div className="bg-white rounded-xl p-6 ring-1 ring-[#ee2b8c]/15 shadow-sm">
-                  <h2 className="text-2xl font-bold text-[#1b0d14] mb-4">What Customers Say</h2>
-                  <div className="p-4 bg-gradient-to-r from-[#ee2b8c]/5 to-[#ee2b8c]/10 rounded-lg border-l-4 border-[#ee2b8c]">
-                    <p className="text-sm font-semibold text-[#ee2b8c] mb-2">✨ AI-Powered Review Summary</p>
-                    <div className="prose prose-lg text-[#1b0d14]/70 max-w-none">
-                      <p className="leading-relaxed">{salonDetails.reviewSummary}</p>
-                    </div>
-                  </div>
-                  {salon.rating && (
-                    <div className="mt-4 flex items-center gap-2">
-                      <span className="text-yellow-500 text-xl">⭐</span>
-                      <span className="text-lg font-bold text-[#1b0d14]">{salon.rating}</span>
-                      {salon.reviewCount && (
-                        <span className="text-[#1b0d14]/60">
-                          ({salon.reviewCount.toLocaleString()} {salon.reviewCount === 1 ? 'review' : 'reviews'})
-                        </span>
-                      )}
-                    </div>
-                  )}
                 </div>
               )}
 
@@ -954,8 +816,7 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
               ) : null}
 
               {/* Amenities & Features - Combined compact section */}
-              {((salonDetails?.amenities && (salonDetails.amenities.goodForChildren || salonDetails.amenities.restroom || salonDetails.amenities.allowsDogs || salonDetails.amenities.reservable || salonDetails.amenities.outdoorSeating)) || 
-                (salon.accessibilityOptions && (salon.accessibilityOptions.wheelchairAccessibleParking || salon.accessibilityOptions.wheelchairAccessibleEntrance || salon.accessibilityOptions.wheelchairAccessibleRestroom || salon.accessibilityOptions.wheelchairAccessibleSeating)) ||
+              {((salon.accessibilityOptions && (salon.accessibilityOptions.wheelchairAccessibleParking || salon.accessibilityOptions.wheelchairAccessibleEntrance || salon.accessibilityOptions.wheelchairAccessibleRestroom || salon.accessibilityOptions.wheelchairAccessibleSeating)) ||
                 (salonDetails?.paymentOptions && salonDetails.paymentOptions.length > 0)) && (
                 <div className="bg-white rounded-xl p-6 ring-1 ring-[#ee2b8c]/15 shadow-sm">
                   <h2 className="text-xl font-bold text-[#1b0d14] mb-4 flex items-center gap-2">
@@ -963,36 +824,6 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
                     <span>Amenities & Features</span>
                   </h2>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    {salonDetails?.amenities?.reservable && (
-                      <div className="flex items-center gap-2 text-sm">
-                        <span className="text-lg">📅</span>
-                        <span className="text-[#1b0d14]/70">Accepts Reservations</span>
-                      </div>
-                    )}
-                    {salonDetails?.amenities?.goodForChildren && (
-                      <div className="flex items-center gap-2 text-sm">
-                        <span className="text-lg">👶</span>
-                        <span className="text-[#1b0d14]/70">Family-Friendly</span>
-                      </div>
-                    )}
-                    {salonDetails?.amenities?.restroom && (
-                      <div className="flex items-center gap-2 text-sm">
-                        <span className="text-lg">🚻</span>
-                        <span className="text-[#1b0d14]/70">Restroom Available</span>
-                      </div>
-                    )}
-                    {salonDetails?.amenities?.allowsDogs && (
-                      <div className="flex items-center gap-2 text-sm">
-                        <span className="text-lg">🐕</span>
-                        <span className="text-[#1b0d14]/70">Pet-Friendly</span>
-                      </div>
-                    )}
-                    {salonDetails?.amenities?.outdoorSeating && (
-                      <div className="flex items-center gap-2 text-sm">
-                        <span className="text-lg">🪑</span>
-                        <span className="text-[#1b0d14]/70">Outdoor Seating</span>
-                      </div>
-                    )}
                     {salon.accessibilityOptions?.wheelchairAccessibleParking && (
                       <div className="flex items-center gap-2 text-sm">
                         <span className="text-lg">♿</span>
@@ -1190,9 +1021,7 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
                         allowFullScreen
                         referrerPolicy="no-referrer-when-downgrade"
                         src={
-                          salon.placeId && process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY
-                            ? `https://www.google.com/maps/embed/v1/place?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&q=place_id:${salon.placeId}`
-                            : salon.address
+                          salon.address
                             ? `https://www.google.com/maps?q=${encodeURIComponent(salon.address)}&output=embed`
                             : salon.name
                             ? `https://www.google.com/maps?q=${encodeURIComponent(`${salon.name}, ${salon.city}, ${salon.state}`)}&output=embed`

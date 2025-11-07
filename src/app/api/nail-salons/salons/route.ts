@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getNailSalonsForLocation } from '@/lib/nailSalonService';
+import { getSalonsForCity } from '@/lib/salonDataService';
+import { fetchNailSalonsFromAPI, convertPlaceToSalon } from '@/lib/googleMapsApiService';
 
 export async function GET(request: NextRequest) {
   try {
@@ -7,6 +8,7 @@ export async function GET(request: NextRequest) {
     const state = searchParams.get('state');
     const city = searchParams.get('city');
     const limit = parseInt(searchParams.get('limit') || '20', 10);
+    const useApi = searchParams.get('useApi') === 'true'; // Optional flag to use API
 
     if (!state) {
       return NextResponse.json(
@@ -18,7 +20,23 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const salons = await getNailSalonsForLocation(state, city || undefined, limit);
+    let salons;
+    
+    if (useApi) {
+      // Use API if explicitly requested (for data collection)
+      const places = await fetchNailSalonsFromAPI(state, city || undefined, limit);
+      salons = places.map(place => convertPlaceToSalon(place, state, city || undefined));
+    } else {
+      // Default: Use R2 data (no API dependency)
+      if (city) {
+        salons = await getSalonsForCity(state, city);
+        // Limit results
+        salons = salons.slice(0, limit);
+      } else {
+        // If no city specified, return empty array (R2 requires city)
+        salons = [];
+      }
+    }
     
     return NextResponse.json({
       success: true,
@@ -26,6 +44,7 @@ export async function GET(request: NextRequest) {
       count: salons.length,
       state,
       city: city || null,
+      source: useApi ? 'api' : 'r2',
     });
   } catch (error) {
     console.error('Error fetching salons:', error);

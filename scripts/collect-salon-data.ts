@@ -11,12 +11,16 @@ dotenv.config({ path: '.env.local', override: true });
 
 import { 
   getAllStatesWithSalons,
-  getCitiesInState, 
-  getNailSalonsForLocation,
+  getCitiesInState,
   generateStateSlug,
   generateCitySlug,
   type NailSalon
 } from '../src/lib/nailSalonService';
+
+import {
+  fetchNailSalonsFromAPI,
+  convertPlaceToSalon
+} from '../src/lib/googleMapsApiService';
 
 import {
   uploadCityDataToR2,
@@ -74,7 +78,9 @@ async function collectCityData(
     }
     
     // Fetch salons from Google Places API (with full details including photo URLs)
-    const salons = await getNailSalonsForLocation(stateName, cityName, 50);
+    // Use API service for data collection
+    const places = await fetchNailSalonsFromAPI(stateName, cityName, 50);
+    const salons = places.map(place => convertPlaceToSalon(place, stateName, cityName));
     
     if (salons.length === 0) {
       return { success: true, salonCount: 0, skipped: false };

@@ -1267,20 +1267,23 @@ export async function getSalonAdditionalData(
   salon: NailSalon,
   placeDetails?: any
 ): Promise<Partial<NailSalon>> {
+  // Note: This function now only processes provided placeDetails.
+  // To fetch fresh data from API, use googleMapsApiService.ts
+  
   if (!salon.placeId) {
     return {};
   }
 
   try {
-    // ✅ OPTIMIZATION: Use provided placeDetails or fetch if not provided
-    let details = placeDetails;
-    if (!details) {
-      details = await getPlaceDetails(salon.placeId);
-    }
-    
-    if (!details) {
+    // Only use provided placeDetails - don't fetch from API
+    // This eliminates Google Maps API dependency
+    if (!placeDetails) {
+      // Return empty object if no placeDetails provided
+      // Photos and other data should already be in salon object from R2
       return {};
     }
+    
+    const details = placeDetails;
 
     const additionalData: Partial<NailSalon> = {};
 

@@ -88,10 +88,10 @@ export function SalonStructuredData({
   } : undefined;
 
   // Build geo coordinates if available
-  const geo = salon.location ? {
+  const geo = (salon.latitude && salon.longitude) ? {
     "@type": "GeoCoordinates",
-    "latitude": salon.location.lat.toString(),
-    "longitude": salon.location.lng.toString()
+    "latitude": salon.latitude.toString(),
+    "longitude": salon.longitude.toString()
   } : undefined;
 
   // Build aggregate rating
@@ -111,7 +111,7 @@ export function SalonStructuredData({
     "image": salon.photos && salon.photos.length > 0 ? salon.photos[0].url : undefined,
     "address": address,
     "geo": geo,
-    "url": salon.websiteUri || `https://nailartai.app/nail-salons/${stateSlug}/${citySlug}/${slug}`,
+    "url": salon.website || `https://nailartai.app/nail-salons/${stateSlug}/${citySlug}/${slug}`,
     "telephone": salon.phone,
     "priceRange": getPriceRange(),
     "openingHoursSpecification": parseOpeningHours(salon.openingHours || salon.currentOpeningHours?.weekdayDescriptions),

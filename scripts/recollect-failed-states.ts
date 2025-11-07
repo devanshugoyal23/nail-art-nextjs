@@ -15,9 +15,13 @@ import {
 import { 
   getAllStatesWithSalons, 
   getCitiesInState,
-  getNailSalonsForLocation,
   generateCitySlug
 } from '../src/lib/nailSalonService';
+
+import {
+  fetchNailSalonsFromAPI,
+  convertPlaceToSalon
+} from '../src/lib/googleMapsApiService';
 
 // States that likely failed due to rate limiting (0 salons but have cities)
 const SUSPICIOUS_STATES = [
@@ -83,7 +87,9 @@ async function collectCityData(
   const RETRY_DELAY = 5000;
   
   try {
-    const salons = await getNailSalonsForLocation(stateName, cityName, 50);
+    // Use API service for data collection
+    const places = await fetchNailSalonsFromAPI(stateName, cityName, 50);
+    const salons = places.map(place => convertPlaceToSalon(place, stateName, cityName));
     
     if (salons.length === 0) {
       return { success: true, salonCount: 0 };

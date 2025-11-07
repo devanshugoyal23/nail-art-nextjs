@@ -168,7 +168,8 @@ export async function getSignedR2Url(key: string, expiresIn: number = 3600): Pro
     Key: prefixedKey,
   });
   
-  return await getSignedUrl(r2Client, command, { expiresIn });
+  const client = getR2Client();
+  return await getSignedUrl(client, command, { expiresIn });
 }
 
 /**

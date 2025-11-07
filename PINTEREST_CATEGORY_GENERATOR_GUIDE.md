@@ -475,3 +475,4 @@ Generate Pinterest CSV for "{YOUR_CATEGORY}" category with all requirements from
 **Tested With:** Halloween, Summer, Fall, Date Night categories
 
 
+

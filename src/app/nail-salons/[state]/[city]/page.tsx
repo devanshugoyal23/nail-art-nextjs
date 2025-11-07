@@ -1,7 +1,8 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { getNailSalonsForLocation, generateStateSlug, generateCitySlug, generateSlug, getPhotoUrl } from '@/lib/nailSalonService';
+import { generateStateSlug, generateCitySlug, generateSlug, getPhotoUrl } from '@/lib/nailSalonService';
+import { getSalonsForCity } from '@/lib/salonDataService';
 import OptimizedImage from '@/components/OptimizedImage';
 import { DirectoryStructuredData } from '@/components/DirectoryStructuredData';
 
@@ -91,7 +92,8 @@ export default async function CityPage({ params }: CityPageProps) {
 
   let salons;
   try {
-    salons = await getNailSalonsForLocation(formattedState, formattedCity, 100);
+    // Use R2 data instead of Google Maps API
+    salons = await getSalonsForCity(formattedState, formattedCity);
   } catch (error) {
     console.error(`Error fetching salons for ${formattedCity}, ${formattedState}:`, error);
     notFound();
