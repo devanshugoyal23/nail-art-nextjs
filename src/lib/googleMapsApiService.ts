@@ -175,7 +175,7 @@ export async function fetchSalonBySlugFromAPI(
   state: string,
   city: string,
   slug: string
-): Promise<{ id: string; displayName?: string | { text: string }; formattedAddress?: string; nationalPhoneNumber?: string; rating?: number; userRatingCount?: number; websiteUri?: string; location?: { latitude: number; longitude: number }; businessStatus?: string; regularOpeningHours?: { weekdayDescriptions: string[] }; types?: string[]; priceLevel?: string; currentOpeningHours?: any; photos?: any[] } | null> {
+): Promise<{ id: string; displayName?: string | { text: string }; formattedAddress?: string; nationalPhoneNumber?: string; rating?: number; userRatingCount?: number; websiteUri?: string; location?: { latitude: number; longitude: number }; businessStatus?: string; regularOpeningHours?: { weekdayDescriptions: string[] }; types?: string[]; priceLevel?: string; currentOpeningHours?: { openNow?: boolean; weekdayDescriptions?: string[] }; photos?: Array<{ name?: string; widthPx?: number; heightPx?: number; authorAttributions?: Array<{ displayName?: string; uri?: string }> }> } | null> {
   if (!GOOGLE_MAPS_API_KEY) {
     throw new Error('NEXT_PUBLIC_GOOGLE_MAPS_API_KEY is not configured');
   }
@@ -228,7 +228,7 @@ export async function fetchSalonBySlugFromAPI(
  * @param placeId - Google Place ID
  * @returns Place details or null
  */
-export async function fetchPlaceDetailsFromAPI(placeId: string): Promise<{ id?: string; displayName?: string | { text: string }; formattedAddress?: string; nationalPhoneNumber?: string; rating?: number; userRatingCount?: number; websiteUri?: string; reviews?: any[]; regularOpeningHours?: any; types?: string[]; photos?: any[]; editorialSummary?: any; priceLevel?: string; businessStatus?: string; currentOpeningHours?: any; } | null> {
+export async function fetchPlaceDetailsFromAPI(placeId: string): Promise<{ id?: string; displayName?: string | { text: string }; formattedAddress?: string; nationalPhoneNumber?: string; rating?: number; userRatingCount?: number; websiteUri?: string; reviews?: Array<{ rating?: number; text?: { text: string }; authorDisplayName?: string; publishTime?: string }>; regularOpeningHours?: { weekdayDescriptions?: string[] }; types?: string[]; photos?: Array<{ name?: string; widthPx?: number; heightPx?: number; authorAttributions?: Array<{ displayName?: string; uri?: string }> }>; editorialSummary?: { text?: string }; priceLevel?: string; businessStatus?: string; currentOpeningHours?: { openNow?: boolean; weekdayDescriptions?: string[] }; } | null> {
   if (!GOOGLE_MAPS_API_KEY) {
     throw new Error('NEXT_PUBLIC_GOOGLE_MAPS_API_KEY is not configured');
   }
@@ -302,7 +302,7 @@ async function getLocationCoordinates(state: string, city?: string): Promise<{ l
  * @param city - City name (optional)
  * @returns NailSalon object
  */
-export function convertPlaceToSalon(place: { id?: string; displayName?: string | { text: string }; formattedAddress?: string; nationalPhoneNumber?: string; rating?: number; userRatingCount?: number; websiteUri?: string; location?: { latitude: number; longitude: number }; businessStatus?: string; regularOpeningHours?: { weekdayDescriptions: string[] }; types?: string[]; priceLevel?: string; currentOpeningHours?: any; photos?: any[] }, state: string, city?: string): { name: string; address: string; city: string; state: string; phone?: string; website?: string; rating?: number; reviewCount?: number; placeId?: string; uri?: string; latitude?: number; longitude?: number; openingHours?: string[]; types?: string[]; photos?: any[]; priceLevel?: string; businessStatus?: string; currentOpeningHours?: any } {
+export function convertPlaceToSalon(place: { id?: string; displayName?: string | { text: string }; formattedAddress?: string; nationalPhoneNumber?: string; rating?: number; userRatingCount?: number; websiteUri?: string; location?: { latitude: number; longitude: number }; businessStatus?: string; regularOpeningHours?: { weekdayDescriptions: string[] }; types?: string[]; priceLevel?: string; currentOpeningHours?: { openNow?: boolean; weekdayDescriptions?: string[] }; photos?: Array<{ name?: string; widthPx?: number; heightPx?: number; authorAttributions?: Array<{ displayName?: string; uri?: string }> }> }, state: string, city?: string): { name: string; address: string; city: string; state: string; phone?: string; website?: string; rating?: number; reviewCount?: number; placeId?: string; uri?: string; latitude?: number; longitude?: number; openingHours?: string[]; types?: string[]; photos?: Array<{ name: string; url: string; width?: number; height?: number; authorAttributions?: Array<{ displayName?: string; uri?: string }> }>; priceLevel?: 'INEXPENSIVE' | 'MODERATE' | 'EXPENSIVE' | 'VERY_EXPENSIVE'; businessStatus?: 'OPERATIONAL' | 'CLOSED_TEMPORARILY' | 'CLOSED_PERMANENTLY'; currentOpeningHours?: { openNow?: boolean; weekdayDescriptions?: string[] } } {
   const address = place.formattedAddress || '';
   const addressParts = address.split(',');
   const salonCity = city || (addressParts.length > 1 ? addressParts[addressParts.length - 2].trim() : '');
@@ -312,7 +312,7 @@ export function convertPlaceToSalon(place: { id?: string; displayName?: string |
     : place.displayName?.text || 'Nail Salon';
   
   // Process photos if available
-  const photos = place.photos ? place.photos.slice(0, 5).map((photo: { name?: string; widthPx?: number; heightPx?: number; authorAttributions?: any[] }) => ({
+  const photos = place.photos ? place.photos.slice(0, 5).map((photo: { name?: string; widthPx?: number; heightPx?: number; authorAttributions?: Array<{ displayName?: string; uri?: string }> }) => ({
     name: photo.name || '',
     url: getPhotoUrl(photo.name),
     width: photo.widthPx || undefined,
@@ -336,8 +336,8 @@ export function convertPlaceToSalon(place: { id?: string; displayName?: string |
     openingHours: place.regularOpeningHours?.weekdayDescriptions || undefined,
     types: place.types || undefined,
     photos: photos,
-    priceLevel: place.priceLevel || undefined,
-    businessStatus: place.businessStatus || undefined,
+    priceLevel: place.priceLevel as ('INEXPENSIVE' | 'MODERATE' | 'EXPENSIVE' | 'VERY_EXPENSIVE') || undefined,
+    businessStatus: place.businessStatus as ('OPERATIONAL' | 'CLOSED_TEMPORARILY' | 'CLOSED_PERMANENTLY') || undefined,
     currentOpeningHours: place.currentOpeningHours ? {
       openNow: place.currentOpeningHours.openNow,
       weekdayDescriptions: place.currentOpeningHours.weekdayDescriptions,

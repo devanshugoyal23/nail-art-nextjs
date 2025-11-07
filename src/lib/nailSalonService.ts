@@ -119,7 +119,7 @@ export async function getNailSalonsForLocation(
     }
     
     // Get location coordinates for bias
-    const locationCoords = await getLocationCoordinates(state, city);
+    const locationCoords = await getLocationCoordinates(state);
 
     // Use multiple search queries to get more results
     // Places API Text Search has a max of 20 per request, so we'll make multiple requests
@@ -137,7 +137,7 @@ export async function getNailSalonsForLocation(
           `nail art studio in ${state}`
         ];
 
-    const allPlaces: Array<{ id: string; displayName?: string | { text: string }; formattedAddress?: string; nationalPhoneNumber?: string; rating?: number; userRatingCount?: number; websiteUri?: string; location?: { latitude: number; longitude: number }; businessStatus?: string; regularOpeningHours?: { weekdayDescriptions: string[] }; types?: string[]; priceLevel?: string; currentOpeningHours?: any; photos?: any[] }> = [];
+    const allPlaces: Array<{ id: string; displayName?: string | { text: string }; formattedAddress?: string; nationalPhoneNumber?: string; rating?: number; userRatingCount?: number; websiteUri?: string; location?: { latitude: number; longitude: number }; businessStatus?: string; regularOpeningHours?: { weekdayDescriptions: string[] }; types?: string[]; priceLevel?: string; currentOpeningHours?: { openNow?: boolean; weekdayDescriptions?: string[] }; photos?: Array<{ name?: string; widthPx?: number; heightPx?: number; authorAttributions?: Array<{ displayName?: string; uri?: string }> }> }> = [];
     const seenPlaceIds = new Set<string>();
 
     // Make multiple requests with different queries to get more results
@@ -255,7 +255,7 @@ export async function getNailSalonsForLocation(
         : place.displayName?.text || 'Nail Salon';
       
       // Process photos if available
-      const photos = place.photos ? place.photos.slice(0, 5).map((photo: { name?: string; widthPx?: number; heightPx?: number; authorAttributions?: any[] }) => ({
+      const photos = place.photos ? place.photos.slice(0, 5).map((photo: { name?: string; widthPx?: number; heightPx?: number; authorAttributions?: Array<{ displayName?: string; uri?: string }> }) => ({
         name: photo.name || '',
         url: getPhotoUrl(photo.name),
         width: photo.widthPx || undefined,
@@ -321,14 +321,14 @@ async function getNailSalonsWithGemini(
     
 Provide the top ${limit} salons with their complete details including name, full address, phone number, and any ratings if available.`;
 
-    const locationCoords = await getLocationCoordinates(state, city);
+    const locationCoords = await getLocationCoordinates(state);
 
     const requestBody: {
       contents: {
         role: string;
         parts: { text: string }[];
       }[];
-      tools: { googleMaps: {} }[];
+      tools: { googleMaps: object }[];
       toolConfig?: {
         retrievalConfig: {
           latLng: {
@@ -476,7 +476,7 @@ export async function getCitiesInState(state: string): Promise<City[]> {
       
       console.log(`✅ Loaded ${cities.length} cities for ${state} from JSON (instant!)`);
       return cities;
-    } catch (fileError) {
+    } catch {
       // JSON file doesn't exist, fall back to API
       console.warn(`⚠️  No JSON file found for ${state}, falling back to Gemini API`);
       return await getCitiesFromGeminiAPI(state);
@@ -605,7 +605,7 @@ export async function getNailSalonBySlug(
         const salonCity = city || (addressParts.length > 1 ? addressParts[addressParts.length - 2].trim() : '');
         
         // Process photos if available
-        const photos = place.photos ? place.photos.slice(0, 5).map((photo: { name?: string; widthPx?: number; heightPx?: number; authorAttributions?: any[] }) => ({
+        const photos = place.photos ? place.photos.slice(0, 5).map((photo: { name?: string; widthPx?: number; heightPx?: number; authorAttributions?: Array<{ displayName?: string; uri?: string }> }) => ({
           name: photo.name || '',
           url: getPhotoUrl(photo.name),
           width: photo.widthPx || undefined,
@@ -655,7 +655,7 @@ export async function getNailSalonBySlug(
       const addressParts = address.split(',');
       const salonCity = city || (addressParts.length > 1 ? addressParts[addressParts.length - 2].trim() : '');
       
-      const photos = firstPlace.photos ? firstPlace.photos.slice(0, 5).map((photo: { name?: string; widthPx?: number; heightPx?: number; authorAttributions?: any[] }) => ({
+      const photos = firstPlace.photos ? firstPlace.photos.slice(0, 5).map((photo: { name?: string; widthPx?: number; heightPx?: number; authorAttributions?: Array<{ displayName?: string; uri?: string }> }) => ({
         name: photo.name || '',
         url: getPhotoUrl(photo.name),
         width: photo.widthPx || undefined,
@@ -711,7 +711,7 @@ export async function getNailSalonBySlug(
  */
 function parseSalonDataFromResponse(
   text: string,
-  groundingMetadata: { webSearchQueries?: any[]; retrievalMetadata?: any },
+  groundingMetadata: { webSearchQueries?: unknown[]; retrievalMetadata?: unknown },
   state: string,
   city?: string
 ): NailSalon[] {
@@ -913,7 +913,7 @@ function getFallbackCitiesForState(state: string): City[] {
 /**
  * Get approximate coordinates for a location
  */
-async function getLocationCoordinates(state: string, city?: string): Promise<{ latitude: number; longitude: number } | null> {
+async function getLocationCoordinates(state: string): Promise<{ latitude: number; longitude: number } | null> {
   // Simple coordinate lookup - in production, use a geocoding service
   const coordinates: Record<string, { latitude: number; longitude: number }> = {
     'California': { latitude: 36.7783, longitude: -119.4179 },
@@ -940,7 +940,7 @@ async function getLocationCoordinates(state: string, city?: string): Promise<{ l
  */
 export async function getSalonDetails(
   salon: NailSalon,
-  placeDetails?: any
+  placeDetails?: { reviews?: Array<{ rating?: number; text?: { text: string }; authorDisplayName?: string; publishTime?: string }>; editorialSummary?: { text?: string }; currentOpeningHours?: { openNow?: boolean; weekdayDescriptions?: string[] } }
 ): Promise<SalonDetails> {
   if (!API_KEY) {
     throw new Error('Gemini API key not configured');
@@ -1247,7 +1247,7 @@ function parseFAQ(text: string): Array<{ question: string; answer: string }> {
 /**
  * Get place details from Google Places API
  */
-export async function getPlaceDetails(placeId: string): Promise<any> {
+export async function getPlaceDetails(placeId: string): Promise<{ reviews?: Array<{ rating?: number; text?: { text: string }; authorDisplayName?: string; publishTime?: string }>; editorialSummary?: { text?: string }; currentOpeningHours?: { openNow?: boolean; weekdayDescriptions?: string[] } } | null> {
   try {
     if (!GOOGLE_MAPS_API_KEY) {
       throw new Error('NEXT_PUBLIC_GOOGLE_MAPS_API_KEY is not configured');
@@ -1277,7 +1277,7 @@ export async function getPlaceDetails(placeId: string): Promise<any> {
  * Get photo URL from Places API photo reference
  * Photo name format: places/{placeId}/photos/{photoId}
  */
-export function getPhotoUrl(photoName: string, maxWidth: number = 800, maxHeight: number = 600): string {
+export function getPhotoUrl(photoName: string, maxWidth: number = 800): string {
   if (!photoName) return '';
   if (!GOOGLE_MAPS_API_KEY) {
     console.warn('NEXT_PUBLIC_GOOGLE_MAPS_API_KEY is not configured. Cannot generate photo URL.');
@@ -1296,7 +1296,7 @@ export function getPhotoUrl(photoName: string, maxWidth: number = 800, maxHeight
  */
 export async function getSalonAdditionalData(
   salon: NailSalon,
-  placeDetails?: { reviews?: any[]; editorialSummary?: any; currentOpeningHours?: any }
+  placeDetails?: { reviews?: Array<{ rating?: number; text?: { text: string }; authorDisplayName?: string; publishTime?: string }>; editorialSummary?: { text?: string }; currentOpeningHours?: { openNow?: boolean; weekdayDescriptions?: string[] } }
 ): Promise<Partial<NailSalon>> {
   // Note: This function now only processes provided placeDetails.
   // To fetch fresh data from API, use googleMapsApiService.ts
@@ -1320,7 +1320,7 @@ export async function getSalonAdditionalData(
 
     // Get photos
     if (details.photos && details.photos.length > 0) {
-      additionalData.photos = details.photos.slice(0, 10).map((photo: any) => ({
+      additionalData.photos = details.photos.slice(0, 10).map((photo: { name?: string; widthPx?: number; heightPx?: number; authorAttributions?: Array<{ displayName?: string; uri?: string }> }) => ({
         name: photo.name || '',
         url: getPhotoUrl(photo.name),
         width: photo.widthPx || undefined,

@@ -2,7 +2,7 @@ import { NailSalon } from '@/lib/nailSalonService';
 
 interface SalonStructuredDataProps {
   salon: NailSalon;
-  salonDetails: any;
+  salonDetails: { description?: string; faq?: Array<{ question: string; answer: string }>; [key: string]: unknown };
   stateSlug: string;
   citySlug: string;
   slug: string;
@@ -16,7 +16,7 @@ export function SalonStructuredData({
   slug 
 }: SalonStructuredDataProps) {
   // Parse opening hours for schema
-  const parseOpeningHours = (hours?: string[]): any[] => {
+  const parseOpeningHours = (hours?: string[]): Array<{ '@type': string; dayOfWeek: string; opens?: string; closes?: string }> => {
     if (!hours || hours.length === 0) return [];
     
     const dayMap: { [key: string]: string } = {
@@ -162,7 +162,7 @@ export function SalonStructuredData({
   };
 
   // Build review schemas (up to 5 reviews)
-  const reviewSchemas = salonDetails?.placeReviews?.slice(0, 5).map((review: any, index: number) => ({
+  const reviewSchemas = salonDetails?.placeReviews?.slice(0, 5).map((review: { rating?: number; text?: string; authorName?: string; publishTime?: string }) => ({
     "@context": "https://schema.org",
     "@type": "Review",
     "itemReviewed": {
@@ -181,11 +181,11 @@ export function SalonStructuredData({
     } : undefined,
     "reviewBody": review.text || undefined,
     "datePublished": review.publishTime || undefined
-  })).filter((review: any) => review.reviewBody || review.reviewRating) || [];
+  })).filter((review: { reviewBody?: string; reviewRating?: { ratingValue?: number } }) => review.reviewBody || review.reviewRating) || [];
 
   // Build ImageObject schemas for salon photos (only valid photos with URLs)
   const imageSchemas = validPhotos.length > 0 
-    ? validPhotos.slice(0, 6).map((photo: any, index: number) => {
+    ? validPhotos.slice(0, 6).map((photo: { url: string; name?: string }, index: number) => {
         const photoTypes = ['exterior', 'interior', 'service area', 'nail art station', 'waiting area', 'treatment room'];
         const photoType = photoTypes[index] || 'interior';
         
@@ -219,7 +219,7 @@ export function SalonStructuredData({
       />
       
       {/* Review Schemas */}
-      {reviewSchemas.map((review: any, index: number) => (
+      {reviewSchemas.map((review: object, index: number) => (
         <script
           key={`review-${index}`}
           type="application/ld+json"
@@ -228,7 +228,7 @@ export function SalonStructuredData({
       ))}
       
       {/* ImageObject Schemas */}
-      {imageSchemas.map((image: any, index: number) => (
+      {imageSchemas.map((image: object, index: number) => (
         <script
           key={`image-${index}`}
           type="application/ld+json"
