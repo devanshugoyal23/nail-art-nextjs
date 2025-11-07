@@ -15,6 +15,9 @@ dotenv.config({ path: '.env.local', override: true });
 const GOOGLE_MAPS_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
 const PLACES_API_URL = 'https://places.googleapis.com/v1/places:searchText';
 
+// Import types for internal use
+import type { NailSalon } from './nailSalonService';
+
 // Re-export types from nailSalonService for convenience
 export type {
   NailSalon,
@@ -329,7 +332,12 @@ export function convertPlaceToSalon(place: GooglePlace, state: string, city?: st
       url: getPhotoUrl(photo.name || ''),
       width: photo.widthPx || undefined,
       height: photo.heightPx || undefined,
-      authorAttributions: photo.authorAttributions || undefined,
+      authorAttributions: Array.isArray(photo.authorAttributions) 
+        ? photo.authorAttributions.map(attr => ({
+            displayName: typeof attr === 'object' && attr && 'displayName' in attr ? attr.displayName as string : undefined,
+            uri: typeof attr === 'object' && attr && 'uri' in attr ? attr.uri as string : undefined,
+          }))
+        : undefined,
     })) : undefined;
 
   return {
@@ -337,22 +345,30 @@ export function convertPlaceToSalon(place: GooglePlace, state: string, city?: st
     address: address,
     city: salonCity,
     state: state,
-    phone: place.nationalPhoneNumber || undefined,
-    website: place.websiteUri || undefined,
-    rating: place.rating || undefined,
-    reviewCount: place.userRatingCount || undefined,
+    phone: typeof place.nationalPhoneNumber === 'string' ? place.nationalPhoneNumber : undefined,
+    website: typeof place.websiteUri === 'string' ? place.websiteUri : undefined,
+    rating: typeof place.rating === 'number' ? place.rating : undefined,
+    reviewCount: typeof place.userRatingCount === 'number' ? place.userRatingCount : undefined,
     placeId: place.id || undefined,
     uri: place.id ? `https://maps.google.com/?place_id=${place.id}` : undefined,
     latitude: place.location?.latitude || undefined,
     longitude: place.location?.longitude || undefined,
-    openingHours: place.regularOpeningHours?.weekdayDescriptions || undefined,
-    types: place.types || undefined,
+    openingHours: (place.regularOpeningHours && typeof place.regularOpeningHours === 'object' && 'weekdayDescriptions' in place.regularOpeningHours && Array.isArray(place.regularOpeningHours.weekdayDescriptions)) 
+      ? place.regularOpeningHours.weekdayDescriptions 
+      : undefined,
+    types: Array.isArray(place.types) ? place.types : undefined,
     photos: photos,
-    priceLevel: place.priceLevel || undefined,
-    businessStatus: place.businessStatus || undefined,
-    currentOpeningHours: place.currentOpeningHours ? {
-      openNow: place.currentOpeningHours.openNow,
-      weekdayDescriptions: place.currentOpeningHours.weekdayDescriptions,
+    priceLevel: (typeof place.priceLevel === 'string' && ['INEXPENSIVE', 'MODERATE', 'EXPENSIVE', 'VERY_EXPENSIVE'].includes(place.priceLevel)) 
+      ? place.priceLevel as 'INEXPENSIVE' | 'MODERATE' | 'EXPENSIVE' | 'VERY_EXPENSIVE' 
+      : undefined,
+    businessStatus: (typeof place.businessStatus === 'string' && ['OPERATIONAL', 'CLOSED_TEMPORARILY', 'CLOSED_PERMANENTLY'].includes(place.businessStatus)) 
+      ? place.businessStatus as 'OPERATIONAL' | 'CLOSED_TEMPORARILY' | 'CLOSED_PERMANENTLY' 
+      : undefined,
+    currentOpeningHours: (place.currentOpeningHours && typeof place.currentOpeningHours === 'object') ? {
+      openNow: 'openNow' in place.currentOpeningHours ? place.currentOpeningHours.openNow as boolean : undefined,
+      weekdayDescriptions: ('weekdayDescriptions' in place.currentOpeningHours && Array.isArray(place.currentOpeningHours.weekdayDescriptions)) 
+        ? place.currentOpeningHours.weekdayDescriptions as string[]
+        : undefined,
     } : undefined,
   };
 }

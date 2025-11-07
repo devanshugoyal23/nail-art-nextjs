@@ -69,7 +69,7 @@ export default function OptimizedImage({
   }, [src, isMobile]);
   
   // Switch to original image if optimized image fails
-  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement>) => {
+  const handleImageError = (_: React.SyntheticEvent<HTMLImageElement>) => {
     if (currentSrc !== src) {
       setCurrentSrc(src);
     }
