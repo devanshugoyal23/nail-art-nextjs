@@ -31,6 +31,7 @@ const Header: React.FC = () => {
               <Link href="/categories" className={linkClass('/categories')}>Categories</Link>
               <Link href="/try-on" className={linkClass('/try-on')}>Virtual Try-On</Link>
               <Link href="/nail-art-gallery" className={linkClass('/nail-art-gallery')}>Gallery</Link>
+              <Link href="/nail-salons" className={linkClass('/nail-salons')}>Find Salons</Link>
             </div>
           </div>
           <div className="-mr-2 flex md:hidden">
@@ -86,6 +87,13 @@ const Header: React.FC = () => {
               onClick={() => setIsOpen(false)}
             >
               Gallery
+            </Link>
+            <Link 
+              href="/nail-salons" 
+              className="block px-3 py-2 rounded-md text-base font-medium text-[#1b0d14] hover:text-[#ee2b8c] transition-colors duration-200 touch-manipulation" 
+              onClick={() => setIsOpen(false)}
+            >
+              Find Salons
             </Link>
           </div>
         </div>
