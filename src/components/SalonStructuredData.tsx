@@ -30,11 +30,11 @@ interface ReviewSchema {
     ratingValue: string;
     bestRating: string;
     worstRating: string;
-  };
+  } | undefined;
   author?: {
     "@type": "Person";
     name: string;
-  };
+  } | undefined;
   reviewBody?: string;
   datePublished?: string;
 }
@@ -211,21 +211,21 @@ export function SalonStructuredData({
   };
 
   // Build review schemas (up to 5 reviews)
-  const reviewSchemas: ReviewSchema[] = salonDetails?.placeReviews?.slice(0, 5).map((review) => ({
+  const reviewSchemas: ReviewSchema[] = salonDetails?.placeReviews?.slice(0, 5).map((review): ReviewSchema => ({
     "@context": "https://schema.org",
-    "@type": "Review",
+    "@type": "Review" as const,
     "itemReviewed": {
-      "@type": "BeautySalon",
+      "@type": "BeautySalon" as const,
       "name": salon.name
     },
     "reviewRating": review.rating ? {
-      "@type": "Rating",
+      "@type": "Rating" as const,
       "ratingValue": review.rating.toString(),
       "bestRating": "5",
       "worstRating": "1"
     } : undefined,
     "author": review.authorName ? {
-      "@type": "Person",
+      "@type": "Person" as const,
       "name": review.authorName
     } : undefined,
     "reviewBody": review.text || undefined,

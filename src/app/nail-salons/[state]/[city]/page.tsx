@@ -200,7 +200,7 @@ export default async function CityPage({ params }: CityPageProps) {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {salons.map((salon, index) => {
             const salonImage = salon.photos && salon.photos.length > 0 
-              ? getPhotoUrl(salon.photos[0].name, 400, 300)
+              ? getPhotoUrl(salon.photos[0].name, 400)
               : null;
             const isOpen = salon.currentOpeningHours?.openNow;
             

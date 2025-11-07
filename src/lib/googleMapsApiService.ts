@@ -34,10 +34,13 @@ export type {
  */
 // Basic type definitions for Google Places API responses
 interface GooglePlace {
-  id: string;
-  displayName: { text: string };
+  id?: string;
+  placeId?: string;
+  displayName?: string | { text?: string };
   formattedAddress?: string;
   location?: { latitude: number; longitude: number };
+  types?: string[];
+  photos?: Array<{ name?: string; widthPx?: number; heightPx?: number; authorAttributions?: unknown }>;
   [key: string]: unknown;
 }
 
@@ -63,7 +66,7 @@ export async function fetchNailSalonsFromAPI(
   }
 
   // Get location coordinates for bias
-  const locationCoords = await getLocationCoordinates(state, city);
+  const locationCoords = await getLocationCoordinates(state);
 
   // Use multiple search queries to get more results
   const searchQueries = city 
@@ -130,7 +133,7 @@ export async function fetchNailSalonsFromAPI(
             if (errorMessage.includes('quota') || errorMessage.includes('rate limit') || errorMessage.includes('exceeded')) {
               throw new Error(`RATE_LIMIT_EXCEEDED: ${errorMessage}`);
             }
-          } catch (parseError) {
+          } catch {
             if (errorText.includes('quota') || errorText.includes('rate limit') || errorText.includes('exceeded')) {
               throw new Error(`RATE_LIMIT_EXCEEDED: ${errorText.substring(0, 200)}`);
             }
@@ -147,9 +150,9 @@ export async function fetchNailSalonsFromAPI(
 
   // Wait for all requests and combine results
   const results = await Promise.all(requestPromises);
-  results.forEach(places => {
-    places.forEach((place) => {
-      const placeId = place.id || place.placeId;
+  results.forEach((places: GooglePlace[]) => {
+    places.forEach((place: GooglePlace) => {
+      const placeId = (place.id || place.placeId) as string | undefined;
       if (placeId && !seenPlaceIds.has(placeId)) {
         seenPlaceIds.add(placeId);
         allPlaces.push(place);
@@ -269,10 +272,9 @@ export async function fetchPlaceDetailsFromAPI(placeId: string): Promise<GoogleP
  * 
  * @param photoName - Photo reference name
  * @param maxWidth - Maximum width (default: 800)
- * @param maxHeight - Maximum height (default: 600)
  * @returns Photo URL
  */
-export function getPhotoUrl(photoName: string, maxWidth: number = 800, _maxHeight: number = 600): string {
+export function getPhotoUrl(photoName: string, maxWidth: number = 800): string {
   if (!photoName) return '';
   if (!GOOGLE_MAPS_API_KEY) {
     console.warn('NEXT_PUBLIC_GOOGLE_MAPS_API_KEY is not configured. Cannot generate photo URL.');
@@ -286,7 +288,7 @@ export function getPhotoUrl(photoName: string, maxWidth: number = 800, _maxHeigh
  * Get approximate coordinates for a location
  * Used for location bias in API calls
  */
-async function getLocationCoordinates(state: string, _city?: string): Promise<{ latitude: number; longitude: number } | null> {
+async function getLocationCoordinates(state: string): Promise<{ latitude: number; longitude: number } | null> {
   const coordinates: Record<string, { latitude: number; longitude: number }> = {
     'California': { latitude: 36.7783, longitude: -119.4179 },
     'New York': { latitude: 40.7128, longitude: -74.0060 },

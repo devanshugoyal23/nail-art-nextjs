@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getSalonsForCity } from '@/lib/salonDataService';
 import { fetchNailSalonsFromAPI, convertPlaceToSalon } from '@/lib/googleMapsApiService';
+import type { NailSalon } from '@/lib/nailSalonService';
 
 export async function GET(request: NextRequest) {
   try {
@@ -20,7 +21,7 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    let salons;
+    let salons: NailSalon[];
     
     if (useApi) {
       // Use API if explicitly requested (for data collection)

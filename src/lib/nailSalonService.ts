@@ -119,7 +119,7 @@ export async function getNailSalonsForLocation(
     }
     
     // Get location coordinates for bias
-    const locationCoords = await getLocationCoordinates(state, city);
+    const locationCoords = await getLocationCoordinates(state);
 
     // Use multiple search queries to get more results
     // Places API Text Search has a max of 20 per request, so we'll make multiple requests
@@ -209,7 +209,7 @@ export async function getNailSalonsForLocation(
               if (errorMessage.includes('quota') || errorMessage.includes('rate limit') || errorMessage.includes('exceeded')) {
                 throw new Error(`RATE_LIMIT_EXCEEDED: ${errorMessage}`);
               }
-            } catch (parseError) {
+            } catch {
               // If not JSON, check error text directly
               if (errorText.includes('quota') || errorText.includes('rate limit') || errorText.includes('exceeded')) {
                 throw new Error(`RATE_LIMIT_EXCEEDED: ${errorText.substring(0, 200)}`);
@@ -328,7 +328,7 @@ async function getNailSalonsWithGemini(
     
 Provide the top ${limit} salons with their complete details including name, full address, phone number, and any ratings if available.`;
 
-    const locationCoords = await getLocationCoordinates(state, city);
+    const locationCoords = await getLocationCoordinates(state);
 
     const requestBody: {
       contents: Array<{ role: string; parts: Array<{ text: string }> }>;
@@ -934,7 +934,7 @@ function getFallbackCitiesForState(state: string): City[] {
 /**
  * Get approximate coordinates for a location
  */
-async function getLocationCoordinates(state: string, _city?: string): Promise<{ latitude: number; longitude: number } | null> {
+async function getLocationCoordinates(state: string): Promise<{ latitude: number; longitude: number } | null> {
   // Simple coordinate lookup - in production, use a geocoding service
   const coordinates: Record<string, { latitude: number; longitude: number }> = {
     'California': { latitude: 36.7783, longitude: -119.4179 },
@@ -1306,7 +1306,7 @@ export async function getPlaceDetails(placeId: string): Promise<PlaceDetails | n
  * Get photo URL from Places API photo reference
  * Photo name format: places/{placeId}/photos/{photoId}
  */
-export function getPhotoUrl(photoName: string, maxWidth: number = 800, _maxHeight: number = 600): string {
+export function getPhotoUrl(photoName: string, maxWidth: number = 800): string {
   if (!photoName) return '';
   if (!GOOGLE_MAPS_API_KEY) {
     console.warn('NEXT_PUBLIC_GOOGLE_MAPS_API_KEY is not configured. Cannot generate photo URL.');
