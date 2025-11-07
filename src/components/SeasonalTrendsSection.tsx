@@ -66,7 +66,7 @@ const SEASONAL_TRENDS = {
   }
 };
 
-export default function SeasonalTrendsSection({ salonName, city }: SeasonalTrendsSectionProps) {
+export default function SeasonalTrendsSection({ salonName }: SeasonalTrendsSectionProps) {
   const season = getCurrentSeason();
   const seasonData = SEASONAL_TRENDS[season];
 

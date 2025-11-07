@@ -96,8 +96,7 @@ function getStateImage(stateName: string): string {
   const info = stateInfo[stateName];
   if (info?.image) return info.image;
   
-  // Fallback to Unsplash with state name
-  const encodedState = encodeURIComponent(`${stateName} state`);
+  // Fallback to Unsplash with nail salon image
   return `https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=400&h=300&fit=crop&q=80`;
 }
 
@@ -123,7 +122,7 @@ export default async function NailSalonsPage() {
           cityCount: cities.length,
           popularCities: cities.slice(0, 3).map(c => c.name),
         };
-      } catch (error) {
+      } catch {
         return {
           ...state,
           cityCount: 0,

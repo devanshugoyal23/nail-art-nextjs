@@ -14,32 +14,7 @@ interface Props {
   popularTags: TagItem[];
 }
 
-export default function LightHomepage({ trendingItems = [], categories = [], popularTags = [] }: Props) {
-  const getHrefForTag = (tag: TagItem) => {
-    if (tag.type === 'color') return `/nail-colors/${tag.value}`;
-    if (tag.type === 'technique') return `/techniques/${tag.value}`;
-    return `/nail-art-gallery/category/${slugify(tag.label)}`;
-  };
-
-  const getPreviewForTag = (tag: TagItem): string | null => {
-    const label = tag.label.toLowerCase();
-    const match = trendingItems.find(i =>
-      (i.design_name && i.design_name.toLowerCase().includes(label)) ||
-      (i.category && i.category.toLowerCase().includes(label)) ||
-      (i.prompt && i.prompt.toLowerCase().includes(label))
-    );
-    return match?.image_url || trendingItems[0]?.image_url || null;
-  };
-
-  const findImageByKeywords = (keywords: string[]): string | null => {
-    const lower = keywords.map(k => k.toLowerCase());
-    const hit = trendingItems.find(i => {
-      const hay = `${i.design_name || ''} ${i.category || ''} ${i.prompt || ''}`.toLowerCase();
-      return lower.some(k => hay.includes(k));
-    });
-    return hit?.image_url || trendingItems[0]?.image_url || null;
-  };
-
+export default function LightHomepage({ trendingItems = [], categories = [] }: Props) {
   const colorHex: Record<string, string> = {
     red: '#ef4444',
     pink: '#ec4899',

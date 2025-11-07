@@ -171,7 +171,7 @@ export async function saveGalleryItem(item: SaveGalleryItemRequest): Promise<Gal
     // Invalidate relevant caches
     try {
       await invalidateGalleryCache();
-      await invalidateCategoryCache(data.category);
+      await invalidateCategoryCache();
     } catch (error) {
       console.warn('Cache invalidation failed:', error);
       // Don't throw - this is non-critical
@@ -566,7 +566,7 @@ export async function deleteGalleryItem(id: string): Promise<boolean> {
 
     // Invalidate relevant caches
     try {
-      await invalidateItemCache(id);
+      await invalidateItemCache();
       await invalidateGalleryCache();
     } catch (error) {
       console.warn('Cache invalidation failed:', error);

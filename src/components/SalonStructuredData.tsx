@@ -63,7 +63,7 @@ export function SalonStructuredData({
         "opens": opens,
         "closes": closes
       };
-    }).filter(Boolean);
+    }).filter((hour): hour is { '@type': string; dayOfWeek: string; opens: string; closes: string } => hour !== null);
   };
 
   // Get price range
@@ -162,7 +162,7 @@ export function SalonStructuredData({
   };
 
   // Build review schemas (up to 5 reviews)
-  const reviewSchemas = salonDetails?.placeReviews?.slice(0, 5).map((review: { rating?: number; text?: string; authorName?: string; publishTime?: string }) => ({
+  const reviewSchemas = (salonDetails?.placeReviews as Array<{ rating?: number; text?: string; authorName?: string; publishTime?: string }> | undefined)?.slice(0, 5).map((review: { rating?: number; text?: string; authorName?: string; publishTime?: string }) => ({
     "@context": "https://schema.org",
     "@type": "Review",
     "itemReviewed": {
@@ -181,11 +181,11 @@ export function SalonStructuredData({
     } : undefined,
     "reviewBody": review.text || undefined,
     "datePublished": review.publishTime || undefined
-  })).filter((review: { reviewBody?: string; reviewRating?: { ratingValue?: number } }) => review.reviewBody || review.reviewRating) || [];
+  })).filter((review) => review.reviewBody || review.reviewRating) || [];
 
   // Build ImageObject schemas for salon photos (only valid photos with URLs)
   const imageSchemas = validPhotos.length > 0 
-    ? validPhotos.slice(0, 6).map((photo: { url: string; name?: string }, index: number) => {
+    ? validPhotos.slice(0, 6).map((photo: { url: string; name?: string; authorAttributions?: Array<{ displayName?: string; uri?: string }> }, index: number) => {
         const photoTypes = ['exterior', 'interior', 'service area', 'nail art station', 'waiting area', 'treatment room'];
         const photoType = photoTypes[index] || 'interior';
         

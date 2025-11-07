@@ -335,7 +335,7 @@ export default async function StatePage({ params }: StatePageProps) {
               <div className="bg-white rounded-2xl p-6 ring-1 ring-[#ee2b8c]/15">
                 <h3 className="text-xl font-bold text-[#1b0d14] mb-4">⭐ Top Cities</h3>
                 <div className="space-y-2">
-                  {topCities.map((city, idx) => (
+                  {topCities.map((city) => (
                     <Link
                       key={city.name}
                       href={`/nail-salons/${stateSlug}/${generateCitySlug(city.name)}`}

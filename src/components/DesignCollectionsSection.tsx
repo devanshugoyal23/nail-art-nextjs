@@ -1,7 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
 import OptimizedImage from './OptimizedImage';
-import { GalleryItem } from '@/lib/supabase';
 import { designUrl } from '@/lib/urlBuilder';
 
 interface DesignCollectionsSectionProps {
@@ -10,7 +9,7 @@ interface DesignCollectionsSectionProps {
     title: string;
     description: string;
     icon: string;
-    designs: GalleryItem[];
+    designs: Array<{ id: string; imageUrl: string; title?: string; colors?: string[]; techniques?: string[]; occasions?: string[]; }>;
     href: string;
   }[];
 }
@@ -57,8 +56,8 @@ export default function DesignCollectionsSection({
                 {collection.designs.slice(0, 4).map((design) => {
                   const designUrlPath = designUrl({
                     id: design.id,
-                    category: design.category,
-                    design_name: design.design_name
+                    category: undefined,
+                    design_name: design.title
                   });
 
                   return (
@@ -68,8 +67,8 @@ export default function DesignCollectionsSection({
                       className="relative aspect-square rounded-lg overflow-hidden ring-1 ring-[#ee2b8c]/20 hover:ring-[#ee2b8c]/50 transition-all hover:scale-105"
                     >
                       <OptimizedImage
-                        src={design.image_url}
-                        alt={design.design_name || 'Nail art design'}
+                        src={design.imageUrl}
+                        alt={design.title || 'Nail art design'}
                         width={150}
                         height={150}
                         className="w-full h-full object-cover"

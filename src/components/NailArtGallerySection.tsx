@@ -17,8 +17,6 @@ interface NailArtGallerySectionProps {
  */
 export default function NailArtGallerySection({ 
   salonName, 
-  city, 
-  state, 
   designs 
 }: NailArtGallerySectionProps) {
   if (!designs || designs.length === 0) return null;

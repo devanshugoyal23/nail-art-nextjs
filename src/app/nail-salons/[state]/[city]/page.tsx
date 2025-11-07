@@ -201,7 +201,7 @@ export default async function CityPage({ params }: CityPageProps) {
           {salons.map((salon, index) => {
             // Get photo URL - check if it's valid (not empty)
             const salonImageUrl = salon.photos && salon.photos.length > 0 
-              ? (salon.photos[0].url || getPhotoUrl(salon.photos[0].name, 400, 300))
+              ? (salon.photos[0].url || getPhotoUrl(salon.photos[0].name, 400))
               : null;
             // Only use image if URL is valid (not empty string)
             const salonImage = salonImageUrl && salonImageUrl.trim() !== '' ? salonImageUrl : null;

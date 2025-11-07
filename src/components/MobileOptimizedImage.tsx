@@ -36,7 +36,6 @@ export default function MobileOptimizedImage({
   height = 160,
   className = '',
   priority = false,
-  sizes = '100vw',
   quality = 85,
   placeholder = 'empty',
   blurDataURL,
@@ -96,7 +95,6 @@ export default function MobileOptimizedImage({
   const handleError = () => {
     if (isMobile && !src.includes('/pinterest-optimized/')) {
       // Try original Pinterest image as fallback
-      const fallbackSrc = src.replace('/mobile-optimized/', '/pinterest-optimized/').replace('.webp', '.jpg');
       setImageError(true);
       // This will trigger a re-render with the fallback src
     } else {

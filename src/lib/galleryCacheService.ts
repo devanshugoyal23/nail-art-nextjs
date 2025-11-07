@@ -13,14 +13,14 @@ export function invalidateGalleryCache(): void {
 /**
  * Invalidate item cache (no-op)
  */
-export function invalidateItemCache(_itemId?: string): void {
+export function invalidateItemCache(): void {
   // No-op since caching is disabled
 }
 
 /**
  * Invalidate category cache (no-op)
  */
-export function invalidateCategoryCache(_category?: string): void {
+export function invalidateCategoryCache(): void {
   // No-op since caching is disabled
 }
 

@@ -15,6 +15,7 @@ import CollapsibleSection from '@/components/CollapsibleSection';
 import { SalonStructuredData } from '@/components/SalonStructuredData';
 import { absoluteUrl } from '@/lib/absoluteUrl';
 import { getGalleryItems, getGalleryItemsByOccasion, getGalleryItemsByColor, getGalleryItemsByTechnique } from '@/lib/galleryService';
+import { GalleryItem } from '@/lib/supabase';
 
 interface SalonDetailPageProps {
   params: Promise<{
@@ -122,6 +123,7 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
   let salonDetails: { description?: string; faq?: Array<{ question: string; answer: string }>; parkingInfo?: string; paymentOptions?: string[]; services?: Array<{ name: string; description?: string; price?: string }> } | null = null;
   let relatedSalons: NailSalon[] = [];
   let galleryDesigns: Array<{ id: string; imageUrl: string; title?: string; description?: string; colors?: string[]; techniques?: string[]; occasions?: string[] }> = [];
+  let rawGalleryItems: GalleryItem[] = [];
   let designCollections: Array<{ title: string; description: string; icon: string; designs: Array<{ id: string; imageUrl: string; title?: string; colors?: string[]; techniques?: string[]; occasions?: string[] }>; href: string }> = [];
   let colorPalettes: Array<{ color: string; designs: Array<{ id: string; imageUrl: string; title?: string; colors?: string[]; techniques?: string[]; occasions?: string[] }>; emoji: string }> = [];
   let techniqueShowcases: Array<{ name: string; designs: Array<{ id: string; imageUrl: string; title?: string; colors?: string[]; techniques?: string[]; occasions?: string[] }>; description: string; icon: string; difficulty: string }> = [];
@@ -175,6 +177,17 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
         getGalleryItemsByTechnique('stamping', 4).catch(() => [])
       ]);
       
+      // Transform GalleryItems to expected format
+      const transformGalleryItems = (items: Array<{ id: string; image_url: string; design_name?: string; prompt: string; colors?: string[]; techniques?: string[]; occasions?: string[] }>) => items.map(item => ({
+        id: item.id,
+        imageUrl: item.image_url,
+        title: item.design_name || item.prompt,
+        description: item.prompt,
+        colors: item.colors,
+        techniques: item.techniques,
+        occasions: item.occasions
+      }));
+      
       // ✅ Create salon details with fallback data (no Google Places API dependency)
       salonDetails = {
         // Simple fallback description
@@ -214,11 +227,12 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
       // Get 8 random designs from the fetched 20 (shuffle for variety)
       if (galleryData && galleryData.items && galleryData.items.length > 0) {
         const shuffled = [...galleryData.items].sort(() => Math.random() - 0.5);
-        galleryDesigns = shuffled.slice(0, 8).map(item => ({
+        rawGalleryItems = shuffled.slice(0, 8);
+        galleryDesigns = rawGalleryItems.map(item => ({
           id: item.id,
-          imageUrl: item.optimized_image_url || item.image_url,
-          title: item.name,
-          description: item.description,
+          imageUrl: item.image_url,
+          title: item.design_name || item.prompt,
+          description: item.prompt,
           colors: item.colors,
           techniques: item.techniques,
           occasions: item.occasions
@@ -227,7 +241,15 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
 
       // Prepare Design Collections
       // Use gallery items as fallback if specific occasion searches return empty
-      const allGalleryItems = galleryData?.items || [];
+      const allGalleryItems = (galleryData?.items || []).map(item => ({
+        id: item.id,
+        imageUrl: item.image_url,
+        title: item.design_name || item.prompt,
+        description: item.prompt,
+        colors: item.colors,
+        techniques: item.techniques,
+        occasions: item.occasions
+      }));
       
       // Helper to get designs by searching in all items
       const getDesignsByOccasion = (occasion: string, fallbackItems: Array<{ id: string; imageUrl: string; title?: string; colors?: string[]; techniques?: string[]; occasions?: string[] }>) => {
@@ -239,11 +261,11 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
         ).slice(0, 4);
       };
 
-      const bridalItems = bridalDesigns.length > 0 ? bridalDesigns : 
-                         weddingDesigns.length > 0 ? weddingDesigns :
+      const bridalItems = bridalDesigns.length > 0 ? transformGalleryItems(bridalDesigns) : 
+                         weddingDesigns.length > 0 ? transformGalleryItems(weddingDesigns) :
                          getDesignsByOccasion('bridal', allGalleryItems);
       
-      const holidayItems = holidayDesigns.length > 0 ? holidayDesigns :
+      const holidayItems = holidayDesigns.length > 0 ? transformGalleryItems(holidayDesigns) :
                           getDesignsByOccasion('holiday', allGalleryItems);
 
       designCollections = [
@@ -299,7 +321,9 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
       colorPalettes = colorOptions
         .map(option => ({
           color: option.name,
-          designs: option.designs.length > 0 ? option.designs : getDesignsByColor(option.name.toLowerCase(), allGalleryItems)
+          designs: option.designs.length > 0 ? 
+            ('image_url' in option.designs[0] ? transformGalleryItems(option.designs as GalleryItem[]) : option.designs as { id: string; imageUrl: string; title?: string; colors?: string[]; techniques?: string[]; occasions?: string[]; }[]) : 
+            getDesignsByColor(option.name.toLowerCase(), allGalleryItems)
         }))
         .filter(palette => palette.designs && palette.designs.length > 0)
         .slice(0, 3) // Ensure exactly 3
@@ -430,7 +454,7 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
         .slice(0, 3)
         .map(technique => ({
           name: technique.name,
-          designs: technique.designs,
+          designs: 'image_url' in technique.designs[0] ? transformGalleryItems(technique.designs as GalleryItem[]) : technique.designs as { id: string; imageUrl: string; title?: string; colors?: string[]; techniques?: string[]; occasions?: string[]; }[],
           ...(techniqueInfo[technique.name] || {
             description: `Professional ${technique.name.toLowerCase()} nail art technique`,
             icon: '✨',
@@ -927,7 +951,7 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
                     salonName={salon.name}
                     city={formattedCity}
                     state={formattedState}
-                    designs={galleryDesigns}
+                    designs={rawGalleryItems}
                   />
                 )}
 

@@ -42,7 +42,7 @@ export async function fetchNailSalonsFromAPI(
   }
 
   // Get location coordinates for bias
-  const locationCoords = await getLocationCoordinates(state, city);
+  const locationCoords = await getLocationCoordinates(state);
 
   // Use multiple search queries to get more results
   const searchQueries = city 
@@ -138,7 +138,7 @@ export async function fetchNailSalonsFromAPI(
   // Wait for all requests and combine results
   const results = await Promise.all(requestPromises);
   results.forEach(places => {
-    places.forEach(place => {
+    places.forEach((place: any) => {
       const placeId = place.id || place.placeId;
       if (placeId && !seenPlaceIds.has(placeId)) {
         seenPlaceIds.add(placeId);
@@ -276,7 +276,7 @@ export function getPhotoUrl(photoName: string, maxWidth: number = 800): string {
  * Get approximate coordinates for a location
  * Used for location bias in API calls
  */
-async function getLocationCoordinates(state: string, city?: string): Promise<{ latitude: number; longitude: number } | null> {
+async function getLocationCoordinates(state: string): Promise<{ latitude: number; longitude: number } | null> {
   const coordinates: Record<string, { latitude: number; longitude: number }> = {
     'California': { latitude: 36.7783, longitude: -119.4179 },
     'New York': { latitude: 40.7128, longitude: -74.0060 },
