@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { generateSlug, getPhotoUrl, generateCitySlug } from '@/lib/nailSalonService';
+import { generateSlug, getPhotoUrl, generateCitySlug, type NailSalon } from '@/lib/nailSalonService';
 import { getSalonsForCity } from '@/lib/salonDataService';
 import OptimizedImage from '@/components/OptimizedImage';
 import { DirectoryStructuredData } from '@/components/DirectoryStructuredData';
@@ -13,77 +13,60 @@ interface CityPageProps {
   }>;
 }
 
-// Generate static params for top cities only (optimized for Vercel Free/Blend)
-// Only pre-generate the most popular cities to avoid build timeouts
-// Other cities will be generated on-demand via ISR
+// Generate static params for cities
 export async function generateStaticParams() {
-  // Top 50 most populous/popular cities across top states
-  // This limits build time while covering most traffic
-  const topCities = [
-    // California
-    { state: 'california', city: 'los-angeles' },
-    { state: 'california', city: 'san-diego' },
-    { state: 'california', city: 'san-jose' },
-    { state: 'california', city: 'san-francisco' },
-    { state: 'california', city: 'fresno' },
-    { state: 'california', city: 'sacramento' },
-    { state: 'california', city: 'long-beach' },
-    { state: 'california', city: 'oakland' },
-    // Texas
-    { state: 'texas', city: 'houston' },
-    { state: 'texas', city: 'san-antonio' },
-    { state: 'texas', city: 'dallas' },
-    { state: 'texas', city: 'austin' },
-    { state: 'texas', city: 'fort-worth' },
-    { state: 'texas', city: 'el-paso' },
-    // Florida
-    { state: 'florida', city: 'jacksonville' },
-    { state: 'florida', city: 'miami' },
-    { state: 'florida', city: 'tampa' },
-    { state: 'florida', city: 'orlando' },
-    { state: 'florida', city: 'st-petersburg' },
-    // New York
-    { state: 'new-york', city: 'new-york' },
-    { state: 'new-york', city: 'buffalo' },
-    { state: 'new-york', city: 'rochester' },
-    // Pennsylvania
-    { state: 'pennsylvania', city: 'philadelphia' },
-    { state: 'pennsylvania', city: 'pittsburgh' },
-    // Illinois
-    { state: 'illinois', city: 'chicago' },
-    // Ohio
-    { state: 'ohio', city: 'columbus' },
-    { state: 'ohio', city: 'cleveland' },
-    { state: 'ohio', city: 'cincinnati' },
-    // Georgia
-    { state: 'georgia', city: 'atlanta' },
-    // North Carolina
-    { state: 'north-carolina', city: 'charlotte' },
-    { state: 'north-carolina', city: 'raleigh' },
-    // Michigan
-    { state: 'michigan', city: 'detroit' },
-    // New Jersey
-    { state: 'new-jersey', city: 'newark' },
-    // Virginia
-    { state: 'virginia', city: 'virginia-beach' },
-    // Washington
-    { state: 'washington', city: 'seattle' },
-    // Arizona
-    { state: 'arizona', city: 'phoenix' },
-    { state: 'arizona', city: 'tucson' },
-    // Massachusetts
-    { state: 'massachusetts', city: 'boston' },
-  ];
-  
-  return topCities;
+  try {
+    const fs = await import('fs/promises');
+    const path = await import('path');
+    const citiesDir = path.join(process.cwd(), 'src', 'data', 'cities');
+    
+    const files = await fs.readdir(citiesDir);
+    const stateFiles = files.filter(file => file.endsWith('.json'));
+    
+    const params: Array<{ state: string; city: string }> = [];
+    
+    // Read each state file and extract cities
+    for (const stateFile of stateFiles) {
+      const stateSlug = stateFile.replace('.json', '');
+      const filePath = path.join(citiesDir, stateFile);
+      
+      try {
+        const fileContent = await fs.readFile(filePath, 'utf-8');
+        const data = JSON.parse(fileContent);
+        
+        if (data.cities && Array.isArray(data.cities)) {
+          // Use all cities, but use the slug from JSON if available, otherwise generate it
+          const cities = data.cities.map((city: { name: string; slug?: string }) => ({
+            state: stateSlug,
+            city: city.slug || generateCitySlug(city.name),
+          }));
+          
+          params.push(...cities);
+        }
+      } catch (error) {
+        console.error(`Error reading ${stateFile}:`, error);
+      }
+    }
+    
+    return params;
+  } catch (error) {
+    console.error('Error generating static params for cities:', error);
+    // Fallback to common cities
+    return [
+      { state: 'arizona', city: 'phoenix' },
+      { state: 'california', city: 'los-angeles' },
+      { state: 'texas', city: 'houston' },
+      { state: 'florida', city: 'miami' },
+      { state: 'new-york', city: 'new-york' },
+    ];
+  }
 }
 
 // Enable dynamic params for cities not in generateStaticParams
 export const dynamicParams = true;
 
-// Enable ISR - revalidate every 6 hours (optimized for Vercel Free/Blend)
-// This allows pages to be generated on-demand without blocking builds
-export const revalidate = 21600;
+// Enable ISR - revalidate every hour
+export const revalidate = 3600;
 
 export async function generateMetadata({ params }: CityPageProps): Promise<Metadata> {
   const resolvedParams = await params;
@@ -162,52 +145,39 @@ export default async function CityPage({ params }: CityPageProps) {
     word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
   ).join(' ');
 
-  // Skip file system check during build time for performance (Vercel Free/Blend optimization)
-  // Rely on R2 data validation and dynamicParams instead
-  // This avoids blocking builds with file I/O operations
-  let cityExists = true; // Default to true, let R2 data check handle validation
-  
-  // Only do file check in development (not during production builds)
-  const isProductionBuild = process.env.NODE_ENV === 'production' && 
-                           (process.env.VERCEL_ENV === 'production' || process.env.VERCEL_ENV === 'preview');
-  
-  if (!isProductionBuild) {
-    // Only do file check in development or local builds
+  // Verify city exists in state data first
+  let cityExists = false;
+  try {
+    const fs = await import('fs/promises');
+    const path = await import('path');
+    const citiesDir = path.join(process.cwd(), 'src', 'data', 'cities');
+    const stateFile = path.join(citiesDir, `${stateSlug}.json`);
+    
     try {
-      const fs = await import('fs/promises');
-      const path = await import('path');
-      const citiesDir = path.join(process.cwd(), 'src', 'data', 'cities');
-      const stateFile = path.join(citiesDir, `${stateSlug}.json`);
+      const fileContent = await fs.readFile(stateFile, 'utf-8');
+      const data = JSON.parse(fileContent);
       
-      try {
-        const fileContent = await fs.readFile(stateFile, 'utf-8');
-        const data = JSON.parse(fileContent);
-        
-        if (data.cities && Array.isArray(data.cities)) {
-          // Check if city exists (by slug or name)
-          cityExists = data.cities.some((city: { name: string; slug?: string }) => 
-            (city.slug || generateCitySlug(city.name)) === citySlug ||
-            city.name.toLowerCase() === formattedCity.toLowerCase()
-          );
-        }
-      } catch (fileError) {
-        // File doesn't exist or can't be read - allow through, R2 will validate
-        console.warn(`Could not read state file for ${stateSlug}:`, fileError);
-        cityExists = true; // Allow through to R2 check
+      if (data.cities && Array.isArray(data.cities)) {
+        // Check if city exists (by slug or name)
+        cityExists = data.cities.some((city: { name: string; slug?: string }) => 
+          (city.slug || generateCitySlug(city.name)) === citySlug ||
+          city.name.toLowerCase() === formattedCity.toLowerCase()
+        );
       }
-    } catch (error) {
-      console.warn(`Error checking city existence:`, error);
-      cityExists = true; // Allow through to R2 check
+    } catch (fileError) {
+      console.warn(`Could not read state file for ${stateSlug}:`, fileError);
     }
+  } catch (error) {
+    console.warn(`Error checking city existence:`, error);
   }
 
-  // Only return 404 if we're certain the city doesn't exist (and not in production build)
-  if (!cityExists && !isProductionBuild) {
+  // If city doesn't exist in our data, return 404
+  if (!cityExists) {
     console.log(`City ${formattedCity}, ${formattedState} not found in state data`);
     notFound();
   }
 
-  let salons;
+  let salons: NailSalon[] = [];
   try {
     // Use R2 data instead of Google Maps API
     // Pass the citySlug from URL to ensure accurate lookup
