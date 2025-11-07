@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { generateStateSlug, generateCitySlug, generateSlug, getPhotoUrl } from '@/lib/nailSalonService';
+import { generateSlug, getPhotoUrl } from '@/lib/nailSalonService';
 import { getSalonsForCity } from '@/lib/salonDataService';
 import OptimizedImage from '@/components/OptimizedImage';
 import { DirectoryStructuredData } from '@/components/DirectoryStructuredData';
@@ -445,7 +445,7 @@ export default async function CityPage({ params }: CityPageProps) {
                   <h4 className="text-base font-semibold text-[#1b0d14] mb-1">What are the best nail salons in {formattedCity}?</h4>
                   <p className="text-sm text-[#1b0d14]/70">
                     The best nail salons in {formattedCity} are those with ratings of 4.5+ stars and positive customer reviews. 
-                    Check our "Top Rated Salons" section above to see the highest-rated options in your area.
+                    Check our &quot;Top Rated Salons&quot; section above to see the highest-rated options in your area.
                   </p>
                 </div>
                 <div>
@@ -473,8 +473,8 @@ export default async function CityPage({ params }: CityPageProps) {
                 <div>
                   <h4 className="text-base font-semibold text-[#1b0d14] mb-1">How can I find nail salons open now in {formattedCity}?</h4>
                   <p className="text-sm text-[#1b0d14]/70">
-                    Look for the "Open Now" badge (green) on salon cards above. Our directory shows real-time open/closed 
-                    status for all salons. You can also check the "Today's hours" preview on each card to see when they close.
+                    Look for the &quot;Open Now&quot; badge (green) on salon cards above. Our directory shows real-time open/closed 
+                    status for all salons. You can also check the &quot;Today&apos;s hours&quot; preview on each card to see when they close.
                   </p>
                 </div>
               </div>

@@ -5,14 +5,10 @@
 
 import { uploadDataToR2, getDataFromR2, dataExistsInR2 } from './r2Service';
 import { 
-  getAllStatesWithSalons, 
-  getCitiesInState,
   generateStateSlug,
   generateCitySlug,
   generateSlug,
-  type NailSalon,
-  type City,
-  type State
+  type NailSalon
 } from './nailSalonService';
 
 // R2 path structure for salon data

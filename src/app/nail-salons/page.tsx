@@ -97,7 +97,6 @@ function getStateImage(stateName: string): string {
   if (info?.image) return info.image;
   
   // Fallback to Unsplash with state name
-  const encodedState = encodeURIComponent(`${stateName} state`);
   return `https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=400&h=300&fit=crop&q=80`;
 }
 
@@ -123,7 +122,7 @@ export default async function NailSalonsPage() {
           cityCount: cities.length,
           popularCities: cities.slice(0, 3).map(c => c.name),
         };
-      } catch (error) {
+      } catch {
         return {
           ...state,
           cityCount: 0,
@@ -267,7 +266,7 @@ export default async function NailSalonsPage() {
             </h2>
             <div className="prose prose-lg text-[#1b0d14]/70">
               <p className="mb-4">
-                Whether you're looking for a quick manicure, a luxurious spa experience, or 
+                Whether you&apos;re looking for a quick manicure, a luxurious spa experience, or 
                 intricate nail art designs, our comprehensive directory helps you find the best 
                 nail salons across all {states.length} US states. Browse by state to discover top-rated salons with 
                 detailed information including ratings, reviews, contact details, opening hours, and more.
@@ -360,7 +359,7 @@ export default async function NailSalonsPage() {
             <div>
               <h3 className="text-lg font-semibold text-[#1b0d14] mb-2">Can I book appointments through this directory?</h3>
               <p className="text-[#1b0d14]/70">
-                While we don't offer direct booking, each salon listing includes phone numbers and website links where 
+                While we don&apos;t offer direct booking, each salon listing includes phone numbers and website links where 
                 you can contact the salon directly to book your appointment. Many salons also accept walk-ins.
               </p>
             </div>

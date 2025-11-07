@@ -32,11 +32,32 @@ export type {
  * @param limit - Maximum number of salons to return (default: 20)
  * @returns Array of nail salons
  */
+// Basic type definitions for Google Places API responses
+interface GooglePlace {
+  id: string;
+  displayName: { text: string };
+  formattedAddress?: string;
+  location?: { latitude: number; longitude: number };
+  [key: string]: unknown;
+}
+
+interface PlacesRequest {
+  textQuery: string;
+  maxResultCount: number;
+  locationBias?: {
+    circle: {
+      center: { latitude: number; longitude: number };
+      radius: number;
+    };
+  };
+  [key: string]: unknown;
+}
+
 export async function fetchNailSalonsFromAPI(
   state: string,
   city?: string,
   limit: number = 20
-): Promise<any[]> {
+): Promise<GooglePlace[]> {
   if (!GOOGLE_MAPS_API_KEY) {
     throw new Error('NEXT_PUBLIC_GOOGLE_MAPS_API_KEY is not configured');
   }
@@ -59,12 +80,12 @@ export async function fetchNailSalonsFromAPI(
         `nail art studio in ${state}`
       ];
 
-  const allPlaces: any[] = [];
+  const allPlaces: GooglePlace[] = [];
   const seenPlaceIds = new Set<string>();
 
   // Make multiple requests with different queries
   const requestPromises = searchQueries.slice(0, Math.ceil(limit / 20)).map(async (searchQuery) => {
-    const placesRequest: any = {
+    const placesRequest: PlacesRequest = {
       textQuery: searchQuery,
       maxResultCount: 20,
       languageCode: 'en',

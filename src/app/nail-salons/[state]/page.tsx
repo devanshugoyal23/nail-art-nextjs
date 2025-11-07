@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { getCitiesInState, generateStateSlug, generateCitySlug } from '@/lib/nailSalonService';
+import { getCitiesInState, generateCitySlug } from '@/lib/nailSalonService';
 import OptimizedImage from '@/components/OptimizedImage';
 import { DirectoryStructuredData } from '@/components/DirectoryStructuredData';
 
@@ -262,8 +262,8 @@ export default async function StatePage({ params }: StatePageProps) {
             <div className="prose prose-lg text-[#1b0d14]/70">
               <p className="mb-4">
                 Explore our comprehensive directory of top-rated nail salons across {cities.length} cities in {formattedState}. 
-                Whether you're looking for a quick manicure, a luxurious spa experience, or intricate nail art, 
-                you'll find the perfect salon in your city. Each listing includes detailed information 
+                Whether you&apos;re looking for a quick manicure, a luxurious spa experience, or intricate nail art, 
+                you&apos;ll find the perfect salon in your city. Each listing includes detailed information 
                 about ratings, reviews, services, opening hours, and contact details.
               </p>
               <h3 className="text-xl font-bold text-[#1b0d14] mt-6 mb-3">
@@ -335,7 +335,7 @@ export default async function StatePage({ params }: StatePageProps) {
               <div className="bg-white rounded-2xl p-6 ring-1 ring-[#ee2b8c]/15">
                 <h3 className="text-xl font-bold text-[#1b0d14] mb-4">⭐ Top Cities</h3>
                 <div className="space-y-2">
-                  {topCities.map((city, idx) => (
+                  {topCities.map((city) => (
                     <Link
                       key={city.name}
                       href={`/nail-salons/${stateSlug}/${generateCitySlug(city.name)}`}
