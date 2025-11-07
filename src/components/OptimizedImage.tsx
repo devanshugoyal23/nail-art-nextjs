@@ -93,6 +93,7 @@ export default function OptimizedImage({
         className="w-full h-full object-cover transition-transform duration-300 hover:scale-105 image-optimized"
         priority={priority}
         sizes={mobileSizes}
+        unoptimized={true}
         // Core Web Vitals optimizations - enhanced for mobile performance
         data-priority={priority ? "true" : "false"}
         // Additional mobile optimizations

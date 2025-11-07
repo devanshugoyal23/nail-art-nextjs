@@ -1,6 +1,30 @@
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'cdn.nailartai.app',
+      },
+      {
+        protocol: 'https',
+        hostname: 'f94b6dc4538f33bcd1553dcdda15b36d.r2.cloudflarestorage.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'lh3.googleusercontent.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'maps.googleapis.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'places.googleapis.com',
+      }
+    ],
+  },
   async redirects() {
     return [
       // Legacy gallery path -> new gallery path

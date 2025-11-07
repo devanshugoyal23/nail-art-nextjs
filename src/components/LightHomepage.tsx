@@ -407,6 +407,7 @@ export default function LightHomepage({ trendingItems = [], categories = [] }: P
                   src="https://lh3.googleusercontent.com/aida-public/AB6AXuDSygmI05_U85yDqLNZpXcLYFVwtsWZX-PVIaipXhIzcC3vS9ff2JGrD72Xf8BEaGkGCl3NlpyjX_icyq6clUcq7yo6bXczuvxvoDYNJdvmJJCPazgGRBqEJ7kwL8GI6uLpV3tFwMpY3_Ha_vk9Hofasbp6AqeITjDd0qDyKqiSL4Hs8qDvLDckHOrrrPs865AjC-mYE7-uUg-F8h0MB96T74HvkxRMkx2u66fgOMlIb3EBDC0pPhiRDqxR2Yru989Y6I37CKpMJIM"
                   width={460}
                   height={460}
+                  unoptimized={true}
                 />
                 <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
               </div>
