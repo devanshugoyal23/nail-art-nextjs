@@ -134,7 +134,7 @@ export function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    '/((?!_next/static|_next/image|favicon.ico|robots.txt|sitemap|manifest.json|sw.js).*)',
+    '/((?!_next/static|_next/image|favicon.ico|robots.txt|sitemap|manifest.json|sw.js|globals.css|.*\\.css|.*\\.js|.*\\.png|.*\\.jpg|.*\\.jpeg|.*\\.gif|.*\\.svg|.*\\.ico|.*\\.woff|.*\\.woff2|.*\\.ttf|.*\\.eot).*)',
     '/admin/:path*',
     '/api/:path*'
   ]

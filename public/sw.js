@@ -1,10 +1,10 @@
 // Service Worker for AI Nail Art Studio
 // Provides offline support and caching for better performance
 
-const CACHE_NAME = 'nail-art-studio-v1';
-const STATIC_CACHE = 'nail-art-static-v1';
-const API_CACHE = 'nail-art-api-v1';
-const IMAGE_CACHE = 'nail-art-images-v1';
+const CACHE_NAME = 'nail-art-studio-v2';
+const STATIC_CACHE = 'nail-art-static-v2';
+const API_CACHE = 'nail-art-api-v2';
+const IMAGE_CACHE = 'nail-art-images-v2';
 
 // Assets to cache immediately
 const STATIC_ASSETS = [
@@ -51,7 +51,7 @@ self.addEventListener('activate', (event) => {
     caches.keys().then((cacheNames) => {
       return Promise.all(
         cacheNames.map((cacheName) => {
-          if (cacheName !== STATIC_CACHE && cacheName !== API_CACHE) {
+          if (cacheName !== STATIC_CACHE && cacheName !== API_CACHE && cacheName !== IMAGE_CACHE) {
             console.log('Service Worker: Deleting old cache:', cacheName);
             return caches.delete(cacheName);
           }
@@ -89,18 +89,20 @@ async function handleApiRequest(request) {
     // Try network first
     const networkResponse = await fetch(request);
 
-    // If successful, cache the response
-    if (networkResponse.ok) {
+    // If successful, cache the response (only GET requests)
+    if (networkResponse.ok && request.method === 'GET') {
       const cache = await caches.open(API_CACHE);
       cache.put(request, networkResponse.clone());
     }
 
     return networkResponse;
   } catch (error) {
-    // Network failed, try cache
-    const cachedResponse = await caches.match(request);
-    if (cachedResponse) {
-      return cachedResponse;
+    // Network failed, try cache (only for GET requests)
+    if (request.method === 'GET') {
+      const cachedResponse = await caches.match(request);
+      if (cachedResponse) {
+        return cachedResponse;
+      }
     }
 
     // No cache available, return error
@@ -125,8 +127,10 @@ async function handleStaticRequest(request) {
     // Network request
     const networkResponse = await fetch(request);
 
-    // Cache successful responses
-    if (networkResponse.ok && request.url.startsWith(self.location.origin)) {
+    // Cache successful responses (only GET requests)
+    if (networkResponse.ok && 
+        request.url.startsWith(self.location.origin) &&
+        request.method === 'GET') {
       const cache = await caches.open(STATIC_CACHE);
       cache.put(request, networkResponse.clone());
     }
@@ -154,6 +158,11 @@ self.addEventListener('sync', (event) => {
 
 // Image request strategy: Cache first with 7-day TTL
 async function handleImageRequest(request) {
+  // Only cache GET requests
+  if (request.method !== 'GET') {
+    return fetch(request);
+  }
+
   const cache = await caches.open(IMAGE_CACHE);
   const cachedResponse = await caches.match(request);
   
