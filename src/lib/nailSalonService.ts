@@ -199,7 +199,7 @@ export async function getNailSalonsForLocation(
               if (errorMessage.includes('quota') || errorMessage.includes('rate limit') || errorMessage.includes('exceeded')) {
                 throw new Error(`RATE_LIMIT_EXCEEDED: ${errorMessage}`);
               }
-            } catch (parseError) {
+            } catch {
               // If not JSON, check error text directly
               if (errorText.includes('quota') || errorText.includes('rate limit') || errorText.includes('exceeded')) {
                 throw new Error(`RATE_LIMIT_EXCEEDED: ${errorText.substring(0, 200)}`);

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getSalonsForCity } from '@/lib/salonDataService';
 import { fetchNailSalonsFromAPI, convertPlaceToSalon } from '@/lib/googleMapsApiService';
+import { NailSalon } from '@/lib/nailSalonService';
 
 export async function GET(request: NextRequest) {
   try {
@@ -20,12 +21,12 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    let salons;
+    let salons: NailSalon[] = [];
     
     if (useApi) {
       // Use API if explicitly requested (for data collection)
       const places = await fetchNailSalonsFromAPI(state, city || undefined, limit);
-      salons = places.map(place => convertPlaceToSalon(place, state, city || undefined));
+      salons = places.map(place => convertPlaceToSalon(place, state));
     } else {
       // Default: Use R2 data (no API dependency)
       if (city) {

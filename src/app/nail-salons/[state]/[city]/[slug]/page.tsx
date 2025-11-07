@@ -119,7 +119,7 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
   ).join(' ');
 
   let salon: NailSalon | null = null;
-  let salonDetails = null;
+  let salonDetails: { description?: string; faq?: Array<{ question: string; answer: string }>; parkingInfo?: string; paymentOptions?: string[]; services?: Array<{ name: string; description?: string; price?: string }> } | null = null;
   let relatedSalons: NailSalon[] = [];
   let galleryDesigns: Array<{ id: string; imageUrl: string; title?: string; description?: string; colors?: string[]; techniques?: string[]; occasions?: string[] }> = [];
   let designCollections: Array<{ title: string; description: string; icon: string; designs: Array<{ id: string; imageUrl: string; title?: string; colors?: string[]; techniques?: string[]; occasions?: string[] }>; href: string }> = [];
@@ -214,7 +214,15 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
       // Get 8 random designs from the fetched 20 (shuffle for variety)
       if (galleryData && galleryData.items && galleryData.items.length > 0) {
         const shuffled = [...galleryData.items].sort(() => Math.random() - 0.5);
-        galleryDesigns = shuffled.slice(0, 8);
+        galleryDesigns = shuffled.slice(0, 8).map(item => ({
+          id: item.id,
+          imageUrl: item.optimized_image_url || item.image_url,
+          title: item.name,
+          description: item.description,
+          colors: item.colors,
+          techniques: item.techniques,
+          occasions: item.occasions
+        }));
       }
 
       // Prepare Design Collections

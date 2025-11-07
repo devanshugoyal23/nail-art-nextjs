@@ -89,7 +89,7 @@ async function collectCityData(
   try {
     // Use API service for data collection
     const places = await fetchNailSalonsFromAPI(stateName, cityName, 50);
-    const salons = places.map(place => convertPlaceToSalon(place, stateName, cityName));
+    const salons = places.map(place => convertPlaceToSalon(place, stateName));
     
     if (salons.length === 0) {
       return { success: true, salonCount: 0 };

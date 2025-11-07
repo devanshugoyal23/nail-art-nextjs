@@ -120,7 +120,7 @@ export async function fetchNailSalonsFromAPI(
             if (errorMessage.includes('quota') || errorMessage.includes('rate limit') || errorMessage.includes('exceeded')) {
               throw new Error(`RATE_LIMIT_EXCEEDED: ${errorMessage}`);
             }
-          } catch (parseError) {
+          } catch {
             if (errorText.includes('quota') || errorText.includes('rate limit') || errorText.includes('exceeded')) {
               throw new Error(`RATE_LIMIT_EXCEEDED: ${errorText.substring(0, 200)}`);
             }
@@ -262,7 +262,7 @@ export async function fetchPlaceDetailsFromAPI(placeId: string): Promise<{ id?: 
  * @param maxHeight - Maximum height (default: 600)
  * @returns Photo URL
  */
-export function getPhotoUrl(photoName: string, maxWidth: number = 800, maxHeight: number = 600): string {
+export function getPhotoUrl(photoName: string, maxWidth: number = 800): string {
   if (!photoName) return '';
   if (!GOOGLE_MAPS_API_KEY) {
     console.warn('NEXT_PUBLIC_GOOGLE_MAPS_API_KEY is not configured. Cannot generate photo URL.');
@@ -302,10 +302,10 @@ async function getLocationCoordinates(state: string, city?: string): Promise<{ l
  * @param city - City name (optional)
  * @returns NailSalon object
  */
-export function convertPlaceToSalon(place: { id?: string; displayName?: string | { text: string }; formattedAddress?: string; nationalPhoneNumber?: string; rating?: number; userRatingCount?: number; websiteUri?: string; location?: { latitude: number; longitude: number }; businessStatus?: string; regularOpeningHours?: { weekdayDescriptions: string[] }; types?: string[]; priceLevel?: string; currentOpeningHours?: { openNow?: boolean; weekdayDescriptions?: string[] }; photos?: Array<{ name?: string; widthPx?: number; heightPx?: number; authorAttributions?: Array<{ displayName?: string; uri?: string }> }> }, state: string, city?: string): { name: string; address: string; city: string; state: string; phone?: string; website?: string; rating?: number; reviewCount?: number; placeId?: string; uri?: string; latitude?: number; longitude?: number; openingHours?: string[]; types?: string[]; photos?: Array<{ name: string; url: string; width?: number; height?: number; authorAttributions?: Array<{ displayName?: string; uri?: string }> }>; priceLevel?: 'INEXPENSIVE' | 'MODERATE' | 'EXPENSIVE' | 'VERY_EXPENSIVE'; businessStatus?: 'OPERATIONAL' | 'CLOSED_TEMPORARILY' | 'CLOSED_PERMANENTLY'; currentOpeningHours?: { openNow?: boolean; weekdayDescriptions?: string[] } } {
+export function convertPlaceToSalon(place: { id?: string; displayName?: string | { text: string }; formattedAddress?: string; nationalPhoneNumber?: string; rating?: number; userRatingCount?: number; websiteUri?: string; location?: { latitude: number; longitude: number }; businessStatus?: string; regularOpeningHours?: { weekdayDescriptions: string[] }; types?: string[]; priceLevel?: string; currentOpeningHours?: { openNow?: boolean; weekdayDescriptions?: string[] }; photos?: Array<{ name?: string; widthPx?: number; heightPx?: number; authorAttributions?: Array<{ displayName?: string; uri?: string }> }> }, state: string): { name: string; address: string; city: string; state: string; phone?: string; website?: string; rating?: number; reviewCount?: number; placeId?: string; uri?: string; latitude?: number; longitude?: number; openingHours?: string[]; types?: string[]; photos?: Array<{ name: string; url: string; width?: number; height?: number; authorAttributions?: Array<{ displayName?: string; uri?: string }> }>; priceLevel?: 'INEXPENSIVE' | 'MODERATE' | 'EXPENSIVE' | 'VERY_EXPENSIVE'; businessStatus?: 'OPERATIONAL' | 'CLOSED_TEMPORARILY' | 'CLOSED_PERMANENTLY'; currentOpeningHours?: { openNow?: boolean; weekdayDescriptions?: string[] } } {
   const address = place.formattedAddress || '';
   const addressParts = address.split(',');
-  const salonCity = city || (addressParts.length > 1 ? addressParts[addressParts.length - 2].trim() : '');
+  const salonCity = addressParts.length > 1 ? addressParts[addressParts.length - 2].trim() : '';
   
   const displayName = typeof place.displayName === 'string' 
     ? place.displayName 

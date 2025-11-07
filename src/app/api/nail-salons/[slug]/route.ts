@@ -28,7 +28,7 @@ export async function GET(
     if (useApi) {
       // Use API if explicitly requested (for data collection)
       const place = await fetchSalonBySlugFromAPI(state, city, resolvedParams.slug);
-      salon = place ? convertPlaceToSalon(place, state, city) : null;
+      salon = place ? convertPlaceToSalon(place, state) : null;
     } else {
       // Default: Use R2 data (no API dependency)
       salon = await getSalonFromR2(state, city, resolvedParams.slug);
