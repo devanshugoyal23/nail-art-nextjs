@@ -23,7 +23,6 @@ const Footer: React.FC = () => {
             <h3 className="font-semibold text-[#1b0d14] mb-4">Find Salons</h3>
             <ul className="space-y-2 text-sm text-[#1b0d14]/70">
               <li><Link className="hover:text-[#ee2b8c] transition-colors" href="/nail-salons">Browse All Salons</Link></li>
-              <li><Link className="hover:text-[#ee2b8c] transition-colors" href="/nail-salons/near-me">Salons Near Me</Link></li>
               <li><Link className="hover:text-[#ee2b8c] transition-colors" href="/nail-salons/california">California Salons</Link></li>
               <li><Link className="hover:text-[#ee2b8c] transition-colors" href="/nail-salons/new-york">New York Salons</Link></li>
               <li><Link className="hover:text-[#ee2b8c] transition-colors" href="/nail-salons/texas">Texas Salons</Link></li>
