@@ -23,10 +23,11 @@ let r2Client: S3Client | null = null;
 function getR2Client(): S3Client {
   if (!r2Client) {
     r2Client = new S3Client({
-  region: 'auto',
-  endpoint: process.env.R2_ENDPOINT || `https://05b5ee1a83754aa6b4fcd974016ecde8.r2.cloudflarestorage.com`,
+      region: 'auto',
+      endpoint: process.env.R2_ENDPOINT || `https://05b5ee1a83754aa6b4fcd974016ecde8.r2.cloudflarestorage.com`,
       credentials: getR2Credentials(),
-});
+      forcePathStyle: true,
+    });
   }
   return r2Client;
 }
