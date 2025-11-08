@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { getCitiesInState, generateCitySlug } from '@/lib/nailSalonService';
 import OptimizedImage from '@/components/OptimizedImage';
 import { DirectoryStructuredData } from '@/components/DirectoryStructuredData';
+import { FAQStructuredData } from '@/components/FAQStructuredData';
 
 interface StatePageProps {
   params: Promise<{
@@ -127,19 +128,40 @@ export default async function StatePage({ params }: StatePageProps) {
   const topCities = [...cities]
     .sort((a, b) => (b.salonCount || 0) - (a.salonCount || 0))
     .slice(0, 5);
-  
+
   // Get state image (using Unsplash with state name)
   const stateImageUrl = `https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=1200&h=400&fit=crop&q=80`;
+
+  // FAQ data for schema
+  const faqs = [
+    {
+      question: `How do I choose a nail salon in ${formattedState}?`,
+      answer: `Look for salons with high ratings (4.5+ stars), read customer reviews, check their photos, and verify they offer the services you need. Our directory provides all this information to help you decide.`
+    },
+    {
+      question: `What are typical nail salon prices in ${formattedState}?`,
+      answer: `Prices vary by location and service. Basic manicures typically range from $20-$40, pedicures from $30-$60, and specialty services like gel nails or nail art can range from $40-$100+. Check individual salon listings for pricing.`
+    },
+    {
+      question: "Do I need an appointment?",
+      answer: `While many salons accept walk-ins, appointments are recommended, especially during peak times (weekends and evenings). Call ahead using the phone numbers provided in our listings.`
+    },
+    {
+      question: `What services do nail salons in ${formattedState} offer?`,
+      answer: `Most salons offer manicures, pedicures, gel polish, acrylic nails, nail art, nail repairs, extensions, and spa treatments. Some also offer waxing, massage, and special event packages.`
+    }
+  ];
 
   return (
     <div className="min-h-screen bg-[#f8f6f7]">
       {/* Structured Data for SEO */}
-      <DirectoryStructuredData 
-        type="state" 
+      <DirectoryStructuredData
+        type="state"
         stateName={formattedState}
         stateSlug={stateSlug}
         itemCount={cities.length}
       />
+      <FAQStructuredData faqs={faqs} />
       
       {/* Hero Section with State Image */}
       <div className="relative overflow-hidden">

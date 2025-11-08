@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { getAllStatesWithSalons, generateStateSlug, getCitiesInState } from '@/lib/nailSalonService';
 import OptimizedImage from '@/components/OptimizedImage';
 import { DirectoryStructuredData } from '@/components/DirectoryStructuredData';
+import { FAQStructuredData } from '@/components/FAQStructuredData';
 
 export const metadata: Metadata = {
   title: 'Nail Salons Near You | Find Best Nail Salons by State',
@@ -111,7 +112,7 @@ function getStateDescription(stateName: string, cityCount: number): string {
 
 export default async function NailSalonsPage() {
   const states = await getAllStatesWithSalons();
-  
+
   // Get city counts for each state (in parallel, but limit to avoid too many file reads)
   const statesWithInfo = await Promise.all(
     states.slice(0, 50).map(async (state) => {
@@ -132,13 +133,38 @@ export default async function NailSalonsPage() {
     })
   );
 
+  // FAQ data for schema
+  const faqs = [
+    {
+      question: "How do I find the best nail salon in my state?",
+      answer: "Browse our directory by selecting your state above. Each salon listing includes ratings, reviews, photos, and contact information to help you make an informed decision. Look for salons with high ratings (4.5+ stars) and positive customer reviews."
+    },
+    {
+      question: "What information is included for each salon?",
+      answer: "Each salon listing includes the salon name, address, phone number, website, ratings, customer reviews, opening hours, photos, and current open/closed status. All information is sourced from Google Places API to ensure accuracy."
+    },
+    {
+      question: "How often is the directory updated?",
+      answer: "Our directory pulls real-time information from Google Places API, ensuring that salon details, ratings, and reviews are always up-to-date. Business hours and open/closed status are updated in real-time."
+    },
+    {
+      question: "Can I book appointments through this directory?",
+      answer: "While we don't offer direct booking, each salon listing includes phone numbers and website links where you can contact the salon directly to book your appointment. Many salons also accept walk-ins."
+    },
+    {
+      question: "What services do nail salons typically offer?",
+      answer: "Most nail salons offer manicures, pedicures, gel polish, acrylic nails, nail art, nail repairs, and extensions. Many also provide luxury spa treatments, massage services, and special packages for weddings and events. Check individual salon listings for specific services."
+    }
+  ];
+
   return (
     <div className="min-h-screen bg-[#f8f6f7]">
       {/* Structured Data for SEO */}
-      <DirectoryStructuredData 
-        type="states" 
+      <DirectoryStructuredData
+        type="states"
         itemCount={states.length}
       />
+      <FAQStructuredData faqs={faqs} />
       
       {/* Hero Section */}
       <div className="relative overflow-hidden bg-gradient-to-br from-[#ee2b8c]/10 to-[#f8f6f7]">

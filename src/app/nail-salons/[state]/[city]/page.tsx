@@ -5,6 +5,7 @@ import { generateSlug, getPhotoUrl, generateCitySlug, type NailSalon } from '@/l
 import { getSalonsForCity } from '@/lib/salonDataService';
 import OptimizedImage from '@/components/OptimizedImage';
 import { DirectoryStructuredData } from '@/components/DirectoryStructuredData';
+import { FAQStructuredData } from '@/components/FAQStructuredData';
 
 interface CityPageProps {
   params: Promise<{
@@ -198,21 +199,46 @@ export default async function CityPage({ params }: CityPageProps) {
     : null;
   const totalReviews = salons.reduce((sum, s) => sum + (s.reviewCount || 0), 0);
   const salonsWithPhotos = salons.filter(s => s.photos && s.photos.length > 0).length;
-  
+
   // Get city image (using Unsplash with city name)
   const cityImageUrl = `https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1200&h=400&fit=crop&q=80`;
+
+  // FAQ data for schema
+  const faqs = [
+    {
+      question: `What are the best nail salons in ${formattedCity}?`,
+      answer: `The best nail salons in ${formattedCity} are those with ratings of 4.5+ stars and positive customer reviews. Check our "Top Rated Salons" section above to see the highest-rated options in your area.`
+    },
+    {
+      question: `How much does a manicure cost in ${formattedCity}?`,
+      answer: `Manicure prices in ${formattedCity} typically range from $20-$40 for basic services, $40-$60 for gel manicures, and $50-$100+ for specialty nail art. Check the price level indicators (💰) on each salon card for guidance.`
+    },
+    {
+      question: `Are walk-ins accepted at nail salons in ${formattedCity}?`,
+      answer: `Many salons in ${formattedCity} accept walk-ins, but appointments are recommended during busy times. Call ahead using the phone numbers in our listings to check availability and book your appointment.`
+    },
+    {
+      question: `What nail services are available in ${formattedCity}?`,
+      answer: `Salons in ${formattedCity} offer a wide range of services including manicures, pedicures, gel polish, acrylic nails, dip powder, nail art, nail repairs, extensions, and spa treatments. Some also offer waxing, massage, and special packages for weddings and events.`
+    },
+    {
+      question: `How can I find nail salons open now in ${formattedCity}?`,
+      answer: `Look for the "Open Now" badge (green) on salon cards above. Our directory shows real-time open/closed status for all salons. You can also check the "Today's hours" preview on each card to see when they close.`
+    }
+  ];
 
   return (
     <div className="min-h-screen bg-[#f8f6f7]">
       {/* Structured Data for SEO */}
-      <DirectoryStructuredData 
-        type="city" 
+      <DirectoryStructuredData
+        type="city"
         stateName={formattedState}
         cityName={formattedCity}
         stateSlug={stateSlug}
         citySlug={citySlug}
         itemCount={salons.length}
       />
+      <FAQStructuredData faqs={faqs} />
       
       {/* Hero Section with City Image */}
       <div className="relative overflow-hidden">
