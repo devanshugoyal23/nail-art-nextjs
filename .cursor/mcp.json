@@ -10,6 +10,14 @@
       "env": {
         "SUPABASE_ACCESS_TOKEN": "sbp_644d909d27a220aa4c02f481da0557213a97c109"
       }
+    },
+
+    "vercel": {
+      "url": "https://mcp.vercel.com"
+    },
+
+    "cloudflare-r2": {
+      "url": "https://bindings.mcp.cloudflare.com/mcp"
     }
   }
 }
