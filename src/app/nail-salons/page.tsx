@@ -143,12 +143,21 @@ export default async function NailSalonsPage() {
       {/* Hero Section */}
       <div className="relative overflow-hidden bg-gradient-to-br from-[#ee2b8c]/10 to-[#f8f6f7]">
         <div className="relative max-w-7xl mx-auto px-4 py-16">
+          {/* Breadcrumb Navigation */}
+          <nav className="flex items-center space-x-2 text-sm mb-6" aria-label="Breadcrumb">
+            <Link href="/" className="text-[#1b0d14]/70 hover:text-[#ee2b8c] transition-colors">
+              Home
+            </Link>
+            <span className="text-[#1b0d14]/40">/</span>
+            <span className="text-[#1b0d14] font-medium">Nail Salons</span>
+          </nav>
+
           <div className="text-center">
             <h1 className="text-5xl md:text-7xl font-bold text-[#1b0d14] mb-6">
               Find Nail Salons Near You
             </h1>
             <p className="text-xl md:text-2xl text-[#1b0d14]/70 max-w-4xl mx-auto mb-8">
-              Discover the best nail salons, nail spas, and nail art studios across {states.length} states. 
+              Discover the best nail salons, nail spas, and nail art studios across {states.length} states.
               Browse by location to find top-rated salons with reviews, ratings, and contact information.
             </p>
           </div>
@@ -266,9 +275,14 @@ export default async function NailSalonsPage() {
             </h2>
             <div className="prose prose-lg text-[#1b0d14]/70">
               <p className="mb-4">
-                Whether you&apos;re looking for a quick manicure, a luxurious spa experience, or 
-                intricate nail art designs, our comprehensive directory helps you find the best 
-                nail salons across all {states.length} US states. Browse by state to discover top-rated salons with 
+                Whether you&apos;re looking for a quick{' '}
+                <Link href="/techniques/french-manicure" className="text-[#ee2b8c] hover:underline font-medium">
+                  manicure
+                </Link>, a luxurious spa experience, or{' '}
+                <Link href="/nail-art-gallery" className="text-[#ee2b8c] hover:underline font-medium">
+                  intricate nail art designs
+                </Link>, our comprehensive directory helps you find the best
+                nail salons across all {states.length} US states. Browse by state to discover top-rated salons with
                 detailed information including ratings, reviews, contact details, opening hours, and more.
               </p>
               <h3 className="text-xl font-bold text-[#1b0d14] mt-6 mb-3">
@@ -278,7 +292,12 @@ export default async function NailSalonsPage() {
                 <li>Professional licensing and certification</li>
                 <li>High ratings and positive customer reviews</li>
                 <li>Clean, sanitized workspace</li>
-                <li>Wide range of services (manicure, pedicure, nail art, etc.)</li>
+                <li>
+                  Wide range of services ({' '}
+                  <Link href="/categories/techniques" className="text-[#ee2b8c] hover:underline">
+                    manicure, pedicure, nail art
+                  </Link>, etc.)
+                </li>
                 <li>Convenient location and hours</li>
                 <li>Quality products and tools</li>
               </ul>
@@ -366,10 +385,67 @@ export default async function NailSalonsPage() {
             <div>
               <h3 className="text-lg font-semibold text-[#1b0d14] mb-2">What services do nail salons typically offer?</h3>
               <p className="text-[#1b0d14]/70">
-                Most nail salons offer manicures, pedicures, gel polish, acrylic nails, nail art, nail repairs, 
-                and extensions. Many also provide luxury spa treatments, massage services, and special packages for 
+                Most nail salons offer manicures, pedicures, gel polish, acrylic nails, nail art, nail repairs,
+                and extensions. Many also provide luxury spa treatments, massage services, and special packages for
                 weddings and events. Check individual salon listings for specific services.
               </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Nail Art Inspiration Section */}
+        <div className="max-w-6xl mx-auto px-4 py-12">
+          <div className="bg-gradient-to-br from-[#ee2b8c]/5 to-[#f8f6f7] rounded-2xl p-8 ring-1 ring-[#ee2b8c]/15">
+            <h2 className="text-2xl md:text-3xl font-bold text-[#1b0d14] mb-4">
+              💅 Get Inspired: Nail Art Ideas to Show Your Technician
+            </h2>
+            <p className="text-[#1b0d14]/70 mb-6 leading-relaxed">
+              Browse our gallery of AI-generated nail art designs. Save your favorites and show them at your next salon visit for perfect results!
+            </p>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <Link
+                href="/nail-art-gallery"
+                className="group bg-white p-4 rounded-xl ring-1 ring-[#ee2b8c]/20 hover:ring-[#ee2b8c]/40 hover:shadow-lg transition-all"
+              >
+                <div className="text-3xl mb-2">🎨</div>
+                <h3 className="font-semibold text-[#1b0d14] group-hover:text-[#ee2b8c] transition-colors">
+                  Browse All Designs
+                </h3>
+                <p className="text-xs text-[#1b0d14]/60 mt-1">1000+ nail art ideas</p>
+              </Link>
+
+              <Link
+                href="/categories/occasions"
+                className="group bg-white p-4 rounded-xl ring-1 ring-[#ee2b8c]/20 hover:ring-[#ee2b8c]/40 hover:shadow-lg transition-all"
+              >
+                <div className="text-3xl mb-2">🎉</div>
+                <h3 className="font-semibold text-[#1b0d14] group-hover:text-[#ee2b8c] transition-colors">
+                  Designs by Occasion
+                </h3>
+                <p className="text-xs text-[#1b0d14]/60 mt-1">Wedding, party & more</p>
+              </Link>
+
+              <Link
+                href="/categories/colors"
+                className="group bg-white p-4 rounded-xl ring-1 ring-[#ee2b8c]/20 hover:ring-[#ee2b8c]/40 hover:shadow-lg transition-all"
+              >
+                <div className="text-3xl mb-2">🌈</div>
+                <h3 className="font-semibold text-[#1b0d14] group-hover:text-[#ee2b8c] transition-colors">
+                  Designs by Color
+                </h3>
+                <p className="text-xs text-[#1b0d14]/60 mt-1">Find your perfect shade</p>
+              </Link>
+
+              <Link
+                href="/nail-art/occasion/wedding"
+                className="group bg-white p-4 rounded-xl ring-1 ring-[#ee2b8c]/20 hover:ring-[#ee2b8c]/40 hover:shadow-lg transition-all"
+              >
+                <div className="text-3xl mb-2">👰</div>
+                <h3 className="font-semibold text-[#1b0d14] group-hover:text-[#ee2b8c] transition-colors">
+                  Wedding Nail Ideas
+                </h3>
+                <p className="text-xs text-[#1b0d14]/60 mt-1">Bridal perfection</p>
+              </Link>
             </div>
           </div>
         </div>
