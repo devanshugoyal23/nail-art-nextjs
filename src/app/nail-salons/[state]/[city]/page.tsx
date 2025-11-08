@@ -5,6 +5,7 @@ import { generateSlug, getPhotoUrl, generateCitySlug, type NailSalon } from '@/l
 import { getSalonsForCity } from '@/lib/salonDataService';
 import OptimizedImage from '@/components/OptimizedImage';
 import { DirectoryStructuredData } from '@/components/DirectoryStructuredData';
+import { FAQStructuredData } from '@/components/FAQStructuredData';
 
 interface CityPageProps {
   params: Promise<{
@@ -198,21 +199,46 @@ export default async function CityPage({ params }: CityPageProps) {
     : null;
   const totalReviews = salons.reduce((sum, s) => sum + (s.reviewCount || 0), 0);
   const salonsWithPhotos = salons.filter(s => s.photos && s.photos.length > 0).length;
-  
+
   // Get city image (using Unsplash with city name)
   const cityImageUrl = `https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1200&h=400&fit=crop&q=80`;
+
+  // FAQ data for schema
+  const faqs = [
+    {
+      question: `What are the best nail salons in ${formattedCity}?`,
+      answer: `The best nail salons in ${formattedCity} are those with ratings of 4.5+ stars and positive customer reviews. Check our "Top Rated Salons" section above to see the highest-rated options in your area.`
+    },
+    {
+      question: `How much does a manicure cost in ${formattedCity}?`,
+      answer: `Manicure prices in ${formattedCity} typically range from $20-$40 for basic services, $40-$60 for gel manicures, and $50-$100+ for specialty nail art. Check the price level indicators (💰) on each salon card for guidance.`
+    },
+    {
+      question: `Are walk-ins accepted at nail salons in ${formattedCity}?`,
+      answer: `Many salons in ${formattedCity} accept walk-ins, but appointments are recommended during busy times. Call ahead using the phone numbers in our listings to check availability and book your appointment.`
+    },
+    {
+      question: `What nail services are available in ${formattedCity}?`,
+      answer: `Salons in ${formattedCity} offer a wide range of services including manicures, pedicures, gel polish, acrylic nails, dip powder, nail art, nail repairs, extensions, and spa treatments. Some also offer waxing, massage, and special packages for weddings and events.`
+    },
+    {
+      question: `How can I find nail salons open now in ${formattedCity}?`,
+      answer: `Look for the "Open Now" badge (green) on salon cards above. Our directory shows real-time open/closed status for all salons. You can also check the "Today's hours" preview on each card to see when they close.`
+    }
+  ];
 
   return (
     <div className="min-h-screen bg-[#f8f6f7]">
       {/* Structured Data for SEO */}
-      <DirectoryStructuredData 
-        type="city" 
+      <DirectoryStructuredData
+        type="city"
         stateName={formattedState}
         cityName={formattedCity}
         stateSlug={stateSlug}
         citySlug={citySlug}
         itemCount={salons.length}
       />
+      <FAQStructuredData faqs={faqs} />
       
       {/* Hero Section with City Image */}
       <div className="relative overflow-hidden">
@@ -231,14 +257,23 @@ export default async function CityPage({ params }: CityPageProps) {
 
         <div className="relative max-w-7xl mx-auto px-4 py-20">
           <div className="text-center">
-            <div className="mb-4">
-              <Link
-                href={`/nail-salons/${stateSlug}`}
-                className="text-white/90 hover:text-white text-sm font-medium inline-flex items-center gap-2 bg-black/30 backdrop-blur-sm px-4 py-2 rounded-full"
-              >
-                ← Back to {formattedState}
+            {/* Breadcrumb Navigation */}
+            <nav className="flex items-center justify-center space-x-2 text-sm mb-6" aria-label="Breadcrumb">
+              <Link href="/" className="text-white/80 hover:text-white transition-colors">
+                Home
               </Link>
-            </div>
+              <span className="text-white/50">/</span>
+              <Link href="/nail-salons" className="text-white/80 hover:text-white transition-colors">
+                Salons
+              </Link>
+              <span className="text-white/50">/</span>
+              <Link href={`/nail-salons/${stateSlug}`} className="text-white/80 hover:text-white transition-colors">
+                {formattedState}
+              </Link>
+              <span className="text-white/50">/</span>
+              <span className="text-white font-medium">{formattedCity}</span>
+            </nav>
+
             <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 drop-shadow-lg">
               Nail Salons in {formattedCity}, {formattedState}
             </h1>
@@ -449,21 +484,53 @@ export default async function CityPage({ params }: CityPageProps) {
             </h2>
             <div className="prose prose-lg text-[#1b0d14]/70">
               <p className="mb-4">
-                Find the perfect nail salon in {formattedCity}, {formattedState}. Our comprehensive directory 
-                features {salons.length} top-rated salons offering a wide range of services including manicures, 
-                pedicures, nail art, gel polish, acrylic nails, and more. Each salon listing includes detailed 
+                Find the perfect nail salon in {formattedCity}, {formattedState}. Our comprehensive directory
+                features {salons.length} top-rated salons offering a wide range of services including{' '}
+                <Link href="/techniques/french-manicure" className="text-[#ee2b8c] hover:underline font-medium">
+                  manicures
+                </Link>,
+                pedicures,{' '}
+                <Link href="/nail-art-gallery" className="text-[#ee2b8c] hover:underline font-medium">
+                  nail art
+                </Link>,{' '}
+                <Link href="/techniques/gel" className="text-[#ee2b8c] hover:underline font-medium">
+                  gel polish
+                </Link>,{' '}
+                <Link href="/techniques/acrylic" className="text-[#ee2b8c] hover:underline font-medium">
+                  acrylic nails
+                </Link>, and more. Each salon listing includes detailed
                 information including ratings, reviews, contact details, opening hours, and photos to help you make the best choice.
               </p>
               <h3 className="text-xl font-bold text-[#1b0d14] mt-6 mb-3">
-                Services Available in {formattedCity}
+                Popular Services in {formattedCity}
               </h3>
               <ul className="list-disc pl-6 space-y-2 mb-6">
                 <li>Professional manicures and pedicures</li>
-                <li>Nail art and design services</li>
-                <li>Gel polish and acrylic nails</li>
+                <li>
+                  <Link href="/nail-art-gallery" className="text-[#ee2b8c] hover:underline">
+                    Nail art and design services
+                  </Link> - bring inspiration from our gallery
+                </li>
+                <li>
+                  <Link href="/techniques/gel" className="text-[#ee2b8c] hover:underline">
+                    Gel polish
+                  </Link> and{' '}
+                  <Link href="/techniques/acrylic" className="text-[#ee2b8c] hover:underline">
+                    acrylic nails
+                  </Link>
+                </li>
                 <li>Nail repairs and extensions</li>
-                <li>Luxury spa treatments</li>
-                <li>Wedding and special occasion packages</li>
+                <li>
+                  Luxury spa treatments and{' '}
+                  <Link href="/categories/techniques" className="text-[#ee2b8c] hover:underline">
+                    specialized techniques
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/nail-art/occasion/wedding" className="text-[#ee2b8c] hover:underline">
+                    Wedding and special occasion packages
+                  </Link>
+                </li>
               </ul>
             </div>
           </div>
@@ -589,6 +656,63 @@ export default async function CityPage({ params }: CityPageProps) {
                   </p>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Nail Art Inspiration Section */}
+        <div className="max-w-6xl mx-auto px-4 py-12">
+          <div className="bg-gradient-to-br from-[#ee2b8c]/5 to-[#f8f6f7] rounded-2xl p-8 ring-1 ring-[#ee2b8c]/15">
+            <h2 className="text-2xl md:text-3xl font-bold text-[#1b0d14] mb-4">
+              💅 Nail Art Ideas for Your {formattedCity} Appointment
+            </h2>
+            <p className="text-[#1b0d14]/70 mb-6 leading-relaxed">
+              Get inspired before your salon visit! Browse our AI-generated nail art designs and save favorites to show your technician.
+            </p>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <Link
+                href="/nail-art-gallery"
+                className="group bg-white p-4 rounded-xl ring-1 ring-[#ee2b8c]/20 hover:ring-[#ee2b8c]/40 hover:shadow-lg transition-all"
+              >
+                <div className="text-3xl mb-2">🎨</div>
+                <h3 className="font-semibold text-[#1b0d14] group-hover:text-[#ee2b8c] transition-colors">
+                  Browse All Designs
+                </h3>
+                <p className="text-xs text-[#1b0d14]/60 mt-1">1000+ nail art ideas</p>
+              </Link>
+
+              <Link
+                href="/categories/colors"
+                className="group bg-white p-4 rounded-xl ring-1 ring-[#ee2b8c]/20 hover:ring-[#ee2b8c]/40 hover:shadow-lg transition-all"
+              >
+                <div className="text-3xl mb-2">🌈</div>
+                <h3 className="font-semibold text-[#1b0d14] group-hover:text-[#ee2b8c] transition-colors">
+                  Designs by Color
+                </h3>
+                <p className="text-xs text-[#1b0d14]/60 mt-1">Find your perfect shade</p>
+              </Link>
+
+              <Link
+                href="/categories/techniques"
+                className="group bg-white p-4 rounded-xl ring-1 ring-[#ee2b8c]/20 hover:ring-[#ee2b8c]/40 hover:shadow-lg transition-all"
+              >
+                <div className="text-3xl mb-2">✨</div>
+                <h3 className="font-semibold text-[#1b0d14] group-hover:text-[#ee2b8c] transition-colors">
+                  Popular Techniques
+                </h3>
+                <p className="text-xs text-[#1b0d14]/60 mt-1">French, gel, chrome & more</p>
+              </Link>
+
+              <Link
+                href="/try-on"
+                className="group bg-white p-4 rounded-xl ring-1 ring-[#ee2b8c]/20 hover:ring-[#ee2b8c]/40 hover:shadow-lg transition-all"
+              >
+                <div className="text-3xl mb-2">📸</div>
+                <h3 className="font-semibold text-[#1b0d14] group-hover:text-[#ee2b8c] transition-colors">
+                  Virtual Try-On
+                </h3>
+                <p className="text-xs text-[#1b0d14]/60 mt-1">See on your hands first</p>
+              </Link>
             </div>
           </div>
         </div>

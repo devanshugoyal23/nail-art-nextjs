@@ -449,7 +449,56 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
           ))
         }}
       />
-      
+
+      {/* HowTo Schema - For Tutorial Rich Results */}
+      {editorial && editorial.steps && editorial.steps.length > 0 && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "HowTo",
+              "name": `How to Create ${item.design_name || 'This Nail Art Design'}`,
+              "description": item.prompt || `Learn how to create this beautiful ${item.category || 'nail art'} design with our step-by-step tutorial.`,
+              "image": {
+                "@type": "ImageObject",
+                "url": item.original_image_url || item.image_url,
+                "width": "1000",
+                "height": "1500"
+              },
+              "totalTime": editorial.timeMinutes ? `PT${editorial.timeMinutes}M` : "PT45M",
+              "estimatedCost": {
+                "@type": "MonetaryAmount",
+                "currency": "USD",
+                "value": editorial.costEstimate || "$20-40"
+              },
+              "supply": (editorial.supplies || []).map(supply => ({
+                "@type": "HowToSupply",
+                "name": supply
+              })),
+              "tool": (editorial.supplies || []).filter(s =>
+                s.toLowerCase().includes('brush') ||
+                s.toLowerCase().includes('tool') ||
+                s.toLowerCase().includes('file')
+              ).map(tool => ({
+                "@type": "HowToTool",
+                "name": tool
+              })),
+              "step": editorial.steps.map((step, index) => ({
+                "@type": "HowToStep",
+                "name": `Step ${index + 1}`,
+                "text": step,
+                "position": index + 1,
+                "url": `https://nailartai.app/${resolvedParams.category}/${resolvedParams.slug}#step-${index + 1}`
+              })),
+              "performTime": editorial.timeMinutes ? `PT${editorial.timeMinutes}M` : "PT45M",
+              "prepTime": "PT10M",
+              "yield": "1 set of decorated nails"
+            })
+          }}
+        />
+      )}
+
       <div className="min-h-screen bg-[#f8f6f7] text-[#1b0d14]">
         {/* Progress Bar */}
         <ProgressBar />
