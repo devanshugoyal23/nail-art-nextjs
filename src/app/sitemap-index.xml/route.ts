@@ -3,13 +3,15 @@ import { NextResponse } from 'next/server';
 /**
  * Optimized Sitemap Index - NO DUPLICATES
  * This is the main sitemap that search engines should crawl
- * 
+ *
  * Structure:
  * - sitemap-static.xml: Core pages (home, gallery, categories)
  * - sitemap-designs.xml: Canonical design URLs only (highest priority)
  * - sitemap-categories.xml: Category pages only
  * - sitemap-images.xml: Image metadata for Google Images
  * - sitemap-gallery.xml: Gallery overview only (no item URLs)
+ * - sitemap-nail-salons.xml: Main salon listing pages
+ * - sitemap-nail-salons-premium.xml: Top 400 premium salon detail pages (✅ NEW)
  */
 export async function GET() {
   const baseUrl = 'https://nailartai.app';
@@ -39,6 +41,10 @@ export async function GET() {
   </sitemap>
   <sitemap>
     <loc>${baseUrl}/sitemap-nail-salons.xml</loc>
+    <lastmod>${currentDate}</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>${baseUrl}/sitemap-nail-salons-premium.xml</loc>
     <lastmod>${currentDate}</lastmod>
   </sitemap>
 </sitemapindex>`;
