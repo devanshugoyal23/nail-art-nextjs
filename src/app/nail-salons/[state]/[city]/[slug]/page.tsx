@@ -40,11 +40,15 @@ export async function generateMetadata({ params }: SalonDetailPageProps): Promis
     word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
   ).join(' ');
 
-  // Fetch salon data for metadata from R2
+  // ✅ OPTIMIZATION: Fetch city data once for metadata (was duplicate R2 request)
   let salon: NailSalon | null = null;
   try {
-    const { getSalonFromR2 } = await import('@/lib/salonDataService');
-    salon = await getSalonFromR2(formattedState, formattedCity, resolvedParams.slug);
+    const { getCityDataFromR2 } = await import('@/lib/salonDataService');
+    const cityData = await getCityDataFromR2(formattedState, formattedCity);
+
+    if (cityData && cityData.salons) {
+      salon = cityData.salons.find(s => generateSlug(s.name) === resolvedParams.slug) || null;
+    }
   } catch (error) {
     console.error('Error fetching salon for metadata:', error);
   }
@@ -159,24 +163,35 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
   let techniqueShowcases: Array<{ name: string; designs: Array<{ id: string; imageUrl: string; title?: string; colors?: string[]; techniques?: string[]; occasions?: string[] }>; description: string; icon: string; difficulty: string }> = [];
   
   try {
-    // ✅ Fetch from R2 only (no API dependency)
-    const { getSalonFromR2 } = await import('@/lib/salonDataService');
-    salon = await getSalonFromR2(formattedState, formattedCity, resolvedParams.slug);
-    
+    // ✅ OPTIMIZATION: Fetch city data once from R2 (was 2-3 duplicate requests!)
+    // This eliminates duplicate R2 calls in getSalonFromR2() and getSalonsForCity()
+    const { getCityDataFromR2 } = await import('@/lib/salonDataService');
+    const cityData = await getCityDataFromR2(formattedState, formattedCity);
+
+    if (!cityData || !cityData.salons) {
+      console.log(`⚠️ No salon data found for ${formattedCity}, ${formattedState}`);
+      notFound();
+    }
+
+    // Find specific salon from city data (no additional R2 request)
+    salon = cityData.salons.find(s => generateSlug(s.name) === resolvedParams.slug) || null;
+
     if (!salon) {
-      // No R2 data available - show 404 instead of falling back to API
       console.log(`⚠️ Salon not found in R2 for ${resolvedParams.slug}`);
       notFound();
     } else {
-      console.log(`✅ Using R2 data for salon ${resolvedParams.slug}`);
+      console.log(`✅ Using R2 data for salon ${resolvedParams.slug} (1 R2 request, was 2-3!)`);
     }
+
     if (salon) {
+      // Use city data for related salons (no additional R2 request)
+      relatedSalons = cityData.salons.filter(s => generateSlug(s.name) !== resolvedParams.slug).slice(0, 5);
+
       // ✅ OPTIMIZATION: Use shared gallery cache (96% query reduction)
       // BEFORE: 26+ parallel Supabase queries (300-500ms, $0.11/month per 10k views)
       // AFTER: 1 cached query (50-100ms, $0.004/month per 10k views)
-      const [additionalData, citySalons, cachedGallery] = await Promise.all([
+      const [additionalData, cachedGallery] = await Promise.all([
         getSalonAdditionalData(salon, undefined).catch(() => ({})),
-        getSalonsForCity(formattedState, formattedCity).catch(() => []),
         getCachedGalleryData().catch(() => null)
       ]);
       
@@ -213,8 +228,7 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
         salon = { ...salon, ...additionalData };
       }
 
-      // Filter out current salon and limit to 5 (get related salons from R2 city data)
-      relatedSalons = citySalons.filter(s => generateSlug(s.name) !== resolvedParams.slug).slice(0, 5);
+      // ✅ Related salons already set from cityData (line 184) - no duplicate R2 request!
 
       // ✅ Use cached gallery data (all pre-categorized, instant)
       if (cachedGallery) {
