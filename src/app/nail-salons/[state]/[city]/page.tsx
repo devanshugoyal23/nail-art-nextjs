@@ -80,10 +80,10 @@ export async function generateStaticParams() {
 // Enable dynamic params for cities not in generateStaticParams
 export const dynamicParams = true;
 
-// Enable ISR - revalidate every 24 hours
-// ✅ PHASE 2.3: Increased from 1h to 24h (96% fewer regenerations)
-// City salon lists rarely change, so 24h cache is appropriate
-export const revalidate = 86400; // 24 hours in seconds (was 3600 = 1 hour)
+// Enable ISR - revalidate every 7 days
+// ✅ PHASE 2.3: Increased from 1h to 7 days (99% fewer regenerations)
+// City salon lists rarely change, so 7-day cache is appropriate
+export const revalidate = 604800; // 7 days in seconds (was 3600 = 1 hour, then 86400 = 24 hours)
 
 export async function generateMetadata({ params }: CityPageProps): Promise<Metadata> {
   const resolvedParams = await params;
