@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { routeForTag } from '@/lib/urlBuilder';
+import { deterministicSelect } from '@/lib/deterministicSelection';
 
 interface BrowseByTagsSectionProps {
   salonName: string;
@@ -14,23 +15,20 @@ const ALL_TAGS = {
   styles: ['Abstract', 'Cute', 'Gothic', 'Vintage', 'Modern', 'Nature', 'Glamour', 'Minimalist']
 };
 
-// Get random tags from each category
-function getRandomTags() {
-  const colorTags = [...ALL_TAGS.colors].sort(() => Math.random() - 0.5).slice(0, 4);
-  const techniqueTags = [...ALL_TAGS.techniques].sort(() => Math.random() - 0.5).slice(0, 3);
-  const occasionTags = [...ALL_TAGS.occasions].sort(() => Math.random() - 0.5).slice(0, 4);
-  const styleTags = [...ALL_TAGS.styles].sort(() => Math.random() - 0.5).slice(0, 3);
-  
+// ✅ FIXED: Use deterministic tag selection for SEO stability
+// Same salon always shows same tags - improves SEO and caching
+// Different salons get different tags for variety across the site
+function getDeterministicTags(salonName: string) {
   return {
-    colors: colorTags,
-    techniques: techniqueTags,
-    occasions: occasionTags,
-    styles: styleTags
+    colors: deterministicSelect(ALL_TAGS.colors, salonName, 4),
+    techniques: deterministicSelect(ALL_TAGS.techniques, salonName, 3),
+    occasions: deterministicSelect(ALL_TAGS.occasions, salonName, 4),
+    styles: deterministicSelect(ALL_TAGS.styles, salonName, 3)
   };
 }
 
 export default function BrowseByTagsSection({ salonName }: BrowseByTagsSectionProps) {
-  const tags = getRandomTags();
+  const tags = getDeterministicTags(salonName);
 
   return (
     <div className="bg-white rounded-xl p-6 ring-1 ring-[#ee2b8c]/15">

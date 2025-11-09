@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import { deterministicSubset } from '@/lib/deterministicSelection';
 
 interface NailCareTipsSectionProps {
   salonName: string;
@@ -111,15 +112,16 @@ const NAIL_CARE_GUIDES: TipGuide[] = [
   }
 ];
 
-// Function to get random tips (different each time page loads)
-function getRandomTips(count: number = 3): TipGuide[] {
-  const shuffled = [...NAIL_CARE_GUIDES].sort(() => Math.random() - 0.5);
-  return shuffled.slice(0, count);
+// ✅ FIXED: Use deterministic tip selection for SEO stability
+// Same salon always shows same tips - improves SEO and caching
+// Different salons get different tips for variety across the site
+function getDeterministicTips(salonName: string, count: number = 1): TipGuide[] {
+  return deterministicSubset(NAIL_CARE_GUIDES, salonName, count);
 }
 
 export default function NailCareTipsSection({ salonName }: NailCareTipsSectionProps) {
-  // Get only 1 random tip guide (shorter, more focused)
-  const selectedTips = getRandomTips(1);
+  // Get 1 deterministic tip guide based on salon name
+  const selectedTips = getDeterministicTips(salonName, 1);
   const guide = selectedTips[0];
 
   return (

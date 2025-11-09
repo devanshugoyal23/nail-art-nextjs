@@ -16,6 +16,7 @@ import { SalonStructuredData } from '@/components/SalonStructuredData';
 import { absoluteUrl } from '@/lib/absoluteUrl';
 import { getGalleryItems, getGalleryItemsByOccasion, getGalleryItemsByColor, getGalleryItemsByTechnique } from '@/lib/galleryService';
 import { GalleryItem } from '@/lib/supabase';
+import { deterministicSelect } from '@/lib/deterministicSelection';
 
 // ISR Configuration - Cache salon pages for 6 hours to reduce CPU usage
 export const revalidate = 21600; // 6 hours in seconds
@@ -253,11 +254,13 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
       
       // Filter out current salon and limit to 5 (get related salons from R2 city data)
       relatedSalons = citySalons.filter(s => generateSlug(s.name) !== resolvedParams.slug).slice(0, 5);
-      
-      // Get 8 random designs from the fetched 20 (shuffle for variety)
+
+      // ✅ FIXED: Use deterministic selection based on salon slug for SEO stability
+      // Same salon always shows same designs - improves caching and SEO
+      // Different salons get different designs for variety across the site
       if (galleryData && galleryData.items && galleryData.items.length > 0) {
-        const shuffled = [...galleryData.items].sort(() => Math.random() - 0.5);
-        rawGalleryItems = shuffled.slice(0, 8);
+        // Use salon slug as seed for deterministic selection
+        rawGalleryItems = deterministicSelect(galleryData.items, resolvedParams.slug, 8);
         galleryDesigns = rawGalleryItems.map(item => ({
           id: item.id,
           imageUrl: item.image_url,
