@@ -1,5 +1,6 @@
 import { GalleryItem, supabase } from './supabase';
 import { NailArtEditorial } from './geminiService';
+import { getCategoriesWithMinimumContent as getCategoriesWithMinimumContentFromGallery, getUnderPopulatedCategories as getUnderPopulatedCategoriesFromGallery } from './galleryService';
 
 export interface TagItem {
   label: string;
@@ -333,82 +334,18 @@ export const CONTENT_THRESHOLDS = {
 
 /**
  * Get categories that meet minimum content requirements
+ * ✅ OPTIMIZATION #8: Delegate to optimized galleryService function
  */
 export async function getCategoriesWithMinimumContent(minItems: number = CONTENT_THRESHOLDS.MIN_ITEMS_FOR_CATEGORY): Promise<string[]> {
-  try {
-    // Get all unique categories first
-    const { data: categoriesData, error: categoriesError } = await supabase
-      .from('gallery_items')
-      .select('category')
-      .not('category', 'is', null);
-      
-    if (categoriesError) {
-      console.error('Error fetching categories for content check:', categoriesError);
-      return [];
-    }
-    
-    // Get unique categories
-    const uniqueCategories = [...new Set(categoriesData?.map(item => item.category).filter(Boolean) || [])];
-    
-    // Get count for each category using count queries
-    const categoriesWithMinContent: string[] = [];
-    
-    for (const category of uniqueCategories) {
-      const { count, error: countError } = await supabase
-        .from('gallery_items')
-        .select('*', { count: 'exact', head: true })
-        .eq('category', category);
-        
-      if (!countError && (count || 0) >= minItems) {
-        categoriesWithMinContent.push(category);
-      }
-    }
-    
-    return categoriesWithMinContent;
-  } catch (error) {
-    console.error('Error getting categories with minimum content:', error);
-    return [];
-  }
+  return getCategoriesWithMinimumContentFromGallery(minItems);
 }
 
 /**
  * Get under-populated categories that need more content
+ * ✅ OPTIMIZATION #8: Delegate to optimized galleryService function
  */
 export async function getUnderPopulatedCategories(minItems: number = CONTENT_THRESHOLDS.MIN_ITEMS_FOR_CATEGORY): Promise<string[]> {
-  try {
-    // Get all unique categories first
-    const { data: categoriesData, error: categoriesError } = await supabase
-      .from('gallery_items')
-      .select('category')
-      .not('category', 'is', null);
-      
-    if (categoriesError) {
-      console.error('Error fetching under-populated categories:', categoriesError);
-      return [];
-    }
-    
-    // Get unique categories
-    const uniqueCategories = [...new Set(categoriesData?.map(item => item.category).filter(Boolean) || [])];
-    
-    // Get count for each category using count queries
-    const underPopulatedCategories: string[] = [];
-    
-    for (const category of uniqueCategories) {
-      const { count, error: countError } = await supabase
-        .from('gallery_items')
-        .select('*', { count: 'exact', head: true })
-        .eq('category', category);
-        
-      if (!countError && (count || 0) < minItems) {
-        underPopulatedCategories.push(category);
-      }
-    }
-    
-    return underPopulatedCategories;
-  } catch (error) {
-    console.error('Error getting under-populated categories:', error);
-    return [];
-  }
+  return getUnderPopulatedCategoriesFromGallery(minItems);
 }
 
 /**
