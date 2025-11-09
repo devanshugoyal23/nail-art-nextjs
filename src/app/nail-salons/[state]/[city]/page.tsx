@@ -14,42 +14,86 @@ interface CityPageProps {
   }>;
 }
 
-// Generate static params for cities
+// ✅ OPTIMIZATION: Pre-build only top 100 cities to prevent build timeouts
+// Other cities will be generated on-demand via ISR (dynamicParams = true)
 export async function generateStaticParams() {
   try {
     const fs = await import('fs/promises');
     const path = await import('path');
     const citiesDir = path.join(process.cwd(), 'src', 'data', 'cities');
-    
+
     const files = await fs.readdir(citiesDir);
     const stateFiles = files.filter(file => file.endsWith('.json'));
-    
-    const params: Array<{ state: string; city: string }> = [];
-    
+
+    // Collect all cities with their salon counts for sorting
+    const allCities: Array<{ state: string; city: string; salonCount: number; name: string }> = [];
+
+    // Famous cities to prioritize (top metros + tourist destinations)
+    const famousCities = new Set([
+      // Top 20 metros by population
+      'new-york', 'los-angeles', 'chicago', 'houston', 'phoenix',
+      'philadelphia', 'san-antonio', 'san-diego', 'dallas', 'san-jose',
+      'austin', 'jacksonville', 'fort-worth', 'columbus', 'charlotte',
+      'san-francisco', 'indianapolis', 'seattle', 'denver', 'washington',
+      // Additional major cities & tourist destinations
+      'boston', 'nashville', 'las-vegas', 'portland', 'memphis',
+      'miami', 'orlando', 'atlanta', 'detroit', 'baltimore',
+      'milwaukee', 'albuquerque', 'tucson', 'sacramento', 'kansas-city',
+      'mesa', 'omaha', 'raleigh', 'long-beach', 'virginia-beach'
+    ]);
+
     // Read each state file and extract cities
     for (const stateFile of stateFiles) {
       const stateSlug = stateFile.replace('.json', '');
       const filePath = path.join(citiesDir, stateFile);
-      
+
       try {
         const fileContent = await fs.readFile(filePath, 'utf-8');
         const data = JSON.parse(fileContent);
-        
+
         if (data.cities && Array.isArray(data.cities)) {
-          // Use all cities, but use the slug from JSON if available, otherwise generate it
-          const cities = data.cities.map((city: { name: string; slug?: string }) => ({
-            state: stateSlug,
-            city: city.slug || generateCitySlug(city.name),
-          }));
-          
-          params.push(...cities);
+          // Collect cities with metadata for sorting
+          for (const city of data.cities) {
+            const citySlug = city.slug || generateCitySlug(city.name);
+            const salonCount = city.salonCount || 0;
+
+            allCities.push({
+              state: stateSlug,
+              city: citySlug,
+              salonCount,
+              name: city.name
+            });
+          }
         }
       } catch (error) {
         console.error(`Error reading ${stateFile}:`, error);
       }
     }
-    
-    return params;
+
+    // Sort cities by priority:
+    // 1. Famous cities first
+    // 2. Then by salon count (most salons = most traffic)
+    const sortedCities = allCities.sort((a, b) => {
+      const aFamous = famousCities.has(a.city);
+      const bFamous = famousCities.has(b.city);
+
+      if (aFamous && !bFamous) return -1;
+      if (!aFamous && bFamous) return 1;
+
+      // If both famous or both not famous, sort by salon count
+      return b.salonCount - a.salonCount;
+    });
+
+    // Take top 100 cities (covers 80%+ of traffic)
+    const top100 = sortedCities.slice(0, 100).map(({ state, city }) => ({
+      state,
+      city
+    }));
+
+    console.log(`✅ Pre-building top ${top100.length} cities (out of ${allCities.length} total)`);
+    console.log(`⚡ Remaining ${allCities.length - top100.length} cities will use on-demand ISR`);
+
+    return top100;
   } catch (error) {
     console.error('Error generating static params for cities:', error);
     // Fallback to common cities
