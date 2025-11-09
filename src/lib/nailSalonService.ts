@@ -1,21 +1,23 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * Nail Salon Service
- * Uses Google Gemini API with Google Maps Grounding to fetch nail salon data
- * Using REST API approach for Maps Grounding support
+ *
+ * Data source: Cloudflare R2 cached salon data
+ * - Salon data pre-collected and stored in R2 (data/nail-salons/)
+ * - Google Places API used only for photo URLs (via R2 cached data)
+ * - No AI/Gemini API calls (removed for performance)
+ *
+ * Architecture:
+ * - Static data: City/state structure from JSON files
+ * - Dynamic data: Salon details from R2 storage
+ * - ISR caching: 6 hours for salon pages, 1 hour for city pages
  */
 
 import dotenv from 'dotenv';
 
 // Force-load .env.local
 dotenv.config({ path: '.env.local', override: true });
-const API_KEY = process.env.GEMINI_API_KEY;
 
-if (!API_KEY) {
-  console.warn('GEMINI_API_KEY environment variable is not set. Nail salon features will not work.');
-}
-
-const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent';
 const GOOGLE_MAPS_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
 
 if (!GOOGLE_MAPS_API_KEY) {
@@ -106,8 +108,10 @@ export interface State {
 }
 
 /**
- * Get nail salons using Google Places API Text Search (faster and more accurate)
- * Enhanced with Gemini for rich descriptions
+ * Get nail salons using Google Places API Text Search
+ *
+ * NOTE: This function is primarily used for data collection scripts.
+ * Production app uses pre-cached R2 data instead (see salonDataService.ts)
  */
 export async function getNailSalonsForLocation(
   state: string,
@@ -296,22 +300,31 @@ export async function getNailSalonsForLocation(
     return salons.slice(0, limit);
   } catch (error) {
     console.error(`Error fetching nail salons for ${city ? `${city}, ` : ''}${state}:`, error);
-    // Fallback to Gemini if Places API fails completely
-    return await getNailSalonsWithGemini(state, city, limit);
+    // ✅ OPTIMIZATION: No Gemini fallback - R2 cached data is used in production instead
+    return [];
   }
 }
 
 /**
- * Fallback: Get nail salons using Gemini API with Google Maps Grounding
+ * @deprecated DEAD CODE - Not used in production
+ *
+ * Legacy function that used Gemini API (removed for performance)
+ * Production app uses R2 cached data instead (see salonDataService.ts)
+ *
+ * This function will throw an error since GEMINI_API_KEY is no longer defined.
+ * Kept for reference only - may be removed in future cleanup.
  */
 async function getNailSalonsWithGemini(
   state: string,
   city?: string,
   limit: number = 20
 ): Promise<NailSalon[]> {
-  if (!API_KEY) {
+  throw new Error('Gemini API has been removed. Use R2 cached data instead (salonDataService.ts)');
+
+  // Old code below - no longer functional
+  /* if (!API_KEY) {
     throw new Error('Gemini API key not configured');
-  }
+  } */
 
   try {
     const locationQuery = city 
@@ -478,9 +491,9 @@ export async function getCitiesInState(state: string): Promise<City[]> {
       console.log(`✅ Loaded ${cities.length} cities for ${state} from JSON (instant!)`);
       return cities;
     } catch {
-      // JSON file doesn't exist, fall back to API
-      console.warn(`⚠️  No JSON file found for ${state}, falling back to Gemini API`);
-      return await getCitiesFromGeminiAPI(state);
+      // ✅ OPTIMIZATION: No Gemini fallback - use hardcoded cities instead
+      console.warn(`⚠️  No JSON file found for ${state}, using fallback cities`);
+      return getFallbackCitiesForState(state);
     }
   } catch (error) {
     console.error(`Error loading cities for ${state}:`, error);
@@ -490,14 +503,22 @@ export async function getCitiesInState(state: string): Promise<City[]> {
 }
 
 /**
- * Get cities from Gemini API (fallback method)
- * Only used if JSON file is missing
+ * @deprecated DEAD CODE - Not used in production
+ *
+ * Legacy function that used Gemini API (removed for performance)
+ * Production uses JSON files in src/data/cities/ instead
+ *
+ * This function will throw an error since GEMINI_API_KEY is no longer defined.
+ * Kept for reference only - may be removed in future cleanup.
  */
 async function getCitiesFromGeminiAPI(state: string): Promise<City[]> {
-  if (!API_KEY) {
+  throw new Error('Gemini API has been removed. Cities loaded from JSON files instead.');
+
+  // Old code below - no longer functional
+  /* if (!API_KEY) {
     console.warn('Gemini API key not configured, using fallback cities');
     return getFallbackCitiesForState(state);
-  }
+  } */
 
   try {
     const prompt = `List ALL major cities, towns, and metropolitan areas in ${state}, USA that have nail salons, nail spas, and nail art studios. Include cities of all sizes - from large metropolitan areas to smaller towns.
@@ -934,9 +955,17 @@ async function getLocationCoordinates(state: string): Promise<{ latitude: number
 }
 
 /**
+ * @deprecated DEAD CODE - Not used in production
+ *
  * Get detailed salon information using Gemini with Google Maps Grounding
  * Enhanced with Places API data for faster, more accurate results
- * 
+ *
+ * Legacy function that used Gemini API (removed for performance - was 15-20s per call!)
+ * Production uses simple fallback data instead (see salon detail page)
+ *
+ * This function will throw an error since GEMINI_API_KEY is no longer defined.
+ * Kept for reference only - may be removed in future cleanup.
+ *
  * @param salon - The salon to get details for
  * @param placeDetails - Optional pre-fetched place details (avoids duplicate API calls)
  */
@@ -944,9 +973,12 @@ export async function getSalonDetails(
   salon: NailSalon,
   placeDetails?: { reviews?: Array<{ rating?: number; text?: { text: string }; authorDisplayName?: string; publishTime?: string }>; editorialSummary?: { text?: string }; currentOpeningHours?: { openNow?: boolean; weekdayDescriptions?: string[] } }
 ): Promise<SalonDetails> {
-  if (!API_KEY) {
+  throw new Error('Gemini API has been removed. Use simple fallback data instead (see salon detail page)');
+
+  // Old code below - no longer functional
+  /* if (!API_KEY) {
     throw new Error('Gemini API key not configured');
-  }
+  } */
 
   try {
     const locationQuery = salon.address || `${salon.name}, ${salon.city}, ${salon.state}`;
