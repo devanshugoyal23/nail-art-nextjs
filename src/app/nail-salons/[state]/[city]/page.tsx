@@ -15,50 +15,64 @@ interface CityPageProps {
 }
 
 // Generate static params for cities
+// OPTIMIZATION: Limit to top 3 cities per state (150 total) to prevent build timeouts
+// Other cities will be generated on-demand via ISR (dynamicParams = true)
 export async function generateStaticParams() {
   try {
     const fs = await import('fs/promises');
     const path = await import('path');
     const citiesDir = path.join(process.cwd(), 'src', 'data', 'cities');
-    
+
     const files = await fs.readdir(citiesDir);
     const stateFiles = files.filter(file => file.endsWith('.json'));
-    
+
     const params: Array<{ state: string; city: string }> = [];
-    
-    // Read each state file and extract cities
+
+    // Read each state file and extract top 3 cities per state
     for (const stateFile of stateFiles) {
       const stateSlug = stateFile.replace('.json', '');
       const filePath = path.join(citiesDir, stateFile);
-      
+
       try {
         const fileContent = await fs.readFile(filePath, 'utf-8');
         const data = JSON.parse(fileContent);
-        
+
         if (data.cities && Array.isArray(data.cities)) {
-          // Use all cities, but use the slug from JSON if available, otherwise generate it
-          const cities = data.cities.map((city: { name: string; slug?: string }) => ({
-            state: stateSlug,
-            city: city.slug || generateCitySlug(city.name),
-          }));
-          
-          params.push(...cities);
+          // OPTIMIZATION: Take only top 3 cities per state (50 states × 3 = 150 cities)
+          // Top cities by population/importance are typically listed first in JSON
+          const topCities = data.cities
+            .slice(0, 3)
+            .map((city: { name: string; slug?: string }) => ({
+              state: stateSlug,
+              city: city.slug || generateCitySlug(city.name),
+            }));
+
+          params.push(...topCities);
         }
       } catch (error) {
         console.error(`Error reading ${stateFile}:`, error);
       }
     }
-    
+
+    console.log(`✅ Pre-building ${params.length} top cities (${params.length / 50} per state average)`);
+
     return params;
   } catch (error) {
     console.error('Error generating static params for cities:', error);
-    // Fallback to common cities
+    // Fallback to top cities in major states
     return [
       { state: 'arizona', city: 'phoenix' },
       { state: 'california', city: 'los-angeles' },
+      { state: 'california', city: 'san-diego' },
+      { state: 'california', city: 'san-francisco' },
       { state: 'texas', city: 'houston' },
+      { state: 'texas', city: 'dallas' },
+      { state: 'texas', city: 'austin' },
       { state: 'florida', city: 'miami' },
+      { state: 'florida', city: 'tampa' },
+      { state: 'florida', city: 'orlando' },
       { state: 'new-york', city: 'new-york' },
+      { state: 'illinois', city: 'chicago' },
     ];
   }
 }
