@@ -17,6 +17,10 @@ import { absoluteUrl } from '@/lib/absoluteUrl';
 import { getGalleryItems, getGalleryItemsByOccasion, getGalleryItemsByColor, getGalleryItemsByTechnique } from '@/lib/galleryService';
 import { GalleryItem } from '@/lib/supabase';
 
+// ISR Configuration - Cache salon pages for 6 hours to reduce CPU usage
+export const revalidate = 21600; // 6 hours in seconds
+export const dynamicParams = true; // Allow on-demand generation for new salons
+
 interface SalonDetailPageProps {
   params: Promise<{
     state: string;
@@ -62,6 +66,24 @@ export async function generateMetadata({ params }: SalonDetailPageProps): Promis
   // Build canonical URL (absolute)
   const canonicalUrl = absoluteUrl(`/nail-salons/${resolvedParams.state}/${resolvedParams.city}/${resolvedParams.slug}`);
 
+  // Calculate quality score for indexing decision (0-100)
+  let qualityScore = 0;
+  if (salon) {
+    // Rating (0-40 points)
+    if (salon.rating) qualityScore += (salon.rating / 5) * 40;
+    // Reviews (0-20 points)
+    if (salon.reviewCount) qualityScore += Math.min((salon.reviewCount / 100) * 20, 20);
+    // Completeness (0-40 points)
+    if (validPhotos.length > 0) qualityScore += 10;
+    if (salon.website) qualityScore += 10;
+    if (salon.phone) qualityScore += 10;
+    if (salon.currentOpeningHours) qualityScore += 5;
+    if (salon.businessStatus === 'OPERATIONAL') qualityScore += 5;
+  }
+
+  // Only index high-quality salons (score >= 60)
+  const shouldIndex = qualityScore >= 60;
+
   return {
     title: optimizedTitle,
     description: enhancedDescription.substring(0, 160),
@@ -102,6 +124,14 @@ export async function generateMetadata({ params }: SalonDetailPageProps): Promis
     },
     alternates: {
       canonical: canonicalUrl,
+    },
+    robots: {
+      index: shouldIndex,
+      follow: true,
+      googleBot: {
+        index: shouldIndex,
+        follow: true,
+      }
     },
   };
 }

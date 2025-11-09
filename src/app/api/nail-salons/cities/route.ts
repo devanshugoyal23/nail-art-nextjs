@@ -17,12 +17,18 @@ export async function GET(request: NextRequest) {
     }
 
     const cities = await getCitiesInState(state);
-    
+
     return NextResponse.json({
       success: true,
       data: cities,
       count: cities.length,
       state,
+    }, {
+      headers: {
+        // Cache for 6 hours, allow stale for 24 hours while revalidating
+        // Cities rarely change
+        'Cache-Control': 'public, s-maxage=21600, stale-while-revalidate=86400',
+      },
     });
   } catch (error) {
     console.error('Error fetching cities:', error);

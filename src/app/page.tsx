@@ -44,6 +44,9 @@ export const metadata: Metadata = {
   },
 };
 
+// ISR Configuration - Cache homepage for 1 hour to reduce CPU usage
+export const revalidate = 3600; // 1 hour in seconds
+
 export default async function Home() {
   // Fetch real data for homepage sections
   const { items: trendingItems } = await getGalleryItems({ limit: 12, sortBy: 'newest' });
