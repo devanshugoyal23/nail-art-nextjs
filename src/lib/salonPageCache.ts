@@ -260,10 +260,10 @@ export function getDesignsByOccasion(
   occasion: string,
   cachedData: CachedGalleryData
 ): SalonGalleryItem[] {
-  const occasionLower = occasion.toLowerCase();
+  const occasionLower = occasion.toLowerCase() as keyof typeof cachedData.byOccasion;
 
   // Try direct match first
-  const directMatch = (cachedData.byOccasion as any)[occasionLower];
+  const directMatch = cachedData.byOccasion[occasionLower];
   if (directMatch && directMatch.length > 0) {
     return directMatch;
   }
@@ -272,7 +272,7 @@ export function getDesignsByOccasion(
   return cachedData.all
     .filter(item =>
       item.occasions?.some((o: string) =>
-        o.toLowerCase().includes(occasionLower)
+        o.toLowerCase().includes(occasion.toLowerCase())
       )
     )
     .slice(0, 4);
@@ -285,10 +285,10 @@ export function getDesignsByColor(
   color: string,
   cachedData: CachedGalleryData
 ): SalonGalleryItem[] {
-  const colorLower = color.toLowerCase();
+  const colorLower = color.toLowerCase() as keyof typeof cachedData.byColor;
 
   // Try direct match first
-  const directMatch = (cachedData.byColor as any)[colorLower];
+  const directMatch = cachedData.byColor[colorLower];
   if (directMatch && directMatch.length > 0) {
     return directMatch;
   }
@@ -297,7 +297,7 @@ export function getDesignsByColor(
   return cachedData.all
     .filter(item =>
       item.colors?.some((c: string) =>
-        c.toLowerCase() === colorLower
+        c.toLowerCase() === color.toLowerCase()
       )
     )
     .slice(0, 4);
@@ -310,10 +310,10 @@ export function getDesignsByTechnique(
   technique: string,
   cachedData: CachedGalleryData
 ): SalonGalleryItem[] {
-  const techniqueLower = technique.toLowerCase();
+  const techniqueLower = technique.toLowerCase() as keyof typeof cachedData.byTechnique;
 
   // Try direct match first
-  const directMatch = (cachedData.byTechnique as any)[techniqueLower];
+  const directMatch = cachedData.byTechnique[techniqueLower];
   if (directMatch && directMatch.length > 0) {
     return directMatch;
   }
@@ -322,7 +322,7 @@ export function getDesignsByTechnique(
   return cachedData.all
     .filter(item =>
       item.techniques?.some((t: string) =>
-        t.toLowerCase().includes(techniqueLower)
+        t.toLowerCase().includes(technique.toLowerCase())
       )
     )
     .slice(0, 4);

@@ -14,7 +14,7 @@ import TechniqueShowcaseSection from '@/components/TechniqueShowcaseSection';
 import CollapsibleSection from '@/components/CollapsibleSection';
 import { SalonStructuredData } from '@/components/SalonStructuredData';
 import { absoluteUrl } from '@/lib/absoluteUrl';
-import { getCachedGalleryData, type SalonGalleryItem } from '@/lib/salonPageCache';
+import { getCachedGalleryData } from '@/lib/salonPageCache';
 import { GalleryItem } from '@/lib/supabase';
 
 // ISR Configuration - Cache salon pages for 6 hours to reduce CPU usage
