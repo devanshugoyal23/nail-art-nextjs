@@ -25,7 +25,7 @@
  */
 
 import { NextResponse } from 'next/server';
-import { getIndexFromR2, getCityDataFromR2 } from '@/lib/salonDataService';
+import { getIndexFromR2, getCityDataFromR2, getStateDataFromR2 } from '@/lib/salonDataService';
 import { generateStateSlug, generateCitySlug, generateSlug, type NailSalon } from '@/lib/nailSalonService';
 
 // Base URL for the site
@@ -157,7 +157,7 @@ export async function GET() {
     // Process each state
     for (const stateInfo of index.states) {
       try {
-        const stateData = await import('@/lib/salonDataService').then(m => m.getStateDataFromR2(stateInfo.name));
+        const stateData = await getStateDataFromR2(stateInfo.name);
         if (!stateData || !stateData.cities) continue;
 
         // Sort cities by priority (famous first, then by salon count)
