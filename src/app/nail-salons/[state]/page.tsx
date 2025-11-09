@@ -41,8 +41,10 @@ export async function generateStaticParams() {
 // Enable dynamic params for states not in generateStaticParams
 export const dynamicParams = true;
 
-// Enable ISR - revalidate every hour
-export const revalidate = 3600;
+// Enable ISR - revalidate every 24 hours
+// ✅ PHASE 2.3: Increased from 1h to 24h (96% fewer regenerations)
+// State city lists rarely change, so 24h cache is appropriate
+export const revalidate = 86400; // 24 hours in seconds (was 3600 = 1 hour)
 
 export async function generateMetadata({ params }: StatePageProps): Promise<Metadata> {
   const resolvedParams = await params;
