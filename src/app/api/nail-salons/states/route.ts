@@ -4,11 +4,17 @@ import { getAllStatesWithSalons } from '@/lib/nailSalonService';
 export async function GET() {
   try {
     const states = await getAllStatesWithSalons();
-    
+
     return NextResponse.json({
       success: true,
       data: states,
       count: states.length,
+    }, {
+      headers: {
+        // Cache for 24 hours, allow stale for 7 days while revalidating
+        // States list is very static
+        'Cache-Control': 'public, s-maxage=86400, stale-while-revalidate=604800',
+      },
     });
   } catch (error) {
     console.error('Error fetching states:', error);

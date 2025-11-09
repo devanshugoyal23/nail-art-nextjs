@@ -46,6 +46,11 @@ export async function GET(request: NextRequest) {
       state,
       city: city || null,
       source: useApi ? 'api' : 'r2',
+    }, {
+      headers: {
+        // Cache for 1 hour, allow stale for 24 hours while revalidating
+        'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400',
+      },
     });
   } catch (error) {
     console.error('Error fetching salons:', error);
