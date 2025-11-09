@@ -25,8 +25,9 @@ interface GalleryDetailPageProps {
   }>;
 }
 
-// Enable ISR (Incremental Static Regeneration) - revalidate every 2 hours
-export const revalidate = 7200;
+// ✅ OPTIMIZATION: Increase cache time since designs are static content
+// Design pages rarely change, so 24-hour cache reduces regenerations by 92%
+export const revalidate = 86400; // 24 hours (was 2 hours)
 
 // Generate static params for popular pages
 export async function generateStaticParams() {
