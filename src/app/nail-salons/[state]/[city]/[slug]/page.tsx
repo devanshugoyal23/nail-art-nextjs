@@ -18,8 +18,10 @@ import { getCachedGalleryData } from '@/lib/salonPageCache';
 import { GalleryItem } from '@/lib/supabase';
 import { deterministicSelect } from '@/lib/deterministicSelection';
 
-// ISR Configuration - Cache salon pages for 6 hours to reduce CPU usage
-export const revalidate = 21600; // 6 hours in seconds
+// ISR Configuration - Cache salon pages for 7 days to reduce CPU usage and R2 costs
+// ✅ PHASE 2.3: Increased from 6h to 7 days (96% fewer regenerations)
+// Salon data rarely changes, so 7-day cache is appropriate for business listings
+export const revalidate = 604800; // 7 days in seconds (was 21600 = 6 hours, then 86400 = 24 hours)
 export const dynamicParams = true; // Allow on-demand generation for new salons
 
 interface SalonDetailPageProps {
