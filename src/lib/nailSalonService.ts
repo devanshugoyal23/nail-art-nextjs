@@ -1,21 +1,23 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * Nail Salon Service
- * Uses Google Gemini API with Google Maps Grounding to fetch nail salon data
- * Using REST API approach for Maps Grounding support
+ *
+ * Data source: Cloudflare R2 cached salon data
+ * - Salon data pre-collected and stored in R2 (data/nail-salons/)
+ * - Google Places API used only for photo URLs (via R2 cached data)
+ * - No AI/Gemini API calls (removed for performance)
+ *
+ * Architecture:
+ * - Static data: City/state structure from JSON files
+ * - Dynamic data: Salon details from R2 storage
+ * - ISR caching: 6 hours for salon pages, 1 hour for city pages
  */
 
 import dotenv from 'dotenv';
 
 // Force-load .env.local
 dotenv.config({ path: '.env.local', override: true });
-const API_KEY = process.env.GEMINI_API_KEY;
 
-if (!API_KEY) {
-  console.warn('GEMINI_API_KEY environment variable is not set. Nail salon features will not work.');
-}
-
-const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent';
 const GOOGLE_MAPS_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
 
 if (!GOOGLE_MAPS_API_KEY) {
@@ -106,8 +108,10 @@ export interface State {
 }
 
 /**
- * Get nail salons using Google Places API Text Search (faster and more accurate)
- * Enhanced with Gemini for rich descriptions
+ * Get nail salons using Google Places API Text Search
+ *
+ * NOTE: This function is primarily used for data collection scripts.
+ * Production app uses pre-cached R2 data instead (see salonDataService.ts)
  */
 export async function getNailSalonsForLocation(
   state: string,
@@ -296,90 +300,27 @@ export async function getNailSalonsForLocation(
     return salons.slice(0, limit);
   } catch (error) {
     console.error(`Error fetching nail salons for ${city ? `${city}, ` : ''}${state}:`, error);
-    // Fallback to Gemini if Places API fails completely
-    return await getNailSalonsWithGemini(state, city, limit);
+    // ✅ OPTIMIZATION: No Gemini fallback - R2 cached data is used in production instead
+    return [];
   }
 }
 
 /**
- * Fallback: Get nail salons using Gemini API with Google Maps Grounding
+ * @deprecated DEAD CODE - Not used in production
+ *
+ * Legacy function that used Gemini API (removed for performance)
+ * Production app uses R2 cached data instead (see salonDataService.ts)
+ *
+ * This function will throw an error since GEMINI_API_KEY is no longer defined.
+ * Kept for reference only - may be removed in future cleanup.
  */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 async function getNailSalonsWithGemini(
   state: string,
   city?: string,
   limit: number = 20
 ): Promise<NailSalon[]> {
-  if (!API_KEY) {
-    throw new Error('Gemini API key not configured');
-  }
-
-  try {
-    const locationQuery = city 
-      ? `${city}, ${state}, USA`
-      : `${state}, USA`;
-
-    const prompt = `List the best and most famous nail salons, nail spas, and nail art studios in ${locationQuery}. 
-    
-Provide the top ${limit} salons with their complete details including name, full address, phone number, and any ratings if available.`;
-
-    const locationCoords = await getLocationCoordinates(state);
-
-    const requestBody: {
-      contents: {
-        role: string;
-        parts: { text: string }[];
-      }[];
-      tools: { googleMaps: object }[];
-      toolConfig?: {
-        retrievalConfig: {
-          latLng: {
-            latitude: number;
-            longitude: number;
-          };
-          radius?: number;
-        };
-      };
-    } = {
-      contents: [{
-        role: 'user',
-        parts: [{ text: prompt }]
-      }],
-      tools: [{ googleMaps: {} }]
-    };
-
-    if (locationCoords) {
-      requestBody.toolConfig = {
-        retrievalConfig: {
-          latLng: {
-            latitude: locationCoords.latitude,
-            longitude: locationCoords.longitude
-          }
-        }
-      };
-    }
-
-    const response = await fetch(`${GEMINI_API_URL}?key=${API_KEY}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(requestBody),
-    });
-
-    if (!response.ok) {
-      throw new Error(`Gemini API error: ${response.status} ${response.statusText}`);
-    }
-
-    const data = await response.json();
-    const text = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
-    const groundingMetadata = data.candidates?.[0]?.groundingMetadata;
-
-    const salons = parseSalonDataFromResponse(text, groundingMetadata, state, city);
-    return salons;
-  } catch (error) {
-    console.error(`Error fetching nail salons with Gemini:`, error);
-    throw error;
-  }
+  throw new Error('Gemini API has been removed. Use R2 cached data instead (salonDataService.ts)');
 }
 
 /**
@@ -478,9 +419,9 @@ export async function getCitiesInState(state: string): Promise<City[]> {
       console.log(`✅ Loaded ${cities.length} cities for ${state} from JSON (instant!)`);
       return cities;
     } catch {
-      // JSON file doesn't exist, fall back to API
-      console.warn(`⚠️  No JSON file found for ${state}, falling back to Gemini API`);
-      return await getCitiesFromGeminiAPI(state);
+      // ✅ OPTIMIZATION: No Gemini fallback - use hardcoded cities instead
+      console.warn(`⚠️  No JSON file found for ${state}, using fallback cities`);
+      return getFallbackCitiesForState(state);
     }
   } catch (error) {
     console.error(`Error loading cities for ${state}:`, error);
@@ -490,64 +431,17 @@ export async function getCitiesInState(state: string): Promise<City[]> {
 }
 
 /**
- * Get cities from Gemini API (fallback method)
- * Only used if JSON file is missing
+ * @deprecated DEAD CODE - Not used in production
+ *
+ * Legacy function that used Gemini API (removed for performance)
+ * Production uses JSON files in src/data/cities/ instead
+ *
+ * This function will throw an error since GEMINI_API_KEY is no longer defined.
+ * Kept for reference only - may be removed in future cleanup.
  */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 async function getCitiesFromGeminiAPI(state: string): Promise<City[]> {
-  if (!API_KEY) {
-    console.warn('Gemini API key not configured, using fallback cities');
-    return getFallbackCitiesForState(state);
-  }
-
-  try {
-    const prompt = `List ALL major cities, towns, and metropolitan areas in ${state}, USA that have nail salons, nail spas, and nail art studios. Include cities of all sizes - from large metropolitan areas to smaller towns.
-
-Provide ONLY the city names, one per line, without any numbering, bullets, or additional text.
-Include as many cities as possible - aim for 50-100+ cities if available in ${state}.
-
-Example format:
-Los Angeles
-San Francisco
-San Diego
-Sacramento
-Fresno
-Oakland`;
-
-    const requestBody = {
-      contents: [{
-        role: 'user',
-        parts: [{ text: prompt }]
-      }]
-    };
-
-    const response = await fetch(`${GEMINI_API_URL}?key=${API_KEY}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(requestBody),
-    });
-
-    if (!response.ok) {
-      console.error(`Gemini API error: ${response.status}`);
-      return getFallbackCitiesForState(state);
-    }
-
-    const data = await response.json();
-    const text = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
-    const cities = parseCitiesFromResponse(text, state);
-
-    // If we got very few cities, use fallback
-    if (cities.length < 3) {
-      return getFallbackCitiesForState(state);
-    }
-
-    return cities;
-  } catch (error) {
-    console.error(`Error fetching cities from Gemini API for ${state}:`, error);
-    // Fallback to common cities if API fails
-    return getFallbackCitiesForState(state);
-  }
+  throw new Error('Gemini API has been removed. Cities loaded from JSON files instead.');
 }
 
 /**
@@ -934,9 +828,17 @@ async function getLocationCoordinates(state: string): Promise<{ latitude: number
 }
 
 /**
+ * @deprecated DEAD CODE - Not used in production
+ *
  * Get detailed salon information using Gemini with Google Maps Grounding
  * Enhanced with Places API data for faster, more accurate results
- * 
+ *
+ * Legacy function that used Gemini API (removed for performance - was 15-20s per call!)
+ * Production uses simple fallback data instead (see salon detail page)
+ *
+ * This function will throw an error since GEMINI_API_KEY is no longer defined.
+ * Kept for reference only - may be removed in future cleanup.
+ *
  * @param salon - The salon to get details for
  * @param placeDetails - Optional pre-fetched place details (avoids duplicate API calls)
  */
@@ -944,202 +846,10 @@ export async function getSalonDetails(
   salon: NailSalon,
   placeDetails?: { reviews?: Array<{ rating?: number; text?: { text: string }; authorDisplayName?: string; publishTime?: string }>; editorialSummary?: { text?: string }; currentOpeningHours?: { openNow?: boolean; weekdayDescriptions?: string[] } }
 ): Promise<SalonDetails> {
-  if (!API_KEY) {
-    throw new Error('Gemini API key not configured');
-  }
-
-  try {
-    const locationQuery = salon.address || `${salon.name}, ${salon.city}, ${salon.state}`;
-    
-    // ✅ OPTIMIZATION: Use provided placeDetails or fetch if not provided
-    let placesDetails = placeDetails;
-    if (!placesDetails && salon.placeId) {
-      try {
-        placesDetails = await getPlaceDetails(salon.placeId) || undefined;
-      } catch (error) {
-        console.error('Error fetching place details:', error);
-      }
-    }
-    
-    // ✅ OPTIMIZATION: Reduce Gemini calls from 7 to 2-3 by using Places API data
-    const prompts = [];
-    
-    // Only generate description if Places API didn't provide one
-    if (!(placesDetails as { generativeSummary?: { overview?: string } })?.generativeSummary?.overview && !placesDetails?.editorialSummary?.text) {
-      prompts.push({
-        section: 'description',
-        prompt: `Provide a detailed 150-200 word description of ${salon.name} located at ${locationQuery}. Include information about the salon's atmosphere, specialties, reputation, and what makes it stand out.`
-      });
-    }
-    
-    // Combine services, parking, and nearby info into ONE call
-    prompts.push({
-      section: 'services_combined',
-      prompt: `For ${salon.name} in ${salon.city}, ${salon.state}, provide:
-
-1. SERVICES: List all nail salon services offered (manicure, pedicure, nail art, gel nails, etc.) with typical pricing if available. Format as: Service Name - Description - Price
-
-2. PARKING & TRANSPORTATION: Describe parking options and public transportation accessibility near ${locationQuery}.
-
-3. NEARBY ATTRACTIONS: List 3-5 nearby attractions, landmarks, or popular places with approximate distances.
-
-Format each section clearly with headers.`
-    });
-    
-    // Only generate FAQ
-    prompts.push({
-      section: 'faq',
-      prompt: `Generate 5 common questions and answers that customers might have about ${salon.name} in ${salon.city}, ${salon.state}. Include questions about booking, services, hours, and policies.`
-    });
-    
-    console.log(`🚀 Optimized: Making ${prompts.length} Gemini calls instead of 7 (using Places API data for the rest)`);
-    console.log(`⚡ Fast mode: Removed Maps Grounding for 80-85% faster responses (1-2s instead of 5-10s per call)`);
-
-    const details: SalonDetails = {};
-
-    // Fetch all details in parallel
-    const detailPromises = prompts.map(async ({ section, prompt }) => {
-      try {
-        // ✅ OPTIMIZATION: Remove Maps Grounding for 80-85% faster responses
-        // Maps Grounding makes each call take 5-10 seconds
-        // Without it, calls take 1-2 seconds
-        const requestBody: {
-          contents: {
-            role: string;
-            parts: { text: string }[];
-          }[];
-        } = {
-          contents: [{
-            role: 'user',
-            parts: [{ text: prompt }]
-          }]
-          // Removed: tools: [{ googleMaps: {} }] - was causing 5-10 second delays!
-          // Removed: toolConfig with location - not needed for generic content
-        };
-
-        const response = await fetch(`${GEMINI_API_URL}?key=${API_KEY}`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(requestBody),
-        });
-
-        if (!response.ok) return null;
-
-        const data = await response.json();
-        const text = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
-        
-        return { section, text };
-      } catch (error) {
-        console.error(`Error fetching ${section} for ${salon.name}:`, error);
-        return null;
-      }
-    });
-
-    const results = await Promise.all(detailPromises);
-
-    // ✅ OPTIMIZATION: Prioritize Places API data (free and instant!)
-    if (placesDetails) {
-      // Priority 1: Use AI-powered place summary from Places API (most accurate)
-      const typedPlacesDetails = placesDetails as { generativeSummary?: { overview?: string }; editorialSummary?: { text?: string; overview?: string } };
-      if (typedPlacesDetails.generativeSummary?.overview) {
-        details.placeSummary = typedPlacesDetails.generativeSummary.overview;
-        // Use as primary description if available
-        if (!details.description) {
-          details.description = typedPlacesDetails.generativeSummary.overview;
-        }
-      }
-      // Priority 2: Use editorial summary if no generative summary
-      else if (typedPlacesDetails.editorialSummary?.overview || placesDetails.editorialSummary?.text) {
-        details.description = typedPlacesDetails.editorialSummary?.overview || placesDetails.editorialSummary?.text;
-      }
-      
-      // Use AI-powered review summary if available
-      if ((placesDetails as { generativeSummary?: { description?: string } }).generativeSummary?.description) {
-        details.reviewSummary = (placesDetails as { generativeSummary: { description: string } }).generativeSummary.description;
-      }
-      
-      // Use reviews from Places API
-      if (placesDetails.reviews && placesDetails.reviews.length > 0) {
-        // Store full reviews for display
-        details.placeReviews = placesDetails.reviews.slice(0, 10).map((review: { rating?: number; text?: { text: string }; authorDisplayName?: string; publishTime?: string }) => ({
-          rating: review.rating || undefined,
-          text: review.text?.text || '',
-          authorName: review.authorDisplayName || undefined,
-          publishTime: review.publishTime || undefined,
-        }));
-
-        // Generate review summary from Places API reviews (no Gemini needed!)
-        if (!details.reviewSummary) {
-          const reviewTexts = placesDetails.reviews
-            .slice(0, 5)
-            .map((review: { text?: { text: string } }) => review.text?.text || '')
-            .filter((text: string) => text.length > 0)
-            .join(' ');
-          
-          if (reviewTexts) {
-            // Create a concise summary from actual reviews
-            details.reviewsSummary = `Based on ${placesDetails.reviews.length} customer reviews: ${reviewTexts.substring(0, 400)}...`;
-            details.reviewSummary = details.reviewsSummary;
-          }
-        }
-        
-        // Use Places API editorial summary for neighborhood info (no Gemini needed!)
-        if (placesDetails.editorialSummary?.text) {
-          details.neighborhoodInfo = placesDetails.editorialSummary.text;
-        }
-      }
-    }
-
-    // Parse Gemini results
-    for (const result of results) {
-      if (!result) continue;
-
-      switch (result.section) {
-        case 'description':
-          // Only use Gemini description if Places API didn't provide one
-          if (!details.description) {
-            details.description = result.text;
-          } else {
-            // Enhance Places description with Gemini insights
-            details.description = `${details.description} ${result.text.substring(0, 100)}`;
-          }
-          break;
-        case 'services_combined':
-          // Parse the combined response (services, parking, attractions)
-          const combinedText = result.text;
-          
-          // Extract services section (use [\s\S] instead of . with s flag for compatibility)
-          const servicesMatch = combinedText.match(/SERVICES:?([\s\S]*?)(?=PARKING|$)/i);
-          if (servicesMatch) {
-            details.services = parseServices(servicesMatch[1]);
-            details.popularServices = parsePopularServices(servicesMatch[1]);
-          }
-          
-          // Extract parking section
-          const parkingMatch = combinedText.match(/PARKING[\s\S]*?:?([\s\S]*?)(?=NEARBY|$)/i);
-          if (parkingMatch) {
-            const parkingData = parseParkingInfo(parkingMatch[1]);
-            details.parkingInfo = parkingData.parking;
-            details.transportation = parkingData.transportation;
-          }
-          
-          // Extract nearby attractions section
-          const attractionsMatch = combinedText.match(/NEARBY[\s\S]*?:?([\s\S]*?)$/i);
-          if (attractionsMatch) {
-            details.nearbyAttractions = parseAttractions(attractionsMatch[1]);
-          }
-          break;
-        case 'faq':
-          details.faq = parseFAQ(result.text);
-          break;
-      }
-    }
-
-    return details;
-  } catch (error) {
-    console.error(`Error fetching salon details for ${salon.name}:`, error);
-    return {};
-  }
+  // Suppress unused parameter warnings
+  void salon;
+  void placeDetails;
+  throw new Error('Gemini API has been removed. Use simple fallback data instead (see salon detail page)');
 }
 
 /**

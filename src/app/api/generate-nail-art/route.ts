@@ -7,13 +7,19 @@ import { validateAIGeneration } from '@/lib/inputValidation';
 // Force-load .env.local to ensure we only use the key from the file,
 // even if a system-level env var is present.
 dotenv.config({ path: '.env.local', override: true });
-const API_KEY = process.env.GEMINI_API_KEY;
 
-if (!API_KEY) {
-  throw new Error('GEMINI_API_KEY environment variable is not set.');
+/**
+ * Initialize Gemini AI client (lazy initialization to prevent build errors)
+ */
+function getAIClient() {
+  const API_KEY = process.env.GEMINI_API_KEY;
+
+  if (!API_KEY) {
+    throw new Error('GEMINI_API_KEY environment variable is not set. Please configure it to use the virtual try-on feature.');
+  }
+
+  return new GoogleGenAI({ apiKey: API_KEY });
 }
-
-const ai = new GoogleGenAI({ apiKey: API_KEY });
 
 type TryOnRequestBody = {
   base64ImageData?: string;
@@ -61,6 +67,7 @@ export async function POST(request: NextRequest) {
 
     // Note: gemini-2.5-flash-image is being used for multimodal image generation
     // This is an experimental feature for image editing/generation
+    const ai = getAIClient();
     const response = await ai.models.generateContent({
       model: 'gemini-2.5-flash-image',
       contents: [
