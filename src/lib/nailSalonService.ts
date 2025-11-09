@@ -296,8 +296,9 @@ export async function getNailSalonsForLocation(
     return salons.slice(0, limit);
   } catch (error) {
     console.error(`Error fetching nail salons for ${city ? `${city}, ` : ''}${state}:`, error);
-    // Fallback to Gemini if Places API fails completely
-    return await getNailSalonsWithGemini(state, city, limit);
+    // ✅ OPTIMIZATION: Return empty array instead of slow Gemini fallback (was 15-20s timeout)
+    // Better to show no results than make users wait 20 seconds
+    return [];
   }
 }
 
@@ -478,9 +479,9 @@ export async function getCitiesInState(state: string): Promise<City[]> {
       console.log(`✅ Loaded ${cities.length} cities for ${state} from JSON (instant!)`);
       return cities;
     } catch {
-      // JSON file doesn't exist, fall back to API
-      console.warn(`⚠️  No JSON file found for ${state}, falling back to Gemini API`);
-      return await getCitiesFromGeminiAPI(state);
+      // JSON file doesn't exist, use hardcoded fallback
+      console.warn(`⚠️  No JSON file found for ${state}, using fallback cities (all states should have JSON files)`);
+      return getFallbackCitiesForState(state);
     }
   } catch (error) {
     console.error(`Error loading cities for ${state}:`, error);
