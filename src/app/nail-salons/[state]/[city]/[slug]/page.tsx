@@ -154,7 +154,6 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
   let salonDetails: { description?: string; faq?: Array<{ question: string; answer: string }>; parkingInfo?: string; paymentOptions?: string[]; services?: Array<{ name: string; description?: string; price?: string }> } | null = null;
   let relatedSalons: NailSalon[] = [];
   let galleryDesigns: Array<{ id: string; imageUrl: string; title?: string; description?: string; colors?: string[]; techniques?: string[]; occasions?: string[] }> = [];
-  let rawGalleryItems: GalleryItem[] = [];
   let designCollections: Array<{ title: string; description: string; icon: string; designs: Array<{ id: string; imageUrl: string; title?: string; colors?: string[]; techniques?: string[]; occasions?: string[] }>; href: string }> = [];
   let colorPalettes: Array<{ color: string; designs: Array<{ id: string; imageUrl: string; title?: string; colors?: string[]; techniques?: string[]; occasions?: string[] }>; emoji: string }> = [];
   let techniqueShowcases: Array<{ name: string; designs: Array<{ id: string; imageUrl: string; title?: string; colors?: string[]; techniques?: string[]; occasions?: string[] }>; description: string; icon: string; difficulty: string }> = [];
@@ -234,32 +233,17 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
       // Filter out current salon and limit to 5 (get related salons from R2 city data)
       relatedSalons = citySalons.filter(s => generateSlug(s.name) !== resolvedParams.slug).slice(0, 5);
       
-      // Get 8 random designs from the fetched 20 (shuffle for variety)
+      // Get 8 random designs from the cached data (shuffle for variety)
+      // ✅ Items are already transformed from cache, no need to map again
       if (galleryData && galleryData.items && galleryData.items.length > 0) {
         const shuffled = [...galleryData.items].sort(() => Math.random() - 0.5);
-        rawGalleryItems = shuffled.slice(0, 8);
-        galleryDesigns = rawGalleryItems.map(item => ({
-          id: item.id,
-          imageUrl: item.image_url,
-          title: item.design_name || item.prompt,
-          description: item.prompt,
-          colors: item.colors,
-          techniques: item.techniques,
-          occasions: item.occasions
-        }));
+        galleryDesigns = shuffled.slice(0, 8);
       }
 
       // Prepare Design Collections
       // Use gallery items as fallback if specific occasion searches return empty
-      const allGalleryItems = (galleryData?.items || []).map(item => ({
-        id: item.id,
-        imageUrl: item.image_url,
-        title: item.design_name || item.prompt,
-        description: item.prompt,
-        colors: item.colors,
-        techniques: item.techniques,
-        occasions: item.occasions
-      }));
+      // ✅ Items are already transformed from cache, use directly
+      const allGalleryItems = galleryData?.items || [];
       
       // Helper to get designs by searching in all items
       const getDesignsByOccasion = (occasion: string, fallbackItems: Array<{ id: string; imageUrl: string; title?: string; colors?: string[]; techniques?: string[]; occasions?: string[] }>) => {
