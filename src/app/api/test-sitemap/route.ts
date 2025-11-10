@@ -66,11 +66,25 @@ export async function GET() {
     }
   }
 
-  // Test 5: Check if city JSON files exist
+  // Test 5: Check VERCEL_URL environment variable
+  results.tests.push({
+    test: 'VERCEL_URL Environment',
+    passed: !!process.env.VERCEL_URL,
+    details: process.env.VERCEL_URL
+      ? `VERCEL_URL = ${process.env.VERCEL_URL}`
+      : 'VERCEL_URL not set (may be issue in local dev)',
+  });
+
+  // Test 6: Check if city JSON files exist using VERCEL_URL approach
   try {
-    // In serverless, public/ is served via CDN, not filesystem
-    // So we fetch via HTTP instead
-    const testUrl = `${process.env.NEXT_PUBLIC_BASE_URL || 'https://nailartai.app'}/data/cities/california.json`;
+    // Use same logic as citiesDataFetcher
+    const baseUrl = process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : (process.env.NEXT_PUBLIC_BASE_URL || 'https://nailartai.app');
+
+    const testUrl = `${baseUrl}/data/cities/california.json`;
+    console.log(`Testing city JSON fetch from: ${testUrl}`);
+
     const response = await fetch(testUrl);
 
     if (response.ok) {
@@ -78,26 +92,77 @@ export async function GET() {
       const hasValidStructure = data.state && Array.isArray(data.cities);
 
       results.tests.push({
-        test: 'City JSON Files',
+        test: 'City JSON Files (VERCEL_URL)',
         passed: hasValidStructure,
         details: hasValidStructure
-          ? `California JSON accessible with ${data.cities.length} cities`
+          ? `California JSON accessible with ${data.cities.length} cities from ${baseUrl}`
           : 'JSON file accessible but invalid structure',
-        files: ['Accessible via HTTP at /data/cities/*.json'],
+        files: [`URL used: ${testUrl}`],
       });
     } else {
       results.tests.push({
-        test: 'City JSON Files',
+        test: 'City JSON Files (VERCEL_URL)',
         passed: false,
-        details: `HTTP fetch failed: ${response.status} ${response.statusText}`,
+        details: `HTTP fetch failed: ${response.status} ${response.statusText} from ${testUrl}`,
       });
     }
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     results.tests.push({
-      test: 'City JSON Files',
+      test: 'City JSON Files (VERCEL_URL)',
       passed: false,
       details: `Error fetching JSON: ${errorMessage}`,
+    });
+  }
+
+  // Test 7: Try to import JSON modules directly (NEW APPROACH - what sitemaps use now)
+  try {
+    const { getAllStateCityData } = await import('@/lib/citiesDataImporter');
+    console.log('Testing citiesDataImporter (module imports)...');
+    const statesMap = getAllStateCityData();
+
+    const statesCount = statesMap.size;
+    const totalCities = Array.from(statesMap.values()).reduce((sum, state) => sum + (state.cities?.length || 0), 0);
+
+    results.tests.push({
+      test: 'Import JSON Modules (NEW)',
+      passed: statesCount > 0,
+      details: statesCount > 0
+        ? `✅ Successfully imported ${statesCount} states with ${totalCities} total cities (bundled as modules)`
+        : 'Failed to import JSON modules',
+    });
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    results.tests.push({
+      test: 'Import JSON Modules (NEW)',
+      passed: false,
+      details: `Error: ${errorMessage}`,
+      error: error instanceof Error ? error.stack : String(error),
+    });
+  }
+
+  // Test 8: Try OLD HTTP fetch approach (deprecated, for comparison)
+  try {
+    const { fetchAllStateCityData } = await import('@/lib/citiesDataFetcher');
+    console.log('Testing citiesDataFetcher (HTTP fetching - OLD)...');
+    const statesMap = await fetchAllStateCityData();
+
+    const statesCount = statesMap.size;
+    const totalCities = Array.from(statesMap.values()).reduce((sum, state) => sum + (state.cities?.length || 0), 0);
+
+    results.tests.push({
+      test: 'HTTP Fetch States (OLD - deprecated)',
+      passed: statesCount > 0,
+      details: statesCount > 0
+        ? `Fetched ${statesCount} states with ${totalCities} total cities via HTTP`
+        : 'Failed to fetch any state data via HTTP (expected - has 401 issue)',
+    });
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    results.tests.push({
+      test: 'HTTP Fetch States (OLD - deprecated)',
+      passed: false,
+      details: `Error: ${errorMessage} (expected - sitemaps now use module imports instead)`,
     });
   }
 

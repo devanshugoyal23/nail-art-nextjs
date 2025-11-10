@@ -34,18 +34,27 @@ interface StateData {
 }
 
 /**
- * Get all states and cities from JSON files
+ * Get all states and cities from imported JSON files
+ * JSON files are bundled with the serverless function (no HTTP needed)
  */
 async function getAllStatesAndCities(): Promise<{ states: string[], topCities: Array<{ state: string, city: string, cityName: string, population?: number }> }> {
   try {
-    // Fetch city data via HTTP (public/ folder is served via CDN, not filesystem)
-    const { fetchAllStateCityData } = await import('@/lib/citiesDataFetcher');
-    const statesMap = await fetchAllStateCityData();
+    console.log('🔍 Loading consolidated city data...');
+    const { getAllStateCityData } = await import('@/lib/consolidatedCitiesData');
+
+    const statesMap = getAllStateCityData();
+    console.log(`📦 Got statesMap with size: ${statesMap.size}`);
+
+    if (statesMap.size === 0) {
+      console.error('❌ statesMap is empty!');
+      return { states: [], topCities: [] };
+    }
 
     const states: string[] = [];
     const allCities: Array<{ state: string, city: string, cityName: string, population?: number, salonCount?: number }> = [];
 
     for (const [stateSlug, data] of statesMap.entries()) {
+      console.log(`  Processing state: ${stateSlug}, cities: ${data.cities?.length || 0}`);
       if (!data.cities || !Array.isArray(data.cities)) continue;
 
       // Add state
@@ -97,7 +106,8 @@ async function getAllStatesAndCities(): Promise<{ states: string[], topCities: A
 
     return { states, topCities };
   } catch (error) {
-    console.error('Error getting states and cities:', error);
+    console.error('❌ CRITICAL ERROR in getAllStatesAndCities:', error);
+    console.error('Error stack:', error instanceof Error ? error.stack : 'No stack trace');
     return { states: [], topCities: [] };
   }
 }

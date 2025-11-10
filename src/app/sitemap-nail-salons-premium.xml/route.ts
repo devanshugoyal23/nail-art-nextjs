@@ -56,17 +56,37 @@ function calculateQualityScore(salon: NailSalon): number {
 
 /**
  * Get all salons from all cities with quality scores
- * NEW: With safety limits and R2 credential checking to prevent timeouts
+ * Using imported JSON files for city data (bundled with serverless function)
  */
 async function getAllSalonsWithScores(): Promise<SalonWithScore[]> {
   const allSalons: SalonWithScore[] = [];
 
   try {
-    // Fetch city data via HTTP (public/ folder is served via CDN, not filesystem)
-    const { fetchAllStateCityData } = await import('@/lib/citiesDataFetcher');
-    const statesMap = await fetchAllStateCityData();
+    // Import consolidated city data (guaranteed to be bundled)
+    const { getAllStateCityData } = await import('@/lib/consolidatedCitiesData');
+    const statesMap = getAllStateCityData();
 
-    console.log(`📊 Processing ${statesMap.size} states for premium sitemap...`);
+    // Build list of all cities with population data
+    const allCities: Array<{ state: string, stateSlug: string, city: string, citySlug: string, population?: number }> = [];
+
+    for (const [stateSlug, data] of statesMap.entries()) {
+      if (!data.cities || !Array.isArray(data.cities)) continue;
+
+      for (const city of data.cities) {
+        allCities.push({
+          state: data.state,
+          stateSlug,
+          city: city.name,
+          citySlug: city.slug,
+          population: city.population,
+        });
+      }
+    }
+
+    // Sort by population to prioritize major cities
+    const sortedCities = allCities.sort((a, b) => (b.population || 0) - (a.population || 0));
+
+    console.log(`📊 Processing top cities from ${statesMap.size} states for premium sitemap...`);
 
     // Safety limits to prevent timeout
     const MAX_CITIES_TO_PROCESS = 100; // Process only top 100 cities initially
@@ -75,60 +95,42 @@ async function getAllSalonsWithScores(): Promise<SalonWithScore[]> {
 
     let citiesProcessed = 0;
 
-    for (const [stateSlug, data] of statesMap.entries()) {
+    // Process each city (sorted by population)
+    for (const city of sortedCities) {
       // Check timeout
       if (Date.now() - startTime > MAX_PROCESSING_TIME) {
         console.warn(`⏰ Timeout reached after ${citiesProcessed} cities, stopping...`);
         break;
       }
 
-      if (!data.cities || !Array.isArray(data.cities)) continue;
-
-      const stateName = data.state;
-
-      // Sort cities by population to prioritize major metros
-      // This ensures we get the best salons from populated areas first
-      const sortedCities = [...data.cities].sort((a, b) => {
-        const popA = a.population || 0;
-        const popB = b.population || 0;
-        return popB - popA; // Descending order
-      });
-
-      // Process each city in the state (with limit)
-      for (const city of sortedCities) {
-        if (citiesProcessed >= MAX_CITIES_TO_PROCESS) {
-          console.warn(`📊 Reached city limit (${MAX_CITIES_TO_PROCESS}), stopping...`);
-          break;
-        }
-
-        try {
-          citiesProcessed++;
-          console.log(`  Processing ${city.name}, ${stateName}...`);
-          const cityData = await getCityDataFromR2(stateName, city.name);
-
-          if (!cityData || !cityData.salons || cityData.salons.length === 0) {
-            continue;
-          }
-
-          // Calculate score for each salon
-          for (const salon of cityData.salons) {
-            const score = calculateQualityScore(salon);
-
-            allSalons.push({
-              ...salon,
-              score,
-              url: `/nail-salons/${stateSlug}/${city.slug}/${generateSlug(salon.name)}`,
-              stateSlug,
-              citySlug: city.slug
-            });
-          }
-        } catch (error) {
-          console.error(`Error processing city ${city.name}, ${stateName}:`, error);
-        }
+      if (citiesProcessed >= MAX_CITIES_TO_PROCESS) {
+        console.warn(`📊 Reached city limit (${MAX_CITIES_TO_PROCESS}), stopping...`);
+        break;
       }
 
-      if (citiesProcessed >= MAX_CITIES_TO_PROCESS) {
-        break;
+      try {
+        citiesProcessed++;
+        console.log(`  Processing ${city.city}, ${city.state}...`);
+        const cityData = await getCityDataFromR2(city.state, city.city);
+
+        if (!cityData || !cityData.salons || cityData.salons.length === 0) {
+          continue;
+        }
+
+        // Calculate score for each salon
+        for (const salon of cityData.salons) {
+          const score = calculateQualityScore(salon);
+
+          allSalons.push({
+            ...salon,
+            score,
+            url: `/nail-salons/${city.stateSlug}/${city.citySlug}/${generateSlug(salon.name)}`,
+            stateSlug: city.stateSlug,
+            citySlug: city.citySlug
+          });
+        }
+      } catch (error) {
+        console.error(`Error processing city ${city.city}, ${city.state}:`, error);
       }
     }
 

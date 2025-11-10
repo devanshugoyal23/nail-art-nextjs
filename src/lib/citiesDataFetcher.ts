@@ -16,8 +16,6 @@ interface StateData {
   cities: CityData[];
 }
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://nailartai.app';
-
 // List of all 50 states
 const ALL_STATES = [
   'alabama', 'alaska', 'arizona', 'arkansas', 'california', 'colorado', 'connecticut',
@@ -31,11 +29,28 @@ const ALL_STATES = [
 ];
 
 /**
+ * Get the current deployment URL
+ * Works for both Vercel preview and production deployments
+ */
+function getDeploymentUrl(): string {
+  // In Vercel, use VERCEL_URL (available in both preview and production)
+  if (process.env.VERCEL_URL) {
+    return `https://${process.env.VERCEL_URL}`;
+  }
+  // Fallback to production URL
+  return process.env.NEXT_PUBLIC_BASE_URL || 'https://nailartai.app';
+}
+
+/**
  * Fetch a single state's city data via HTTP
  */
 export async function fetchStateCityData(stateSlug: string): Promise<StateData | null> {
   try {
-    const url = `${BASE_URL}/data/cities/${stateSlug}.json`;
+    // Use current deployment URL (works in both preview and production)
+    const baseUrl = getDeploymentUrl();
+    const url = `${baseUrl}/data/cities/${stateSlug}.json`;
+    console.log(`Fetching city data from: ${url}`);
+
     const response = await fetch(url, {
       next: { revalidate: 86400 } // Cache for 24 hours
     });
