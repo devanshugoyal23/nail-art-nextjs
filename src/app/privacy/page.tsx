@@ -251,7 +251,7 @@ export default function PrivacyPage() {
           </section>
 
           <section id="childrens-privacy" className="not-prose rounded-xl bg-white shadow-sm ring-1 ring-black/5 p-6">
-            <h2 className="text-xl font-semibold text-[#1b0d14] mb-3">10. Children's Privacy</h2>
+            <h2 className="text-xl font-semibold text-[#1b0d14] mb-3">10. Children&apos;s Privacy</h2>
             <p className="text-[#1b0d14]/80 mb-3">
               Our Service is not directed to children under the age of 13 (or the minimum age required in your jurisdiction for data processing without parental consent). We do not knowingly collect personal information from children under 13.
             </p>
