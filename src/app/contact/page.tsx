@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Contact Us - Get in Touch with Nail Art AI Support",
@@ -137,34 +138,34 @@ export default function ContactPage() {
           Looking for immediate answers? Check out these resources before contacting us:
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <a href="/faq" className="flex items-center gap-3 p-4 bg-white rounded-lg hover:ring-2 hover:ring-[#ee2b8c]/30 transition-all">
+          <Link href="/faq" className="flex items-center gap-3 p-4 bg-white rounded-lg hover:ring-2 hover:ring-[#ee2b8c]/30 transition-all">
             <span className="text-2xl">❓</span>
             <div>
               <h3 className="font-semibold text-[#1b0d14]">Frequently Asked Questions</h3>
               <p className="text-sm text-[#1b0d14]/70">Find answers to common questions</p>
             </div>
-          </a>
-          <a href="/nail-care-tips" className="flex items-center gap-3 p-4 bg-white rounded-lg hover:ring-2 hover:ring-[#ee2b8c]/30 transition-all">
+          </Link>
+          <Link href="/nail-care-tips" className="flex items-center gap-3 p-4 bg-white rounded-lg hover:ring-2 hover:ring-[#ee2b8c]/30 transition-all">
             <span className="text-2xl">💡</span>
             <div>
               <h3 className="font-semibold text-[#1b0d14]">Nail Care Tips</h3>
               <p className="text-sm text-[#1b0d14]/70">Expert advice and guides</p>
             </div>
-          </a>
-          <a href="/try-on" className="flex items-center gap-3 p-4 bg-white rounded-lg hover:ring-2 hover:ring-[#ee2b8c]/30 transition-all">
+          </Link>
+          <Link href="/try-on" className="flex items-center gap-3 p-4 bg-white rounded-lg hover:ring-2 hover:ring-[#ee2b8c]/30 transition-all">
             <span className="text-2xl">✨</span>
             <div>
               <h3 className="font-semibold text-[#1b0d14]">Virtual Try-On Help</h3>
               <p className="text-sm text-[#1b0d14]/70">Learn how to use our AI tool</p>
             </div>
-          </a>
-          <a href="/about" className="flex items-center gap-3 p-4 bg-white rounded-lg hover:ring-2 hover:ring-[#ee2b8c]/30 transition-all">
+          </Link>
+          <Link href="/about" className="flex items-center gap-3 p-4 bg-white rounded-lg hover:ring-2 hover:ring-[#ee2b8c]/30 transition-all">
             <span className="text-2xl">ℹ️</span>
             <div>
               <h3 className="font-semibold text-[#1b0d14]">About Nail Art AI</h3>
               <p className="text-sm text-[#1b0d14]/70">Learn about our platform</p>
             </div>
-          </a>
+          </Link>
         </div>
       </div>
 
