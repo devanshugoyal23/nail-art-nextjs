@@ -62,8 +62,8 @@ async function getAllSalonsWithScores(): Promise<SalonWithScore[]> {
   const allSalons: SalonWithScore[] = [];
 
   try {
-    // Import city data (bundled with function, no HTTP needed)
-    const { getAllStateCityData } = await import('@/lib/citiesDataImporter');
+    // Import consolidated city data (guaranteed to be bundled)
+    const { getAllStateCityData } = await import('@/lib/consolidatedCitiesData');
     const statesMap = getAllStateCityData();
 
     // Build list of all cities with population data

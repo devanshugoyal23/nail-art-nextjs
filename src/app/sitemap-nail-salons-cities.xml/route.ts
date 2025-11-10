@@ -39,25 +39,14 @@ interface StateData {
  */
 async function getAllStatesAndCities(): Promise<{ states: string[], topCities: Array<{ state: string, city: string, cityName: string, population?: number }> }> {
   try {
-    // First test if a single import works
-    console.log('🧪 Testing single JSON import...');
-    try {
-      const { testSingleImport } = await import('@/lib/citiesDataImporterTest');
-      const testResult = testSingleImport();
-      console.log('✅ Single import test result:', testResult ? 'SUCCESS' : 'FAILED');
-    } catch (testError) {
-      console.error('❌ Single import test FAILED:', testError);
-    }
-
-    console.log('🔍 Attempting to import citiesDataImporter...');
-    const { getAllStateCityData } = await import('@/lib/citiesDataImporter');
-    console.log('✅ Import successful, calling getAllStateCityData()...');
+    console.log('🔍 Loading consolidated city data...');
+    const { getAllStateCityData } = await import('@/lib/consolidatedCitiesData');
 
     const statesMap = getAllStateCityData();
     console.log(`📦 Got statesMap with size: ${statesMap.size}`);
 
     if (statesMap.size === 0) {
-      console.error('❌ statesMap is empty! JSON imports may have failed');
+      console.error('❌ statesMap is empty!');
       return { states: [], topCities: [] };
     }
 
