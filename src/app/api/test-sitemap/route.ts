@@ -1,6 +1,15 @@
 import { NextResponse } from 'next/server';
 import { getCityDataFromR2 } from '@/lib/salonDataService';
 
+interface TestResult {
+  test: string;
+  passed: boolean;
+  details: string;
+  salonCount?: number;
+  error?: string;
+  files?: string[];
+}
+
 /**
  * Test endpoint to verify R2 data and sitemap generation
  * Visit: /api/test-sitemap
@@ -8,7 +17,7 @@ import { getCityDataFromR2 } from '@/lib/salonDataService';
 export async function GET() {
   const results = {
     timestamp: new Date().toISOString(),
-    tests: [] as any[],
+    tests: [] as TestResult[],
     summary: {
       totalTests: 0,
       passed: 0,
@@ -45,12 +54,14 @@ export async function GET() {
           : 'No data found in R2',
         salonCount: cityData?.salons?.length || 0,
       });
-    } catch (error: any) {
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      const errorString = error instanceof Error ? error.toString() : String(error);
       results.tests.push({
         test: `R2 Data: ${testCity.city}, ${testCity.state}`,
         passed: false,
-        details: `Error: ${error.message}`,
-        error: error.toString(),
+        details: `Error: ${errorMessage}`,
+        error: errorString,
       });
     }
   }
@@ -69,11 +80,12 @@ export async function GET() {
       details: `Found ${jsonFiles.length} state JSON files`,
       files: jsonFiles.slice(0, 10),
     });
-  } catch (error: any) {
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     results.tests.push({
       test: 'City JSON Files',
       passed: false,
-      details: `Error reading files: ${error.message}`,
+      details: `Error reading files: ${errorMessage}`,
     });
   }
 
