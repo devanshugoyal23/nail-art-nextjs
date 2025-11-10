@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import Link from "next/link";
 import LightHomepage from "@/components/LightHomepage";
 import { getGalleryItems } from "@/lib/optimizedGalleryService";
 import { getAllCategoriesWithThumbnails } from "@/lib/categoryService";
@@ -169,7 +170,7 @@ export default async function Home() {
             </h3>
             <p className="text-[#1b0d14]/80 mb-6 leading-relaxed">
               Beyond inspiration, Nail Art AI is your complete resource for nail health and maintenance. Our{' '}
-              <a href="/nail-care-tips" className="text-[#ee2b8c] underline hover:text-[#ee2b8c]/80">expert nail care tips</a>{' '}
+              <Link href="/nail-care-tips" className="text-[#ee2b8c] underline hover:text-[#ee2b8c]/80">expert nail care tips</Link>{' '}
               cover everything from making your manicure last longer to choosing the right nail shape for your hands.
               Learn about gel vs. acrylic nails, proper removal techniques, nail health basics, and at-home care routines
               from licensed nail technicians.
@@ -252,18 +253,18 @@ export default async function Home() {
               <h3 className="text-2xl font-bold mb-4">Ready to Find Your Perfect Nail Design?</h3>
               <p className="mb-6">Try our AI-powered virtual try-on now and discover your next favorite manicure</p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <a
+                <Link
                   href="/try-on"
                   className="inline-block bg-white text-[#ee2b8c] font-semibold py-3 px-8 rounded-full hover:bg-white/90 transition-colors"
                 >
                   Try Virtual Try-On
-                </a>
-                <a
+                </Link>
+                <Link
                   href="/nail-art-gallery"
                   className="inline-block bg-white/20 text-white font-semibold py-3 px-8 rounded-full hover:bg-white/30 transition-colors"
                 >
                   Browse Gallery
-                </a>
+                </Link>
               </div>
             </div>
           </article>

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Terms of Service - User Agreement & Conditions | Nail Art AI",
@@ -57,13 +58,13 @@ export default function TermsPage() {
           <section id="acceptance" className="not-prose rounded-xl bg-white shadow-sm ring-1 ring-black/5 p-6">
             <h2 className="text-xl font-semibold text-[#1b0d14] mb-3">1. Acceptance of Terms</h2>
             <p className="text-[#1b0d14]/80 mb-3">
-              These Terms of Service ("Terms") constitute a legally binding agreement between you and Nail Art AI
-              ("we," "us," or "our") regarding your access to and use of our website, mobile applications, and services
-              (collectively, the "Service").
+              These Terms of Service (&quot;Terms&quot;) constitute a legally binding agreement between you and Nail Art AI
+              (&quot;we,&quot; &quot;us,&quot; or &quot;our&quot;) regarding your access to and use of our website, mobile applications, and services
+              (collectively, the &quot;Service&quot;).
             </p>
             <p className="text-[#1b0d14]/80 mb-3">
               By accessing or using the Service, you acknowledge that you have read, understood, and agree to be bound
-              by these Terms and our <a href="/privacy" className="text-[#ee2b8c] underline">Privacy Policy</a>. If you
+              by these Terms and our <Link href="/privacy" className="text-[#ee2b8c] underline">Privacy Policy</Link>. If you
               do not agree to these Terms, you must not access or use the Service.
             </p>
             <p className="text-[#1b0d14]/80">
@@ -78,7 +79,7 @@ export default function TermsPage() {
             <h3 className="font-semibold text-[#1b0d14] mb-2 mt-4">2.1 Age Requirements</h3>
             <p className="text-[#1b0d14]/80 mb-3">
               You must be at least 13 years old (or the minimum age required in your jurisdiction) to use the Service.
-              If you are under 18, you represent that you have your parent or guardian's permission to use the Service.
+              If you are under 18, you represent that you have your parent or guardian&apos;s permission to use the Service.
             </p>
 
             <h3 className="font-semibold text-[#1b0d14] mb-2">2.2 Account Creation</h3>
@@ -128,7 +129,7 @@ export default function TermsPage() {
 
             <h3 className="font-semibold text-[#1b0d14] mb-2 mt-4">4.1 Your Content</h3>
             <p className="text-[#1b0d14]/80 mb-3">
-              You retain all ownership rights to content you upload, submit, or post to the Service ("User Content"),
+              You retain all ownership rights to content you upload, submit, or post to the Service (&quot;User Content&quot;),
               including hand photos, reviews, ratings, and comments. By submitting User Content, you grant us a
               worldwide, non-exclusive, royalty-free, sublicensable, and transferable license to use, reproduce, distribute,
               prepare derivative works of, display, and perform the User Content solely to provide, maintain, and improve
@@ -171,7 +172,7 @@ export default function TermsPage() {
 
             <h3 className="font-semibold text-[#1b0d14] mb-2">5.2 Trademarks</h3>
             <p className="text-[#1b0d14]/80 mb-3">
-              "Nail Art AI" and all related logos, product and service names, designs, and slogans are trademarks of
+              &quot;Nail Art AI&quot; and all related logos, product and service names, designs, and slogans are trademarks of
               Nail Art AI. You may not use such marks without our prior written permission. Other names, logos, and brands
               are property of their respective owners.
             </p>
@@ -188,7 +189,7 @@ export default function TermsPage() {
           <section id="third-party" className="not-prose rounded-xl bg-white shadow-sm ring-1 ring-black/5 p-6">
             <h2 className="text-xl font-semibold text-[#1b0d14] mb-3">6. Third-Party Services & Links</h2>
             <p className="text-[#1b0d14]/80 mb-3">
-              The Service may contain links to third-party websites, applications, or services ("Third-Party Services")
+              The Service may contain links to third-party websites, applications, or services (&quot;Third-Party Services&quot;)
               that are not owned or controlled by Nail Art AI, including nail salon websites, social media platforms,
               and payment processors.
             </p>
@@ -240,7 +241,7 @@ export default function TermsPage() {
             <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-4">
               <p className="text-sm font-semibold text-yellow-800 mb-1">IMPORTANT LEGAL NOTICE</p>
               <p className="text-sm text-yellow-700">
-                THE SERVICE IS PROVIDED ON AN "AS IS" AND "AS AVAILABLE" BASIS WITHOUT WARRANTIES OF ANY KIND.
+                THE SERVICE IS PROVIDED ON AN &quot;AS IS&quot; AND &quot;AS AVAILABLE&quot; BASIS WITHOUT WARRANTIES OF ANY KIND.
               </p>
             </div>
 
@@ -304,7 +305,7 @@ export default function TermsPage() {
             <p className="text-[#1b0d14]/80 mb-3">
               You agree to defend, indemnify, and hold harmless Nail Art AI and its affiliates, officers, directors,
               employees, agents, suppliers, and licensors from and against any and all claims, damages, obligations,
-              losses, liabilities, costs, and expenses (including but not limited to reasonable attorneys' fees) arising from:
+              losses, liabilities, costs, and expenses (including but not limited to reasonable attorneys&apos; fees) arising from:
             </p>
             <ul className="text-[#1b0d14]/80 list-disc pl-5 space-y-2">
               <li>Your use of or inability to use the Service</li>
@@ -342,10 +343,10 @@ export default function TermsPage() {
             <h2 className="text-xl font-semibold text-[#1b0d14] mb-3">12. Changes to These Terms</h2>
             <p className="text-[#1b0d14]/80 mb-3">
               We reserve the right to modify or replace these Terms at any time at our sole discretion. If a revision
-              is material, we will provide at least 30 days' notice prior to any new terms taking effect by:
+              is material, we will provide at least 30 days&apos; notice prior to any new terms taking effect by:
             </p>
             <ul className="text-[#1b0d14]/80 list-disc pl-5 space-y-1 mb-3">
-              <li>Updating the "Last Updated" date at the top of these Terms</li>
+              <li>Updating the &quot;Last Updated&quot; date at the top of these Terms</li>
               <li>Sending you an email notification (if you have provided an email address)</li>
               <li>Posting a prominent notice on the Service</li>
             </ul>

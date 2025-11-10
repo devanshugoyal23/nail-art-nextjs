@@ -57,8 +57,8 @@ export default function PrivacyPage() {
           <section id="who-we-are" className="not-prose rounded-xl bg-white shadow-sm ring-1 ring-black/5 p-6">
             <h2 className="text-xl font-semibold text-[#1b0d14] mb-3">1. Who We Are</h2>
             <p className="text-[#1b0d14]/80 mb-3">
-              Nail Art AI ("we," "our," or "us") is the data controller responsible for personal information collected and
-              processed in connection with our website, mobile applications, and services (collectively, the "Service").
+              Nail Art AI (&quot;we,&quot; &quot;our,&quot; or &quot;us&quot;) is the data controller responsible for personal information collected and
+              processed in connection with our website, mobile applications, and services (collectively, the &quot;Service&quot;).
               Our Service provides AI-powered virtual nail art try-on technology, design galleries, nail salon directories,
               and educational resources.
             </p>
@@ -95,7 +95,7 @@ export default function PrivacyPage() {
             <h3 className="font-semibold text-[#1b0d14] mb-2 mt-4">2.3 Cookies and Similar Technologies</h3>
             <p className="text-[#1b0d14]/80 mb-2">
               We use cookies, web beacons, and similar tracking technologies for essential functionality and analytics.
-              See Section 11 "Cookies" for detailed information and choices.
+              See Section 11 &quot;Cookies&quot; for detailed information and choices.
             </p>
 
             <h3 className="font-semibold text-[#1b0d14] mb-2 mt-4">2.4 Third-Party Information</h3>
@@ -228,7 +228,7 @@ export default function PrivacyPage() {
             <ul className="text-[#1b0d14]/80 list-disc pl-5 space-y-2 mb-4">
               <li><strong>Access:</strong> Request a copy of the personal information we hold about you.</li>
               <li><strong>Correction:</strong> Request correction of inaccurate or incomplete information.</li>
-              <li><strong>Deletion:</strong> Request deletion of your personal information ("right to be forgotten").</li>
+              <li><strong>Deletion:</strong> Request deletion of your personal information (&quot;right to be forgotten&quot;).</li>
               <li><strong>Portability:</strong> Request a copy of your data in a machine-readable format.</li>
               <li><strong>Object:</strong> Object to certain processing activities.</li>
               <li><strong>Restrict:</strong> Request restriction of processing in certain circumstances.</li>
@@ -240,13 +240,13 @@ export default function PrivacyPage() {
             <ul className="text-[#1b0d14]/80 list-disc pl-5 space-y-1 mb-4">
               <li>Right to know what personal information we collect, use, and share</li>
               <li>Right to delete personal information</li>
-              <li>Right to opt-out of "sales" (we do not sell personal information)</li>
+              <li>Right to opt-out of &quot;sales&quot; (we do not sell personal information)</li>
               <li>Right to non-discrimination for exercising privacy rights</li>
             </ul>
 
             <h3 className="font-semibold text-[#1b0d14] mb-2">How to Exercise Your Rights</h3>
             <p className="text-[#1b0d14]/80">
-              To exercise any of these rights, please contact us at <a href="mailto:help@nailartai.app" className="text-[#ee2b8c] underline">help@nailartai.app</a> with "Privacy Rights Request" in the subject line. We will respond within the timeframe required by applicable law (typically 30 days).
+              To exercise any of these rights, please contact us at <a href="mailto:help@nailartai.app" className="text-[#ee2b8c] underline">help@nailartai.app</a> with &quot;Privacy Rights Request&quot; in the subject line. We will respond within the timeframe required by applicable law (typically 30 days).
             </p>
           </section>
 
@@ -295,7 +295,7 @@ export default function PrivacyPage() {
               We may update this Privacy Policy from time to time to reflect changes in our practices, technology, legal requirements, or other factors. When we make material changes, we will:
             </p>
             <ul className="text-[#1b0d14]/80 list-disc pl-5 space-y-1 mb-3">
-              <li>Update the "Last Updated" date at the top of this policy</li>
+              <li>Update the &quot;Last Updated&quot; date at the top of this policy</li>
               <li>Notify you via email or prominent notice on our Service</li>
               <li>Obtain your consent where required by law</li>
             </ul>

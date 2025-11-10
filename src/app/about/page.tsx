@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "About Us - Our Story, Mission & Team | Nail Art AI",
@@ -225,12 +226,12 @@ export default function AboutPage() {
           ideas? We&apos;d love to hear from you.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <a
+          <Link
             href="/contact"
             className="inline-block bg-white text-[#ee2b8c] font-semibold py-3 px-8 rounded-full hover:bg-white/90 transition-colors"
           >
             Contact Us
-          </a>
+          </Link>
           <a
             href="mailto:help@nailartai.app"
             className="inline-block bg-white/20 text-white font-semibold py-3 px-8 rounded-full hover:bg-white/30 transition-colors"
