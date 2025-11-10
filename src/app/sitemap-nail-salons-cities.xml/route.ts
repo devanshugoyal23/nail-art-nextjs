@@ -39,13 +39,33 @@ interface StateData {
  */
 async function getAllStatesAndCities(): Promise<{ states: string[], topCities: Array<{ state: string, city: string, cityName: string, population?: number }> }> {
   try {
+    // First test if a single import works
+    console.log('🧪 Testing single JSON import...');
+    try {
+      const { testSingleImport } = await import('@/lib/citiesDataImporterTest');
+      const testResult = testSingleImport();
+      console.log('✅ Single import test result:', testResult ? 'SUCCESS' : 'FAILED');
+    } catch (testError) {
+      console.error('❌ Single import test FAILED:', testError);
+    }
+
+    console.log('🔍 Attempting to import citiesDataImporter...');
     const { getAllStateCityData } = await import('@/lib/citiesDataImporter');
+    console.log('✅ Import successful, calling getAllStateCityData()...');
+
     const statesMap = getAllStateCityData();
+    console.log(`📦 Got statesMap with size: ${statesMap.size}`);
+
+    if (statesMap.size === 0) {
+      console.error('❌ statesMap is empty! JSON imports may have failed');
+      return { states: [], topCities: [] };
+    }
 
     const states: string[] = [];
     const allCities: Array<{ state: string, city: string, cityName: string, population?: number, salonCount?: number }> = [];
 
     for (const [stateSlug, data] of statesMap.entries()) {
+      console.log(`  Processing state: ${stateSlug}, cities: ${data.cities?.length || 0}`);
       if (!data.cities || !Array.isArray(data.cities)) continue;
 
       // Add state
@@ -97,7 +117,8 @@ async function getAllStatesAndCities(): Promise<{ states: string[], topCities: A
 
     return { states, topCities };
   } catch (error) {
-    console.error('Error getting states and cities:', error);
+    console.error('❌ CRITICAL ERROR in getAllStatesAndCities:', error);
+    console.error('Error stack:', error instanceof Error ? error.stack : 'No stack trace');
     return { states: [], topCities: [] };
   }
 }
