@@ -1,5 +1,4 @@
 import { Metadata } from 'next';
-import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { generateSlug, getPhotoUrl, generateCitySlug, type NailSalon } from '@/lib/nailSalonService';
 import { getSalonsForCity } from '@/lib/salonDataService';
@@ -158,41 +157,14 @@ export default async function CityPage({ params }: CityPageProps) {
   const formattedState = stateName.split(' ').map(word => 
     word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
   ).join(' ');
-  const formattedCity = cityName.split(' ').map(word => 
+  const formattedCity = cityName.split(' ').map(word =>
     word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
   ).join(' ');
 
-  // Verify city exists in state data first
-  let cityExists = false;
-  try {
-    const fs = await import('fs/promises');
-    const path = await import('path');
-    const citiesDir = path.join(process.cwd(), 'src', 'data', 'cities');
-    const stateFile = path.join(citiesDir, `${stateSlug}.json`);
-    
-    try {
-      const fileContent = await fs.readFile(stateFile, 'utf-8');
-      const data = JSON.parse(fileContent);
-      
-      if (data.cities && Array.isArray(data.cities)) {
-        // Check if city exists (by slug or name)
-        cityExists = data.cities.some((city: { name: string; slug?: string }) => 
-          (city.slug || generateCitySlug(city.name)) === citySlug ||
-          city.name.toLowerCase() === formattedCity.toLowerCase()
-        );
-      }
-    } catch (fileError) {
-      console.warn(`Could not read state file for ${stateSlug}:`, fileError);
-    }
-  } catch (error) {
-    console.warn(`Error checking city existence:`, error);
-  }
-
-  // If city doesn't exist in our data, return 404
-  if (!cityExists) {
-    console.log(`City ${formattedCity}, ${formattedState} not found in state data`);
-    notFound();
-  }
+  // ✅ OPTIMIZATION: Removed filesystem-based city validation to fix 404 errors on Vercel
+  // The city JSON files are only used at build time for generateStaticParams()
+  // At runtime, we rely on R2 data and show an empty state if no salons are found
+  // This approach works reliably on Vercel's serverless platform without filesystem access issues
 
   let salons: NailSalon[] = [];
   try {
