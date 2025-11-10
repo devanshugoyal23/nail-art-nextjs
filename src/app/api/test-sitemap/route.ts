@@ -115,29 +115,54 @@ export async function GET() {
     });
   }
 
-  // Test 7: Try to fetch all states data (simulates sitemap generation)
+  // Test 7: Try to import JSON modules directly (NEW APPROACH - what sitemaps use now)
+  try {
+    const { getAllStateCityData } = await import('@/lib/citiesDataImporter');
+    console.log('Testing citiesDataImporter (module imports)...');
+    const statesMap = getAllStateCityData();
+
+    const statesCount = statesMap.size;
+    const totalCities = Array.from(statesMap.values()).reduce((sum, state) => sum + (state.cities?.length || 0), 0);
+
+    results.tests.push({
+      test: 'Import JSON Modules (NEW)',
+      passed: statesCount > 0,
+      details: statesCount > 0
+        ? `✅ Successfully imported ${statesCount} states with ${totalCities} total cities (bundled as modules)`
+        : 'Failed to import JSON modules',
+    });
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    results.tests.push({
+      test: 'Import JSON Modules (NEW)',
+      passed: false,
+      details: `Error: ${errorMessage}`,
+      error: error instanceof Error ? error.stack : String(error),
+    });
+  }
+
+  // Test 8: Try OLD HTTP fetch approach (deprecated, for comparison)
   try {
     const { fetchAllStateCityData } = await import('@/lib/citiesDataFetcher');
-    console.log('Testing fetchAllStateCityData...');
+    console.log('Testing citiesDataFetcher (HTTP fetching - OLD)...');
     const statesMap = await fetchAllStateCityData();
 
     const statesCount = statesMap.size;
     const totalCities = Array.from(statesMap.values()).reduce((sum, state) => sum + (state.cities?.length || 0), 0);
 
     results.tests.push({
-      test: 'Fetch All States Data',
+      test: 'HTTP Fetch States (OLD - deprecated)',
       passed: statesCount > 0,
       details: statesCount > 0
-        ? `Successfully fetched ${statesCount} states with ${totalCities} total cities`
-        : 'Failed to fetch any state data',
+        ? `Fetched ${statesCount} states with ${totalCities} total cities via HTTP`
+        : 'Failed to fetch any state data via HTTP (expected - has 401 issue)',
     });
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     results.tests.push({
-      test: 'Fetch All States Data',
+      test: 'HTTP Fetch States (OLD - deprecated)',
       passed: false,
-      details: `Error: ${errorMessage}`,
-      error: error instanceof Error ? error.stack : String(error),
+      details: `Error: ${errorMessage} (expected - sitemaps now use module imports instead)`,
     });
   }
 
