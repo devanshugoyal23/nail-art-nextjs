@@ -35,7 +35,8 @@ const ALL_STATES = [
  */
 export async function fetchStateCityData(stateSlug: string): Promise<StateData | null> {
   try {
-    const url = `${BASE_URL}/data/cities/${stateSlug}.json`;
+    // Use relative URL to fetch from current deployment (works in both preview and production)
+    const url = `/data/cities/${stateSlug}.json`;
     const response = await fetch(url, {
       next: { revalidate: 86400 } // Cache for 24 hours
     });
