@@ -62,16 +62,6 @@ async function getAllSalonsWithScores(): Promise<SalonWithScore[]> {
   const allSalons: SalonWithScore[] = [];
 
   try {
-    // Check if R2 credentials are configured
-    const hasR2Creds = process.env.R2_ACCESS_KEY_ID && process.env.R2_SECRET_ACCESS_KEY;
-
-    if (!hasR2Creds) {
-      console.warn('⚠️ R2 credentials not configured. Premium sitemap will be empty.');
-      console.warn('   Set R2_ACCESS_KEY_ID and R2_SECRET_ACCESS_KEY in environment variables');
-      console.warn('   OR upload salon data to R2 using: npm run collect-salons');
-      return [];
-    }
-
     // Read city JSON files to get all cities
     const fs = await import('fs/promises');
     const path = await import('path');
@@ -107,20 +97,24 @@ async function getAllSalonsWithScores(): Promise<SalonWithScore[]> {
 
         const stateName = data.state;
 
+        // Sort cities by population to prioritize major metros
+        // This ensures we get the best salons from populated areas first
+        const sortedCities = [...data.cities].sort((a, b) => {
+          const popA = a.population || 0;
+          const popB = b.population || 0;
+          return popB - popA; // Descending order
+        });
+
         // Process each city in the state (with limit)
-        for (const city of data.cities) {
+        for (const city of sortedCities) {
           if (citiesProcessed >= MAX_CITIES_TO_PROCESS) {
             console.warn(`📊 Reached city limit (${MAX_CITIES_TO_PROCESS}), stopping...`);
             break;
           }
 
-          // Skip cities with no salons (salonCount = 0)
-          if (city.salonCount === 0) {
-            continue;
-          }
-
           try {
             citiesProcessed++;
+            console.log(`  Processing ${city.name}, ${stateName}...`);
             const cityData = await getCityDataFromR2(stateName, city.name);
 
             if (!cityData || !cityData.salons || cityData.salons.length === 0) {
