@@ -56,11 +56,22 @@ function calculateQualityScore(salon: NailSalon): number {
 
 /**
  * Get all salons from all cities with quality scores
+ * NEW: With safety limits and R2 credential checking to prevent timeouts
  */
 async function getAllSalonsWithScores(): Promise<SalonWithScore[]> {
   const allSalons: SalonWithScore[] = [];
 
   try {
+    // Check if R2 credentials are configured
+    const hasR2Creds = process.env.R2_ACCESS_KEY_ID && process.env.R2_SECRET_ACCESS_KEY;
+
+    if (!hasR2Creds) {
+      console.warn('⚠️ R2 credentials not configured. Premium sitemap will be empty.');
+      console.warn('   Set R2_ACCESS_KEY_ID and R2_SECRET_ACCESS_KEY in environment variables');
+      console.warn('   OR upload salon data to R2 using: npm run collect-salons');
+      return [];
+    }
+
     // Read city JSON files to get all cities
     const fs = await import('fs/promises');
     const path = await import('path');
@@ -71,7 +82,20 @@ async function getAllSalonsWithScores(): Promise<SalonWithScore[]> {
 
     console.log(`📊 Processing ${stateFiles.length} states for premium sitemap...`);
 
+    // Safety limits to prevent timeout
+    const MAX_CITIES_TO_PROCESS = 100; // Process only top 100 cities initially
+    const MAX_PROCESSING_TIME = 25000; // 25 seconds max
+    const startTime = Date.now();
+
+    let citiesProcessed = 0;
+
     for (const stateFile of stateFiles) {
+      // Check timeout
+      if (Date.now() - startTime > MAX_PROCESSING_TIME) {
+        console.warn(`⏰ Timeout reached after ${citiesProcessed} cities, stopping...`);
+        break;
+      }
+
       const stateSlug = stateFile.replace('.json', '');
       const filePath = path.join(citiesDir, stateFile);
 
@@ -83,12 +107,25 @@ async function getAllSalonsWithScores(): Promise<SalonWithScore[]> {
 
         const stateName = data.state;
 
-        // Process each city in the state
+        // Process each city in the state (with limit)
         for (const city of data.cities) {
+          if (citiesProcessed >= MAX_CITIES_TO_PROCESS) {
+            console.warn(`📊 Reached city limit (${MAX_CITIES_TO_PROCESS}), stopping...`);
+            break;
+          }
+
+          // Skip cities with no salons (salonCount = 0)
+          if (city.salonCount === 0) {
+            continue;
+          }
+
           try {
+            citiesProcessed++;
             const cityData = await getCityDataFromR2(stateName, city.name);
 
-            if (!cityData || !cityData.salons) continue;
+            if (!cityData || !cityData.salons || cityData.salons.length === 0) {
+              continue;
+            }
 
             // Calculate score for each salon
             for (const salon of cityData.salons) {
@@ -106,12 +143,17 @@ async function getAllSalonsWithScores(): Promise<SalonWithScore[]> {
             console.error(`Error processing city ${city.name}, ${stateName}:`, error);
           }
         }
+
+        if (citiesProcessed >= MAX_CITIES_TO_PROCESS) {
+          break;
+        }
       } catch (error) {
         console.error(`Error reading ${stateFile}:`, error);
       }
     }
 
-    console.log(`✅ Processed ${allSalons.length} total salons`);
+    const duration = Date.now() - startTime;
+    console.log(`✅ Processed ${allSalons.length} total salons from ${citiesProcessed} cities in ${duration}ms`);
     return allSalons;
   } catch (error) {
     console.error('Error getting all salons:', error);
