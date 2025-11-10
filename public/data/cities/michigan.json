@@ -1,0 +1,663 @@
+{
+  "state": "Michigan",
+  "stateCode": "MI",
+  "generatedAt": "2025-11-06T10:23:23.921Z",
+  "citiesCount": 131,
+  "cities": [
+    {
+      "name": "Detroit",
+      "slug": "detroit",
+      "salonCount": 0
+    },
+    {
+      "name": "Grand Rapids",
+      "slug": "grand-rapids",
+      "salonCount": 0
+    },
+    {
+      "name": "Warren",
+      "slug": "warren",
+      "salonCount": 0
+    },
+    {
+      "name": "Sterling Heights",
+      "slug": "sterling-heights",
+      "salonCount": 0
+    },
+    {
+      "name": "Ann Arbor",
+      "slug": "ann-arbor",
+      "salonCount": 0
+    },
+    {
+      "name": "Lansing",
+      "slug": "lansing",
+      "salonCount": 0
+    },
+    {
+      "name": "Flint",
+      "slug": "flint",
+      "salonCount": 0
+    },
+    {
+      "name": "Dearborn",
+      "slug": "dearborn",
+      "salonCount": 0
+    },
+    {
+      "name": "Livonia",
+      "slug": "livonia",
+      "salonCount": 0
+    },
+    {
+      "name": "Troy",
+      "slug": "troy",
+      "salonCount": 0
+    },
+    {
+      "name": "Westland",
+      "slug": "westland",
+      "salonCount": 0
+    },
+    {
+      "name": "Farmington Hills",
+      "slug": "farmington-hills",
+      "salonCount": 0
+    },
+    {
+      "name": "Kalamazoo",
+      "slug": "kalamazoo",
+      "salonCount": 0
+    },
+    {
+      "name": "Southfield",
+      "slug": "southfield",
+      "salonCount": 0
+    },
+    {
+      "name": "Rochester Hills",
+      "slug": "rochester-hills",
+      "salonCount": 0
+    },
+    {
+      "name": "Pontiac",
+      "slug": "pontiac",
+      "salonCount": 0
+    },
+    {
+      "name": "Royal Oak",
+      "slug": "royal-oak",
+      "salonCount": 0
+    },
+    {
+      "name": "Novi",
+      "slug": "novi",
+      "salonCount": 0
+    },
+    {
+      "name": "Ypsilanti",
+      "slug": "ypsilanti",
+      "salonCount": 0
+    },
+    {
+      "name": "Battle Creek",
+      "slug": "battle-creek",
+      "salonCount": 0
+    },
+    {
+      "name": "Saginaw",
+      "slug": "saginaw",
+      "salonCount": 0
+    },
+    {
+      "name": "Midland",
+      "slug": "midland",
+      "salonCount": 0
+    },
+    {
+      "name": "Bay City",
+      "slug": "bay-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Port Huron",
+      "slug": "port-huron",
+      "salonCount": 0
+    },
+    {
+      "name": "Muskegon",
+      "slug": "muskegon",
+      "salonCount": 0
+    },
+    {
+      "name": "Holland",
+      "slug": "holland",
+      "salonCount": 0
+    },
+    {
+      "name": "Jackson",
+      "slug": "jackson",
+      "salonCount": 0
+    },
+    {
+      "name": "East Lansing",
+      "slug": "east-lansing",
+      "salonCount": 0
+    },
+    {
+      "name": "Grosse Pointe",
+      "slug": "grosse-pointe",
+      "salonCount": 0
+    },
+    {
+      "name": "Birmingham",
+      "slug": "birmingham",
+      "salonCount": 0
+    },
+    {
+      "name": "Clarkston",
+      "slug": "clarkston",
+      "salonCount": 0
+    },
+    {
+      "name": "Brighton",
+      "slug": "brighton",
+      "salonCount": 0
+    },
+    {
+      "name": "Howell",
+      "slug": "howell",
+      "salonCount": 0
+    },
+    {
+      "name": "Fenton",
+      "slug": "fenton",
+      "salonCount": 0
+    },
+    {
+      "name": "Grand Blanc",
+      "slug": "grand-blanc",
+      "salonCount": 0
+    },
+    {
+      "name": "Davison",
+      "slug": "davison",
+      "salonCount": 0
+    },
+    {
+      "name": "Owosso",
+      "slug": "owosso",
+      "salonCount": 0
+    },
+    {
+      "name": "Alma",
+      "slug": "alma",
+      "salonCount": 0
+    },
+    {
+      "name": "Mount Pleasant",
+      "slug": "mount-pleasant",
+      "salonCount": 0
+    },
+    {
+      "name": "Ludington",
+      "slug": "ludington",
+      "salonCount": 0
+    },
+    {
+      "name": "Traverse City",
+      "slug": "traverse-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Petoskey",
+      "slug": "petoskey",
+      "salonCount": 0
+    },
+    {
+      "name": "Gaylord",
+      "slug": "gaylord",
+      "salonCount": 0
+    },
+    {
+      "name": "Cadillac",
+      "slug": "cadillac",
+      "salonCount": 0
+    },
+    {
+      "name": "Manistee",
+      "slug": "manistee",
+      "salonCount": 0
+    },
+    {
+      "name": "Marquette",
+      "slug": "marquette",
+      "salonCount": 0
+    },
+    {
+      "name": "Sault Ste. Marie",
+      "slug": "sault-ste-marie",
+      "salonCount": 0
+    },
+    {
+      "name": "Escanaba",
+      "slug": "escanaba",
+      "salonCount": 0
+    },
+    {
+      "name": "Iron Mountain",
+      "slug": "iron-mountain",
+      "salonCount": 0
+    },
+    {
+      "name": "Adrian",
+      "slug": "adrian",
+      "salonCount": 0
+    },
+    {
+      "name": "Monroe",
+      "slug": "monroe",
+      "salonCount": 0
+    },
+    {
+      "name": "Coldwater",
+      "slug": "coldwater",
+      "salonCount": 0
+    },
+    {
+      "name": "Hillsdale",
+      "slug": "hillsdale",
+      "salonCount": 0
+    },
+    {
+      "name": "Sturgis",
+      "slug": "sturgis",
+      "salonCount": 0
+    },
+    {
+      "name": "Niles",
+      "slug": "niles",
+      "salonCount": 0
+    },
+    {
+      "name": "Benton Harbor",
+      "slug": "benton-harbor",
+      "salonCount": 0
+    },
+    {
+      "name": "St. Joseph",
+      "slug": "st-joseph",
+      "salonCount": 0
+    },
+    {
+      "name": "South Haven",
+      "slug": "south-haven",
+      "salonCount": 0
+    },
+    {
+      "name": "Allegan",
+      "slug": "allegan",
+      "salonCount": 0
+    },
+    {
+      "name": "Grand Haven",
+      "slug": "grand-haven",
+      "salonCount": 0
+    },
+    {
+      "name": "Zeeland",
+      "slug": "zeeland",
+      "salonCount": 0
+    },
+    {
+      "name": "Ionia",
+      "slug": "ionia",
+      "salonCount": 0
+    },
+    {
+      "name": "Greenville",
+      "slug": "greenville",
+      "salonCount": 0
+    },
+    {
+      "name": "Big Rapids",
+      "slug": "big-rapids",
+      "salonCount": 0
+    },
+    {
+      "name": "Clare",
+      "slug": "clare",
+      "salonCount": 0
+    },
+    {
+      "name": "Standish",
+      "slug": "standish",
+      "salonCount": 0
+    },
+    {
+      "name": "Tawas City",
+      "slug": "tawas-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Oscoda",
+      "slug": "oscoda",
+      "salonCount": 0
+    },
+    {
+      "name": "Alpena",
+      "slug": "alpena",
+      "salonCount": 0
+    },
+    {
+      "name": "Cheboygan",
+      "slug": "cheboygan",
+      "salonCount": 0
+    },
+    {
+      "name": "Rogers City",
+      "slug": "rogers-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Houghton Lake",
+      "slug": "houghton-lake",
+      "salonCount": 0
+    },
+    {
+      "name": "Grayling",
+      "slug": "grayling",
+      "salonCount": 0
+    },
+    {
+      "name": "West Branch",
+      "slug": "west-branch",
+      "salonCount": 0
+    },
+    {
+      "name": "Reed City",
+      "slug": "reed-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Evart",
+      "slug": "evart",
+      "salonCount": 0
+    },
+    {
+      "name": "Fremont",
+      "slug": "fremont",
+      "salonCount": 0
+    },
+    {
+      "name": "White Lake",
+      "slug": "white-lake",
+      "salonCount": 0
+    },
+    {
+      "name": "Whitehall",
+      "slug": "whitehall",
+      "salonCount": 0
+    },
+    {
+      "name": "Spring Lake",
+      "slug": "spring-lake",
+      "salonCount": 0
+    },
+    {
+      "name": "Hudsonville",
+      "slug": "hudsonville",
+      "salonCount": 0
+    },
+    {
+      "name": "Jenison",
+      "slug": "jenison",
+      "salonCount": 0
+    },
+    {
+      "name": "Walker",
+      "slug": "walker",
+      "salonCount": 0
+    },
+    {
+      "name": "Wyoming",
+      "slug": "wyoming",
+      "salonCount": 0
+    },
+    {
+      "name": "Kentwood",
+      "slug": "kentwood",
+      "salonCount": 0
+    },
+    {
+      "name": "Grandville",
+      "slug": "grandville",
+      "salonCount": 0
+    },
+    {
+      "name": "Rockford",
+      "slug": "rockford",
+      "salonCount": 0
+    },
+    {
+      "name": "Lowell",
+      "slug": "lowell",
+      "salonCount": 0
+    },
+    {
+      "name": "Caledonia",
+      "slug": "caledonia",
+      "salonCount": 0
+    },
+    {
+      "name": "Hastings",
+      "slug": "hastings",
+      "salonCount": 0
+    },
+    {
+      "name": "Charlotte",
+      "slug": "charlotte",
+      "salonCount": 0
+    },
+    {
+      "name": "Mason",
+      "slug": "mason",
+      "salonCount": 0
+    },
+    {
+      "name": "Okemos",
+      "slug": "okemos",
+      "salonCount": 0
+    },
+    {
+      "name": "Williamston",
+      "slug": "williamston",
+      "salonCount": 0
+    },
+    {
+      "name": "Fowlerville",
+      "slug": "fowlerville",
+      "salonCount": 0
+    },
+    {
+      "name": "Milford",
+      "slug": "milford",
+      "salonCount": 0
+    },
+    {
+      "name": "Walled Lake",
+      "slug": "walled-lake",
+      "salonCount": 0
+    },
+    {
+      "name": "Wixom",
+      "slug": "wixom",
+      "salonCount": 0
+    },
+    {
+      "name": "South Lyon",
+      "slug": "south-lyon",
+      "salonCount": 0
+    },
+    {
+      "name": "Northville",
+      "slug": "northville",
+      "salonCount": 0
+    },
+    {
+      "name": "Plymouth",
+      "slug": "plymouth",
+      "salonCount": 0
+    },
+    {
+      "name": "Canton",
+      "slug": "canton",
+      "salonCount": 0
+    },
+    {
+      "name": "Belleville",
+      "slug": "belleville",
+      "salonCount": 0
+    },
+    {
+      "name": "Romulus",
+      "slug": "romulus",
+      "salonCount": 0
+    },
+    {
+      "name": "Taylor",
+      "slug": "taylor",
+      "salonCount": 0
+    },
+    {
+      "name": "Lincoln Park",
+      "slug": "lincoln-park",
+      "salonCount": 0
+    },
+    {
+      "name": "Allen Park",
+      "slug": "allen-park",
+      "salonCount": 0
+    },
+    {
+      "name": "Wyandotte",
+      "slug": "wyandotte",
+      "salonCount": 0
+    },
+    {
+      "name": "Southgate",
+      "slug": "southgate",
+      "salonCount": 0
+    },
+    {
+      "name": "Riverview",
+      "slug": "riverview",
+      "salonCount": 0
+    },
+    {
+      "name": "Woodhaven",
+      "slug": "woodhaven",
+      "salonCount": 0
+    },
+    {
+      "name": "Trenton",
+      "slug": "trenton",
+      "salonCount": 0
+    },
+    {
+      "name": "Flat Rock",
+      "slug": "flat-rock",
+      "salonCount": 0
+    },
+    {
+      "name": "Rockwood",
+      "slug": "rockwood",
+      "salonCount": 0
+    },
+    {
+      "name": "Milan",
+      "slug": "milan",
+      "salonCount": 0
+    },
+    {
+      "name": "Chelsea",
+      "slug": "chelsea",
+      "salonCount": 0
+    },
+    {
+      "name": "Dexter",
+      "slug": "dexter",
+      "salonCount": 0
+    },
+    {
+      "name": "Saline",
+      "slug": "saline",
+      "salonCount": 0
+    },
+    {
+      "name": "Tecumseh",
+      "slug": "tecumseh",
+      "salonCount": 0
+    },
+    {
+      "name": "Lapeer",
+      "slug": "lapeer",
+      "salonCount": 0
+    },
+    {
+      "name": "Frankenmuth",
+      "slug": "frankenmuth",
+      "salonCount": 0
+    },
+    {
+      "name": "Auburn",
+      "slug": "auburn",
+      "salonCount": 0
+    },
+    {
+      "name": "Pinconning",
+      "slug": "pinconning",
+      "salonCount": 0
+    },
+    {
+      "name": "Gladwin",
+      "slug": "gladwin",
+      "salonCount": 0
+    },
+    {
+      "name": "Harrison",
+      "slug": "harrison",
+      "salonCount": 0
+    },
+    {
+      "name": "Farwell",
+      "slug": "farwell",
+      "salonCount": 0
+    },
+    {
+      "name": "Ironwood",
+      "slug": "ironwood",
+      "salonCount": 0
+    },
+    {
+      "name": "Houghton",
+      "slug": "houghton",
+      "salonCount": 0
+    },
+    {
+      "name": "Hancock",
+      "slug": "hancock",
+      "salonCount": 0
+    },
+    {
+      "name": "Ishpeming",
+      "slug": "ishpeming",
+      "salonCount": 0
+    },
+    {
+      "name": "Negaunee",
+      "slug": "negaunee",
+      "salonCount": 0
+    }
+  ]
+}

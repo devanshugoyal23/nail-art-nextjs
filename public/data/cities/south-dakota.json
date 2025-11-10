@@ -1,0 +1,543 @@
+{
+  "state": "South Dakota",
+  "stateCode": "SD",
+  "generatedAt": "2025-11-06T10:24:26.359Z",
+  "citiesCount": 107,
+  "cities": [
+    {
+      "name": "Sioux Falls",
+      "slug": "sioux-falls",
+      "salonCount": 0
+    },
+    {
+      "name": "Rapid City",
+      "slug": "rapid-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Aberdeen",
+      "slug": "aberdeen",
+      "salonCount": 0
+    },
+    {
+      "name": "Brookings",
+      "slug": "brookings",
+      "salonCount": 0
+    },
+    {
+      "name": "Watertown",
+      "slug": "watertown",
+      "salonCount": 0
+    },
+    {
+      "name": "Mitchell",
+      "slug": "mitchell",
+      "salonCount": 0
+    },
+    {
+      "name": "Yankton",
+      "slug": "yankton",
+      "salonCount": 0
+    },
+    {
+      "name": "Pierre",
+      "slug": "pierre",
+      "salonCount": 0
+    },
+    {
+      "name": "Huron",
+      "slug": "huron",
+      "salonCount": 0
+    },
+    {
+      "name": "Spearfish",
+      "slug": "spearfish",
+      "salonCount": 0
+    },
+    {
+      "name": "Vermillion",
+      "slug": "vermillion",
+      "salonCount": 0
+    },
+    {
+      "name": "Brandon",
+      "slug": "brandon",
+      "salonCount": 0
+    },
+    {
+      "name": "Box Elder",
+      "slug": "box-elder",
+      "salonCount": 0
+    },
+    {
+      "name": "Tea",
+      "slug": "tea",
+      "salonCount": 0
+    },
+    {
+      "name": "Sturgis",
+      "slug": "sturgis",
+      "salonCount": 0
+    },
+    {
+      "name": "Dell Rapids",
+      "slug": "dell-rapids",
+      "salonCount": 0
+    },
+    {
+      "name": "Madison",
+      "slug": "madison",
+      "salonCount": 0
+    },
+    {
+      "name": "Hot Springs",
+      "slug": "hot-springs",
+      "salonCount": 0
+    },
+    {
+      "name": "Custer",
+      "slug": "custer",
+      "salonCount": 0
+    },
+    {
+      "name": "Lead",
+      "slug": "lead",
+      "salonCount": 0
+    },
+    {
+      "name": "Deadwood",
+      "slug": "deadwood",
+      "salonCount": 0
+    },
+    {
+      "name": "Harrisburg",
+      "slug": "harrisburg",
+      "salonCount": 0
+    },
+    {
+      "name": "North Sioux City",
+      "slug": "north-sioux-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Canton",
+      "slug": "canton",
+      "salonCount": 0
+    },
+    {
+      "name": "Milbank",
+      "slug": "milbank",
+      "salonCount": 0
+    },
+    {
+      "name": "Redfield",
+      "slug": "redfield",
+      "salonCount": 0
+    },
+    {
+      "name": "Sisseton",
+      "slug": "sisseton",
+      "salonCount": 0
+    },
+    {
+      "name": "Chamberlain",
+      "slug": "chamberlain",
+      "salonCount": 0
+    },
+    {
+      "name": "Winner",
+      "slug": "winner",
+      "salonCount": 0
+    },
+    {
+      "name": "Belle Fourche",
+      "slug": "belle-fourche",
+      "salonCount": 0
+    },
+    {
+      "name": "Fort Pierre",
+      "slug": "fort-pierre",
+      "salonCount": 0
+    },
+    {
+      "name": "Flandreau",
+      "slug": "flandreau",
+      "salonCount": 0
+    },
+    {
+      "name": "Parkston",
+      "slug": "parkston",
+      "salonCount": 0
+    },
+    {
+      "name": "Webster",
+      "slug": "webster",
+      "salonCount": 0
+    },
+    {
+      "name": "Salem",
+      "slug": "salem",
+      "salonCount": 0
+    },
+    {
+      "name": "Garretson",
+      "slug": "garretson",
+      "salonCount": 0
+    },
+    {
+      "name": "Mobridge",
+      "slug": "mobridge",
+      "salonCount": 0
+    },
+    {
+      "name": "Clear Lake",
+      "slug": "clear-lake",
+      "salonCount": 0
+    },
+    {
+      "name": "Springfield",
+      "slug": "springfield",
+      "salonCount": 0
+    },
+    {
+      "name": "Groton",
+      "slug": "groton",
+      "salonCount": 0
+    },
+    {
+      "name": "Miller",
+      "slug": "miller",
+      "salonCount": 0
+    },
+    {
+      "name": "Tyndall",
+      "slug": "tyndall",
+      "salonCount": 0
+    },
+    {
+      "name": "Volga",
+      "slug": "volga",
+      "salonCount": 0
+    },
+    {
+      "name": "Wagner",
+      "slug": "wagner",
+      "salonCount": 0
+    },
+    {
+      "name": "Wall",
+      "slug": "wall",
+      "salonCount": 0
+    },
+    {
+      "name": "Wessington Springs",
+      "slug": "wessington-springs",
+      "salonCount": 0
+    },
+    {
+      "name": "White Lake",
+      "slug": "white-lake",
+      "salonCount": 0
+    },
+    {
+      "name": "Wilmot",
+      "slug": "wilmot",
+      "salonCount": 0
+    },
+    {
+      "name": "Woonsocket",
+      "slug": "woonsocket",
+      "salonCount": 0
+    },
+    {
+      "name": "Worthing",
+      "slug": "worthing",
+      "salonCount": 0
+    },
+    {
+      "name": "Beresford",
+      "slug": "beresford",
+      "salonCount": 0
+    },
+    {
+      "name": "Lennox",
+      "slug": "lennox",
+      "salonCount": 0
+    },
+    {
+      "name": "Baltic",
+      "slug": "baltic",
+      "salonCount": 0
+    },
+    {
+      "name": "Gettysburg",
+      "slug": "gettysburg",
+      "salonCount": 0
+    },
+    {
+      "name": "Gregory",
+      "slug": "gregory",
+      "salonCount": 0
+    },
+    {
+      "name": "Highmore",
+      "slug": "highmore",
+      "salonCount": 0
+    },
+    {
+      "name": "Kimball",
+      "slug": "kimball",
+      "salonCount": 0
+    },
+    {
+      "name": "Lake Andes",
+      "slug": "lake-andes",
+      "salonCount": 0
+    },
+    {
+      "name": "Menno",
+      "slug": "menno",
+      "salonCount": 0
+    },
+    {
+      "name": "Onida",
+      "slug": "onida",
+      "salonCount": 0
+    },
+    {
+      "name": "Platte",
+      "slug": "platte",
+      "salonCount": 0
+    },
+    {
+      "name": "Scotland",
+      "slug": "scotland",
+      "salonCount": 0
+    },
+    {
+      "name": "Viborg",
+      "slug": "viborg",
+      "salonCount": 0
+    },
+    {
+      "name": "Irene",
+      "slug": "irene",
+      "salonCount": 0
+    },
+    {
+      "name": "Parker",
+      "slug": "parker",
+      "salonCount": 0
+    },
+    {
+      "name": "Marion",
+      "slug": "marion",
+      "salonCount": 0
+    },
+    {
+      "name": "Alexandria",
+      "slug": "alexandria",
+      "salonCount": 0
+    },
+    {
+      "name": "Howard",
+      "slug": "howard",
+      "salonCount": 0
+    },
+    {
+      "name": "De Smet",
+      "slug": "de-smet",
+      "salonCount": 0
+    },
+    {
+      "name": "Kadoka",
+      "slug": "kadoka",
+      "salonCount": 0
+    },
+    {
+      "name": "Lemmon",
+      "slug": "lemmon",
+      "salonCount": 0
+    },
+    {
+      "name": "Edgemont",
+      "slug": "edgemont",
+      "salonCount": 0
+    },
+    {
+      "name": "Piedmont",
+      "slug": "piedmont",
+      "salonCount": 0
+    },
+    {
+      "name": "Colton",
+      "slug": "colton",
+      "salonCount": 0
+    },
+    {
+      "name": "Centerville",
+      "slug": "centerville",
+      "salonCount": 0
+    },
+    {
+      "name": "Elk Point",
+      "slug": "elk-point",
+      "salonCount": 0
+    },
+    {
+      "name": "Alcester",
+      "slug": "alcester",
+      "salonCount": 0
+    },
+    {
+      "name": "Britton",
+      "slug": "britton",
+      "salonCount": 0
+    },
+    {
+      "name": "Castlewood",
+      "slug": "castlewood",
+      "salonCount": 0
+    },
+    {
+      "name": "Clark",
+      "slug": "clark",
+      "salonCount": 0
+    },
+    {
+      "name": "Colman",
+      "slug": "colman",
+      "salonCount": 0
+    },
+    {
+      "name": "Dakota Dunes",
+      "slug": "dakota-dunes",
+      "salonCount": 0
+    },
+    {
+      "name": "Eagle Butte",
+      "slug": "eagle-butte",
+      "salonCount": 0
+    },
+    {
+      "name": "Eureka",
+      "slug": "eureka",
+      "salonCount": 0
+    },
+    {
+      "name": "Faith",
+      "slug": "faith",
+      "salonCount": 0
+    },
+    {
+      "name": "Faulkton",
+      "slug": "faulkton",
+      "salonCount": 0
+    },
+    {
+      "name": "Herreid",
+      "slug": "herreid",
+      "salonCount": 0
+    },
+    {
+      "name": "Hill City",
+      "slug": "hill-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Ipswich",
+      "slug": "ipswich",
+      "salonCount": 0
+    },
+    {
+      "name": "Jefferson",
+      "slug": "jefferson",
+      "salonCount": 0
+    },
+    {
+      "name": "Lake Norden",
+      "slug": "lake-norden",
+      "salonCount": 0
+    },
+    {
+      "name": "Leola",
+      "slug": "leola",
+      "salonCount": 0
+    },
+    {
+      "name": "McLaughlin",
+      "slug": "mclaughlin",
+      "salonCount": 0
+    },
+    {
+      "name": "Mission",
+      "slug": "mission",
+      "salonCount": 0
+    },
+    {
+      "name": "Montrose",
+      "slug": "montrose",
+      "salonCount": 0
+    },
+    {
+      "name": "Newell",
+      "slug": "newell",
+      "salonCount": 0
+    },
+    {
+      "name": "Philip",
+      "slug": "philip",
+      "salonCount": 0
+    },
+    {
+      "name": "Roscoe",
+      "slug": "roscoe",
+      "salonCount": 0
+    },
+    {
+      "name": "Selby",
+      "slug": "selby",
+      "salonCount": 0
+    },
+    {
+      "name": "Summit",
+      "slug": "summit",
+      "salonCount": 0
+    },
+    {
+      "name": "Timber Lake",
+      "slug": "timber-lake",
+      "salonCount": 0
+    },
+    {
+      "name": "Tripp",
+      "slug": "tripp",
+      "salonCount": 0
+    },
+    {
+      "name": "Valley Springs",
+      "slug": "valley-springs",
+      "salonCount": 0
+    },
+    {
+      "name": "Wakonda",
+      "slug": "wakonda",
+      "salonCount": 0
+    },
+    {
+      "name": "White",
+      "slug": "white",
+      "salonCount": 0
+    },
+    {
+      "name": "Whitewood",
+      "slug": "whitewood",
+      "salonCount": 0
+    },
+    {
+      "name": "Wolsey",
+      "slug": "wolsey",
+      "salonCount": 0
+    }
+  ]
+}

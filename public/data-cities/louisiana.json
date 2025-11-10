@@ -1,0 +1,688 @@
+{
+  "state": "Louisiana",
+  "stateCode": "LA",
+  "generatedAt": "2025-11-06T10:23:37.433Z",
+  "citiesCount": 136,
+  "cities": [
+    {
+      "name": "New Orleans",
+      "slug": "new-orleans",
+      "salonCount": 0
+    },
+    {
+      "name": "Baton Rouge",
+      "slug": "baton-rouge",
+      "salonCount": 0
+    },
+    {
+      "name": "Shreveport",
+      "slug": "shreveport",
+      "salonCount": 0
+    },
+    {
+      "name": "Lafayette",
+      "slug": "lafayette",
+      "salonCount": 0
+    },
+    {
+      "name": "Lake Charles",
+      "slug": "lake-charles",
+      "salonCount": 0
+    },
+    {
+      "name": "Kenner",
+      "slug": "kenner",
+      "salonCount": 0
+    },
+    {
+      "name": "Metairie",
+      "slug": "metairie",
+      "salonCount": 0
+    },
+    {
+      "name": "Bossier City",
+      "slug": "bossier-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Monroe",
+      "slug": "monroe",
+      "salonCount": 0
+    },
+    {
+      "name": "Alexandria",
+      "slug": "alexandria",
+      "salonCount": 0
+    },
+    {
+      "name": "Houma",
+      "slug": "houma",
+      "salonCount": 0
+    },
+    {
+      "name": "Slidell",
+      "slug": "slidell",
+      "salonCount": 0
+    },
+    {
+      "name": "Marrero",
+      "slug": "marrero",
+      "salonCount": 0
+    },
+    {
+      "name": "Laplace",
+      "slug": "laplace",
+      "salonCount": 0
+    },
+    {
+      "name": "Terrytown",
+      "slug": "terrytown",
+      "salonCount": 0
+    },
+    {
+      "name": "Gretna",
+      "slug": "gretna",
+      "salonCount": 0
+    },
+    {
+      "name": "Harvey",
+      "slug": "harvey",
+      "salonCount": 0
+    },
+    {
+      "name": "Hammond",
+      "slug": "hammond",
+      "salonCount": 0
+    },
+    {
+      "name": "West Monroe",
+      "slug": "west-monroe",
+      "salonCount": 0
+    },
+    {
+      "name": "Sulphur",
+      "slug": "sulphur",
+      "salonCount": 0
+    },
+    {
+      "name": "Natchitoches",
+      "slug": "natchitoches",
+      "salonCount": 0
+    },
+    {
+      "name": "New Iberia",
+      "slug": "new-iberia",
+      "salonCount": 0
+    },
+    {
+      "name": "Central",
+      "slug": "central",
+      "salonCount": 0
+    },
+    {
+      "name": "Thibodaux",
+      "slug": "thibodaux",
+      "salonCount": 0
+    },
+    {
+      "name": "Belle Chasse",
+      "slug": "belle-chasse",
+      "salonCount": 0
+    },
+    {
+      "name": "Ruston",
+      "slug": "ruston",
+      "salonCount": 0
+    },
+    {
+      "name": "Zachary",
+      "slug": "zachary",
+      "salonCount": 0
+    },
+    {
+      "name": "Destrehan",
+      "slug": "destrehan",
+      "salonCount": 0
+    },
+    {
+      "name": "Gonzales",
+      "slug": "gonzales",
+      "salonCount": 0
+    },
+    {
+      "name": "Minden",
+      "slug": "minden",
+      "salonCount": 0
+    },
+    {
+      "name": "Pineville",
+      "slug": "pineville",
+      "salonCount": 0
+    },
+    {
+      "name": "Opelousas",
+      "slug": "opelousas",
+      "salonCount": 0
+    },
+    {
+      "name": "Crowley",
+      "slug": "crowley",
+      "salonCount": 0
+    },
+    {
+      "name": "Bogalusa",
+      "slug": "bogalusa",
+      "salonCount": 0
+    },
+    {
+      "name": "De Ridder",
+      "slug": "de-ridder",
+      "salonCount": 0
+    },
+    {
+      "name": "Leesville",
+      "slug": "leesville",
+      "salonCount": 0
+    },
+    {
+      "name": "Morgan City",
+      "slug": "morgan-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Franklin",
+      "slug": "franklin",
+      "salonCount": 0
+    },
+    {
+      "name": "Jennings",
+      "slug": "jennings",
+      "salonCount": 0
+    },
+    {
+      "name": "Eunice",
+      "slug": "eunice",
+      "salonCount": 0
+    },
+    {
+      "name": "Patterson",
+      "slug": "patterson",
+      "salonCount": 0
+    },
+    {
+      "name": "Bastrop",
+      "slug": "bastrop",
+      "salonCount": 0
+    },
+    {
+      "name": "Westwego",
+      "slug": "westwego",
+      "salonCount": 0
+    },
+    {
+      "name": "Plaquemine",
+      "slug": "plaquemine",
+      "salonCount": 0
+    },
+    {
+      "name": "Abbeville",
+      "slug": "abbeville",
+      "salonCount": 0
+    },
+    {
+      "name": "Tallulah",
+      "slug": "tallulah",
+      "salonCount": 0
+    },
+    {
+      "name": "Mandeville",
+      "slug": "mandeville",
+      "salonCount": 0
+    },
+    {
+      "name": "Covington",
+      "slug": "covington",
+      "salonCount": 0
+    },
+    {
+      "name": "Denham Springs",
+      "slug": "denham-springs",
+      "salonCount": 0
+    },
+    {
+      "name": "Harahan",
+      "slug": "harahan",
+      "salonCount": 0
+    },
+    {
+      "name": "Springhill",
+      "slug": "springhill",
+      "salonCount": 0
+    },
+    {
+      "name": "Vidalia",
+      "slug": "vidalia",
+      "salonCount": 0
+    },
+    {
+      "name": "Kaplan",
+      "slug": "kaplan",
+      "salonCount": 0
+    },
+    {
+      "name": "Rayne",
+      "slug": "rayne",
+      "salonCount": 0
+    },
+    {
+      "name": "Breaux Bridge",
+      "slug": "breaux-bridge",
+      "salonCount": 0
+    },
+    {
+      "name": "St. Martinville",
+      "slug": "st-martinville",
+      "salonCount": 0
+    },
+    {
+      "name": "Ville Platte",
+      "slug": "ville-platte",
+      "salonCount": 0
+    },
+    {
+      "name": "Boutte",
+      "slug": "boutte",
+      "salonCount": 0
+    },
+    {
+      "name": "Luling",
+      "slug": "luling",
+      "salonCount": 0
+    },
+    {
+      "name": "Reserve",
+      "slug": "reserve",
+      "salonCount": 0
+    },
+    {
+      "name": "Donaldsonville",
+      "slug": "donaldsonville",
+      "salonCount": 0
+    },
+    {
+      "name": "Marksville",
+      "slug": "marksville",
+      "salonCount": 0
+    },
+    {
+      "name": "Many",
+      "slug": "many",
+      "salonCount": 0
+    },
+    {
+      "name": "Winnfield",
+      "slug": "winnfield",
+      "salonCount": 0
+    },
+    {
+      "name": "Jonesboro",
+      "slug": "jonesboro",
+      "salonCount": 0
+    },
+    {
+      "name": "Grambling",
+      "slug": "grambling",
+      "salonCount": 0
+    },
+    {
+      "name": "Farmerville",
+      "slug": "farmerville",
+      "salonCount": 0
+    },
+    {
+      "name": "Arcadia",
+      "slug": "arcadia",
+      "salonCount": 0
+    },
+    {
+      "name": "Homer",
+      "slug": "homer",
+      "salonCount": 0
+    },
+    {
+      "name": "Haynesville",
+      "slug": "haynesville",
+      "salonCount": 0
+    },
+    {
+      "name": "Mansfield",
+      "slug": "mansfield",
+      "salonCount": 0
+    },
+    {
+      "name": "Logansport",
+      "slug": "logansport",
+      "salonCount": 0
+    },
+    {
+      "name": "Coushatta",
+      "slug": "coushatta",
+      "salonCount": 0
+    },
+    {
+      "name": "Jena",
+      "slug": "jena",
+      "salonCount": 0
+    },
+    {
+      "name": "Ferriday",
+      "slug": "ferriday",
+      "salonCount": 0
+    },
+    {
+      "name": "Lake Providence",
+      "slug": "lake-providence",
+      "salonCount": 0
+    },
+    {
+      "name": "Oak Grove",
+      "slug": "oak-grove",
+      "salonCount": 0
+    },
+    {
+      "name": "Delhi",
+      "slug": "delhi",
+      "salonCount": 0
+    },
+    {
+      "name": "Rayville",
+      "slug": "rayville",
+      "salonCount": 0
+    },
+    {
+      "name": "Richwood",
+      "slug": "richwood",
+      "salonCount": 0
+    },
+    {
+      "name": "Amite City",
+      "slug": "amite-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Franklinton",
+      "slug": "franklinton",
+      "salonCount": 0
+    },
+    {
+      "name": "Kentwood",
+      "slug": "kentwood",
+      "salonCount": 0
+    },
+    {
+      "name": "Ponchatoula",
+      "slug": "ponchatoula",
+      "salonCount": 0
+    },
+    {
+      "name": "Independence",
+      "slug": "independence",
+      "salonCount": 0
+    },
+    {
+      "name": "Greensburg",
+      "slug": "greensburg",
+      "salonCount": 0
+    },
+    {
+      "name": "Colfax",
+      "slug": "colfax",
+      "salonCount": 0
+    },
+    {
+      "name": "Wisner",
+      "slug": "wisner",
+      "salonCount": 0
+    },
+    {
+      "name": "Elton",
+      "slug": "elton",
+      "salonCount": 0
+    },
+    {
+      "name": "Kinder",
+      "slug": "kinder",
+      "salonCount": 0
+    },
+    {
+      "name": "Oberlin",
+      "slug": "oberlin",
+      "salonCount": 0
+    },
+    {
+      "name": "Lake Arthur",
+      "slug": "lake-arthur",
+      "salonCount": 0
+    },
+    {
+      "name": "Iowa",
+      "slug": "iowa",
+      "salonCount": 0
+    },
+    {
+      "name": "Carencro",
+      "slug": "carencro",
+      "salonCount": 0
+    },
+    {
+      "name": "Broussard",
+      "slug": "broussard",
+      "salonCount": 0
+    },
+    {
+      "name": "Youngsville",
+      "slug": "youngsville",
+      "salonCount": 0
+    },
+    {
+      "name": "Erath",
+      "slug": "erath",
+      "salonCount": 0
+    },
+    {
+      "name": "Jeanerette",
+      "slug": "jeanerette",
+      "salonCount": 0
+    },
+    {
+      "name": "Baldwin",
+      "slug": "baldwin",
+      "salonCount": 0
+    },
+    {
+      "name": "Lutcher",
+      "slug": "lutcher",
+      "salonCount": 0
+    },
+    {
+      "name": "St. Francisville",
+      "slug": "st-francisville",
+      "salonCount": 0
+    },
+    {
+      "name": "New Roads",
+      "slug": "new-roads",
+      "salonCount": 0
+    },
+    {
+      "name": "Clinton",
+      "slug": "clinton",
+      "salonCount": 0
+    },
+    {
+      "name": "Jackson",
+      "slug": "jackson",
+      "salonCount": 0
+    },
+    {
+      "name": "Benton",
+      "slug": "benton",
+      "salonCount": 0
+    },
+    {
+      "name": "Haughton",
+      "slug": "haughton",
+      "salonCount": 0
+    },
+    {
+      "name": "Port Allen",
+      "slug": "port-allen",
+      "salonCount": 0
+    },
+    {
+      "name": "White Castle",
+      "slug": "white-castle",
+      "salonCount": 0
+    },
+    {
+      "name": "Sorrento",
+      "slug": "sorrento",
+      "salonCount": 0
+    },
+    {
+      "name": "Vacherie",
+      "slug": "vacherie",
+      "salonCount": 0
+    },
+    {
+      "name": "Bayou Vista",
+      "slug": "bayou-vista",
+      "salonCount": 0
+    },
+    {
+      "name": "Amelia",
+      "slug": "amelia",
+      "salonCount": 0
+    },
+    {
+      "name": "Bridge City",
+      "slug": "bridge-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Cut Off",
+      "slug": "cut-off",
+      "salonCount": 0
+    },
+    {
+      "name": "Larose",
+      "slug": "larose",
+      "salonCount": 0
+    },
+    {
+      "name": "Golden Meadow",
+      "slug": "golden-meadow",
+      "salonCount": 0
+    },
+    {
+      "name": "Galliano",
+      "slug": "galliano",
+      "salonCount": 0
+    },
+    {
+      "name": "Lockport",
+      "slug": "lockport",
+      "salonCount": 0
+    },
+    {
+      "name": "Mathews",
+      "slug": "mathews",
+      "salonCount": 0
+    },
+    {
+      "name": "Raceland",
+      "slug": "raceland",
+      "salonCount": 0
+    },
+    {
+      "name": "Geismar",
+      "slug": "geismar",
+      "salonCount": 0
+    },
+    {
+      "name": "Walker",
+      "slug": "walker",
+      "salonCount": 0
+    },
+    {
+      "name": "Livingston",
+      "slug": "livingston",
+      "salonCount": 0
+    },
+    {
+      "name": "Tickfaw",
+      "slug": "tickfaw",
+      "salonCount": 0
+    },
+    {
+      "name": "Roseland",
+      "slug": "roseland",
+      "salonCount": 0
+    },
+    {
+      "name": "Varnado",
+      "slug": "varnado",
+      "salonCount": 0
+    },
+    {
+      "name": "Angie",
+      "slug": "angie",
+      "salonCount": 0
+    },
+    {
+      "name": "Washington",
+      "slug": "washington",
+      "salonCount": 0
+    },
+    {
+      "name": "Palmetto",
+      "slug": "palmetto",
+      "salonCount": 0
+    },
+    {
+      "name": "Leonville",
+      "slug": "leonville",
+      "salonCount": 0
+    },
+    {
+      "name": "Port Barre",
+      "slug": "port-barre",
+      "salonCount": 0
+    },
+    {
+      "name": "Sunset",
+      "slug": "sunset",
+      "salonCount": 0
+    },
+    {
+      "name": "Grand Coteau",
+      "slug": "grand-coteau",
+      "salonCount": 0
+    },
+    {
+      "name": "Arnaudville",
+      "slug": "arnaudville",
+      "salonCount": 0
+    },
+    {
+      "name": "Garyville",
+      "slug": "garyville",
+      "salonCount": 0
+    },
+    {
+      "name": "St. Rose",
+      "slug": "st-rose",
+      "salonCount": 0
+    }
+  ]
+}

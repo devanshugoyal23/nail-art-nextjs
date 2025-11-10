@@ -1,0 +1,278 @@
+{
+  "state": "Vermont",
+  "stateCode": "VT",
+  "generatedAt": "2025-11-06T10:24:32.791Z",
+  "citiesCount": 54,
+  "cities": [
+    {
+      "name": "Burlington",
+      "slug": "burlington",
+      "salonCount": 0
+    },
+    {
+      "name": "South Burlington",
+      "slug": "south-burlington",
+      "salonCount": 0
+    },
+    {
+      "name": "Rutland",
+      "slug": "rutland",
+      "salonCount": 0
+    },
+    {
+      "name": "Essex",
+      "slug": "essex",
+      "salonCount": 0
+    },
+    {
+      "name": "Colchester",
+      "slug": "colchester",
+      "salonCount": 0
+    },
+    {
+      "name": "Bennington",
+      "slug": "bennington",
+      "salonCount": 0
+    },
+    {
+      "name": "Brattleboro",
+      "slug": "brattleboro",
+      "salonCount": 0
+    },
+    {
+      "name": "Hartford",
+      "slug": "hartford",
+      "salonCount": 0
+    },
+    {
+      "name": "White River Junction",
+      "slug": "white-river-junction",
+      "salonCount": 0
+    },
+    {
+      "name": "Quechee",
+      "slug": "quechee",
+      "salonCount": 0
+    },
+    {
+      "name": "Milton",
+      "slug": "milton",
+      "salonCount": 0
+    },
+    {
+      "name": "Springfield",
+      "slug": "springfield",
+      "salonCount": 0
+    },
+    {
+      "name": "St. Johnsbury",
+      "slug": "st-johnsbury",
+      "salonCount": 0
+    },
+    {
+      "name": "Middlebury",
+      "slug": "middlebury",
+      "salonCount": 0
+    },
+    {
+      "name": "St. Albans",
+      "slug": "st-albans",
+      "salonCount": 0
+    },
+    {
+      "name": "Montpelier",
+      "slug": "montpelier",
+      "salonCount": 0
+    },
+    {
+      "name": "Barre",
+      "slug": "barre",
+      "salonCount": 0
+    },
+    {
+      "name": "Winooski",
+      "slug": "winooski",
+      "salonCount": 0
+    },
+    {
+      "name": "Shelburne",
+      "slug": "shelburne",
+      "salonCount": 0
+    },
+    {
+      "name": "Swanton",
+      "slug": "swanton",
+      "salonCount": 0
+    },
+    {
+      "name": "Hinesburg",
+      "slug": "hinesburg",
+      "salonCount": 0
+    },
+    {
+      "name": "Waterbury",
+      "slug": "waterbury",
+      "salonCount": 0
+    },
+    {
+      "name": "Randolph",
+      "slug": "randolph",
+      "salonCount": 0
+    },
+    {
+      "name": "Lyndonville",
+      "slug": "lyndonville",
+      "salonCount": 0
+    },
+    {
+      "name": "Morrisville",
+      "slug": "morrisville",
+      "salonCount": 0
+    },
+    {
+      "name": "Northfield",
+      "slug": "northfield",
+      "salonCount": 0
+    },
+    {
+      "name": "Manchester Center",
+      "slug": "manchester-center",
+      "salonCount": 0
+    },
+    {
+      "name": "Woodstock",
+      "slug": "woodstock",
+      "salonCount": 0
+    },
+    {
+      "name": "Ludlow",
+      "slug": "ludlow",
+      "salonCount": 0
+    },
+    {
+      "name": "Stowe",
+      "slug": "stowe",
+      "salonCount": 0
+    },
+    {
+      "name": "Windsor",
+      "slug": "windsor",
+      "salonCount": 0
+    },
+    {
+      "name": "Poultney",
+      "slug": "poultney",
+      "salonCount": 0
+    },
+    {
+      "name": "Castleton",
+      "slug": "castleton",
+      "salonCount": 0
+    },
+    {
+      "name": "Brandon",
+      "slug": "brandon",
+      "salonCount": 0
+    },
+    {
+      "name": "Bristol",
+      "slug": "bristol",
+      "salonCount": 0
+    },
+    {
+      "name": "Fair Haven",
+      "slug": "fair-haven",
+      "salonCount": 0
+    },
+    {
+      "name": "Bradford",
+      "slug": "bradford",
+      "salonCount": 0
+    },
+    {
+      "name": "Chester",
+      "slug": "chester",
+      "salonCount": 0
+    },
+    {
+      "name": "Hardwick",
+      "slug": "hardwick",
+      "salonCount": 0
+    },
+    {
+      "name": "Johnson",
+      "slug": "johnson",
+      "salonCount": 0
+    },
+    {
+      "name": "Vergennes",
+      "slug": "vergennes",
+      "salonCount": 0
+    },
+    {
+      "name": "Newport",
+      "slug": "newport",
+      "salonCount": 0
+    },
+    {
+      "name": "Derby",
+      "slug": "derby",
+      "salonCount": 0
+    },
+    {
+      "name": "Wilmington",
+      "slug": "wilmington",
+      "salonCount": 0
+    },
+    {
+      "name": "Dorset",
+      "slug": "dorset",
+      "salonCount": 0
+    },
+    {
+      "name": "Killington",
+      "slug": "killington",
+      "salonCount": 0
+    },
+    {
+      "name": "Waitsfield",
+      "slug": "waitsfield",
+      "salonCount": 0
+    },
+    {
+      "name": "Norwich",
+      "slug": "norwich",
+      "salonCount": 0
+    },
+    {
+      "name": "Bellows Falls",
+      "slug": "bellows-falls",
+      "salonCount": 0
+    },
+    {
+      "name": "Enosburg Falls",
+      "slug": "enosburg-falls",
+      "salonCount": 0
+    },
+    {
+      "name": "Jeffersonville",
+      "slug": "jeffersonville",
+      "salonCount": 0
+    },
+    {
+      "name": "West Rutland",
+      "slug": "west-rutland",
+      "salonCount": 0
+    },
+    {
+      "name": "Orleans",
+      "slug": "orleans",
+      "salonCount": 0
+    },
+    {
+      "name": "Island Pond",
+      "slug": "island-pond",
+      "salonCount": 0
+    }
+  ]
+}

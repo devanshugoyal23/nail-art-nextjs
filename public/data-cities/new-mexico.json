@@ -1,0 +1,503 @@
+{
+  "state": "New Mexico",
+  "stateCode": "NM",
+  "generatedAt": "2025-11-06T10:24:31.878Z",
+  "citiesCount": 99,
+  "cities": [
+    {
+      "name": "Albuquerque",
+      "slug": "albuquerque",
+      "salonCount": 0
+    },
+    {
+      "name": "Las Cruces",
+      "slug": "las-cruces",
+      "salonCount": 0
+    },
+    {
+      "name": "Santa Fe",
+      "slug": "santa-fe",
+      "salonCount": 0
+    },
+    {
+      "name": "Rio Rancho",
+      "slug": "rio-rancho",
+      "salonCount": 0
+    },
+    {
+      "name": "Roswell",
+      "slug": "roswell",
+      "salonCount": 0
+    },
+    {
+      "name": "Farmington",
+      "slug": "farmington",
+      "salonCount": 0
+    },
+    {
+      "name": "Clovis",
+      "slug": "clovis",
+      "salonCount": 0
+    },
+    {
+      "name": "Hobbs",
+      "slug": "hobbs",
+      "salonCount": 0
+    },
+    {
+      "name": "Alamogordo",
+      "slug": "alamogordo",
+      "salonCount": 0
+    },
+    {
+      "name": "Carlsbad",
+      "slug": "carlsbad",
+      "salonCount": 0
+    },
+    {
+      "name": "Gallup",
+      "slug": "gallup",
+      "salonCount": 0
+    },
+    {
+      "name": "Los Lunas",
+      "slug": "los-lunas",
+      "salonCount": 0
+    },
+    {
+      "name": "Portales",
+      "slug": "portales",
+      "salonCount": 0
+    },
+    {
+      "name": "Deming",
+      "slug": "deming",
+      "salonCount": 0
+    },
+    {
+      "name": "Grants",
+      "slug": "grants",
+      "salonCount": 0
+    },
+    {
+      "name": "Silver City",
+      "slug": "silver-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Española",
+      "slug": "espa-ola",
+      "salonCount": 0
+    },
+    {
+      "name": "Los Alamos",
+      "slug": "los-alamos",
+      "salonCount": 0
+    },
+    {
+      "name": "Las Vegas",
+      "slug": "las-vegas",
+      "salonCount": 0
+    },
+    {
+      "name": "Anthony",
+      "slug": "anthony",
+      "salonCount": 0
+    },
+    {
+      "name": "Artesia",
+      "slug": "artesia",
+      "salonCount": 0
+    },
+    {
+      "name": "Belen",
+      "slug": "belen",
+      "salonCount": 0
+    },
+    {
+      "name": "Bernalillo",
+      "slug": "bernalillo",
+      "salonCount": 0
+    },
+    {
+      "name": "Corrales",
+      "slug": "corrales",
+      "salonCount": 0
+    },
+    {
+      "name": "Edgewood",
+      "slug": "edgewood",
+      "salonCount": 0
+    },
+    {
+      "name": "Eunice",
+      "slug": "eunice",
+      "salonCount": 0
+    },
+    {
+      "name": "Hatch",
+      "slug": "hatch",
+      "salonCount": 0
+    },
+    {
+      "name": "Jal",
+      "slug": "jal",
+      "salonCount": 0
+    },
+    {
+      "name": "Lordsburg",
+      "slug": "lordsburg",
+      "salonCount": 0
+    },
+    {
+      "name": "Milan",
+      "slug": "milan",
+      "salonCount": 0
+    },
+    {
+      "name": "Moriarty",
+      "slug": "moriarty",
+      "salonCount": 0
+    },
+    {
+      "name": "Peralta",
+      "slug": "peralta",
+      "salonCount": 0
+    },
+    {
+      "name": "Raton",
+      "slug": "raton",
+      "salonCount": 0
+    },
+    {
+      "name": "Santa Rosa",
+      "slug": "santa-rosa",
+      "salonCount": 0
+    },
+    {
+      "name": "Socorro",
+      "slug": "socorro",
+      "salonCount": 0
+    },
+    {
+      "name": "Sunland Park",
+      "slug": "sunland-park",
+      "salonCount": 0
+    },
+    {
+      "name": "Truth or Consequences",
+      "slug": "truth-or-consequences",
+      "salonCount": 0
+    },
+    {
+      "name": "Tucumcari",
+      "slug": "tucumcari",
+      "salonCount": 0
+    },
+    {
+      "name": "Taos",
+      "slug": "taos",
+      "salonCount": 0
+    },
+    {
+      "name": "Ruidoso",
+      "slug": "ruidoso",
+      "salonCount": 0
+    },
+    {
+      "name": "Cloudcroft",
+      "slug": "cloudcroft",
+      "salonCount": 0
+    },
+    {
+      "name": "Mesilla",
+      "slug": "mesilla",
+      "salonCount": 0
+    },
+    {
+      "name": "Dexter",
+      "slug": "dexter",
+      "salonCount": 0
+    },
+    {
+      "name": "Bosque Farms",
+      "slug": "bosque-farms",
+      "salonCount": 0
+    },
+    {
+      "name": "Placitas",
+      "slug": "placitas",
+      "salonCount": 0
+    },
+    {
+      "name": "Chaparral",
+      "slug": "chaparral",
+      "salonCount": 0
+    },
+    {
+      "name": "South Valley",
+      "slug": "south-valley",
+      "salonCount": 0
+    },
+    {
+      "name": "Ohkay Owingeh",
+      "slug": "ohkay-owingeh",
+      "salonCount": 0
+    },
+    {
+      "name": "Zuni Pueblo",
+      "slug": "zuni-pueblo",
+      "salonCount": 0
+    },
+    {
+      "name": "Laguna Pueblo",
+      "slug": "laguna-pueblo",
+      "salonCount": 0
+    },
+    {
+      "name": "Carrizozo",
+      "slug": "carrizozo",
+      "salonCount": 0
+    },
+    {
+      "name": "Clayton",
+      "slug": "clayton",
+      "salonCount": 0
+    },
+    {
+      "name": "Fort Sumner",
+      "slug": "fort-sumner",
+      "salonCount": 0
+    },
+    {
+      "name": "Chama",
+      "slug": "chama",
+      "salonCount": 0
+    },
+    {
+      "name": "Cuba",
+      "slug": "cuba",
+      "salonCount": 0
+    },
+    {
+      "name": "Loving",
+      "slug": "loving",
+      "salonCount": 0
+    },
+    {
+      "name": "Cimarron",
+      "slug": "cimarron",
+      "salonCount": 0
+    },
+    {
+      "name": "Pecos",
+      "slug": "pecos",
+      "salonCount": 0
+    },
+    {
+      "name": "Questa",
+      "slug": "questa",
+      "salonCount": 0
+    },
+    {
+      "name": "Red River",
+      "slug": "red-river",
+      "salonCount": 0
+    },
+    {
+      "name": "Capitan",
+      "slug": "capitan",
+      "salonCount": 0
+    },
+    {
+      "name": "Mescalero",
+      "slug": "mescalero",
+      "salonCount": 0
+    },
+    {
+      "name": "Jemez Springs",
+      "slug": "jemez-springs",
+      "salonCount": 0
+    },
+    {
+      "name": "Peñasco",
+      "slug": "pe-asco",
+      "salonCount": 0
+    },
+    {
+      "name": "Tijeras",
+      "slug": "tijeras",
+      "salonCount": 0
+    },
+    {
+      "name": "Chimayo",
+      "slug": "chimayo",
+      "salonCount": 0
+    },
+    {
+      "name": "Tesuque",
+      "slug": "tesuque",
+      "salonCount": 0
+    },
+    {
+      "name": "Pojoaque",
+      "slug": "pojoaque",
+      "salonCount": 0
+    },
+    {
+      "name": "El Prado",
+      "slug": "el-prado",
+      "salonCount": 0
+    },
+    {
+      "name": "Ranchos de Taos",
+      "slug": "ranchos-de-taos",
+      "salonCount": 0
+    },
+    {
+      "name": "Angel Fire",
+      "slug": "angel-fire",
+      "salonCount": 0
+    },
+    {
+      "name": "Eagle Nest",
+      "slug": "eagle-nest",
+      "salonCount": 0
+    },
+    {
+      "name": "San Felipe Pueblo",
+      "slug": "san-felipe-pueblo",
+      "salonCount": 0
+    },
+    {
+      "name": "Isleta Pueblo",
+      "slug": "isleta-pueblo",
+      "salonCount": 0
+    },
+    {
+      "name": "Acoma Pueblo",
+      "slug": "acoma-pueblo",
+      "salonCount": 0
+    },
+    {
+      "name": "Tohajiilee",
+      "slug": "tohajiilee",
+      "salonCount": 0
+    },
+    {
+      "name": "Crownpoint",
+      "slug": "crownpoint",
+      "salonCount": 0
+    },
+    {
+      "name": "Shiprock",
+      "slug": "shiprock",
+      "salonCount": 0
+    },
+    {
+      "name": "Kirtland",
+      "slug": "kirtland",
+      "salonCount": 0
+    },
+    {
+      "name": "Aztec",
+      "slug": "aztec",
+      "salonCount": 0
+    },
+    {
+      "name": "Bloomfield",
+      "slug": "bloomfield",
+      "salonCount": 0
+    },
+    {
+      "name": "El Cerro Mission",
+      "slug": "el-cerro-mission",
+      "salonCount": 0
+    },
+    {
+      "name": "Meadow Lake",
+      "slug": "meadow-lake",
+      "salonCount": 0
+    },
+    {
+      "name": "Reserve",
+      "slug": "reserve",
+      "salonCount": 0
+    },
+    {
+      "name": "Columbus",
+      "slug": "columbus",
+      "salonCount": 0
+    },
+    {
+      "name": "Hurley",
+      "slug": "hurley",
+      "salonCount": 0
+    },
+    {
+      "name": "Bayard",
+      "slug": "bayard",
+      "salonCount": 0
+    },
+    {
+      "name": "Santa Clara",
+      "slug": "santa-clara",
+      "salonCount": 0
+    },
+    {
+      "name": "Tularosa",
+      "slug": "tularosa",
+      "salonCount": 0
+    },
+    {
+      "name": "High Rolls",
+      "slug": "high-rolls",
+      "salonCount": 0
+    },
+    {
+      "name": "Hagerman",
+      "slug": "hagerman",
+      "salonCount": 0
+    },
+    {
+      "name": "Lovington",
+      "slug": "lovington",
+      "salonCount": 0
+    },
+    {
+      "name": "Tatum",
+      "slug": "tatum",
+      "salonCount": 0
+    },
+    {
+      "name": "Estancia",
+      "slug": "estancia",
+      "salonCount": 0
+    },
+    {
+      "name": "Logan",
+      "slug": "logan",
+      "salonCount": 0
+    },
+    {
+      "name": "Springer",
+      "slug": "springer",
+      "salonCount": 0
+    },
+    {
+      "name": "Ojo Caliente",
+      "slug": "ojo-caliente",
+      "salonCount": 0
+    },
+    {
+      "name": "Sombrillo",
+      "slug": "sombrillo",
+      "salonCount": 0
+    },
+    {
+      "name": "Mora",
+      "slug": "mora",
+      "salonCount": 0
+    }
+  ]
+}

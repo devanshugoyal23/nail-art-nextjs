@@ -1,0 +1,928 @@
+{
+  "state": "Illinois",
+  "stateCode": "IL",
+  "generatedAt": "2025-11-06T10:19:18.216Z",
+  "citiesCount": 184,
+  "cities": [
+    {
+      "name": "Addison",
+      "slug": "addison",
+      "salonCount": 0
+    },
+    {
+      "name": "Algonquin",
+      "slug": "algonquin",
+      "salonCount": 0
+    },
+    {
+      "name": "Alton",
+      "slug": "alton",
+      "salonCount": 0
+    },
+    {
+      "name": "Anna",
+      "slug": "anna",
+      "salonCount": 0
+    },
+    {
+      "name": "Antioch",
+      "slug": "antioch",
+      "salonCount": 0
+    },
+    {
+      "name": "Arlington Heights",
+      "slug": "arlington-heights",
+      "salonCount": 0
+    },
+    {
+      "name": "Aurora",
+      "slug": "aurora",
+      "salonCount": 0
+    },
+    {
+      "name": "Bartlett",
+      "slug": "bartlett",
+      "salonCount": 0
+    },
+    {
+      "name": "Batavia",
+      "slug": "batavia",
+      "salonCount": 0
+    },
+    {
+      "name": "Bedford Park",
+      "slug": "bedford-park",
+      "salonCount": 0
+    },
+    {
+      "name": "Belleville",
+      "slug": "belleville",
+      "salonCount": 0
+    },
+    {
+      "name": "Bensenville",
+      "slug": "bensenville",
+      "salonCount": 0
+    },
+    {
+      "name": "Benton",
+      "slug": "benton",
+      "salonCount": 0
+    },
+    {
+      "name": "Berwyn",
+      "slug": "berwyn",
+      "salonCount": 0
+    },
+    {
+      "name": "Bethalto",
+      "slug": "bethalto",
+      "salonCount": 0
+    },
+    {
+      "name": "Bloomington",
+      "slug": "bloomington",
+      "salonCount": 0
+    },
+    {
+      "name": "Bloomingdale",
+      "slug": "bloomingdale",
+      "salonCount": 0
+    },
+    {
+      "name": "Bolingbrook",
+      "slug": "bolingbrook",
+      "salonCount": 0
+    },
+    {
+      "name": "Bourbonnais",
+      "slug": "bourbonnais",
+      "salonCount": 0
+    },
+    {
+      "name": "Bradley",
+      "slug": "bradley",
+      "salonCount": 0
+    },
+    {
+      "name": "Bridgeview",
+      "slug": "bridgeview",
+      "salonCount": 0
+    },
+    {
+      "name": "Buffalo Grove",
+      "slug": "buffalo-grove",
+      "salonCount": 0
+    },
+    {
+      "name": "Burbank",
+      "slug": "burbank",
+      "salonCount": 0
+    },
+    {
+      "name": "Cairo",
+      "slug": "cairo",
+      "salonCount": 0
+    },
+    {
+      "name": "Carbondale",
+      "slug": "carbondale",
+      "salonCount": 0
+    },
+    {
+      "name": "Carol Stream",
+      "slug": "carol-stream",
+      "salonCount": 0
+    },
+    {
+      "name": "Cary",
+      "slug": "cary",
+      "salonCount": 0
+    },
+    {
+      "name": "Centralia",
+      "slug": "centralia",
+      "salonCount": 0
+    },
+    {
+      "name": "Champaign",
+      "slug": "champaign",
+      "salonCount": 0
+    },
+    {
+      "name": "Channahon",
+      "slug": "channahon",
+      "salonCount": 0
+    },
+    {
+      "name": "Charleston",
+      "slug": "charleston",
+      "salonCount": 0
+    },
+    {
+      "name": "Chicago",
+      "slug": "chicago",
+      "salonCount": 0
+    },
+    {
+      "name": "Chillicothe",
+      "slug": "chillicothe",
+      "salonCount": 0
+    },
+    {
+      "name": "Cicero",
+      "slug": "cicero",
+      "salonCount": 0
+    },
+    {
+      "name": "Collinsville",
+      "slug": "collinsville",
+      "salonCount": 0
+    },
+    {
+      "name": "Country Club Hills",
+      "slug": "country-club-hills",
+      "salonCount": 0
+    },
+    {
+      "name": "Crestwood",
+      "slug": "crestwood",
+      "salonCount": 0
+    },
+    {
+      "name": "Crystal Lake",
+      "slug": "crystal-lake",
+      "salonCount": 0
+    },
+    {
+      "name": "Danville",
+      "slug": "danville",
+      "salonCount": 0
+    },
+    {
+      "name": "Decatur",
+      "slug": "decatur",
+      "salonCount": 0
+    },
+    {
+      "name": "Deerfield",
+      "slug": "deerfield",
+      "salonCount": 0
+    },
+    {
+      "name": "DeKalb",
+      "slug": "dekalb",
+      "salonCount": 0
+    },
+    {
+      "name": "Des Plaines",
+      "slug": "des-plaines",
+      "salonCount": 0
+    },
+    {
+      "name": "Dixon",
+      "slug": "dixon",
+      "salonCount": 0
+    },
+    {
+      "name": "Downers Grove",
+      "slug": "downers-grove",
+      "salonCount": 0
+    },
+    {
+      "name": "Du Quoin",
+      "slug": "du-quoin",
+      "salonCount": 0
+    },
+    {
+      "name": "East Moline",
+      "slug": "east-moline",
+      "salonCount": 0
+    },
+    {
+      "name": "East Peoria",
+      "slug": "east-peoria",
+      "salonCount": 0
+    },
+    {
+      "name": "East St. Louis",
+      "slug": "east-st-louis",
+      "salonCount": 0
+    },
+    {
+      "name": "Edwardsville",
+      "slug": "edwardsville",
+      "salonCount": 0
+    },
+    {
+      "name": "Effingham",
+      "slug": "effingham",
+      "salonCount": 0
+    },
+    {
+      "name": "Elgin",
+      "slug": "elgin",
+      "salonCount": 0
+    },
+    {
+      "name": "Elmhurst",
+      "slug": "elmhurst",
+      "salonCount": 0
+    },
+    {
+      "name": "Evanston",
+      "slug": "evanston",
+      "salonCount": 0
+    },
+    {
+      "name": "Fairview Heights",
+      "slug": "fairview-heights",
+      "salonCount": 0
+    },
+    {
+      "name": "Flossmoor",
+      "slug": "flossmoor",
+      "salonCount": 0
+    },
+    {
+      "name": "Flora",
+      "slug": "flora",
+      "salonCount": 0
+    },
+    {
+      "name": "Forest Park",
+      "slug": "forest-park",
+      "salonCount": 0
+    },
+    {
+      "name": "Fox Lake",
+      "slug": "fox-lake",
+      "salonCount": 0
+    },
+    {
+      "name": "Frankfort",
+      "slug": "frankfort",
+      "salonCount": 0
+    },
+    {
+      "name": "Franklin Park",
+      "slug": "franklin-park",
+      "salonCount": 0
+    },
+    {
+      "name": "Freeport",
+      "slug": "freeport",
+      "salonCount": 0
+    },
+    {
+      "name": "Galesburg",
+      "slug": "galesburg",
+      "salonCount": 0
+    },
+    {
+      "name": "Geneva",
+      "slug": "geneva",
+      "salonCount": 0
+    },
+    {
+      "name": "Geneseo",
+      "slug": "geneseo",
+      "salonCount": 0
+    },
+    {
+      "name": "Glendale Heights",
+      "slug": "glendale-heights",
+      "salonCount": 0
+    },
+    {
+      "name": "Glenview",
+      "slug": "glenview",
+      "salonCount": 0
+    },
+    {
+      "name": "Godfrey",
+      "slug": "godfrey",
+      "salonCount": 0
+    },
+    {
+      "name": "Granite City",
+      "slug": "granite-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Grayslake",
+      "slug": "grayslake",
+      "salonCount": 0
+    },
+    {
+      "name": "Greenville",
+      "slug": "greenville",
+      "salonCount": 0
+    },
+    {
+      "name": "Gurnee",
+      "slug": "gurnee",
+      "salonCount": 0
+    },
+    {
+      "name": "Hanover Park",
+      "slug": "hanover-park",
+      "salonCount": 0
+    },
+    {
+      "name": "Harrisburg",
+      "slug": "harrisburg",
+      "salonCount": 0
+    },
+    {
+      "name": "Harvard",
+      "slug": "harvard",
+      "salonCount": 0
+    },
+    {
+      "name": "Hazel Crest",
+      "slug": "hazel-crest",
+      "salonCount": 0
+    },
+    {
+      "name": "Herrin",
+      "slug": "herrin",
+      "salonCount": 0
+    },
+    {
+      "name": "Hickory Hills",
+      "slug": "hickory-hills",
+      "salonCount": 0
+    },
+    {
+      "name": "Highland",
+      "slug": "highland",
+      "salonCount": 0
+    },
+    {
+      "name": "Highland Park",
+      "slug": "highland-park",
+      "salonCount": 0
+    },
+    {
+      "name": "Hoffman Estates",
+      "slug": "hoffman-estates",
+      "salonCount": 0
+    },
+    {
+      "name": "Homewood",
+      "slug": "homewood",
+      "salonCount": 0
+    },
+    {
+      "name": "Huntley",
+      "slug": "huntley",
+      "salonCount": 0
+    },
+    {
+      "name": "Itasca",
+      "slug": "itasca",
+      "salonCount": 0
+    },
+    {
+      "name": "Jacksonville",
+      "slug": "jacksonville",
+      "salonCount": 0
+    },
+    {
+      "name": "Johnsburg",
+      "slug": "johnsburg",
+      "salonCount": 0
+    },
+    {
+      "name": "Joliet",
+      "slug": "joliet",
+      "salonCount": 0
+    },
+    {
+      "name": "Justice",
+      "slug": "justice",
+      "salonCount": 0
+    },
+    {
+      "name": "Kankakee",
+      "slug": "kankakee",
+      "salonCount": 0
+    },
+    {
+      "name": "Lake Forest",
+      "slug": "lake-forest",
+      "salonCount": 0
+    },
+    {
+      "name": "Lake Zurich",
+      "slug": "lake-zurich",
+      "salonCount": 0
+    },
+    {
+      "name": "LaSalle",
+      "slug": "lasalle",
+      "salonCount": 0
+    },
+    {
+      "name": "Lawrenceville",
+      "slug": "lawrenceville",
+      "salonCount": 0
+    },
+    {
+      "name": "Libertyville",
+      "slug": "libertyville",
+      "salonCount": 0
+    },
+    {
+      "name": "Lincoln",
+      "slug": "lincoln",
+      "salonCount": 0
+    },
+    {
+      "name": "Lombard",
+      "slug": "lombard",
+      "salonCount": 0
+    },
+    {
+      "name": "Macomb",
+      "slug": "macomb",
+      "salonCount": 0
+    },
+    {
+      "name": "Marion",
+      "slug": "marion",
+      "salonCount": 0
+    },
+    {
+      "name": "Marseilles",
+      "slug": "marseilles",
+      "salonCount": 0
+    },
+    {
+      "name": "Matteson",
+      "slug": "matteson",
+      "salonCount": 0
+    },
+    {
+      "name": "Mattoon",
+      "slug": "mattoon",
+      "salonCount": 0
+    },
+    {
+      "name": "Maywood",
+      "slug": "maywood",
+      "salonCount": 0
+    },
+    {
+      "name": "McHenry",
+      "slug": "mchenry",
+      "salonCount": 0
+    },
+    {
+      "name": "Melrose Park",
+      "slug": "melrose-park",
+      "salonCount": 0
+    },
+    {
+      "name": "Mendota",
+      "slug": "mendota",
+      "salonCount": 0
+    },
+    {
+      "name": "Metropolis",
+      "slug": "metropolis",
+      "salonCount": 0
+    },
+    {
+      "name": "Midlothian",
+      "slug": "midlothian",
+      "salonCount": 0
+    },
+    {
+      "name": "Milan",
+      "slug": "milan",
+      "salonCount": 0
+    },
+    {
+      "name": "Minooka",
+      "slug": "minooka",
+      "salonCount": 0
+    },
+    {
+      "name": "Mokena",
+      "slug": "mokena",
+      "salonCount": 0
+    },
+    {
+      "name": "Moline",
+      "slug": "moline",
+      "salonCount": 0
+    },
+    {
+      "name": "Monmouth",
+      "slug": "monmouth",
+      "salonCount": 0
+    },
+    {
+      "name": "Monticello",
+      "slug": "monticello",
+      "salonCount": 0
+    },
+    {
+      "name": "Morris",
+      "slug": "morris",
+      "salonCount": 0
+    },
+    {
+      "name": "Morton",
+      "slug": "morton",
+      "salonCount": 0
+    },
+    {
+      "name": "Morton Grove",
+      "slug": "morton-grove",
+      "salonCount": 0
+    },
+    {
+      "name": "Mount Prospect",
+      "slug": "mount-prospect",
+      "salonCount": 0
+    },
+    {
+      "name": "Mount Vernon",
+      "slug": "mount-vernon",
+      "salonCount": 0
+    },
+    {
+      "name": "Mundelein",
+      "slug": "mundelein",
+      "salonCount": 0
+    },
+    {
+      "name": "Naperville",
+      "slug": "naperville",
+      "salonCount": 0
+    },
+    {
+      "name": "New Lenox",
+      "slug": "new-lenox",
+      "salonCount": 0
+    },
+    {
+      "name": "Normal",
+      "slug": "normal",
+      "salonCount": 0
+    },
+    {
+      "name": "North Chicago",
+      "slug": "north-chicago",
+      "salonCount": 0
+    },
+    {
+      "name": "Northbrook",
+      "slug": "northbrook",
+      "salonCount": 0
+    },
+    {
+      "name": "Oak Forest",
+      "slug": "oak-forest",
+      "salonCount": 0
+    },
+    {
+      "name": "Oak Lawn",
+      "slug": "oak-lawn",
+      "salonCount": 0
+    },
+    {
+      "name": "O'Fallon",
+      "slug": "o-fallon",
+      "salonCount": 0
+    },
+    {
+      "name": "Olney",
+      "slug": "olney",
+      "salonCount": 0
+    },
+    {
+      "name": "Olympia Fields",
+      "slug": "olympia-fields",
+      "salonCount": 0
+    },
+    {
+      "name": "Orland Park",
+      "slug": "orland-park",
+      "salonCount": 0
+    },
+    {
+      "name": "Oswego",
+      "slug": "oswego",
+      "salonCount": 0
+    },
+    {
+      "name": "Ottawa",
+      "slug": "ottawa",
+      "salonCount": 0
+    },
+    {
+      "name": "Palatine",
+      "slug": "palatine",
+      "salonCount": 0
+    },
+    {
+      "name": "Palos Hills",
+      "slug": "palos-hills",
+      "salonCount": 0
+    },
+    {
+      "name": "Paris",
+      "slug": "paris",
+      "salonCount": 0
+    },
+    {
+      "name": "Park Ridge",
+      "slug": "park-ridge",
+      "salonCount": 0
+    },
+    {
+      "name": "Pekin",
+      "slug": "pekin",
+      "salonCount": 0
+    },
+    {
+      "name": "Peru",
+      "slug": "peru",
+      "salonCount": 0
+    },
+    {
+      "name": "Peoria",
+      "slug": "peoria",
+      "salonCount": 0
+    },
+    {
+      "name": "Plainfield",
+      "slug": "plainfield",
+      "salonCount": 0
+    },
+    {
+      "name": "Plano",
+      "slug": "plano",
+      "salonCount": 0
+    },
+    {
+      "name": "Pontiac",
+      "slug": "pontiac",
+      "salonCount": 0
+    },
+    {
+      "name": "Quincy",
+      "slug": "quincy",
+      "salonCount": 0
+    },
+    {
+      "name": "Rantoul",
+      "slug": "rantoul",
+      "salonCount": 0
+    },
+    {
+      "name": "Richton Park",
+      "slug": "richton-park",
+      "salonCount": 0
+    },
+    {
+      "name": "River Forest",
+      "slug": "river-forest",
+      "salonCount": 0
+    },
+    {
+      "name": "Robinson",
+      "slug": "robinson",
+      "salonCount": 0
+    },
+    {
+      "name": "Rockford",
+      "slug": "rockford",
+      "salonCount": 0
+    },
+    {
+      "name": "Rock Island",
+      "slug": "rock-island",
+      "salonCount": 0
+    },
+    {
+      "name": "Romeoville",
+      "slug": "romeoville",
+      "salonCount": 0
+    },
+    {
+      "name": "Roselle",
+      "slug": "roselle",
+      "salonCount": 0
+    },
+    {
+      "name": "Roxana",
+      "slug": "roxana",
+      "salonCount": 0
+    },
+    {
+      "name": "Salem",
+      "slug": "salem",
+      "salonCount": 0
+    },
+    {
+      "name": "Sandwich",
+      "slug": "sandwich",
+      "salonCount": 0
+    },
+    {
+      "name": "Schaumburg",
+      "slug": "schaumburg",
+      "salonCount": 0
+    },
+    {
+      "name": "Shorewood",
+      "slug": "shorewood",
+      "salonCount": 0
+    },
+    {
+      "name": "Silvis",
+      "slug": "silvis",
+      "salonCount": 0
+    },
+    {
+      "name": "Skokie",
+      "slug": "skokie",
+      "salonCount": 0
+    },
+    {
+      "name": "Springfield",
+      "slug": "springfield",
+      "salonCount": 0
+    },
+    {
+      "name": "St. Charles",
+      "slug": "st-charles",
+      "salonCount": 0
+    },
+    {
+      "name": "Sterling",
+      "slug": "sterling",
+      "salonCount": 0
+    },
+    {
+      "name": "Streator",
+      "slug": "streator",
+      "salonCount": 0
+    },
+    {
+      "name": "Streamwood",
+      "slug": "streamwood",
+      "salonCount": 0
+    },
+    {
+      "name": "Summit",
+      "slug": "summit",
+      "salonCount": 0
+    },
+    {
+      "name": "Sycamore",
+      "slug": "sycamore",
+      "salonCount": 0
+    },
+    {
+      "name": "Taylorville",
+      "slug": "taylorville",
+      "salonCount": 0
+    },
+    {
+      "name": "Tinley Park",
+      "slug": "tinley-park",
+      "salonCount": 0
+    },
+    {
+      "name": "Urbana",
+      "slug": "urbana",
+      "salonCount": 0
+    },
+    {
+      "name": "Vandalia",
+      "slug": "vandalia",
+      "salonCount": 0
+    },
+    {
+      "name": "Vernon Hills",
+      "slug": "vernon-hills",
+      "salonCount": 0
+    },
+    {
+      "name": "Warrenville",
+      "slug": "warrenville",
+      "salonCount": 0
+    },
+    {
+      "name": "Washington",
+      "slug": "washington",
+      "salonCount": 0
+    },
+    {
+      "name": "Waukegan",
+      "slug": "waukegan",
+      "salonCount": 0
+    },
+    {
+      "name": "West Chicago",
+      "slug": "west-chicago",
+      "salonCount": 0
+    },
+    {
+      "name": "West Frankfort",
+      "slug": "west-frankfort",
+      "salonCount": 0
+    },
+    {
+      "name": "Wheaton",
+      "slug": "wheaton",
+      "salonCount": 0
+    },
+    {
+      "name": "Wheeling",
+      "slug": "wheeling",
+      "salonCount": 0
+    },
+    {
+      "name": "Wilmette",
+      "slug": "wilmette",
+      "salonCount": 0
+    },
+    {
+      "name": "Winfield",
+      "slug": "winfield",
+      "salonCount": 0
+    },
+    {
+      "name": "Wood River",
+      "slug": "wood-river",
+      "salonCount": 0
+    },
+    {
+      "name": "Woodridge",
+      "slug": "woodridge",
+      "salonCount": 0
+    },
+    {
+      "name": "Woodstock",
+      "slug": "woodstock",
+      "salonCount": 0
+    },
+    {
+      "name": "Yorkville",
+      "slug": "yorkville",
+      "salonCount": 0
+    },
+    {
+      "name": "Zion",
+      "slug": "zion",
+      "salonCount": 0
+    }
+  ]
+}

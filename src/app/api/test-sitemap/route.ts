@@ -70,7 +70,7 @@ export async function GET() {
   try {
     const fs = await import('fs/promises');
     const path = await import('path');
-    const citiesDir = path.join(process.cwd(), 'src', 'data', 'cities');
+    const citiesDir = path.join(process.cwd(), 'public', 'data', 'cities');
     const files = await fs.readdir(citiesDir);
     const jsonFiles = files.filter(f => f.endsWith('.json'));
 

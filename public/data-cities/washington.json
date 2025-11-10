@@ -1,0 +1,878 @@
+{
+  "state": "Washington",
+  "stateCode": "WA",
+  "generatedAt": "2025-11-06T10:25:09.187Z",
+  "citiesCount": 174,
+  "cities": [
+    {
+      "name": "Seattle",
+      "slug": "seattle",
+      "salonCount": 0
+    },
+    {
+      "name": "Spokane",
+      "slug": "spokane",
+      "salonCount": 0
+    },
+    {
+      "name": "Tacoma",
+      "slug": "tacoma",
+      "salonCount": 0
+    },
+    {
+      "name": "Vancouver",
+      "slug": "vancouver",
+      "salonCount": 0
+    },
+    {
+      "name": "Bellevue",
+      "slug": "bellevue",
+      "salonCount": 0
+    },
+    {
+      "name": "Everett",
+      "slug": "everett",
+      "salonCount": 0
+    },
+    {
+      "name": "Kent",
+      "slug": "kent",
+      "salonCount": 0
+    },
+    {
+      "name": "Renton",
+      "slug": "renton",
+      "salonCount": 0
+    },
+    {
+      "name": "Federal Way",
+      "slug": "federal-way",
+      "salonCount": 0
+    },
+    {
+      "name": "Auburn",
+      "slug": "auburn",
+      "salonCount": 0
+    },
+    {
+      "name": "Marysville",
+      "slug": "marysville",
+      "salonCount": 0
+    },
+    {
+      "name": "Lakewood",
+      "slug": "lakewood",
+      "salonCount": 0
+    },
+    {
+      "name": "Redmond",
+      "slug": "redmond",
+      "salonCount": 0
+    },
+    {
+      "name": "Bellingham",
+      "slug": "bellingham",
+      "salonCount": 0
+    },
+    {
+      "name": "Yakima",
+      "slug": "yakima",
+      "salonCount": 0
+    },
+    {
+      "name": "Kirkland",
+      "slug": "kirkland",
+      "salonCount": 0
+    },
+    {
+      "name": "Olympia",
+      "slug": "olympia",
+      "salonCount": 0
+    },
+    {
+      "name": "Pasco",
+      "slug": "pasco",
+      "salonCount": 0
+    },
+    {
+      "name": "Kennewick",
+      "slug": "kennewick",
+      "salonCount": 0
+    },
+    {
+      "name": "Richland",
+      "slug": "richland",
+      "salonCount": 0
+    },
+    {
+      "name": "Bremerton",
+      "slug": "bremerton",
+      "salonCount": 0
+    },
+    {
+      "name": "Longview",
+      "slug": "longview",
+      "salonCount": 0
+    },
+    {
+      "name": "Lynnwood",
+      "slug": "lynnwood",
+      "salonCount": 0
+    },
+    {
+      "name": "Edmonds",
+      "slug": "edmonds",
+      "salonCount": 0
+    },
+    {
+      "name": "Puyallup",
+      "slug": "puyallup",
+      "salonCount": 0
+    },
+    {
+      "name": "Wenatchee",
+      "slug": "wenatchee",
+      "salonCount": 0
+    },
+    {
+      "name": "Mount Vernon",
+      "slug": "mount-vernon",
+      "salonCount": 0
+    },
+    {
+      "name": "Anacortes",
+      "slug": "anacortes",
+      "salonCount": 0
+    },
+    {
+      "name": "Oak Harbor",
+      "slug": "oak-harbor",
+      "salonCount": 0
+    },
+    {
+      "name": "Ellensburg",
+      "slug": "ellensburg",
+      "salonCount": 0
+    },
+    {
+      "name": "Pullman",
+      "slug": "pullman",
+      "salonCount": 0
+    },
+    {
+      "name": "Moses Lake",
+      "slug": "moses-lake",
+      "salonCount": 0
+    },
+    {
+      "name": "Issaquah",
+      "slug": "issaquah",
+      "salonCount": 0
+    },
+    {
+      "name": "Sammamish",
+      "slug": "sammamish",
+      "salonCount": 0
+    },
+    {
+      "name": "Mercer Island",
+      "slug": "mercer-island",
+      "salonCount": 0
+    },
+    {
+      "name": "Bainbridge Island",
+      "slug": "bainbridge-island",
+      "salonCount": 0
+    },
+    {
+      "name": "Port Orchard",
+      "slug": "port-orchard",
+      "salonCount": 0
+    },
+    {
+      "name": "Gig Harbor",
+      "slug": "gig-harbor",
+      "salonCount": 0
+    },
+    {
+      "name": "Poulsbo",
+      "slug": "poulsbo",
+      "salonCount": 0
+    },
+    {
+      "name": "Silverdale",
+      "slug": "silverdale",
+      "salonCount": 0
+    },
+    {
+      "name": "Tumwater",
+      "slug": "tumwater",
+      "salonCount": 0
+    },
+    {
+      "name": "Lacey",
+      "slug": "lacey",
+      "salonCount": 0
+    },
+    {
+      "name": "Centralia",
+      "slug": "centralia",
+      "salonCount": 0
+    },
+    {
+      "name": "Chehalis",
+      "slug": "chehalis",
+      "salonCount": 0
+    },
+    {
+      "name": "Aberdeen",
+      "slug": "aberdeen",
+      "salonCount": 0
+    },
+    {
+      "name": "Hoquiam",
+      "slug": "hoquiam",
+      "salonCount": 0
+    },
+    {
+      "name": "Shelton",
+      "slug": "shelton",
+      "salonCount": 0
+    },
+    {
+      "name": "Snohomish",
+      "slug": "snohomish",
+      "salonCount": 0
+    },
+    {
+      "name": "Monroe",
+      "slug": "monroe",
+      "salonCount": 0
+    },
+    {
+      "name": "Sultan",
+      "slug": "sultan",
+      "salonCount": 0
+    },
+    {
+      "name": "Lake Stevens",
+      "slug": "lake-stevens",
+      "salonCount": 0
+    },
+    {
+      "name": "Arlington",
+      "slug": "arlington",
+      "salonCount": 0
+    },
+    {
+      "name": "Stanwood",
+      "slug": "stanwood",
+      "salonCount": 0
+    },
+    {
+      "name": "Mukilteo",
+      "slug": "mukilteo",
+      "salonCount": 0
+    },
+    {
+      "name": "Bothell",
+      "slug": "bothell",
+      "salonCount": 0
+    },
+    {
+      "name": "Shoreline",
+      "slug": "shoreline",
+      "salonCount": 0
+    },
+    {
+      "name": "Woodinville",
+      "slug": "woodinville",
+      "salonCount": 0
+    },
+    {
+      "name": "Mill Creek",
+      "slug": "mill-creek",
+      "salonCount": 0
+    },
+    {
+      "name": "Duvall",
+      "slug": "duvall",
+      "salonCount": 0
+    },
+    {
+      "name": "North Bend",
+      "slug": "north-bend",
+      "salonCount": 0
+    },
+    {
+      "name": "Snoqualmie",
+      "slug": "snoqualmie",
+      "salonCount": 0
+    },
+    {
+      "name": "Enumclaw",
+      "slug": "enumclaw",
+      "salonCount": 0
+    },
+    {
+      "name": "Maple Valley",
+      "slug": "maple-valley",
+      "salonCount": 0
+    },
+    {
+      "name": "Sumner",
+      "slug": "sumner",
+      "salonCount": 0
+    },
+    {
+      "name": "Bonney Lake",
+      "slug": "bonney-lake",
+      "salonCount": 0
+    },
+    {
+      "name": "Fife",
+      "slug": "fife",
+      "salonCount": 0
+    },
+    {
+      "name": "Milton",
+      "slug": "milton",
+      "salonCount": 0
+    },
+    {
+      "name": "Orting",
+      "slug": "orting",
+      "salonCount": 0
+    },
+    {
+      "name": "Buckley",
+      "slug": "buckley",
+      "salonCount": 0
+    },
+    {
+      "name": "Yelm",
+      "slug": "yelm",
+      "salonCount": 0
+    },
+    {
+      "name": "Forks",
+      "slug": "forks",
+      "salonCount": 0
+    },
+    {
+      "name": "Port Angeles",
+      "slug": "port-angeles",
+      "salonCount": 0
+    },
+    {
+      "name": "Sequim",
+      "slug": "sequim",
+      "salonCount": 0
+    },
+    {
+      "name": "Clarkston",
+      "slug": "clarkston",
+      "salonCount": 0
+    },
+    {
+      "name": "Walla Walla",
+      "slug": "walla-walla",
+      "salonCount": 0
+    },
+    {
+      "name": "Toppenish",
+      "slug": "toppenish",
+      "salonCount": 0
+    },
+    {
+      "name": "Sunnyside",
+      "slug": "sunnyside",
+      "salonCount": 0
+    },
+    {
+      "name": "Grandview",
+      "slug": "grandview",
+      "salonCount": 0
+    },
+    {
+      "name": "Prosser",
+      "slug": "prosser",
+      "salonCount": 0
+    },
+    {
+      "name": "Colfax",
+      "slug": "colfax",
+      "salonCount": 0
+    },
+    {
+      "name": "Othello",
+      "slug": "othello",
+      "salonCount": 0
+    },
+    {
+      "name": "Ritzville",
+      "slug": "ritzville",
+      "salonCount": 0
+    },
+    {
+      "name": "Connell",
+      "slug": "connell",
+      "salonCount": 0
+    },
+    {
+      "name": "Ephrata",
+      "slug": "ephrata",
+      "salonCount": 0
+    },
+    {
+      "name": "Quincy",
+      "slug": "quincy",
+      "salonCount": 0
+    },
+    {
+      "name": "East Wenatchee",
+      "slug": "east-wenatchee",
+      "salonCount": 0
+    },
+    {
+      "name": "Leavenworth",
+      "slug": "leavenworth",
+      "salonCount": 0
+    },
+    {
+      "name": "Cashmere",
+      "slug": "cashmere",
+      "salonCount": 0
+    },
+    {
+      "name": "Chelan",
+      "slug": "chelan",
+      "salonCount": 0
+    },
+    {
+      "name": "Omak",
+      "slug": "omak",
+      "salonCount": 0
+    },
+    {
+      "name": "Okanogan",
+      "slug": "okanogan",
+      "salonCount": 0
+    },
+    {
+      "name": "Brewster",
+      "slug": "brewster",
+      "salonCount": 0
+    },
+    {
+      "name": "Oroville",
+      "slug": "oroville",
+      "salonCount": 0
+    },
+    {
+      "name": "Twisp",
+      "slug": "twisp",
+      "salonCount": 0
+    },
+    {
+      "name": "Winthrop",
+      "slug": "winthrop",
+      "salonCount": 0
+    },
+    {
+      "name": "Grand Coulee",
+      "slug": "grand-coulee",
+      "salonCount": 0
+    },
+    {
+      "name": "Kettle Falls",
+      "slug": "kettle-falls",
+      "salonCount": 0
+    },
+    {
+      "name": "Colville",
+      "slug": "colville",
+      "salonCount": 0
+    },
+    {
+      "name": "Newport",
+      "slug": "newport",
+      "salonCount": 0
+    },
+    {
+      "name": "Deer Park",
+      "slug": "deer-park",
+      "salonCount": 0
+    },
+    {
+      "name": "Airway Heights",
+      "slug": "airway-heights",
+      "salonCount": 0
+    },
+    {
+      "name": "Medical Lake",
+      "slug": "medical-lake",
+      "salonCount": 0
+    },
+    {
+      "name": "Cheney",
+      "slug": "cheney",
+      "salonCount": 0
+    },
+    {
+      "name": "Liberty Lake",
+      "slug": "liberty-lake",
+      "salonCount": 0
+    },
+    {
+      "name": "Spokane Valley",
+      "slug": "spokane-valley",
+      "salonCount": 0
+    },
+    {
+      "name": "Cle Elum",
+      "slug": "cle-elum",
+      "salonCount": 0
+    },
+    {
+      "name": "South Bend",
+      "slug": "south-bend",
+      "salonCount": 0
+    },
+    {
+      "name": "Raymond",
+      "slug": "raymond",
+      "salonCount": 0
+    },
+    {
+      "name": "Elma",
+      "slug": "elma",
+      "salonCount": 0
+    },
+    {
+      "name": "Montesano",
+      "slug": "montesano",
+      "salonCount": 0
+    },
+    {
+      "name": "Rochester",
+      "slug": "rochester",
+      "salonCount": 0
+    },
+    {
+      "name": "La Center",
+      "slug": "la-center",
+      "salonCount": 0
+    },
+    {
+      "name": "Battle Ground",
+      "slug": "battle-ground",
+      "salonCount": 0
+    },
+    {
+      "name": "Ridgefield",
+      "slug": "ridgefield",
+      "salonCount": 0
+    },
+    {
+      "name": "Camas",
+      "slug": "camas",
+      "salonCount": 0
+    },
+    {
+      "name": "Washougal",
+      "slug": "washougal",
+      "salonCount": 0
+    },
+    {
+      "name": "Kelso",
+      "slug": "kelso",
+      "salonCount": 0
+    },
+    {
+      "name": "Castle Rock",
+      "slug": "castle-rock",
+      "salonCount": 0
+    },
+    {
+      "name": "Kalama",
+      "slug": "kalama",
+      "salonCount": 0
+    },
+    {
+      "name": "Woodland",
+      "slug": "woodland",
+      "salonCount": 0
+    },
+    {
+      "name": "Union Gap",
+      "slug": "union-gap",
+      "salonCount": 0
+    },
+    {
+      "name": "Zillah",
+      "slug": "zillah",
+      "salonCount": 0
+    },
+    {
+      "name": "Selah",
+      "slug": "selah",
+      "salonCount": 0
+    },
+    {
+      "name": "Burien",
+      "slug": "burien",
+      "salonCount": 0
+    },
+    {
+      "name": "SeaTac",
+      "slug": "seatac",
+      "salonCount": 0
+    },
+    {
+      "name": "University Place",
+      "slug": "university-place",
+      "salonCount": 0
+    },
+    {
+      "name": "Covington",
+      "slug": "covington",
+      "salonCount": 0
+    },
+    {
+      "name": "Lake Forest Park",
+      "slug": "lake-forest-park",
+      "salonCount": 0
+    },
+    {
+      "name": "Kenmore",
+      "slug": "kenmore",
+      "salonCount": 0
+    },
+    {
+      "name": "Black Diamond",
+      "slug": "black-diamond",
+      "salonCount": 0
+    },
+    {
+      "name": "Darrington",
+      "slug": "darrington",
+      "salonCount": 0
+    },
+    {
+      "name": "Gold Bar",
+      "slug": "gold-bar",
+      "salonCount": 0
+    },
+    {
+      "name": "Coupeville",
+      "slug": "coupeville",
+      "salonCount": 0
+    },
+    {
+      "name": "Freeland",
+      "slug": "freeland",
+      "salonCount": 0
+    },
+    {
+      "name": "Langley",
+      "slug": "langley",
+      "salonCount": 0
+    },
+    {
+      "name": "Clinton",
+      "slug": "clinton",
+      "salonCount": 0
+    },
+    {
+      "name": "Concrete",
+      "slug": "concrete",
+      "salonCount": 0
+    },
+    {
+      "name": "Waitsburg",
+      "slug": "waitsburg",
+      "salonCount": 0
+    },
+    {
+      "name": "Pomeroy",
+      "slug": "pomeroy",
+      "salonCount": 0
+    },
+    {
+      "name": "Palouse",
+      "slug": "palouse",
+      "salonCount": 0
+    },
+    {
+      "name": "Tekoa",
+      "slug": "tekoa",
+      "salonCount": 0
+    },
+    {
+      "name": "St. John",
+      "slug": "st-john",
+      "salonCount": 0
+    },
+    {
+      "name": "Almira",
+      "slug": "almira",
+      "salonCount": 0
+    },
+    {
+      "name": "Davenport",
+      "slug": "davenport",
+      "salonCount": 0
+    },
+    {
+      "name": "Harrington",
+      "slug": "harrington",
+      "salonCount": 0
+    },
+    {
+      "name": "Lind",
+      "slug": "lind",
+      "salonCount": 0
+    },
+    {
+      "name": "Odessa",
+      "slug": "odessa",
+      "salonCount": 0
+    },
+    {
+      "name": "Sprague",
+      "slug": "sprague",
+      "salonCount": 0
+    },
+    {
+      "name": "Wilbur",
+      "slug": "wilbur",
+      "salonCount": 0
+    },
+    {
+      "name": "Republic",
+      "slug": "republic",
+      "salonCount": 0
+    },
+    {
+      "name": "Metaline Falls",
+      "slug": "metaline-falls",
+      "salonCount": 0
+    },
+    {
+      "name": "Northport",
+      "slug": "northport",
+      "salonCount": 0
+    },
+    {
+      "name": "Ione",
+      "slug": "ione",
+      "salonCount": 0
+    },
+    {
+      "name": "Marcus",
+      "slug": "marcus",
+      "salonCount": 0
+    },
+    {
+      "name": "Riverside",
+      "slug": "riverside",
+      "salonCount": 0
+    },
+    {
+      "name": "Pateros",
+      "slug": "pateros",
+      "salonCount": 0
+    },
+    {
+      "name": "Bingen",
+      "slug": "bingen",
+      "salonCount": 0
+    },
+    {
+      "name": "White Salmon",
+      "slug": "white-salmon",
+      "salonCount": 0
+    },
+    {
+      "name": "Stevenson",
+      "slug": "stevenson",
+      "salonCount": 0
+    },
+    {
+      "name": "Goldendale",
+      "slug": "goldendale",
+      "salonCount": 0
+    },
+    {
+      "name": "Moxee",
+      "slug": "moxee",
+      "salonCount": 0
+    },
+    {
+      "name": "Granger",
+      "slug": "granger",
+      "salonCount": 0
+    },
+    {
+      "name": "Mabton",
+      "slug": "mabton",
+      "salonCount": 0
+    },
+    {
+      "name": "Benton City",
+      "slug": "benton-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Dayton",
+      "slug": "dayton",
+      "salonCount": 0
+    },
+    {
+      "name": "Tenino",
+      "slug": "tenino",
+      "salonCount": 0
+    },
+    {
+      "name": "Littlerock",
+      "slug": "littlerock",
+      "salonCount": 0
+    },
+    {
+      "name": "Roy",
+      "slug": "roy",
+      "salonCount": 0
+    },
+    {
+      "name": "Eatonville",
+      "slug": "eatonville",
+      "salonCount": 0
+    },
+    {
+      "name": "Ocean Shores",
+      "slug": "ocean-shores",
+      "salonCount": 0
+    },
+    {
+      "name": "Westport",
+      "slug": "westport",
+      "salonCount": 0
+    },
+    {
+      "name": "Ilwaco",
+      "slug": "ilwaco",
+      "salonCount": 0
+    },
+    {
+      "name": "Long Beach",
+      "slug": "long-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "Cathlamet",
+      "slug": "cathlamet",
+      "salonCount": 0
+    }
+  ]
+}

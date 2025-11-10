@@ -38,9 +38,10 @@ interface StateData {
  */
 async function getAllStatesAndCities(): Promise<{ states: string[], topCities: Array<{ state: string, city: string, cityName: string, population?: number }> }> {
   try {
+    // Using public folder because src/data is not deployed to serverless functions
     const fs = await import('fs/promises');
     const path = await import('path');
-    const citiesDir = path.join(process.cwd(), 'src', 'data', 'cities');
+    const citiesDir = path.join(process.cwd(), 'public', 'data', 'cities');
 
     const files = await fs.readdir(citiesDir);
     const stateFiles = files.filter(file => file.endsWith('.json'));

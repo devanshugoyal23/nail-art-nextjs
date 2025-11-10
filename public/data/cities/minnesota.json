@@ -1,0 +1,598 @@
+{
+  "state": "Minnesota",
+  "stateCode": "MN",
+  "generatedAt": "2025-11-06T10:23:23.586Z",
+  "citiesCount": 118,
+  "cities": [
+    {
+      "name": "Minneapolis",
+      "slug": "minneapolis",
+      "salonCount": 0
+    },
+    {
+      "name": "Saint Paul",
+      "slug": "saint-paul",
+      "salonCount": 0
+    },
+    {
+      "name": "Rochester",
+      "slug": "rochester",
+      "salonCount": 0
+    },
+    {
+      "name": "Duluth",
+      "slug": "duluth",
+      "salonCount": 0
+    },
+    {
+      "name": "Bloomington",
+      "slug": "bloomington",
+      "salonCount": 0
+    },
+    {
+      "name": "St. Cloud",
+      "slug": "st-cloud",
+      "salonCount": 0
+    },
+    {
+      "name": "Brooklyn Park",
+      "slug": "brooklyn-park",
+      "salonCount": 0
+    },
+    {
+      "name": "Plymouth",
+      "slug": "plymouth",
+      "salonCount": 0
+    },
+    {
+      "name": "Maple Grove",
+      "slug": "maple-grove",
+      "salonCount": 0
+    },
+    {
+      "name": "Woodbury",
+      "slug": "woodbury",
+      "salonCount": 0
+    },
+    {
+      "name": "Blaine",
+      "slug": "blaine",
+      "salonCount": 0
+    },
+    {
+      "name": "Lakeville",
+      "slug": "lakeville",
+      "salonCount": 0
+    },
+    {
+      "name": "Burnsville",
+      "slug": "burnsville",
+      "salonCount": 0
+    },
+    {
+      "name": "Eden Prairie",
+      "slug": "eden-prairie",
+      "salonCount": 0
+    },
+    {
+      "name": "Coon Rapids",
+      "slug": "coon-rapids",
+      "salonCount": 0
+    },
+    {
+      "name": "Eagan",
+      "slug": "eagan",
+      "salonCount": 0
+    },
+    {
+      "name": "Anoka",
+      "slug": "anoka",
+      "salonCount": 0
+    },
+    {
+      "name": "Andover",
+      "slug": "andover",
+      "salonCount": 0
+    },
+    {
+      "name": "Apple Valley",
+      "slug": "apple-valley",
+      "salonCount": 0
+    },
+    {
+      "name": "Champlin",
+      "slug": "champlin",
+      "salonCount": 0
+    },
+    {
+      "name": "Chanhassen",
+      "slug": "chanhassen",
+      "salonCount": 0
+    },
+    {
+      "name": "Circle Pines",
+      "slug": "circle-pines",
+      "salonCount": 0
+    },
+    {
+      "name": "Columbia Heights",
+      "slug": "columbia-heights",
+      "salonCount": 0
+    },
+    {
+      "name": "Cottage Grove",
+      "slug": "cottage-grove",
+      "salonCount": 0
+    },
+    {
+      "name": "Crystal",
+      "slug": "crystal",
+      "salonCount": 0
+    },
+    {
+      "name": "Edina",
+      "slug": "edina",
+      "salonCount": 0
+    },
+    {
+      "name": "Elk River",
+      "slug": "elk-river",
+      "salonCount": 0
+    },
+    {
+      "name": "Excelsior",
+      "slug": "excelsior",
+      "salonCount": 0
+    },
+    {
+      "name": "Farmington",
+      "slug": "farmington",
+      "salonCount": 0
+    },
+    {
+      "name": "Forest Lake",
+      "slug": "forest-lake",
+      "salonCount": 0
+    },
+    {
+      "name": "Fridley",
+      "slug": "fridley",
+      "salonCount": 0
+    },
+    {
+      "name": "Golden Valley",
+      "slug": "golden-valley",
+      "salonCount": 0
+    },
+    {
+      "name": "Ham Lake",
+      "slug": "ham-lake",
+      "salonCount": 0
+    },
+    {
+      "name": "Hastings",
+      "slug": "hastings",
+      "salonCount": 0
+    },
+    {
+      "name": "Hopkins",
+      "slug": "hopkins",
+      "salonCount": 0
+    },
+    {
+      "name": "Inver Grove Heights",
+      "slug": "inver-grove-heights",
+      "salonCount": 0
+    },
+    {
+      "name": "Lino Lakes",
+      "slug": "lino-lakes",
+      "salonCount": 0
+    },
+    {
+      "name": "Little Canada",
+      "slug": "little-canada",
+      "salonCount": 0
+    },
+    {
+      "name": "Long Lake",
+      "slug": "long-lake",
+      "salonCount": 0
+    },
+    {
+      "name": "Mahtomedi",
+      "slug": "mahtomedi",
+      "salonCount": 0
+    },
+    {
+      "name": "Maplewood",
+      "slug": "maplewood",
+      "salonCount": 0
+    },
+    {
+      "name": "Mendota Heights",
+      "slug": "mendota-heights",
+      "salonCount": 0
+    },
+    {
+      "name": "Minnetonka",
+      "slug": "minnetonka",
+      "salonCount": 0
+    },
+    {
+      "name": "Moorhead",
+      "slug": "moorhead",
+      "salonCount": 0
+    },
+    {
+      "name": "Mound",
+      "slug": "mound",
+      "salonCount": 0
+    },
+    {
+      "name": "New Brighton",
+      "slug": "new-brighton",
+      "salonCount": 0
+    },
+    {
+      "name": "New Hope",
+      "slug": "new-hope",
+      "salonCount": 0
+    },
+    {
+      "name": "North Branch",
+      "slug": "north-branch",
+      "salonCount": 0
+    },
+    {
+      "name": "North Oaks",
+      "slug": "north-oaks",
+      "salonCount": 0
+    },
+    {
+      "name": "Oakdale",
+      "slug": "oakdale",
+      "salonCount": 0
+    },
+    {
+      "name": "Orono",
+      "slug": "orono",
+      "salonCount": 0
+    },
+    {
+      "name": "Osseo",
+      "slug": "osseo",
+      "salonCount": 0
+    },
+    {
+      "name": "Otsego",
+      "slug": "otsego",
+      "salonCount": 0
+    },
+    {
+      "name": "Prior Lake",
+      "slug": "prior-lake",
+      "salonCount": 0
+    },
+    {
+      "name": "Ramsey",
+      "slug": "ramsey",
+      "salonCount": 0
+    },
+    {
+      "name": "Richfield",
+      "slug": "richfield",
+      "salonCount": 0
+    },
+    {
+      "name": "Robbinsdale",
+      "slug": "robbinsdale",
+      "salonCount": 0
+    },
+    {
+      "name": "Rogers",
+      "slug": "rogers",
+      "salonCount": 0
+    },
+    {
+      "name": "Rosemount",
+      "slug": "rosemount",
+      "salonCount": 0
+    },
+    {
+      "name": "Roseville",
+      "slug": "roseville",
+      "salonCount": 0
+    },
+    {
+      "name": "Savage",
+      "slug": "savage",
+      "salonCount": 0
+    },
+    {
+      "name": "Shakopee",
+      "slug": "shakopee",
+      "salonCount": 0
+    },
+    {
+      "name": "Shoreview",
+      "slug": "shoreview",
+      "salonCount": 0
+    },
+    {
+      "name": "Shorewood",
+      "slug": "shorewood",
+      "salonCount": 0
+    },
+    {
+      "name": "Spring Lake Park",
+      "slug": "spring-lake-park",
+      "salonCount": 0
+    },
+    {
+      "name": "Stillwater",
+      "slug": "stillwater",
+      "salonCount": 0
+    },
+    {
+      "name": "Vadnais Heights",
+      "slug": "vadnais-heights",
+      "salonCount": 0
+    },
+    {
+      "name": "Victoria",
+      "slug": "victoria",
+      "salonCount": 0
+    },
+    {
+      "name": "Waconia",
+      "slug": "waconia",
+      "salonCount": 0
+    },
+    {
+      "name": "Wayzata",
+      "slug": "wayzata",
+      "salonCount": 0
+    },
+    {
+      "name": "White Bear Lake",
+      "slug": "white-bear-lake",
+      "salonCount": 0
+    },
+    {
+      "name": "Willmar",
+      "slug": "willmar",
+      "salonCount": 0
+    },
+    {
+      "name": "Albert Lea",
+      "slug": "albert-lea",
+      "salonCount": 0
+    },
+    {
+      "name": "Alexandria",
+      "slug": "alexandria",
+      "salonCount": 0
+    },
+    {
+      "name": "Austin",
+      "slug": "austin",
+      "salonCount": 0
+    },
+    {
+      "name": "Bemidji",
+      "slug": "bemidji",
+      "salonCount": 0
+    },
+    {
+      "name": "Brainerd",
+      "slug": "brainerd",
+      "salonCount": 0
+    },
+    {
+      "name": "Buffalo",
+      "slug": "buffalo",
+      "salonCount": 0
+    },
+    {
+      "name": "Cambridge",
+      "slug": "cambridge",
+      "salonCount": 0
+    },
+    {
+      "name": "Cloquet",
+      "slug": "cloquet",
+      "salonCount": 0
+    },
+    {
+      "name": "Crookston",
+      "slug": "crookston",
+      "salonCount": 0
+    },
+    {
+      "name": "Detroit Lakes",
+      "slug": "detroit-lakes",
+      "salonCount": 0
+    },
+    {
+      "name": "East Grand Forks",
+      "slug": "east-grand-forks",
+      "salonCount": 0
+    },
+    {
+      "name": "Ely",
+      "slug": "ely",
+      "salonCount": 0
+    },
+    {
+      "name": "Fairmont",
+      "slug": "fairmont",
+      "salonCount": 0
+    },
+    {
+      "name": "Faribault",
+      "slug": "faribault",
+      "salonCount": 0
+    },
+    {
+      "name": "Fergus Falls",
+      "slug": "fergus-falls",
+      "salonCount": 0
+    },
+    {
+      "name": "Grand Marais",
+      "slug": "grand-marais",
+      "salonCount": 0
+    },
+    {
+      "name": "Grand Rapids",
+      "slug": "grand-rapids",
+      "salonCount": 0
+    },
+    {
+      "name": "Hibbing",
+      "slug": "hibbing",
+      "salonCount": 0
+    },
+    {
+      "name": "Hinckley",
+      "slug": "hinckley",
+      "salonCount": 0
+    },
+    {
+      "name": "Hutchinson",
+      "slug": "hutchinson",
+      "salonCount": 0
+    },
+    {
+      "name": "International Falls",
+      "slug": "international-falls",
+      "salonCount": 0
+    },
+    {
+      "name": "Litchfield",
+      "slug": "litchfield",
+      "salonCount": 0
+    },
+    {
+      "name": "Mankato",
+      "slug": "mankato",
+      "salonCount": 0
+    },
+    {
+      "name": "Marshall",
+      "slug": "marshall",
+      "salonCount": 0
+    },
+    {
+      "name": "Montevideo",
+      "slug": "montevideo",
+      "salonCount": 0
+    },
+    {
+      "name": "Monticello",
+      "slug": "monticello",
+      "salonCount": 0
+    },
+    {
+      "name": "New Ulm",
+      "slug": "new-ulm",
+      "salonCount": 0
+    },
+    {
+      "name": "Northfield",
+      "slug": "northfield",
+      "salonCount": 0
+    },
+    {
+      "name": "Owatonna",
+      "slug": "owatonna",
+      "salonCount": 0
+    },
+    {
+      "name": "Park Rapids",
+      "slug": "park-rapids",
+      "salonCount": 0
+    },
+    {
+      "name": "Perham",
+      "slug": "perham",
+      "salonCount": 0
+    },
+    {
+      "name": "Pine City",
+      "slug": "pine-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Princeton",
+      "slug": "princeton",
+      "salonCount": 0
+    },
+    {
+      "name": "Red Wing",
+      "slug": "red-wing",
+      "salonCount": 0
+    },
+    {
+      "name": "Redwood Falls",
+      "slug": "redwood-falls",
+      "salonCount": 0
+    },
+    {
+      "name": "Saint Peter",
+      "slug": "saint-peter",
+      "salonCount": 0
+    },
+    {
+      "name": "Silver Bay",
+      "slug": "silver-bay",
+      "salonCount": 0
+    },
+    {
+      "name": "Staples",
+      "slug": "staples",
+      "salonCount": 0
+    },
+    {
+      "name": "Thief River Falls",
+      "slug": "thief-river-falls",
+      "salonCount": 0
+    },
+    {
+      "name": "Two Harbors",
+      "slug": "two-harbors",
+      "salonCount": 0
+    },
+    {
+      "name": "Virginia",
+      "slug": "virginia",
+      "salonCount": 0
+    },
+    {
+      "name": "Walker",
+      "slug": "walker",
+      "salonCount": 0
+    },
+    {
+      "name": "Waseca",
+      "slug": "waseca",
+      "salonCount": 0
+    },
+    {
+      "name": "Winona",
+      "slug": "winona",
+      "salonCount": 0
+    },
+    {
+      "name": "Worthington",
+      "slug": "worthington",
+      "salonCount": 0
+    },
+    {
+      "name": "Wyoming",
+      "slug": "wyoming",
+      "salonCount": 0
+    }
+  ]
+}

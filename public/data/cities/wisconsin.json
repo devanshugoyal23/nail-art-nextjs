@@ -1,0 +1,968 @@
+{
+  "state": "Wisconsin",
+  "stateCode": "WI",
+  "generatedAt": "2025-11-06T10:25:08.041Z",
+  "citiesCount": 192,
+  "cities": [
+    {
+      "name": "Milwaukee",
+      "slug": "milwaukee",
+      "salonCount": 0
+    },
+    {
+      "name": "Madison",
+      "slug": "madison",
+      "salonCount": 0
+    },
+    {
+      "name": "Green Bay",
+      "slug": "green-bay",
+      "salonCount": 0
+    },
+    {
+      "name": "Kenosha",
+      "slug": "kenosha",
+      "salonCount": 0
+    },
+    {
+      "name": "Racine",
+      "slug": "racine",
+      "salonCount": 0
+    },
+    {
+      "name": "Appleton",
+      "slug": "appleton",
+      "salonCount": 0
+    },
+    {
+      "name": "Waukesha",
+      "slug": "waukesha",
+      "salonCount": 0
+    },
+    {
+      "name": "Eau Claire",
+      "slug": "eau-claire",
+      "salonCount": 0
+    },
+    {
+      "name": "Oshkosh",
+      "slug": "oshkosh",
+      "salonCount": 0
+    },
+    {
+      "name": "Janesville",
+      "slug": "janesville",
+      "salonCount": 0
+    },
+    {
+      "name": "West Allis",
+      "slug": "west-allis",
+      "salonCount": 0
+    },
+    {
+      "name": "La Crosse",
+      "slug": "la-crosse",
+      "salonCount": 0
+    },
+    {
+      "name": "Sheboygan",
+      "slug": "sheboygan",
+      "salonCount": 0
+    },
+    {
+      "name": "Fond du Lac",
+      "slug": "fond-du-lac",
+      "salonCount": 0
+    },
+    {
+      "name": "New Berlin",
+      "slug": "new-berlin",
+      "salonCount": 0
+    },
+    {
+      "name": "Wausau",
+      "slug": "wausau",
+      "salonCount": 0
+    },
+    {
+      "name": "Brookfield",
+      "slug": "brookfield",
+      "salonCount": 0
+    },
+    {
+      "name": "Beloit",
+      "slug": "beloit",
+      "salonCount": 0
+    },
+    {
+      "name": "Greenfield",
+      "slug": "greenfield",
+      "salonCount": 0
+    },
+    {
+      "name": "Franklin",
+      "slug": "franklin",
+      "salonCount": 0
+    },
+    {
+      "name": "Oak Creek",
+      "slug": "oak-creek",
+      "salonCount": 0
+    },
+    {
+      "name": "Manitowoc",
+      "slug": "manitowoc",
+      "salonCount": 0
+    },
+    {
+      "name": "West Bend",
+      "slug": "west-bend",
+      "salonCount": 0
+    },
+    {
+      "name": "Sun Prairie",
+      "slug": "sun-prairie",
+      "salonCount": 0
+    },
+    {
+      "name": "Mequon",
+      "slug": "mequon",
+      "salonCount": 0
+    },
+    {
+      "name": "Watertown",
+      "slug": "watertown",
+      "salonCount": 0
+    },
+    {
+      "name": "Neenah",
+      "slug": "neenah",
+      "salonCount": 0
+    },
+    {
+      "name": "Menasha",
+      "slug": "menasha",
+      "salonCount": 0
+    },
+    {
+      "name": "Caledonia",
+      "slug": "caledonia",
+      "salonCount": 0
+    },
+    {
+      "name": "Muskego",
+      "slug": "muskego",
+      "salonCount": 0
+    },
+    {
+      "name": "De Pere",
+      "slug": "de-pere",
+      "salonCount": 0
+    },
+    {
+      "name": "Stevens Point",
+      "slug": "stevens-point",
+      "salonCount": 0
+    },
+    {
+      "name": "Fitchburg",
+      "slug": "fitchburg",
+      "salonCount": 0
+    },
+    {
+      "name": "Superior",
+      "slug": "superior",
+      "salonCount": 0
+    },
+    {
+      "name": "Germantown",
+      "slug": "germantown",
+      "salonCount": 0
+    },
+    {
+      "name": "Oconomowoc",
+      "slug": "oconomowoc",
+      "salonCount": 0
+    },
+    {
+      "name": "Hartford",
+      "slug": "hartford",
+      "salonCount": 0
+    },
+    {
+      "name": "Cedarburg",
+      "slug": "cedarburg",
+      "salonCount": 0
+    },
+    {
+      "name": "Grafton",
+      "slug": "grafton",
+      "salonCount": 0
+    },
+    {
+      "name": "Port Washington",
+      "slug": "port-washington",
+      "salonCount": 0
+    },
+    {
+      "name": "Burlington",
+      "slug": "burlington",
+      "salonCount": 0
+    },
+    {
+      "name": "Whitewater",
+      "slug": "whitewater",
+      "salonCount": 0
+    },
+    {
+      "name": "Fort Atkinson",
+      "slug": "fort-atkinson",
+      "salonCount": 0
+    },
+    {
+      "name": "Delafield",
+      "slug": "delafield",
+      "salonCount": 0
+    },
+    {
+      "name": "Stoughton",
+      "slug": "stoughton",
+      "salonCount": 0
+    },
+    {
+      "name": "Waunakee",
+      "slug": "waunakee",
+      "salonCount": 0
+    },
+    {
+      "name": "Verona",
+      "slug": "verona",
+      "salonCount": 0
+    },
+    {
+      "name": "Baraboo",
+      "slug": "baraboo",
+      "salonCount": 0
+    },
+    {
+      "name": "Merrill",
+      "slug": "merrill",
+      "salonCount": 0
+    },
+    {
+      "name": "Rhinelander",
+      "slug": "rhinelander",
+      "salonCount": 0
+    },
+    {
+      "name": "Tomahawk",
+      "slug": "tomahawk",
+      "salonCount": 0
+    },
+    {
+      "name": "Rice Lake",
+      "slug": "rice-lake",
+      "salonCount": 0
+    },
+    {
+      "name": "Hudson",
+      "slug": "hudson",
+      "salonCount": 0
+    },
+    {
+      "name": "River Falls",
+      "slug": "river-falls",
+      "salonCount": 0
+    },
+    {
+      "name": "Menomonie",
+      "slug": "menomonie",
+      "salonCount": 0
+    },
+    {
+      "name": "Chippewa Falls",
+      "slug": "chippewa-falls",
+      "salonCount": 0
+    },
+    {
+      "name": "Marinette",
+      "slug": "marinette",
+      "salonCount": 0
+    },
+    {
+      "name": "Sturgeon Bay",
+      "slug": "sturgeon-bay",
+      "salonCount": 0
+    },
+    {
+      "name": "Two Rivers",
+      "slug": "two-rivers",
+      "salonCount": 0
+    },
+    {
+      "name": "Kaukauna",
+      "slug": "kaukauna",
+      "salonCount": 0
+    },
+    {
+      "name": "Little Chute",
+      "slug": "little-chute",
+      "salonCount": 0
+    },
+    {
+      "name": "Kimberly",
+      "slug": "kimberly",
+      "salonCount": 0
+    },
+    {
+      "name": "Mount Horeb",
+      "slug": "mount-horeb",
+      "salonCount": 0
+    },
+    {
+      "name": "Dodgeville",
+      "slug": "dodgeville",
+      "salonCount": 0
+    },
+    {
+      "name": "Platteville",
+      "slug": "platteville",
+      "salonCount": 0
+    },
+    {
+      "name": "Reedsburg",
+      "slug": "reedsburg",
+      "salonCount": 0
+    },
+    {
+      "name": "Sparta",
+      "slug": "sparta",
+      "salonCount": 0
+    },
+    {
+      "name": "Onalaska",
+      "slug": "onalaska",
+      "salonCount": 0
+    },
+    {
+      "name": "Holmen",
+      "slug": "holmen",
+      "salonCount": 0
+    },
+    {
+      "name": "Altoona",
+      "slug": "altoona",
+      "salonCount": 0
+    },
+    {
+      "name": "Plover",
+      "slug": "plover",
+      "salonCount": 0
+    },
+    {
+      "name": "Wisconsin Rapids",
+      "slug": "wisconsin-rapids",
+      "salonCount": 0
+    },
+    {
+      "name": "Marshfield",
+      "slug": "marshfield",
+      "salonCount": 0
+    },
+    {
+      "name": "Antigo",
+      "slug": "antigo",
+      "salonCount": 0
+    },
+    {
+      "name": "Shawano",
+      "slug": "shawano",
+      "salonCount": 0
+    },
+    {
+      "name": "Plymouth",
+      "slug": "plymouth",
+      "salonCount": 0
+    },
+    {
+      "name": "Sheboygan Falls",
+      "slug": "sheboygan-falls",
+      "salonCount": 0
+    },
+    {
+      "name": "Kohler",
+      "slug": "kohler",
+      "salonCount": 0
+    },
+    {
+      "name": "Kewaskum",
+      "slug": "kewaskum",
+      "salonCount": 0
+    },
+    {
+      "name": "Jackson",
+      "slug": "jackson",
+      "salonCount": 0
+    },
+    {
+      "name": "Slinger",
+      "slug": "slinger",
+      "salonCount": 0
+    },
+    {
+      "name": "Mayville",
+      "slug": "mayville",
+      "salonCount": 0
+    },
+    {
+      "name": "Beaver Dam",
+      "slug": "beaver-dam",
+      "salonCount": 0
+    },
+    {
+      "name": "Columbus",
+      "slug": "columbus",
+      "salonCount": 0
+    },
+    {
+      "name": "Waupun",
+      "slug": "waupun",
+      "salonCount": 0
+    },
+    {
+      "name": "Ripon",
+      "slug": "ripon",
+      "salonCount": 0
+    },
+    {
+      "name": "Berlin",
+      "slug": "berlin",
+      "salonCount": 0
+    },
+    {
+      "name": "Omro",
+      "slug": "omro",
+      "salonCount": 0
+    },
+    {
+      "name": "Winneconne",
+      "slug": "winneconne",
+      "salonCount": 0
+    },
+    {
+      "name": "Hortonville",
+      "slug": "hortonville",
+      "salonCount": 0
+    },
+    {
+      "name": "Seymour",
+      "slug": "seymour",
+      "salonCount": 0
+    },
+    {
+      "name": "Wrightstown",
+      "slug": "wrightstown",
+      "salonCount": 0
+    },
+    {
+      "name": "Denmark",
+      "slug": "denmark",
+      "salonCount": 0
+    },
+    {
+      "name": "Luxemburg",
+      "slug": "luxemburg",
+      "salonCount": 0
+    },
+    {
+      "name": "Oconto",
+      "slug": "oconto",
+      "salonCount": 0
+    },
+    {
+      "name": "Peshtigo",
+      "slug": "peshtigo",
+      "salonCount": 0
+    },
+    {
+      "name": "Clintonville",
+      "slug": "clintonville",
+      "salonCount": 0
+    },
+    {
+      "name": "New London",
+      "slug": "new-london",
+      "salonCount": 0
+    },
+    {
+      "name": "Waupaca",
+      "slug": "waupaca",
+      "salonCount": 0
+    },
+    {
+      "name": "Weyauwega",
+      "slug": "weyauwega",
+      "salonCount": 0
+    },
+    {
+      "name": "Nekoosa",
+      "slug": "nekoosa",
+      "salonCount": 0
+    },
+    {
+      "name": "Adams",
+      "slug": "adams",
+      "salonCount": 0
+    },
+    {
+      "name": "Black River Falls",
+      "slug": "black-river-falls",
+      "salonCount": 0
+    },
+    {
+      "name": "Mauston",
+      "slug": "mauston",
+      "salonCount": 0
+    },
+    {
+      "name": "Wisconsin Dells",
+      "slug": "wisconsin-dells",
+      "salonCount": 0
+    },
+    {
+      "name": "Lake Delton",
+      "slug": "lake-delton",
+      "salonCount": 0
+    },
+    {
+      "name": "Portage",
+      "slug": "portage",
+      "salonCount": 0
+    },
+    {
+      "name": "Prairie du Sac",
+      "slug": "prairie-du-sac",
+      "salonCount": 0
+    },
+    {
+      "name": "Sauk City",
+      "slug": "sauk-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Spring Green",
+      "slug": "spring-green",
+      "salonCount": 0
+    },
+    {
+      "name": "Fennimore",
+      "slug": "fennimore",
+      "salonCount": 0
+    },
+    {
+      "name": "Lancaster",
+      "slug": "lancaster",
+      "salonCount": 0
+    },
+    {
+      "name": "Cuba City",
+      "slug": "cuba-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Monroe",
+      "slug": "monroe",
+      "salonCount": 0
+    },
+    {
+      "name": "Brodhead",
+      "slug": "brodhead",
+      "salonCount": 0
+    },
+    {
+      "name": "Edgerton",
+      "slug": "edgerton",
+      "salonCount": 0
+    },
+    {
+      "name": "Evansville",
+      "slug": "evansville",
+      "salonCount": 0
+    },
+    {
+      "name": "Milton",
+      "slug": "milton",
+      "salonCount": 0
+    },
+    {
+      "name": "Elkhorn",
+      "slug": "elkhorn",
+      "salonCount": 0
+    },
+    {
+      "name": "Lake Geneva",
+      "slug": "lake-geneva",
+      "salonCount": 0
+    },
+    {
+      "name": "Walworth",
+      "slug": "walworth",
+      "salonCount": 0
+    },
+    {
+      "name": "Fontana",
+      "slug": "fontana",
+      "salonCount": 0
+    },
+    {
+      "name": "Williams Bay",
+      "slug": "williams-bay",
+      "salonCount": 0
+    },
+    {
+      "name": "Darien",
+      "slug": "darien",
+      "salonCount": 0
+    },
+    {
+      "name": "Genoa City",
+      "slug": "genoa-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Salem",
+      "slug": "salem",
+      "salonCount": 0
+    },
+    {
+      "name": "Twin Lakes",
+      "slug": "twin-lakes",
+      "salonCount": 0
+    },
+    {
+      "name": "Silver Lake",
+      "slug": "silver-lake",
+      "salonCount": 0
+    },
+    {
+      "name": "Waterford",
+      "slug": "waterford",
+      "salonCount": 0
+    },
+    {
+      "name": "East Troy",
+      "slug": "east-troy",
+      "salonCount": 0
+    },
+    {
+      "name": "Mukwonago",
+      "slug": "mukwonago",
+      "salonCount": 0
+    },
+    {
+      "name": "Jefferson",
+      "slug": "jefferson",
+      "salonCount": 0
+    },
+    {
+      "name": "Sullivan",
+      "slug": "sullivan",
+      "salonCount": 0
+    },
+    {
+      "name": "Cambridge",
+      "slug": "cambridge",
+      "salonCount": 0
+    },
+    {
+      "name": "Johnson Creek",
+      "slug": "johnson-creek",
+      "salonCount": 0
+    },
+    {
+      "name": "Waterloo",
+      "slug": "waterloo",
+      "salonCount": 0
+    },
+    {
+      "name": "Horicon",
+      "slug": "horicon",
+      "salonCount": 0
+    },
+    {
+      "name": "Juneau",
+      "slug": "juneau",
+      "salonCount": 0
+    },
+    {
+      "name": "Poynette",
+      "slug": "poynette",
+      "salonCount": 0
+    },
+    {
+      "name": "Lodi",
+      "slug": "lodi",
+      "salonCount": 0
+    },
+    {
+      "name": "McFarland",
+      "slug": "mcfarland",
+      "salonCount": 0
+    },
+    {
+      "name": "Oregon",
+      "slug": "oregon",
+      "salonCount": 0
+    },
+    {
+      "name": "Belleville",
+      "slug": "belleville",
+      "salonCount": 0
+    },
+    {
+      "name": "New Glarus",
+      "slug": "new-glarus",
+      "salonCount": 0
+    },
+    {
+      "name": "Markesan",
+      "slug": "markesan",
+      "salonCount": 0
+    },
+    {
+      "name": "Princeton",
+      "slug": "princeton",
+      "salonCount": 0
+    },
+    {
+      "name": "Chilton",
+      "slug": "chilton",
+      "salonCount": 0
+    },
+    {
+      "name": "Brillion",
+      "slug": "brillion",
+      "salonCount": 0
+    },
+    {
+      "name": "Hilbert",
+      "slug": "hilbert",
+      "salonCount": 0
+    },
+    {
+      "name": "New Holstein",
+      "slug": "new-holstein",
+      "salonCount": 0
+    },
+    {
+      "name": "Kiel",
+      "slug": "kiel",
+      "salonCount": 0
+    },
+    {
+      "name": "Elkhart Lake",
+      "slug": "elkhart-lake",
+      "salonCount": 0
+    },
+    {
+      "name": "Howards Grove",
+      "slug": "howards-grove",
+      "salonCount": 0
+    },
+    {
+      "name": "Adell",
+      "slug": "adell",
+      "salonCount": 0
+    },
+    {
+      "name": "Saukville",
+      "slug": "saukville",
+      "salonCount": 0
+    },
+    {
+      "name": "Thiensville",
+      "slug": "thiensville",
+      "salonCount": 0
+    },
+    {
+      "name": "Fox Point",
+      "slug": "fox-point",
+      "salonCount": 0
+    },
+    {
+      "name": "Whitefish Bay",
+      "slug": "whitefish-bay",
+      "salonCount": 0
+    },
+    {
+      "name": "Shorewood",
+      "slug": "shorewood",
+      "salonCount": 0
+    },
+    {
+      "name": "Glendale",
+      "slug": "glendale",
+      "salonCount": 0
+    },
+    {
+      "name": "Bayside",
+      "slug": "bayside",
+      "salonCount": 0
+    },
+    {
+      "name": "Brown Deer",
+      "slug": "brown-deer",
+      "salonCount": 0
+    },
+    {
+      "name": "Butler",
+      "slug": "butler",
+      "salonCount": 0
+    },
+    {
+      "name": "Elm Grove",
+      "slug": "elm-grove",
+      "salonCount": 0
+    },
+    {
+      "name": "Hales Corners",
+      "slug": "hales-corners",
+      "salonCount": 0
+    },
+    {
+      "name": "Greendale",
+      "slug": "greendale",
+      "salonCount": 0
+    },
+    {
+      "name": "Cudahy",
+      "slug": "cudahy",
+      "salonCount": 0
+    },
+    {
+      "name": "South Milwaukee",
+      "slug": "south-milwaukee",
+      "salonCount": 0
+    },
+    {
+      "name": "St. Francis",
+      "slug": "st-francis",
+      "salonCount": 0
+    },
+    {
+      "name": "Pleasant Prairie",
+      "slug": "pleasant-prairie",
+      "salonCount": 0
+    },
+    {
+      "name": "Somers",
+      "slug": "somers",
+      "salonCount": 0
+    },
+    {
+      "name": "Bristol",
+      "slug": "bristol",
+      "salonCount": 0
+    },
+    {
+      "name": "Paddock Lake",
+      "slug": "paddock-lake",
+      "salonCount": 0
+    },
+    {
+      "name": "Ashland",
+      "slug": "ashland",
+      "salonCount": 0
+    },
+    {
+      "name": "St Croix Falls",
+      "slug": "st-croix-falls",
+      "salonCount": 0
+    },
+    {
+      "name": "Prescott",
+      "slug": "prescott",
+      "salonCount": 0
+    },
+    {
+      "name": "Durand",
+      "slug": "durand",
+      "salonCount": 0
+    },
+    {
+      "name": "Arcadia",
+      "slug": "arcadia",
+      "salonCount": 0
+    },
+    {
+      "name": "Galesville",
+      "slug": "galesville",
+      "salonCount": 0
+    },
+    {
+      "name": "Alma",
+      "slug": "alma",
+      "salonCount": 0
+    },
+    {
+      "name": "Blair",
+      "slug": "blair",
+      "salonCount": 0
+    },
+    {
+      "name": "Whitehall",
+      "slug": "whitehall",
+      "salonCount": 0
+    },
+    {
+      "name": "Mondovi",
+      "slug": "mondovi",
+      "salonCount": 0
+    },
+    {
+      "name": "Osceola",
+      "slug": "osceola",
+      "salonCount": 0
+    },
+    {
+      "name": "Somerset",
+      "slug": "somerset",
+      "salonCount": 0
+    },
+    {
+      "name": "New Richmond",
+      "slug": "new-richmond",
+      "salonCount": 0
+    },
+    {
+      "name": "Baldwin",
+      "slug": "baldwin",
+      "salonCount": 0
+    },
+    {
+      "name": "Hammond",
+      "slug": "hammond",
+      "salonCount": 0
+    },
+    {
+      "name": "Roberts",
+      "slug": "roberts",
+      "salonCount": 0
+    },
+    {
+      "name": "Ellsworth",
+      "slug": "ellsworth",
+      "salonCount": 0
+    },
+    {
+      "name": "Spring Valley",
+      "slug": "spring-valley",
+      "salonCount": 0
+    },
+    {
+      "name": "Elmwood",
+      "slug": "elmwood",
+      "salonCount": 0
+    }
+  ]
+}

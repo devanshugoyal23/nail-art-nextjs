@@ -1,0 +1,203 @@
+{
+  "state": "Rhode Island",
+  "stateCode": "RI",
+  "generatedAt": "2025-11-06T10:24:11.044Z",
+  "citiesCount": 39,
+  "cities": [
+    {
+      "name": "Barrington",
+      "slug": "barrington",
+      "salonCount": 0
+    },
+    {
+      "name": "Bristol",
+      "slug": "bristol",
+      "salonCount": 0
+    },
+    {
+      "name": "Burrillville",
+      "slug": "burrillville",
+      "salonCount": 0
+    },
+    {
+      "name": "Central Falls",
+      "slug": "central-falls",
+      "salonCount": 0
+    },
+    {
+      "name": "Charlestown",
+      "slug": "charlestown",
+      "salonCount": 0
+    },
+    {
+      "name": "Coventry",
+      "slug": "coventry",
+      "salonCount": 0
+    },
+    {
+      "name": "Cranston",
+      "slug": "cranston",
+      "salonCount": 0
+    },
+    {
+      "name": "Cumberland",
+      "slug": "cumberland",
+      "salonCount": 0
+    },
+    {
+      "name": "East Greenwich",
+      "slug": "east-greenwich",
+      "salonCount": 0
+    },
+    {
+      "name": "East Providence",
+      "slug": "east-providence",
+      "salonCount": 0
+    },
+    {
+      "name": "Exeter",
+      "slug": "exeter",
+      "salonCount": 0
+    },
+    {
+      "name": "Foster",
+      "slug": "foster",
+      "salonCount": 0
+    },
+    {
+      "name": "Glocester",
+      "slug": "glocester",
+      "salonCount": 0
+    },
+    {
+      "name": "Hopkinton",
+      "slug": "hopkinton",
+      "salonCount": 0
+    },
+    {
+      "name": "Jamestown",
+      "slug": "jamestown",
+      "salonCount": 0
+    },
+    {
+      "name": "Johnston",
+      "slug": "johnston",
+      "salonCount": 0
+    },
+    {
+      "name": "Lincoln",
+      "slug": "lincoln",
+      "salonCount": 0
+    },
+    {
+      "name": "Little Compton",
+      "slug": "little-compton",
+      "salonCount": 0
+    },
+    {
+      "name": "Middletown",
+      "slug": "middletown",
+      "salonCount": 0
+    },
+    {
+      "name": "Narragansett",
+      "slug": "narragansett",
+      "salonCount": 0
+    },
+    {
+      "name": "Newport",
+      "slug": "newport",
+      "salonCount": 0
+    },
+    {
+      "name": "New Shoreham",
+      "slug": "new-shoreham",
+      "salonCount": 0
+    },
+    {
+      "name": "North Kingstown",
+      "slug": "north-kingstown",
+      "salonCount": 0
+    },
+    {
+      "name": "North Providence",
+      "slug": "north-providence",
+      "salonCount": 0
+    },
+    {
+      "name": "North Smithfield",
+      "slug": "north-smithfield",
+      "salonCount": 0
+    },
+    {
+      "name": "Pawtucket",
+      "slug": "pawtucket",
+      "salonCount": 0
+    },
+    {
+      "name": "Portsmouth",
+      "slug": "portsmouth",
+      "salonCount": 0
+    },
+    {
+      "name": "Providence",
+      "slug": "providence",
+      "salonCount": 0
+    },
+    {
+      "name": "Richmond",
+      "slug": "richmond",
+      "salonCount": 0
+    },
+    {
+      "name": "Scituate",
+      "slug": "scituate",
+      "salonCount": 0
+    },
+    {
+      "name": "Smithfield",
+      "slug": "smithfield",
+      "salonCount": 0
+    },
+    {
+      "name": "South Kingstown",
+      "slug": "south-kingstown",
+      "salonCount": 0
+    },
+    {
+      "name": "Tiverton",
+      "slug": "tiverton",
+      "salonCount": 0
+    },
+    {
+      "name": "Warren",
+      "slug": "warren",
+      "salonCount": 0
+    },
+    {
+      "name": "Warwick",
+      "slug": "warwick",
+      "salonCount": 0
+    },
+    {
+      "name": "West Greenwich",
+      "slug": "west-greenwich",
+      "salonCount": 0
+    },
+    {
+      "name": "Westerly",
+      "slug": "westerly",
+      "salonCount": 0
+    },
+    {
+      "name": "West Warwick",
+      "slug": "west-warwick",
+      "salonCount": 0
+    },
+    {
+      "name": "Woonsocket",
+      "slug": "woonsocket",
+      "salonCount": 0
+    }
+  ]
+}

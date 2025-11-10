@@ -1,0 +1,818 @@
+{
+  "state": "South Carolina",
+  "stateCode": "SC",
+  "generatedAt": "2025-11-06T10:24:19.672Z",
+  "citiesCount": 162,
+  "cities": [
+    {
+      "name": "Columbia",
+      "slug": "columbia",
+      "salonCount": 0
+    },
+    {
+      "name": "Charleston",
+      "slug": "charleston",
+      "salonCount": 0
+    },
+    {
+      "name": "Greenville",
+      "slug": "greenville",
+      "salonCount": 0
+    },
+    {
+      "name": "North Charleston",
+      "slug": "north-charleston",
+      "salonCount": 0
+    },
+    {
+      "name": "Mount Pleasant",
+      "slug": "mount-pleasant",
+      "salonCount": 0
+    },
+    {
+      "name": "Rock Hill",
+      "slug": "rock-hill",
+      "salonCount": 0
+    },
+    {
+      "name": "Summerville",
+      "slug": "summerville",
+      "salonCount": 0
+    },
+    {
+      "name": "Goose Creek",
+      "slug": "goose-creek",
+      "salonCount": 0
+    },
+    {
+      "name": "Hilton Head Island",
+      "slug": "hilton-head-island",
+      "salonCount": 0
+    },
+    {
+      "name": "Florence",
+      "slug": "florence",
+      "salonCount": 0
+    },
+    {
+      "name": "Spartanburg",
+      "slug": "spartanburg",
+      "salonCount": 0
+    },
+    {
+      "name": "Myrtle Beach",
+      "slug": "myrtle-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "Anderson",
+      "slug": "anderson",
+      "salonCount": 0
+    },
+    {
+      "name": "Greer",
+      "slug": "greer",
+      "salonCount": 0
+    },
+    {
+      "name": "Sumter",
+      "slug": "sumter",
+      "salonCount": 0
+    },
+    {
+      "name": "Bluffton",
+      "slug": "bluffton",
+      "salonCount": 0
+    },
+    {
+      "name": "Lexington",
+      "slug": "lexington",
+      "salonCount": 0
+    },
+    {
+      "name": "Mauldin",
+      "slug": "mauldin",
+      "salonCount": 0
+    },
+    {
+      "name": "Easley",
+      "slug": "easley",
+      "salonCount": 0
+    },
+    {
+      "name": "Simpsonville",
+      "slug": "simpsonville",
+      "salonCount": 0
+    },
+    {
+      "name": "West Columbia",
+      "slug": "west-columbia",
+      "salonCount": 0
+    },
+    {
+      "name": "Greenwood",
+      "slug": "greenwood",
+      "salonCount": 0
+    },
+    {
+      "name": "North Augusta",
+      "slug": "north-augusta",
+      "salonCount": 0
+    },
+    {
+      "name": "Orangeburg",
+      "slug": "orangeburg",
+      "salonCount": 0
+    },
+    {
+      "name": "Conway",
+      "slug": "conway",
+      "salonCount": 0
+    },
+    {
+      "name": "Clemson",
+      "slug": "clemson",
+      "salonCount": 0
+    },
+    {
+      "name": "Gaffney",
+      "slug": "gaffney",
+      "salonCount": 0
+    },
+    {
+      "name": "Beaufort",
+      "slug": "beaufort",
+      "salonCount": 0
+    },
+    {
+      "name": "Port Royal",
+      "slug": "port-royal",
+      "salonCount": 0
+    },
+    {
+      "name": "Forest Acres",
+      "slug": "forest-acres",
+      "salonCount": 0
+    },
+    {
+      "name": "Hartsville",
+      "slug": "hartsville",
+      "salonCount": 0
+    },
+    {
+      "name": "Camden",
+      "slug": "camden",
+      "salonCount": 0
+    },
+    {
+      "name": "Newberry",
+      "slug": "newberry",
+      "salonCount": 0
+    },
+    {
+      "name": "Union",
+      "slug": "union",
+      "salonCount": 0
+    },
+    {
+      "name": "Lancaster",
+      "slug": "lancaster",
+      "salonCount": 0
+    },
+    {
+      "name": "Chester",
+      "slug": "chester",
+      "salonCount": 0
+    },
+    {
+      "name": "Dillon",
+      "slug": "dillon",
+      "salonCount": 0
+    },
+    {
+      "name": "Marion",
+      "slug": "marion",
+      "salonCount": 0
+    },
+    {
+      "name": "Manning",
+      "slug": "manning",
+      "salonCount": 0
+    },
+    {
+      "name": "Darlington",
+      "slug": "darlington",
+      "salonCount": 0
+    },
+    {
+      "name": "Cheraw",
+      "slug": "cheraw",
+      "salonCount": 0
+    },
+    {
+      "name": "Barnwell",
+      "slug": "barnwell",
+      "salonCount": 0
+    },
+    {
+      "name": "Laurens",
+      "slug": "laurens",
+      "salonCount": 0
+    },
+    {
+      "name": "Clinton",
+      "slug": "clinton",
+      "salonCount": 0
+    },
+    {
+      "name": "Abbeville",
+      "slug": "abbeville",
+      "salonCount": 0
+    },
+    {
+      "name": "Batesburg-Leesville",
+      "slug": "batesburg-leesville",
+      "salonCount": 0
+    },
+    {
+      "name": "Chapin",
+      "slug": "chapin",
+      "salonCount": 0
+    },
+    {
+      "name": "Irmo",
+      "slug": "irmo",
+      "salonCount": 0
+    },
+    {
+      "name": "Cayce",
+      "slug": "cayce",
+      "salonCount": 0
+    },
+    {
+      "name": "Lugoff",
+      "slug": "lugoff",
+      "salonCount": 0
+    },
+    {
+      "name": "Kershaw",
+      "slug": "kershaw",
+      "salonCount": 0
+    },
+    {
+      "name": "Pageland",
+      "slug": "pageland",
+      "salonCount": 0
+    },
+    {
+      "name": "Lake City",
+      "slug": "lake-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Kingstree",
+      "slug": "kingstree",
+      "salonCount": 0
+    },
+    {
+      "name": "Georgetown",
+      "slug": "georgetown",
+      "salonCount": 0
+    },
+    {
+      "name": "North Myrtle Beach",
+      "slug": "north-myrtle-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "Surfside Beach",
+      "slug": "surfside-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "Folly Beach",
+      "slug": "folly-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "Isle of Palms",
+      "slug": "isle-of-palms",
+      "salonCount": 0
+    },
+    {
+      "name": "Pawleys Island",
+      "slug": "pawleys-island",
+      "salonCount": 0
+    },
+    {
+      "name": "Fountain Inn",
+      "slug": "fountain-inn",
+      "salonCount": 0
+    },
+    {
+      "name": "Seneca",
+      "slug": "seneca",
+      "salonCount": 0
+    },
+    {
+      "name": "Walhalla",
+      "slug": "walhalla",
+      "salonCount": 0
+    },
+    {
+      "name": "Westminster",
+      "slug": "westminster",
+      "salonCount": 0
+    },
+    {
+      "name": "Central",
+      "slug": "central",
+      "salonCount": 0
+    },
+    {
+      "name": "Pendleton",
+      "slug": "pendleton",
+      "salonCount": 0
+    },
+    {
+      "name": "Belton",
+      "slug": "belton",
+      "salonCount": 0
+    },
+    {
+      "name": "Williamston",
+      "slug": "williamston",
+      "salonCount": 0
+    },
+    {
+      "name": "Honea Path",
+      "slug": "honea-path",
+      "salonCount": 0
+    },
+    {
+      "name": "Ware Shoals",
+      "slug": "ware-shoals",
+      "salonCount": 0
+    },
+    {
+      "name": "Ninety Six",
+      "slug": "ninety-six",
+      "salonCount": 0
+    },
+    {
+      "name": "Saluda",
+      "slug": "saluda",
+      "salonCount": 0
+    },
+    {
+      "name": "Prosperity",
+      "slug": "prosperity",
+      "salonCount": 0
+    },
+    {
+      "name": "Little Mountain",
+      "slug": "little-mountain",
+      "salonCount": 0
+    },
+    {
+      "name": "Blythewood",
+      "slug": "blythewood",
+      "salonCount": 0
+    },
+    {
+      "name": "Elgin",
+      "slug": "elgin",
+      "salonCount": 0
+    },
+    {
+      "name": "Winnsboro",
+      "slug": "winnsboro",
+      "salonCount": 0
+    },
+    {
+      "name": "Bishopville",
+      "slug": "bishopville",
+      "salonCount": 0
+    },
+    {
+      "name": "Timmonsville",
+      "slug": "timmonsville",
+      "salonCount": 0
+    },
+    {
+      "name": "Hemingway",
+      "slug": "hemingway",
+      "salonCount": 0
+    },
+    {
+      "name": "Andrews",
+      "slug": "andrews",
+      "salonCount": 0
+    },
+    {
+      "name": "Moncks Corner",
+      "slug": "moncks-corner",
+      "salonCount": 0
+    },
+    {
+      "name": "St Stephen",
+      "slug": "st-stephen",
+      "salonCount": 0
+    },
+    {
+      "name": "Holly Hill",
+      "slug": "holly-hill",
+      "salonCount": 0
+    },
+    {
+      "name": "Eutawville",
+      "slug": "eutawville",
+      "salonCount": 0
+    },
+    {
+      "name": "Santee",
+      "slug": "santee",
+      "salonCount": 0
+    },
+    {
+      "name": "Summerton",
+      "slug": "summerton",
+      "salonCount": 0
+    },
+    {
+      "name": "Walterboro",
+      "slug": "walterboro",
+      "salonCount": 0
+    },
+    {
+      "name": "Hampton",
+      "slug": "hampton",
+      "salonCount": 0
+    },
+    {
+      "name": "Yemassee",
+      "slug": "yemassee",
+      "salonCount": 0
+    },
+    {
+      "name": "Ridgeland",
+      "slug": "ridgeland",
+      "salonCount": 0
+    },
+    {
+      "name": "Hardeeville",
+      "slug": "hardeeville",
+      "salonCount": 0
+    },
+    {
+      "name": "Gloverville",
+      "slug": "gloverville",
+      "salonCount": 0
+    },
+    {
+      "name": "Burnettown",
+      "slug": "burnettown",
+      "salonCount": 0
+    },
+    {
+      "name": "Clearwater",
+      "slug": "clearwater",
+      "salonCount": 0
+    },
+    {
+      "name": "North",
+      "slug": "north",
+      "salonCount": 0
+    },
+    {
+      "name": "Wagener",
+      "slug": "wagener",
+      "salonCount": 0
+    },
+    {
+      "name": "Blackville",
+      "slug": "blackville",
+      "salonCount": 0
+    },
+    {
+      "name": "Denmark",
+      "slug": "denmark",
+      "salonCount": 0
+    },
+    {
+      "name": "St George",
+      "slug": "st-george",
+      "salonCount": 0
+    },
+    {
+      "name": "Cross",
+      "slug": "cross",
+      "salonCount": 0
+    },
+    {
+      "name": "Johns Island",
+      "slug": "johns-island",
+      "salonCount": 0
+    },
+    {
+      "name": "Kiawah Island",
+      "slug": "kiawah-island",
+      "salonCount": 0
+    },
+    {
+      "name": "Seabrook Island",
+      "slug": "seabrook-island",
+      "salonCount": 0
+    },
+    {
+      "name": "Edisto Beach",
+      "slug": "edisto-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "Murrells Inlet",
+      "slug": "murrells-inlet",
+      "salonCount": 0
+    },
+    {
+      "name": "Garden City Beach",
+      "slug": "garden-city-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "Socastee",
+      "slug": "socastee",
+      "salonCount": 0
+    },
+    {
+      "name": "Carolina Forest",
+      "slug": "carolina-forest",
+      "salonCount": 0
+    },
+    {
+      "name": "Little River",
+      "slug": "little-river",
+      "salonCount": 0
+    },
+    {
+      "name": "Longs",
+      "slug": "longs",
+      "salonCount": 0
+    },
+    {
+      "name": "Aynor",
+      "slug": "aynor",
+      "salonCount": 0
+    },
+    {
+      "name": "Loris",
+      "slug": "loris",
+      "salonCount": 0
+    },
+    {
+      "name": "McClellanville",
+      "slug": "mcclellanville",
+      "salonCount": 0
+    },
+    {
+      "name": "Pacolet",
+      "slug": "pacolet",
+      "salonCount": 0
+    },
+    {
+      "name": "Inman",
+      "slug": "inman",
+      "salonCount": 0
+    },
+    {
+      "name": "Campobello",
+      "slug": "campobello",
+      "salonCount": 0
+    },
+    {
+      "name": "Landrum",
+      "slug": "landrum",
+      "salonCount": 0
+    },
+    {
+      "name": "Lyman",
+      "slug": "lyman",
+      "salonCount": 0
+    },
+    {
+      "name": "Wellford",
+      "slug": "wellford",
+      "salonCount": 0
+    },
+    {
+      "name": "Woodruff",
+      "slug": "woodruff",
+      "salonCount": 0
+    },
+    {
+      "name": "Cowpens",
+      "slug": "cowpens",
+      "salonCount": 0
+    },
+    {
+      "name": "Blacksburg",
+      "slug": "blacksburg",
+      "salonCount": 0
+    },
+    {
+      "name": "Fort Mill",
+      "slug": "fort-mill",
+      "salonCount": 0
+    },
+    {
+      "name": "Tega Cay",
+      "slug": "tega-cay",
+      "salonCount": 0
+    },
+    {
+      "name": "York",
+      "slug": "york",
+      "salonCount": 0
+    },
+    {
+      "name": "Clover",
+      "slug": "clover",
+      "salonCount": 0
+    },
+    {
+      "name": "Catawba",
+      "slug": "catawba",
+      "salonCount": 0
+    },
+    {
+      "name": "Great Falls",
+      "slug": "great-falls",
+      "salonCount": 0
+    },
+    {
+      "name": "Richburg",
+      "slug": "richburg",
+      "salonCount": 0
+    },
+    {
+      "name": "Bethune",
+      "slug": "bethune",
+      "salonCount": 0
+    },
+    {
+      "name": "Jefferson",
+      "slug": "jefferson",
+      "salonCount": 0
+    },
+    {
+      "name": "McBee",
+      "slug": "mcbee",
+      "salonCount": 0
+    },
+    {
+      "name": "Chesterfield",
+      "slug": "chesterfield",
+      "salonCount": 0
+    },
+    {
+      "name": "Patrick",
+      "slug": "patrick",
+      "salonCount": 0
+    },
+    {
+      "name": "Bennettsville",
+      "slug": "bennettsville",
+      "salonCount": 0
+    },
+    {
+      "name": "Clio",
+      "slug": "clio",
+      "salonCount": 0
+    },
+    {
+      "name": "McColl",
+      "slug": "mccoll",
+      "salonCount": 0
+    },
+    {
+      "name": "Latta",
+      "slug": "latta",
+      "salonCount": 0
+    },
+    {
+      "name": "Sellers",
+      "slug": "sellers",
+      "salonCount": 0
+    },
+    {
+      "name": "Lake View",
+      "slug": "lake-view",
+      "salonCount": 0
+    },
+    {
+      "name": "Mullins",
+      "slug": "mullins",
+      "salonCount": 0
+    },
+    {
+      "name": "Nichols",
+      "slug": "nichols",
+      "salonCount": 0
+    },
+    {
+      "name": "Johnsonville",
+      "slug": "johnsonville",
+      "salonCount": 0
+    },
+    {
+      "name": "Pamplico",
+      "slug": "pamplico",
+      "salonCount": 0
+    },
+    {
+      "name": "Scranton",
+      "slug": "scranton",
+      "salonCount": 0
+    },
+    {
+      "name": "Olanta",
+      "slug": "olanta",
+      "salonCount": 0
+    },
+    {
+      "name": "Turbeville",
+      "slug": "turbeville",
+      "salonCount": 0
+    },
+    {
+      "name": "Mayesville",
+      "slug": "mayesville",
+      "salonCount": 0
+    },
+    {
+      "name": "Paxville",
+      "slug": "paxville",
+      "salonCount": 0
+    },
+    {
+      "name": "Rowesville",
+      "slug": "rowesville",
+      "salonCount": 0
+    },
+    {
+      "name": "Branchville",
+      "slug": "branchville",
+      "salonCount": 0
+    },
+    {
+      "name": "Bowman",
+      "slug": "bowman",
+      "salonCount": 0
+    },
+    {
+      "name": "Vance",
+      "slug": "vance",
+      "salonCount": 0
+    },
+    {
+      "name": "St Matthews",
+      "slug": "st-matthews",
+      "salonCount": 0
+    },
+    {
+      "name": "Calhoun Falls",
+      "slug": "calhoun-falls",
+      "salonCount": 0
+    },
+    {
+      "name": "Due West",
+      "slug": "due-west",
+      "salonCount": 0
+    },
+    {
+      "name": "Iva",
+      "slug": "iva",
+      "salonCount": 0
+    },
+    {
+      "name": "Starr",
+      "slug": "starr",
+      "salonCount": 0
+    },
+    {
+      "name": "Fair Play",
+      "slug": "fair-play",
+      "salonCount": 0
+    },
+    {
+      "name": "Ridgeville",
+      "slug": "ridgeville",
+      "salonCount": 0
+    },
+    {
+      "name": "Hanahan",
+      "slug": "hanahan",
+      "salonCount": 0
+    }
+  ]
+}

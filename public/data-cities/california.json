@@ -1,0 +1,3213 @@
+{
+  "state": "California",
+  "stateCode": "CA",
+  "generatedAt": "2025-11-06T10:19:42.791Z",
+  "citiesCount": 641,
+  "cities": [
+    {
+      "name": "Los Angeles",
+      "slug": "los-angeles",
+      "salonCount": 0
+    },
+    {
+      "name": "San Francisco",
+      "slug": "san-francisco",
+      "salonCount": 0
+    },
+    {
+      "name": "San Diego",
+      "slug": "san-diego",
+      "salonCount": 0
+    },
+    {
+      "name": "Sacramento",
+      "slug": "sacramento",
+      "salonCount": 0
+    },
+    {
+      "name": "Fresno",
+      "slug": "fresno",
+      "salonCount": 0
+    },
+    {
+      "name": "Oakland",
+      "slug": "oakland",
+      "salonCount": 0
+    },
+    {
+      "name": "Long Beach",
+      "slug": "long-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "Bakersfield",
+      "slug": "bakersfield",
+      "salonCount": 0
+    },
+    {
+      "name": "Anaheim",
+      "slug": "anaheim",
+      "salonCount": 0
+    },
+    {
+      "name": "Santa Ana",
+      "slug": "santa-ana",
+      "salonCount": 0
+    },
+    {
+      "name": "Riverside",
+      "slug": "riverside",
+      "salonCount": 0
+    },
+    {
+      "name": "Stockton",
+      "slug": "stockton",
+      "salonCount": 0
+    },
+    {
+      "name": "Chula Vista",
+      "slug": "chula-vista",
+      "salonCount": 0
+    },
+    {
+      "name": "Irvine",
+      "slug": "irvine",
+      "salonCount": 0
+    },
+    {
+      "name": "Fremont",
+      "slug": "fremont",
+      "salonCount": 0
+    },
+    {
+      "name": "San Bernardino",
+      "slug": "san-bernardino",
+      "salonCount": 0
+    },
+    {
+      "name": "Modesto",
+      "slug": "modesto",
+      "salonCount": 0
+    },
+    {
+      "name": "Fontana",
+      "slug": "fontana",
+      "salonCount": 0
+    },
+    {
+      "name": "Moreno Valley",
+      "slug": "moreno-valley",
+      "salonCount": 0
+    },
+    {
+      "name": "Oxnard",
+      "slug": "oxnard",
+      "salonCount": 0
+    },
+    {
+      "name": "Huntington Beach",
+      "slug": "huntington-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "Glendale",
+      "slug": "glendale",
+      "salonCount": 0
+    },
+    {
+      "name": "Santa Clarita",
+      "slug": "santa-clarita",
+      "salonCount": 0
+    },
+    {
+      "name": "Rancho Cucamonga",
+      "slug": "rancho-cucamonga",
+      "salonCount": 0
+    },
+    {
+      "name": "Oceanside",
+      "slug": "oceanside",
+      "salonCount": 0
+    },
+    {
+      "name": "Ontario",
+      "slug": "ontario",
+      "salonCount": 0
+    },
+    {
+      "name": "Corona",
+      "slug": "corona",
+      "salonCount": 0
+    },
+    {
+      "name": "Lancaster",
+      "slug": "lancaster",
+      "salonCount": 0
+    },
+    {
+      "name": "Palmdale",
+      "slug": "palmdale",
+      "salonCount": 0
+    },
+    {
+      "name": "Salinas",
+      "slug": "salinas",
+      "salonCount": 0
+    },
+    {
+      "name": "Hayward",
+      "slug": "hayward",
+      "salonCount": 0
+    },
+    {
+      "name": "Pomona",
+      "slug": "pomona",
+      "salonCount": 0
+    },
+    {
+      "name": "Escondido",
+      "slug": "escondido",
+      "salonCount": 0
+    },
+    {
+      "name": "Sunnyvale",
+      "slug": "sunnyvale",
+      "salonCount": 0
+    },
+    {
+      "name": "Torrance",
+      "slug": "torrance",
+      "salonCount": 0
+    },
+    {
+      "name": "Pasadena",
+      "slug": "pasadena",
+      "salonCount": 0
+    },
+    {
+      "name": "Roseville",
+      "slug": "roseville",
+      "salonCount": 0
+    },
+    {
+      "name": "Victorville",
+      "slug": "victorville",
+      "salonCount": 0
+    },
+    {
+      "name": "Orange",
+      "slug": "orange",
+      "salonCount": 0
+    },
+    {
+      "name": "Fullerton",
+      "slug": "fullerton",
+      "salonCount": 0
+    },
+    {
+      "name": "Elk Grove",
+      "slug": "elk-grove",
+      "salonCount": 0
+    },
+    {
+      "name": "Concord",
+      "slug": "concord",
+      "salonCount": 0
+    },
+    {
+      "name": "Santa Clara",
+      "slug": "santa-clara",
+      "salonCount": 0
+    },
+    {
+      "name": "Visalia",
+      "slug": "visalia",
+      "salonCount": 0
+    },
+    {
+      "name": "Vallejo",
+      "slug": "vallejo",
+      "salonCount": 0
+    },
+    {
+      "name": "Berkeley",
+      "slug": "berkeley",
+      "salonCount": 0
+    },
+    {
+      "name": "Fairfield",
+      "slug": "fairfield",
+      "salonCount": 0
+    },
+    {
+      "name": "Carlsbad",
+      "slug": "carlsbad",
+      "salonCount": 0
+    },
+    {
+      "name": "Murrieta",
+      "slug": "murrieta",
+      "salonCount": 0
+    },
+    {
+      "name": "Temecula",
+      "slug": "temecula",
+      "salonCount": 0
+    },
+    {
+      "name": "Antioch",
+      "slug": "antioch",
+      "salonCount": 0
+    },
+    {
+      "name": "Richmond",
+      "slug": "richmond",
+      "salonCount": 0
+    },
+    {
+      "name": "Menifee",
+      "slug": "menifee",
+      "salonCount": 0
+    },
+    {
+      "name": "Indio",
+      "slug": "indio",
+      "salonCount": 0
+    },
+    {
+      "name": "Chico",
+      "slug": "chico",
+      "salonCount": 0
+    },
+    {
+      "name": "Hesperia",
+      "slug": "hesperia",
+      "salonCount": 0
+    },
+    {
+      "name": "Redding",
+      "slug": "redding",
+      "salonCount": 0
+    },
+    {
+      "name": "Daly City",
+      "slug": "daly-city",
+      "salonCount": 0
+    },
+    {
+      "name": "San Mateo",
+      "slug": "san-mateo",
+      "salonCount": 0
+    },
+    {
+      "name": "Costa Mesa",
+      "slug": "costa-mesa",
+      "salonCount": 0
+    },
+    {
+      "name": "Compton",
+      "slug": "compton",
+      "salonCount": 0
+    },
+    {
+      "name": "Downey",
+      "slug": "downey",
+      "salonCount": 0
+    },
+    {
+      "name": "Ventura",
+      "slug": "ventura",
+      "salonCount": 0
+    },
+    {
+      "name": "Norwalk",
+      "slug": "norwalk",
+      "salonCount": 0
+    },
+    {
+      "name": "Burbank",
+      "slug": "burbank",
+      "salonCount": 0
+    },
+    {
+      "name": "El Monte",
+      "slug": "el-monte",
+      "salonCount": 0
+    },
+    {
+      "name": "Jurupa Valley",
+      "slug": "jurupa-valley",
+      "salonCount": 0
+    },
+    {
+      "name": "Rialto",
+      "slug": "rialto",
+      "salonCount": 0
+    },
+    {
+      "name": "Santa Maria",
+      "slug": "santa-maria",
+      "salonCount": 0
+    },
+    {
+      "name": "Mission Viejo",
+      "slug": "mission-viejo",
+      "salonCount": 0
+    },
+    {
+      "name": "Vacaville",
+      "slug": "vacaville",
+      "salonCount": 0
+    },
+    {
+      "name": "San Marcos",
+      "slug": "san-marcos",
+      "salonCount": 0
+    },
+    {
+      "name": "Vista",
+      "slug": "vista",
+      "salonCount": 0
+    },
+    {
+      "name": "Tracy",
+      "slug": "tracy",
+      "salonCount": 0
+    },
+    {
+      "name": "Citrus Heights",
+      "slug": "citrus-heights",
+      "salonCount": 0
+    },
+    {
+      "name": "Lake Forest",
+      "slug": "lake-forest",
+      "salonCount": 0
+    },
+    {
+      "name": "Camarillo",
+      "slug": "camarillo",
+      "salonCount": 0
+    },
+    {
+      "name": "Pleasanton",
+      "slug": "pleasanton",
+      "salonCount": 0
+    },
+    {
+      "name": "South Gate",
+      "slug": "south-gate",
+      "salonCount": 0
+    },
+    {
+      "name": "Whittier",
+      "slug": "whittier",
+      "salonCount": 0
+    },
+    {
+      "name": "Newport Beach",
+      "slug": "newport-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "Redlands",
+      "slug": "redlands",
+      "salonCount": 0
+    },
+    {
+      "name": "Merced",
+      "slug": "merced",
+      "salonCount": 0
+    },
+    {
+      "name": "Lakewood",
+      "slug": "lakewood",
+      "salonCount": 0
+    },
+    {
+      "name": "San Leandro",
+      "slug": "san-leandro",
+      "salonCount": 0
+    },
+    {
+      "name": "Napa",
+      "slug": "napa",
+      "salonCount": 0
+    },
+    {
+      "name": "Woodland",
+      "slug": "woodland",
+      "salonCount": 0
+    },
+    {
+      "name": "Union City",
+      "slug": "union-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Monterey",
+      "slug": "monterey",
+      "salonCount": 0
+    },
+    {
+      "name": "Redondo Beach",
+      "slug": "redondo-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "Alameda",
+      "slug": "alameda",
+      "salonCount": 0
+    },
+    {
+      "name": "Tustin",
+      "slug": "tustin",
+      "salonCount": 0
+    },
+    {
+      "name": "Chino",
+      "slug": "chino",
+      "salonCount": 0
+    },
+    {
+      "name": "Santa Cruz",
+      "slug": "santa-cruz",
+      "salonCount": 0
+    },
+    {
+      "name": "Yorba Linda",
+      "slug": "yorba-linda",
+      "salonCount": 0
+    },
+    {
+      "name": "San Clemente",
+      "slug": "san-clemente",
+      "salonCount": 0
+    },
+    {
+      "name": "Laguna Niguel",
+      "slug": "laguna-niguel",
+      "salonCount": 0
+    },
+    {
+      "name": "Milpitas",
+      "slug": "milpitas",
+      "salonCount": 0
+    },
+    {
+      "name": "Davis",
+      "slug": "davis",
+      "salonCount": 0
+    },
+    {
+      "name": "Santa Monica",
+      "slug": "santa-monica",
+      "salonCount": 0
+    },
+    {
+      "name": "Santa Rosa",
+      "slug": "santa-rosa",
+      "salonCount": 0
+    },
+    {
+      "name": "Palo Alto",
+      "slug": "palo-alto",
+      "salonCount": 0
+    },
+    {
+      "name": "Mountain View",
+      "slug": "mountain-view",
+      "salonCount": 0
+    },
+    {
+      "name": "San Rafael",
+      "slug": "san-rafael",
+      "salonCount": 0
+    },
+    {
+      "name": "Petaluma",
+      "slug": "petaluma",
+      "salonCount": 0
+    },
+    {
+      "name": "Livermore",
+      "slug": "livermore",
+      "salonCount": 0
+    },
+    {
+      "name": "Walnut Creek",
+      "slug": "walnut-creek",
+      "salonCount": 0
+    },
+    {
+      "name": "San Ramon",
+      "slug": "san-ramon",
+      "salonCount": 0
+    },
+    {
+      "name": "Pleasant Hill",
+      "slug": "pleasant-hill",
+      "salonCount": 0
+    },
+    {
+      "name": "Martinez",
+      "slug": "martinez",
+      "salonCount": 0
+    },
+    {
+      "name": "Brentwood",
+      "slug": "brentwood",
+      "salonCount": 0
+    },
+    {
+      "name": "Pittsburg",
+      "slug": "pittsburg",
+      "salonCount": 0
+    },
+    {
+      "name": "Novato",
+      "slug": "novato",
+      "salonCount": 0
+    },
+    {
+      "name": "Rohnert Park",
+      "slug": "rohnert-park",
+      "salonCount": 0
+    },
+    {
+      "name": "Arcadia",
+      "slug": "arcadia",
+      "salonCount": 0
+    },
+    {
+      "name": "Bellflower",
+      "slug": "bellflower",
+      "salonCount": 0
+    },
+    {
+      "name": "Buena Park",
+      "slug": "buena-park",
+      "salonCount": 0
+    },
+    {
+      "name": "Carson",
+      "slug": "carson",
+      "salonCount": 0
+    },
+    {
+      "name": "Cerritos",
+      "slug": "cerritos",
+      "salonCount": 0
+    },
+    {
+      "name": "Claremont",
+      "slug": "claremont",
+      "salonCount": 0
+    },
+    {
+      "name": "Culver City",
+      "slug": "culver-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Diamond Bar",
+      "slug": "diamond-bar",
+      "salonCount": 0
+    },
+    {
+      "name": "Gardena",
+      "slug": "gardena",
+      "salonCount": 0
+    },
+    {
+      "name": "Goleta",
+      "slug": "goleta",
+      "salonCount": 0
+    },
+    {
+      "name": "Hanford",
+      "slug": "hanford",
+      "salonCount": 0
+    },
+    {
+      "name": "La Habra",
+      "slug": "la-habra",
+      "salonCount": 0
+    },
+    {
+      "name": "La Mesa",
+      "slug": "la-mesa",
+      "salonCount": 0
+    },
+    {
+      "name": "La Mirada",
+      "slug": "la-mirada",
+      "salonCount": 0
+    },
+    {
+      "name": "Laguna Hills",
+      "slug": "laguna-hills",
+      "salonCount": 0
+    },
+    {
+      "name": "Lompoc",
+      "slug": "lompoc",
+      "salonCount": 0
+    },
+    {
+      "name": "Manteca",
+      "slug": "manteca",
+      "salonCount": 0
+    },
+    {
+      "name": "Marina",
+      "slug": "marina",
+      "salonCount": 0
+    },
+    {
+      "name": "Menlo Park",
+      "slug": "menlo-park",
+      "salonCount": 0
+    },
+    {
+      "name": "Monrovia",
+      "slug": "monrovia",
+      "salonCount": 0
+    },
+    {
+      "name": "Montclair",
+      "slug": "montclair",
+      "salonCount": 0
+    },
+    {
+      "name": "Montebello",
+      "slug": "montebello",
+      "salonCount": 0
+    },
+    {
+      "name": "Monterey Park",
+      "slug": "monterey-park",
+      "salonCount": 0
+    },
+    {
+      "name": "Morgan Hill",
+      "slug": "morgan-hill",
+      "salonCount": 0
+    },
+    {
+      "name": "Newark",
+      "slug": "newark",
+      "salonCount": 0
+    },
+    {
+      "name": "Oakley",
+      "slug": "oakley",
+      "salonCount": 0
+    },
+    {
+      "name": "Perris",
+      "slug": "perris",
+      "salonCount": 0
+    },
+    {
+      "name": "Pico Rivera",
+      "slug": "pico-rivera",
+      "salonCount": 0
+    },
+    {
+      "name": "Porterville",
+      "slug": "porterville",
+      "salonCount": 0
+    },
+    {
+      "name": "Rancho Cordova",
+      "slug": "rancho-cordova",
+      "salonCount": 0
+    },
+    {
+      "name": "Redwood City",
+      "slug": "redwood-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Rocklin",
+      "slug": "rocklin",
+      "salonCount": 0
+    },
+    {
+      "name": "San Carlos",
+      "slug": "san-carlos",
+      "salonCount": 0
+    },
+    {
+      "name": "San Gabriel",
+      "slug": "san-gabriel",
+      "salonCount": 0
+    },
+    {
+      "name": "San Juan Capistrano",
+      "slug": "san-juan-capistrano",
+      "salonCount": 0
+    },
+    {
+      "name": "San Luis Obispo",
+      "slug": "san-luis-obispo",
+      "salonCount": 0
+    },
+    {
+      "name": "Santa Barbara",
+      "slug": "santa-barbara",
+      "salonCount": 0
+    },
+    {
+      "name": "Santee",
+      "slug": "santee",
+      "salonCount": 0
+    },
+    {
+      "name": "Saratoga",
+      "slug": "saratoga",
+      "salonCount": 0
+    },
+    {
+      "name": "Seal Beach",
+      "slug": "seal-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "Signal Hill",
+      "slug": "signal-hill",
+      "salonCount": 0
+    },
+    {
+      "name": "South San Francisco",
+      "slug": "south-san-francisco",
+      "salonCount": 0
+    },
+    {
+      "name": "Stanton",
+      "slug": "stanton",
+      "salonCount": 0
+    },
+    {
+      "name": "Thousand Oaks",
+      "slug": "thousand-oaks",
+      "salonCount": 0
+    },
+    {
+      "name": "Upland",
+      "slug": "upland",
+      "salonCount": 0
+    },
+    {
+      "name": "West Covina",
+      "slug": "west-covina",
+      "salonCount": 0
+    },
+    {
+      "name": "West Sacramento",
+      "slug": "west-sacramento",
+      "salonCount": 0
+    },
+    {
+      "name": "Westminster",
+      "slug": "westminster",
+      "salonCount": 0
+    },
+    {
+      "name": "Yuba City",
+      "slug": "yuba-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Atascadero",
+      "slug": "atascadero",
+      "salonCount": 0
+    },
+    {
+      "name": "Morro Bay",
+      "slug": "morro-bay",
+      "salonCount": 0
+    },
+    {
+      "name": "Pismo Beach",
+      "slug": "pismo-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "Solvang",
+      "slug": "solvang",
+      "salonCount": 0
+    },
+    {
+      "name": "Buellton",
+      "slug": "buellton",
+      "salonCount": 0
+    },
+    {
+      "name": "King City",
+      "slug": "king-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Soledad",
+      "slug": "soledad",
+      "salonCount": 0
+    },
+    {
+      "name": "Greenfield",
+      "slug": "greenfield",
+      "salonCount": 0
+    },
+    {
+      "name": "Gonzales",
+      "slug": "gonzales",
+      "salonCount": 0
+    },
+    {
+      "name": "Carmel-by-the-Sea",
+      "slug": "carmel-by-the-sea",
+      "salonCount": 0
+    },
+    {
+      "name": "Pacific Grove",
+      "slug": "pacific-grove",
+      "salonCount": 0
+    },
+    {
+      "name": "Seaside",
+      "slug": "seaside",
+      "salonCount": 0
+    },
+    {
+      "name": "Fort Bragg",
+      "slug": "fort-bragg",
+      "salonCount": 0
+    },
+    {
+      "name": "Eureka",
+      "slug": "eureka",
+      "salonCount": 0
+    },
+    {
+      "name": "Arcata",
+      "slug": "arcata",
+      "salonCount": 0
+    },
+    {
+      "name": "McKinleyville",
+      "slug": "mckinleyville",
+      "salonCount": 0
+    },
+    {
+      "name": "Crescent City",
+      "slug": "crescent-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Weed",
+      "slug": "weed",
+      "salonCount": 0
+    },
+    {
+      "name": "Mount Shasta",
+      "slug": "mount-shasta",
+      "salonCount": 0
+    },
+    {
+      "name": "Yreka",
+      "slug": "yreka",
+      "salonCount": 0
+    },
+    {
+      "name": "Dunsmuir",
+      "slug": "dunsmuir",
+      "salonCount": 0
+    },
+    {
+      "name": "Anderson",
+      "slug": "anderson",
+      "salonCount": 0
+    },
+    {
+      "name": "Red Bluff",
+      "slug": "red-bluff",
+      "salonCount": 0
+    },
+    {
+      "name": "Corning",
+      "slug": "corning",
+      "salonCount": 0
+    },
+    {
+      "name": "Orland",
+      "slug": "orland",
+      "salonCount": 0
+    },
+    {
+      "name": "Willows",
+      "slug": "willows",
+      "salonCount": 0
+    },
+    {
+      "name": "Gridley",
+      "slug": "gridley",
+      "salonCount": 0
+    },
+    {
+      "name": "Oroville",
+      "slug": "oroville",
+      "salonCount": 0
+    },
+    {
+      "name": "Paradise",
+      "slug": "paradise",
+      "salonCount": 0
+    },
+    {
+      "name": "Truckee",
+      "slug": "truckee",
+      "salonCount": 0
+    },
+    {
+      "name": "South Lake Tahoe",
+      "slug": "south-lake-tahoe",
+      "salonCount": 0
+    },
+    {
+      "name": "Mammoth Lakes",
+      "slug": "mammoth-lakes",
+      "salonCount": 0
+    },
+    {
+      "name": "Bishop",
+      "slug": "bishop",
+      "salonCount": 0
+    },
+    {
+      "name": "Ridgecrest",
+      "slug": "ridgecrest",
+      "salonCount": 0
+    },
+    {
+      "name": "Barstow",
+      "slug": "barstow",
+      "salonCount": 0
+    },
+    {
+      "name": "Big Bear Lake",
+      "slug": "big-bear-lake",
+      "salonCount": 0
+    },
+    {
+      "name": "Idyllwild",
+      "slug": "idyllwild",
+      "salonCount": 0
+    },
+    {
+      "name": "Oakhurst",
+      "slug": "oakhurst",
+      "salonCount": 0
+    },
+    {
+      "name": "Coalinga",
+      "slug": "coalinga",
+      "salonCount": 0
+    },
+    {
+      "name": "Lemoore",
+      "slug": "lemoore",
+      "salonCount": 0
+    },
+    {
+      "name": "Corcoran",
+      "slug": "corcoran",
+      "salonCount": 0
+    },
+    {
+      "name": "Delano",
+      "slug": "delano",
+      "salonCount": 0
+    },
+    {
+      "name": "Wasco",
+      "slug": "wasco",
+      "salonCount": 0
+    },
+    {
+      "name": "Arvin",
+      "slug": "arvin",
+      "salonCount": 0
+    },
+    {
+      "name": "Tehachapi",
+      "slug": "tehachapi",
+      "salonCount": 0
+    },
+    {
+      "name": "Shafter",
+      "slug": "shafter",
+      "salonCount": 0
+    },
+    {
+      "name": "Blythe",
+      "slug": "blythe",
+      "salonCount": 0
+    },
+    {
+      "name": "El Centro",
+      "slug": "el-centro",
+      "salonCount": 0
+    },
+    {
+      "name": "Calexico",
+      "slug": "calexico",
+      "salonCount": 0
+    },
+    {
+      "name": "Holtville",
+      "slug": "holtville",
+      "salonCount": 0
+    },
+    {
+      "name": "Brawley",
+      "slug": "brawley",
+      "salonCount": 0
+    },
+    {
+      "name": "Imperial",
+      "slug": "imperial",
+      "salonCount": 0
+    },
+    {
+      "name": "Coronado",
+      "slug": "coronado",
+      "salonCount": 0
+    },
+    {
+      "name": "Del Mar",
+      "slug": "del-mar",
+      "salonCount": 0
+    },
+    {
+      "name": "Encinitas",
+      "slug": "encinitas",
+      "salonCount": 0
+    },
+    {
+      "name": "Solana Beach",
+      "slug": "solana-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "Poway",
+      "slug": "poway",
+      "salonCount": 0
+    },
+    {
+      "name": "Ramona",
+      "slug": "ramona",
+      "salonCount": 0
+    },
+    {
+      "name": "Julian",
+      "slug": "julian",
+      "salonCount": 0
+    },
+    {
+      "name": "Valley Center",
+      "slug": "valley-center",
+      "salonCount": 0
+    },
+    {
+      "name": "Spring Valley",
+      "slug": "spring-valley",
+      "salonCount": 0
+    },
+    {
+      "name": "Lemon Grove",
+      "slug": "lemon-grove",
+      "salonCount": 0
+    },
+    {
+      "name": "Lakeside",
+      "slug": "lakeside",
+      "salonCount": 0
+    },
+    {
+      "name": "El Cajon",
+      "slug": "el-cajon",
+      "salonCount": 0
+    },
+    {
+      "name": "National City",
+      "slug": "national-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Imperial Beach",
+      "slug": "imperial-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "San Ysidro",
+      "slug": "san-ysidro",
+      "salonCount": 0
+    },
+    {
+      "name": "Borrego Springs",
+      "slug": "borrego-springs",
+      "salonCount": 0
+    },
+    {
+      "name": "Calipatria",
+      "slug": "calipatria",
+      "salonCount": 0
+    },
+    {
+      "name": "Westmorland",
+      "slug": "westmorland",
+      "salonCount": 0
+    },
+    {
+      "name": "Niland",
+      "slug": "niland",
+      "salonCount": 0
+    },
+    {
+      "name": "Mecca",
+      "slug": "mecca",
+      "salonCount": 0
+    },
+    {
+      "name": "Thermal",
+      "slug": "thermal",
+      "salonCount": 0
+    },
+    {
+      "name": "Coachella",
+      "slug": "coachella",
+      "salonCount": 0
+    },
+    {
+      "name": "Bermuda Dunes",
+      "slug": "bermuda-dunes",
+      "salonCount": 0
+    },
+    {
+      "name": "Rancho Mirage",
+      "slug": "rancho-mirage",
+      "salonCount": 0
+    },
+    {
+      "name": "Palm Desert",
+      "slug": "palm-desert",
+      "salonCount": 0
+    },
+    {
+      "name": "Palm Springs",
+      "slug": "palm-springs",
+      "salonCount": 0
+    },
+    {
+      "name": "Cathedral City",
+      "slug": "cathedral-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Desert Hot Springs",
+      "slug": "desert-hot-springs",
+      "salonCount": 0
+    },
+    {
+      "name": "La Quinta",
+      "slug": "la-quinta",
+      "salonCount": 0
+    },
+    {
+      "name": "Indian Wells",
+      "slug": "indian-wells",
+      "salonCount": 0
+    },
+    {
+      "name": "Twentynine Palms",
+      "slug": "twentynine-palms",
+      "salonCount": 0
+    },
+    {
+      "name": "Yucca Valley",
+      "slug": "yucca-valley",
+      "salonCount": 0
+    },
+    {
+      "name": "Big Bear City",
+      "slug": "big-bear-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Lake Arrowhead",
+      "slug": "lake-arrowhead",
+      "salonCount": 0
+    },
+    {
+      "name": "Wrightwood",
+      "slug": "wrightwood",
+      "salonCount": 0
+    },
+    {
+      "name": "Crestline",
+      "slug": "crestline",
+      "salonCount": 0
+    },
+    {
+      "name": "Running Springs",
+      "slug": "running-springs",
+      "salonCount": 0
+    },
+    {
+      "name": "Hemet",
+      "slug": "hemet",
+      "salonCount": 0
+    },
+    {
+      "name": "San Jacinto",
+      "slug": "san-jacinto",
+      "salonCount": 0
+    },
+    {
+      "name": "Banning",
+      "slug": "banning",
+      "salonCount": 0
+    },
+    {
+      "name": "Beaumont",
+      "slug": "beaumont",
+      "salonCount": 0
+    },
+    {
+      "name": "Calimesa",
+      "slug": "calimesa",
+      "salonCount": 0
+    },
+    {
+      "name": "Yucaipa",
+      "slug": "yucaipa",
+      "salonCount": 0
+    },
+    {
+      "name": "Wildomar",
+      "slug": "wildomar",
+      "salonCount": 0
+    },
+    {
+      "name": "Lake Elsinore",
+      "slug": "lake-elsinore",
+      "salonCount": 0
+    },
+    {
+      "name": "Canyon Lake",
+      "slug": "canyon-lake",
+      "salonCount": 0
+    },
+    {
+      "name": "Norco",
+      "slug": "norco",
+      "salonCount": 0
+    },
+    {
+      "name": "Eastvale",
+      "slug": "eastvale",
+      "salonCount": 0
+    },
+    {
+      "name": "Colton",
+      "slug": "colton",
+      "salonCount": 0
+    },
+    {
+      "name": "Loma Linda",
+      "slug": "loma-linda",
+      "salonCount": 0
+    },
+    {
+      "name": "Grand Terrace",
+      "slug": "grand-terrace",
+      "salonCount": 0
+    },
+    {
+      "name": "Highland",
+      "slug": "highland",
+      "salonCount": 0
+    },
+    {
+      "name": "Mentone",
+      "slug": "mentone",
+      "salonCount": 0
+    },
+    {
+      "name": "Baldwin Park",
+      "slug": "baldwin-park",
+      "salonCount": 0
+    },
+    {
+      "name": "Azusa",
+      "slug": "azusa",
+      "salonCount": 0
+    },
+    {
+      "name": "Covina",
+      "slug": "covina",
+      "salonCount": 0
+    },
+    {
+      "name": "La Verne",
+      "slug": "la-verne",
+      "salonCount": 0
+    },
+    {
+      "name": "San Dimas",
+      "slug": "san-dimas",
+      "salonCount": 0
+    },
+    {
+      "name": "Glendora",
+      "slug": "glendora",
+      "salonCount": 0
+    },
+    {
+      "name": "Sierra Madre",
+      "slug": "sierra-madre",
+      "salonCount": 0
+    },
+    {
+      "name": "Duarte",
+      "slug": "duarte",
+      "salonCount": 0
+    },
+    {
+      "name": "Temple City",
+      "slug": "temple-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Rosemead",
+      "slug": "rosemead",
+      "salonCount": 0
+    },
+    {
+      "name": "San Marino",
+      "slug": "san-marino",
+      "salonCount": 0
+    },
+    {
+      "name": "Alhambra",
+      "slug": "alhambra",
+      "salonCount": 0
+    },
+    {
+      "name": "South Pasadena",
+      "slug": "south-pasadena",
+      "salonCount": 0
+    },
+    {
+      "name": "South El Monte",
+      "slug": "south-el-monte",
+      "salonCount": 0
+    },
+    {
+      "name": "Maywood",
+      "slug": "maywood",
+      "salonCount": 0
+    },
+    {
+      "name": "Bell Gardens",
+      "slug": "bell-gardens",
+      "salonCount": 0
+    },
+    {
+      "name": "Bell",
+      "slug": "bell",
+      "salonCount": 0
+    },
+    {
+      "name": "Cudahy",
+      "slug": "cudahy",
+      "salonCount": 0
+    },
+    {
+      "name": "Commerce",
+      "slug": "commerce",
+      "salonCount": 0
+    },
+    {
+      "name": "Huntington Park",
+      "slug": "huntington-park",
+      "salonCount": 0
+    },
+    {
+      "name": "Walnut Park",
+      "slug": "walnut-park",
+      "salonCount": 0
+    },
+    {
+      "name": "Lennox",
+      "slug": "lennox",
+      "salonCount": 0
+    },
+    {
+      "name": "Marina del Rey",
+      "slug": "marina-del-rey",
+      "salonCount": 0
+    },
+    {
+      "name": "West Hollywood",
+      "slug": "west-hollywood",
+      "salonCount": 0
+    },
+    {
+      "name": "Beverly Hills",
+      "slug": "beverly-hills",
+      "salonCount": 0
+    },
+    {
+      "name": "Malibu",
+      "slug": "malibu",
+      "salonCount": 0
+    },
+    {
+      "name": "Calabasas",
+      "slug": "calabasas",
+      "salonCount": 0
+    },
+    {
+      "name": "Agoura Hills",
+      "slug": "agoura-hills",
+      "salonCount": 0
+    },
+    {
+      "name": "Westlake Village",
+      "slug": "westlake-village",
+      "salonCount": 0
+    },
+    {
+      "name": "Simi Valley",
+      "slug": "simi-valley",
+      "salonCount": 0
+    },
+    {
+      "name": "Moorpark",
+      "slug": "moorpark",
+      "salonCount": 0
+    },
+    {
+      "name": "Port Hueneme",
+      "slug": "port-hueneme",
+      "salonCount": 0
+    },
+    {
+      "name": "Fillmore",
+      "slug": "fillmore",
+      "salonCount": 0
+    },
+    {
+      "name": "Santa Paula",
+      "slug": "santa-paula",
+      "salonCount": 0
+    },
+    {
+      "name": "Ojai",
+      "slug": "ojai",
+      "salonCount": 0
+    },
+    {
+      "name": "Carpinteria",
+      "slug": "carpinteria",
+      "salonCount": 0
+    },
+    {
+      "name": "Montecito",
+      "slug": "montecito",
+      "salonCount": 0
+    },
+    {
+      "name": "Summerland",
+      "slug": "summerland",
+      "salonCount": 0
+    },
+    {
+      "name": "Isla Vista",
+      "slug": "isla-vista",
+      "salonCount": 0
+    },
+    {
+      "name": "Santa Ynez",
+      "slug": "santa-ynez",
+      "salonCount": 0
+    },
+    {
+      "name": "Los Olivos",
+      "slug": "los-olivos",
+      "salonCount": 0
+    },
+    {
+      "name": "Orcutt",
+      "slug": "orcutt",
+      "salonCount": 0
+    },
+    {
+      "name": "Guadalupe",
+      "slug": "guadalupe",
+      "salonCount": 0
+    },
+    {
+      "name": "Nipomo",
+      "slug": "nipomo",
+      "salonCount": 0
+    },
+    {
+      "name": "Arroyo Grande",
+      "slug": "arroyo-grande",
+      "salonCount": 0
+    },
+    {
+      "name": "Grover Beach",
+      "slug": "grover-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "Oceano",
+      "slug": "oceano",
+      "salonCount": 0
+    },
+    {
+      "name": "Cambria",
+      "slug": "cambria",
+      "salonCount": 0
+    },
+    {
+      "name": "San Simeon",
+      "slug": "san-simeon",
+      "salonCount": 0
+    },
+    {
+      "name": "Cayucos",
+      "slug": "cayucos",
+      "salonCount": 0
+    },
+    {
+      "name": "Los Osos",
+      "slug": "los-osos",
+      "salonCount": 0
+    },
+    {
+      "name": "Paso Robles",
+      "slug": "paso-robles",
+      "salonCount": 0
+    },
+    {
+      "name": "Templeton",
+      "slug": "templeton",
+      "salonCount": 0
+    },
+    {
+      "name": "Shandon",
+      "slug": "shandon",
+      "salonCount": 0
+    },
+    {
+      "name": "Santa Margarita",
+      "slug": "santa-margarita",
+      "salonCount": 0
+    },
+    {
+      "name": "Creston",
+      "slug": "creston",
+      "salonCount": 0
+    },
+    {
+      "name": "Avenal",
+      "slug": "avenal",
+      "salonCount": 0
+    },
+    {
+      "name": "Kerman",
+      "slug": "kerman",
+      "salonCount": 0
+    },
+    {
+      "name": "Sanger",
+      "slug": "sanger",
+      "salonCount": 0
+    },
+    {
+      "name": "Parlier",
+      "slug": "parlier",
+      "salonCount": 0
+    },
+    {
+      "name": "Reedley",
+      "slug": "reedley",
+      "salonCount": 0
+    },
+    {
+      "name": "Orange Cove",
+      "slug": "orange-cove",
+      "salonCount": 0
+    },
+    {
+      "name": "Dinuba",
+      "slug": "dinuba",
+      "salonCount": 0
+    },
+    {
+      "name": "Lindsay",
+      "slug": "lindsay",
+      "salonCount": 0
+    },
+    {
+      "name": "Exeter",
+      "slug": "exeter",
+      "salonCount": 0
+    },
+    {
+      "name": "Farmersville",
+      "slug": "farmersville",
+      "salonCount": 0
+    },
+    {
+      "name": "Strathmore",
+      "slug": "strathmore",
+      "salonCount": 0
+    },
+    {
+      "name": "Earlimart",
+      "slug": "earlimart",
+      "salonCount": 0
+    },
+    {
+      "name": "Pixley",
+      "slug": "pixley",
+      "salonCount": 0
+    },
+    {
+      "name": "Terra Bella",
+      "slug": "terra-bella",
+      "salonCount": 0
+    },
+    {
+      "name": "Tipton",
+      "slug": "tipton",
+      "salonCount": 0
+    },
+    {
+      "name": "Lost Hills",
+      "slug": "lost-hills",
+      "salonCount": 0
+    },
+    {
+      "name": "McFarland",
+      "slug": "mcfarland",
+      "salonCount": 0
+    },
+    {
+      "name": "Kernville",
+      "slug": "kernville",
+      "salonCount": 0
+    },
+    {
+      "name": "Lake Isabella",
+      "slug": "lake-isabella",
+      "salonCount": 0
+    },
+    {
+      "name": "Oildale",
+      "slug": "oildale",
+      "salonCount": 0
+    },
+    {
+      "name": "Buttonwillow",
+      "slug": "buttonwillow",
+      "salonCount": 0
+    },
+    {
+      "name": "Lamont",
+      "slug": "lamont",
+      "salonCount": 0
+    },
+    {
+      "name": "Weedpatch",
+      "slug": "weedpatch",
+      "salonCount": 0
+    },
+    {
+      "name": "Edison",
+      "slug": "edison",
+      "salonCount": 0
+    },
+    {
+      "name": "Calwa",
+      "slug": "calwa",
+      "salonCount": 0
+    },
+    {
+      "name": "Clovis",
+      "slug": "clovis",
+      "salonCount": 0
+    },
+    {
+      "name": "Selma",
+      "slug": "selma",
+      "salonCount": 0
+    },
+    {
+      "name": "Kingsburg",
+      "slug": "kingsburg",
+      "salonCount": 0
+    },
+    {
+      "name": "Fowler",
+      "slug": "fowler",
+      "salonCount": 0
+    },
+    {
+      "name": "Lathrop",
+      "slug": "lathrop",
+      "salonCount": 0
+    },
+    {
+      "name": "Ripon",
+      "slug": "ripon",
+      "salonCount": 0
+    },
+    {
+      "name": "Salida",
+      "slug": "salida",
+      "salonCount": 0
+    },
+    {
+      "name": "Ceres",
+      "slug": "ceres",
+      "salonCount": 0
+    },
+    {
+      "name": "Turlock",
+      "slug": "turlock",
+      "salonCount": 0
+    },
+    {
+      "name": "Patterson",
+      "slug": "patterson",
+      "salonCount": 0
+    },
+    {
+      "name": "Newman",
+      "slug": "newman",
+      "salonCount": 0
+    },
+    {
+      "name": "Gustine",
+      "slug": "gustine",
+      "salonCount": 0
+    },
+    {
+      "name": "Livingston",
+      "slug": "livingston",
+      "salonCount": 0
+    },
+    {
+      "name": "Atwater",
+      "slug": "atwater",
+      "salonCount": 0
+    },
+    {
+      "name": "Winton",
+      "slug": "winton",
+      "salonCount": 0
+    },
+    {
+      "name": "Delhi",
+      "slug": "delhi",
+      "salonCount": 0
+    },
+    {
+      "name": "Dos Palos",
+      "slug": "dos-palos",
+      "salonCount": 0
+    },
+    {
+      "name": "Los Banos",
+      "slug": "los-banos",
+      "salonCount": 0
+    },
+    {
+      "name": "Chowchilla",
+      "slug": "chowchilla",
+      "salonCount": 0
+    },
+    {
+      "name": "Madera",
+      "slug": "madera",
+      "salonCount": 0
+    },
+    {
+      "name": "Yosemite Lakes Park",
+      "slug": "yosemite-lakes-park",
+      "salonCount": 0
+    },
+    {
+      "name": "Mariposa",
+      "slug": "mariposa",
+      "salonCount": 0
+    },
+    {
+      "name": "Groveland",
+      "slug": "groveland",
+      "salonCount": 0
+    },
+    {
+      "name": "Sonora",
+      "slug": "sonora",
+      "salonCount": 0
+    },
+    {
+      "name": "Jamestown",
+      "slug": "jamestown",
+      "salonCount": 0
+    },
+    {
+      "name": "Columbia",
+      "slug": "columbia",
+      "salonCount": 0
+    },
+    {
+      "name": "Angels Camp",
+      "slug": "angels-camp",
+      "salonCount": 0
+    },
+    {
+      "name": "Murphys",
+      "slug": "murphys",
+      "salonCount": 0
+    },
+    {
+      "name": "Arnold",
+      "slug": "arnold",
+      "salonCount": 0
+    },
+    {
+      "name": "Soulsbyville",
+      "slug": "soulsbyville",
+      "salonCount": 0
+    },
+    {
+      "name": "Twain Harte",
+      "slug": "twain-harte",
+      "salonCount": 0
+    },
+    {
+      "name": "Pinecrest",
+      "slug": "pinecrest",
+      "salonCount": 0
+    },
+    {
+      "name": "Bridgeport",
+      "slug": "bridgeport",
+      "salonCount": 0
+    },
+    {
+      "name": "Lee Vining",
+      "slug": "lee-vining",
+      "salonCount": 0
+    },
+    {
+      "name": "June Lake",
+      "slug": "june-lake",
+      "salonCount": 0
+    },
+    {
+      "name": "Big Pine",
+      "slug": "big-pine",
+      "salonCount": 0
+    },
+    {
+      "name": "Lone Pine",
+      "slug": "lone-pine",
+      "salonCount": 0
+    },
+    {
+      "name": "Independence",
+      "slug": "independence",
+      "salonCount": 0
+    },
+    {
+      "name": "Tecopa",
+      "slug": "tecopa",
+      "salonCount": 0
+    },
+    {
+      "name": "Baker",
+      "slug": "baker",
+      "salonCount": 0
+    },
+    {
+      "name": "Needles",
+      "slug": "needles",
+      "salonCount": 0
+    },
+    {
+      "name": "Parker Dam",
+      "slug": "parker-dam",
+      "salonCount": 0
+    },
+    {
+      "name": "Winterhaven",
+      "slug": "winterhaven",
+      "salonCount": 0
+    },
+    {
+      "name": "Bard",
+      "slug": "bard",
+      "salonCount": 0
+    },
+    {
+      "name": "Seeley",
+      "slug": "seeley",
+      "salonCount": 0
+    },
+    {
+      "name": "Heber",
+      "slug": "heber",
+      "salonCount": 0
+    },
+    {
+      "name": "Palo Verde",
+      "slug": "palo-verde",
+      "salonCount": 0
+    },
+    {
+      "name": "Earp",
+      "slug": "earp",
+      "salonCount": 0
+    },
+    {
+      "name": "Vidal",
+      "slug": "vidal",
+      "salonCount": 0
+    },
+    {
+      "name": "Hinkley",
+      "slug": "hinkley",
+      "salonCount": 0
+    },
+    {
+      "name": "Helendale",
+      "slug": "helendale",
+      "salonCount": 0
+    },
+    {
+      "name": "Oro Grande",
+      "slug": "oro-grande",
+      "salonCount": 0
+    },
+    {
+      "name": "Apple Valley",
+      "slug": "apple-valley",
+      "salonCount": 0
+    },
+    {
+      "name": "Lucerne Valley",
+      "slug": "lucerne-valley",
+      "salonCount": 0
+    },
+    {
+      "name": "Adelanto",
+      "slug": "adelanto",
+      "salonCount": 0
+    },
+    {
+      "name": "Phelan",
+      "slug": "phelan",
+      "salonCount": 0
+    },
+    {
+      "name": "Pinon Hills",
+      "slug": "pinon-hills",
+      "salonCount": 0
+    },
+    {
+      "name": "Lytle Creek",
+      "slug": "lytle-creek",
+      "salonCount": 0
+    },
+    {
+      "name": "Devore",
+      "slug": "devore",
+      "salonCount": 0
+    },
+    {
+      "name": "Meyers",
+      "slug": "meyers",
+      "salonCount": 0
+    },
+    {
+      "name": "Bijou",
+      "slug": "bijou",
+      "salonCount": 0
+    },
+    {
+      "name": "Tahoe City",
+      "slug": "tahoe-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Tahoe Vista",
+      "slug": "tahoe-vista",
+      "salonCount": 0
+    },
+    {
+      "name": "Kings Beach",
+      "slug": "kings-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "Carnelian Bay",
+      "slug": "carnelian-bay",
+      "salonCount": 0
+    },
+    {
+      "name": "Homewood",
+      "slug": "homewood",
+      "salonCount": 0
+    },
+    {
+      "name": "Tahoma",
+      "slug": "tahoma",
+      "salonCount": 0
+    },
+    {
+      "name": "Soda Springs",
+      "slug": "soda-springs",
+      "salonCount": 0
+    },
+    {
+      "name": "Portola",
+      "slug": "portola",
+      "salonCount": 0
+    },
+    {
+      "name": "Loyalton",
+      "slug": "loyalton",
+      "salonCount": 0
+    },
+    {
+      "name": "Downieville",
+      "slug": "downieville",
+      "salonCount": 0
+    },
+    {
+      "name": "Sierraville",
+      "slug": "sierraville",
+      "salonCount": 0
+    },
+    {
+      "name": "Greenville",
+      "slug": "greenville",
+      "salonCount": 0
+    },
+    {
+      "name": "Quincy",
+      "slug": "quincy",
+      "salonCount": 0
+    },
+    {
+      "name": "Chester",
+      "slug": "chester",
+      "salonCount": 0
+    },
+    {
+      "name": "Graeagle",
+      "slug": "graeagle",
+      "salonCount": 0
+    },
+    {
+      "name": "Taylorsville",
+      "slug": "taylorsville",
+      "salonCount": 0
+    },
+    {
+      "name": "Doyle",
+      "slug": "doyle",
+      "salonCount": 0
+    },
+    {
+      "name": "Herlong",
+      "slug": "herlong",
+      "salonCount": 0
+    },
+    {
+      "name": "Susanville",
+      "slug": "susanville",
+      "salonCount": 0
+    },
+    {
+      "name": "Janesville",
+      "slug": "janesville",
+      "salonCount": 0
+    },
+    {
+      "name": "Standish",
+      "slug": "standish",
+      "salonCount": 0
+    },
+    {
+      "name": "Bieber",
+      "slug": "bieber",
+      "salonCount": 0
+    },
+    {
+      "name": "Fall River Mills",
+      "slug": "fall-river-mills",
+      "salonCount": 0
+    },
+    {
+      "name": "Burney",
+      "slug": "burney",
+      "salonCount": 0
+    },
+    {
+      "name": "Old Station",
+      "slug": "old-station",
+      "salonCount": 0
+    },
+    {
+      "name": "Shasta Lake",
+      "slug": "shasta-lake",
+      "salonCount": 0
+    },
+    {
+      "name": "Cottonwood",
+      "slug": "cottonwood",
+      "salonCount": 0
+    },
+    {
+      "name": "Palo Cedro",
+      "slug": "palo-cedro",
+      "salonCount": 0
+    },
+    {
+      "name": "Millville",
+      "slug": "millville",
+      "salonCount": 0
+    },
+    {
+      "name": "Shingletown",
+      "slug": "shingletown",
+      "salonCount": 0
+    },
+    {
+      "name": "Happy Camp",
+      "slug": "happy-camp",
+      "salonCount": 0
+    },
+    {
+      "name": "Forks of Salmon",
+      "slug": "forks-of-salmon",
+      "salonCount": 0
+    },
+    {
+      "name": "Somes Bar",
+      "slug": "somes-bar",
+      "salonCount": 0
+    },
+    {
+      "name": "Orleans",
+      "slug": "orleans",
+      "salonCount": 0
+    },
+    {
+      "name": "Hoopa",
+      "slug": "hoopa",
+      "salonCount": 0
+    },
+    {
+      "name": "Willow Creek",
+      "slug": "willow-creek",
+      "salonCount": 0
+    },
+    {
+      "name": "Weott",
+      "slug": "weott",
+      "salonCount": 0
+    },
+    {
+      "name": "Garberville",
+      "slug": "garberville",
+      "salonCount": 0
+    },
+    {
+      "name": "Redway",
+      "slug": "redway",
+      "salonCount": 0
+    },
+    {
+      "name": "Miranda",
+      "slug": "miranda",
+      "salonCount": 0
+    },
+    {
+      "name": "Petrolia",
+      "slug": "petrolia",
+      "salonCount": 0
+    },
+    {
+      "name": "Honeydew",
+      "slug": "honeydew",
+      "salonCount": 0
+    },
+    {
+      "name": "Rio Dell",
+      "slug": "rio-dell",
+      "salonCount": 0
+    },
+    {
+      "name": "Fortuna",
+      "slug": "fortuna",
+      "salonCount": 0
+    },
+    {
+      "name": "Loleta",
+      "slug": "loleta",
+      "salonCount": 0
+    },
+    {
+      "name": "Fields Landing",
+      "slug": "fields-landing",
+      "salonCount": 0
+    },
+    {
+      "name": "Cutten",
+      "slug": "cutten",
+      "salonCount": 0
+    },
+    {
+      "name": "Myrtletown",
+      "slug": "myrtletown",
+      "salonCount": 0
+    },
+    {
+      "name": "Manila",
+      "slug": "manila",
+      "salonCount": 0
+    },
+    {
+      "name": "Samoa",
+      "slug": "samoa",
+      "salonCount": 0
+    },
+    {
+      "name": "Kneeland",
+      "slug": "kneeland",
+      "salonCount": 0
+    },
+    {
+      "name": "Maple Creek",
+      "slug": "maple-creek",
+      "salonCount": 0
+    },
+    {
+      "name": "Trinity Center",
+      "slug": "trinity-center",
+      "salonCount": 0
+    },
+    {
+      "name": "Lewiston",
+      "slug": "lewiston",
+      "salonCount": 0
+    },
+    {
+      "name": "Weaverville",
+      "slug": "weaverville",
+      "salonCount": 0
+    },
+    {
+      "name": "Douglas City",
+      "slug": "douglas-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Hayfork",
+      "slug": "hayfork",
+      "salonCount": 0
+    },
+    {
+      "name": "Big Bar",
+      "slug": "big-bar",
+      "salonCount": 0
+    },
+    {
+      "name": "Burnt Ranch",
+      "slug": "burnt-ranch",
+      "salonCount": 0
+    },
+    {
+      "name": "Coffee Creek",
+      "slug": "coffee-creek",
+      "salonCount": 0
+    },
+    {
+      "name": "Hyampom",
+      "slug": "hyampom",
+      "salonCount": 0
+    },
+    {
+      "name": "Ruth",
+      "slug": "ruth",
+      "salonCount": 0
+    },
+    {
+      "name": "Etna",
+      "slug": "etna",
+      "salonCount": 0
+    },
+    {
+      "name": "Fort Jones",
+      "slug": "fort-jones",
+      "salonCount": 0
+    },
+    {
+      "name": "Dorris",
+      "slug": "dorris",
+      "salonCount": 0
+    },
+    {
+      "name": "Tulelake",
+      "slug": "tulelake",
+      "salonCount": 0
+    },
+    {
+      "name": "Tennant",
+      "slug": "tennant",
+      "salonCount": 0
+    },
+    {
+      "name": "Macdoel",
+      "slug": "macdoel",
+      "salonCount": 0
+    },
+    {
+      "name": "Gazelle",
+      "slug": "gazelle",
+      "salonCount": 0
+    },
+    {
+      "name": "Hornbrook",
+      "slug": "hornbrook",
+      "salonCount": 0
+    },
+    {
+      "name": "Klamath",
+      "slug": "klamath",
+      "salonCount": 0
+    },
+    {
+      "name": "Trinidad",
+      "slug": "trinidad",
+      "salonCount": 0
+    },
+    {
+      "name": "Bayside",
+      "slug": "bayside",
+      "salonCount": 0
+    },
+    {
+      "name": "Ferndale",
+      "slug": "ferndale",
+      "salonCount": 0
+    },
+    {
+      "name": "Pepperwood",
+      "slug": "pepperwood",
+      "salonCount": 0
+    },
+    {
+      "name": "Scotia",
+      "slug": "scotia",
+      "salonCount": 0
+    },
+    {
+      "name": "Carlotta",
+      "slug": "carlotta",
+      "salonCount": 0
+    },
+    {
+      "name": "Myers Flat",
+      "slug": "myers-flat",
+      "salonCount": 0
+    },
+    {
+      "name": "Phillipsville",
+      "slug": "phillipsville",
+      "salonCount": 0
+    },
+    {
+      "name": "Shelter Cove",
+      "slug": "shelter-cove",
+      "salonCount": 0
+    },
+    {
+      "name": "Benbow",
+      "slug": "benbow",
+      "salonCount": 0
+    },
+    {
+      "name": "Leggett",
+      "slug": "leggett",
+      "salonCount": 0
+    },
+    {
+      "name": "Laytonville",
+      "slug": "laytonville",
+      "salonCount": 0
+    },
+    {
+      "name": "Piercy",
+      "slug": "piercy",
+      "salonCount": 0
+    },
+    {
+      "name": "Covelo",
+      "slug": "covelo",
+      "salonCount": 0
+    },
+    {
+      "name": "Dos Rios",
+      "slug": "dos-rios",
+      "salonCount": 0
+    },
+    {
+      "name": "Willits",
+      "slug": "willits",
+      "salonCount": 0
+    },
+    {
+      "name": "Redwood Valley",
+      "slug": "redwood-valley",
+      "salonCount": 0
+    },
+    {
+      "name": "Ukiah",
+      "slug": "ukiah",
+      "salonCount": 0
+    },
+    {
+      "name": "Potter Valley",
+      "slug": "potter-valley",
+      "salonCount": 0
+    },
+    {
+      "name": "Hopland",
+      "slug": "hopland",
+      "salonCount": 0
+    },
+    {
+      "name": "Philo",
+      "slug": "philo",
+      "salonCount": 0
+    },
+    {
+      "name": "Boonville",
+      "slug": "boonville",
+      "salonCount": 0
+    },
+    {
+      "name": "Gualala",
+      "slug": "gualala",
+      "salonCount": 0
+    },
+    {
+      "name": "Point Arena",
+      "slug": "point-arena",
+      "salonCount": 0
+    },
+    {
+      "name": "Anchor Bay",
+      "slug": "anchor-bay",
+      "salonCount": 0
+    },
+    {
+      "name": "Sea Ranch",
+      "slug": "sea-ranch",
+      "salonCount": 0
+    },
+    {
+      "name": "Elk",
+      "slug": "elk",
+      "salonCount": 0
+    },
+    {
+      "name": "Albion",
+      "slug": "albion",
+      "salonCount": 0
+    },
+    {
+      "name": "Mendocino",
+      "slug": "mendocino",
+      "salonCount": 0
+    },
+    {
+      "name": "Little River",
+      "slug": "little-river",
+      "salonCount": 0
+    },
+    {
+      "name": "Comptche",
+      "slug": "comptche",
+      "salonCount": 0
+    },
+    {
+      "name": "Clearlake",
+      "slug": "clearlake",
+      "salonCount": 0
+    },
+    {
+      "name": "Lakeport",
+      "slug": "lakeport",
+      "salonCount": 0
+    },
+    {
+      "name": "Lower Lake",
+      "slug": "lower-lake",
+      "salonCount": 0
+    },
+    {
+      "name": "Kelseyville",
+      "slug": "kelseyville",
+      "salonCount": 0
+    },
+    {
+      "name": "Lucerne",
+      "slug": "lucerne",
+      "salonCount": 0
+    },
+    {
+      "name": "Nice",
+      "slug": "nice",
+      "salonCount": 0
+    },
+    {
+      "name": "Upper Lake",
+      "slug": "upper-lake",
+      "salonCount": 0
+    },
+    {
+      "name": "Cobb",
+      "slug": "cobb",
+      "salonCount": 0
+    },
+    {
+      "name": "Hidden Valley Lake",
+      "slug": "hidden-valley-lake",
+      "salonCount": 0
+    },
+    {
+      "name": "Middletown",
+      "slug": "middletown",
+      "salonCount": 0
+    },
+    {
+      "name": "Angwin",
+      "slug": "angwin",
+      "salonCount": 0
+    },
+    {
+      "name": "St Helena",
+      "slug": "st-helena",
+      "salonCount": 0
+    },
+    {
+      "name": "Yountville",
+      "slug": "yountville",
+      "salonCount": 0
+    },
+    {
+      "name": "Rutherford",
+      "slug": "rutherford",
+      "salonCount": 0
+    },
+    {
+      "name": "Oakville",
+      "slug": "oakville",
+      "salonCount": 0
+    },
+    {
+      "name": "Sonoma",
+      "slug": "sonoma",
+      "salonCount": 0
+    },
+    {
+      "name": "Boyes Hot Springs",
+      "slug": "boyes-hot-springs",
+      "salonCount": 0
+    },
+    {
+      "name": "Eldridge",
+      "slug": "eldridge",
+      "salonCount": 0
+    },
+    {
+      "name": "Glen Ellen",
+      "slug": "glen-ellen",
+      "salonCount": 0
+    },
+    {
+      "name": "Kenwood",
+      "slug": "kenwood",
+      "salonCount": 0
+    },
+    {
+      "name": "Windsor",
+      "slug": "windsor",
+      "salonCount": 0
+    },
+    {
+      "name": "Healdsburg",
+      "slug": "healdsburg",
+      "salonCount": 0
+    },
+    {
+      "name": "Geyserville",
+      "slug": "geyserville",
+      "salonCount": 0
+    },
+    {
+      "name": "Cloverdale",
+      "slug": "cloverdale",
+      "salonCount": 0
+    },
+    {
+      "name": "Occidental",
+      "slug": "occidental",
+      "salonCount": 0
+    },
+    {
+      "name": "Graton",
+      "slug": "graton",
+      "salonCount": 0
+    },
+    {
+      "name": "Forestville",
+      "slug": "forestville",
+      "salonCount": 0
+    },
+    {
+      "name": "Guerneville",
+      "slug": "guerneville",
+      "salonCount": 0
+    },
+    {
+      "name": "Monte Rio",
+      "slug": "monte-rio",
+      "salonCount": 0
+    },
+    {
+      "name": "Duncans Mills",
+      "slug": "duncans-mills",
+      "salonCount": 0
+    },
+    {
+      "name": "Jenner",
+      "slug": "jenner",
+      "salonCount": 0
+    },
+    {
+      "name": "Bodega Bay",
+      "slug": "bodega-bay",
+      "salonCount": 0
+    },
+    {
+      "name": "Cotati",
+      "slug": "cotati",
+      "salonCount": 0
+    },
+    {
+      "name": "Penngrove",
+      "slug": "penngrove",
+      "salonCount": 0
+    },
+    {
+      "name": "Sebastopol",
+      "slug": "sebastopol",
+      "salonCount": 0
+    },
+    {
+      "name": "Larkspur",
+      "slug": "larkspur",
+      "salonCount": 0
+    },
+    {
+      "name": "Mill Valley",
+      "slug": "mill-valley",
+      "salonCount": 0
+    },
+    {
+      "name": "Corte Madera",
+      "slug": "corte-madera",
+      "salonCount": 0
+    },
+    {
+      "name": "Sausalito",
+      "slug": "sausalito",
+      "salonCount": 0
+    },
+    {
+      "name": "Tiburon",
+      "slug": "tiburon",
+      "salonCount": 0
+    },
+    {
+      "name": "Belvedere",
+      "slug": "belvedere",
+      "salonCount": 0
+    },
+    {
+      "name": "Kentfield",
+      "slug": "kentfield",
+      "salonCount": 0
+    },
+    {
+      "name": "Greenbrae",
+      "slug": "greenbrae",
+      "salonCount": 0
+    },
+    {
+      "name": "Fairfax",
+      "slug": "fairfax",
+      "salonCount": 0
+    },
+    {
+      "name": "San Anselmo",
+      "slug": "san-anselmo",
+      "salonCount": 0
+    },
+    {
+      "name": "Ross",
+      "slug": "ross",
+      "salonCount": 0
+    },
+    {
+      "name": "Forest Knolls",
+      "slug": "forest-knolls",
+      "salonCount": 0
+    },
+    {
+      "name": "Woodacre",
+      "slug": "woodacre",
+      "salonCount": 0
+    },
+    {
+      "name": "Inverness",
+      "slug": "inverness",
+      "salonCount": 0
+    },
+    {
+      "name": "Point Reyes Station",
+      "slug": "point-reyes-station",
+      "salonCount": 0
+    },
+    {
+      "name": "Stinson Beach",
+      "slug": "stinson-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "Bolinas",
+      "slug": "bolinas",
+      "salonCount": 0
+    },
+    {
+      "name": "Lagunitas",
+      "slug": "lagunitas",
+      "salonCount": 0
+    },
+    {
+      "name": "Nicasio",
+      "slug": "nicasio",
+      "salonCount": 0
+    },
+    {
+      "name": "Hamilton City",
+      "slug": "hamilton-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Dixon",
+      "slug": "dixon",
+      "salonCount": 0
+    },
+    {
+      "name": "Winters",
+      "slug": "winters",
+      "salonCount": 0
+    },
+    {
+      "name": "Rio Vista",
+      "slug": "rio-vista",
+      "salonCount": 0
+    },
+    {
+      "name": "Isleton",
+      "slug": "isleton",
+      "salonCount": 0
+    },
+    {
+      "name": "Galt",
+      "slug": "galt",
+      "salonCount": 0
+    },
+    {
+      "name": "Wilton",
+      "slug": "wilton",
+      "salonCount": 0
+    },
+    {
+      "name": "El Dorado Hills",
+      "slug": "el-dorado-hills",
+      "salonCount": 0
+    },
+    {
+      "name": "Cameron Park",
+      "slug": "cameron-park",
+      "salonCount": 0
+    },
+    {
+      "name": "Shingle Springs",
+      "slug": "shingle-springs",
+      "salonCount": 0
+    },
+    {
+      "name": "Placerville",
+      "slug": "placerville",
+      "salonCount": 0
+    },
+    {
+      "name": "Pollock Pines",
+      "slug": "pollock-pines",
+      "salonCount": 0
+    },
+    {
+      "name": "Diamond Springs",
+      "slug": "diamond-springs",
+      "salonCount": 0
+    },
+    {
+      "name": "Rescue",
+      "slug": "rescue",
+      "salonCount": 0
+    },
+    {
+      "name": "Coloma",
+      "slug": "coloma",
+      "salonCount": 0
+    },
+    {
+      "name": "Cool",
+      "slug": "cool",
+      "salonCount": 0
+    },
+    {
+      "name": "Auburn",
+      "slug": "auburn",
+      "salonCount": 0
+    },
+    {
+      "name": "Applegate",
+      "slug": "applegate",
+      "salonCount": 0
+    },
+    {
+      "name": "Penryn",
+      "slug": "penryn",
+      "salonCount": 0
+    },
+    {
+      "name": "Loomis",
+      "slug": "loomis",
+      "salonCount": 0
+    },
+    {
+      "name": "Granite Bay",
+      "slug": "granite-bay",
+      "salonCount": 0
+    },
+    {
+      "name": "Lincoln",
+      "slug": "lincoln",
+      "salonCount": 0
+    },
+    {
+      "name": "Newcastle",
+      "slug": "newcastle",
+      "salonCount": 0
+    },
+    {
+      "name": "Colfax",
+      "slug": "colfax",
+      "salonCount": 0
+    },
+    {
+      "name": "Grass Valley",
+      "slug": "grass-valley",
+      "salonCount": 0
+    },
+    {
+      "name": "Nevada City",
+      "slug": "nevada-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Rough and Ready",
+      "slug": "rough-and-ready",
+      "salonCount": 0
+    },
+    {
+      "name": "Penn Valley",
+      "slug": "penn-valley",
+      "salonCount": 0
+    },
+    {
+      "name": "Cedar Ridge",
+      "slug": "cedar-ridge",
+      "salonCount": 0
+    },
+    {
+      "name": "Chicago Park",
+      "slug": "chicago-park",
+      "salonCount": 0
+    },
+    {
+      "name": "North San Juan",
+      "slug": "north-san-juan",
+      "salonCount": 0
+    },
+    {
+      "name": "Smartsville",
+      "slug": "smartsville",
+      "salonCount": 0
+    },
+    {
+      "name": "Browns Valley",
+      "slug": "browns-valley",
+      "salonCount": 0
+    },
+    {
+      "name": "Oregon House",
+      "slug": "oregon-house",
+      "salonCount": 0
+    },
+    {
+      "name": "Marysville",
+      "slug": "marysville",
+      "salonCount": 0
+    },
+    {
+      "name": "Linda",
+      "slug": "linda",
+      "salonCount": 0
+    },
+    {
+      "name": "Olivehurst",
+      "slug": "olivehurst",
+      "salonCount": 0
+    },
+    {
+      "name": "Live Oak",
+      "slug": "live-oak",
+      "salonCount": 0
+    },
+    {
+      "name": "Sutter",
+      "slug": "sutter",
+      "salonCount": 0
+    },
+    {
+      "name": "Meridian",
+      "slug": "meridian",
+      "salonCount": 0
+    },
+    {
+      "name": "Robbins",
+      "slug": "robbins",
+      "salonCount": 0
+    },
+    {
+      "name": "Rio Oso",
+      "slug": "rio-oso",
+      "salonCount": 0
+    },
+    {
+      "name": "Wheatland",
+      "slug": "wheatland",
+      "salonCount": 0
+    },
+    {
+      "name": "Arbuckle",
+      "slug": "arbuckle",
+      "salonCount": 0
+    },
+    {
+      "name": "Williams",
+      "slug": "williams",
+      "salonCount": 0
+    },
+    {
+      "name": "Maxwell",
+      "slug": "maxwell",
+      "salonCount": 0
+    },
+    {
+      "name": "Colusa",
+      "slug": "colusa",
+      "salonCount": 0
+    },
+    {
+      "name": "Princeton",
+      "slug": "princeton",
+      "salonCount": 0
+    },
+    {
+      "name": "Glenn",
+      "slug": "glenn",
+      "salonCount": 0
+    },
+    {
+      "name": "Durham",
+      "slug": "durham",
+      "salonCount": 0
+    },
+    {
+      "name": "Magalia",
+      "slug": "magalia",
+      "salonCount": 0
+    },
+    {
+      "name": "Thermalito",
+      "slug": "thermalito",
+      "salonCount": 0
+    },
+    {
+      "name": "Palermo",
+      "slug": "palermo",
+      "salonCount": 0
+    },
+    {
+      "name": "Biggs",
+      "slug": "biggs",
+      "salonCount": 0
+    },
+    {
+      "name": "Richvale",
+      "slug": "richvale",
+      "salonCount": 0
+    },
+    {
+      "name": "Forbestown",
+      "slug": "forbestown",
+      "salonCount": 0
+    },
+    {
+      "name": "Challenge",
+      "slug": "challenge",
+      "salonCount": 0
+    },
+    {
+      "name": "Bangor",
+      "slug": "bangor",
+      "salonCount": 0
+    },
+    {
+      "name": "Berry Creek",
+      "slug": "berry-creek",
+      "salonCount": 0
+    },
+    {
+      "name": "Brownsville",
+      "slug": "brownsville",
+      "salonCount": 0
+    },
+    {
+      "name": "Dobbins",
+      "slug": "dobbins",
+      "salonCount": 0
+    },
+    {
+      "name": "Rackerby",
+      "slug": "rackerby",
+      "salonCount": 0
+    },
+    {
+      "name": "Oroville East",
+      "slug": "oroville-east",
+      "salonCount": 0
+    },
+    {
+      "name": "Cohasset",
+      "slug": "cohasset",
+      "salonCount": 0
+    },
+    {
+      "name": "Forest Ranch",
+      "slug": "forest-ranch",
+      "salonCount": 0
+    },
+    {
+      "name": "Stirling City",
+      "slug": "stirling-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Georgetown",
+      "slug": "georgetown",
+      "salonCount": 0
+    },
+    {
+      "name": "Garden Valley",
+      "slug": "garden-valley",
+      "salonCount": 0
+    },
+    {
+      "name": "Pilot Hill",
+      "slug": "pilot-hill",
+      "salonCount": 0
+    },
+    {
+      "name": "Camino",
+      "slug": "camino",
+      "salonCount": 0
+    },
+    {
+      "name": "El Dorado",
+      "slug": "el-dorado",
+      "salonCount": 0
+    },
+    {
+      "name": "Dillon Beach",
+      "slug": "dillon-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "Tomales",
+      "slug": "tomales",
+      "salonCount": 0
+    },
+    {
+      "name": "Valley Ford",
+      "slug": "valley-ford",
+      "salonCount": 0
+    },
+    {
+      "name": "Bloomfield",
+      "slug": "bloomfield",
+      "salonCount": 0
+    }
+  ]
+}

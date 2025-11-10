@@ -1,0 +1,403 @@
+{
+  "state": "Delaware",
+  "stateCode": "DE",
+  "generatedAt": "2025-11-06T10:19:35.432Z",
+  "citiesCount": 79,
+  "cities": [
+    {
+      "name": "Angola",
+      "slug": "angola",
+      "salonCount": 0
+    },
+    {
+      "name": "Arden",
+      "slug": "arden",
+      "salonCount": 0
+    },
+    {
+      "name": "Ardencroft",
+      "slug": "ardencroft",
+      "salonCount": 0
+    },
+    {
+      "name": "Ardentown",
+      "slug": "ardentown",
+      "salonCount": 0
+    },
+    {
+      "name": "Bear",
+      "slug": "bear",
+      "salonCount": 0
+    },
+    {
+      "name": "Bellefonte",
+      "slug": "bellefonte",
+      "salonCount": 0
+    },
+    {
+      "name": "Bethany Beach",
+      "slug": "bethany-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "Blades",
+      "slug": "blades",
+      "salonCount": 0
+    },
+    {
+      "name": "Bowers Beach",
+      "slug": "bowers-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "Bridgeville",
+      "slug": "bridgeville",
+      "salonCount": 0
+    },
+    {
+      "name": "Brookside",
+      "slug": "brookside",
+      "salonCount": 0
+    },
+    {
+      "name": "Camden",
+      "slug": "camden",
+      "salonCount": 0
+    },
+    {
+      "name": "Cheswold",
+      "slug": "cheswold",
+      "salonCount": 0
+    },
+    {
+      "name": "Claymont",
+      "slug": "claymont",
+      "salonCount": 0
+    },
+    {
+      "name": "Dagsboro",
+      "slug": "dagsboro",
+      "salonCount": 0
+    },
+    {
+      "name": "Delaware City",
+      "slug": "delaware-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Delmar",
+      "slug": "delmar",
+      "salonCount": 0
+    },
+    {
+      "name": "Dewey Beach",
+      "slug": "dewey-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "Dover",
+      "slug": "dover",
+      "salonCount": 0
+    },
+    {
+      "name": "Edgemoor",
+      "slug": "edgemoor",
+      "salonCount": 0
+    },
+    {
+      "name": "Ellendale",
+      "slug": "ellendale",
+      "salonCount": 0
+    },
+    {
+      "name": "Elsmere",
+      "slug": "elsmere",
+      "salonCount": 0
+    },
+    {
+      "name": "Farmington",
+      "slug": "farmington",
+      "salonCount": 0
+    },
+    {
+      "name": "Felton",
+      "slug": "felton",
+      "salonCount": 0
+    },
+    {
+      "name": "Fenwick Island",
+      "slug": "fenwick-island",
+      "salonCount": 0
+    },
+    {
+      "name": "Five Points",
+      "slug": "five-points",
+      "salonCount": 0
+    },
+    {
+      "name": "Frankford",
+      "slug": "frankford",
+      "salonCount": 0
+    },
+    {
+      "name": "Frederica",
+      "slug": "frederica",
+      "salonCount": 0
+    },
+    {
+      "name": "Georgetown",
+      "slug": "georgetown",
+      "salonCount": 0
+    },
+    {
+      "name": "Gills Neck",
+      "slug": "gills-neck",
+      "salonCount": 0
+    },
+    {
+      "name": "Glasgow",
+      "slug": "glasgow",
+      "salonCount": 0
+    },
+    {
+      "name": "Greenville",
+      "slug": "greenville",
+      "salonCount": 0
+    },
+    {
+      "name": "Greenwood",
+      "slug": "greenwood",
+      "salonCount": 0
+    },
+    {
+      "name": "Harbeson",
+      "slug": "harbeson",
+      "salonCount": 0
+    },
+    {
+      "name": "Harrington",
+      "slug": "harrington",
+      "salonCount": 0
+    },
+    {
+      "name": "Hartly",
+      "slug": "hartly",
+      "salonCount": 0
+    },
+    {
+      "name": "Hockessin",
+      "slug": "hockessin",
+      "salonCount": 0
+    },
+    {
+      "name": "Houston",
+      "slug": "houston",
+      "salonCount": 0
+    },
+    {
+      "name": "Kenton",
+      "slug": "kenton",
+      "salonCount": 0
+    },
+    {
+      "name": "Laurel",
+      "slug": "laurel",
+      "salonCount": 0
+    },
+    {
+      "name": "Leipsic",
+      "slug": "leipsic",
+      "salonCount": 0
+    },
+    {
+      "name": "Lewes",
+      "slug": "lewes",
+      "salonCount": 0
+    },
+    {
+      "name": "Lincoln",
+      "slug": "lincoln",
+      "salonCount": 0
+    },
+    {
+      "name": "Little Creek",
+      "slug": "little-creek",
+      "salonCount": 0
+    },
+    {
+      "name": "Little Heaven",
+      "slug": "little-heaven",
+      "salonCount": 0
+    },
+    {
+      "name": "Long Neck",
+      "slug": "long-neck",
+      "salonCount": 0
+    },
+    {
+      "name": "Magnolia",
+      "slug": "magnolia",
+      "salonCount": 0
+    },
+    {
+      "name": "Marshallton",
+      "slug": "marshallton",
+      "salonCount": 0
+    },
+    {
+      "name": "Middletown",
+      "slug": "middletown",
+      "salonCount": 0
+    },
+    {
+      "name": "Milford",
+      "slug": "milford",
+      "salonCount": 0
+    },
+    {
+      "name": "Millsboro",
+      "slug": "millsboro",
+      "salonCount": 0
+    },
+    {
+      "name": "Millville",
+      "slug": "millville",
+      "salonCount": 0
+    },
+    {
+      "name": "Milton",
+      "slug": "milton",
+      "salonCount": 0
+    },
+    {
+      "name": "Nassau",
+      "slug": "nassau",
+      "salonCount": 0
+    },
+    {
+      "name": "Newark",
+      "slug": "newark",
+      "salonCount": 0
+    },
+    {
+      "name": "New Castle",
+      "slug": "new-castle",
+      "salonCount": 0
+    },
+    {
+      "name": "Newport",
+      "slug": "newport",
+      "salonCount": 0
+    },
+    {
+      "name": "North Star",
+      "slug": "north-star",
+      "salonCount": 0
+    },
+    {
+      "name": "Oak Orchard",
+      "slug": "oak-orchard",
+      "salonCount": 0
+    },
+    {
+      "name": "Ocean View",
+      "slug": "ocean-view",
+      "salonCount": 0
+    },
+    {
+      "name": "Odessa",
+      "slug": "odessa",
+      "salonCount": 0
+    },
+    {
+      "name": "Pike Creek",
+      "slug": "pike-creek",
+      "salonCount": 0
+    },
+    {
+      "name": "Rehoboth Beach",
+      "slug": "rehoboth-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "Rising Sun-Lebanon",
+      "slug": "rising-sun-lebanon",
+      "salonCount": 0
+    },
+    {
+      "name": "Roxana",
+      "slug": "roxana",
+      "salonCount": 0
+    },
+    {
+      "name": "Seaford",
+      "slug": "seaford",
+      "salonCount": 0
+    },
+    {
+      "name": "Selbyville",
+      "slug": "selbyville",
+      "salonCount": 0
+    },
+    {
+      "name": "Slaughter Beach",
+      "slug": "slaughter-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "Smyrna",
+      "slug": "smyrna",
+      "salonCount": 0
+    },
+    {
+      "name": "South Bethany",
+      "slug": "south-bethany",
+      "salonCount": 0
+    },
+    {
+      "name": "St. Georges",
+      "slug": "st-georges",
+      "salonCount": 0
+    },
+    {
+      "name": "Stanton",
+      "slug": "stanton",
+      "salonCount": 0
+    },
+    {
+      "name": "Talleyville",
+      "slug": "talleyville",
+      "salonCount": 0
+    },
+    {
+      "name": "Townsend",
+      "slug": "townsend",
+      "salonCount": 0
+    },
+    {
+      "name": "Viola",
+      "slug": "viola",
+      "salonCount": 0
+    },
+    {
+      "name": "West Fenwick Island",
+      "slug": "west-fenwick-island",
+      "salonCount": 0
+    },
+    {
+      "name": "Wilmington",
+      "slug": "wilmington",
+      "salonCount": 0
+    },
+    {
+      "name": "Woodside",
+      "slug": "woodside",
+      "salonCount": 0
+    },
+    {
+      "name": "Wyoming",
+      "slug": "wyoming",
+      "salonCount": 0
+    }
+  ]
+}

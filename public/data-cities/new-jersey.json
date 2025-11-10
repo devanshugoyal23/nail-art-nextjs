@@ -1,0 +1,813 @@
+{
+  "state": "New Jersey",
+  "stateCode": "NJ",
+  "generatedAt": "2025-11-06T10:23:48.209Z",
+  "citiesCount": 161,
+  "cities": [
+    {
+      "name": "Newark",
+      "slug": "newark",
+      "salonCount": 0
+    },
+    {
+      "name": "Jersey City",
+      "slug": "jersey-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Paterson",
+      "slug": "paterson",
+      "salonCount": 0
+    },
+    {
+      "name": "Elizabeth",
+      "slug": "elizabeth",
+      "salonCount": 0
+    },
+    {
+      "name": "Trenton",
+      "slug": "trenton",
+      "salonCount": 0
+    },
+    {
+      "name": "Atlantic City",
+      "slug": "atlantic-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Camden",
+      "slug": "camden",
+      "salonCount": 0
+    },
+    {
+      "name": "Edison",
+      "slug": "edison",
+      "salonCount": 0
+    },
+    {
+      "name": "Woodbridge",
+      "slug": "woodbridge",
+      "salonCount": 0
+    },
+    {
+      "name": "Lakewood",
+      "slug": "lakewood",
+      "salonCount": 0
+    },
+    {
+      "name": "Toms River",
+      "slug": "toms-river",
+      "salonCount": 0
+    },
+    {
+      "name": "Hamilton",
+      "slug": "hamilton",
+      "salonCount": 0
+    },
+    {
+      "name": "Clifton",
+      "slug": "clifton",
+      "salonCount": 0
+    },
+    {
+      "name": "Cherry Hill",
+      "slug": "cherry-hill",
+      "salonCount": 0
+    },
+    {
+      "name": "Middletown",
+      "slug": "middletown",
+      "salonCount": 0
+    },
+    {
+      "name": "Union City",
+      "slug": "union-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Old Bridge",
+      "slug": "old-bridge",
+      "salonCount": 0
+    },
+    {
+      "name": "Gloucester Township",
+      "slug": "gloucester-township",
+      "salonCount": 0
+    },
+    {
+      "name": "Bayonne",
+      "slug": "bayonne",
+      "salonCount": 0
+    },
+    {
+      "name": "East Orange",
+      "slug": "east-orange",
+      "salonCount": 0
+    },
+    {
+      "name": "North Bergen",
+      "slug": "north-bergen",
+      "salonCount": 0
+    },
+    {
+      "name": "Vineland",
+      "slug": "vineland",
+      "salonCount": 0
+    },
+    {
+      "name": "Union",
+      "slug": "union",
+      "salonCount": 0
+    },
+    {
+      "name": "Piscataway",
+      "slug": "piscataway",
+      "salonCount": 0
+    },
+    {
+      "name": "New Brunswick",
+      "slug": "new-brunswick",
+      "salonCount": 0
+    },
+    {
+      "name": "Perth Amboy",
+      "slug": "perth-amboy",
+      "salonCount": 0
+    },
+    {
+      "name": "Hoboken",
+      "slug": "hoboken",
+      "salonCount": 0
+    },
+    {
+      "name": "West New York",
+      "slug": "west-new-york",
+      "salonCount": 0
+    },
+    {
+      "name": "Plainfield",
+      "slug": "plainfield",
+      "salonCount": 0
+    },
+    {
+      "name": "Parsippany-Troy Hills",
+      "slug": "parsippany-troy-hills",
+      "salonCount": 0
+    },
+    {
+      "name": "Irvington",
+      "slug": "irvington",
+      "salonCount": 0
+    },
+    {
+      "name": "Bloomfield",
+      "slug": "bloomfield",
+      "salonCount": 0
+    },
+    {
+      "name": "Long Branch",
+      "slug": "long-branch",
+      "salonCount": 0
+    },
+    {
+      "name": "Sayreville",
+      "slug": "sayreville",
+      "salonCount": 0
+    },
+    {
+      "name": "Kearny",
+      "slug": "kearny",
+      "salonCount": 0
+    },
+    {
+      "name": "Linden",
+      "slug": "linden",
+      "salonCount": 0
+    },
+    {
+      "name": "Fair Lawn",
+      "slug": "fair-lawn",
+      "salonCount": 0
+    },
+    {
+      "name": "Belleville",
+      "slug": "belleville",
+      "salonCount": 0
+    },
+    {
+      "name": "Ewing",
+      "slug": "ewing",
+      "salonCount": 0
+    },
+    {
+      "name": "Wayne",
+      "slug": "wayne",
+      "salonCount": 0
+    },
+    {
+      "name": "Montclair",
+      "slug": "montclair",
+      "salonCount": 0
+    },
+    {
+      "name": "Hackensack",
+      "slug": "hackensack",
+      "salonCount": 0
+    },
+    {
+      "name": "Manalapan",
+      "slug": "manalapan",
+      "salonCount": 0
+    },
+    {
+      "name": "Franklin",
+      "slug": "franklin",
+      "salonCount": 0
+    },
+    {
+      "name": "Livingston",
+      "slug": "livingston",
+      "salonCount": 0
+    },
+    {
+      "name": "Bridgewater",
+      "slug": "bridgewater",
+      "salonCount": 0
+    },
+    {
+      "name": "Rahway",
+      "slug": "rahway",
+      "salonCount": 0
+    },
+    {
+      "name": "Westfield",
+      "slug": "westfield",
+      "salonCount": 0
+    },
+    {
+      "name": "Englewood",
+      "slug": "englewood",
+      "salonCount": 0
+    },
+    {
+      "name": "Paramus",
+      "slug": "paramus",
+      "salonCount": 0
+    },
+    {
+      "name": "Morristown",
+      "slug": "morristown",
+      "salonCount": 0
+    },
+    {
+      "name": "Princeton",
+      "slug": "princeton",
+      "salonCount": 0
+    },
+    {
+      "name": "Summit",
+      "slug": "summit",
+      "salonCount": 0
+    },
+    {
+      "name": "Red Bank",
+      "slug": "red-bank",
+      "salonCount": 0
+    },
+    {
+      "name": "Freehold",
+      "slug": "freehold",
+      "salonCount": 0
+    },
+    {
+      "name": "Denville",
+      "slug": "denville",
+      "salonCount": 0
+    },
+    {
+      "name": "Rockaway",
+      "slug": "rockaway",
+      "salonCount": 0
+    },
+    {
+      "name": "Dover",
+      "slug": "dover",
+      "salonCount": 0
+    },
+    {
+      "name": "Rutherford",
+      "slug": "rutherford",
+      "salonCount": 0
+    },
+    {
+      "name": "Nutley",
+      "slug": "nutley",
+      "salonCount": 0
+    },
+    {
+      "name": "Garfield",
+      "slug": "garfield",
+      "salonCount": 0
+    },
+    {
+      "name": "Fort Lee",
+      "slug": "fort-lee",
+      "salonCount": 0
+    },
+    {
+      "name": "Teaneck",
+      "slug": "teaneck",
+      "salonCount": 0
+    },
+    {
+      "name": "Ramsey",
+      "slug": "ramsey",
+      "salonCount": 0
+    },
+    {
+      "name": "Mahwah",
+      "slug": "mahwah",
+      "salonCount": 0
+    },
+    {
+      "name": "Ridgewood",
+      "slug": "ridgewood",
+      "salonCount": 0
+    },
+    {
+      "name": "Hasbrouck Heights",
+      "slug": "hasbrouck-heights",
+      "salonCount": 0
+    },
+    {
+      "name": "Lodi",
+      "slug": "lodi",
+      "salonCount": 0
+    },
+    {
+      "name": "Secaucus",
+      "slug": "secaucus",
+      "salonCount": 0
+    },
+    {
+      "name": "Weehawken",
+      "slug": "weehawken",
+      "salonCount": 0
+    },
+    {
+      "name": "Harrison",
+      "slug": "harrison",
+      "salonCount": 0
+    },
+    {
+      "name": "South Amboy",
+      "slug": "south-amboy",
+      "salonCount": 0
+    },
+    {
+      "name": "Hazlet",
+      "slug": "hazlet",
+      "salonCount": 0
+    },
+    {
+      "name": "Holmdel",
+      "slug": "holmdel",
+      "salonCount": 0
+    },
+    {
+      "name": "Aberdeen",
+      "slug": "aberdeen",
+      "salonCount": 0
+    },
+    {
+      "name": "Marlboro",
+      "slug": "marlboro",
+      "salonCount": 0
+    },
+    {
+      "name": "Howell",
+      "slug": "howell",
+      "salonCount": 0
+    },
+    {
+      "name": "Jackson",
+      "slug": "jackson",
+      "salonCount": 0
+    },
+    {
+      "name": "Brick",
+      "slug": "brick",
+      "salonCount": 0
+    },
+    {
+      "name": "Berkeley",
+      "slug": "berkeley",
+      "salonCount": 0
+    },
+    {
+      "name": "Manchester",
+      "slug": "manchester",
+      "salonCount": 0
+    },
+    {
+      "name": "Stafford",
+      "slug": "stafford",
+      "salonCount": 0
+    },
+    {
+      "name": "Barnegat",
+      "slug": "barnegat",
+      "salonCount": 0
+    },
+    {
+      "name": "Point Pleasant Beach",
+      "slug": "point-pleasant-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "Point Pleasant Borough",
+      "slug": "point-pleasant-borough",
+      "salonCount": 0
+    },
+    {
+      "name": "Wall",
+      "slug": "wall",
+      "salonCount": 0
+    },
+    {
+      "name": "Neptune",
+      "slug": "neptune",
+      "salonCount": 0
+    },
+    {
+      "name": "Asbury Park",
+      "slug": "asbury-park",
+      "salonCount": 0
+    },
+    {
+      "name": "Ocean Township",
+      "slug": "ocean-township",
+      "salonCount": 0
+    },
+    {
+      "name": "Belmar",
+      "slug": "belmar",
+      "salonCount": 0
+    },
+    {
+      "name": "Spring Lake",
+      "slug": "spring-lake",
+      "salonCount": 0
+    },
+    {
+      "name": "Manasquan",
+      "slug": "manasquan",
+      "salonCount": 0
+    },
+    {
+      "name": "Eatontown",
+      "slug": "eatontown",
+      "salonCount": 0
+    },
+    {
+      "name": "Tinton Falls",
+      "slug": "tinton-falls",
+      "salonCount": 0
+    },
+    {
+      "name": "Shrewsbury",
+      "slug": "shrewsbury",
+      "salonCount": 0
+    },
+    {
+      "name": "Rumson",
+      "slug": "rumson",
+      "salonCount": 0
+    },
+    {
+      "name": "Cranford",
+      "slug": "cranford",
+      "salonCount": 0
+    },
+    {
+      "name": "Scotch Plains",
+      "slug": "scotch-plains",
+      "salonCount": 0
+    },
+    {
+      "name": "Springfield",
+      "slug": "springfield",
+      "salonCount": 0
+    },
+    {
+      "name": "Roselle",
+      "slug": "roselle",
+      "salonCount": 0
+    },
+    {
+      "name": "Clark",
+      "slug": "clark",
+      "salonCount": 0
+    },
+    {
+      "name": "Hillside",
+      "slug": "hillside",
+      "salonCount": 0
+    },
+    {
+      "name": "New Providence",
+      "slug": "new-providence",
+      "salonCount": 0
+    },
+    {
+      "name": "Chatham",
+      "slug": "chatham",
+      "salonCount": 0
+    },
+    {
+      "name": "Madison",
+      "slug": "madison",
+      "salonCount": 0
+    },
+    {
+      "name": "Florham Park",
+      "slug": "florham-park",
+      "salonCount": 0
+    },
+    {
+      "name": "Morris Plains",
+      "slug": "morris-plains",
+      "salonCount": 0
+    },
+    {
+      "name": "Randolph",
+      "slug": "randolph",
+      "salonCount": 0
+    },
+    {
+      "name": "Boonton",
+      "slug": "boonton",
+      "salonCount": 0
+    },
+    {
+      "name": "Montville",
+      "slug": "montville",
+      "salonCount": 0
+    },
+    {
+      "name": "Pompton Lakes",
+      "slug": "pompton-lakes",
+      "salonCount": 0
+    },
+    {
+      "name": "West Milford",
+      "slug": "west-milford",
+      "salonCount": 0
+    },
+    {
+      "name": "Passaic",
+      "slug": "passaic",
+      "salonCount": 0
+    },
+    {
+      "name": "Little Falls",
+      "slug": "little-falls",
+      "salonCount": 0
+    },
+    {
+      "name": "Cedar Grove",
+      "slug": "cedar-grove",
+      "salonCount": 0
+    },
+    {
+      "name": "Verona",
+      "slug": "verona",
+      "salonCount": 0
+    },
+    {
+      "name": "Caldwell",
+      "slug": "caldwell",
+      "salonCount": 0
+    },
+    {
+      "name": "Millburn",
+      "slug": "millburn",
+      "salonCount": 0
+    },
+    {
+      "name": "South Orange",
+      "slug": "south-orange",
+      "salonCount": 0
+    },
+    {
+      "name": "Maplewood",
+      "slug": "maplewood",
+      "salonCount": 0
+    },
+    {
+      "name": "Orange",
+      "slug": "orange",
+      "salonCount": 0
+    },
+    {
+      "name": "West Orange",
+      "slug": "west-orange",
+      "salonCount": 0
+    },
+    {
+      "name": "North Brunswick",
+      "slug": "north-brunswick",
+      "salonCount": 0
+    },
+    {
+      "name": "East Brunswick",
+      "slug": "east-brunswick",
+      "salonCount": 0
+    },
+    {
+      "name": "Monroe",
+      "slug": "monroe",
+      "salonCount": 0
+    },
+    {
+      "name": "South River",
+      "slug": "south-river",
+      "salonCount": 0
+    },
+    {
+      "name": "East Windsor",
+      "slug": "east-windsor",
+      "salonCount": 0
+    },
+    {
+      "name": "West Windsor",
+      "slug": "west-windsor",
+      "salonCount": 0
+    },
+    {
+      "name": "Robbinsville",
+      "slug": "robbinsville",
+      "salonCount": 0
+    },
+    {
+      "name": "Lawrence",
+      "slug": "lawrence",
+      "salonCount": 0
+    },
+    {
+      "name": "Hopewell",
+      "slug": "hopewell",
+      "salonCount": 0
+    },
+    {
+      "name": "Flemington",
+      "slug": "flemington",
+      "salonCount": 0
+    },
+    {
+      "name": "Phillipsburg",
+      "slug": "phillipsburg",
+      "salonCount": 0
+    },
+    {
+      "name": "Hackettstown",
+      "slug": "hackettstown",
+      "salonCount": 0
+    },
+    {
+      "name": "Newton",
+      "slug": "newton",
+      "salonCount": 0
+    },
+    {
+      "name": "Sparta",
+      "slug": "sparta",
+      "salonCount": 0
+    },
+    {
+      "name": "Hopatcong",
+      "slug": "hopatcong",
+      "salonCount": 0
+    },
+    {
+      "name": "Vernon",
+      "slug": "vernon",
+      "salonCount": 0
+    },
+    {
+      "name": "Sussex",
+      "slug": "sussex",
+      "salonCount": 0
+    },
+    {
+      "name": "Salem",
+      "slug": "salem",
+      "salonCount": 0
+    },
+    {
+      "name": "Bridgeton",
+      "slug": "bridgeton",
+      "salonCount": 0
+    },
+    {
+      "name": "Millville",
+      "slug": "millville",
+      "salonCount": 0
+    },
+    {
+      "name": "Swedesboro",
+      "slug": "swedesboro",
+      "salonCount": 0
+    },
+    {
+      "name": "Woodbury",
+      "slug": "woodbury",
+      "salonCount": 0
+    },
+    {
+      "name": "Deptford",
+      "slug": "deptford",
+      "salonCount": 0
+    },
+    {
+      "name": "Washington",
+      "slug": "washington",
+      "salonCount": 0
+    },
+    {
+      "name": "Glassboro",
+      "slug": "glassboro",
+      "salonCount": 0
+    },
+    {
+      "name": "Egg Harbor Township",
+      "slug": "egg-harbor-township",
+      "salonCount": 0
+    },
+    {
+      "name": "Galloway",
+      "slug": "galloway",
+      "salonCount": 0
+    },
+    {
+      "name": "Ocean City",
+      "slug": "ocean-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Evesham",
+      "slug": "evesham",
+      "salonCount": 0
+    },
+    {
+      "name": "Voorhees",
+      "slug": "voorhees",
+      "salonCount": 0
+    },
+    {
+      "name": "Haddonfield",
+      "slug": "haddonfield",
+      "salonCount": 0
+    },
+    {
+      "name": "Collingswood",
+      "slug": "collingswood",
+      "salonCount": 0
+    },
+    {
+      "name": "Audubon",
+      "slug": "audubon",
+      "salonCount": 0
+    },
+    {
+      "name": "Mount Laurel",
+      "slug": "mount-laurel",
+      "salonCount": 0
+    },
+    {
+      "name": "Willingboro",
+      "slug": "willingboro",
+      "salonCount": 0
+    },
+    {
+      "name": "Burlington",
+      "slug": "burlington",
+      "salonCount": 0
+    },
+    {
+      "name": "Medford",
+      "slug": "medford",
+      "salonCount": 0
+    },
+    {
+      "name": "Mount Holly",
+      "slug": "mount-holly",
+      "salonCount": 0
+    },
+    {
+      "name": "Bordentown",
+      "slug": "bordentown",
+      "salonCount": 0
+    }
+  ]
+}

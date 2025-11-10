@@ -1,0 +1,213 @@
+{
+  "state": "Wyoming",
+  "stateCode": "WY",
+  "generatedAt": "2025-11-06T10:25:42.323Z",
+  "citiesCount": 41,
+  "cities": [
+    {
+      "name": "Cheyenne",
+      "slug": "cheyenne",
+      "salonCount": 0
+    },
+    {
+      "name": "Casper",
+      "slug": "casper",
+      "salonCount": 0
+    },
+    {
+      "name": "Laramie",
+      "slug": "laramie",
+      "salonCount": 0
+    },
+    {
+      "name": "Gillette",
+      "slug": "gillette",
+      "salonCount": 0
+    },
+    {
+      "name": "Rock Springs",
+      "slug": "rock-springs",
+      "salonCount": 0
+    },
+    {
+      "name": "Sheridan",
+      "slug": "sheridan",
+      "salonCount": 0
+    },
+    {
+      "name": "Green River",
+      "slug": "green-river",
+      "salonCount": 0
+    },
+    {
+      "name": "Evanston",
+      "slug": "evanston",
+      "salonCount": 0
+    },
+    {
+      "name": "Riverton",
+      "slug": "riverton",
+      "salonCount": 0
+    },
+    {
+      "name": "Cody",
+      "slug": "cody",
+      "salonCount": 0
+    },
+    {
+      "name": "Jackson",
+      "slug": "jackson",
+      "salonCount": 0
+    },
+    {
+      "name": "Rawlins",
+      "slug": "rawlins",
+      "salonCount": 0
+    },
+    {
+      "name": "Lander",
+      "slug": "lander",
+      "salonCount": 0
+    },
+    {
+      "name": "Powell",
+      "slug": "powell",
+      "salonCount": 0
+    },
+    {
+      "name": "Douglas",
+      "slug": "douglas",
+      "salonCount": 0
+    },
+    {
+      "name": "Torrington",
+      "slug": "torrington",
+      "salonCount": 0
+    },
+    {
+      "name": "Worland",
+      "slug": "worland",
+      "salonCount": 0
+    },
+    {
+      "name": "Buffalo",
+      "slug": "buffalo",
+      "salonCount": 0
+    },
+    {
+      "name": "Evansville",
+      "slug": "evansville",
+      "salonCount": 0
+    },
+    {
+      "name": "Wheatland",
+      "slug": "wheatland",
+      "salonCount": 0
+    },
+    {
+      "name": "Newcastle",
+      "slug": "newcastle",
+      "salonCount": 0
+    },
+    {
+      "name": "Thermopolis",
+      "slug": "thermopolis",
+      "salonCount": 0
+    },
+    {
+      "name": "Kemmerer",
+      "slug": "kemmerer",
+      "salonCount": 0
+    },
+    {
+      "name": "Glenrock",
+      "slug": "glenrock",
+      "salonCount": 0
+    },
+    {
+      "name": "Lovell",
+      "slug": "lovell",
+      "salonCount": 0
+    },
+    {
+      "name": "Pinedale",
+      "slug": "pinedale",
+      "salonCount": 0
+    },
+    {
+      "name": "Wright",
+      "slug": "wright",
+      "salonCount": 0
+    },
+    {
+      "name": "Greybull",
+      "slug": "greybull",
+      "salonCount": 0
+    },
+    {
+      "name": "Saratoga",
+      "slug": "saratoga",
+      "salonCount": 0
+    },
+    {
+      "name": "Basin",
+      "slug": "basin",
+      "salonCount": 0
+    },
+    {
+      "name": "Pine Bluffs",
+      "slug": "pine-bluffs",
+      "salonCount": 0
+    },
+    {
+      "name": "Mountain View",
+      "slug": "mountain-view",
+      "salonCount": 0
+    },
+    {
+      "name": "Guernsey",
+      "slug": "guernsey",
+      "salonCount": 0
+    },
+    {
+      "name": "Upton",
+      "slug": "upton",
+      "salonCount": 0
+    },
+    {
+      "name": "Moorcroft",
+      "slug": "moorcroft",
+      "salonCount": 0
+    },
+    {
+      "name": "Ranchester",
+      "slug": "ranchester",
+      "salonCount": 0
+    },
+    {
+      "name": "Dubois",
+      "slug": "dubois",
+      "salonCount": 0
+    },
+    {
+      "name": "Wilson",
+      "slug": "wilson",
+      "salonCount": 0
+    },
+    {
+      "name": "South Greeley",
+      "slug": "south-greeley",
+      "salonCount": 0
+    },
+    {
+      "name": "Marbleton",
+      "slug": "marbleton",
+      "salonCount": 0
+    },
+    {
+      "name": "Diamondville",
+      "slug": "diamondville",
+      "salonCount": 0
+    }
+  ]
+}

@@ -63,9 +63,10 @@ async function getAllSalonsWithScores(): Promise<SalonWithScore[]> {
 
   try {
     // Read city JSON files to get all cities
+    // Using public folder because src/data is not deployed to serverless functions
     const fs = await import('fs/promises');
     const path = await import('path');
-    const citiesDir = path.join(process.cwd(), 'src', 'data', 'cities');
+    const citiesDir = path.join(process.cwd(), 'public', 'data', 'cities');
 
     const files = await fs.readdir(citiesDir);
     const stateFiles = files.filter(file => file.endsWith('.json'));

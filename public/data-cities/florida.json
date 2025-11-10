@@ -1,0 +1,1423 @@
+{
+  "state": "Florida",
+  "stateCode": "FL",
+  "generatedAt": "2025-11-06T10:19:31.701Z",
+  "citiesCount": 283,
+  "cities": [
+    {
+      "name": "Miami",
+      "slug": "miami",
+      "salonCount": 0
+    },
+    {
+      "name": "Fort Lauderdale",
+      "slug": "fort-lauderdale",
+      "salonCount": 0
+    },
+    {
+      "name": "Pompano Beach",
+      "slug": "pompano-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "Hialeah",
+      "slug": "hialeah",
+      "salonCount": 0
+    },
+    {
+      "name": "Miami Beach",
+      "slug": "miami-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "Coral Gables",
+      "slug": "coral-gables",
+      "salonCount": 0
+    },
+    {
+      "name": "Doral",
+      "slug": "doral",
+      "salonCount": 0
+    },
+    {
+      "name": "Boca Raton",
+      "slug": "boca-raton",
+      "salonCount": 0
+    },
+    {
+      "name": "West Palm Beach",
+      "slug": "west-palm-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "Jupiter",
+      "slug": "jupiter",
+      "salonCount": 0
+    },
+    {
+      "name": "Boynton Beach",
+      "slug": "boynton-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "Delray Beach",
+      "slug": "delray-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "Lake Worth Beach",
+      "slug": "lake-worth-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "Palm Beach Gardens",
+      "slug": "palm-beach-gardens",
+      "salonCount": 0
+    },
+    {
+      "name": "Sunrise",
+      "slug": "sunrise",
+      "salonCount": 0
+    },
+    {
+      "name": "Plantation",
+      "slug": "plantation",
+      "salonCount": 0
+    },
+    {
+      "name": "Davie",
+      "slug": "davie",
+      "salonCount": 0
+    },
+    {
+      "name": "Hollywood",
+      "slug": "hollywood",
+      "salonCount": 0
+    },
+    {
+      "name": "Miramar",
+      "slug": "miramar",
+      "salonCount": 0
+    },
+    {
+      "name": "Pembroke Pines",
+      "slug": "pembroke-pines",
+      "salonCount": 0
+    },
+    {
+      "name": "Coral Springs",
+      "slug": "coral-springs",
+      "salonCount": 0
+    },
+    {
+      "name": "Deerfield Beach",
+      "slug": "deerfield-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "Lighthouse Point",
+      "slug": "lighthouse-point",
+      "salonCount": 0
+    },
+    {
+      "name": "North Miami",
+      "slug": "north-miami",
+      "salonCount": 0
+    },
+    {
+      "name": "South Miami",
+      "slug": "south-miami",
+      "salonCount": 0
+    },
+    {
+      "name": "Key Biscayne",
+      "slug": "key-biscayne",
+      "salonCount": 0
+    },
+    {
+      "name": "Homestead",
+      "slug": "homestead",
+      "salonCount": 0
+    },
+    {
+      "name": "Florida City",
+      "slug": "florida-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Opa-locka",
+      "slug": "opa-locka",
+      "salonCount": 0
+    },
+    {
+      "name": "Sunny Isles Beach",
+      "slug": "sunny-isles-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "Aventura",
+      "slug": "aventura",
+      "salonCount": 0
+    },
+    {
+      "name": "Hallandale Beach",
+      "slug": "hallandale-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "Dania Beach",
+      "slug": "dania-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "Coconut Creek",
+      "slug": "coconut-creek",
+      "salonCount": 0
+    },
+    {
+      "name": "Parkland",
+      "slug": "parkland",
+      "salonCount": 0
+    },
+    {
+      "name": "Weston",
+      "slug": "weston",
+      "salonCount": 0
+    },
+    {
+      "name": "Lauderhill",
+      "slug": "lauderhill",
+      "salonCount": 0
+    },
+    {
+      "name": "Tamarac",
+      "slug": "tamarac",
+      "salonCount": 0
+    },
+    {
+      "name": "North Lauderdale",
+      "slug": "north-lauderdale",
+      "salonCount": 0
+    },
+    {
+      "name": "Margate",
+      "slug": "margate",
+      "salonCount": 0
+    },
+    {
+      "name": "Royal Palm Beach",
+      "slug": "royal-palm-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "Wellington",
+      "slug": "wellington",
+      "salonCount": 0
+    },
+    {
+      "name": "Greenacres",
+      "slug": "greenacres",
+      "salonCount": 0
+    },
+    {
+      "name": "Riviera Beach",
+      "slug": "riviera-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "Palm Springs",
+      "slug": "palm-springs",
+      "salonCount": 0
+    },
+    {
+      "name": "Lantana",
+      "slug": "lantana",
+      "salonCount": 0
+    },
+    {
+      "name": "Highland Beach",
+      "slug": "highland-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "Ocean Ridge",
+      "slug": "ocean-ridge",
+      "salonCount": 0
+    },
+    {
+      "name": "Naples",
+      "slug": "naples",
+      "salonCount": 0
+    },
+    {
+      "name": "Marco Island",
+      "slug": "marco-island",
+      "salonCount": 0
+    },
+    {
+      "name": "Bonita Springs",
+      "slug": "bonita-springs",
+      "salonCount": 0
+    },
+    {
+      "name": "Estero",
+      "slug": "estero",
+      "salonCount": 0
+    },
+    {
+      "name": "Fort Myers",
+      "slug": "fort-myers",
+      "salonCount": 0
+    },
+    {
+      "name": "Cape Coral",
+      "slug": "cape-coral",
+      "salonCount": 0
+    },
+    {
+      "name": "Sanibel",
+      "slug": "sanibel",
+      "salonCount": 0
+    },
+    {
+      "name": "Captiva",
+      "slug": "captiva",
+      "salonCount": 0
+    },
+    {
+      "name": "Fort Myers Beach",
+      "slug": "fort-myers-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "Lehigh Acres",
+      "slug": "lehigh-acres",
+      "salonCount": 0
+    },
+    {
+      "name": "Port Charlotte",
+      "slug": "port-charlotte",
+      "salonCount": 0
+    },
+    {
+      "name": "Punta Gorda",
+      "slug": "punta-gorda",
+      "salonCount": 0
+    },
+    {
+      "name": "North Port",
+      "slug": "north-port",
+      "salonCount": 0
+    },
+    {
+      "name": "Sarasota",
+      "slug": "sarasota",
+      "salonCount": 0
+    },
+    {
+      "name": "Bradenton",
+      "slug": "bradenton",
+      "salonCount": 0
+    },
+    {
+      "name": "Venice",
+      "slug": "venice",
+      "salonCount": 0
+    },
+    {
+      "name": "Palmetto",
+      "slug": "palmetto",
+      "salonCount": 0
+    },
+    {
+      "name": "Englewood",
+      "slug": "englewood",
+      "salonCount": 0
+    },
+    {
+      "name": "Tampa",
+      "slug": "tampa",
+      "salonCount": 0
+    },
+    {
+      "name": "St. Petersburg",
+      "slug": "st-petersburg",
+      "salonCount": 0
+    },
+    {
+      "name": "Clearwater",
+      "slug": "clearwater",
+      "salonCount": 0
+    },
+    {
+      "name": "Brandon",
+      "slug": "brandon",
+      "salonCount": 0
+    },
+    {
+      "name": "Dunedin",
+      "slug": "dunedin",
+      "salonCount": 0
+    },
+    {
+      "name": "Largo",
+      "slug": "largo",
+      "salonCount": 0
+    },
+    {
+      "name": "Pinellas Park",
+      "slug": "pinellas-park",
+      "salonCount": 0
+    },
+    {
+      "name": "Seminole",
+      "slug": "seminole",
+      "salonCount": 0
+    },
+    {
+      "name": "Tarpon Springs",
+      "slug": "tarpon-springs",
+      "salonCount": 0
+    },
+    {
+      "name": "Oldsmar",
+      "slug": "oldsmar",
+      "salonCount": 0
+    },
+    {
+      "name": "Palm Harbor",
+      "slug": "palm-harbor",
+      "salonCount": 0
+    },
+    {
+      "name": "New Port Richey",
+      "slug": "new-port-richey",
+      "salonCount": 0
+    },
+    {
+      "name": "Port Richey",
+      "slug": "port-richey",
+      "salonCount": 0
+    },
+    {
+      "name": "Hudson",
+      "slug": "hudson",
+      "salonCount": 0
+    },
+    {
+      "name": "Spring Hill",
+      "slug": "spring-hill",
+      "salonCount": 0
+    },
+    {
+      "name": "Wesley Chapel",
+      "slug": "wesley-chapel",
+      "salonCount": 0
+    },
+    {
+      "name": "Zephyrhills",
+      "slug": "zephyrhills",
+      "salonCount": 0
+    },
+    {
+      "name": "Land O' Lakes",
+      "slug": "land-o-lakes",
+      "salonCount": 0
+    },
+    {
+      "name": "Lakeland",
+      "slug": "lakeland",
+      "salonCount": 0
+    },
+    {
+      "name": "Winter Haven",
+      "slug": "winter-haven",
+      "salonCount": 0
+    },
+    {
+      "name": "Plant City",
+      "slug": "plant-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Riverview",
+      "slug": "riverview",
+      "salonCount": 0
+    },
+    {
+      "name": "Ruskin",
+      "slug": "ruskin",
+      "salonCount": 0
+    },
+    {
+      "name": "Apollo Beach",
+      "slug": "apollo-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "St. Pete Beach",
+      "slug": "st-pete-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "Madeira Beach",
+      "slug": "madeira-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "Treasure Island",
+      "slug": "treasure-island",
+      "salonCount": 0
+    },
+    {
+      "name": "Indian Rocks Beach",
+      "slug": "indian-rocks-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "Belleair",
+      "slug": "belleair",
+      "salonCount": 0
+    },
+    {
+      "name": "Indian Shores",
+      "slug": "indian-shores",
+      "salonCount": 0
+    },
+    {
+      "name": "Orlando",
+      "slug": "orlando",
+      "salonCount": 0
+    },
+    {
+      "name": "Kissimmee",
+      "slug": "kissimmee",
+      "salonCount": 0
+    },
+    {
+      "name": "Sanford",
+      "slug": "sanford",
+      "salonCount": 0
+    },
+    {
+      "name": "Altamonte Springs",
+      "slug": "altamonte-springs",
+      "salonCount": 0
+    },
+    {
+      "name": "Winter Park",
+      "slug": "winter-park",
+      "salonCount": 0
+    },
+    {
+      "name": "Maitland",
+      "slug": "maitland",
+      "salonCount": 0
+    },
+    {
+      "name": "Casselberry",
+      "slug": "casselberry",
+      "salonCount": 0
+    },
+    {
+      "name": "Longwood",
+      "slug": "longwood",
+      "salonCount": 0
+    },
+    {
+      "name": "Oviedo",
+      "slug": "oviedo",
+      "salonCount": 0
+    },
+    {
+      "name": "Winter Springs",
+      "slug": "winter-springs",
+      "salonCount": 0
+    },
+    {
+      "name": "Lake Mary",
+      "slug": "lake-mary",
+      "salonCount": 0
+    },
+    {
+      "name": "Apopka",
+      "slug": "apopka",
+      "salonCount": 0
+    },
+    {
+      "name": "Ocoee",
+      "slug": "ocoee",
+      "salonCount": 0
+    },
+    {
+      "name": "Clermont",
+      "slug": "clermont",
+      "salonCount": 0
+    },
+    {
+      "name": "Leesburg",
+      "slug": "leesburg",
+      "salonCount": 0
+    },
+    {
+      "name": "Mount Dora",
+      "slug": "mount-dora",
+      "salonCount": 0
+    },
+    {
+      "name": "Eustis",
+      "slug": "eustis",
+      "salonCount": 0
+    },
+    {
+      "name": "Tavares",
+      "slug": "tavares",
+      "salonCount": 0
+    },
+    {
+      "name": "Lady Lake",
+      "slug": "lady-lake",
+      "salonCount": 0
+    },
+    {
+      "name": "Groveland",
+      "slug": "groveland",
+      "salonCount": 0
+    },
+    {
+      "name": "Minneola",
+      "slug": "minneola",
+      "salonCount": 0
+    },
+    {
+      "name": "St. Cloud",
+      "slug": "st-cloud",
+      "salonCount": 0
+    },
+    {
+      "name": "Poinciana",
+      "slug": "poinciana",
+      "salonCount": 0
+    },
+    {
+      "name": "Davenport",
+      "slug": "davenport",
+      "salonCount": 0
+    },
+    {
+      "name": "Celebration",
+      "slug": "celebration",
+      "salonCount": 0
+    },
+    {
+      "name": "The Villages",
+      "slug": "the-villages",
+      "salonCount": 0
+    },
+    {
+      "name": "Cocoa",
+      "slug": "cocoa",
+      "salonCount": 0
+    },
+    {
+      "name": "Melbourne",
+      "slug": "melbourne",
+      "salonCount": 0
+    },
+    {
+      "name": "Palm Bay",
+      "slug": "palm-bay",
+      "salonCount": 0
+    },
+    {
+      "name": "Titusville",
+      "slug": "titusville",
+      "salonCount": 0
+    },
+    {
+      "name": "Merritt Island",
+      "slug": "merritt-island",
+      "salonCount": 0
+    },
+    {
+      "name": "Vero Beach",
+      "slug": "vero-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "Sebastian",
+      "slug": "sebastian",
+      "salonCount": 0
+    },
+    {
+      "name": "Fort Pierce",
+      "slug": "fort-pierce",
+      "salonCount": 0
+    },
+    {
+      "name": "Port St. Lucie",
+      "slug": "port-st-lucie",
+      "salonCount": 0
+    },
+    {
+      "name": "Jensen Beach",
+      "slug": "jensen-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "Stuart",
+      "slug": "stuart",
+      "salonCount": 0
+    },
+    {
+      "name": "Okeechobee",
+      "slug": "okeechobee",
+      "salonCount": 0
+    },
+    {
+      "name": "Indialantic",
+      "slug": "indialantic",
+      "salonCount": 0
+    },
+    {
+      "name": "Melbourne Beach",
+      "slug": "melbourne-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "Satellite Beach",
+      "slug": "satellite-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "Indian Harbour Beach",
+      "slug": "indian-harbour-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "Rockledge",
+      "slug": "rockledge",
+      "salonCount": 0
+    },
+    {
+      "name": "Cape Canaveral",
+      "slug": "cape-canaveral",
+      "salonCount": 0
+    },
+    {
+      "name": "Cocoa Beach",
+      "slug": "cocoa-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "Jacksonville",
+      "slug": "jacksonville",
+      "salonCount": 0
+    },
+    {
+      "name": "Jacksonville Beach",
+      "slug": "jacksonville-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "Atlantic Beach",
+      "slug": "atlantic-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "Neptune Beach",
+      "slug": "neptune-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "Ponte Vedra Beach",
+      "slug": "ponte-vedra-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "St. Augustine",
+      "slug": "st-augustine",
+      "salonCount": 0
+    },
+    {
+      "name": "St. Augustine Beach",
+      "slug": "st-augustine-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "Orange Park",
+      "slug": "orange-park",
+      "salonCount": 0
+    },
+    {
+      "name": "Green Cove Springs",
+      "slug": "green-cove-springs",
+      "salonCount": 0
+    },
+    {
+      "name": "Palatka",
+      "slug": "palatka",
+      "salonCount": 0
+    },
+    {
+      "name": "Fernandina Beach",
+      "slug": "fernandina-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "Yulee",
+      "slug": "yulee",
+      "salonCount": 0
+    },
+    {
+      "name": "Hilliard",
+      "slug": "hilliard",
+      "salonCount": 0
+    },
+    {
+      "name": "Pensacola",
+      "slug": "pensacola",
+      "salonCount": 0
+    },
+    {
+      "name": "Gulf Breeze",
+      "slug": "gulf-breeze",
+      "salonCount": 0
+    },
+    {
+      "name": "Milton",
+      "slug": "milton",
+      "salonCount": 0
+    },
+    {
+      "name": "Navarre",
+      "slug": "navarre",
+      "salonCount": 0
+    },
+    {
+      "name": "Cantonment",
+      "slug": "cantonment",
+      "salonCount": 0
+    },
+    {
+      "name": "Tallahassee",
+      "slug": "tallahassee",
+      "salonCount": 0
+    },
+    {
+      "name": "Quincy",
+      "slug": "quincy",
+      "salonCount": 0
+    },
+    {
+      "name": "Crawfordville",
+      "slug": "crawfordville",
+      "salonCount": 0
+    },
+    {
+      "name": "Ocala",
+      "slug": "ocala",
+      "salonCount": 0
+    },
+    {
+      "name": "Belleview",
+      "slug": "belleview",
+      "salonCount": 0
+    },
+    {
+      "name": "Dunnellon",
+      "slug": "dunnellon",
+      "salonCount": 0
+    },
+    {
+      "name": "Gainesville",
+      "slug": "gainesville",
+      "salonCount": 0
+    },
+    {
+      "name": "Alachua",
+      "slug": "alachua",
+      "salonCount": 0
+    },
+    {
+      "name": "Newberry",
+      "slug": "newberry",
+      "salonCount": 0
+    },
+    {
+      "name": "High Springs",
+      "slug": "high-springs",
+      "salonCount": 0
+    },
+    {
+      "name": "Panama City",
+      "slug": "panama-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Panama City Beach",
+      "slug": "panama-city-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "Lynn Haven",
+      "slug": "lynn-haven",
+      "salonCount": 0
+    },
+    {
+      "name": "Callaway",
+      "slug": "callaway",
+      "salonCount": 0
+    },
+    {
+      "name": "Parker",
+      "slug": "parker",
+      "salonCount": 0
+    },
+    {
+      "name": "Springfield",
+      "slug": "springfield",
+      "salonCount": 0
+    },
+    {
+      "name": "Port St. Joe",
+      "slug": "port-st-joe",
+      "salonCount": 0
+    },
+    {
+      "name": "Mexico Beach",
+      "slug": "mexico-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "Destin",
+      "slug": "destin",
+      "salonCount": 0
+    },
+    {
+      "name": "Fort Walton Beach",
+      "slug": "fort-walton-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "Crestview",
+      "slug": "crestview",
+      "salonCount": 0
+    },
+    {
+      "name": "Niceville",
+      "slug": "niceville",
+      "salonCount": 0
+    },
+    {
+      "name": "Valparaiso",
+      "slug": "valparaiso",
+      "salonCount": 0
+    },
+    {
+      "name": "Mary Esther",
+      "slug": "mary-esther",
+      "salonCount": 0
+    },
+    {
+      "name": "Miramar Beach",
+      "slug": "miramar-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "DeFuniak Springs",
+      "slug": "defuniak-springs",
+      "salonCount": 0
+    },
+    {
+      "name": "Key West",
+      "slug": "key-west",
+      "salonCount": 0
+    },
+    {
+      "name": "Marathon",
+      "slug": "marathon",
+      "salonCount": 0
+    },
+    {
+      "name": "Key Largo",
+      "slug": "key-largo",
+      "salonCount": 0
+    },
+    {
+      "name": "Islamorada",
+      "slug": "islamorada",
+      "salonCount": 0
+    },
+    {
+      "name": "Big Pine Key",
+      "slug": "big-pine-key",
+      "salonCount": 0
+    },
+    {
+      "name": "Tavernier",
+      "slug": "tavernier",
+      "salonCount": 0
+    },
+    {
+      "name": "Sebring",
+      "slug": "sebring",
+      "salonCount": 0
+    },
+    {
+      "name": "Avon Park",
+      "slug": "avon-park",
+      "salonCount": 0
+    },
+    {
+      "name": "Lake Placid",
+      "slug": "lake-placid",
+      "salonCount": 0
+    },
+    {
+      "name": "Bartow",
+      "slug": "bartow",
+      "salonCount": 0
+    },
+    {
+      "name": "Auburndale",
+      "slug": "auburndale",
+      "salonCount": 0
+    },
+    {
+      "name": "Haines City",
+      "slug": "haines-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Lake Wales",
+      "slug": "lake-wales",
+      "salonCount": 0
+    },
+    {
+      "name": "Mulberry",
+      "slug": "mulberry",
+      "salonCount": 0
+    },
+    {
+      "name": "Frostproof",
+      "slug": "frostproof",
+      "salonCount": 0
+    },
+    {
+      "name": "Lake Alfred",
+      "slug": "lake-alfred",
+      "salonCount": 0
+    },
+    {
+      "name": "Polk City",
+      "slug": "polk-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Daytona Beach",
+      "slug": "daytona-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "Ormond Beach",
+      "slug": "ormond-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "Deltona",
+      "slug": "deltona",
+      "salonCount": 0
+    },
+    {
+      "name": "Port Orange",
+      "slug": "port-orange",
+      "salonCount": 0
+    },
+    {
+      "name": "New Smyrna Beach",
+      "slug": "new-smyrna-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "DeLand",
+      "slug": "deland",
+      "salonCount": 0
+    },
+    {
+      "name": "Orange City",
+      "slug": "orange-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Holly Hill",
+      "slug": "holly-hill",
+      "salonCount": 0
+    },
+    {
+      "name": "Edgewater",
+      "slug": "edgewater",
+      "salonCount": 0
+    },
+    {
+      "name": "South Daytona",
+      "slug": "south-daytona",
+      "salonCount": 0
+    },
+    {
+      "name": "Oak Hill",
+      "slug": "oak-hill",
+      "salonCount": 0
+    },
+    {
+      "name": "Ponce Inlet",
+      "slug": "ponce-inlet",
+      "salonCount": 0
+    },
+    {
+      "name": "Perry",
+      "slug": "perry",
+      "salonCount": 0
+    },
+    {
+      "name": "Lake City",
+      "slug": "lake-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Live Oak",
+      "slug": "live-oak",
+      "salonCount": 0
+    },
+    {
+      "name": "Madison",
+      "slug": "madison",
+      "salonCount": 0
+    },
+    {
+      "name": "Cross City",
+      "slug": "cross-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Starke",
+      "slug": "starke",
+      "salonCount": 0
+    },
+    {
+      "name": "Lake Butler",
+      "slug": "lake-butler",
+      "salonCount": 0
+    },
+    {
+      "name": "Macclenny",
+      "slug": "macclenny",
+      "salonCount": 0
+    },
+    {
+      "name": "Blountstown",
+      "slug": "blountstown",
+      "salonCount": 0
+    },
+    {
+      "name": "Chipley",
+      "slug": "chipley",
+      "salonCount": 0
+    },
+    {
+      "name": "Bonifay",
+      "slug": "bonifay",
+      "salonCount": 0
+    },
+    {
+      "name": "Graceville",
+      "slug": "graceville",
+      "salonCount": 0
+    },
+    {
+      "name": "Marianna",
+      "slug": "marianna",
+      "salonCount": 0
+    },
+    {
+      "name": "Sneads",
+      "slug": "sneads",
+      "salonCount": 0
+    },
+    {
+      "name": "Jasper",
+      "slug": "jasper",
+      "salonCount": 0
+    },
+    {
+      "name": "Fort White",
+      "slug": "fort-white",
+      "salonCount": 0
+    },
+    {
+      "name": "Branford",
+      "slug": "branford",
+      "salonCount": 0
+    },
+    {
+      "name": "Trenton",
+      "slug": "trenton",
+      "salonCount": 0
+    },
+    {
+      "name": "Bell",
+      "slug": "bell",
+      "salonCount": 0
+    },
+    {
+      "name": "Cedar Key",
+      "slug": "cedar-key",
+      "salonCount": 0
+    },
+    {
+      "name": "Chiefland",
+      "slug": "chiefland",
+      "salonCount": 0
+    },
+    {
+      "name": "Hawthorne",
+      "slug": "hawthorne",
+      "salonCount": 0
+    },
+    {
+      "name": "Keystone Heights",
+      "slug": "keystone-heights",
+      "salonCount": 0
+    },
+    {
+      "name": "Bushnell",
+      "slug": "bushnell",
+      "salonCount": 0
+    },
+    {
+      "name": "Wildwood",
+      "slug": "wildwood",
+      "salonCount": 0
+    },
+    {
+      "name": "Webster",
+      "slug": "webster",
+      "salonCount": 0
+    },
+    {
+      "name": "Brooksville",
+      "slug": "brooksville",
+      "salonCount": 0
+    },
+    {
+      "name": "Dade City",
+      "slug": "dade-city",
+      "salonCount": 0
+    },
+    {
+      "name": "San Antonio",
+      "slug": "san-antonio",
+      "salonCount": 0
+    },
+    {
+      "name": "Umatilla",
+      "slug": "umatilla",
+      "salonCount": 0
+    },
+    {
+      "name": "Altoona",
+      "slug": "altoona",
+      "salonCount": 0
+    },
+    {
+      "name": "Paisley",
+      "slug": "paisley",
+      "salonCount": 0
+    },
+    {
+      "name": "Lake Helen",
+      "slug": "lake-helen",
+      "salonCount": 0
+    },
+    {
+      "name": "Enterprise",
+      "slug": "enterprise",
+      "salonCount": 0
+    },
+    {
+      "name": "Bunnell",
+      "slug": "bunnell",
+      "salonCount": 0
+    },
+    {
+      "name": "Flagler Beach",
+      "slug": "flagler-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "Homosassa",
+      "slug": "homosassa",
+      "salonCount": 0
+    },
+    {
+      "name": "Crystal River",
+      "slug": "crystal-river",
+      "salonCount": 0
+    },
+    {
+      "name": "Inverness",
+      "slug": "inverness",
+      "salonCount": 0
+    },
+    {
+      "name": "Lecanto",
+      "slug": "lecanto",
+      "salonCount": 0
+    },
+    {
+      "name": "Hernando Beach",
+      "slug": "hernando-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "Lutz",
+      "slug": "lutz",
+      "salonCount": 0
+    },
+    {
+      "name": "Odessa",
+      "slug": "odessa",
+      "salonCount": 0
+    },
+    {
+      "name": "Sun City Center",
+      "slug": "sun-city-center",
+      "salonCount": 0
+    },
+    {
+      "name": "Gibsonton",
+      "slug": "gibsonton",
+      "salonCount": 0
+    },
+    {
+      "name": "Lithia",
+      "slug": "lithia",
+      "salonCount": 0
+    },
+    {
+      "name": "Wimauma",
+      "slug": "wimauma",
+      "salonCount": 0
+    },
+    {
+      "name": "Parrish",
+      "slug": "parrish",
+      "salonCount": 0
+    },
+    {
+      "name": "Bradenton Beach",
+      "slug": "bradenton-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "Holmes Beach",
+      "slug": "holmes-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "LaBelle",
+      "slug": "labelle",
+      "salonCount": 0
+    },
+    {
+      "name": "Clewiston",
+      "slug": "clewiston",
+      "salonCount": 0
+    },
+    {
+      "name": "Moore Haven",
+      "slug": "moore-haven",
+      "salonCount": 0
+    },
+    {
+      "name": "Pahokee",
+      "slug": "pahokee",
+      "salonCount": 0
+    },
+    {
+      "name": "Belle Glade",
+      "slug": "belle-glade",
+      "salonCount": 0
+    },
+    {
+      "name": "South Bay",
+      "slug": "south-bay",
+      "salonCount": 0
+    },
+    {
+      "name": "Indiantown",
+      "slug": "indiantown",
+      "salonCount": 0
+    },
+    {
+      "name": "Westlake",
+      "slug": "westlake",
+      "salonCount": 0
+    },
+    {
+      "name": "Loxahatchee",
+      "slug": "loxahatchee",
+      "salonCount": 0
+    },
+    {
+      "name": "North Palm Beach",
+      "slug": "north-palm-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "Juno Beach",
+      "slug": "juno-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "Tequesta",
+      "slug": "tequesta",
+      "salonCount": 0
+    },
+    {
+      "name": "Hobe Sound",
+      "slug": "hobe-sound",
+      "salonCount": 0
+    },
+    {
+      "name": "Port Salerno",
+      "slug": "port-salerno",
+      "salonCount": 0
+    },
+    {
+      "name": "Ocean Breeze",
+      "slug": "ocean-breeze",
+      "salonCount": 0
+    },
+    {
+      "name": "Fellsmere",
+      "slug": "fellsmere",
+      "salonCount": 0
+    },
+    {
+      "name": "Palm City",
+      "slug": "palm-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Golden Gate",
+      "slug": "golden-gate",
+      "salonCount": 0
+    },
+    {
+      "name": "Immokalee",
+      "slug": "immokalee",
+      "salonCount": 0
+    }
+  ]
+}

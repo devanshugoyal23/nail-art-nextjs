@@ -1,0 +1,513 @@
+{
+  "state": "Arizona",
+  "stateCode": "AZ",
+  "generatedAt": "2025-11-06T10:19:14.113Z",
+  "citiesCount": 101,
+  "cities": [
+    {
+      "name": "Ajo",
+      "slug": "ajo",
+      "salonCount": 0
+    },
+    {
+      "name": "Apache Junction",
+      "slug": "apache-junction",
+      "salonCount": 0
+    },
+    {
+      "name": "Bagdad",
+      "slug": "bagdad",
+      "salonCount": 0
+    },
+    {
+      "name": "Benson",
+      "slug": "benson",
+      "salonCount": 0
+    },
+    {
+      "name": "Bisbee",
+      "slug": "bisbee",
+      "salonCount": 0
+    },
+    {
+      "name": "Buckeye",
+      "slug": "buckeye",
+      "salonCount": 0
+    },
+    {
+      "name": "Bullhead City",
+      "slug": "bullhead-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Camp Verde",
+      "slug": "camp-verde",
+      "salonCount": 0
+    },
+    {
+      "name": "Casa Grande",
+      "slug": "casa-grande",
+      "salonCount": 0
+    },
+    {
+      "name": "Catalina Foothills",
+      "slug": "catalina-foothills",
+      "salonCount": 0
+    },
+    {
+      "name": "Chandler",
+      "slug": "chandler",
+      "salonCount": 0
+    },
+    {
+      "name": "Chinle",
+      "slug": "chinle",
+      "salonCount": 0
+    },
+    {
+      "name": "Chino Valley",
+      "slug": "chino-valley",
+      "salonCount": 0
+    },
+    {
+      "name": "Clarkdale",
+      "slug": "clarkdale",
+      "salonCount": 0
+    },
+    {
+      "name": "Clifton",
+      "slug": "clifton",
+      "salonCount": 0
+    },
+    {
+      "name": "Colorado City",
+      "slug": "colorado-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Coolidge",
+      "slug": "coolidge",
+      "salonCount": 0
+    },
+    {
+      "name": "Cottonwood",
+      "slug": "cottonwood",
+      "salonCount": 0
+    },
+    {
+      "name": "Dewey-Humboldt",
+      "slug": "dewey-humboldt",
+      "salonCount": 0
+    },
+    {
+      "name": "Douglas",
+      "slug": "douglas",
+      "salonCount": 0
+    },
+    {
+      "name": "Duncan",
+      "slug": "duncan",
+      "salonCount": 0
+    },
+    {
+      "name": "Eagar",
+      "slug": "eagar",
+      "salonCount": 0
+    },
+    {
+      "name": "El Mirage",
+      "slug": "el-mirage",
+      "salonCount": 0
+    },
+    {
+      "name": "Eloy",
+      "slug": "eloy",
+      "salonCount": 0
+    },
+    {
+      "name": "Flagstaff",
+      "slug": "flagstaff",
+      "salonCount": 0
+    },
+    {
+      "name": "Florence",
+      "slug": "florence",
+      "salonCount": 0
+    },
+    {
+      "name": "Fort Mohave",
+      "slug": "fort-mohave",
+      "salonCount": 0
+    },
+    {
+      "name": "Fountain Hills",
+      "slug": "fountain-hills",
+      "salonCount": 0
+    },
+    {
+      "name": "Fredonia",
+      "slug": "fredonia",
+      "salonCount": 0
+    },
+    {
+      "name": "Ganado",
+      "slug": "ganado",
+      "salonCount": 0
+    },
+    {
+      "name": "Gila Bend",
+      "slug": "gila-bend",
+      "salonCount": 0
+    },
+    {
+      "name": "Gilbert",
+      "slug": "gilbert",
+      "salonCount": 0
+    },
+    {
+      "name": "Glendale",
+      "slug": "glendale",
+      "salonCount": 0
+    },
+    {
+      "name": "Globe",
+      "slug": "globe",
+      "salonCount": 0
+    },
+    {
+      "name": "Golden Valley",
+      "slug": "golden-valley",
+      "salonCount": 0
+    },
+    {
+      "name": "Goodyear",
+      "slug": "goodyear",
+      "salonCount": 0
+    },
+    {
+      "name": "Grand Canyon Village",
+      "slug": "grand-canyon-village",
+      "salonCount": 0
+    },
+    {
+      "name": "Green Valley",
+      "slug": "green-valley",
+      "salonCount": 0
+    },
+    {
+      "name": "Guadalupe",
+      "slug": "guadalupe",
+      "salonCount": 0
+    },
+    {
+      "name": "Hayden",
+      "slug": "hayden",
+      "salonCount": 0
+    },
+    {
+      "name": "Holbrook",
+      "slug": "holbrook",
+      "salonCount": 0
+    },
+    {
+      "name": "Kearny",
+      "slug": "kearny",
+      "salonCount": 0
+    },
+    {
+      "name": "Kayenta",
+      "slug": "kayenta",
+      "salonCount": 0
+    },
+    {
+      "name": "Kingman",
+      "slug": "kingman",
+      "salonCount": 0
+    },
+    {
+      "name": "Lake Havasu City",
+      "slug": "lake-havasu-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Litchfield Park",
+      "slug": "litchfield-park",
+      "salonCount": 0
+    },
+    {
+      "name": "Mammoth",
+      "slug": "mammoth",
+      "salonCount": 0
+    },
+    {
+      "name": "Marana",
+      "slug": "marana",
+      "salonCount": 0
+    },
+    {
+      "name": "Maricopa",
+      "slug": "maricopa",
+      "salonCount": 0
+    },
+    {
+      "name": "Mesa",
+      "slug": "mesa",
+      "salonCount": 0
+    },
+    {
+      "name": "Miami",
+      "slug": "miami",
+      "salonCount": 0
+    },
+    {
+      "name": "Morenci",
+      "slug": "morenci",
+      "salonCount": 0
+    },
+    {
+      "name": "Nogales",
+      "slug": "nogales",
+      "salonCount": 0
+    },
+    {
+      "name": "Oracle",
+      "slug": "oracle",
+      "salonCount": 0
+    },
+    {
+      "name": "Oro Valley",
+      "slug": "oro-valley",
+      "salonCount": 0
+    },
+    {
+      "name": "Page",
+      "slug": "page",
+      "salonCount": 0
+    },
+    {
+      "name": "Parker",
+      "slug": "parker",
+      "salonCount": 0
+    },
+    {
+      "name": "Payson",
+      "slug": "payson",
+      "salonCount": 0
+    },
+    {
+      "name": "Peoria",
+      "slug": "peoria",
+      "salonCount": 0
+    },
+    {
+      "name": "Phoenix",
+      "slug": "phoenix",
+      "salonCount": 0
+    },
+    {
+      "name": "Pima",
+      "slug": "pima",
+      "salonCount": 0
+    },
+    {
+      "name": "Pinetop-Lakeside",
+      "slug": "pinetop-lakeside",
+      "salonCount": 0
+    },
+    {
+      "name": "Prescott",
+      "slug": "prescott",
+      "salonCount": 0
+    },
+    {
+      "name": "Prescott Valley",
+      "slug": "prescott-valley",
+      "salonCount": 0
+    },
+    {
+      "name": "Queen Creek",
+      "slug": "queen-creek",
+      "salonCount": 0
+    },
+    {
+      "name": "Quartzsite",
+      "slug": "quartzsite",
+      "salonCount": 0
+    },
+    {
+      "name": "Rio Rico",
+      "slug": "rio-rico",
+      "salonCount": 0
+    },
+    {
+      "name": "Rimrock",
+      "slug": "rimrock",
+      "salonCount": 0
+    },
+    {
+      "name": "Saddlebrooke",
+      "slug": "saddlebrooke",
+      "salonCount": 0
+    },
+    {
+      "name": "Safford",
+      "slug": "safford",
+      "salonCount": 0
+    },
+    {
+      "name": "Sahuarita",
+      "slug": "sahuarita",
+      "salonCount": 0
+    },
+    {
+      "name": "San Luis",
+      "slug": "san-luis",
+      "salonCount": 0
+    },
+    {
+      "name": "San Tan Valley",
+      "slug": "san-tan-valley",
+      "salonCount": 0
+    },
+    {
+      "name": "Scottsdale",
+      "slug": "scottsdale",
+      "salonCount": 0
+    },
+    {
+      "name": "Sedona",
+      "slug": "sedona",
+      "salonCount": 0
+    },
+    {
+      "name": "Show Low",
+      "slug": "show-low",
+      "salonCount": 0
+    },
+    {
+      "name": "Sierra Vista",
+      "slug": "sierra-vista",
+      "salonCount": 0
+    },
+    {
+      "name": "Snowflake",
+      "slug": "snowflake",
+      "salonCount": 0
+    },
+    {
+      "name": "Springerville",
+      "slug": "springerville",
+      "salonCount": 0
+    },
+    {
+      "name": "St. Johns",
+      "slug": "st-johns",
+      "salonCount": 0
+    },
+    {
+      "name": "Star Valley",
+      "slug": "star-valley",
+      "salonCount": 0
+    },
+    {
+      "name": "Sun City",
+      "slug": "sun-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Sun City West",
+      "slug": "sun-city-west",
+      "salonCount": 0
+    },
+    {
+      "name": "Sun Lakes",
+      "slug": "sun-lakes",
+      "salonCount": 0
+    },
+    {
+      "name": "Superior",
+      "slug": "superior",
+      "salonCount": 0
+    },
+    {
+      "name": "Surprise",
+      "slug": "surprise",
+      "salonCount": 0
+    },
+    {
+      "name": "Taylor",
+      "slug": "taylor",
+      "salonCount": 0
+    },
+    {
+      "name": "Tempe",
+      "slug": "tempe",
+      "salonCount": 0
+    },
+    {
+      "name": "Thatcher",
+      "slug": "thatcher",
+      "salonCount": 0
+    },
+    {
+      "name": "Tolleson",
+      "slug": "tolleson",
+      "salonCount": 0
+    },
+    {
+      "name": "Tombstone",
+      "slug": "tombstone",
+      "salonCount": 0
+    },
+    {
+      "name": "Tuba City",
+      "slug": "tuba-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Tucson",
+      "slug": "tucson",
+      "salonCount": 0
+    },
+    {
+      "name": "Wickenburg",
+      "slug": "wickenburg",
+      "salonCount": 0
+    },
+    {
+      "name": "Willcox",
+      "slug": "willcox",
+      "salonCount": 0
+    },
+    {
+      "name": "Williams",
+      "slug": "williams",
+      "salonCount": 0
+    },
+    {
+      "name": "Window Rock",
+      "slug": "window-rock",
+      "salonCount": 0
+    },
+    {
+      "name": "Winslow",
+      "slug": "winslow",
+      "salonCount": 0
+    },
+    {
+      "name": "Whiteriver",
+      "slug": "whiteriver",
+      "salonCount": 0
+    },
+    {
+      "name": "Youngtown",
+      "slug": "youngtown",
+      "salonCount": 0
+    },
+    {
+      "name": "Yuma",
+      "slug": "yuma",
+      "salonCount": 0
+    }
+  ]
+}
