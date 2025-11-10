@@ -68,24 +68,36 @@ export async function GET() {
 
   // Test 5: Check if city JSON files exist
   try {
-    const fs = await import('fs/promises');
-    const path = await import('path');
-    const citiesDir = path.join(process.cwd(), 'public', 'data', 'cities');
-    const files = await fs.readdir(citiesDir);
-    const jsonFiles = files.filter(f => f.endsWith('.json'));
+    // In serverless, public/ is served via CDN, not filesystem
+    // So we fetch via HTTP instead
+    const testUrl = `${process.env.NEXT_PUBLIC_BASE_URL || 'https://nailartai.app'}/data/cities/california.json`;
+    const response = await fetch(testUrl);
 
-    results.tests.push({
-      test: 'City JSON Files',
-      passed: jsonFiles.length > 0,
-      details: `Found ${jsonFiles.length} state JSON files`,
-      files: jsonFiles.slice(0, 10),
-    });
+    if (response.ok) {
+      const data = await response.json();
+      const hasValidStructure = data.state && Array.isArray(data.cities);
+
+      results.tests.push({
+        test: 'City JSON Files',
+        passed: hasValidStructure,
+        details: hasValidStructure
+          ? `California JSON accessible with ${data.cities.length} cities`
+          : 'JSON file accessible but invalid structure',
+        files: ['Accessible via HTTP at /data/cities/*.json'],
+      });
+    } else {
+      results.tests.push({
+        test: 'City JSON Files',
+        passed: false,
+        details: `HTTP fetch failed: ${response.status} ${response.statusText}`,
+      });
+    }
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     results.tests.push({
       test: 'City JSON Files',
       passed: false,
-      details: `Error reading files: ${errorMessage}`,
+      details: `Error fetching JSON: ${errorMessage}`,
     });
   }
 

@@ -62,16 +62,11 @@ async function getAllSalonsWithScores(): Promise<SalonWithScore[]> {
   const allSalons: SalonWithScore[] = [];
 
   try {
-    // Read city JSON files to get all cities
-    // Using public folder because src/data is not deployed to serverless functions
-    const fs = await import('fs/promises');
-    const path = await import('path');
-    const citiesDir = path.join(process.cwd(), 'public', 'data', 'cities');
+    // Fetch city data via HTTP (public/ folder is served via CDN, not filesystem)
+    const { fetchAllStateCityData } = await import('@/lib/citiesDataFetcher');
+    const statesMap = await fetchAllStateCityData();
 
-    const files = await fs.readdir(citiesDir);
-    const stateFiles = files.filter(file => file.endsWith('.json'));
-
-    console.log(`📊 Processing ${stateFiles.length} states for premium sitemap...`);
+    console.log(`📊 Processing ${statesMap.size} states for premium sitemap...`);
 
     // Safety limits to prevent timeout
     const MAX_CITIES_TO_PROCESS = 100; // Process only top 100 cities initially
@@ -80,23 +75,16 @@ async function getAllSalonsWithScores(): Promise<SalonWithScore[]> {
 
     let citiesProcessed = 0;
 
-    for (const stateFile of stateFiles) {
+    for (const [stateSlug, data] of statesMap.entries()) {
       // Check timeout
       if (Date.now() - startTime > MAX_PROCESSING_TIME) {
         console.warn(`⏰ Timeout reached after ${citiesProcessed} cities, stopping...`);
         break;
       }
 
-      const stateSlug = stateFile.replace('.json', '');
-      const filePath = path.join(citiesDir, stateFile);
+      if (!data.cities || !Array.isArray(data.cities)) continue;
 
-      try {
-        const fileContent = await fs.readFile(filePath, 'utf-8');
-        const data = JSON.parse(fileContent);
-
-        if (!data.cities || !Array.isArray(data.cities)) continue;
-
-        const stateName = data.state;
+      const stateName = data.state;
 
         // Sort cities by population to prioritize major metros
         // This ensures we get the best salons from populated areas first
@@ -142,9 +130,6 @@ async function getAllSalonsWithScores(): Promise<SalonWithScore[]> {
         if (citiesProcessed >= MAX_CITIES_TO_PROCESS) {
           break;
         }
-      } catch (error) {
-        console.error(`Error reading ${stateFile}:`, error);
-      }
     }
 
     const duration = Date.now() - startTime;
