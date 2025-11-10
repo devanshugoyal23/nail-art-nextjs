@@ -56,16 +56,37 @@ function calculateQualityScore(salon: NailSalon): number {
 
 /**
  * Get all salons from all cities with quality scores
- * Using hardcoded cities to avoid HTTP fetching issues in Vercel serverless
+ * Using imported JSON files for city data (bundled with serverless function)
  */
 async function getAllSalonsWithScores(): Promise<SalonWithScore[]> {
   const allSalons: SalonWithScore[] = [];
 
   try {
-    // Use hardcoded cities to avoid HTTP fetching issues
-    const { TOP_CITIES } = await import('@/lib/hardcodedCities');
+    // Import city data (bundled with function, no HTTP needed)
+    const { getAllStateCityData } = await import('@/lib/citiesDataImporter');
+    const statesMap = getAllStateCityData();
 
-    console.log(`📊 Processing ${TOP_CITIES.length} major cities for premium sitemap...`);
+    // Build list of all cities with population data
+    const allCities: Array<{ state: string, stateSlug: string, city: string, citySlug: string, population?: number }> = [];
+
+    for (const [stateSlug, data] of statesMap.entries()) {
+      if (!data.cities || !Array.isArray(data.cities)) continue;
+
+      for (const city of data.cities) {
+        allCities.push({
+          state: data.state,
+          stateSlug,
+          city: city.name,
+          citySlug: city.slug,
+          population: city.population,
+        });
+      }
+    }
+
+    // Sort by population to prioritize major cities
+    const sortedCities = allCities.sort((a, b) => (b.population || 0) - (a.population || 0));
+
+    console.log(`📊 Processing top cities from ${statesMap.size} states for premium sitemap...`);
 
     // Safety limits to prevent timeout
     const MAX_CITIES_TO_PROCESS = 100; // Process only top 100 cities initially
@@ -74,8 +95,8 @@ async function getAllSalonsWithScores(): Promise<SalonWithScore[]> {
 
     let citiesProcessed = 0;
 
-    // Process each city (already sorted by importance/population)
-    for (const city of TOP_CITIES) {
+    // Process each city (sorted by population)
+    for (const city of sortedCities) {
       // Check timeout
       if (Date.now() - startTime > MAX_PROCESSING_TIME) {
         console.warn(`⏰ Timeout reached after ${citiesProcessed} cities, stopping...`);
@@ -89,8 +110,8 @@ async function getAllSalonsWithScores(): Promise<SalonWithScore[]> {
 
       try {
         citiesProcessed++;
-        console.log(`  Processing ${city.name}, ${city.state}...`);
-        const cityData = await getCityDataFromR2(city.state, city.name);
+        console.log(`  Processing ${city.city}, ${city.state}...`);
+        const cityData = await getCityDataFromR2(city.state, city.city);
 
         if (!cityData || !cityData.salons || cityData.salons.length === 0) {
           continue;
@@ -103,13 +124,13 @@ async function getAllSalonsWithScores(): Promise<SalonWithScore[]> {
           allSalons.push({
             ...salon,
             score,
-            url: `/nail-salons/${city.stateSlug}/${city.slug}/${generateSlug(salon.name)}`,
+            url: `/nail-salons/${city.stateSlug}/${city.citySlug}/${generateSlug(salon.name)}`,
             stateSlug: city.stateSlug,
-            citySlug: city.slug
+            citySlug: city.citySlug
           });
         }
       } catch (error) {
-        console.error(`Error processing city ${city.name}, ${city.state}:`, error);
+        console.error(`Error processing city ${city.city}, ${city.state}:`, error);
       }
     }
 
