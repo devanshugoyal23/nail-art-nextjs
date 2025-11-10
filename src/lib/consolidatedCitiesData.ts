@@ -2,7 +2,7 @@
 // This ensures data is bundled with serverless functions
 
 interface CityData { name: string; slug: string; salonCount?: number; population?: number; }
-interface StateData { state: string; stateCode: string; citiesCount: number; cities: CityData[]; }
+interface StateData { state: string; stateCode: string; generatedAt?: string; citiesCount: number; cities: CityData[]; }
 
 export const STATES_DATA: Record<string, StateData> = {
   "alabama": {
