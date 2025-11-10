@@ -1,0 +1,613 @@
+{
+  "state": "New Hampshire",
+  "stateCode": "NH",
+  "generatedAt": "2025-11-06T10:23:32.477Z",
+  "citiesCount": 121,
+  "cities": [
+    {
+      "name": "Manchester",
+      "slug": "manchester",
+      "salonCount": 0
+    },
+    {
+      "name": "Nashua",
+      "slug": "nashua",
+      "salonCount": 0
+    },
+    {
+      "name": "Concord",
+      "slug": "concord",
+      "salonCount": 0
+    },
+    {
+      "name": "Derry",
+      "slug": "derry",
+      "salonCount": 0
+    },
+    {
+      "name": "Dover",
+      "slug": "dover",
+      "salonCount": 0
+    },
+    {
+      "name": "Rochester",
+      "slug": "rochester",
+      "salonCount": 0
+    },
+    {
+      "name": "Salem",
+      "slug": "salem",
+      "salonCount": 0
+    },
+    {
+      "name": "Merrimack",
+      "slug": "merrimack",
+      "salonCount": 0
+    },
+    {
+      "name": "Londonderry",
+      "slug": "londonderry",
+      "salonCount": 0
+    },
+    {
+      "name": "Hudson",
+      "slug": "hudson",
+      "salonCount": 0
+    },
+    {
+      "name": "Portsmouth",
+      "slug": "portsmouth",
+      "salonCount": 0
+    },
+    {
+      "name": "Keene",
+      "slug": "keene",
+      "salonCount": 0
+    },
+    {
+      "name": "Laconia",
+      "slug": "laconia",
+      "salonCount": 0
+    },
+    {
+      "name": "Bedford",
+      "slug": "bedford",
+      "salonCount": 0
+    },
+    {
+      "name": "Goffstown",
+      "slug": "goffstown",
+      "salonCount": 0
+    },
+    {
+      "name": "Exeter",
+      "slug": "exeter",
+      "salonCount": 0
+    },
+    {
+      "name": "Amherst",
+      "slug": "amherst",
+      "salonCount": 0
+    },
+    {
+      "name": "Milford",
+      "slug": "milford",
+      "salonCount": 0
+    },
+    {
+      "name": "Durham",
+      "slug": "durham",
+      "salonCount": 0
+    },
+    {
+      "name": "Hampton",
+      "slug": "hampton",
+      "salonCount": 0
+    },
+    {
+      "name": "Hooksett",
+      "slug": "hooksett",
+      "salonCount": 0
+    },
+    {
+      "name": "Plaistow",
+      "slug": "plaistow",
+      "salonCount": 0
+    },
+    {
+      "name": "Windham",
+      "slug": "windham",
+      "salonCount": 0
+    },
+    {
+      "name": "Pembroke",
+      "slug": "pembroke",
+      "salonCount": 0
+    },
+    {
+      "name": "Newmarket",
+      "slug": "newmarket",
+      "salonCount": 0
+    },
+    {
+      "name": "Raymond",
+      "slug": "raymond",
+      "salonCount": 0
+    },
+    {
+      "name": "Pelham",
+      "slug": "pelham",
+      "salonCount": 0
+    },
+    {
+      "name": "Somersworth",
+      "slug": "somersworth",
+      "salonCount": 0
+    },
+    {
+      "name": "Franklin",
+      "slug": "franklin",
+      "salonCount": 0
+    },
+    {
+      "name": "Claremont",
+      "slug": "claremont",
+      "salonCount": 0
+    },
+    {
+      "name": "Lebanon",
+      "slug": "lebanon",
+      "salonCount": 0
+    },
+    {
+      "name": "Hanover",
+      "slug": "hanover",
+      "salonCount": 0
+    },
+    {
+      "name": "Littleton",
+      "slug": "littleton",
+      "salonCount": 0
+    },
+    {
+      "name": "Plymouth",
+      "slug": "plymouth",
+      "salonCount": 0
+    },
+    {
+      "name": "Conway",
+      "slug": "conway",
+      "salonCount": 0
+    },
+    {
+      "name": "Tilton",
+      "slug": "tilton",
+      "salonCount": 0
+    },
+    {
+      "name": "Bristol",
+      "slug": "bristol",
+      "salonCount": 0
+    },
+    {
+      "name": "Peterborough",
+      "slug": "peterborough",
+      "salonCount": 0
+    },
+    {
+      "name": "Walpole",
+      "slug": "walpole",
+      "salonCount": 0
+    },
+    {
+      "name": "Hillsborough",
+      "slug": "hillsborough",
+      "salonCount": 0
+    },
+    {
+      "name": "Henniker",
+      "slug": "henniker",
+      "salonCount": 0
+    },
+    {
+      "name": "New London",
+      "slug": "new-london",
+      "salonCount": 0
+    },
+    {
+      "name": "Newport",
+      "slug": "newport",
+      "salonCount": 0
+    },
+    {
+      "name": "Jaffrey",
+      "slug": "jaffrey",
+      "salonCount": 0
+    },
+    {
+      "name": "Rindge",
+      "slug": "rindge",
+      "salonCount": 0
+    },
+    {
+      "name": "Swanzey",
+      "slug": "swanzey",
+      "salonCount": 0
+    },
+    {
+      "name": "Wilton",
+      "slug": "wilton",
+      "salonCount": 0
+    },
+    {
+      "name": "Epping",
+      "slug": "epping",
+      "salonCount": 0
+    },
+    {
+      "name": "Farmington",
+      "slug": "farmington",
+      "salonCount": 0
+    },
+    {
+      "name": "Wolfeboro",
+      "slug": "wolfeboro",
+      "salonCount": 0
+    },
+    {
+      "name": "Meredith",
+      "slug": "meredith",
+      "salonCount": 0
+    },
+    {
+      "name": "Gilford",
+      "slug": "gilford",
+      "salonCount": 0
+    },
+    {
+      "name": "Alton",
+      "slug": "alton",
+      "salonCount": 0
+    },
+    {
+      "name": "Belmont",
+      "slug": "belmont",
+      "salonCount": 0
+    },
+    {
+      "name": "Candia",
+      "slug": "candia",
+      "salonCount": 0
+    },
+    {
+      "name": "Chester",
+      "slug": "chester",
+      "salonCount": 0
+    },
+    {
+      "name": "Chichester",
+      "slug": "chichester",
+      "salonCount": 0
+    },
+    {
+      "name": "Bow",
+      "slug": "bow",
+      "salonCount": 0
+    },
+    {
+      "name": "Litchfield",
+      "slug": "litchfield",
+      "salonCount": 0
+    },
+    {
+      "name": "Hollis",
+      "slug": "hollis",
+      "salonCount": 0
+    },
+    {
+      "name": "New Boston",
+      "slug": "new-boston",
+      "salonCount": 0
+    },
+    {
+      "name": "Weare",
+      "slug": "weare",
+      "salonCount": 0
+    },
+    {
+      "name": "Hopkinton",
+      "slug": "hopkinton",
+      "salonCount": 0
+    },
+    {
+      "name": "Warner",
+      "slug": "warner",
+      "salonCount": 0
+    },
+    {
+      "name": "Bradford",
+      "slug": "bradford",
+      "salonCount": 0
+    },
+    {
+      "name": "Allenstown",
+      "slug": "allenstown",
+      "salonCount": 0
+    },
+    {
+      "name": "Pittsfield",
+      "slug": "pittsfield",
+      "salonCount": 0
+    },
+    {
+      "name": "Loudon",
+      "slug": "loudon",
+      "salonCount": 0
+    },
+    {
+      "name": "Epsom",
+      "slug": "epsom",
+      "salonCount": 0
+    },
+    {
+      "name": "Northwood",
+      "slug": "northwood",
+      "salonCount": 0
+    },
+    {
+      "name": "Deerfield",
+      "slug": "deerfield",
+      "salonCount": 0
+    },
+    {
+      "name": "Barrington",
+      "slug": "barrington",
+      "salonCount": 0
+    },
+    {
+      "name": "Strafford",
+      "slug": "strafford",
+      "salonCount": 0
+    },
+    {
+      "name": "Rollinsford",
+      "slug": "rollinsford",
+      "salonCount": 0
+    },
+    {
+      "name": "Newfields",
+      "slug": "newfields",
+      "salonCount": 0
+    },
+    {
+      "name": "Stratham",
+      "slug": "stratham",
+      "salonCount": 0
+    },
+    {
+      "name": "Greenland",
+      "slug": "greenland",
+      "salonCount": 0
+    },
+    {
+      "name": "Rye",
+      "slug": "rye",
+      "salonCount": 0
+    },
+    {
+      "name": "Hampton Falls",
+      "slug": "hampton-falls",
+      "salonCount": 0
+    },
+    {
+      "name": "Seabrook",
+      "slug": "seabrook",
+      "salonCount": 0
+    },
+    {
+      "name": "Kingston",
+      "slug": "kingston",
+      "salonCount": 0
+    },
+    {
+      "name": "Newton",
+      "slug": "newton",
+      "salonCount": 0
+    },
+    {
+      "name": "Hampstead",
+      "slug": "hampstead",
+      "salonCount": 0
+    },
+    {
+      "name": "Danville",
+      "slug": "danville",
+      "salonCount": 0
+    },
+    {
+      "name": "Fremont",
+      "slug": "fremont",
+      "salonCount": 0
+    },
+    {
+      "name": "Sandown",
+      "slug": "sandown",
+      "salonCount": 0
+    },
+    {
+      "name": "Brentwood",
+      "slug": "brentwood",
+      "salonCount": 0
+    },
+    {
+      "name": "Atkinson",
+      "slug": "atkinson",
+      "salonCount": 0
+    },
+    {
+      "name": "Sunapee",
+      "slug": "sunapee",
+      "salonCount": 0
+    },
+    {
+      "name": "Canaan",
+      "slug": "canaan",
+      "salonCount": 0
+    },
+    {
+      "name": "Enfield",
+      "slug": "enfield",
+      "salonCount": 0
+    },
+    {
+      "name": "Grantham",
+      "slug": "grantham",
+      "salonCount": 0
+    },
+    {
+      "name": "Charlestown",
+      "slug": "charlestown",
+      "salonCount": 0
+    },
+    {
+      "name": "Lincoln",
+      "slug": "lincoln",
+      "salonCount": 0
+    },
+    {
+      "name": "Woodstock",
+      "slug": "woodstock",
+      "salonCount": 0
+    },
+    {
+      "name": "Campton",
+      "slug": "campton",
+      "salonCount": 0
+    },
+    {
+      "name": "Ashland",
+      "slug": "ashland",
+      "salonCount": 0
+    },
+    {
+      "name": "Holderness",
+      "slug": "holderness",
+      "salonCount": 0
+    },
+    {
+      "name": "Sanbornton",
+      "slug": "sanbornton",
+      "salonCount": 0
+    },
+    {
+      "name": "Moultonborough",
+      "slug": "moultonborough",
+      "salonCount": 0
+    },
+    {
+      "name": "Ossipee",
+      "slug": "ossipee",
+      "salonCount": 0
+    },
+    {
+      "name": "Wakefield",
+      "slug": "wakefield",
+      "salonCount": 0
+    },
+    {
+      "name": "Tamworth",
+      "slug": "tamworth",
+      "salonCount": 0
+    },
+    {
+      "name": "Bartlett",
+      "slug": "bartlett",
+      "salonCount": 0
+    },
+    {
+      "name": "Jackson",
+      "slug": "jackson",
+      "salonCount": 0
+    },
+    {
+      "name": "Franconia",
+      "slug": "franconia",
+      "salonCount": 0
+    },
+    {
+      "name": "Sugar Hill",
+      "slug": "sugar-hill",
+      "salonCount": 0
+    },
+    {
+      "name": "Lisbon",
+      "slug": "lisbon",
+      "salonCount": 0
+    },
+    {
+      "name": "Haverhill",
+      "slug": "haverhill",
+      "salonCount": 0
+    },
+    {
+      "name": "Orford",
+      "slug": "orford",
+      "salonCount": 0
+    },
+    {
+      "name": "Rumney",
+      "slug": "rumney",
+      "salonCount": 0
+    },
+    {
+      "name": "Warren",
+      "slug": "warren",
+      "salonCount": 0
+    },
+    {
+      "name": "Colebrook",
+      "slug": "colebrook",
+      "salonCount": 0
+    },
+    {
+      "name": "Lancaster",
+      "slug": "lancaster",
+      "salonCount": 0
+    },
+    {
+      "name": "Northumberland",
+      "slug": "northumberland",
+      "salonCount": 0
+    },
+    {
+      "name": "Stewartstown",
+      "slug": "stewartstown",
+      "salonCount": 0
+    },
+    {
+      "name": "Whitefield",
+      "slug": "whitefield",
+      "salonCount": 0
+    },
+    {
+      "name": "Gorham",
+      "slug": "gorham",
+      "salonCount": 0
+    },
+    {
+      "name": "Berlin",
+      "slug": "berlin",
+      "salonCount": 0
+    },
+    {
+      "name": "Jefferson",
+      "slug": "jefferson",
+      "salonCount": 0
+    },
+    {
+      "name": "Bethlehem",
+      "slug": "bethlehem",
+      "salonCount": 0
+    }
+  ]
+}

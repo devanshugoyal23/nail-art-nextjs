@@ -38,41 +38,28 @@ interface StateData {
  */
 async function getAllStatesAndCities(): Promise<{ states: string[], topCities: Array<{ state: string, city: string, cityName: string, population?: number }> }> {
   try {
-    const fs = await import('fs/promises');
-    const path = await import('path');
-    const citiesDir = path.join(process.cwd(), 'src', 'data', 'cities');
-
-    const files = await fs.readdir(citiesDir);
-    const stateFiles = files.filter(file => file.endsWith('.json'));
+    // Fetch city data via HTTP (public/ folder is served via CDN, not filesystem)
+    const { fetchAllStateCityData } = await import('@/lib/citiesDataFetcher');
+    const statesMap = await fetchAllStateCityData();
 
     const states: string[] = [];
     const allCities: Array<{ state: string, city: string, cityName: string, population?: number, salonCount?: number }> = [];
 
-    for (const stateFile of stateFiles) {
-      const stateSlug = stateFile.replace('.json', '');
-      const filePath = path.join(citiesDir, stateFile);
+    for (const [stateSlug, data] of statesMap.entries()) {
+      if (!data.cities || !Array.isArray(data.cities)) continue;
 
-      try {
-        const fileContent = await fs.readFile(filePath, 'utf-8');
-        const data: StateData = JSON.parse(fileContent);
+      // Add state
+      states.push(stateSlug);
 
-        if (!data.cities || !Array.isArray(data.cities)) continue;
-
-        // Add state
-        states.push(stateSlug);
-
-        // Add all cities from this state
-        for (const city of data.cities) {
-          allCities.push({
-            state: stateSlug,
-            city: city.slug,
-            cityName: city.name,
-            population: city.population,
-            salonCount: city.salonCount,
-          });
-        }
-      } catch (error) {
-        console.error(`Error reading ${stateFile}:`, error);
+      // Add all cities from this state
+      for (const city of data.cities) {
+        allCities.push({
+          state: stateSlug,
+          city: city.slug,
+          cityName: city.name,
+          population: city.population,
+          salonCount: city.salonCount,
+        });
       }
     }
 

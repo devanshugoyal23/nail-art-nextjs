@@ -1,0 +1,513 @@
+{
+  "state": "Montana",
+  "stateCode": "MT",
+  "generatedAt": "2025-11-06T10:23:47.789Z",
+  "citiesCount": 101,
+  "cities": [
+    {
+      "name": "Absarokee",
+      "slug": "absarokee",
+      "salonCount": 0
+    },
+    {
+      "name": "Alberton",
+      "slug": "alberton",
+      "salonCount": 0
+    },
+    {
+      "name": "Anaconda",
+      "slug": "anaconda",
+      "salonCount": 0
+    },
+    {
+      "name": "Arlee",
+      "slug": "arlee",
+      "salonCount": 0
+    },
+    {
+      "name": "Augusta",
+      "slug": "augusta",
+      "salonCount": 0
+    },
+    {
+      "name": "Baker",
+      "slug": "baker",
+      "salonCount": 0
+    },
+    {
+      "name": "Belgrade",
+      "slug": "belgrade",
+      "salonCount": 0
+    },
+    {
+      "name": "Bigfork",
+      "slug": "bigfork",
+      "salonCount": 0
+    },
+    {
+      "name": "Big Sandy",
+      "slug": "big-sandy",
+      "salonCount": 0
+    },
+    {
+      "name": "Big Sky",
+      "slug": "big-sky",
+      "salonCount": 0
+    },
+    {
+      "name": "Billings",
+      "slug": "billings",
+      "salonCount": 0
+    },
+    {
+      "name": "Bonner",
+      "slug": "bonner",
+      "salonCount": 0
+    },
+    {
+      "name": "Boulder",
+      "slug": "boulder",
+      "salonCount": 0
+    },
+    {
+      "name": "Bozeman",
+      "slug": "bozeman",
+      "salonCount": 0
+    },
+    {
+      "name": "Bridger",
+      "slug": "bridger",
+      "salonCount": 0
+    },
+    {
+      "name": "Broadus",
+      "slug": "broadus",
+      "salonCount": 0
+    },
+    {
+      "name": "Browning",
+      "slug": "browning",
+      "salonCount": 0
+    },
+    {
+      "name": "Butte",
+      "slug": "butte",
+      "salonCount": 0
+    },
+    {
+      "name": "Cascade",
+      "slug": "cascade",
+      "salonCount": 0
+    },
+    {
+      "name": "Chester",
+      "slug": "chester",
+      "salonCount": 0
+    },
+    {
+      "name": "Choteau",
+      "slug": "choteau",
+      "salonCount": 0
+    },
+    {
+      "name": "Circle",
+      "slug": "circle",
+      "salonCount": 0
+    },
+    {
+      "name": "Columbia Falls",
+      "slug": "columbia-falls",
+      "salonCount": 0
+    },
+    {
+      "name": "Colstrip",
+      "slug": "colstrip",
+      "salonCount": 0
+    },
+    {
+      "name": "Columbus",
+      "slug": "columbus",
+      "salonCount": 0
+    },
+    {
+      "name": "Conrad",
+      "slug": "conrad",
+      "salonCount": 0
+    },
+    {
+      "name": "Corvallis",
+      "slug": "corvallis",
+      "salonCount": 0
+    },
+    {
+      "name": "Cut Bank",
+      "slug": "cut-bank",
+      "salonCount": 0
+    },
+    {
+      "name": "Darby",
+      "slug": "darby",
+      "salonCount": 0
+    },
+    {
+      "name": "Deer Lodge",
+      "slug": "deer-lodge",
+      "salonCount": 0
+    },
+    {
+      "name": "Dillon",
+      "slug": "dillon",
+      "salonCount": 0
+    },
+    {
+      "name": "Drummond",
+      "slug": "drummond",
+      "salonCount": 0
+    },
+    {
+      "name": "East Helena",
+      "slug": "east-helena",
+      "salonCount": 0
+    },
+    {
+      "name": "Ekalaka",
+      "slug": "ekalaka",
+      "salonCount": 0
+    },
+    {
+      "name": "Ennis",
+      "slug": "ennis",
+      "salonCount": 0
+    },
+    {
+      "name": "Eureka",
+      "slug": "eureka",
+      "salonCount": 0
+    },
+    {
+      "name": "Evergreen",
+      "slug": "evergreen",
+      "salonCount": 0
+    },
+    {
+      "name": "Fairfield",
+      "slug": "fairfield",
+      "salonCount": 0
+    },
+    {
+      "name": "Florence",
+      "slug": "florence",
+      "salonCount": 0
+    },
+    {
+      "name": "Forsyth",
+      "slug": "forsyth",
+      "salonCount": 0
+    },
+    {
+      "name": "Fort Benton",
+      "slug": "fort-benton",
+      "salonCount": 0
+    },
+    {
+      "name": "Frenchtown",
+      "slug": "frenchtown",
+      "salonCount": 0
+    },
+    {
+      "name": "Fromberg",
+      "slug": "fromberg",
+      "salonCount": 0
+    },
+    {
+      "name": "Gardiner",
+      "slug": "gardiner",
+      "salonCount": 0
+    },
+    {
+      "name": "Glasgow",
+      "slug": "glasgow",
+      "salonCount": 0
+    },
+    {
+      "name": "Glendive",
+      "slug": "glendive",
+      "salonCount": 0
+    },
+    {
+      "name": "Great Falls",
+      "slug": "great-falls",
+      "salonCount": 0
+    },
+    {
+      "name": "Hamilton",
+      "slug": "hamilton",
+      "salonCount": 0
+    },
+    {
+      "name": "Hardin",
+      "slug": "hardin",
+      "salonCount": 0
+    },
+    {
+      "name": "Harlowton",
+      "slug": "harlowton",
+      "salonCount": 0
+    },
+    {
+      "name": "Harrison",
+      "slug": "harrison",
+      "salonCount": 0
+    },
+    {
+      "name": "Havre",
+      "slug": "havre",
+      "salonCount": 0
+    },
+    {
+      "name": "Helena",
+      "slug": "helena",
+      "salonCount": 0
+    },
+    {
+      "name": "Hot Springs",
+      "slug": "hot-springs",
+      "salonCount": 0
+    },
+    {
+      "name": "Hysham",
+      "slug": "hysham",
+      "salonCount": 0
+    },
+    {
+      "name": "Joliet",
+      "slug": "joliet",
+      "salonCount": 0
+    },
+    {
+      "name": "Kalispell",
+      "slug": "kalispell",
+      "salonCount": 0
+    },
+    {
+      "name": "Lakeside",
+      "slug": "lakeside",
+      "salonCount": 0
+    },
+    {
+      "name": "Laurel",
+      "slug": "laurel",
+      "salonCount": 0
+    },
+    {
+      "name": "Lewistown",
+      "slug": "lewistown",
+      "salonCount": 0
+    },
+    {
+      "name": "Libby",
+      "slug": "libby",
+      "salonCount": 0
+    },
+    {
+      "name": "Lincoln",
+      "slug": "lincoln",
+      "salonCount": 0
+    },
+    {
+      "name": "Livingston",
+      "slug": "livingston",
+      "salonCount": 0
+    },
+    {
+      "name": "Lockwood",
+      "slug": "lockwood",
+      "salonCount": 0
+    },
+    {
+      "name": "Lolo",
+      "slug": "lolo",
+      "salonCount": 0
+    },
+    {
+      "name": "Malta",
+      "slug": "malta",
+      "salonCount": 0
+    },
+    {
+      "name": "Manhattan",
+      "slug": "manhattan",
+      "salonCount": 0
+    },
+    {
+      "name": "Miles City",
+      "slug": "miles-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Missoula",
+      "slug": "missoula",
+      "salonCount": 0
+    },
+    {
+      "name": "Park City",
+      "slug": "park-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Philipsburg",
+      "slug": "philipsburg",
+      "salonCount": 0
+    },
+    {
+      "name": "Plains",
+      "slug": "plains",
+      "salonCount": 0
+    },
+    {
+      "name": "Plentywood",
+      "slug": "plentywood",
+      "salonCount": 0
+    },
+    {
+      "name": "Polson",
+      "slug": "polson",
+      "salonCount": 0
+    },
+    {
+      "name": "Poplar",
+      "slug": "poplar",
+      "salonCount": 0
+    },
+    {
+      "name": "Red Lodge",
+      "slug": "red-lodge",
+      "salonCount": 0
+    },
+    {
+      "name": "Ronan",
+      "slug": "ronan",
+      "salonCount": 0
+    },
+    {
+      "name": "Roundup",
+      "slug": "roundup",
+      "salonCount": 0
+    },
+    {
+      "name": "Scobey",
+      "slug": "scobey",
+      "salonCount": 0
+    },
+    {
+      "name": "Seeley Lake",
+      "slug": "seeley-lake",
+      "salonCount": 0
+    },
+    {
+      "name": "Shelby",
+      "slug": "shelby",
+      "salonCount": 0
+    },
+    {
+      "name": "Sheridan",
+      "slug": "sheridan",
+      "salonCount": 0
+    },
+    {
+      "name": "Sidney",
+      "slug": "sidney",
+      "salonCount": 0
+    },
+    {
+      "name": "Somers",
+      "slug": "somers",
+      "salonCount": 0
+    },
+    {
+      "name": "St. Ignatius",
+      "slug": "st-ignatius",
+      "salonCount": 0
+    },
+    {
+      "name": "Stanford",
+      "slug": "stanford",
+      "salonCount": 0
+    },
+    {
+      "name": "Stevensville",
+      "slug": "stevensville",
+      "salonCount": 0
+    },
+    {
+      "name": "Superior",
+      "slug": "superior",
+      "salonCount": 0
+    },
+    {
+      "name": "Terry",
+      "slug": "terry",
+      "salonCount": 0
+    },
+    {
+      "name": "Thompson Falls",
+      "slug": "thompson-falls",
+      "salonCount": 0
+    },
+    {
+      "name": "Three Forks",
+      "slug": "three-forks",
+      "salonCount": 0
+    },
+    {
+      "name": "Townsend",
+      "slug": "townsend",
+      "salonCount": 0
+    },
+    {
+      "name": "Twin Bridges",
+      "slug": "twin-bridges",
+      "salonCount": 0
+    },
+    {
+      "name": "Victor",
+      "slug": "victor",
+      "salonCount": 0
+    },
+    {
+      "name": "Virginia City",
+      "slug": "virginia-city",
+      "salonCount": 0
+    },
+    {
+      "name": "West Yellowstone",
+      "slug": "west-yellowstone",
+      "salonCount": 0
+    },
+    {
+      "name": "Whitefish",
+      "slug": "whitefish",
+      "salonCount": 0
+    },
+    {
+      "name": "Whitehall",
+      "slug": "whitehall",
+      "salonCount": 0
+    },
+    {
+      "name": "White Sulphur Springs",
+      "slug": "white-sulphur-springs",
+      "salonCount": 0
+    },
+    {
+      "name": "Wibaux",
+      "slug": "wibaux",
+      "salonCount": 0
+    },
+    {
+      "name": "Wolf Point",
+      "slug": "wolf-point",
+      "salonCount": 0
+    }
+  ]
+}

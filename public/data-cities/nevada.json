@@ -1,0 +1,338 @@
+{
+  "state": "Nevada",
+  "stateCode": "NV",
+  "generatedAt": "2025-11-06T10:23:40.778Z",
+  "citiesCount": 66,
+  "cities": [
+    {
+      "name": "Las Vegas",
+      "slug": "las-vegas",
+      "salonCount": 0
+    },
+    {
+      "name": "Henderson",
+      "slug": "henderson",
+      "salonCount": 0
+    },
+    {
+      "name": "North Las Vegas",
+      "slug": "north-las-vegas",
+      "salonCount": 0
+    },
+    {
+      "name": "Reno",
+      "slug": "reno",
+      "salonCount": 0
+    },
+    {
+      "name": "Sparks",
+      "slug": "sparks",
+      "salonCount": 0
+    },
+    {
+      "name": "Carson City",
+      "slug": "carson-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Enterprise",
+      "slug": "enterprise",
+      "salonCount": 0
+    },
+    {
+      "name": "Paradise",
+      "slug": "paradise",
+      "salonCount": 0
+    },
+    {
+      "name": "Spring Valley",
+      "slug": "spring-valley",
+      "salonCount": 0
+    },
+    {
+      "name": "Sunrise Manor",
+      "slug": "sunrise-manor",
+      "salonCount": 0
+    },
+    {
+      "name": "Whitney",
+      "slug": "whitney",
+      "salonCount": 0
+    },
+    {
+      "name": "Winchester",
+      "slug": "winchester",
+      "salonCount": 0
+    },
+    {
+      "name": "Pahrump",
+      "slug": "pahrump",
+      "salonCount": 0
+    },
+    {
+      "name": "Mesquite",
+      "slug": "mesquite",
+      "salonCount": 0
+    },
+    {
+      "name": "Fernley",
+      "slug": "fernley",
+      "salonCount": 0
+    },
+    {
+      "name": "Elko",
+      "slug": "elko",
+      "salonCount": 0
+    },
+    {
+      "name": "Fallon",
+      "slug": "fallon",
+      "salonCount": 0
+    },
+    {
+      "name": "Boulder City",
+      "slug": "boulder-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Laughlin",
+      "slug": "laughlin",
+      "salonCount": 0
+    },
+    {
+      "name": "Winnemucca",
+      "slug": "winnemucca",
+      "salonCount": 0
+    },
+    {
+      "name": "Ely",
+      "slug": "ely",
+      "salonCount": 0
+    },
+    {
+      "name": "Gardnerville",
+      "slug": "gardnerville",
+      "salonCount": 0
+    },
+    {
+      "name": "Minden",
+      "slug": "minden",
+      "salonCount": 0
+    },
+    {
+      "name": "Yerington",
+      "slug": "yerington",
+      "salonCount": 0
+    },
+    {
+      "name": "Dayton",
+      "slug": "dayton",
+      "salonCount": 0
+    },
+    {
+      "name": "Silver Springs",
+      "slug": "silver-springs",
+      "salonCount": 0
+    },
+    {
+      "name": "Indian Hills",
+      "slug": "indian-hills",
+      "salonCount": 0
+    },
+    {
+      "name": "Stateline",
+      "slug": "stateline",
+      "salonCount": 0
+    },
+    {
+      "name": "Incline Village",
+      "slug": "incline-village",
+      "salonCount": 0
+    },
+    {
+      "name": "Caliente",
+      "slug": "caliente",
+      "salonCount": 0
+    },
+    {
+      "name": "Lovelock",
+      "slug": "lovelock",
+      "salonCount": 0
+    },
+    {
+      "name": "Battle Mountain",
+      "slug": "battle-mountain",
+      "salonCount": 0
+    },
+    {
+      "name": "Wells",
+      "slug": "wells",
+      "salonCount": 0
+    },
+    {
+      "name": "Hawthorne",
+      "slug": "hawthorne",
+      "salonCount": 0
+    },
+    {
+      "name": "Virginia City",
+      "slug": "virginia-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Cold Springs",
+      "slug": "cold-springs",
+      "salonCount": 0
+    },
+    {
+      "name": "Sun Valley",
+      "slug": "sun-valley",
+      "salonCount": 0
+    },
+    {
+      "name": "Spanish Springs",
+      "slug": "spanish-springs",
+      "salonCount": 0
+    },
+    {
+      "name": "Lemmon Valley",
+      "slug": "lemmon-valley",
+      "salonCount": 0
+    },
+    {
+      "name": "Verdi",
+      "slug": "verdi",
+      "salonCount": 0
+    },
+    {
+      "name": "Genoa",
+      "slug": "genoa",
+      "salonCount": 0
+    },
+    {
+      "name": "Mound House",
+      "slug": "mound-house",
+      "salonCount": 0
+    },
+    {
+      "name": "Tonopah",
+      "slug": "tonopah",
+      "salonCount": 0
+    },
+    {
+      "name": "Beatty",
+      "slug": "beatty",
+      "salonCount": 0
+    },
+    {
+      "name": "Alamo",
+      "slug": "alamo",
+      "salonCount": 0
+    },
+    {
+      "name": "Indian Springs",
+      "slug": "indian-springs",
+      "salonCount": 0
+    },
+    {
+      "name": "Round Mountain",
+      "slug": "round-mountain",
+      "salonCount": 0
+    },
+    {
+      "name": "Spring Creek",
+      "slug": "spring-creek",
+      "salonCount": 0
+    },
+    {
+      "name": "Jackpot",
+      "slug": "jackpot",
+      "salonCount": 0
+    },
+    {
+      "name": "Overton",
+      "slug": "overton",
+      "salonCount": 0
+    },
+    {
+      "name": "Logandale",
+      "slug": "logandale",
+      "salonCount": 0
+    },
+    {
+      "name": "Primm",
+      "slug": "primm",
+      "salonCount": 0
+    },
+    {
+      "name": "Searchlight",
+      "slug": "searchlight",
+      "salonCount": 0
+    },
+    {
+      "name": "Goodsprings",
+      "slug": "goodsprings",
+      "salonCount": 0
+    },
+    {
+      "name": "Sandy Valley",
+      "slug": "sandy-valley",
+      "salonCount": 0
+    },
+    {
+      "name": "Bunkerville",
+      "slug": "bunkerville",
+      "salonCount": 0
+    },
+    {
+      "name": "Goldfield",
+      "slug": "goldfield",
+      "salonCount": 0
+    },
+    {
+      "name": "Eureka",
+      "slug": "eureka",
+      "salonCount": 0
+    },
+    {
+      "name": "Panaca",
+      "slug": "panaca",
+      "salonCount": 0
+    },
+    {
+      "name": "Pioche",
+      "slug": "pioche",
+      "salonCount": 0
+    },
+    {
+      "name": "Nellis AFB",
+      "slug": "nellis-afb",
+      "salonCount": 0
+    },
+    {
+      "name": "Mount Charleston",
+      "slug": "mount-charleston",
+      "salonCount": 0
+    },
+    {
+      "name": "Crescent Valley",
+      "slug": "crescent-valley",
+      "salonCount": 0
+    },
+    {
+      "name": "Baker",
+      "slug": "baker",
+      "salonCount": 0
+    },
+    {
+      "name": "Amargosa Valley",
+      "slug": "amargosa-valley",
+      "salonCount": 0
+    },
+    {
+      "name": "Jean",
+      "slug": "jean",
+      "salonCount": 0
+    }
+  ]
+}

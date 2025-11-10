@@ -1,0 +1,593 @@
+{
+  "state": "West Virginia",
+  "stateCode": "WV",
+  "generatedAt": "2025-11-06T10:25:11.605Z",
+  "citiesCount": 117,
+  "cities": [
+    {
+      "name": "Charleston",
+      "slug": "charleston",
+      "salonCount": 0
+    },
+    {
+      "name": "Huntington",
+      "slug": "huntington",
+      "salonCount": 0
+    },
+    {
+      "name": "Morgantown",
+      "slug": "morgantown",
+      "salonCount": 0
+    },
+    {
+      "name": "Parkersburg",
+      "slug": "parkersburg",
+      "salonCount": 0
+    },
+    {
+      "name": "Wheeling",
+      "slug": "wheeling",
+      "salonCount": 0
+    },
+    {
+      "name": "Beckley",
+      "slug": "beckley",
+      "salonCount": 0
+    },
+    {
+      "name": "Martinsburg",
+      "slug": "martinsburg",
+      "salonCount": 0
+    },
+    {
+      "name": "Fairmont",
+      "slug": "fairmont",
+      "salonCount": 0
+    },
+    {
+      "name": "Clarksburg",
+      "slug": "clarksburg",
+      "salonCount": 0
+    },
+    {
+      "name": "Princeton",
+      "slug": "princeton",
+      "salonCount": 0
+    },
+    {
+      "name": "Bluefield",
+      "slug": "bluefield",
+      "salonCount": 0
+    },
+    {
+      "name": "Oak Hill",
+      "slug": "oak-hill",
+      "salonCount": 0
+    },
+    {
+      "name": "Lewisburg",
+      "slug": "lewisburg",
+      "salonCount": 0
+    },
+    {
+      "name": "Elkins",
+      "slug": "elkins",
+      "salonCount": 0
+    },
+    {
+      "name": "Keyser",
+      "slug": "keyser",
+      "salonCount": 0
+    },
+    {
+      "name": "Point Pleasant",
+      "slug": "point-pleasant",
+      "salonCount": 0
+    },
+    {
+      "name": "Ripley",
+      "slug": "ripley",
+      "salonCount": 0
+    },
+    {
+      "name": "Spencer",
+      "slug": "spencer",
+      "salonCount": 0
+    },
+    {
+      "name": "Logan",
+      "slug": "logan",
+      "salonCount": 0
+    },
+    {
+      "name": "Williamson",
+      "slug": "williamson",
+      "salonCount": 0
+    },
+    {
+      "name": "Welch",
+      "slug": "welch",
+      "salonCount": 0
+    },
+    {
+      "name": "Summersville",
+      "slug": "summersville",
+      "salonCount": 0
+    },
+    {
+      "name": "Buckhannon",
+      "slug": "buckhannon",
+      "salonCount": 0
+    },
+    {
+      "name": "Grafton",
+      "slug": "grafton",
+      "salonCount": 0
+    },
+    {
+      "name": "Weston",
+      "slug": "weston",
+      "salonCount": 0
+    },
+    {
+      "name": "New Martinsville",
+      "slug": "new-martinsville",
+      "salonCount": 0
+    },
+    {
+      "name": "Moundsville",
+      "slug": "moundsville",
+      "salonCount": 0
+    },
+    {
+      "name": "Weirton",
+      "slug": "weirton",
+      "salonCount": 0
+    },
+    {
+      "name": "Chester",
+      "slug": "chester",
+      "salonCount": 0
+    },
+    {
+      "name": "Wellsburg",
+      "slug": "wellsburg",
+      "salonCount": 0
+    },
+    {
+      "name": "Kingwood",
+      "slug": "kingwood",
+      "salonCount": 0
+    },
+    {
+      "name": "Ranson",
+      "slug": "ranson",
+      "salonCount": 0
+    },
+    {
+      "name": "Charles Town",
+      "slug": "charles-town",
+      "salonCount": 0
+    },
+    {
+      "name": "Shepherdstown",
+      "slug": "shepherdstown",
+      "salonCount": 0
+    },
+    {
+      "name": "South Charleston",
+      "slug": "south-charleston",
+      "salonCount": 0
+    },
+    {
+      "name": "St. Albans",
+      "slug": "st-albans",
+      "salonCount": 0
+    },
+    {
+      "name": "Nitro",
+      "slug": "nitro",
+      "salonCount": 0
+    },
+    {
+      "name": "Dunbar",
+      "slug": "dunbar",
+      "salonCount": 0
+    },
+    {
+      "name": "Barboursville",
+      "slug": "barboursville",
+      "salonCount": 0
+    },
+    {
+      "name": "Ceredo",
+      "slug": "ceredo",
+      "salonCount": 0
+    },
+    {
+      "name": "Kenova",
+      "slug": "kenova",
+      "salonCount": 0
+    },
+    {
+      "name": "Milton",
+      "slug": "milton",
+      "salonCount": 0
+    },
+    {
+      "name": "Vienna",
+      "slug": "vienna",
+      "salonCount": 0
+    },
+    {
+      "name": "Williamstown",
+      "slug": "williamstown",
+      "salonCount": 0
+    },
+    {
+      "name": "Star City",
+      "slug": "star-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Granville",
+      "slug": "granville",
+      "salonCount": 0
+    },
+    {
+      "name": "Westover",
+      "slug": "westover",
+      "salonCount": 0
+    },
+    {
+      "name": "Bridgeport",
+      "slug": "bridgeport",
+      "salonCount": 0
+    },
+    {
+      "name": "Shinnston",
+      "slug": "shinnston",
+      "salonCount": 0
+    },
+    {
+      "name": "Mannington",
+      "slug": "mannington",
+      "salonCount": 0
+    },
+    {
+      "name": "Richwood",
+      "slug": "richwood",
+      "salonCount": 0
+    },
+    {
+      "name": "Petersburg",
+      "slug": "petersburg",
+      "salonCount": 0
+    },
+    {
+      "name": "Moorefield",
+      "slug": "moorefield",
+      "salonCount": 0
+    },
+    {
+      "name": "Romney",
+      "slug": "romney",
+      "salonCount": 0
+    },
+    {
+      "name": "Berkeley Springs",
+      "slug": "berkeley-springs",
+      "salonCount": 0
+    },
+    {
+      "name": "Hinton",
+      "slug": "hinton",
+      "salonCount": 0
+    },
+    {
+      "name": "White Sulphur Springs",
+      "slug": "white-sulphur-springs",
+      "salonCount": 0
+    },
+    {
+      "name": "Alderson",
+      "slug": "alderson",
+      "salonCount": 0
+    },
+    {
+      "name": "Ronceverte",
+      "slug": "ronceverte",
+      "salonCount": 0
+    },
+    {
+      "name": "Rainelle",
+      "slug": "rainelle",
+      "salonCount": 0
+    },
+    {
+      "name": "Fayetteville",
+      "slug": "fayetteville",
+      "salonCount": 0
+    },
+    {
+      "name": "Montgomery",
+      "slug": "montgomery",
+      "salonCount": 0
+    },
+    {
+      "name": "Paden City",
+      "slug": "paden-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Sistersville",
+      "slug": "sistersville",
+      "salonCount": 0
+    },
+    {
+      "name": "Cross Lanes",
+      "slug": "cross-lanes",
+      "salonCount": 0
+    },
+    {
+      "name": "Teays Valley",
+      "slug": "teays-valley",
+      "salonCount": 0
+    },
+    {
+      "name": "Scott Depot",
+      "slug": "scott-depot",
+      "salonCount": 0
+    },
+    {
+      "name": "Inwood",
+      "slug": "inwood",
+      "salonCount": 0
+    },
+    {
+      "name": "Falling Waters",
+      "slug": "falling-waters",
+      "salonCount": 0
+    },
+    {
+      "name": "Hedgesville",
+      "slug": "hedgesville",
+      "salonCount": 0
+    },
+    {
+      "name": "Spring Mills",
+      "slug": "spring-mills",
+      "salonCount": 0
+    },
+    {
+      "name": "Daniels",
+      "slug": "daniels",
+      "salonCount": 0
+    },
+    {
+      "name": "Beaver",
+      "slug": "beaver",
+      "salonCount": 0
+    },
+    {
+      "name": "Crab Orchard",
+      "slug": "crab-orchard",
+      "salonCount": 0
+    },
+    {
+      "name": "Sophia",
+      "slug": "sophia",
+      "salonCount": 0
+    },
+    {
+      "name": "Cheat Lake",
+      "slug": "cheat-lake",
+      "salonCount": 0
+    },
+    {
+      "name": "White Hall",
+      "slug": "white-hall",
+      "salonCount": 0
+    },
+    {
+      "name": "Lubeck",
+      "slug": "lubeck",
+      "salonCount": 0
+    },
+    {
+      "name": "Fort Ashby",
+      "slug": "fort-ashby",
+      "salonCount": 0
+    },
+    {
+      "name": "Ridgeley",
+      "slug": "ridgeley",
+      "salonCount": 0
+    },
+    {
+      "name": "Wiley Ford",
+      "slug": "wiley-ford",
+      "salonCount": 0
+    },
+    {
+      "name": "Mullens",
+      "slug": "mullens",
+      "salonCount": 0
+    },
+    {
+      "name": "Pineville",
+      "slug": "pineville",
+      "salonCount": 0
+    },
+    {
+      "name": "Chapmanville",
+      "slug": "chapmanville",
+      "salonCount": 0
+    },
+    {
+      "name": "Man",
+      "slug": "man",
+      "salonCount": 0
+    },
+    {
+      "name": "Matewan",
+      "slug": "matewan",
+      "salonCount": 0
+    },
+    {
+      "name": "Delbarton",
+      "slug": "delbarton",
+      "salonCount": 0
+    },
+    {
+      "name": "Marmet",
+      "slug": "marmet",
+      "salonCount": 0
+    },
+    {
+      "name": "Belle",
+      "slug": "belle",
+      "salonCount": 0
+    },
+    {
+      "name": "Cedar Grove",
+      "slug": "cedar-grove",
+      "salonCount": 0
+    },
+    {
+      "name": "Poca",
+      "slug": "poca",
+      "salonCount": 0
+    },
+    {
+      "name": "Winfield",
+      "slug": "winfield",
+      "salonCount": 0
+    },
+    {
+      "name": "Eleanor",
+      "slug": "eleanor",
+      "salonCount": 0
+    },
+    {
+      "name": "Culloden",
+      "slug": "culloden",
+      "salonCount": 0
+    },
+    {
+      "name": "Ona",
+      "slug": "ona",
+      "salonCount": 0
+    },
+    {
+      "name": "Hamlin",
+      "slug": "hamlin",
+      "salonCount": 0
+    },
+    {
+      "name": "Madison",
+      "slug": "madison",
+      "salonCount": 0
+    },
+    {
+      "name": "War",
+      "slug": "war",
+      "salonCount": 0
+    },
+    {
+      "name": "Gary",
+      "slug": "gary",
+      "salonCount": 0
+    },
+    {
+      "name": "Holden",
+      "slug": "holden",
+      "salonCount": 0
+    },
+    {
+      "name": "Mount Gay",
+      "slug": "mount-gay",
+      "salonCount": 0
+    },
+    {
+      "name": "Gilbert",
+      "slug": "gilbert",
+      "salonCount": 0
+    },
+    {
+      "name": "Capon Bridge",
+      "slug": "capon-bridge",
+      "salonCount": 0
+    },
+    {
+      "name": "Mount Hope",
+      "slug": "mount-hope",
+      "salonCount": 0
+    },
+    {
+      "name": "Pennsboro",
+      "slug": "pennsboro",
+      "salonCount": 0
+    },
+    {
+      "name": "Harrisville",
+      "slug": "harrisville",
+      "salonCount": 0
+    },
+    {
+      "name": "St. Marys",
+      "slug": "st-marys",
+      "salonCount": 0
+    },
+    {
+      "name": "Glenville",
+      "slug": "glenville",
+      "salonCount": 0
+    },
+    {
+      "name": "Sutton",
+      "slug": "sutton",
+      "salonCount": 0
+    },
+    {
+      "name": "Gassaway",
+      "slug": "gassaway",
+      "salonCount": 0
+    },
+    {
+      "name": "Webster Springs",
+      "slug": "webster-springs",
+      "salonCount": 0
+    },
+    {
+      "name": "Thomas",
+      "slug": "thomas",
+      "salonCount": 0
+    },
+    {
+      "name": "Davis",
+      "slug": "davis",
+      "salonCount": 0
+    },
+    {
+      "name": "Parsons",
+      "slug": "parsons",
+      "salonCount": 0
+    },
+    {
+      "name": "Grantsville",
+      "slug": "grantsville",
+      "salonCount": 0
+    },
+    {
+      "name": "Philippi",
+      "slug": "philippi",
+      "salonCount": 0
+    },
+    {
+      "name": "New Cumberland",
+      "slug": "new-cumberland",
+      "salonCount": 0
+    }
+  ]
+}

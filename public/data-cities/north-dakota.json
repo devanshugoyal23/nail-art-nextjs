@@ -1,0 +1,288 @@
+{
+  "state": "North Dakota",
+  "stateCode": "ND",
+  "generatedAt": "2025-11-06T10:24:37.776Z",
+  "citiesCount": 56,
+  "cities": [
+    {
+      "name": "Fargo",
+      "slug": "fargo",
+      "salonCount": 0
+    },
+    {
+      "name": "Bismarck",
+      "slug": "bismarck",
+      "salonCount": 0
+    },
+    {
+      "name": "Grand Forks",
+      "slug": "grand-forks",
+      "salonCount": 0
+    },
+    {
+      "name": "Minot",
+      "slug": "minot",
+      "salonCount": 0
+    },
+    {
+      "name": "West Fargo",
+      "slug": "west-fargo",
+      "salonCount": 0
+    },
+    {
+      "name": "Dickinson",
+      "slug": "dickinson",
+      "salonCount": 0
+    },
+    {
+      "name": "Mandan",
+      "slug": "mandan",
+      "salonCount": 0
+    },
+    {
+      "name": "Jamestown",
+      "slug": "jamestown",
+      "salonCount": 0
+    },
+    {
+      "name": "Wahpeton",
+      "slug": "wahpeton",
+      "salonCount": 0
+    },
+    {
+      "name": "Devils Lake",
+      "slug": "devils-lake",
+      "salonCount": 0
+    },
+    {
+      "name": "Valley City",
+      "slug": "valley-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Watford City",
+      "slug": "watford-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Grafton",
+      "slug": "grafton",
+      "salonCount": 0
+    },
+    {
+      "name": "Beulah",
+      "slug": "beulah",
+      "salonCount": 0
+    },
+    {
+      "name": "Horace",
+      "slug": "horace",
+      "salonCount": 0
+    },
+    {
+      "name": "Casselton",
+      "slug": "casselton",
+      "salonCount": 0
+    },
+    {
+      "name": "Rugby",
+      "slug": "rugby",
+      "salonCount": 0
+    },
+    {
+      "name": "Stanley",
+      "slug": "stanley",
+      "salonCount": 0
+    },
+    {
+      "name": "New Town",
+      "slug": "new-town",
+      "salonCount": 0
+    },
+    {
+      "name": "Hazen",
+      "slug": "hazen",
+      "salonCount": 0
+    },
+    {
+      "name": "Oakes",
+      "slug": "oakes",
+      "salonCount": 0
+    },
+    {
+      "name": "Bottineau",
+      "slug": "bottineau",
+      "salonCount": 0
+    },
+    {
+      "name": "Harvey",
+      "slug": "harvey",
+      "salonCount": 0
+    },
+    {
+      "name": "Carrington",
+      "slug": "carrington",
+      "salonCount": 0
+    },
+    {
+      "name": "Lisbon",
+      "slug": "lisbon",
+      "salonCount": 0
+    },
+    {
+      "name": "Mayville",
+      "slug": "mayville",
+      "salonCount": 0
+    },
+    {
+      "name": "Hillsboro",
+      "slug": "hillsboro",
+      "salonCount": 0
+    },
+    {
+      "name": "Park River",
+      "slug": "park-river",
+      "salonCount": 0
+    },
+    {
+      "name": "Rolla",
+      "slug": "rolla",
+      "salonCount": 0
+    },
+    {
+      "name": "Linton",
+      "slug": "linton",
+      "salonCount": 0
+    },
+    {
+      "name": "Bowman",
+      "slug": "bowman",
+      "salonCount": 0
+    },
+    {
+      "name": "New Salem",
+      "slug": "new-salem",
+      "salonCount": 0
+    },
+    {
+      "name": "Cando",
+      "slug": "cando",
+      "salonCount": 0
+    },
+    {
+      "name": "Garrison",
+      "slug": "garrison",
+      "salonCount": 0
+    },
+    {
+      "name": "Wishek",
+      "slug": "wishek",
+      "salonCount": 0
+    },
+    {
+      "name": "Ellendale",
+      "slug": "ellendale",
+      "salonCount": 0
+    },
+    {
+      "name": "Hettinger",
+      "slug": "hettinger",
+      "salonCount": 0
+    },
+    {
+      "name": "Killdeer",
+      "slug": "killdeer",
+      "salonCount": 0
+    },
+    {
+      "name": "Tioga",
+      "slug": "tioga",
+      "salonCount": 0
+    },
+    {
+      "name": "Langdon",
+      "slug": "langdon",
+      "salonCount": 0
+    },
+    {
+      "name": "New Rockford",
+      "slug": "new-rockford",
+      "salonCount": 0
+    },
+    {
+      "name": "Washburn",
+      "slug": "washburn",
+      "salonCount": 0
+    },
+    {
+      "name": "Hankinson",
+      "slug": "hankinson",
+      "salonCount": 0
+    },
+    {
+      "name": "Cooperstown",
+      "slug": "cooperstown",
+      "salonCount": 0
+    },
+    {
+      "name": "Larimore",
+      "slug": "larimore",
+      "salonCount": 0
+    },
+    {
+      "name": "Mohall",
+      "slug": "mohall",
+      "salonCount": 0
+    },
+    {
+      "name": "Mott",
+      "slug": "mott",
+      "salonCount": 0
+    },
+    {
+      "name": "Napoleon",
+      "slug": "napoleon",
+      "salonCount": 0
+    },
+    {
+      "name": "Underwood",
+      "slug": "underwood",
+      "salonCount": 0
+    },
+    {
+      "name": "Gwinner",
+      "slug": "gwinner",
+      "salonCount": 0
+    },
+    {
+      "name": "Walhalla",
+      "slug": "walhalla",
+      "salonCount": 0
+    },
+    {
+      "name": "Wilton",
+      "slug": "wilton",
+      "salonCount": 0
+    },
+    {
+      "name": "Crosby",
+      "slug": "crosby",
+      "salonCount": 0
+    },
+    {
+      "name": "Steele",
+      "slug": "steele",
+      "salonCount": 0
+    },
+    {
+      "name": "Ashley",
+      "slug": "ashley",
+      "salonCount": 0
+    },
+    {
+      "name": "Westhope",
+      "slug": "westhope",
+      "salonCount": 0
+    }
+  ]
+}

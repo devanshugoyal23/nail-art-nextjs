@@ -1,0 +1,458 @@
+{
+  "state": "Hawaii",
+  "stateCode": "HI",
+  "generatedAt": "2025-11-06T10:19:17.487Z",
+  "citiesCount": 90,
+  "cities": [
+    {
+      "name": "Honolulu",
+      "slug": "honolulu",
+      "salonCount": 0
+    },
+    {
+      "name": "Pearl City",
+      "slug": "pearl-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Kaneohe",
+      "slug": "kaneohe",
+      "salonCount": 0
+    },
+    {
+      "name": "Mililani",
+      "slug": "mililani",
+      "salonCount": 0
+    },
+    {
+      "name": "Waipahu",
+      "slug": "waipahu",
+      "salonCount": 0
+    },
+    {
+      "name": "Ewa Gentry",
+      "slug": "ewa-gentry",
+      "salonCount": 0
+    },
+    {
+      "name": "Kapolei",
+      "slug": "kapolei",
+      "salonCount": 0
+    },
+    {
+      "name": "Kailua",
+      "slug": "kailua",
+      "salonCount": 0
+    },
+    {
+      "name": "Waianae",
+      "slug": "waianae",
+      "salonCount": 0
+    },
+    {
+      "name": "Waimalu",
+      "slug": "waimalu",
+      "salonCount": 0
+    },
+    {
+      "name": "Aiea",
+      "slug": "aiea",
+      "salonCount": 0
+    },
+    {
+      "name": "Makakilo",
+      "slug": "makakilo",
+      "salonCount": 0
+    },
+    {
+      "name": "Wahiawa",
+      "slug": "wahiawa",
+      "salonCount": 0
+    },
+    {
+      "name": "Maili",
+      "slug": "maili",
+      "salonCount": 0
+    },
+    {
+      "name": "Nanakuli",
+      "slug": "nanakuli",
+      "salonCount": 0
+    },
+    {
+      "name": "Laie",
+      "slug": "laie",
+      "salonCount": 0
+    },
+    {
+      "name": "Hauula",
+      "slug": "hauula",
+      "salonCount": 0
+    },
+    {
+      "name": "Punaluu",
+      "slug": "punaluu",
+      "salonCount": 0
+    },
+    {
+      "name": "Kaaawa",
+      "slug": "kaaawa",
+      "salonCount": 0
+    },
+    {
+      "name": "Kunia Camp",
+      "slug": "kunia-camp",
+      "salonCount": 0
+    },
+    {
+      "name": "Whitmore Village",
+      "slug": "whitmore-village",
+      "salonCount": 0
+    },
+    {
+      "name": "Waialua",
+      "slug": "waialua",
+      "salonCount": 0
+    },
+    {
+      "name": "Haleiwa",
+      "slug": "haleiwa",
+      "salonCount": 0
+    },
+    {
+      "name": "Kahuku",
+      "slug": "kahuku",
+      "salonCount": 0
+    },
+    {
+      "name": "Waimanalo",
+      "slug": "waimanalo",
+      "salonCount": 0
+    },
+    {
+      "name": "Waimanalo Beach",
+      "slug": "waimanalo-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "Hawaii Kai",
+      "slug": "hawaii-kai",
+      "salonCount": 0
+    },
+    {
+      "name": "Salt Lake",
+      "slug": "salt-lake",
+      "salonCount": 0
+    },
+    {
+      "name": "Village Park",
+      "slug": "village-park",
+      "salonCount": 0
+    },
+    {
+      "name": "Ewa Beach",
+      "slug": "ewa-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "Ocean Pointe",
+      "slug": "ocean-pointe",
+      "salonCount": 0
+    },
+    {
+      "name": "Schofield Barracks",
+      "slug": "schofield-barracks",
+      "salonCount": 0
+    },
+    {
+      "name": "Wheeler Army Airfield",
+      "slug": "wheeler-army-airfield",
+      "salonCount": 0
+    },
+    {
+      "name": "Mokuleia",
+      "slug": "mokuleia",
+      "salonCount": 0
+    },
+    {
+      "name": "Maunawili",
+      "slug": "maunawili",
+      "salonCount": 0
+    },
+    {
+      "name": "Kahului",
+      "slug": "kahului",
+      "salonCount": 0
+    },
+    {
+      "name": "Wailuku",
+      "slug": "wailuku",
+      "salonCount": 0
+    },
+    {
+      "name": "Kihei",
+      "slug": "kihei",
+      "salonCount": 0
+    },
+    {
+      "name": "Lahaina",
+      "slug": "lahaina",
+      "salonCount": 0
+    },
+    {
+      "name": "Makawao",
+      "slug": "makawao",
+      "salonCount": 0
+    },
+    {
+      "name": "Kula",
+      "slug": "kula",
+      "salonCount": 0
+    },
+    {
+      "name": "Pukalani",
+      "slug": "pukalani",
+      "salonCount": 0
+    },
+    {
+      "name": "Paia",
+      "slug": "paia",
+      "salonCount": 0
+    },
+    {
+      "name": "Haiku",
+      "slug": "haiku",
+      "salonCount": 0
+    },
+    {
+      "name": "Spreckelsville",
+      "slug": "spreckelsville",
+      "salonCount": 0
+    },
+    {
+      "name": "Wailea",
+      "slug": "wailea",
+      "salonCount": 0
+    },
+    {
+      "name": "Kapalua",
+      "slug": "kapalua",
+      "salonCount": 0
+    },
+    {
+      "name": "Hana",
+      "slug": "hana",
+      "salonCount": 0
+    },
+    {
+      "name": "Napili-Honokowai",
+      "slug": "napili-honokowai",
+      "salonCount": 0
+    },
+    {
+      "name": "Maalaea",
+      "slug": "maalaea",
+      "salonCount": 0
+    },
+    {
+      "name": "Keokea",
+      "slug": "keokea",
+      "salonCount": 0
+    },
+    {
+      "name": "Hilo",
+      "slug": "hilo",
+      "salonCount": 0
+    },
+    {
+      "name": "Kailua-Kona",
+      "slug": "kailua-kona",
+      "salonCount": 0
+    },
+    {
+      "name": "Waimea",
+      "slug": "waimea",
+      "salonCount": 0
+    },
+    {
+      "name": "Pahoa",
+      "slug": "pahoa",
+      "salonCount": 0
+    },
+    {
+      "name": "Keaau",
+      "slug": "keaau",
+      "salonCount": 0
+    },
+    {
+      "name": "Volcano",
+      "slug": "volcano",
+      "salonCount": 0
+    },
+    {
+      "name": "Captain Cook",
+      "slug": "captain-cook",
+      "salonCount": 0
+    },
+    {
+      "name": "Honokaa",
+      "slug": "honokaa",
+      "salonCount": 0
+    },
+    {
+      "name": "Kapaau",
+      "slug": "kapaau",
+      "salonCount": 0
+    },
+    {
+      "name": "Naalehu",
+      "slug": "naalehu",
+      "salonCount": 0
+    },
+    {
+      "name": "Ocean View",
+      "slug": "ocean-view",
+      "salonCount": 0
+    },
+    {
+      "name": "Pepeekeo",
+      "slug": "pepeekeo",
+      "salonCount": 0
+    },
+    {
+      "name": "Waikoloa Village",
+      "slug": "waikoloa-village",
+      "salonCount": 0
+    },
+    {
+      "name": "Holualoa",
+      "slug": "holualoa",
+      "salonCount": 0
+    },
+    {
+      "name": "Kawaihae",
+      "slug": "kawaihae",
+      "salonCount": 0
+    },
+    {
+      "name": "Kurtistown",
+      "slug": "kurtistown",
+      "salonCount": 0
+    },
+    {
+      "name": "Papaikou",
+      "slug": "papaikou",
+      "salonCount": 0
+    },
+    {
+      "name": "Hawi",
+      "slug": "hawi",
+      "salonCount": 0
+    },
+    {
+      "name": "Laupahoehoe",
+      "slug": "laupahoehoe",
+      "salonCount": 0
+    },
+    {
+      "name": "Honaunau",
+      "slug": "honaunau",
+      "salonCount": 0
+    },
+    {
+      "name": "Lihue",
+      "slug": "lihue",
+      "salonCount": 0
+    },
+    {
+      "name": "Kapaa",
+      "slug": "kapaa",
+      "salonCount": 0
+    },
+    {
+      "name": "Poipu",
+      "slug": "poipu",
+      "salonCount": 0
+    },
+    {
+      "name": "Kalaheo",
+      "slug": "kalaheo",
+      "salonCount": 0
+    },
+    {
+      "name": "Hanalei",
+      "slug": "hanalei",
+      "salonCount": 0
+    },
+    {
+      "name": "Princeville",
+      "slug": "princeville",
+      "salonCount": 0
+    },
+    {
+      "name": "Kekaha",
+      "slug": "kekaha",
+      "salonCount": 0
+    },
+    {
+      "name": "Eleele",
+      "slug": "eleele",
+      "salonCount": 0
+    },
+    {
+      "name": "Lawai",
+      "slug": "lawai",
+      "salonCount": 0
+    },
+    {
+      "name": "Kaumakani",
+      "slug": "kaumakani",
+      "salonCount": 0
+    },
+    {
+      "name": "Kilauea",
+      "slug": "kilauea",
+      "salonCount": 0
+    },
+    {
+      "name": "Anahola",
+      "slug": "anahola",
+      "salonCount": 0
+    },
+    {
+      "name": "Wailua",
+      "slug": "wailua",
+      "salonCount": 0
+    },
+    {
+      "name": "Puhi",
+      "slug": "puhi",
+      "salonCount": 0
+    },
+    {
+      "name": "Hanapepe",
+      "slug": "hanapepe",
+      "salonCount": 0
+    },
+    {
+      "name": "Kaunakakai",
+      "slug": "kaunakakai",
+      "salonCount": 0
+    },
+    {
+      "name": "Maunaloa",
+      "slug": "maunaloa",
+      "salonCount": 0
+    },
+    {
+      "name": "Hoolehua",
+      "slug": "hoolehua",
+      "salonCount": 0
+    },
+    {
+      "name": "Lanai City",
+      "slug": "lanai-city",
+      "salonCount": 0
+    }
+  ]
+}

@@ -1,0 +1,623 @@
+{
+  "state": "Oregon",
+  "stateCode": "OR",
+  "generatedAt": "2025-11-06T10:24:22.604Z",
+  "citiesCount": 123,
+  "cities": [
+    {
+      "name": "Portland",
+      "slug": "portland",
+      "salonCount": 0
+    },
+    {
+      "name": "Salem",
+      "slug": "salem",
+      "salonCount": 0
+    },
+    {
+      "name": "Eugene",
+      "slug": "eugene",
+      "salonCount": 0
+    },
+    {
+      "name": "Gresham",
+      "slug": "gresham",
+      "salonCount": 0
+    },
+    {
+      "name": "Hillsboro",
+      "slug": "hillsboro",
+      "salonCount": 0
+    },
+    {
+      "name": "Beaverton",
+      "slug": "beaverton",
+      "salonCount": 0
+    },
+    {
+      "name": "Bend",
+      "slug": "bend",
+      "salonCount": 0
+    },
+    {
+      "name": "Medford",
+      "slug": "medford",
+      "salonCount": 0
+    },
+    {
+      "name": "Springfield",
+      "slug": "springfield",
+      "salonCount": 0
+    },
+    {
+      "name": "Corvallis",
+      "slug": "corvallis",
+      "salonCount": 0
+    },
+    {
+      "name": "Albany",
+      "slug": "albany",
+      "salonCount": 0
+    },
+    {
+      "name": "Tigard",
+      "slug": "tigard",
+      "salonCount": 0
+    },
+    {
+      "name": "Grants Pass",
+      "slug": "grants-pass",
+      "salonCount": 0
+    },
+    {
+      "name": "Keizer",
+      "slug": "keizer",
+      "salonCount": 0
+    },
+    {
+      "name": "McMinnville",
+      "slug": "mcminnville",
+      "salonCount": 0
+    },
+    {
+      "name": "Oregon City",
+      "slug": "oregon-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Redmond",
+      "slug": "redmond",
+      "salonCount": 0
+    },
+    {
+      "name": "Woodburn",
+      "slug": "woodburn",
+      "salonCount": 0
+    },
+    {
+      "name": "Wilsonville",
+      "slug": "wilsonville",
+      "salonCount": 0
+    },
+    {
+      "name": "Forest Grove",
+      "slug": "forest-grove",
+      "salonCount": 0
+    },
+    {
+      "name": "Lake Oswego",
+      "slug": "lake-oswego",
+      "salonCount": 0
+    },
+    {
+      "name": "Newberg",
+      "slug": "newberg",
+      "salonCount": 0
+    },
+    {
+      "name": "Ashland",
+      "slug": "ashland",
+      "salonCount": 0
+    },
+    {
+      "name": "Happy Valley",
+      "slug": "happy-valley",
+      "salonCount": 0
+    },
+    {
+      "name": "Roseburg",
+      "slug": "roseburg",
+      "salonCount": 0
+    },
+    {
+      "name": "Klamath Falls",
+      "slug": "klamath-falls",
+      "salonCount": 0
+    },
+    {
+      "name": "Milwaukie",
+      "slug": "milwaukie",
+      "salonCount": 0
+    },
+    {
+      "name": "Tualatin",
+      "slug": "tualatin",
+      "salonCount": 0
+    },
+    {
+      "name": "West Linn",
+      "slug": "west-linn",
+      "salonCount": 0
+    },
+    {
+      "name": "Central Point",
+      "slug": "central-point",
+      "salonCount": 0
+    },
+    {
+      "name": "Dallas",
+      "slug": "dallas",
+      "salonCount": 0
+    },
+    {
+      "name": "Canby",
+      "slug": "canby",
+      "salonCount": 0
+    },
+    {
+      "name": "Monmouth",
+      "slug": "monmouth",
+      "salonCount": 0
+    },
+    {
+      "name": "Lebanon",
+      "slug": "lebanon",
+      "salonCount": 0
+    },
+    {
+      "name": "The Dalles",
+      "slug": "the-dalles",
+      "salonCount": 0
+    },
+    {
+      "name": "Troutdale",
+      "slug": "troutdale",
+      "salonCount": 0
+    },
+    {
+      "name": "St. Helens",
+      "slug": "st-helens",
+      "salonCount": 0
+    },
+    {
+      "name": "Astoria",
+      "slug": "astoria",
+      "salonCount": 0
+    },
+    {
+      "name": "Tillamook",
+      "slug": "tillamook",
+      "salonCount": 0
+    },
+    {
+      "name": "Newport",
+      "slug": "newport",
+      "salonCount": 0
+    },
+    {
+      "name": "Lincoln City",
+      "slug": "lincoln-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Seaside",
+      "slug": "seaside",
+      "salonCount": 0
+    },
+    {
+      "name": "Hermiston",
+      "slug": "hermiston",
+      "salonCount": 0
+    },
+    {
+      "name": "Pendleton",
+      "slug": "pendleton",
+      "salonCount": 0
+    },
+    {
+      "name": "Hood River",
+      "slug": "hood-river",
+      "salonCount": 0
+    },
+    {
+      "name": "Coos Bay",
+      "slug": "coos-bay",
+      "salonCount": 0
+    },
+    {
+      "name": "La Grande",
+      "slug": "la-grande",
+      "salonCount": 0
+    },
+    {
+      "name": "Ontario",
+      "slug": "ontario",
+      "salonCount": 0
+    },
+    {
+      "name": "Prineville",
+      "slug": "prineville",
+      "salonCount": 0
+    },
+    {
+      "name": "Scappoose",
+      "slug": "scappoose",
+      "salonCount": 0
+    },
+    {
+      "name": "Stayton",
+      "slug": "stayton",
+      "salonCount": 0
+    },
+    {
+      "name": "Cottage Grove",
+      "slug": "cottage-grove",
+      "salonCount": 0
+    },
+    {
+      "name": "Sutherlin",
+      "slug": "sutherlin",
+      "salonCount": 0
+    },
+    {
+      "name": "Sweet Home",
+      "slug": "sweet-home",
+      "salonCount": 0
+    },
+    {
+      "name": "Warrenton",
+      "slug": "warrenton",
+      "salonCount": 0
+    },
+    {
+      "name": "Gladstone",
+      "slug": "gladstone",
+      "salonCount": 0
+    },
+    {
+      "name": "Sherwood",
+      "slug": "sherwood",
+      "salonCount": 0
+    },
+    {
+      "name": "Cornelius",
+      "slug": "cornelius",
+      "salonCount": 0
+    },
+    {
+      "name": "Florence",
+      "slug": "florence",
+      "salonCount": 0
+    },
+    {
+      "name": "North Bend",
+      "slug": "north-bend",
+      "salonCount": 0
+    },
+    {
+      "name": "Bandon",
+      "slug": "bandon",
+      "salonCount": 0
+    },
+    {
+      "name": "Brookings",
+      "slug": "brookings",
+      "salonCount": 0
+    },
+    {
+      "name": "Gold Beach",
+      "slug": "gold-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "Depoe Bay",
+      "slug": "depoe-bay",
+      "salonCount": 0
+    },
+    {
+      "name": "Yachats",
+      "slug": "yachats",
+      "salonCount": 0
+    },
+    {
+      "name": "Waldport",
+      "slug": "waldport",
+      "salonCount": 0
+    },
+    {
+      "name": "Manzanita",
+      "slug": "manzanita",
+      "salonCount": 0
+    },
+    {
+      "name": "Cannon Beach",
+      "slug": "cannon-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "Rockaway Beach",
+      "slug": "rockaway-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "Madras",
+      "slug": "madras",
+      "salonCount": 0
+    },
+    {
+      "name": "Sisters",
+      "slug": "sisters",
+      "salonCount": 0
+    },
+    {
+      "name": "La Pine",
+      "slug": "la-pine",
+      "salonCount": 0
+    },
+    {
+      "name": "Sunriver",
+      "slug": "sunriver",
+      "salonCount": 0
+    },
+    {
+      "name": "Baker City",
+      "slug": "baker-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Milton-Freewater",
+      "slug": "milton-freewater",
+      "salonCount": 0
+    },
+    {
+      "name": "Enterprise",
+      "slug": "enterprise",
+      "salonCount": 0
+    },
+    {
+      "name": "Joseph",
+      "slug": "joseph",
+      "salonCount": 0
+    },
+    {
+      "name": "John Day",
+      "slug": "john-day",
+      "salonCount": 0
+    },
+    {
+      "name": "Burns",
+      "slug": "burns",
+      "salonCount": 0
+    },
+    {
+      "name": "Lakeview",
+      "slug": "lakeview",
+      "salonCount": 0
+    },
+    {
+      "name": "Philomath",
+      "slug": "philomath",
+      "salonCount": 0
+    },
+    {
+      "name": "Independence",
+      "slug": "independence",
+      "salonCount": 0
+    },
+    {
+      "name": "Sheridan",
+      "slug": "sheridan",
+      "salonCount": 0
+    },
+    {
+      "name": "Junction City",
+      "slug": "junction-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Veneta",
+      "slug": "veneta",
+      "salonCount": 0
+    },
+    {
+      "name": "Creswell",
+      "slug": "creswell",
+      "salonCount": 0
+    },
+    {
+      "name": "Oakridge",
+      "slug": "oakridge",
+      "salonCount": 0
+    },
+    {
+      "name": "Myrtle Creek",
+      "slug": "myrtle-creek",
+      "salonCount": 0
+    },
+    {
+      "name": "Canyonville",
+      "slug": "canyonville",
+      "salonCount": 0
+    },
+    {
+      "name": "Riddle",
+      "slug": "riddle",
+      "salonCount": 0
+    },
+    {
+      "name": "Winston",
+      "slug": "winston",
+      "salonCount": 0
+    },
+    {
+      "name": "Phoenix",
+      "slug": "phoenix",
+      "salonCount": 0
+    },
+    {
+      "name": "Talent",
+      "slug": "talent",
+      "salonCount": 0
+    },
+    {
+      "name": "White City",
+      "slug": "white-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Umatilla",
+      "slug": "umatilla",
+      "salonCount": 0
+    },
+    {
+      "name": "Boardman",
+      "slug": "boardman",
+      "salonCount": 0
+    },
+    {
+      "name": "Irrigon",
+      "slug": "irrigon",
+      "salonCount": 0
+    },
+    {
+      "name": "Union",
+      "slug": "union",
+      "salonCount": 0
+    },
+    {
+      "name": "Brownsville",
+      "slug": "brownsville",
+      "salonCount": 0
+    },
+    {
+      "name": "Halsey",
+      "slug": "halsey",
+      "salonCount": 0
+    },
+    {
+      "name": "Harrisburg",
+      "slug": "harrisburg",
+      "salonCount": 0
+    },
+    {
+      "name": "Coburg",
+      "slug": "coburg",
+      "salonCount": 0
+    },
+    {
+      "name": "Culver",
+      "slug": "culver",
+      "salonCount": 0
+    },
+    {
+      "name": "Dufur",
+      "slug": "dufur",
+      "salonCount": 0
+    },
+    {
+      "name": "Maupin",
+      "slug": "maupin",
+      "salonCount": 0
+    },
+    {
+      "name": "Fossil",
+      "slug": "fossil",
+      "salonCount": 0
+    },
+    {
+      "name": "Condon",
+      "slug": "condon",
+      "salonCount": 0
+    },
+    {
+      "name": "Echo",
+      "slug": "echo",
+      "salonCount": 0
+    },
+    {
+      "name": "Stanfield",
+      "slug": "stanfield",
+      "salonCount": 0
+    },
+    {
+      "name": "Halfway",
+      "slug": "halfway",
+      "salonCount": 0
+    },
+    {
+      "name": "Athena",
+      "slug": "athena",
+      "salonCount": 0
+    },
+    {
+      "name": "Weston",
+      "slug": "weston",
+      "salonCount": 0
+    },
+    {
+      "name": "Nyssa",
+      "slug": "nyssa",
+      "salonCount": 0
+    },
+    {
+      "name": "Vale",
+      "slug": "vale",
+      "salonCount": 0
+    },
+    {
+      "name": "Wallowa",
+      "slug": "wallowa",
+      "salonCount": 0
+    },
+    {
+      "name": "Powers",
+      "slug": "powers",
+      "salonCount": 0
+    },
+    {
+      "name": "Port Orford",
+      "slug": "port-orford",
+      "salonCount": 0
+    },
+    {
+      "name": "Reedsport",
+      "slug": "reedsport",
+      "salonCount": 0
+    },
+    {
+      "name": "Drain",
+      "slug": "drain",
+      "salonCount": 0
+    },
+    {
+      "name": "Yoncalla",
+      "slug": "yoncalla",
+      "salonCount": 0
+    },
+    {
+      "name": "Banks",
+      "slug": "banks",
+      "salonCount": 0
+    },
+    {
+      "name": "Vernonia",
+      "slug": "vernonia",
+      "salonCount": 0
+    },
+    {
+      "name": "Rainier",
+      "slug": "rainier",
+      "salonCount": 0
+    }
+  ]
+}

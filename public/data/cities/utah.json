@@ -1,0 +1,768 @@
+{
+  "state": "Utah",
+  "stateCode": "UT",
+  "generatedAt": "2025-11-06T10:24:23.452Z",
+  "citiesCount": 152,
+  "cities": [
+    {
+      "name": "Salt Lake City",
+      "slug": "salt-lake-city",
+      "salonCount": 0
+    },
+    {
+      "name": "West Valley City",
+      "slug": "west-valley-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Provo",
+      "slug": "provo",
+      "salonCount": 0
+    },
+    {
+      "name": "Orem",
+      "slug": "orem",
+      "salonCount": 0
+    },
+    {
+      "name": "Sandy",
+      "slug": "sandy",
+      "salonCount": 0
+    },
+    {
+      "name": "Ogden",
+      "slug": "ogden",
+      "salonCount": 0
+    },
+    {
+      "name": "St. George",
+      "slug": "st-george",
+      "salonCount": 0
+    },
+    {
+      "name": "Layton",
+      "slug": "layton",
+      "salonCount": 0
+    },
+    {
+      "name": "West Jordan",
+      "slug": "west-jordan",
+      "salonCount": 0
+    },
+    {
+      "name": "Taylorsville",
+      "slug": "taylorsville",
+      "salonCount": 0
+    },
+    {
+      "name": "South Jordan",
+      "slug": "south-jordan",
+      "salonCount": 0
+    },
+    {
+      "name": "Lehi",
+      "slug": "lehi",
+      "salonCount": 0
+    },
+    {
+      "name": "Draper",
+      "slug": "draper",
+      "salonCount": 0
+    },
+    {
+      "name": "Riverton",
+      "slug": "riverton",
+      "salonCount": 0
+    },
+    {
+      "name": "Herriman",
+      "slug": "herriman",
+      "salonCount": 0
+    },
+    {
+      "name": "Spanish Fork",
+      "slug": "spanish-fork",
+      "salonCount": 0
+    },
+    {
+      "name": "Bountiful",
+      "slug": "bountiful",
+      "salonCount": 0
+    },
+    {
+      "name": "Logan",
+      "slug": "logan",
+      "salonCount": 0
+    },
+    {
+      "name": "Tooele",
+      "slug": "tooele",
+      "salonCount": 0
+    },
+    {
+      "name": "Murray",
+      "slug": "murray",
+      "salonCount": 0
+    },
+    {
+      "name": "Midvale",
+      "slug": "midvale",
+      "salonCount": 0
+    },
+    {
+      "name": "Kaysville",
+      "slug": "kaysville",
+      "salonCount": 0
+    },
+    {
+      "name": "American Fork",
+      "slug": "american-fork",
+      "salonCount": 0
+    },
+    {
+      "name": "Farmington",
+      "slug": "farmington",
+      "salonCount": 0
+    },
+    {
+      "name": "Syracuse",
+      "slug": "syracuse",
+      "salonCount": 0
+    },
+    {
+      "name": "Eagle Mountain",
+      "slug": "eagle-mountain",
+      "salonCount": 0
+    },
+    {
+      "name": "Pleasant Grove",
+      "slug": "pleasant-grove",
+      "salonCount": 0
+    },
+    {
+      "name": "Cottonwood Heights",
+      "slug": "cottonwood-heights",
+      "salonCount": 0
+    },
+    {
+      "name": "Clearfield",
+      "slug": "clearfield",
+      "salonCount": 0
+    },
+    {
+      "name": "Roy",
+      "slug": "roy",
+      "salonCount": 0
+    },
+    {
+      "name": "Springville",
+      "slug": "springville",
+      "salonCount": 0
+    },
+    {
+      "name": "Payson",
+      "slug": "payson",
+      "salonCount": 0
+    },
+    {
+      "name": "Saratoga Springs",
+      "slug": "saratoga-springs",
+      "salonCount": 0
+    },
+    {
+      "name": "Cedar City",
+      "slug": "cedar-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Hurricane",
+      "slug": "hurricane",
+      "salonCount": 0
+    },
+    {
+      "name": "Washington",
+      "slug": "washington",
+      "salonCount": 0
+    },
+    {
+      "name": "Ivins",
+      "slug": "ivins",
+      "salonCount": 0
+    },
+    {
+      "name": "Santa Clara",
+      "slug": "santa-clara",
+      "salonCount": 0
+    },
+    {
+      "name": "Richfield",
+      "slug": "richfield",
+      "salonCount": 0
+    },
+    {
+      "name": "Nephi",
+      "slug": "nephi",
+      "salonCount": 0
+    },
+    {
+      "name": "Heber City",
+      "slug": "heber-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Park City",
+      "slug": "park-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Vernal",
+      "slug": "vernal",
+      "salonCount": 0
+    },
+    {
+      "name": "Price",
+      "slug": "price",
+      "salonCount": 0
+    },
+    {
+      "name": "Moab",
+      "slug": "moab",
+      "salonCount": 0
+    },
+    {
+      "name": "Brigham City",
+      "slug": "brigham-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Beaver",
+      "slug": "beaver",
+      "salonCount": 0
+    },
+    {
+      "name": "Milford",
+      "slug": "milford",
+      "salonCount": 0
+    },
+    {
+      "name": "Tremonton",
+      "slug": "tremonton",
+      "salonCount": 0
+    },
+    {
+      "name": "Garland",
+      "slug": "garland",
+      "salonCount": 0
+    },
+    {
+      "name": "Perry",
+      "slug": "perry",
+      "salonCount": 0
+    },
+    {
+      "name": "Willard",
+      "slug": "willard",
+      "salonCount": 0
+    },
+    {
+      "name": "Nibley",
+      "slug": "nibley",
+      "salonCount": 0
+    },
+    {
+      "name": "Providence",
+      "slug": "providence",
+      "salonCount": 0
+    },
+    {
+      "name": "Smithfield",
+      "slug": "smithfield",
+      "salonCount": 0
+    },
+    {
+      "name": "North Logan",
+      "slug": "north-logan",
+      "salonCount": 0
+    },
+    {
+      "name": "Hyde Park",
+      "slug": "hyde-park",
+      "salonCount": 0
+    },
+    {
+      "name": "Hyrum",
+      "slug": "hyrum",
+      "salonCount": 0
+    },
+    {
+      "name": "Richmond",
+      "slug": "richmond",
+      "salonCount": 0
+    },
+    {
+      "name": "Lewiston",
+      "slug": "lewiston",
+      "salonCount": 0
+    },
+    {
+      "name": "Mendon",
+      "slug": "mendon",
+      "salonCount": 0
+    },
+    {
+      "name": "Helper",
+      "slug": "helper",
+      "salonCount": 0
+    },
+    {
+      "name": "Wellington",
+      "slug": "wellington",
+      "salonCount": 0
+    },
+    {
+      "name": "Centerville",
+      "slug": "centerville",
+      "salonCount": 0
+    },
+    {
+      "name": "Woods Cross",
+      "slug": "woods-cross",
+      "salonCount": 0
+    },
+    {
+      "name": "North Salt Lake",
+      "slug": "north-salt-lake",
+      "salonCount": 0
+    },
+    {
+      "name": "Fruit Heights",
+      "slug": "fruit-heights",
+      "salonCount": 0
+    },
+    {
+      "name": "West Point",
+      "slug": "west-point",
+      "salonCount": 0
+    },
+    {
+      "name": "Clinton",
+      "slug": "clinton",
+      "salonCount": 0
+    },
+    {
+      "name": "South Weber",
+      "slug": "south-weber",
+      "salonCount": 0
+    },
+    {
+      "name": "Roosevelt",
+      "slug": "roosevelt",
+      "salonCount": 0
+    },
+    {
+      "name": "Duchesne",
+      "slug": "duchesne",
+      "salonCount": 0
+    },
+    {
+      "name": "Altamont",
+      "slug": "altamont",
+      "salonCount": 0
+    },
+    {
+      "name": "Myton",
+      "slug": "myton",
+      "salonCount": 0
+    },
+    {
+      "name": "Castle Dale",
+      "slug": "castle-dale",
+      "salonCount": 0
+    },
+    {
+      "name": "Huntington",
+      "slug": "huntington",
+      "salonCount": 0
+    },
+    {
+      "name": "Orangeville",
+      "slug": "orangeville",
+      "salonCount": 0
+    },
+    {
+      "name": "Green River",
+      "slug": "green-river",
+      "salonCount": 0
+    },
+    {
+      "name": "Panguitch",
+      "slug": "panguitch",
+      "salonCount": 0
+    },
+    {
+      "name": "Escalante",
+      "slug": "escalante",
+      "salonCount": 0
+    },
+    {
+      "name": "Enoch",
+      "slug": "enoch",
+      "salonCount": 0
+    },
+    {
+      "name": "Eureka",
+      "slug": "eureka",
+      "salonCount": 0
+    },
+    {
+      "name": "Kanab",
+      "slug": "kanab",
+      "salonCount": 0
+    },
+    {
+      "name": "Orderville",
+      "slug": "orderville",
+      "salonCount": 0
+    },
+    {
+      "name": "Delta",
+      "slug": "delta",
+      "salonCount": 0
+    },
+    {
+      "name": "Fillmore",
+      "slug": "fillmore",
+      "salonCount": 0
+    },
+    {
+      "name": "Hinckley",
+      "slug": "hinckley",
+      "salonCount": 0
+    },
+    {
+      "name": "Morgan",
+      "slug": "morgan",
+      "salonCount": 0
+    },
+    {
+      "name": "Junction",
+      "slug": "junction",
+      "salonCount": 0
+    },
+    {
+      "name": "Circleville",
+      "slug": "circleville",
+      "salonCount": 0
+    },
+    {
+      "name": "Garden City",
+      "slug": "garden-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Randolph",
+      "slug": "randolph",
+      "salonCount": 0
+    },
+    {
+      "name": "Holladay",
+      "slug": "holladay",
+      "salonCount": 0
+    },
+    {
+      "name": "Millcreek",
+      "slug": "millcreek",
+      "salonCount": 0
+    },
+    {
+      "name": "South Salt Lake",
+      "slug": "south-salt-lake",
+      "salonCount": 0
+    },
+    {
+      "name": "Bluffdale",
+      "slug": "bluffdale",
+      "salonCount": 0
+    },
+    {
+      "name": "Alta",
+      "slug": "alta",
+      "salonCount": 0
+    },
+    {
+      "name": "Monticello",
+      "slug": "monticello",
+      "salonCount": 0
+    },
+    {
+      "name": "Blanding",
+      "slug": "blanding",
+      "salonCount": 0
+    },
+    {
+      "name": "Bluff",
+      "slug": "bluff",
+      "salonCount": 0
+    },
+    {
+      "name": "Manti",
+      "slug": "manti",
+      "salonCount": 0
+    },
+    {
+      "name": "Ephraim",
+      "slug": "ephraim",
+      "salonCount": 0
+    },
+    {
+      "name": "Gunnison",
+      "slug": "gunnison",
+      "salonCount": 0
+    },
+    {
+      "name": "Fairview",
+      "slug": "fairview",
+      "salonCount": 0
+    },
+    {
+      "name": "Moroni",
+      "slug": "moroni",
+      "salonCount": 0
+    },
+    {
+      "name": "Fountain Green",
+      "slug": "fountain-green",
+      "salonCount": 0
+    },
+    {
+      "name": "Mount Pleasant",
+      "slug": "mount-pleasant",
+      "salonCount": 0
+    },
+    {
+      "name": "Spring City",
+      "slug": "spring-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Salina",
+      "slug": "salina",
+      "salonCount": 0
+    },
+    {
+      "name": "Monroe",
+      "slug": "monroe",
+      "salonCount": 0
+    },
+    {
+      "name": "Aurora",
+      "slug": "aurora",
+      "salonCount": 0
+    },
+    {
+      "name": "Kamas",
+      "slug": "kamas",
+      "salonCount": 0
+    },
+    {
+      "name": "Coalville",
+      "slug": "coalville",
+      "salonCount": 0
+    },
+    {
+      "name": "Oakley",
+      "slug": "oakley",
+      "salonCount": 0
+    },
+    {
+      "name": "Francis",
+      "slug": "francis",
+      "salonCount": 0
+    },
+    {
+      "name": "Grantsville",
+      "slug": "grantsville",
+      "salonCount": 0
+    },
+    {
+      "name": "Stockton",
+      "slug": "stockton",
+      "salonCount": 0
+    },
+    {
+      "name": "Wendover",
+      "slug": "wendover",
+      "salonCount": 0
+    },
+    {
+      "name": "Naples",
+      "slug": "naples",
+      "salonCount": 0
+    },
+    {
+      "name": "Ballard",
+      "slug": "ballard",
+      "salonCount": 0
+    },
+    {
+      "name": "Highland",
+      "slug": "highland",
+      "salonCount": 0
+    },
+    {
+      "name": "Alpine",
+      "slug": "alpine",
+      "salonCount": 0
+    },
+    {
+      "name": "Mapleton",
+      "slug": "mapleton",
+      "salonCount": 0
+    },
+    {
+      "name": "Salem",
+      "slug": "salem",
+      "salonCount": 0
+    },
+    {
+      "name": "Santaquin",
+      "slug": "santaquin",
+      "salonCount": 0
+    },
+    {
+      "name": "Lindon",
+      "slug": "lindon",
+      "salonCount": 0
+    },
+    {
+      "name": "Vineyard",
+      "slug": "vineyard",
+      "salonCount": 0
+    },
+    {
+      "name": "Cedar Hills",
+      "slug": "cedar-hills",
+      "salonCount": 0
+    },
+    {
+      "name": "Elk Ridge",
+      "slug": "elk-ridge",
+      "salonCount": 0
+    },
+    {
+      "name": "Genola",
+      "slug": "genola",
+      "salonCount": 0
+    },
+    {
+      "name": "Goshen",
+      "slug": "goshen",
+      "salonCount": 0
+    },
+    {
+      "name": "Woodland Hills",
+      "slug": "woodland-hills",
+      "salonCount": 0
+    },
+    {
+      "name": "Midway",
+      "slug": "midway",
+      "salonCount": 0
+    },
+    {
+      "name": "Charleston",
+      "slug": "charleston",
+      "salonCount": 0
+    },
+    {
+      "name": "La Verkin",
+      "slug": "la-verkin",
+      "salonCount": 0
+    },
+    {
+      "name": "Enterprise",
+      "slug": "enterprise",
+      "salonCount": 0
+    },
+    {
+      "name": "Springdale",
+      "slug": "springdale",
+      "salonCount": 0
+    },
+    {
+      "name": "Loa",
+      "slug": "loa",
+      "salonCount": 0
+    },
+    {
+      "name": "Bicknell",
+      "slug": "bicknell",
+      "salonCount": 0
+    },
+    {
+      "name": "Torrey",
+      "slug": "torrey",
+      "salonCount": 0
+    },
+    {
+      "name": "North Ogden",
+      "slug": "north-ogden",
+      "salonCount": 0
+    },
+    {
+      "name": "South Ogden",
+      "slug": "south-ogden",
+      "salonCount": 0
+    },
+    {
+      "name": "Washington Terrace",
+      "slug": "washington-terrace",
+      "salonCount": 0
+    },
+    {
+      "name": "Pleasant View",
+      "slug": "pleasant-view",
+      "salonCount": 0
+    },
+    {
+      "name": "Harrisville",
+      "slug": "harrisville",
+      "salonCount": 0
+    },
+    {
+      "name": "Riverdale",
+      "slug": "riverdale",
+      "salonCount": 0
+    },
+    {
+      "name": "West Haven",
+      "slug": "west-haven",
+      "salonCount": 0
+    },
+    {
+      "name": "Farr West",
+      "slug": "farr-west",
+      "salonCount": 0
+    },
+    {
+      "name": "Plain City",
+      "slug": "plain-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Uintah",
+      "slug": "uintah",
+      "salonCount": 0
+    },
+    {
+      "name": "Marriott-Slaterville",
+      "slug": "marriott-slaterville",
+      "salonCount": 0
+    },
+    {
+      "name": "Manila",
+      "slug": "manila",
+      "salonCount": 0
+    }
+  ]
+}

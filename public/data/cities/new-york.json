@@ -1,0 +1,933 @@
+{
+  "state": "New York",
+  "stateCode": "NY",
+  "generatedAt": "2025-11-06T10:24:35.041Z",
+  "citiesCount": 185,
+  "cities": [
+    {
+      "name": "New York",
+      "slug": "new-york",
+      "salonCount": 0
+    },
+    {
+      "name": "Brooklyn",
+      "slug": "brooklyn",
+      "salonCount": 0
+    },
+    {
+      "name": "Queens",
+      "slug": "queens",
+      "salonCount": 0
+    },
+    {
+      "name": "Bronx",
+      "slug": "bronx",
+      "salonCount": 0
+    },
+    {
+      "name": "Staten Island",
+      "slug": "staten-island",
+      "salonCount": 0
+    },
+    {
+      "name": "Buffalo",
+      "slug": "buffalo",
+      "salonCount": 0
+    },
+    {
+      "name": "Rochester",
+      "slug": "rochester",
+      "salonCount": 0
+    },
+    {
+      "name": "Syracuse",
+      "slug": "syracuse",
+      "salonCount": 0
+    },
+    {
+      "name": "Albany",
+      "slug": "albany",
+      "salonCount": 0
+    },
+    {
+      "name": "Yonkers",
+      "slug": "yonkers",
+      "salonCount": 0
+    },
+    {
+      "name": "Schenectady",
+      "slug": "schenectady",
+      "salonCount": 0
+    },
+    {
+      "name": "Utica",
+      "slug": "utica",
+      "salonCount": 0
+    },
+    {
+      "name": "New Rochelle",
+      "slug": "new-rochelle",
+      "salonCount": 0
+    },
+    {
+      "name": "Mount Vernon",
+      "slug": "mount-vernon",
+      "salonCount": 0
+    },
+    {
+      "name": "White Plains",
+      "slug": "white-plains",
+      "salonCount": 0
+    },
+    {
+      "name": "Troy",
+      "slug": "troy",
+      "salonCount": 0
+    },
+    {
+      "name": "Niagara Falls",
+      "slug": "niagara-falls",
+      "salonCount": 0
+    },
+    {
+      "name": "Binghamton",
+      "slug": "binghamton",
+      "salonCount": 0
+    },
+    {
+      "name": "Rome",
+      "slug": "rome",
+      "salonCount": 0
+    },
+    {
+      "name": "Kingston",
+      "slug": "kingston",
+      "salonCount": 0
+    },
+    {
+      "name": "Poughkeepsie",
+      "slug": "poughkeepsie",
+      "salonCount": 0
+    },
+    {
+      "name": "Elmira",
+      "slug": "elmira",
+      "salonCount": 0
+    },
+    {
+      "name": "Auburn",
+      "slug": "auburn",
+      "salonCount": 0
+    },
+    {
+      "name": "Watertown",
+      "slug": "watertown",
+      "salonCount": 0
+    },
+    {
+      "name": "Corning",
+      "slug": "corning",
+      "salonCount": 0
+    },
+    {
+      "name": "Oswego",
+      "slug": "oswego",
+      "salonCount": 0
+    },
+    {
+      "name": "Plattsburgh",
+      "slug": "plattsburgh",
+      "salonCount": 0
+    },
+    {
+      "name": "Glens Falls",
+      "slug": "glens-falls",
+      "salonCount": 0
+    },
+    {
+      "name": "Jamestown",
+      "slug": "jamestown",
+      "salonCount": 0
+    },
+    {
+      "name": "Ithaca",
+      "slug": "ithaca",
+      "salonCount": 0
+    },
+    {
+      "name": "Saratoga Springs",
+      "slug": "saratoga-springs",
+      "salonCount": 0
+    },
+    {
+      "name": "Middletown",
+      "slug": "middletown",
+      "salonCount": 0
+    },
+    {
+      "name": "Newburgh",
+      "slug": "newburgh",
+      "salonCount": 0
+    },
+    {
+      "name": "Port Jervis",
+      "slug": "port-jervis",
+      "salonCount": 0
+    },
+    {
+      "name": "Peekskill",
+      "slug": "peekskill",
+      "salonCount": 0
+    },
+    {
+      "name": "Beacon",
+      "slug": "beacon",
+      "salonCount": 0
+    },
+    {
+      "name": "Cortland",
+      "slug": "cortland",
+      "salonCount": 0
+    },
+    {
+      "name": "Geneva",
+      "slug": "geneva",
+      "salonCount": 0
+    },
+    {
+      "name": "Oneonta",
+      "slug": "oneonta",
+      "salonCount": 0
+    },
+    {
+      "name": "Hudson",
+      "slug": "hudson",
+      "salonCount": 0
+    },
+    {
+      "name": "Cohoes",
+      "slug": "cohoes",
+      "salonCount": 0
+    },
+    {
+      "name": "Amsterdam",
+      "slug": "amsterdam",
+      "salonCount": 0
+    },
+    {
+      "name": "Dunkirk",
+      "slug": "dunkirk",
+      "salonCount": 0
+    },
+    {
+      "name": "Lackawanna",
+      "slug": "lackawanna",
+      "salonCount": 0
+    },
+    {
+      "name": "Tonawanda",
+      "slug": "tonawanda",
+      "salonCount": 0
+    },
+    {
+      "name": "North Tonawanda",
+      "slug": "north-tonawanda",
+      "salonCount": 0
+    },
+    {
+      "name": "Hornell",
+      "slug": "hornell",
+      "salonCount": 0
+    },
+    {
+      "name": "Canandaigua",
+      "slug": "canandaigua",
+      "salonCount": 0
+    },
+    {
+      "name": "Oneida",
+      "slug": "oneida",
+      "salonCount": 0
+    },
+    {
+      "name": "Salamanca",
+      "slug": "salamanca",
+      "salonCount": 0
+    },
+    {
+      "name": "Hempstead",
+      "slug": "hempstead",
+      "salonCount": 0
+    },
+    {
+      "name": "Brookhaven",
+      "slug": "brookhaven",
+      "salonCount": 0
+    },
+    {
+      "name": "Oyster Bay",
+      "slug": "oyster-bay",
+      "salonCount": 0
+    },
+    {
+      "name": "Huntington",
+      "slug": "huntington",
+      "salonCount": 0
+    },
+    {
+      "name": "Smithtown",
+      "slug": "smithtown",
+      "salonCount": 0
+    },
+    {
+      "name": "Babylon",
+      "slug": "babylon",
+      "salonCount": 0
+    },
+    {
+      "name": "Ramapo",
+      "slug": "ramapo",
+      "salonCount": 0
+    },
+    {
+      "name": "Clarkstown",
+      "slug": "clarkstown",
+      "salonCount": 0
+    },
+    {
+      "name": "Orangetown",
+      "slug": "orangetown",
+      "salonCount": 0
+    },
+    {
+      "name": "Greenburgh",
+      "slug": "greenburgh",
+      "salonCount": 0
+    },
+    {
+      "name": "Colonie",
+      "slug": "colonie",
+      "salonCount": 0
+    },
+    {
+      "name": "Clifton Park",
+      "slug": "clifton-park",
+      "salonCount": 0
+    },
+    {
+      "name": "Guilderland",
+      "slug": "guilderland",
+      "salonCount": 0
+    },
+    {
+      "name": "Bethlehem",
+      "slug": "bethlehem",
+      "salonCount": 0
+    },
+    {
+      "name": "Rotterdam",
+      "slug": "rotterdam",
+      "salonCount": 0
+    },
+    {
+      "name": "Cicero",
+      "slug": "cicero",
+      "salonCount": 0
+    },
+    {
+      "name": "DeWitt",
+      "slug": "dewitt",
+      "salonCount": 0
+    },
+    {
+      "name": "Greece",
+      "slug": "greece",
+      "salonCount": 0
+    },
+    {
+      "name": "Brighton",
+      "slug": "brighton",
+      "salonCount": 0
+    },
+    {
+      "name": "Irondequoit",
+      "slug": "irondequoit",
+      "salonCount": 0
+    },
+    {
+      "name": "Penfield",
+      "slug": "penfield",
+      "salonCount": 0
+    },
+    {
+      "name": "Webster",
+      "slug": "webster",
+      "salonCount": 0
+    },
+    {
+      "name": "Amherst",
+      "slug": "amherst",
+      "salonCount": 0
+    },
+    {
+      "name": "Cheektowaga",
+      "slug": "cheektowaga",
+      "salonCount": 0
+    },
+    {
+      "name": "Hamburg",
+      "slug": "hamburg",
+      "salonCount": 0
+    },
+    {
+      "name": "West Seneca",
+      "slug": "west-seneca",
+      "salonCount": 0
+    },
+    {
+      "name": "Orchard Park",
+      "slug": "orchard-park",
+      "salonCount": 0
+    },
+    {
+      "name": "Clarence",
+      "slug": "clarence",
+      "salonCount": 0
+    },
+    {
+      "name": "Grand Island",
+      "slug": "grand-island",
+      "salonCount": 0
+    },
+    {
+      "name": "Lewiston",
+      "slug": "lewiston",
+      "salonCount": 0
+    },
+    {
+      "name": "Lockport",
+      "slug": "lockport",
+      "salonCount": 0
+    },
+    {
+      "name": "Henrietta",
+      "slug": "henrietta",
+      "salonCount": 0
+    },
+    {
+      "name": "Perinton",
+      "slug": "perinton",
+      "salonCount": 0
+    },
+    {
+      "name": "Pittsford",
+      "slug": "pittsford",
+      "salonCount": 0
+    },
+    {
+      "name": "Victor",
+      "slug": "victor",
+      "salonCount": 0
+    },
+    {
+      "name": "Fairport",
+      "slug": "fairport",
+      "salonCount": 0
+    },
+    {
+      "name": "East Aurora",
+      "slug": "east-aurora",
+      "salonCount": 0
+    },
+    {
+      "name": "Lancaster",
+      "slug": "lancaster",
+      "salonCount": 0
+    },
+    {
+      "name": "Olean",
+      "slug": "olean",
+      "salonCount": 0
+    },
+    {
+      "name": "Batavia",
+      "slug": "batavia",
+      "salonCount": 0
+    },
+    {
+      "name": "Brockport",
+      "slug": "brockport",
+      "salonCount": 0
+    },
+    {
+      "name": "Le Roy",
+      "slug": "le-roy",
+      "salonCount": 0
+    },
+    {
+      "name": "Medina",
+      "slug": "medina",
+      "salonCount": 0
+    },
+    {
+      "name": "Albion",
+      "slug": "albion",
+      "salonCount": 0
+    },
+    {
+      "name": "Waterloo",
+      "slug": "waterloo",
+      "salonCount": 0
+    },
+    {
+      "name": "Seneca Falls",
+      "slug": "seneca-falls",
+      "salonCount": 0
+    },
+    {
+      "name": "Skaneateles",
+      "slug": "skaneateles",
+      "salonCount": 0
+    },
+    {
+      "name": "Fulton",
+      "slug": "fulton",
+      "salonCount": 0
+    },
+    {
+      "name": "Massena",
+      "slug": "massena",
+      "salonCount": 0
+    },
+    {
+      "name": "Potsdam",
+      "slug": "potsdam",
+      "salonCount": 0
+    },
+    {
+      "name": "Canton",
+      "slug": "canton",
+      "salonCount": 0
+    },
+    {
+      "name": "Malone",
+      "slug": "malone",
+      "salonCount": 0
+    },
+    {
+      "name": "Lake Placid",
+      "slug": "lake-placid",
+      "salonCount": 0
+    },
+    {
+      "name": "Saranac Lake",
+      "slug": "saranac-lake",
+      "salonCount": 0
+    },
+    {
+      "name": "Ticonderoga",
+      "slug": "ticonderoga",
+      "salonCount": 0
+    },
+    {
+      "name": "Queensbury",
+      "slug": "queensbury",
+      "salonCount": 0
+    },
+    {
+      "name": "Warwick",
+      "slug": "warwick",
+      "salonCount": 0
+    },
+    {
+      "name": "Goshen",
+      "slug": "goshen",
+      "salonCount": 0
+    },
+    {
+      "name": "Monroe",
+      "slug": "monroe",
+      "salonCount": 0
+    },
+    {
+      "name": "Montgomery",
+      "slug": "montgomery",
+      "salonCount": 0
+    },
+    {
+      "name": "Wappingers Falls",
+      "slug": "wappingers-falls",
+      "salonCount": 0
+    },
+    {
+      "name": "Hyde Park",
+      "slug": "hyde-park",
+      "salonCount": 0
+    },
+    {
+      "name": "Rhinebeck",
+      "slug": "rhinebeck",
+      "salonCount": 0
+    },
+    {
+      "name": "Red Hook",
+      "slug": "red-hook",
+      "salonCount": 0
+    },
+    {
+      "name": "Fishkill",
+      "slug": "fishkill",
+      "salonCount": 0
+    },
+    {
+      "name": "Carmel",
+      "slug": "carmel",
+      "salonCount": 0
+    },
+    {
+      "name": "Brewster",
+      "slug": "brewster",
+      "salonCount": 0
+    },
+    {
+      "name": "Mahopac",
+      "slug": "mahopac",
+      "salonCount": 0
+    },
+    {
+      "name": "Katonah",
+      "slug": "katonah",
+      "salonCount": 0
+    },
+    {
+      "name": "Rye",
+      "slug": "rye",
+      "salonCount": 0
+    },
+    {
+      "name": "Harrison",
+      "slug": "harrison",
+      "salonCount": 0
+    },
+    {
+      "name": "Scarsdale",
+      "slug": "scarsdale",
+      "salonCount": 0
+    },
+    {
+      "name": "Ossining",
+      "slug": "ossining",
+      "salonCount": 0
+    },
+    {
+      "name": "Tarrytown",
+      "slug": "tarrytown",
+      "salonCount": 0
+    },
+    {
+      "name": "Dobbs Ferry",
+      "slug": "dobbs-ferry",
+      "salonCount": 0
+    },
+    {
+      "name": "Suffern",
+      "slug": "suffern",
+      "salonCount": 0
+    },
+    {
+      "name": "Spring Valley",
+      "slug": "spring-valley",
+      "salonCount": 0
+    },
+    {
+      "name": "Nyack",
+      "slug": "nyack",
+      "salonCount": 0
+    },
+    {
+      "name": "Haverstraw",
+      "slug": "haverstraw",
+      "salonCount": 0
+    },
+    {
+      "name": "Monticello",
+      "slug": "monticello",
+      "salonCount": 0
+    },
+    {
+      "name": "Ellenville",
+      "slug": "ellenville",
+      "salonCount": 0
+    },
+    {
+      "name": "New Paltz",
+      "slug": "new-paltz",
+      "salonCount": 0
+    },
+    {
+      "name": "Saugerties",
+      "slug": "saugerties",
+      "salonCount": 0
+    },
+    {
+      "name": "Catskill",
+      "slug": "catskill",
+      "salonCount": 0
+    },
+    {
+      "name": "East Greenbush",
+      "slug": "east-greenbush",
+      "salonCount": 0
+    },
+    {
+      "name": "Rensselaer",
+      "slug": "rensselaer",
+      "salonCount": 0
+    },
+    {
+      "name": "Scotia",
+      "slug": "scotia",
+      "salonCount": 0
+    },
+    {
+      "name": "Gloversville",
+      "slug": "gloversville",
+      "salonCount": 0
+    },
+    {
+      "name": "Johnstown",
+      "slug": "johnstown",
+      "salonCount": 0
+    },
+    {
+      "name": "Herkimer",
+      "slug": "herkimer",
+      "salonCount": 0
+    },
+    {
+      "name": "Ilion",
+      "slug": "ilion",
+      "salonCount": 0
+    },
+    {
+      "name": "Frankfort",
+      "slug": "frankfort",
+      "salonCount": 0
+    },
+    {
+      "name": "Clinton",
+      "slug": "clinton",
+      "salonCount": 0
+    },
+    {
+      "name": "New Hartford",
+      "slug": "new-hartford",
+      "salonCount": 0
+    },
+    {
+      "name": "Whitesboro",
+      "slug": "whitesboro",
+      "salonCount": 0
+    },
+    {
+      "name": "Baldwinsville",
+      "slug": "baldwinsville",
+      "salonCount": 0
+    },
+    {
+      "name": "East Syracuse",
+      "slug": "east-syracuse",
+      "salonCount": 0
+    },
+    {
+      "name": "Manlius",
+      "slug": "manlius",
+      "salonCount": 0
+    },
+    {
+      "name": "Fayetteville",
+      "slug": "fayetteville",
+      "salonCount": 0
+    },
+    {
+      "name": "Cazenovia",
+      "slug": "cazenovia",
+      "salonCount": 0
+    },
+    {
+      "name": "Hamilton",
+      "slug": "hamilton",
+      "salonCount": 0
+    },
+    {
+      "name": "Norwich",
+      "slug": "norwich",
+      "salonCount": 0
+    },
+    {
+      "name": "Sidney",
+      "slug": "sidney",
+      "salonCount": 0
+    },
+    {
+      "name": "Delhi",
+      "slug": "delhi",
+      "salonCount": 0
+    },
+    {
+      "name": "Cooperstown",
+      "slug": "cooperstown",
+      "salonCount": 0
+    },
+    {
+      "name": "Johnson City",
+      "slug": "johnson-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Endicott",
+      "slug": "endicott",
+      "salonCount": 0
+    },
+    {
+      "name": "Vestal",
+      "slug": "vestal",
+      "salonCount": 0
+    },
+    {
+      "name": "Owego",
+      "slug": "owego",
+      "salonCount": 0
+    },
+    {
+      "name": "Dryden",
+      "slug": "dryden",
+      "salonCount": 0
+    },
+    {
+      "name": "Lansing",
+      "slug": "lansing",
+      "salonCount": 0
+    },
+    {
+      "name": "Trumansburg",
+      "slug": "trumansburg",
+      "salonCount": 0
+    },
+    {
+      "name": "Watkins Glen",
+      "slug": "watkins-glen",
+      "salonCount": 0
+    },
+    {
+      "name": "Horseheads",
+      "slug": "horseheads",
+      "salonCount": 0
+    },
+    {
+      "name": "Painted Post",
+      "slug": "painted-post",
+      "salonCount": 0
+    },
+    {
+      "name": "Penn Yan",
+      "slug": "penn-yan",
+      "salonCount": 0
+    },
+    {
+      "name": "Dansville",
+      "slug": "dansville",
+      "salonCount": 0
+    },
+    {
+      "name": "Geneseo",
+      "slug": "geneseo",
+      "salonCount": 0
+    },
+    {
+      "name": "Warsaw",
+      "slug": "warsaw",
+      "salonCount": 0
+    },
+    {
+      "name": "Fredonia",
+      "slug": "fredonia",
+      "salonCount": 0
+    },
+    {
+      "name": "Westfield",
+      "slug": "westfield",
+      "salonCount": 0
+    },
+    {
+      "name": "Lakewood",
+      "slug": "lakewood",
+      "salonCount": 0
+    },
+    {
+      "name": "Port Jefferson",
+      "slug": "port-jefferson",
+      "salonCount": 0
+    },
+    {
+      "name": "Commack",
+      "slug": "commack",
+      "salonCount": 0
+    },
+    {
+      "name": "Bay Shore",
+      "slug": "bay-shore",
+      "salonCount": 0
+    },
+    {
+      "name": "Lindenhurst",
+      "slug": "lindenhurst",
+      "salonCount": 0
+    },
+    {
+      "name": "Massapequa",
+      "slug": "massapequa",
+      "salonCount": 0
+    },
+    {
+      "name": "Long Beach",
+      "slug": "long-beach",
+      "salonCount": 0
+    },
+    {
+      "name": "Garden City",
+      "slug": "garden-city",
+      "salonCount": 0
+    },
+    {
+      "name": "Hicksville",
+      "slug": "hicksville",
+      "salonCount": 0
+    },
+    {
+      "name": "Freeport",
+      "slug": "freeport",
+      "salonCount": 0
+    },
+    {
+      "name": "Rockville Centre",
+      "slug": "rockville-centre",
+      "salonCount": 0
+    },
+    {
+      "name": "Valley Stream",
+      "slug": "valley-stream",
+      "salonCount": 0
+    },
+    {
+      "name": "New Hyde Park",
+      "slug": "new-hyde-park",
+      "salonCount": 0
+    },
+    {
+      "name": "Glen Cove",
+      "slug": "glen-cove",
+      "salonCount": 0
+    }
+  ]
+}

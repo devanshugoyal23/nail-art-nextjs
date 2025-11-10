@@ -1,0 +1,168 @@
+{
+  "state": "Alaska",
+  "stateCode": "AK",
+  "generatedAt": "2025-11-06T10:19:19.544Z",
+  "citiesCount": 32,
+  "cities": [
+    {
+      "name": "Anchorage",
+      "slug": "anchorage",
+      "salonCount": 0
+    },
+    {
+      "name": "Fairbanks",
+      "slug": "fairbanks",
+      "salonCount": 0
+    },
+    {
+      "name": "Juneau",
+      "slug": "juneau",
+      "salonCount": 0
+    },
+    {
+      "name": "Wasilla",
+      "slug": "wasilla",
+      "salonCount": 0
+    },
+    {
+      "name": "Palmer",
+      "slug": "palmer",
+      "salonCount": 0
+    },
+    {
+      "name": "Kodiak",
+      "slug": "kodiak",
+      "salonCount": 0
+    },
+    {
+      "name": "Kenai",
+      "slug": "kenai",
+      "salonCount": 0
+    },
+    {
+      "name": "Soldotna",
+      "slug": "soldotna",
+      "salonCount": 0
+    },
+    {
+      "name": "Homer",
+      "slug": "homer",
+      "salonCount": 0
+    },
+    {
+      "name": "Seward",
+      "slug": "seward",
+      "salonCount": 0
+    },
+    {
+      "name": "Valdez",
+      "slug": "valdez",
+      "salonCount": 0
+    },
+    {
+      "name": "Sitka",
+      "slug": "sitka",
+      "salonCount": 0
+    },
+    {
+      "name": "Ketchikan",
+      "slug": "ketchikan",
+      "salonCount": 0
+    },
+    {
+      "name": "North Pole",
+      "slug": "north-pole",
+      "salonCount": 0
+    },
+    {
+      "name": "Bethel",
+      "slug": "bethel",
+      "salonCount": 0
+    },
+    {
+      "name": "Utqiagvik",
+      "slug": "utqiagvik",
+      "salonCount": 0
+    },
+    {
+      "name": "Nome",
+      "slug": "nome",
+      "salonCount": 0
+    },
+    {
+      "name": "Kotzebue",
+      "slug": "kotzebue",
+      "salonCount": 0
+    },
+    {
+      "name": "Unalaska",
+      "slug": "unalaska",
+      "salonCount": 0
+    },
+    {
+      "name": "Petersburg",
+      "slug": "petersburg",
+      "salonCount": 0
+    },
+    {
+      "name": "Wrangell",
+      "slug": "wrangell",
+      "salonCount": 0
+    },
+    {
+      "name": "Haines",
+      "slug": "haines",
+      "salonCount": 0
+    },
+    {
+      "name": "Cordova",
+      "slug": "cordova",
+      "salonCount": 0
+    },
+    {
+      "name": "Delta Junction",
+      "slug": "delta-junction",
+      "salonCount": 0
+    },
+    {
+      "name": "Skagway",
+      "slug": "skagway",
+      "salonCount": 0
+    },
+    {
+      "name": "Craig",
+      "slug": "craig",
+      "salonCount": 0
+    },
+    {
+      "name": "Klawock",
+      "slug": "klawock",
+      "salonCount": 0
+    },
+    {
+      "name": "Metlakatla",
+      "slug": "metlakatla",
+      "salonCount": 0
+    },
+    {
+      "name": "Talkeetna",
+      "slug": "talkeetna",
+      "salonCount": 0
+    },
+    {
+      "name": "Girdwood",
+      "slug": "girdwood",
+      "salonCount": 0
+    },
+    {
+      "name": "Dillingham",
+      "slug": "dillingham",
+      "salonCount": 0
+    },
+    {
+      "name": "Big Lake",
+      "slug": "big-lake",
+      "salonCount": 0
+    }
+  ]
+}
