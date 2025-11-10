@@ -34,64 +34,27 @@ interface StateData {
 }
 
 /**
- * Get all states and cities from JSON files
+ * Get all states and cities from hardcoded list
+ * Using hardcoded data to avoid HTTP fetching issues in Vercel serverless
  */
 async function getAllStatesAndCities(): Promise<{ states: string[], topCities: Array<{ state: string, city: string, cityName: string, population?: number }> }> {
   try {
-    // Fetch city data via HTTP (public/ folder is served via CDN, not filesystem)
-    const { fetchAllStateCityData } = await import('@/lib/citiesDataFetcher');
-    const statesMap = await fetchAllStateCityData();
+    const { ALL_STATES, TOP_CITIES } = await import('@/lib/hardcodedCities');
 
-    const states: string[] = [];
-    const allCities: Array<{ state: string, city: string, cityName: string, population?: number, salonCount?: number }> = [];
+    // Extract state slugs
+    const states = ALL_STATES.map(s => s.slug);
 
-    for (const [stateSlug, data] of statesMap.entries()) {
-      if (!data.cities || !Array.isArray(data.cities)) continue;
-
-      // Add state
-      states.push(stateSlug);
-
-      // Add all cities from this state
-      for (const city of data.cities) {
-        allCities.push({
-          state: stateSlug,
-          city: city.slug,
-          cityName: city.name,
-          population: city.population,
-          salonCount: city.salonCount,
-        });
-      }
-    }
-
-    // Sort cities by:
-    // 1. Population (if available)
-    // 2. Salon count (if available)
-    // 3. Name (alphabetical)
-    const sortedCities = allCities.sort((a, b) => {
-      // Prioritize cities with population data
-      if (a.population && b.population) {
-        return b.population - a.population;
-      }
-      if (a.population && !b.population) return -1;
-      if (!a.population && b.population) return 1;
-
-      // Then by salon count
-      if (a.salonCount && b.salonCount) {
-        return b.salonCount - a.salonCount;
-      }
-      if (a.salonCount && !b.salonCount) return -1;
-      if (!a.salonCount && b.salonCount) return 1;
-
-      // Finally alphabetical
-      return a.cityName.localeCompare(b.cityName);
-    });
-
-    // Take top 200 cities
-    const topCities = sortedCities.slice(0, 200);
+    // Convert cities to expected format and take top 200
+    const topCities = TOP_CITIES.slice(0, 200).map(city => ({
+      state: city.stateSlug,
+      city: city.slug,
+      cityName: city.name,
+      population: city.population,
+    }));
 
     console.log(`📊 Sitemap data:`, {
       totalStates: states.length,
-      totalCities: allCities.length,
+      totalCities: TOP_CITIES.length,
       topCitiesInSitemap: topCities.length,
     });
 

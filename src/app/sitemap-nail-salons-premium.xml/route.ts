@@ -56,17 +56,16 @@ function calculateQualityScore(salon: NailSalon): number {
 
 /**
  * Get all salons from all cities with quality scores
- * NEW: With safety limits and R2 credential checking to prevent timeouts
+ * Using hardcoded cities to avoid HTTP fetching issues in Vercel serverless
  */
 async function getAllSalonsWithScores(): Promise<SalonWithScore[]> {
   const allSalons: SalonWithScore[] = [];
 
   try {
-    // Fetch city data via HTTP (public/ folder is served via CDN, not filesystem)
-    const { fetchAllStateCityData } = await import('@/lib/citiesDataFetcher');
-    const statesMap = await fetchAllStateCityData();
+    // Use hardcoded cities to avoid HTTP fetching issues
+    const { TOP_CITIES } = await import('@/lib/hardcodedCities');
 
-    console.log(`📊 Processing ${statesMap.size} states for premium sitemap...`);
+    console.log(`📊 Processing ${TOP_CITIES.length} major cities for premium sitemap...`);
 
     // Safety limits to prevent timeout
     const MAX_CITIES_TO_PROCESS = 100; // Process only top 100 cities initially
@@ -75,60 +74,42 @@ async function getAllSalonsWithScores(): Promise<SalonWithScore[]> {
 
     let citiesProcessed = 0;
 
-    for (const [stateSlug, data] of statesMap.entries()) {
+    // Process each city (already sorted by importance/population)
+    for (const city of TOP_CITIES) {
       // Check timeout
       if (Date.now() - startTime > MAX_PROCESSING_TIME) {
         console.warn(`⏰ Timeout reached after ${citiesProcessed} cities, stopping...`);
         break;
       }
 
-      if (!data.cities || !Array.isArray(data.cities)) continue;
-
-      const stateName = data.state;
-
-      // Sort cities by population to prioritize major metros
-      // This ensures we get the best salons from populated areas first
-      const sortedCities = [...data.cities].sort((a, b) => {
-        const popA = a.population || 0;
-        const popB = b.population || 0;
-        return popB - popA; // Descending order
-      });
-
-      // Process each city in the state (with limit)
-      for (const city of sortedCities) {
-        if (citiesProcessed >= MAX_CITIES_TO_PROCESS) {
-          console.warn(`📊 Reached city limit (${MAX_CITIES_TO_PROCESS}), stopping...`);
-          break;
-        }
-
-        try {
-          citiesProcessed++;
-          console.log(`  Processing ${city.name}, ${stateName}...`);
-          const cityData = await getCityDataFromR2(stateName, city.name);
-
-          if (!cityData || !cityData.salons || cityData.salons.length === 0) {
-            continue;
-          }
-
-          // Calculate score for each salon
-          for (const salon of cityData.salons) {
-            const score = calculateQualityScore(salon);
-
-            allSalons.push({
-              ...salon,
-              score,
-              url: `/nail-salons/${stateSlug}/${city.slug}/${generateSlug(salon.name)}`,
-              stateSlug,
-              citySlug: city.slug
-            });
-          }
-        } catch (error) {
-          console.error(`Error processing city ${city.name}, ${stateName}:`, error);
-        }
+      if (citiesProcessed >= MAX_CITIES_TO_PROCESS) {
+        console.warn(`📊 Reached city limit (${MAX_CITIES_TO_PROCESS}), stopping...`);
+        break;
       }
 
-      if (citiesProcessed >= MAX_CITIES_TO_PROCESS) {
-        break;
+      try {
+        citiesProcessed++;
+        console.log(`  Processing ${city.name}, ${city.state}...`);
+        const cityData = await getCityDataFromR2(city.state, city.name);
+
+        if (!cityData || !cityData.salons || cityData.salons.length === 0) {
+          continue;
+        }
+
+        // Calculate score for each salon
+        for (const salon of cityData.salons) {
+          const score = calculateQualityScore(salon);
+
+          allSalons.push({
+            ...salon,
+            score,
+            url: `/nail-salons/${city.stateSlug}/${city.slug}/${generateSlug(salon.name)}`,
+            stateSlug: city.stateSlug,
+            citySlug: city.slug
+          });
+        }
+      } catch (error) {
+        console.error(`Error processing city ${city.name}, ${city.state}:`, error);
       }
     }
 
