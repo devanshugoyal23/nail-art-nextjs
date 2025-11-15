@@ -193,38 +193,82 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
       // ✅ OPTIMIZATION: Use shared gallery cache (96% query reduction)
       // BEFORE: 26+ parallel Supabase queries (300-500ms, $0.11/month per 10k views)
       // AFTER: 1 cached query (50-100ms, $0.004/month per 10k views)
-      const [additionalData, cachedGallery] = await Promise.all([
-        getSalonAdditionalData(salon, undefined).catch(() => ({})),
-        getCachedGalleryData().catch(() => null)
+      const currentSalon = salon; // Create const to satisfy TypeScript
+      const [additionalData, cachedGallery, enrichedData] = await Promise.all([
+        getSalonAdditionalData(currentSalon, undefined).catch(() => ({})),
+        getCachedGalleryData().catch(() => null),
+        // ✅ NEW: Try to load enriched data from R2 (no API calls, just cache read)
+        import('@/lib/r2SalonStorage').then(({ getEnrichedDataFromR2 }) =>
+          getEnrichedDataFromR2(currentSalon).catch(() => null)
+        ).catch(() => null)
       ]);
-      
-      // ✅ Create salon details with fallback data (no Google Places API dependency)
-      salonDetails = {
-        // Simple fallback description
-        description: `${salon.name} is a professional nail salon located in ${salon.city}, ${salon.state}.`,
 
-        // Default parking info
-        parkingInfo: 'Street parking and nearby parking lots are typically available.',
+      // ✅ Create salon details with enriched data OR fallback data (no Google Places API dependency)
+      if (enrichedData && enrichedData.sections) {
+        // Use enriched data from R2 if available
+        salonDetails = {
+          // Use AI-generated description
+          description: enrichedData.sections.about?.content
+            ? enrichedData.sections.about.content.replace(/<[^>]*>/g, '').substring(0, 300) + '...'
+            : `${salon.name} is a professional nail salon located in ${salon.city}, ${salon.state}.`,
 
-        // Default payment options
-        paymentOptions: ['Cash', 'Credit Cards', 'Debit Cards'],
+          // Use parking guide if available
+          parkingInfo: enrichedData.sections.parking?.summary || 'Street parking and nearby parking lots are typically available.',
 
-        // Default FAQ
-        faq: [
-          {
-            question: 'Do I need an appointment?',
-            answer: 'Walk-ins are welcome, but appointments are recommended to ensure availability.'
-          },
-          {
-            question: 'What payment methods do you accept?',
-            answer: 'Most nail salons accept cash, credit cards, and mobile payments.'
-          },
-          {
-            question: 'Is this salon family-friendly?',
-            answer: 'Please contact the salon to inquire about services for children.'
-          },
-        ],
-      };
+          // Default payment options
+          paymentOptions: ['Cash', 'Credit Cards', 'Debit Cards'],
+
+          // Use AI-generated FAQ if available
+          faq: enrichedData.sections.faq?.questions.map(q => ({
+            question: q.question,
+            answer: q.answer
+          })) || [
+            {
+              question: 'Do I need an appointment?',
+              answer: 'Walk-ins are welcome, but appointments are recommended to ensure availability.'
+            },
+            {
+              question: 'What payment methods do you accept?',
+              answer: 'Most nail salons accept cash, credit cards, and mobile payments.'
+            },
+            {
+              question: 'Is this salon family-friendly?',
+              answer: 'Please contact the salon to inquire about services for children.'
+            },
+          ],
+
+          // TODO: Add enriched sections to SalonDetails interface
+          // enrichedSections: enrichedData.sections,
+        };
+      } else {
+        // Fallback to default data if no enriched data available
+        salonDetails = {
+          // Simple fallback description
+          description: `${salon.name} is a professional nail salon located in ${salon.city}, ${salon.state}.`,
+
+          // Default parking info
+          parkingInfo: 'Street parking and nearby parking lots are typically available.',
+
+          // Default payment options
+          paymentOptions: ['Cash', 'Credit Cards', 'Debit Cards'],
+
+          // Default FAQ
+          faq: [
+            {
+              question: 'Do I need an appointment?',
+              answer: 'Walk-ins are welcome, but appointments are recommended to ensure availability.'
+            },
+            {
+              question: 'What payment methods do you accept?',
+              answer: 'Most nail salons accept cash, credit cards, and mobile payments.'
+            },
+            {
+              question: 'Is this salon family-friendly?',
+              answer: 'Please contact the salon to inquire about services for children.'
+            },
+          ],
+        };
+      }
 
       // Merge additional data (photos, etc.) into salon
       if (additionalData) {
