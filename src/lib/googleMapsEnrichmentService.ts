@@ -298,25 +298,11 @@ export async function fetchNearbyAmenities(
 }
 
 // ========================================
-// PHOTO URLS
+// PHOTO URLS - REMOVED (not needed for enrichment, cost optimization)
 // ========================================
 
-/**
- * Get photo URL from photo reference
- * Photos are free to fetch!
- */
-export function getPhotoUrl(photoReference: string, maxWidth: number = 1200): string {
-  if (!photoReference || !GOOGLE_MAPS_API_KEY) return '';
-  return `https://places.googleapis.com/v1/${photoReference}/media?maxWidthPx=${maxWidth}&key=${GOOGLE_MAPS_API_KEY}`;
-}
-
-/**
- * Resolve photo URLs from photo references
- */
-export function resolvePhotoUrls(photos: RawPlaceDetails['photos'], maxWidth: number = 1200): string[] {
-  if (!photos) return [];
-  return photos.map((photo) => getPhotoUrl(photo.photoReference, maxWidth)).filter((url) => url !== '');
-}
+// Photo-related functions removed to save costs and simplify implementation
+// Photos are not essential for SEO content generation
 
 // ========================================
 // MAIN ENRICHMENT FUNCTION
