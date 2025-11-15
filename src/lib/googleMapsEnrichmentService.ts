@@ -66,7 +66,6 @@ export async function fetchPlaceDetails(placeId: string): Promise<RawPlaceDetail
           'businessStatus',
           'regularOpeningHours',
           'currentOpeningHours',
-          'photos',
           'reviews',
           'types',
           'location',
@@ -106,12 +105,6 @@ export async function fetchPlaceDetails(placeId: string): Promise<RawPlaceDetail
             // Note: periods would need more parsing from the API response
           }
         : undefined,
-      photos: data.photos?.slice(0, 10).map((photo: { name?: string; heightPx?: number; widthPx?: number; authorAttributions?: Array<{ displayName?: string }> }) => ({
-        photoReference: photo.name || '',
-        height: photo.heightPx || 0,
-        width: photo.widthPx || 0,
-        htmlAttributions: photo.authorAttributions?.map((attr) => attr.displayName || '') || [],
-      })),
       reviews: data.reviews?.slice(0, 5).map((review: { authorAttribution?: { displayName?: string; uri?: string; photoUri?: string }; authorDisplayName?: string; originalText?: { languageCode?: string }; rating?: number; relativePublishTimeDescription?: string; text?: string | { text?: string }; publishTime?: string }) => ({
         authorName: review.authorAttribution?.displayName || review.authorDisplayName || 'Anonymous',
         authorUrl: review.authorAttribution?.uri,
@@ -379,22 +372,17 @@ export async function fetchRawSalonData(salon: NailSalon): Promise<RawSalonData 
       nearby = await fetchNearbyAmenities(lat, lng);
     }
 
-    // 3. Resolve photo URLs
-    const photoUrls = resolvePhotoUrls(placeDetails.photos);
-
-    // 4. Build raw data object
+    // 3. Build raw data object
     const rawData: RawSalonData = {
       placeId: salon.placeId,
       fetchedAt: new Date().toISOString(),
       ttl: 30 * 24 * 60 * 60, // 30 days
       placeDetails,
       nearby,
-      photoUrls,
     };
 
     console.log(`✅ Successfully fetched raw data for: ${salon.name}`);
     console.log(`   Reviews: ${placeDetails.reviews?.length || 0}`);
-    console.log(`   Photos: ${photoUrls.length}`);
     console.log(`   Competitors: ${nearby.competitors.length}`);
 
     return rawData;

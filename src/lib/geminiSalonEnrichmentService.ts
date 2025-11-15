@@ -207,7 +207,7 @@ async function generateFAQ(salon: NailSalon, rawData: RawSalonData): Promise<{
   const aiInstance = getAI();
   const reviews = rawData.placeDetails.reviews || [];
 
-  const systemPrompt = `You are an expert at creating helpful FAQs for local businesses. Based on salon data and reviews, create 8-12 frequently asked questions with accurate answers.
+  const systemPrompt = `You are an expert at creating helpful FAQs for local businesses. Based on salon data and reviews, create 5-6 frequently asked questions with accurate answers.
 
 Return JSON with:
 - summary (string, 1 sentence intro)
@@ -469,20 +469,6 @@ export async function enrichSalonData(
     // 10. Nearby Amenities
     sections.nearbyAmenities = generateNearbyAmenities(rawData);
     console.log(`   ✅ Nearby Amenities: ${sections.nearbyAmenities.amenities.length} places`);
-
-    // 11. Photo Gallery
-    if (rawData.photoUrls && rawData.photoUrls.length > 0) {
-      sections.photoGallery = {
-        summary: `Explore our salon through ${rawData.photoUrls.length} photos:`,
-        photos: rawData.photoUrls.slice(0, 6).map((url, i) => ({
-          url,
-          caption: `${salon.name} - View ${i + 1}`,
-          category: i === 0 ? 'exterior' : 'interior',
-        })),
-        generatedAt: new Date().toISOString(),
-      };
-      console.log(`   ✅ Photo Gallery: ${rawData.photoUrls.length} photos`);
-    }
   }
 
   const processingTime = Date.now() - startTime;

@@ -234,7 +234,6 @@ async function main() {
   console.log(`      Salon: ${salon.name}`);
   console.log(`      Location: ${salon.city}, ${salon.state}`);
   console.log(`      Reviews: ${rawData.placeDetails.reviews?.length || 0}`);
-  console.log(`      Photos: ${rawData.photoUrls?.length || 0}`);
   console.log(`      Nearby parking: ${rawData.nearby.parking?.length || 0}`);
   console.log(`      Nearby transit: ${rawData.nearby.transit?.length || 0}`);
   console.log(`      Nearby competitors: ${rawData.nearby.competitors?.length || 0}`);

@@ -28,12 +28,6 @@ export interface RawPlaceDetails {
       close: { day: number; time: string };
     }>;
   };
-  photos?: Array<{
-    photoReference: string;
-    height: number;
-    width: number;
-    htmlAttributions: string[];
-  }>;
   reviews?: Array<{
     authorName: string;
     authorUrl?: string;
@@ -112,9 +106,6 @@ export interface RawSalonData {
 
   // Popular times data (if available)
   popularTimes?: RawPopularTimes;
-
-  // Photo URLs (resolved from photo references)
-  photoUrls?: string[];
 }
 
 // ========================================

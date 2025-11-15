@@ -17,6 +17,8 @@ import { absoluteUrl } from '@/lib/absoluteUrl';
 import { getCachedGalleryData } from '@/lib/salonPageCache';
 import { GalleryItem } from '@/lib/supabase';
 import { deterministicSelect } from '@/lib/deterministicSelection';
+import EnrichedSalonSections from '@/components/EnrichedSalonSections';
+import { EnrichedSalonData } from '@/types/salonEnrichment';
 
 // ISR Configuration - Cache salon pages for 7 days to reduce CPU usage and R2 costs
 // ✅ PHASE 2.3: Increased from 6h to 7 days (96% fewer regenerations)
@@ -158,6 +160,7 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
 
   let salon: NailSalon | null = null;
   let salonDetails: SalonDetails | null = null;
+  let enrichedData: EnrichedSalonData | null = null;
   let relatedSalons: NailSalon[] = [];
   let galleryDesigns: Array<{ id: string; imageUrl: string; title?: string; description?: string; colors?: string[]; techniques?: string[]; occasions?: string[] }> = [];
   let rawGalleryItems: GalleryItem[] = [];
@@ -194,7 +197,7 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
       // BEFORE: 26+ parallel Supabase queries (300-500ms, $0.11/month per 10k views)
       // AFTER: 1 cached query (50-100ms, $0.004/month per 10k views)
       const currentSalon = salon; // Create const to satisfy TypeScript
-      const [additionalData, cachedGallery, enrichedData] = await Promise.all([
+      const [additionalData, cachedGallery, fetchedEnrichedData] = await Promise.all([
         getSalonAdditionalData(currentSalon, undefined).catch(() => ({})),
         getCachedGalleryData().catch(() => null),
         // ✅ NEW: Try to load enriched data from R2 (no API calls, just cache read)
@@ -203,20 +206,23 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
         ).catch(() => null)
       ]);
 
+      // Store enriched data for use in component
+      enrichedData = fetchedEnrichedData;
+
       // ✅ Create salon details with enriched data OR fallback data (no Google Places API dependency)
-      if (enrichedData && enrichedData.sections) {
+      if (fetchedEnrichedData && fetchedEnrichedData.sections) {
         // Use enriched data from R2 if available
         salonDetails = {
           // Use AI-generated description
-          description: enrichedData.sections.about?.content
-            ? enrichedData.sections.about.content.replace(/<[^>]*>/g, '').substring(0, 300) + '...'
+          description: fetchedEnrichedData.sections.about?.content
+            ? fetchedEnrichedData.sections.about.content.replace(/<[^>]*>/g, '').substring(0, 300) + '...'
             : `${salon.name} is a professional nail salon located in ${salon.city}, ${salon.state}.`,
 
           // Use parking guide if available
-          parkingInfo: enrichedData.sections.parking?.summary || 'Street parking and nearby parking lots are typically available.',
+          parkingInfo: fetchedEnrichedData.sections.parking?.summary || 'Street parking and nearby parking lots are typically available.',
 
           // Use AI-generated FAQ if available
-          faq: enrichedData.sections.faq?.questions.map(q => ({
+          faq: fetchedEnrichedData.sections.faq?.questions.map(q => ({
             question: q.question,
             answer: q.answer
           })) || [
@@ -235,7 +241,7 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
           ],
 
           // Use real customer reviews from enriched data
-          placeReviews: enrichedData.sections.customerReviews?.featuredReviews.map(r => ({
+          placeReviews: fetchedEnrichedData.sections.customerReviews?.featuredReviews.map(r => ({
             rating: r.rating,
             text: r.text,
             authorName: r.authorName,
@@ -243,10 +249,7 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
           })) || undefined,
 
           // Use review summary if available
-          reviewsSummary: enrichedData.sections.reviewInsights?.summary,
-
-          // TODO: Add enriched sections to SalonDetails interface
-          // enrichedSections: enrichedData.sections,
+          reviewsSummary: fetchedEnrichedData.sections.reviewInsights?.summary,
         };
       } else {
         // Fallback to default data if no enriched data available
@@ -891,8 +894,16 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
                 </div>
               )}
 
-              {/* FAQ Section - Compact */}
-              {salonDetails?.faq && salonDetails.faq.length > 0 && (
+              {/* Enriched Salon Sections - Real data from Google Maps + Gemini AI */}
+              {enrichedData && (
+                <EnrichedSalonSections
+                  enrichedData={enrichedData}
+                  salonName={salon.name}
+                />
+              )}
+
+              {/* FAQ Section - Compact (only show if no enriched data) */}
+              {!enrichedData && salonDetails?.faq && salonDetails.faq.length > 0 && (
                 <CollapsibleSection
                   title="Frequently Asked Questions"
                   defaultExpanded={false}
