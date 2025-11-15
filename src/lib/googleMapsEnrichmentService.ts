@@ -72,12 +72,10 @@ export async function fetchPlaceDetails(placeId: string): Promise<RawPlaceDetail
           'location',
           'viewport',
           'addressComponents',
-          'utcOffset',
-          'adrAddress',
-          'vicinity',
+          'adrFormatAddress',
+          'shortFormattedAddress',
           'plusCode',
           'editorialSummary',
-          'generativeSummary',
         ].join(','),
       },
     });
@@ -150,9 +148,7 @@ export async function fetchPlaceDetails(placeId: string): Promise<RawPlaceDetail
         shortName: comp.shortText || '',
         types: comp.types || [],
       })),
-      utcOffset: data.utcOffsetMinutes,
       adrAddress: data.adrFormatAddress,
-      vicinity: data.vicinity,
       plusCode: data.plusCode
         ? {
             compoundCode: data.plusCode.compoundCode,
