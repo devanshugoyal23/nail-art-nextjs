@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { getSalonAdditionalData, generateSlug, NailSalon } from '@/lib/nailSalonService';
+import { getSalonAdditionalData, generateSlug, NailSalon, SalonDetails } from '@/lib/nailSalonService';
 import { getSalonsForCity } from '@/lib/salonDataService';
 import OptimizedImage from '@/components/OptimizedImage';
 import NailArtGallerySection from '@/components/NailArtGallerySection';
@@ -157,7 +157,7 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
   ).join(' ');
 
   let salon: NailSalon | null = null;
-  let salonDetails: { description?: string; faq?: Array<{ question: string; answer: string }>; parkingInfo?: string; paymentOptions?: string[]; services?: Array<{ name: string; description?: string; price?: string }> } | null = null;
+  let salonDetails: SalonDetails | null = null;
   let relatedSalons: NailSalon[] = [];
   let galleryDesigns: Array<{ id: string; imageUrl: string; title?: string; description?: string; colors?: string[]; techniques?: string[]; occasions?: string[] }> = [];
   let rawGalleryItems: GalleryItem[] = [];
@@ -215,9 +215,6 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
           // Use parking guide if available
           parkingInfo: enrichedData.sections.parking?.summary || 'Street parking and nearby parking lots are typically available.',
 
-          // Default payment options
-          paymentOptions: ['Cash', 'Credit Cards', 'Debit Cards'],
-
           // Use AI-generated FAQ if available
           faq: enrichedData.sections.faq?.questions.map(q => ({
             question: q.question,
@@ -237,6 +234,17 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
             },
           ],
 
+          // Use real customer reviews from enriched data
+          placeReviews: enrichedData.sections.customerReviews?.featuredReviews.map(r => ({
+            rating: r.rating,
+            text: r.text,
+            authorName: r.authorName,
+            publishTime: r.date,
+          })) || undefined,
+
+          // Use review summary if available
+          reviewsSummary: enrichedData.sections.reviewInsights?.summary,
+
           // TODO: Add enriched sections to SalonDetails interface
           // enrichedSections: enrichedData.sections,
         };
@@ -248,9 +256,6 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
 
           // Default parking info
           parkingInfo: 'Street parking and nearby parking lots are typically available.',
-
-          // Default payment options
-          paymentOptions: ['Cash', 'Credit Cards', 'Debit Cards'],
 
           // Default FAQ
           faq: [
