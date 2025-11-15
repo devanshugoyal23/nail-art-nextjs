@@ -267,3 +267,66 @@ export async function retryFailedSalons() {
     stopEnrichment();
   }
 }
+
+/**
+ * Enrich specific selected salons by their place IDs
+ */
+export async function enrichSelectedSalons(placeIds: string[]) {
+  try {
+    addLog(`🎯 Starting enrichment for ${placeIds.length} selected salon(s)...`);
+
+    // Get all salons and filter by place IDs
+    const allSalons = await getAllSalons();
+    const salonsToEnrich = allSalons.filter((s) => placeIds.includes(s.placeId || ''));
+
+    if (salonsToEnrich.length === 0) {
+      addLog('⚠️  No matching salons found for the provided IDs');
+      stopEnrichment();
+      return;
+    }
+
+    addLog(`📋 Found ${salonsToEnrich.length} salon(s) to enrich`);
+
+    // Initialize progress
+    updateProgress({
+      isRunning: true,
+      totalSalons: salonsToEnrich.length,
+      enriched: 0,
+      failed: 0,
+    });
+
+    // Process each salon
+    for (let i = 0; i < salonsToEnrich.length; i++) {
+      const salon = salonsToEnrich[i];
+
+      // Check if should stop
+      const progress = loadProgress();
+      if (!progress.isRunning) {
+        addLog('⏸️  Enrichment paused by user');
+        break;
+      }
+
+      // Set current location
+      setCurrentLocation(salon.state, salon.city);
+
+      // Process salon
+      await processSalon(salon);
+
+      // Rate limiting: wait between salons
+      if (i < salonsToEnrich.length - 1) {
+        await sleep(10000); // 10 seconds
+      }
+
+      // Update time estimate every salon
+      updateTimeEstimate();
+    }
+
+    // Mark as completed
+    stopEnrichment();
+    addLog(`🎉 Selected enrichment completed! Processed ${salonsToEnrich.length} salon(s)`);
+  } catch (error) {
+    console.error('Selected enrichment error:', error);
+    addLog(`❌ Fatal error: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    stopEnrichment();
+  }
+}
