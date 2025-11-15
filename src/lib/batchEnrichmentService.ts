@@ -269,23 +269,19 @@ export async function retryFailedSalons() {
 }
 
 /**
- * Enrich specific selected salons by their place IDs
+ * Enrich specific selected salons (receives full salon objects for speed)
+ * This is MUCH faster than loading all salons - same speed as npm run command!
  */
-export async function enrichSelectedSalons(placeIds: string[]) {
+export async function enrichSelectedSalons(salonsToEnrich: NailSalon[]) {
   try {
-    addLog(`🎯 Starting enrichment for ${placeIds.length} selected salon(s)...`);
-
-    // Get all salons and filter by place IDs
-    const allSalons = await getAllSalons();
-    const salonsToEnrich = allSalons.filter((s) => placeIds.includes(s.placeId || ''));
+    console.log(`\n🎯 Starting enrichment for ${salonsToEnrich.length} selected salon(s)...\n`);
+    addLog(`🎯 Starting enrichment for ${salonsToEnrich.length} selected salon(s)...`);
 
     if (salonsToEnrich.length === 0) {
-      addLog('⚠️  No matching salons found for the provided IDs');
+      addLog('⚠️  No salons provided');
       stopEnrichment();
       return;
     }
-
-    addLog(`📋 Found ${salonsToEnrich.length} salon(s) to enrich`);
 
     // Initialize progress
     updateProgress({
@@ -295,25 +291,37 @@ export async function enrichSelectedSalons(placeIds: string[]) {
       failed: 0,
     });
 
+    console.log(`📋 Processing ${salonsToEnrich.length} salon(s)...\n`);
+
     // Process each salon
     for (let i = 0; i < salonsToEnrich.length; i++) {
       const salon = salonsToEnrich[i];
+
+      console.log(`\n[${ i + 1}/${salonsToEnrich.length}] 🏪 ${salon.name}`);
+      console.log(`   📍 ${salon.city}, ${salon.state}`);
+      addLog(`[${i + 1}/${salonsToEnrich.length}] Processing: ${salon.name} (${salon.city}, ${salon.state})`);
 
       // Check if should stop
       const progress = loadProgress();
       if (!progress.isRunning) {
         addLog('⏸️  Enrichment paused by user');
+        console.log('\n⏸️  Enrichment paused by user\n');
         break;
       }
 
       // Set current location
       setCurrentLocation(salon.state, salon.city);
 
-      // Process salon
+      // Process salon (this logs internally)
+      const startTime = Date.now();
       await processSalon(salon);
+      const duration = ((Date.now() - startTime) / 1000).toFixed(1);
+
+      console.log(`   ✅ Completed in ${duration}s\n`);
 
       // Rate limiting: wait between salons
       if (i < salonsToEnrich.length - 1) {
+        console.log(`   ⏱️  Waiting 10s before next salon...\n`);
         await sleep(10000); // 10 seconds
       }
 
@@ -323,7 +331,9 @@ export async function enrichSelectedSalons(placeIds: string[]) {
 
     // Mark as completed
     stopEnrichment();
-    addLog(`🎉 Selected enrichment completed! Processed ${salonsToEnrich.length} salon(s)`);
+    const finalMessage = `🎉 Selected enrichment completed! Processed ${salonsToEnrich.length} salon(s)`;
+    addLog(finalMessage);
+    console.log(`\n${finalMessage}\n`);
   } catch (error) {
     console.error('Selected enrichment error:', error);
     addLog(`❌ Fatal error: ${error instanceof Error ? error.message : 'Unknown error'}`);

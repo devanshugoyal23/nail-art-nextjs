@@ -178,17 +178,20 @@ export default function EnrichmentAdminPage() {
 
     setLoading(true);
     try {
+      // Get full salon objects for selected placeIds (MUCH faster than loading all salons on backend!)
+      const selectedSalonObjects = salons.filter((s) => selectedSalons.has(s.placeId || ''));
+
       const res = await fetch('/api/admin/enrichment/enrich-selected', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ placeIds: Array.from(selectedSalons) }),
+        body: JSON.stringify({ salons: selectedSalonObjects }),
       });
 
       if (!res.ok) {
         const error = await res.json();
         alert(`Error: ${error.error || 'Failed to start'}`);
       } else {
-        alert(`Started enrichment for ${selectedSalons.size} salon(s)`);
+        alert(`Started enrichment for ${selectedSalons.size} salon(s)!\n\nSwitch to "Overview & Progress" tab to monitor.`);
         setSelectedSalons(new Set());
       }
     } catch (error) {
@@ -280,7 +283,7 @@ export default function EnrichmentAdminPage() {
             <span>🎨</span>
             <span>Salon Enrichment Control Center</span>
           </h1>
-          <p className="text-gray-600 mt-2">
+          <p className="text-gray-800 mt-2 font-medium">
             Comprehensive batch enrichment management with real-time tracking
           </p>
         </div>
@@ -402,8 +405,8 @@ export default function EnrichmentAdminPage() {
             {progress && progress.totalSalons > 0 && (
               <div className="bg-white rounded-lg shadow-sm p-6">
                 <div className="flex items-center justify-between mb-2">
-                  <h3 className="font-semibold">Overall Progress</h3>
-                  <span className="text-sm text-gray-600">{progress.estimatedTimeRemaining || 'Calculating...'}</span>
+                  <h3 className="font-semibold text-gray-900">Overall Progress</h3>
+                  <span className="text-sm text-gray-800 font-medium">{progress.estimatedTimeRemaining || 'Calculating...'}</span>
                 </div>
                 <div className="w-full bg-gray-200 rounded-full h-6 overflow-hidden">
                   <div
@@ -418,7 +421,7 @@ export default function EnrichmentAdminPage() {
 
             {/* Control Buttons */}
             <div className="bg-white rounded-lg shadow-sm p-6">
-              <h3 className="font-semibold mb-4">Quick Actions</h3>
+              <h3 className="font-semibold text-gray-900 mb-4">Quick Actions</h3>
               <div className="flex flex-wrap gap-3">
                 {!progress?.isRunning ? (
                   <button
@@ -453,7 +456,7 @@ export default function EnrichmentAdminPage() {
             {/* Completed Cities */}
             {progress && progress.completedCities.length > 0 && (
               <div className="bg-white rounded-lg shadow-sm p-6">
-                <h3 className="font-semibold mb-3">
+                <h3 className="font-semibold text-gray-900 mb-3">
                   ✅ Completed Cities ({progress.completedCities.length})
                 </h3>
                 <div className="flex flex-wrap gap-2">
@@ -473,9 +476,9 @@ export default function EnrichmentAdminPage() {
                 <div className="space-y-2 max-h-64 overflow-y-auto">
                   {progress.failedSalons.map((salon, idx) => (
                     <div key={idx} className="p-3 bg-red-50 rounded border border-red-100">
-                      <div className="font-medium text-sm">{salon.name}</div>
-                      <div className="text-xs text-gray-600 mt-1">{salon.error}</div>
-                      <div className="text-xs text-gray-500 mt-1">Retries: {salon.retries}</div>
+                      <div className="font-medium text-sm text-gray-900">{salon.name}</div>
+                      <div className="text-xs text-gray-800 mt-1">{salon.error}</div>
+                      <div className="text-xs text-gray-700 mt-1">Retries: {salon.retries}</div>
                     </div>
                   ))}
                 </div>
@@ -499,22 +502,22 @@ export default function EnrichmentAdminPage() {
             {/* Cost Breakdown */}
             {progress && (
               <div className="bg-white rounded-lg shadow-sm p-6">
-                <h3 className="font-semibold mb-4">💵 Cost Breakdown</h3>
+                <h3 className="font-semibold text-gray-900 mb-4">💵 Cost Breakdown</h3>
                 <div className="grid md:grid-cols-3 gap-4">
                   <div className="p-4 bg-blue-50 rounded-lg">
-                    <div className="text-sm text-gray-600 mb-1">Google Maps API</div>
+                    <div className="text-sm text-gray-800 font-medium mb-1">Google Maps API</div>
                     <div className="text-2xl font-bold text-blue-600">${progress.costs.googleMaps.toFixed(2)}</div>
-                    <div className="text-xs text-gray-500 mt-1">{progress.enriched} × $0.017</div>
+                    <div className="text-xs text-gray-700 mt-1">{progress.enriched} × $0.017</div>
                   </div>
                   <div className="p-4 bg-purple-50 rounded-lg">
-                    <div className="text-sm text-gray-600 mb-1">Gemini API</div>
+                    <div className="text-sm text-gray-800 font-medium mb-1">Gemini API</div>
                     <div className="text-2xl font-bold text-purple-600">${progress.costs.gemini.toFixed(2)}</div>
-                    <div className="text-xs text-gray-500 mt-1">{progress.enriched} × ~$0.013</div>
+                    <div className="text-xs text-gray-700 mt-1">{progress.enriched} × ~$0.013</div>
                   </div>
                   <div className="p-4 bg-pink-50 rounded-lg">
-                    <div className="text-sm text-gray-600 mb-1">Total Cost</div>
+                    <div className="text-sm text-gray-800 font-medium mb-1">Total Cost</div>
                     <div className="text-2xl font-bold text-pink-600">${progress.costs.total.toFixed(2)}</div>
-                    <div className="text-xs text-gray-500 mt-1">
+                    <div className="text-xs text-gray-700 mt-1">
                       Avg: ${(progress.costs.total / progress.enriched).toFixed(4)}/salon
                     </div>
                   </div>
@@ -529,11 +532,11 @@ export default function EnrichmentAdminPage() {
           <div className="space-y-6">
             {/* Location Selection */}
             <div className="bg-white rounded-lg shadow-sm p-6">
-              <h3 className="font-semibold mb-4">📍 Select Location</h3>
+              <h3 className="font-semibold text-gray-900 mb-4">📍 Select Location</h3>
               <div className="grid md:grid-cols-2 gap-4">
                 {/* State Selection */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">State</label>
+                  <label className="block text-sm font-medium text-gray-900 mb-2">State</label>
                   <input
                     type="text"
                     placeholder="Search states..."
@@ -561,7 +564,7 @@ export default function EnrichmentAdminPage() {
 
                 {/* City Selection */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">City</label>
+                  <label className="block text-sm font-medium text-gray-900 mb-2">City</label>
                   <input
                     type="text"
                     placeholder="Search cities..."
@@ -607,7 +610,7 @@ export default function EnrichmentAdminPage() {
                   <div className="grid md:grid-cols-2 gap-4 mb-4">
                     {/* Search */}
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Search Salons</label>
+                      <label className="block text-sm font-medium text-gray-900 mb-2">Search Salons</label>
                       <input
                         type="text"
                         placeholder="Search by name..."
@@ -619,7 +622,7 @@ export default function EnrichmentAdminPage() {
 
                     {/* Status Filter */}
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Filter by Status</label>
+                      <label className="block text-sm font-medium text-gray-900 mb-2">Filter by Status</label>
                       <select
                         value={statusFilter}
                         onChange={(e) => setStatusFilter(e.target.value as typeof statusFilter)}
@@ -641,7 +644,7 @@ export default function EnrichmentAdminPage() {
                       {selectedSalons.size === filteredSalons.length ? '☐ Deselect All' : '☑ Select All'}
                     </button>
 
-                    <span className="text-sm text-gray-600">
+                    <span className="text-sm text-gray-800 font-medium">
                       {selectedSalons.size} of {filteredSalons.length} selected
                     </span>
 
@@ -709,22 +712,22 @@ export default function EnrichmentAdminPage() {
                               )}
                             </td>
                             <td className="px-4 py-3 font-medium text-gray-900">{salon.name}</td>
-                            <td className="px-4 py-3 text-sm text-gray-600">{salon.address}</td>
+                            <td className="px-4 py-3 text-sm text-gray-800">{salon.address}</td>
                             <td className="px-4 py-3 text-sm">
                               {salon.rating ? (
                                 <span className="flex items-center gap-1">
                                   <span className="text-yellow-500">⭐</span>
-                                  <span>{salon.rating.toFixed(1)}</span>
+                                  <span className="text-gray-900">{salon.rating.toFixed(1)}</span>
                                 </span>
                               ) : (
-                                <span className="text-gray-400">N/A</span>
+                                <span className="text-gray-600">N/A</span>
                               )}
                             </td>
-                            <td className="px-4 py-3 text-sm text-gray-600">{salon.reviewCount || 0}</td>
-                            <td className="px-4 py-3 text-sm text-gray-600">
+                            <td className="px-4 py-3 text-sm text-gray-800">{salon.reviewCount || 0}</td>
+                            <td className="px-4 py-3 text-sm text-gray-800">
                               {salon.enrichedAt
                                 ? new Date(salon.enrichedAt).toLocaleDateString()
-                                : <span className="text-gray-400">Never</span>}
+                                : <span className="text-gray-600">Never</span>}
                             </td>
                           </tr>
                         ))}
@@ -733,7 +736,7 @@ export default function EnrichmentAdminPage() {
                   </div>
 
                   {filteredSalons.length === 0 && (
-                    <div className="p-8 text-center text-gray-500">
+                    <div className="p-8 text-center text-gray-800">
                       <p>No salons match your filters</p>
                     </div>
                   )}
@@ -745,14 +748,14 @@ export default function EnrichmentAdminPage() {
             {loading && salons.length === 0 && (
               <div className="bg-white rounded-lg shadow-sm p-12 text-center">
                 <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-pink-500 border-t-transparent"></div>
-                <p className="mt-4 text-gray-600">Loading salons...</p>
+                <p className="mt-4 text-gray-800 font-medium">Loading salons...</p>
               </div>
             )}
 
             {/* Empty State */}
             {!loading && salons.length === 0 && selectedState && selectedCity && (
               <div className="bg-white rounded-lg shadow-sm p-12 text-center">
-                <p className="text-gray-500">No salons found in {selectedCity}, {selectedState}</p>
+                <p className="text-gray-800">No salons found in {selectedCity}, {selectedState}</p>
               </div>
             )}
 
@@ -761,7 +764,7 @@ export default function EnrichmentAdminPage() {
               <div className="bg-white rounded-lg shadow-sm p-12 text-center">
                 <div className="text-6xl mb-4">📍</div>
                 <p className="text-lg font-medium text-gray-900 mb-2">Select a State and City</p>
-                <p className="text-gray-600">Choose a location above to view and enrich salons</p>
+                <p className="text-gray-800">Choose a location above to view and enrich salons</p>
               </div>
             )}
           </div>

@@ -7,6 +7,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { loadProgress, updateProgress } from '@/lib/enrichmentProgressService';
 import { enrichSelectedSalons } from '@/lib/batchEnrichmentService';
+import { NailSalon } from '@/lib/nailSalonService';
 
 export async function POST(request: NextRequest) {
   try {
@@ -17,22 +18,23 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { placeIds } = body;
+    const { salons } = body;
 
-    if (!placeIds || !Array.isArray(placeIds) || placeIds.length === 0) {
+    if (!salons || !Array.isArray(salons) || salons.length === 0) {
       return NextResponse.json({ error: 'No salons selected' }, { status: 400 });
     }
 
     // Start enrichment in background (non-blocking)
     updateProgress({ isRunning: true });
 
-    enrichSelectedSalons(placeIds).catch((error) => {
+    // Pass full salon objects instead of just IDs (MUCH faster!)
+    enrichSelectedSalons(salons as NailSalon[]).catch((error) => {
       console.error('Selected enrichment error:', error);
     });
 
     return NextResponse.json({
       success: true,
-      message: `Starting enrichment for ${placeIds.length} salon(s)`,
+      message: `Starting enrichment for ${salons.length} salon(s)`,
     });
   } catch (error) {
     console.error('Error starting selected enrichment:', error);
