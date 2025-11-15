@@ -168,6 +168,26 @@ async function main() {
     console.log('   Loading from R2 cache...');
     rawData = await getRawDataFromR2(salon);
     console.log('   ✅ Loaded from cache (cost: $0.00)');
+
+    // Update salon object from cached data
+    if (rawData && salon.name === 'Unknown' && rawData.placeDetails) {
+      salon.name = rawData.placeDetails.name;
+      salon.address = rawData.placeDetails.formattedAddress || 'Unknown';
+      salon.rating = rawData.placeDetails.rating;
+      salon.reviewCount = rawData.placeDetails.userRatingsTotal;
+
+      // Extract city and state from address
+      if (rawData.placeDetails.addressComponents) {
+        for (const comp of rawData.placeDetails.addressComponents) {
+          if (comp.types.includes('locality')) {
+            salon.city = comp.longName;
+          }
+          if (comp.types.includes('administrative_area_level_1')) {
+            salon.state = comp.longName;
+          }
+        }
+      }
+    }
   }
 
   if (!rawData || flags.forceRefresh) {
@@ -184,30 +204,30 @@ async function main() {
       process.exit(1);
     }
 
-    // Save to R2
-    console.log('\n   💾 Saving raw data to R2...');
-    await saveRawDataToR2(salon, rawData);
-    rawDataCost = 0.177;
-  }
+    // Update salon object with fetched data BEFORE saving to R2
+    if (salon.name === 'Unknown' && rawData.placeDetails) {
+      salon.name = rawData.placeDetails.name;
+      salon.address = rawData.placeDetails.formattedAddress || 'Unknown';
+      salon.rating = rawData.placeDetails.rating;
+      salon.reviewCount = rawData.placeDetails.userRatingsTotal;
 
-  // Update salon object with fetched data
-  if (salon.name === 'Unknown' && rawData.placeDetails) {
-    salon.name = rawData.placeDetails.name;
-    salon.address = rawData.placeDetails.formattedAddress || 'Unknown';
-    salon.rating = rawData.placeDetails.rating;
-    salon.reviewCount = rawData.placeDetails.userRatingsTotal;
-
-    // Extract city and state from address
-    if (rawData.placeDetails.addressComponents) {
-      for (const comp of rawData.placeDetails.addressComponents) {
-        if (comp.types.includes('locality')) {
-          salon.city = comp.longName;
-        }
-        if (comp.types.includes('administrative_area_level_1')) {
-          salon.state = comp.longName;
+      // Extract city and state from address
+      if (rawData.placeDetails.addressComponents) {
+        for (const comp of rawData.placeDetails.addressComponents) {
+          if (comp.types.includes('locality')) {
+            salon.city = comp.longName;
+          }
+          if (comp.types.includes('administrative_area_level_1')) {
+            salon.state = comp.longName;
+          }
         }
       }
     }
+
+    // Save to R2 (now with correct salon info)
+    console.log('\n   💾 Saving raw data to R2...');
+    await saveRawDataToR2(salon, rawData);
+    rawDataCost = 0.177;
   }
 
   console.log(`\n   ✅ Raw data ready`);
