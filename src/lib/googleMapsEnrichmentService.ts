@@ -328,12 +328,10 @@ export function resolvePhotoUrls(photos: RawPlaceDetails['photos'], maxWidth: nu
  * This is the main function to call from enrichment scripts.
  * It fetches:
  * - Place details with reviews and photos
- * - Nearby competitors, parking, transit, restaurants, shopping
- * - Photo URLs
  *
- * Total cost: ~$0.177 per salon
- * - Place Details: $0.017
- * - Nearby Search x5: $0.160 ($0.032 each)
+ * Total cost: ~$0.017 per salon
+ * - Place Details: $0.017 only
+ * - Nearby Search: REMOVED to save $0.160 per salon
  */
 export async function fetchRawSalonData(salon: NailSalon): Promise<RawSalonData | null> {
   if (!salon.placeId) {
@@ -352,8 +350,9 @@ export async function fetchRawSalonData(salon: NailSalon): Promise<RawSalonData 
       return null;
     }
 
-    // 2. Fetch nearby amenities (if we have coordinates)
-    let nearby: {
+    // 2. Nearby amenities: REMOVED to save $0.160 per salon (5x $0.032 calls)
+    // Parking and amenities sections will use generic/helpful content instead
+    const nearby: {
       competitors: RawNearbyPlace[];
       parking: RawNearbyPlace[];
       transit: RawNearbyPlace[];
@@ -366,11 +365,6 @@ export async function fetchRawSalonData(salon: NailSalon): Promise<RawSalonData 
       restaurants: [],
       shopping: [],
     };
-
-    if (placeDetails.geometry?.location) {
-      const { lat, lng } = placeDetails.geometry.location;
-      nearby = await fetchNearbyAmenities(lat, lng);
-    }
 
     // 3. Build raw data object
     const rawData: RawSalonData = {
