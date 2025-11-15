@@ -105,7 +105,7 @@ export async function fetchPlaceDetails(placeId: string): Promise<RawPlaceDetail
             // Note: periods would need more parsing from the API response
           }
         : undefined,
-      reviews: data.reviews?.slice(0, 5).map((review: { authorAttribution?: { displayName?: string; uri?: string; photoUri?: string }; authorDisplayName?: string; originalText?: { languageCode?: string }; rating?: number; relativePublishTimeDescription?: string; text?: string | { text?: string }; publishTime?: string }) => ({
+      reviews: data.reviews?.map((review: { authorAttribution?: { displayName?: string; uri?: string; photoUri?: string }; authorDisplayName?: string; originalText?: { languageCode?: string }; rating?: number; relativePublishTimeDescription?: string; text?: string | { text?: string }; publishTime?: string }) => ({
         authorName: review.authorAttribution?.displayName || review.authorDisplayName || 'Anonymous',
         authorUrl: review.authorAttribution?.uri,
         language: review.originalText?.languageCode,

@@ -52,41 +52,37 @@ async function generateAboutSection(
 ): Promise<EnrichedSection> {
   const aiInstance = getAI();
 
-  const systemPrompt = `You are a professional copywriter specializing in local business content. Create a compelling "About" section for a nail salon based on real data.
+  const systemPrompt = `You are a friendly copywriter who writes like a real person. Create a short, crisp "About" section for a nail salon based on real customer reviews.
 
 Requirements:
-- 500-750 words
-- Highlight unique aspects mentioned in reviews
-- Include specific services, specialties, atmosphere
-- Natural, conversational tone
-- NO generic filler
-- Focus on what makes THIS salon special
-- Include relevant details: location benefits, years in business (if known), team expertise
+- 150-250 words only (keep it brief and conversational)
+- Write in simple, natural language like you're telling a friend about this place
+- Focus on 2-3 specific things customers love (from reviews)
+- Mention the vibe/atmosphere if clear from reviews
+- NO marketing fluff or generic phrases
+- Use short paragraphs (2-3 sentences max)
 
 Return JSON with:
 - title (string)
-- content (string, HTML formatted with <p> tags)
+- content (string, HTML formatted with <p> tags, 2-3 short paragraphs)
 - wordCount (number)`;
 
   const reviews = rawData.placeDetails.reviews || [];
   const reviewSummary =
     reviews.length > 0
       ? reviews
-          .slice(0, 5)
           .map((r) => `"${r.text.substring(0, 200)}..." - ${r.rating}/5`)
           .join('\n')
       : 'No reviews available';
 
   const userPrompt = `Salon: ${salon.name}
 Location: ${salon.city}, ${salon.state}
-Address: ${rawData.placeDetails.formattedAddress || salon.address}
-Rating: ${rawData.placeDetails.rating || 'N/A'} (${rawData.placeDetails.userRatingsTotal || 0} reviews)
-Price Level: ${salon.priceLevel || 'N/A'}
+Rating: ${rawData.placeDetails.rating || 'N/A'} stars (${rawData.placeDetails.userRatingsTotal || 0} reviews)
 
-Recent Customer Reviews:
+What customers say:
 ${reviewSummary}
 
-Write a unique, compelling "About" section for this salon. Use specific details from the reviews to highlight what makes it special.`;
+Write a brief, conversational "About" section (150-250 words). Focus on what real customers love about this place.`;
 
   try {
     const response = await aiInstance.models.generateContent({
@@ -146,14 +142,16 @@ async function generateReviewInsights(rawData: RawSalonData): Promise<{
 
   const aiInstance = getAI();
 
-  const systemPrompt = `You are a sentiment analysis expert. Analyze nail salon reviews and extract key insights.
+  const systemPrompt = `You are a sentiment analysis expert. Analyze Google's most helpful reviews for this nail salon and extract key insights.
+
+IMPORTANT: These are Google's featured "most helpful" reviews (typically 5), not all customer reviews. Make this clear in your summary.
 
 Return JSON with:
-- summary (string, 2-3 sentences)
+- summary (string, 2-3 sentences - mention these are "featured reviews from Google" or "most helpful reviews")
 - overallSentiment ("positive" | "neutral" | "negative")
 - insights (array of objects: category, sentiment, score 0-100, keyPhrases array, exampleQuotes array)
-- strengths (array of strings, top 3-5 strengths)
-- improvements (array of strings, top 3-5 areas for improvement)
+- strengths (array of strings, top 3-5 strengths mentioned in these reviews)
+- improvements (array of strings, areas for improvement if mentioned)
 
 Categories to analyze: Cleanliness, Service Quality, Value for Money, Staff Friendliness, Expertise, Wait Times, Atmosphere`;
 
@@ -429,11 +427,11 @@ export async function enrichSalonData(
       });
 
       sections.customerReviews = {
-        summary: `Read what our ${reviews.length} customers have to say about their experience:`,
-        totalReviews: reviews.length,
+        summary: `Featured reviews from Google (showing ${reviews.length} of ${rawData.placeDetails.userRatingsTotal || reviews.length} total reviews):`,
+        totalReviews: rawData.placeDetails.userRatingsTotal || reviews.length,
         averageRating: rawData.placeDetails.rating || 0,
         ratingDistribution: ratingDist,
-        featuredReviews: reviews.slice(0, 5).map((r) => ({
+        featuredReviews: reviews.map((r) => ({
           authorName: r.authorName,
           rating: r.rating,
           text: r.text,
