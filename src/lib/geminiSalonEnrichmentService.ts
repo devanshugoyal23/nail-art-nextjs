@@ -195,7 +195,7 @@ Generate all three sections (About, Review Insights, FAQ) based on this data.`;
           {
             question: 'What services do you offer?',
             answer: 'We offer a full range of nail care services including manicures, pedicures, gel nails, and nail art.',
-            source: 'General',
+            source: 'inferred',
           },
         ],
         generatedAt: new Date().toISOString(),

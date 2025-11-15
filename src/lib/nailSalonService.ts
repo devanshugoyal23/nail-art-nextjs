@@ -1120,3 +1120,29 @@ export function generateStateSlug(state: string): string {
   return generateSlug(state);
 }
 
+/**
+ * Get ALL salons across all states and cities
+ * Used for batch enrichment processing
+ */
+export async function getAllSalons(): Promise<NailSalon[]> {
+  const allSalons: NailSalon[] = [];
+
+  try {
+    const states = await getAllStatesWithSalons();
+
+    for (const state of states) {
+      const cities = await getCitiesInState(state.slug);
+
+      for (const city of cities) {
+        const salons = await getNailSalonsForLocation(city.name, state.name);
+        allSalons.push(...salons);
+      }
+    }
+
+    return allSalons;
+  } catch (error) {
+    console.error('Error fetching all salons:', error);
+    return [];
+  }
+}
+

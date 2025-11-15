@@ -452,7 +452,7 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
         {salon && salonDetails && (
           <SalonStructuredData
             salon={salon}
-            salonDetails={salonDetails}
+            salonDetails={salonDetails as { description?: string; faq?: Array<{ question: string; answer: string }>; [key: string]: unknown }}
             stateSlug={stateSlug}
             citySlug={citySlug}
             slug={resolvedParams.slug}
@@ -827,8 +827,7 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
               ) : null}
 
               {/* Amenities & Features - Combined compact section */}
-              {((salon.accessibilityOptions && (salon.accessibilityOptions.wheelchairAccessibleParking || salon.accessibilityOptions.wheelchairAccessibleEntrance || salon.accessibilityOptions.wheelchairAccessibleRestroom || salon.accessibilityOptions.wheelchairAccessibleSeating)) ||
-                (salonDetails?.paymentOptions && salonDetails.paymentOptions.length > 0)) && (
+              {(salon.accessibilityOptions && (salon.accessibilityOptions.wheelchairAccessibleParking || salon.accessibilityOptions.wheelchairAccessibleEntrance || salon.accessibilityOptions.wheelchairAccessibleRestroom || salon.accessibilityOptions.wheelchairAccessibleSeating)) && (
                 <div className="bg-white rounded-xl p-6 ring-1 ring-[#ee2b8c]/15 shadow-sm">
                   <h2 className="text-xl font-bold text-[#1b0d14] mb-4 flex items-center gap-2">
                     <span>✨</span>
@@ -841,21 +840,12 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
                         <span className="text-[#1b0d14]/70">Wheelchair Accessible</span>
                       </div>
                     )}
-                    {salonDetails?.paymentOptions && salonDetails.paymentOptions.length > 0 && (
-                      <div className="flex items-center gap-2 text-sm">
-                        <span className="text-lg">💳</span>
-                        <span className="text-[#1b0d14]/70">
-                          {salonDetails.paymentOptions.slice(0, 2).join(', ')}
-                          {salonDetails.paymentOptions.length > 2 && ` +${salonDetails.paymentOptions.length - 2} more`}
-                        </span>
-                      </div>
-                    )}
                   </div>
                 </div>
               )}
 
               {/* Parking & Transportation - Compact */}
-              {(salonDetails?.parkingInfo || (salonDetails as { transportation?: string | string[] })?.transportation) && (
+              {(salonDetails?.parkingInfo || (salonDetails as unknown as { transportation?: string | string[] })?.transportation) && (
                 <div className="bg-white rounded-xl p-6 ring-1 ring-[#ee2b8c]/15 shadow-sm">
                   <h2 className="text-xl font-bold text-[#1b0d14] mb-4 flex items-center gap-2">
                     <span>🅿️</span>
@@ -878,11 +868,11 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
                           <span>Public Transportation</span>
                         </h3>
                         <div className="text-[#1b0d14]/70 text-sm ml-7">
-                          {typeof (salonDetails as { transportation: string | string[] }).transportation === 'string' ? (
-                            <p>{(salonDetails as { transportation: string }).transportation}</p>
+                          {typeof (salonDetails as unknown as { transportation: string | string[] }).transportation === 'string' ? (
+                            <p>{(salonDetails as unknown as { transportation: string }).transportation}</p>
                           ) : (
                             <ul className="list-disc list-inside space-y-1">
-                              {((salonDetails as { transportation: string[] }).transportation).map((transport: string, index: number) => (
+                              {((salonDetails as unknown as { transportation: string[] }).transportation).map((transport: string, index: number) => (
                                 <li key={index}>{transport}</li>
                               ))}
                             </ul>
