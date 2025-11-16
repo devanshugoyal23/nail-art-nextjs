@@ -95,6 +95,14 @@ async function enrichCitiesInBackground(
     const { cityName, stateName } = cities[i];
 
     try {
+      // Check if enrichment was paused
+      const { loadProgress } = await import('@/lib/enrichmentProgressService');
+      const progress = loadProgress();
+      if (!progress.isRunning) {
+        console.log('\n⏸️  Sitemap enrichment paused by user - stopping city processing\n');
+        return; // Stop the entire background process
+      }
+
       console.log(`\n[${i + 1}/${cities.length}] 🏙️  Processing: ${cityName}, ${stateName}`);
 
       // Fetch all salons from this city
@@ -118,6 +126,13 @@ async function enrichCitiesInBackground(
       if (i < cities.length - 1) {
         console.log(`   ⏱️  Waiting 10s before next city...\n`);
         await sleep(10000);
+
+        // Check again after wait to stop promptly if paused
+        const progressAfterWait = loadProgress();
+        if (!progressAfterWait.isRunning) {
+          console.log('\n⏸️  Sitemap enrichment paused during wait - stopping\n');
+          return;
+        }
       }
     } catch (error) {
       console.error(`   ❌ Error enriching ${cityName}, ${stateName}:`, error);

@@ -90,6 +90,7 @@ You will create THREE sections in ONE response:
 2. REVIEW INSIGHTS:
    - Analyze Google's featured reviews (typically 5 most helpful)
    - Extract key insights by category (Cleanliness, Service Quality, Value, Staff Friendliness, Expertise, Wait Times, Atmosphere)
+   - For each category, provide a score from 1-5 (where 1=very poor, 3=average, 5=excellent)
    - Overall sentiment
    - Top 3-5 strengths
    - Areas for improvement if mentioned
@@ -109,7 +110,7 @@ Return JSON with this structure:
   "reviewInsights": {
     "summary": "string (2-3 sentences, mention these are featured Google reviews)",
     "overallSentiment": "positive" | "neutral" | "negative",
-    "insights": [{"category": "string", "sentiment": "string", "score": number, "keyPhrases": [], "exampleQuotes": []}],
+    "insights": [{"category": "string", "sentiment": "string", "score": number (1-5), "keyPhrases": [], "exampleQuotes": []}],
     "strengths": ["string"],
     "improvements": ["string"]
   },

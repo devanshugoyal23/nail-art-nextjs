@@ -190,10 +190,10 @@ export default function EnrichedSalonSections({ enrichedData, salonName }: Enric
                               ? 'bg-red-500'
                               : 'bg-gray-500'
                           }`}
-                          style={{ width: `${insight.score}%` }}
+                          style={{ width: `${(insight.score / 5) * 100}%` }}
                         />
                       </div>
-                      <span className="text-xs font-semibold text-[#1b0d14]/60">{insight.score}/100</span>
+                      <span className="text-xs font-semibold text-[#1b0d14]/60">{insight.score}/5</span>
                     </div>
                     {insight.keyPhrases.length > 0 && (
                       <div className="flex flex-wrap gap-1 mt-2">
