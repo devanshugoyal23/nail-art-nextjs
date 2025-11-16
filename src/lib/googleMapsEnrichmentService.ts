@@ -81,8 +81,19 @@ export async function fetchPlaceDetails(placeId: string): Promise<RawPlaceDetail
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error(`Place Details API error: ${response.status} ${response.statusText}`, errorText);
-      return null;
+      console.error(`❌ Google Maps API error: ${response.status} ${response.statusText}`);
+      console.error(`   Error details: ${errorText}`);
+
+      // Parse error details if JSON
+      let errorDetails = errorText;
+      try {
+        const errorJson = JSON.parse(errorText);
+        errorDetails = errorJson.error?.message || errorJson.message || errorText;
+      } catch {
+        // Keep original text if not JSON
+      }
+
+      throw new Error(`Google Maps API ${response.status}: ${errorDetails}`);
     }
 
     const data = await response.json();
@@ -153,8 +164,11 @@ export async function fetchPlaceDetails(placeId: string): Promise<RawPlaceDetail
     console.log(`✅ Fetched place details: ${placeDetails.name} (${placeDetails.userRatingsTotal || 0} reviews)`);
     return placeDetails;
   } catch (error) {
-    console.error('Error fetching place details:', error);
-    return null;
+    // Re-throw the error so it can be caught by the caller with full details
+    if (error instanceof Error) {
+      throw error;
+    }
+    throw new Error(`Failed to fetch place details: ${error}`);
   }
 }
 
@@ -205,8 +219,19 @@ export async function searchNearbyPlaces(
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error(`Nearby Search API error: ${response.status} ${response.statusText}`, errorText);
-      return [];
+      console.error(`❌ Nearby Search API error: ${response.status} ${response.statusText}`);
+      console.error(`   Error details: ${errorText}`);
+
+      // Parse error details if JSON
+      let errorDetails = errorText;
+      try {
+        const errorJson = JSON.parse(errorText);
+        errorDetails = errorJson.error?.message || errorJson.message || errorText;
+      } catch {
+        // Keep original text if not JSON
+      }
+
+      throw new Error(`Nearby Search API ${response.status}: ${errorDetails}`);
     }
 
     const data = await response.json();
@@ -242,8 +267,11 @@ export async function searchNearbyPlaces(
     console.log(`✅ Found ${nearbyPlaces.length} ${type} places`);
     return nearbyPlaces;
   } catch (error) {
-    console.error(`Error searching for nearby ${type}:`, error);
-    return [];
+    // Re-throw with context
+    if (error instanceof Error) {
+      throw new Error(`Nearby search for ${type} failed: ${error.message}`);
+    }
+    throw new Error(`Nearby search for ${type} failed: ${error}`);
   }
 }
 
@@ -321,19 +349,17 @@ export async function fetchNearbyAmenities(
  */
 export async function fetchRawSalonData(salon: NailSalon): Promise<RawSalonData | null> {
   if (!salon.placeId) {
-    console.error('❌ Salon missing placeId:', salon.name);
-    return null;
+    throw new Error(`Salon missing placeId: ${salon.name}`);
   }
 
-  console.log(`\n🚀 Starting enrichment for: ${salon.name}`);
+  console.log(`\n🚀 Starting Google Maps fetch for: ${salon.name}`);
   console.log(`   Place ID: ${salon.placeId}`);
 
   try {
     // 1. Fetch place details (includes reviews, photos, opening hours)
     const placeDetails = await fetchPlaceDetails(salon.placeId);
     if (!placeDetails) {
-      console.error('❌ Failed to fetch place details');
-      return null;
+      throw new Error('Place details returned null (unexpected)');
     }
 
     // 2. Nearby amenities: REMOVED to save $0.160 per salon (5x $0.032 calls)
@@ -368,7 +394,11 @@ export async function fetchRawSalonData(salon: NailSalon): Promise<RawSalonData 
     return rawData;
   } catch (error) {
     console.error('❌ Error fetching raw salon data:', error);
-    return null;
+    // Re-throw the error with context
+    if (error instanceof Error) {
+      throw new Error(`Failed to fetch Google Maps data: ${error.message}`);
+    }
+    throw new Error(`Failed to fetch Google Maps data: ${error}`);
   }
 }
 
