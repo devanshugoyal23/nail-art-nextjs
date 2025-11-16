@@ -219,6 +219,28 @@ export default function EnrichmentAdminPage() {
     }
   };
 
+  const handleEnrichSitemap = async () => {
+    if (!confirm('This will enrich all salons from the top 200 cities in your sitemap. This is a long-running process that will take several hours. Continue?')) {
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const res = await fetch('/api/admin/enrichment/enrich-sitemap', { method: 'POST' });
+      const data = await res.json();
+
+      if (res.ok) {
+        alert(`Started enrichment for ${data.citiesCount} sitemap cities!\n\nTop 10 cities:\n${data.topCities.map((c: { city: string; state: string }) => `${c.city}, ${c.state}`).join('\n')}\n\nSwitch to "Overview & Progress" tab to monitor progress.`);
+      } else {
+        alert(`Error: ${data.error || 'Failed to start'}`);
+      }
+    } catch (error) {
+      alert('Failed to start sitemap enrichment');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const toggleSalonSelection = (placeId: string) => {
     const newSelection = new Set(selectedSalons);
     if (newSelection.has(placeId)) {
@@ -398,6 +420,15 @@ export default function EnrichmentAdminPage() {
                     <li>• Auto-skip if already enriched</li>
                   </ul>
                 </div>
+                <div>
+                  <p className="font-medium mb-2">🗺️ Sitemap Enrichment:</p>
+                  <ul className="space-y-1 ml-4">
+                    <li>• Enriches top 200 cities in sitemap</li>
+                    <li>• Sorted by population/salon count</li>
+                    <li>• Same cities as public sitemap</li>
+                    <li>• Best for initial SEO coverage</li>
+                  </ul>
+                </div>
               </div>
             </div>
 
@@ -448,6 +479,17 @@ export default function EnrichmentAdminPage() {
                     className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 font-medium"
                   >
                     🔄 Retry Failed ({progress.failedSalons.length})
+                  </button>
+                )}
+
+                {!progress?.isRunning && (
+                  <button
+                    onClick={handleEnrichSitemap}
+                    disabled={loading}
+                    className="px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50 font-medium flex items-center gap-2"
+                  >
+                    <span>🗺️</span>
+                    <span>Enrich All Sitemap Cities (Top 200)</span>
                   </button>
                 )}
               </div>
