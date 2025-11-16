@@ -12,15 +12,16 @@
  * - Cost: $0.11/month → $0.004/month for 10k views (96% savings)
  *
  * How it works:
- * 1. Fetch 100 latest gallery items once
+ * 1. Fetch 500 latest gallery items once (for maximum variety across pages)
  * 2. Pre-categorize by color, technique, occasion
  * 3. Cache for 6 hours (matches salon page ISR)
  * 4. All salon pages share same cache
  *
  * Cache Strategy:
- * - First salon page: Generates cache (1 query, ~200ms)
+ * - First salon page: Generates cache (1 query, ~300ms)
  * - Next 10,000 salon pages: Use cache (0 queries, instant)
  * - Auto-refresh every 6 hours
+ * - Cache size: ~200KB (increased from ~40KB for better variety)
  */
 
 import { unstable_cache } from 'next/cache';
@@ -74,7 +75,7 @@ export interface CachedGalleryData {
     birthday: SalonGalleryItem[];
   };
 
-  // Random selection for variety
+  // Random selection for variety (legacy - prefer using 'all' for maximum uniqueness)
   random: SalonGalleryItem[];
 
   // All items (for fallback)
@@ -158,10 +159,11 @@ async function generateGalleryData(): Promise<CachedGalleryData> {
   console.log('🔄 Generating shared gallery cache...');
   const startTime = Date.now();
 
-  // Fetch 100 latest gallery items (single query)
+  // Fetch 500 latest gallery items for maximum variety across salon pages
+  // More designs = better distribution across 4000+ salons
   const { items } = await getGalleryItems({
     page: 1,
-    limit: 100,
+    limit: 500, // Increased from 100 for better variety
     sortBy: 'newest'
   });
 

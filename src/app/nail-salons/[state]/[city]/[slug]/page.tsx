@@ -290,10 +290,11 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
       // 1. Cached gallery data (96% query reduction from main branch)
       // 2. Deterministic selection (85% R2 cost reduction + SEO stability)
       if (cachedGallery) {
-        // ✅ Use deterministic selection instead of random shuffle
+        // ✅ Use ALL gallery designs for maximum variety (was using only 20 from 'random')
         // Same salon = same designs every time (SEO + caching)
         // Different salons = different designs (variety across site)
-        const selectedDesigns = deterministicSelect(cachedGallery.random, resolvedParams.slug, 8);
+        // Using cachedGallery.all (100+ designs) instead of random (20 designs)
+        const selectedDesigns = deterministicSelect(cachedGallery.all, resolvedParams.slug, 8);
         galleryDesigns = selectedDesigns;
 
         // Convert to raw gallery items format (for backwards compatibility)
