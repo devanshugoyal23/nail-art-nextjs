@@ -666,8 +666,8 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
                 );
               })()}
 
-              {/* Services & Pricing - MEDIUM PRIORITY */}
-              {((salonDetails as { services?: Array<{ name: string; description?: string; price?: string }> })?.services && (salonDetails as { services?: Array<{ name: string; description?: string; price?: string }> }).services!.length > 0) || (salon.types && salon.types.length > 0) ? (
+              {/* Services & Pricing - MEDIUM PRIORITY (only show if no enriched services) */}
+              {!enrichedData?.sections?.services && (((salonDetails as { services?: Array<{ name: string; description?: string; price?: string }> })?.services && (salonDetails as { services?: Array<{ name: string; description?: string; price?: string }> }).services!.length > 0) || (salon.types && salon.types.length > 0)) ? (
                 <div className="bg-white rounded-xl p-6 ring-1 ring-[#ee2b8c]/15 shadow-sm">
                   <h2 className="text-xl font-bold text-[#1b0d14] mb-4 flex items-center gap-2">
                     <span>💅</span>
