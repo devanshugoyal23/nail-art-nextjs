@@ -18,7 +18,8 @@
     "generate-cities:dry-run": "node scripts/generate-cities-json.js --dry-run",
     "generate-cities:fast": "node scripts/generate-cities-json.js --batch-size=15",
     "collect-salon-data": "tsx scripts/collect-salon-data.ts",
-    "recollect-failed-states": "tsx scripts/recollect-failed-states.ts"
+    "recollect-failed-states": "tsx scripts/recollect-failed-states.ts",
+    "enrich-salon": "tsx scripts/enrich-single-salon.ts"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.906.0",

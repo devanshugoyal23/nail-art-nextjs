@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { getSalonAdditionalData, generateSlug, NailSalon } from '@/lib/nailSalonService';
+import { getSalonAdditionalData, generateSlug, NailSalon, SalonDetails } from '@/lib/nailSalonService';
 import { getSalonsForCity } from '@/lib/salonDataService';
 import OptimizedImage from '@/components/OptimizedImage';
 import NailArtGallerySection from '@/components/NailArtGallerySection';
@@ -17,6 +17,8 @@ import { absoluteUrl } from '@/lib/absoluteUrl';
 import { getCachedGalleryData } from '@/lib/salonPageCache';
 import { GalleryItem } from '@/lib/supabase';
 import { deterministicSelect } from '@/lib/deterministicSelection';
+import EnrichedSalonSections from '@/components/EnrichedSalonSections';
+import { EnrichedSalonData } from '@/types/salonEnrichment';
 
 // ISR Configuration - Cache salon pages for 7 days to reduce CPU usage and R2 costs
 // ✅ PHASE 2.3: Increased from 6h to 7 days (96% fewer regenerations)
@@ -157,7 +159,8 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
   ).join(' ');
 
   let salon: NailSalon | null = null;
-  let salonDetails: { description?: string; faq?: Array<{ question: string; answer: string }>; parkingInfo?: string; paymentOptions?: string[]; services?: Array<{ name: string; description?: string; price?: string }> } | null = null;
+  let salonDetails: SalonDetails | null = null;
+  let enrichedData: EnrichedSalonData | null = null;
   let relatedSalons: NailSalon[] = [];
   let galleryDesigns: Array<{ id: string; imageUrl: string; title?: string; description?: string; colors?: string[]; techniques?: string[]; occasions?: string[] }> = [];
   let rawGalleryItems: GalleryItem[] = [];
@@ -193,38 +196,87 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
       // ✅ OPTIMIZATION: Use shared gallery cache (96% query reduction)
       // BEFORE: 26+ parallel Supabase queries (300-500ms, $0.11/month per 10k views)
       // AFTER: 1 cached query (50-100ms, $0.004/month per 10k views)
-      const [additionalData, cachedGallery] = await Promise.all([
-        getSalonAdditionalData(salon, undefined).catch(() => ({})),
-        getCachedGalleryData().catch(() => null)
+      const currentSalon = salon; // Create const to satisfy TypeScript
+      const [additionalData, cachedGallery, fetchedEnrichedData] = await Promise.all([
+        getSalonAdditionalData(currentSalon, undefined).catch(() => ({})),
+        getCachedGalleryData().catch(() => null),
+        // ✅ NEW: Try to load enriched data from R2 (no API calls, just cache read)
+        import('@/lib/r2SalonStorage').then(({ getEnrichedDataFromR2 }) =>
+          getEnrichedDataFromR2(currentSalon).catch(() => null)
+        ).catch(() => null)
       ]);
-      
-      // ✅ Create salon details with fallback data (no Google Places API dependency)
-      salonDetails = {
-        // Simple fallback description
-        description: `${salon.name} is a professional nail salon located in ${salon.city}, ${salon.state}.`,
 
-        // Default parking info
-        parkingInfo: 'Street parking and nearby parking lots are typically available.',
+      // Store enriched data for use in component
+      enrichedData = fetchedEnrichedData;
 
-        // Default payment options
-        paymentOptions: ['Cash', 'Credit Cards', 'Debit Cards'],
+      // ✅ Create salon details with enriched data OR fallback data (no Google Places API dependency)
+      if (fetchedEnrichedData && fetchedEnrichedData.sections) {
+        // Use enriched data from R2 if available
+        salonDetails = {
+          // Use AI-generated description
+          description: fetchedEnrichedData.sections.about?.content
+            ? fetchedEnrichedData.sections.about.content.replace(/<[^>]*>/g, '').substring(0, 300) + '...'
+            : `${salon.name} is a professional nail salon located in ${salon.city}, ${salon.state}.`,
 
-        // Default FAQ
-        faq: [
-          {
-            question: 'Do I need an appointment?',
-            answer: 'Walk-ins are welcome, but appointments are recommended to ensure availability.'
-          },
-          {
-            question: 'What payment methods do you accept?',
-            answer: 'Most nail salons accept cash, credit cards, and mobile payments.'
-          },
-          {
-            question: 'Is this salon family-friendly?',
-            answer: 'Please contact the salon to inquire about services for children.'
-          },
-        ],
-      };
+          // Use parking guide if available
+          parkingInfo: fetchedEnrichedData.sections.parking?.summary || 'Street parking and nearby parking lots are typically available.',
+
+          // Use AI-generated FAQ if available
+          faq: fetchedEnrichedData.sections.faq?.questions.map(q => ({
+            question: q.question,
+            answer: q.answer
+          })) || [
+            {
+              question: 'Do I need an appointment?',
+              answer: 'Walk-ins are welcome, but appointments are recommended to ensure availability.'
+            },
+            {
+              question: 'What payment methods do you accept?',
+              answer: 'Most nail salons accept cash, credit cards, and mobile payments.'
+            },
+            {
+              question: 'Is this salon family-friendly?',
+              answer: 'Please contact the salon to inquire about services for children.'
+            },
+          ],
+
+          // Use real customer reviews from enriched data
+          placeReviews: fetchedEnrichedData.sections.customerReviews?.featuredReviews.map(r => ({
+            rating: r.rating,
+            text: r.text,
+            authorName: r.authorName,
+            publishTime: r.date,
+          })) || undefined,
+
+          // Use review summary if available
+          reviewsSummary: fetchedEnrichedData.sections.reviewInsights?.summary,
+        };
+      } else {
+        // Fallback to default data if no enriched data available
+        salonDetails = {
+          // Simple fallback description
+          description: `${salon.name} is a professional nail salon located in ${salon.city}, ${salon.state}.`,
+
+          // Default parking info
+          parkingInfo: 'Street parking and nearby parking lots are typically available.',
+
+          // Default FAQ
+          faq: [
+            {
+              question: 'Do I need an appointment?',
+              answer: 'Walk-ins are welcome, but appointments are recommended to ensure availability.'
+            },
+            {
+              question: 'What payment methods do you accept?',
+              answer: 'Most nail salons accept cash, credit cards, and mobile payments.'
+            },
+            {
+              question: 'Is this salon family-friendly?',
+              answer: 'Please contact the salon to inquire about services for children.'
+            },
+          ],
+        };
+      }
 
       // Merge additional data (photos, etc.) into salon
       if (additionalData) {
@@ -400,7 +452,7 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
         {salon && salonDetails && (
           <SalonStructuredData
             salon={salon}
-            salonDetails={salonDetails}
+            salonDetails={salonDetails as { description?: string; faq?: Array<{ question: string; answer: string }>; [key: string]: unknown }}
             stateSlug={stateSlug}
             citySlug={citySlug}
             slug={resolvedParams.slug}
@@ -775,8 +827,7 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
               ) : null}
 
               {/* Amenities & Features - Combined compact section */}
-              {((salon.accessibilityOptions && (salon.accessibilityOptions.wheelchairAccessibleParking || salon.accessibilityOptions.wheelchairAccessibleEntrance || salon.accessibilityOptions.wheelchairAccessibleRestroom || salon.accessibilityOptions.wheelchairAccessibleSeating)) ||
-                (salonDetails?.paymentOptions && salonDetails.paymentOptions.length > 0)) && (
+              {(salon.accessibilityOptions && (salon.accessibilityOptions.wheelchairAccessibleParking || salon.accessibilityOptions.wheelchairAccessibleEntrance || salon.accessibilityOptions.wheelchairAccessibleRestroom || salon.accessibilityOptions.wheelchairAccessibleSeating)) && (
                 <div className="bg-white rounded-xl p-6 ring-1 ring-[#ee2b8c]/15 shadow-sm">
                   <h2 className="text-xl font-bold text-[#1b0d14] mb-4 flex items-center gap-2">
                     <span>✨</span>
@@ -789,21 +840,12 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
                         <span className="text-[#1b0d14]/70">Wheelchair Accessible</span>
                       </div>
                     )}
-                    {salonDetails?.paymentOptions && salonDetails.paymentOptions.length > 0 && (
-                      <div className="flex items-center gap-2 text-sm">
-                        <span className="text-lg">💳</span>
-                        <span className="text-[#1b0d14]/70">
-                          {salonDetails.paymentOptions.slice(0, 2).join(', ')}
-                          {salonDetails.paymentOptions.length > 2 && ` +${salonDetails.paymentOptions.length - 2} more`}
-                        </span>
-                      </div>
-                    )}
                   </div>
                 </div>
               )}
 
               {/* Parking & Transportation - Compact */}
-              {(salonDetails?.parkingInfo || (salonDetails as { transportation?: string | string[] })?.transportation) && (
+              {(salonDetails?.parkingInfo || (salonDetails as unknown as { transportation?: string | string[] })?.transportation) && (
                 <div className="bg-white rounded-xl p-6 ring-1 ring-[#ee2b8c]/15 shadow-sm">
                   <h2 className="text-xl font-bold text-[#1b0d14] mb-4 flex items-center gap-2">
                     <span>🅿️</span>
@@ -826,11 +868,11 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
                           <span>Public Transportation</span>
                         </h3>
                         <div className="text-[#1b0d14]/70 text-sm ml-7">
-                          {typeof (salonDetails as { transportation: string | string[] }).transportation === 'string' ? (
-                            <p>{(salonDetails as { transportation: string }).transportation}</p>
+                          {typeof (salonDetails as unknown as { transportation: string | string[] }).transportation === 'string' ? (
+                            <p>{(salonDetails as unknown as { transportation: string }).transportation}</p>
                           ) : (
                             <ul className="list-disc list-inside space-y-1">
-                              {((salonDetails as { transportation: string[] }).transportation).map((transport: string, index: number) => (
+                              {((salonDetails as unknown as { transportation: string[] }).transportation).map((transport: string, index: number) => (
                                 <li key={index}>{transport}</li>
                               ))}
                             </ul>
@@ -842,8 +884,16 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
                 </div>
               )}
 
-              {/* FAQ Section - Compact */}
-              {salonDetails?.faq && salonDetails.faq.length > 0 && (
+              {/* Enriched Salon Sections - Real data from Google Maps + Gemini AI */}
+              {enrichedData && (
+                <EnrichedSalonSections
+                  enrichedData={enrichedData}
+                  salonName={salon.name}
+                />
+              )}
+
+              {/* FAQ Section - Compact (only show if no enriched data) */}
+              {!enrichedData && salonDetails?.faq && salonDetails.faq.length > 0 && (
                 <CollapsibleSection
                   title="Frequently Asked Questions"
                   defaultExpanded={false}

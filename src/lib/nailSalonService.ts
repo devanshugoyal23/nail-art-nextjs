@@ -318,6 +318,7 @@ export async function getNailSalonsForLocation(
 async function getNailSalonsWithGemini(
   state: string,
   city?: string,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   limit: number = 20
 ): Promise<NailSalon[]> {
   throw new Error('Gemini API has been removed. Use R2 cached data instead (salonDataService.ts)');
@@ -604,6 +605,7 @@ export async function getNailSalonBySlug(
 /**
  * Parse salon data from Gemini API response with Google Maps grounding
  */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function parseSalonDataFromResponse(
   text: string,
   groundingMetadata: { webSearchQueries?: unknown[]; retrievalMetadata?: unknown },
@@ -736,8 +738,9 @@ function parseSalonDataFromResponse(
 }
 
 /**
- * Parse cities from response
+ * DEPRECATED: Parse cities from response (no longer used - data comes from R2)
  */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function parseCitiesFromResponse(text: string, state: string): City[] {
   const cities: City[] = [];
   const lines = text.split('\n').filter(line => line.trim());
@@ -880,6 +883,7 @@ function parseServices(text: string): Array<{ name: string; description?: string
 /**
  * Parse popular services
  */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function parsePopularServices(text: string): string[] {
   const services = parseServices(text);
   return services.slice(0, 5).map(s => s.name);
@@ -888,6 +892,7 @@ function parsePopularServices(text: string): string[] {
 /**
  * Parse nearby attractions
  */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function parseAttractions(text: string): Array<{ name: string; distance?: string }> {
   const attractions: Array<{ name: string; distance?: string }> = [];
   const lines = text.split('\n').filter(line => line.trim());
@@ -908,6 +913,7 @@ function parseAttractions(text: string): Array<{ name: string; distance?: string
 /**
  * Parse parking and transportation info
  */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function parseParkingInfo(text: string): { parking?: string; transportation?: string[] } {
   const transportation: string[] = [];
   const lines = text.split('\n').filter(line => line.trim());
@@ -927,6 +933,7 @@ function parseParkingInfo(text: string): { parking?: string; transportation?: st
 /**
  * Parse FAQ from text
  */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function parseFAQ(text: string): Array<{ question: string; answer: string }> {
   const faq: Array<{ question: string; answer: string }> = [];
   const lines = text.split('\n').filter(line => line.trim());
@@ -1118,5 +1125,32 @@ export function generateCitySlug(city: string): string {
  */
 export function generateStateSlug(state: string): string {
   return generateSlug(state);
+}
+
+/**
+ * Get ALL salons across all states and cities
+ * Used for batch enrichment processing
+ */
+export async function getAllSalons(): Promise<NailSalon[]> {
+  const allSalons: NailSalon[] = [];
+
+  try {
+    const states = await getAllStatesWithSalons();
+
+    for (const state of states) {
+      const stateSlug = generateStateSlug(state.name);
+      const cities = await getCitiesInState(stateSlug);
+
+      for (const city of cities) {
+        const salons = await getNailSalonsForLocation(city.name, state.name);
+        allSalons.push(...salons);
+      }
+    }
+
+    return allSalons;
+  } catch (error) {
+    console.error('Error fetching all salons:', error);
+    return [];
+  }
 }
 
