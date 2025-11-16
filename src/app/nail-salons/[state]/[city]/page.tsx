@@ -5,6 +5,8 @@ import { getSalonsForCity } from '@/lib/salonDataService';
 import OptimizedImage from '@/components/OptimizedImage';
 import { DirectoryStructuredData } from '@/components/DirectoryStructuredData';
 import { FAQStructuredData } from '@/components/FAQStructuredData';
+import { getCachedGalleryData } from '@/lib/salonPageCache';
+import { deterministicSelect } from '@/lib/deterministicSelection';
 
 interface CityPageProps {
   params: Promise<{
@@ -181,6 +183,10 @@ export default async function CityPage({ params }: CityPageProps) {
   // Don't call notFound() if salons array is empty - show empty state instead
   // This allows pages to be generated even if R2 data isn't available yet
 
+  // Load cached gallery data for salon card images
+  // Using nail design images instead of salon photos (which aren't in R2)
+  const cachedGallery = await getCachedGalleryData();
+
   // Calculate statistics
   const avgRating = salons.filter(s => s.rating).length > 0
     ? (salons.reduce((sum, s) => sum + (s.rating || 0), 0) / salons.filter(s => s.rating).length).toFixed(1)
@@ -329,12 +335,13 @@ export default async function CityPage({ params }: CityPageProps) {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {salons.map((salon, index) => {
-            // Get photo URL - check if it's valid (not empty)
-            const salonImageUrl = salon.photos && salon.photos.length > 0 
-              ? (salon.photos[0].url || getPhotoUrl(salon.photos[0].name, 400))
+            // Use nail design image instead of salon photo (deterministic selection)
+            // Each salon gets a consistent, unique nail design based on its slug
+            const salonSlug = generateSlug(salon.name);
+            const selectedDesigns = deterministicSelect(cachedGallery.all, salonSlug, 1);
+            const salonImage = selectedDesigns.length > 0
+              ? selectedDesigns[0].imageUrl
               : null;
-            // Only use image if URL is valid (not empty string)
-            const salonImage = salonImageUrl && salonImageUrl.trim() !== '' ? salonImageUrl : null;
             const isOpen = salon.currentOpeningHours?.openNow;
             
             return (
