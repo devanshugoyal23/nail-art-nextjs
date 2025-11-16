@@ -220,22 +220,38 @@ export default function EnrichmentAdminPage() {
   };
 
   const handleEnrichSitemap = async () => {
+    console.log('🗺️ Sitemap enrichment button clicked');
+
     if (!confirm('This will enrich all salons from the top 200 cities in your sitemap. This is a long-running process that will take several hours. Continue?')) {
+      console.log('User cancelled sitemap enrichment');
       return;
     }
 
+    console.log('User confirmed - starting sitemap enrichment...');
     setLoading(true);
+
     try {
-      const res = await fetch('/api/admin/enrichment/enrich-sitemap', { method: 'POST' });
+      console.log('Calling /api/admin/enrichment/enrich-sitemap...');
+      const res = await fetch('/api/admin/enrichment/enrich-sitemap', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      console.log('Response status:', res.status);
       const data = await res.json();
+      console.log('Response data:', data);
 
       if (res.ok) {
         alert(`Started enrichment for ${data.citiesCount} sitemap cities!\n\nTop 10 cities:\n${data.topCities.map((c: { city: string; state: string }) => `${c.city}, ${c.state}`).join('\n')}\n\nSwitch to "Overview & Progress" tab to monitor progress.`);
       } else {
+        console.error('Error response:', data);
         alert(`Error: ${data.error || 'Failed to start'}`);
       }
     } catch (error) {
-      alert('Failed to start sitemap enrichment');
+      console.error('Failed to call sitemap enrichment API:', error);
+      alert(`Failed to start sitemap enrichment: ${error instanceof Error ? error.message : 'Unknown error'}`);
     } finally {
       setLoading(false);
     }

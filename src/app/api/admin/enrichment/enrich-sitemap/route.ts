@@ -7,12 +7,17 @@ import { NailSalon } from '@/lib/nailSalonService';
  * This follows the same logic as the sitemap generation - top 200 cities sorted by population/salon count
  */
 export async function POST() {
+  console.log('📥 POST /api/admin/enrichment/enrich-sitemap - Request received');
+
   try {
     console.log('🚀 Starting sitemap cities enrichment...');
 
     // Get top 200 cities from consolidated data (same as sitemap)
+    console.log('📦 Importing consolidatedCitiesData...');
     const { getAllStateCityData } = await import('@/lib/consolidatedCitiesData');
+    console.log('📊 Calling getAllStateCityData()...');
     const statesMap = getAllStateCityData();
+    console.log(`📍 Got statesMap with ${statesMap.size} states`);
 
     // Collect all cities
     const allCities: Array<{
@@ -66,18 +71,25 @@ export async function POST() {
     console.log(`   Top 10: ${topCities.slice(0, 10).map(c => `${c.cityName}, ${c.stateName}`).join('; ')}`);
 
     // Start enrichment in background (don't await)
+    console.log('🎯 Starting background enrichment process...');
     enrichCitiesInBackground(topCities);
 
-    return NextResponse.json({
+    const responseData = {
       success: true,
       message: `Started enrichment for ${topCities.length} sitemap cities`,
       citiesCount: topCities.length,
       topCities: topCities.slice(0, 10).map(c => ({ city: c.cityName, state: c.stateName })),
-    });
+    };
+
+    console.log('✅ Returning success response:', responseData);
+    return NextResponse.json(responseData);
   } catch (error) {
     console.error('❌ Error starting sitemap enrichment:', error);
+    console.error('❌ Error details:', error instanceof Error ? error.message : String(error));
+    console.error('❌ Error stack:', error instanceof Error ? error.stack : 'No stack');
+
     return NextResponse.json(
-      { error: 'Failed to start sitemap enrichment' },
+      { error: `Failed to start sitemap enrichment: ${error instanceof Error ? error.message : String(error)}` },
       { status: 500 }
     );
   }
