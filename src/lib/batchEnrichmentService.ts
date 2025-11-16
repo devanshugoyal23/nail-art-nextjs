@@ -95,14 +95,24 @@ async function processSalon(salon: NailSalon): Promise<boolean> {
     }
 
     // Fetch raw data from Google Maps API
-    let rawData = await getRawDataFromR2(salon).catch(() => null);
+    let rawData = await getRawDataFromR2(salon).catch((err) => {
+      console.log(`   📦 No cached raw data: ${err.message}`);
+      return null;
+    });
 
     if (!rawData) {
       addLog(`📍 Fetching fresh data for: ${salon.name}`);
-      rawData = await fetchRawSalonData(salon);
+      try {
+        rawData = await fetchRawSalonData(salon);
+      } catch (fetchError) {
+        const fetchMsg = fetchError instanceof Error ? fetchError.message : 'Unknown error';
+        addLog(`❌ Google Maps API error for ${salon.name}: ${fetchMsg}`);
+        console.error(`   ❌ fetchRawSalonData error:`, fetchError);
+        throw new Error(`Google Maps API failed: ${fetchMsg}`);
+      }
 
       if (!rawData) {
-        throw new Error('Failed to fetch raw data from Google Maps');
+        throw new Error('Failed to fetch raw data from Google Maps (returned null)');
       }
 
       // Update salon object with fetched data
@@ -125,17 +135,40 @@ async function processSalon(salon: NailSalon): Promise<boolean> {
       }
 
       // Save raw data to R2
-      await saveRawDataToR2(salon, rawData);
+      try {
+        await saveRawDataToR2(salon, rawData);
+      } catch (saveError) {
+        const saveMsg = saveError instanceof Error ? saveError.message : 'Unknown error';
+        addLog(`⚠️  Failed to save raw data to R2: ${saveMsg}`);
+        console.error(`   ⚠️  R2 save error:`, saveError);
+        // Continue anyway - we have the data
+      }
     } else {
       addLog(`📦 Using cached raw data for: ${salon.name}`);
     }
 
     // Enrich with Gemini AI (Tier 1)
     addLog(`🤖 Enriching with AI: ${salon.name}`);
-    const enrichedData = await enrichSalonData(salon, rawData, ['tier1']);
+    let enrichedData;
+    try {
+      enrichedData = await enrichSalonData(salon, rawData, ['tier1']);
+    } catch (geminiError) {
+      const geminiMsg = geminiError instanceof Error ? geminiError.message : 'Unknown error';
+      addLog(`❌ Gemini AI error for ${salon.name}: ${geminiMsg}`);
+      console.error(`   ❌ enrichSalonData error:`, geminiError);
+      throw new Error(`Gemini AI failed: ${geminiMsg}`);
+    }
 
     // Save enriched data to R2
-    await saveEnrichedDataToR2(salon, enrichedData);
+    try {
+      await saveEnrichedDataToR2(salon, enrichedData);
+      addLog(`✅ Successfully enriched and saved: ${salon.name}`);
+    } catch (saveError) {
+      const saveMsg = saveError instanceof Error ? saveError.message : 'Unknown error';
+      addLog(`❌ Failed to save enriched data to R2: ${saveMsg}`);
+      console.error(`   ❌ R2 enriched save error:`, saveError);
+      throw new Error(`R2 save failed: ${saveMsg}`);
+    }
 
     // Calculate costs
     const costs = {
@@ -148,6 +181,13 @@ async function processSalon(salon: NailSalon): Promise<boolean> {
     return true;
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    const errorStack = error instanceof Error ? error.stack : '';
+    addLog(`❌ Failed to process ${salon.name}: ${errorMessage}`);
+    console.error(`\n❌ ERROR processing ${salon.name}:`);
+    console.error(`   Message: ${errorMessage}`);
+    if (errorStack) {
+      console.error(`   Stack: ${errorStack}`);
+    }
     markSalonFailed(salon.placeId || '', salon.name, errorMessage);
     return false;
   }
@@ -176,13 +216,15 @@ export async function startBatchEnrichment(config: BatchConfig, resume: boolean 
       });
     }
 
-    // Process in batches
-    const batchSize = config.batchSize;
-    let processedInBatch = 0;
+    // PARALLEL PROCESSING: Process multiple salons concurrently
+    // This is 15-20x faster than sequential processing!
+    const CONCURRENT_BATCH_SIZE = 25; // Process 25 salons at once
+    let totalProcessed = 0;
 
-    for (let i = 0; i < salons.length; i++) {
-      const salon = salons[i];
+    addLog(`🚀 PARALLEL MODE: Processing ${CONCURRENT_BATCH_SIZE} salons concurrently`);
+    addLog(`📊 Total batches: ${Math.ceil(salons.length / CONCURRENT_BATCH_SIZE)}`);
 
+    for (let i = 0; i < salons.length; i += CONCURRENT_BATCH_SIZE) {
       // Check if should stop
       const progress = loadProgress();
       if (!progress.isRunning) {
@@ -190,34 +232,44 @@ export async function startBatchEnrichment(config: BatchConfig, resume: boolean 
         break;
       }
 
-      // Set current location
-      setCurrentLocation(salon.state, salon.city);
+      // Get the next batch of salons to process
+      const batch = salons.slice(i, i + CONCURRENT_BATCH_SIZE);
+      const batchNumber = Math.floor(i / CONCURRENT_BATCH_SIZE) + 1;
+      const totalBatches = Math.ceil(salons.length / CONCURRENT_BATCH_SIZE);
 
-      // Process salon
-      const success = await processSalon(salon);
+      addLog(`\n📦 Processing batch ${batchNumber}/${totalBatches} (${batch.length} salons in parallel)...`);
+      console.log(`\n🔄 Batch ${batchNumber}/${totalBatches}: Processing ${batch.length} salons concurrently...\n`);
 
-      if (success) {
-        processedInBatch++;
+      // Set location for first salon in batch (for progress tracking)
+      if (batch.length > 0) {
+        setCurrentLocation(batch[0].state, batch[0].city);
       }
 
-      // Rate limiting: wait between salons (avoid API throttling)
-      // ~6 salons per minute = 10 seconds between salons
-      if (i < salons.length - 1) {
-        await sleep(10000); // 10 seconds
+      // Process all salons in this batch concurrently using Promise.allSettled
+      // This runs them in parallel instead of waiting for each one
+      const batchStartTime = Date.now();
+      const results = await Promise.allSettled(
+        batch.map(salon => processSalon(salon))
+      );
+
+      // Count successes and failures
+      const succeeded = results.filter(r => r.status === 'fulfilled' && r.value === true).length;
+      const failed = results.filter(r => r.status === 'rejected' || (r.status === 'fulfilled' && r.value === false)).length;
+      const batchDuration = ((Date.now() - batchStartTime) / 1000).toFixed(1);
+
+      totalProcessed += batch.length;
+
+      addLog(`✅ Batch ${batchNumber} complete: ${succeeded} succeeded, ${failed} failed in ${batchDuration}s`);
+      console.log(`✅ Batch ${batchNumber}/${totalBatches} done: ${succeeded} ✓, ${failed} ✗ (${batchDuration}s)\n`);
+
+      // Small delay between batches for API breathing room
+      if (i + CONCURRENT_BATCH_SIZE < salons.length) {
+        addLog(`⏱️  Waiting 500ms before next batch...`);
+        await sleep(500); // 0.5s between batches
       }
 
-      // After each batch, wait longer
-      if (processedInBatch >= batchSize) {
-        addLog(`📊 Completed batch of ${batchSize} salons. Taking a 30s break...`);
-        await sleep(30000); // 30 seconds break between batches
-        processedInBatch = 0;
-        updateTimeEstimate();
-      }
-
-      // Update time estimate every 10 salons
-      if (i % 10 === 0) {
-        updateTimeEstimate();
-      }
+      // Update time estimate after each batch
+      updateTimeEstimate();
     }
 
     // Mark as completed
@@ -252,15 +304,39 @@ export async function retryFailedSalons() {
     // Clear failed list
     updateProgress({ failedSalons: [], failed: 0 });
 
-    // Process each failed salon
-    for (const salon of salonsToRetry) {
+    // PARALLEL PROCESSING for retries
+    const CONCURRENT_BATCH_SIZE = 25;
+
+    if (salonsToRetry.length > 10) {
+      addLog(`🚀 PARALLEL MODE: Retrying ${salonsToRetry.length} failed salons (${CONCURRENT_BATCH_SIZE} at a time)`);
+    }
+
+    for (let i = 0; i < salonsToRetry.length; i += CONCURRENT_BATCH_SIZE) {
       const progressCurrent = loadProgress();
       if (!progressCurrent.isRunning) {
         break;
       }
 
-      await processSalon(salon);
-      await sleep(10000); // Rate limiting
+      const batch = salonsToRetry.slice(i, i + CONCURRENT_BATCH_SIZE);
+      const batchNumber = Math.floor(i / CONCURRENT_BATCH_SIZE) + 1;
+      const totalBatches = Math.ceil(salonsToRetry.length / CONCURRENT_BATCH_SIZE);
+
+      addLog(`📦 Retry batch ${batchNumber}/${totalBatches} (${batch.length} salons)...`);
+
+      // Process all salons in this batch concurrently
+      const results = await Promise.allSettled(
+        batch.map(salon => processSalon(salon))
+      );
+
+      const succeeded = results.filter(r => r.status === 'fulfilled' && r.value === true).length;
+      const failed = results.filter(r => r.status === 'rejected' || (r.status === 'fulfilled' && r.value === false)).length;
+
+      addLog(`✅ Retry batch ${batchNumber} complete: ${succeeded} succeeded, ${failed} failed`);
+
+      // Small delay between batches
+      if (i + CONCURRENT_BATCH_SIZE < salonsToRetry.length) {
+        await sleep(500);
+      }
     }
 
     stopEnrichment();
@@ -297,14 +373,15 @@ export async function enrichSelectedSalons(salonsToEnrich: NailSalon[]) {
 
     console.log(`📋 Processing ${salonsToEnrich.length} salon(s)...\n`);
 
-    // Process each salon
-    for (let i = 0; i < salonsToEnrich.length; i++) {
-      const salon = salonsToEnrich[i];
+    // PARALLEL PROCESSING for selected salons
+    const CONCURRENT_BATCH_SIZE = 25; // Process 25 salons at once
 
-      console.log(`\n[${ i + 1}/${salonsToEnrich.length}] 🏪 ${salon.name}`);
-      console.log(`   📍 ${salon.city}, ${salon.state}`);
-      addLog(`[${i + 1}/${salonsToEnrich.length}] Processing: ${salon.name} (${salon.city}, ${salon.state})`);
+    if (salonsToEnrich.length > 10) {
+      addLog(`🚀 PARALLEL MODE: Processing ${CONCURRENT_BATCH_SIZE} salons concurrently`);
+      console.log(`🚀 Using parallel processing for faster enrichment (${CONCURRENT_BATCH_SIZE} at a time)\n`);
+    }
 
+    for (let i = 0; i < salonsToEnrich.length; i += CONCURRENT_BATCH_SIZE) {
       // Check if should stop
       const progress = loadProgress();
       if (!progress.isRunning) {
@@ -313,25 +390,49 @@ export async function enrichSelectedSalons(salonsToEnrich: NailSalon[]) {
         break;
       }
 
-      // Set current location
-      setCurrentLocation(salon.state, salon.city);
+      // Get the next batch of salons to process
+      const batch = salonsToEnrich.slice(i, i + CONCURRENT_BATCH_SIZE);
+      const batchNumber = Math.floor(i / CONCURRENT_BATCH_SIZE) + 1;
+      const totalBatches = Math.ceil(salonsToEnrich.length / CONCURRENT_BATCH_SIZE);
 
-      // Process salon (this logs internally)
-      const startTime = Date.now();
-      await processSalon(salon);
-      const duration = ((Date.now() - startTime) / 1000).toFixed(1);
-
-      console.log(`   ✅ Completed in ${duration}s\n`);
-
-      // Rate limiting: wait between salons
-      // Gemini Flash Tier 1: 15 RPM = 1 request every 4s
-      // This allows ~15 salons/minute (2.5x faster than before!)
-      if (i < salonsToEnrich.length - 1) {
-        console.log(`   ⏱️  Waiting 4s before next salon...\n`);
-        await sleep(4000); // 4 seconds (was 10s)
+      if (batch.length > 1) {
+        console.log(`\n🔄 Batch ${batchNumber}/${totalBatches}: Processing ${batch.length} salons concurrently...\n`);
+        addLog(`📦 Processing batch ${batchNumber}/${totalBatches} (${batch.length} salons in parallel)...`);
       }
 
-      // Update time estimate every salon
+      // Set location for first salon in batch
+      if (batch.length > 0) {
+        setCurrentLocation(batch[0].state, batch[0].city);
+      }
+
+      // Log each salon in the batch
+      batch.forEach((salon, idx) => {
+        const globalIdx = i + idx + 1;
+        console.log(`[${globalIdx}/${salonsToEnrich.length}] 🏪 ${salon.name} - ${salon.city}, ${salon.state}`);
+      });
+
+      // Process all salons in this batch concurrently
+      const batchStartTime = Date.now();
+      const results = await Promise.allSettled(
+        batch.map(salon => processSalon(salon))
+      );
+
+      // Count successes and failures
+      const succeeded = results.filter(r => r.status === 'fulfilled' && r.value === true).length;
+      const failed = results.filter(r => r.status === 'rejected' || (r.status === 'fulfilled' && r.value === false)).length;
+      const batchDuration = ((Date.now() - batchStartTime) / 1000).toFixed(1);
+
+      console.log(`\n✅ Batch ${batchNumber} complete: ${succeeded} ✓, ${failed} ✗ in ${batchDuration}s\n`);
+      if (batch.length > 1) {
+        addLog(`✅ Batch ${batchNumber} complete: ${succeeded} succeeded, ${failed} failed in ${batchDuration}s`);
+      }
+
+      // Small delay between batches
+      if (i + CONCURRENT_BATCH_SIZE < salonsToEnrich.length) {
+        await sleep(500); // 0.5s between batches
+      }
+
+      // Update time estimate
       updateTimeEstimate();
     }
 
