@@ -190,6 +190,18 @@ export interface EnrichedSalonData {
   version: string; // Versioning for cache invalidation
   ttl: number; // Time to live in seconds
 
+  // Source reviews used to generate this content (for migration from /raw)
+  sourceReviews?: Array<{
+    authorName: string;
+    authorUrl?: string;
+    language?: string;
+    profilePhotoUrl?: string;
+    rating: number;
+    relativeTimeDescription: string;
+    text: string;
+    time: number;
+  }>;
+
   // TIER 1: ESSENTIAL SECTIONS
   sections: {
     // 1. Enhanced About Section (500-750 words)

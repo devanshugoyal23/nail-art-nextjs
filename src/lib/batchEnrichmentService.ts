@@ -94,50 +94,61 @@ async function processSalon(salon: NailSalon): Promise<boolean> {
       return false;
     }
 
-    // Fetch raw data - OPTIMIZED to use existing salon data from R2!
-    let rawData = await getRawDataFromR2(salon).catch(() => null);
+    // MIGRATION-SAFE: Check multiple sources for reviews (enriched first, then raw, then fresh)
+    let reviews: any[] | null = null;
     let googleMapsCost = 0;
+    let rawData: any = null;
 
-    if (!rawData) {
-      // Check if salon qualifies for expensive review fetching
+    // Try 1: Check if reviews exist in OLD enriched data (post-migration)
+    const existingEnrichedForReviews = await getEnrichedDataFromR2(salon).catch(() => null);
+    if (existingEnrichedForReviews?.sourceReviews && existingEnrichedForReviews.sourceReviews.length > 0) {
+      reviews = existingEnrichedForReviews.sourceReviews;
+      console.log(`   📦 Using ${reviews.length} reviews from /enriched (migrated)`);
+    }
+
+    // Try 2: Check /raw for reviews (backward compatibility - pre-migration)
+    if (!reviews) {
+      rawData = await getRawDataFromR2(salon).catch(() => null);
+      if (rawData?.placeDetails?.reviews && rawData.placeDetails.reviews.length > 0) {
+        reviews = rawData.placeDetails.reviews;
+        console.log(`   📦 Using ${reviews.length} reviews from /raw (legacy)`);
+      }
+    }
+
+    // Try 3: No cached reviews - decide whether to fetch fresh
+    if (!reviews) {
       const hasGoodRating = (salon.rating || 0) >= 4.0;
       const hasEnoughReviews = (salon.reviewCount || 0) >= 10;
       const shouldFetchReviews = hasGoodRating && hasEnoughReviews;
 
       if (shouldFetchReviews) {
-        // HIGH-QUALITY SALON: Fetch only reviews (we already have phone, website, hours from R2!)
-        addLog(`📝 Fetching reviews for: ${salon.name} (${salon.rating}⭐, ${salon.reviewCount} reviews)`);
+        // HIGH-QUALITY SALON: Fetch only reviews
+        addLog(`📝 Fetching fresh reviews for: ${salon.name} (${salon.rating}⭐, ${salon.reviewCount} reviews)`);
 
-        const { fetchPlaceReviews, createRawDataFromExisting } = await import('./googleMapsEnrichmentService');
-        const reviews = await fetchPlaceReviews(salon.placeId!);
+        const { fetchPlaceReviews } = await import('./googleMapsEnrichmentService');
+        reviews = await fetchPlaceReviews(salon.placeId!);
 
         if (!reviews) {
           throw new Error('Failed to fetch reviews from Google Maps');
         }
 
-        // Create raw data using existing salon info + fetched reviews
-        rawData = createRawDataFromExisting(salon, reviews);
         googleMapsCost = 0.017; // Cost for fetching reviews
-
-        console.log(`   ✅ Optimized: Using existing data + ${reviews.length} reviews`);
+        console.log(`   ✅ Fetched ${reviews.length} fresh reviews from Google API`);
       } else {
-        // LOW-QUALITY SALON: Skip expensive API call, use template content
+        // LOW-QUALITY SALON: Skip API call entirely
         addLog(`⚡ Template content for: ${salon.name} (${salon.rating || 'N/A'}⭐, ${salon.reviewCount || 0} reviews)`);
-
-        const { createRawDataFromExisting } = await import('./googleMapsEnrichmentService');
-        // Create raw data with NO reviews (template-based content)
-        rawData = createRawDataFromExisting(salon, []);
+        reviews = []; // Empty for template content
         googleMapsCost = 0; // No API call = $0!
-
         console.log(`   💰 Cost saved: $0.017 (using template content)`);
       }
-
-      // Save raw data to R2
-      await saveRawDataToR2(salon, rawData);
     } else {
-      addLog(`📦 Using cached raw data for: ${salon.name}`);
+      addLog(`📦 Using cached data for: ${salon.name}`);
       googleMapsCost = 0; // Using cache = $0
     }
+
+    // Build raw data from existing salon info + reviews
+    const { createRawDataFromExisting } = await import('./googleMapsEnrichmentService');
+    rawData = createRawDataFromExisting(salon, reviews);
 
     // Enrich with Gemini AI (Tier 1)
     addLog(`🤖 Enriching with AI: ${salon.name}`);

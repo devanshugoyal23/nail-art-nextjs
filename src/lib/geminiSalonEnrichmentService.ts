@@ -638,6 +638,7 @@ export async function enrichSalonData(
     enrichedAt: new Date().toISOString(),
     version: '1.0.0',
     ttl: 30 * 24 * 60 * 60, // 30 days
+    sourceReviews: rawData.placeDetails.reviews || [], // Store source reviews for migration
     sections,
     metadata: {
       totalWordCount,
