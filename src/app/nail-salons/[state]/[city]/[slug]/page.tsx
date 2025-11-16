@@ -545,58 +545,6 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Left Column - Salon Details */}
             <div className="lg:col-span-2 space-y-6">
-              {/* Photo Gallery - HIGH PRIORITY: Visual content */}
-              {(() => {
-                // Filter out photos with empty or invalid URLs
-                const validPhotos = salon.photos?.filter(photo => photo.url && photo.url.trim() !== '') || [];
-                
-                // Only show photo gallery if there are valid photos with URLs
-                if (validPhotos.length === 0) {
-                  return null;
-                }
-                
-                return (
-                  <div className="bg-white rounded-xl p-6 ring-1 ring-[#ee2b8c]/15 shadow-sm">
-                    <h2 className="text-2xl font-bold text-[#1b0d14] mb-6 flex items-center gap-2">
-                      <span>📸</span>
-                      <span>Photo Gallery</span>
-                    </h2>
-                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                      {validPhotos.slice(0, 6).map((photo, index) => {
-                        // Enhanced alt text based on photo position
-                        const photoTypes = ['exterior', 'interior', 'service area', 'nail art station', 'waiting area', 'treatment room'];
-                        const photoType = photoTypes[index] || 'interior';
-                        const enhancedAlt = `${salon.name} nail salon ${photoType} in ${formattedCity}, ${formattedState}`;
-                        
-                        return (
-                          <div key={index} className="relative aspect-square rounded-lg overflow-hidden group cursor-pointer ring-1 ring-gray-200 hover:ring-[#ee2b8c]/50 transition-all">
-                            <OptimizedImage
-                              src={photo.url}
-                              alt={enhancedAlt}
-                              width={400}
-                              height={400}
-                              className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-                            />
-                          {photo.authorAttributions && photo.authorAttributions[0] && (
-                            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent text-white text-xs p-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                              {photo.authorAttributions[0].displayName && (
-                                <p>Photo by {photo.authorAttributions[0].displayName}</p>
-                              )}
-                            </div>
-                          )}
-                          </div>
-                        );
-                      })}
-                    </div>
-                    {salon.photos && salon.photos.length > 6 && (
-                      <p className="text-sm text-[#1b0d14]/60 mt-4 text-center">
-                        +{salon.photos!.length - 6} more photos available on Google Maps
-                      </p>
-                    )}
-                  </div>
-                );
-              })()}
-
               {/* About Section - HIGH PRIORITY: Key information */}
               {salonDetails?.description && (
                 <div className="bg-white rounded-xl p-6 ring-1 ring-[#ee2b8c]/15 shadow-sm">

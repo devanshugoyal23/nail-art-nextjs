@@ -265,52 +265,6 @@ export default function EnrichedSalonSections({ enrichedData, salonName }: Enric
         </div>
       )}
 
-      {/* Parking & Transportation */}
-      {sections.parking && (
-        <div className="bg-white rounded-xl p-6 ring-1 ring-[#ee2b8c]/15 shadow-sm">
-          <h2 className="text-2xl font-bold text-[#1b0d14] mb-4 flex items-center gap-2">
-            <span>🚗</span>
-            <span>Parking & Transportation</span>
-          </h2>
-          <p className="text-[#1b0d14]/80 mb-4">{sections.parking.summary}</p>
-
-          <div className="space-y-3">
-            {sections.parking.options.map((option, index) => (
-              <div key={index} className="p-3 bg-[#f8f6f7] rounded-lg">
-                <div className="flex items-start justify-between mb-1">
-                  <span className="font-semibold text-[#1b0d14] capitalize">{option.type}</span>
-                  {option.distance && (
-                    <span className="text-xs px-2 py-1 bg-white rounded text-[#1b0d14]/60">
-                      {option.distance}
-                    </span>
-                  )}
-                </div>
-                {option.name && (
-                  <p className="text-sm text-[#1b0d14] mb-1">{option.name}</p>
-                )}
-                {option.notes && (
-                  <p className="text-sm text-[#1b0d14]/70">{option.notes}</p>
-                )}
-                {option.cost && (
-                  <p className="text-xs text-[#1b0d14]/50 mt-1">Cost: {option.cost}</p>
-                )}
-              </div>
-            ))}
-          </div>
-
-          {sections.parking.transitOptions && sections.parking.transitOptions.length > 0 && (
-            <div className="mt-4 pt-4 border-t border-[#ee2b8c]/10">
-              <h3 className="font-semibold text-[#1b0d14] mb-2">Public Transit</h3>
-              <ul className="space-y-1">
-                {sections.parking.transitOptions.map((transit, index) => (
-                  <li key={index} className="text-sm text-[#1b0d14]/70">• {transit}</li>
-                ))}
-              </ul>
-            </div>
-          )}
-        </div>
-      )}
-
       {/* Nearby Amenities */}
       {sections.nearbyAmenities && sections.nearbyAmenities.amenities.length > 0 && (
         <div className="bg-white rounded-xl p-6 ring-1 ring-[#ee2b8c]/15 shadow-sm">
