@@ -305,6 +305,62 @@ export async function fetchNearbyAmenities(
 // Photos are not essential for SEO content generation
 
 // ========================================
+// REVIEWS-ONLY FETCH (OPTIMIZED)
+// ========================================
+
+/**
+ * Fetch ONLY reviews for a salon (optimized, cheapest option)
+ * Cost: $0.017 per call
+ *
+ * Use this when you already have basic salon data (phone, website, hours, rating)
+ * from your R2 city data and only need reviews for AI content generation.
+ */
+export async function fetchPlaceReviews(placeId: string): Promise<RawPlaceDetails['reviews'] | null> {
+  if (!GOOGLE_MAPS_API_KEY) {
+    throw new Error('NEXT_PUBLIC_GOOGLE_MAPS_API_KEY is not configured');
+  }
+
+  try {
+    console.log(`📝 Fetching reviews only for ${placeId}...`);
+
+    const response = await fetch(`https://places.googleapis.com/v1/places/${placeId}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Goog-Api-Key': GOOGLE_MAPS_API_KEY,
+        // ONLY request reviews field - minimizes cost
+        'X-Goog-FieldMask': 'reviews',
+      },
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error(`Reviews API error: ${response.status} ${response.statusText}`, errorText);
+      return null;
+    }
+
+    const data = await response.json();
+
+    const reviews = data.reviews?.map((review: any) => ({
+      authorName: review.authorAttribution?.displayName || review.authorDisplayName || 'Anonymous',
+      authorUrl: review.authorAttribution?.uri,
+      language: review.originalText?.languageCode,
+      profilePhotoUrl: review.authorAttribution?.photoUri,
+      rating: review.rating || 0,
+      relativeTimeDescription: review.relativePublishTimeDescription || '',
+      text: typeof review.text === 'string' ? review.text : review.text?.text || '',
+      time: review.publishTime ? new Date(review.publishTime).getTime() / 1000 : Date.now() / 1000,
+    }));
+
+    console.log(`✅ Fetched ${reviews?.length || 0} reviews`);
+    return reviews || null;
+  } catch (error) {
+    console.error('Error fetching reviews:', error);
+    return null;
+  }
+}
+
+// ========================================
 // MAIN ENRICHMENT FUNCTION
 // ========================================
 
@@ -370,6 +426,50 @@ export async function fetchRawSalonData(salon: NailSalon): Promise<RawSalonData 
     console.error('❌ Error fetching raw salon data:', error);
     return null;
   }
+}
+
+/**
+ * Create RawSalonData from existing salon data + fetched reviews (OPTIMIZED)
+ *
+ * Use this when you have all basic data from R2 and only need to add reviews.
+ * This avoids redundant API calls for data you already have!
+ */
+export function createRawDataFromExisting(salon: NailSalon, reviews: RawPlaceDetails['reviews']): RawSalonData {
+  // Build place details from existing salon data
+  const placeDetails: RawPlaceDetails = {
+    placeId: salon.placeId || '',
+    name: salon.name,
+    formattedAddress: salon.address,
+    formattedPhoneNumber: salon.phone,
+    website: salon.website,
+    rating: salon.rating,
+    userRatingsTotal: salon.reviewCount,
+    openingHours: salon.openingHours ? {
+      weekdayText: salon.openingHours,
+    } : undefined,
+    reviews: reviews || [],
+    types: salon.types,
+    geometry: salon.latitude && salon.longitude ? {
+      location: {
+        lat: salon.latitude,
+        lng: salon.longitude,
+      },
+    } : undefined,
+  };
+
+  return {
+    placeId: salon.placeId || '',
+    fetchedAt: new Date().toISOString(),
+    ttl: 30 * 24 * 60 * 60, // 30 days
+    placeDetails,
+    nearby: {
+      competitors: [],
+      parking: [],
+      transit: [],
+      restaurants: [],
+      shopping: [],
+    },
+  };
 }
 
 // ========================================

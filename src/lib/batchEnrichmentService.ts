@@ -94,40 +94,49 @@ async function processSalon(salon: NailSalon): Promise<boolean> {
       return false;
     }
 
-    // Fetch raw data from Google Maps API
+    // Fetch raw data - OPTIMIZED to use existing salon data from R2!
     let rawData = await getRawDataFromR2(salon).catch(() => null);
+    let googleMapsCost = 0;
 
     if (!rawData) {
-      addLog(`📍 Fetching fresh data for: ${salon.name}`);
-      rawData = await fetchRawSalonData(salon);
+      // Check if salon qualifies for expensive review fetching
+      const hasGoodRating = (salon.rating || 0) >= 4.0;
+      const hasEnoughReviews = (salon.reviewCount || 0) >= 10;
+      const shouldFetchReviews = hasGoodRating && hasEnoughReviews;
 
-      if (!rawData) {
-        throw new Error('Failed to fetch raw data from Google Maps');
-      }
+      if (shouldFetchReviews) {
+        // HIGH-QUALITY SALON: Fetch only reviews (we already have phone, website, hours from R2!)
+        addLog(`📝 Fetching reviews for: ${salon.name} (${salon.rating}⭐, ${salon.reviewCount} reviews)`);
 
-      // Update salon object with fetched data
-      if (rawData.placeDetails) {
-        salon.name = rawData.placeDetails.name;
-        salon.address = rawData.placeDetails.formattedAddress || salon.address;
-        salon.rating = rawData.placeDetails.rating;
-        salon.reviewCount = rawData.placeDetails.userRatingsTotal;
+        const { fetchPlaceReviews, createRawDataFromExisting } = await import('./googleMapsEnrichmentService');
+        const reviews = await fetchPlaceReviews(salon.placeId!);
 
-        if (rawData.placeDetails.addressComponents) {
-          for (const comp of rawData.placeDetails.addressComponents) {
-            if (comp.types.includes('locality')) {
-              salon.city = comp.longName;
-            }
-            if (comp.types.includes('administrative_area_level_1')) {
-              salon.state = comp.longName;
-            }
-          }
+        if (!reviews) {
+          throw new Error('Failed to fetch reviews from Google Maps');
         }
+
+        // Create raw data using existing salon info + fetched reviews
+        rawData = createRawDataFromExisting(salon, reviews);
+        googleMapsCost = 0.017; // Cost for fetching reviews
+
+        console.log(`   ✅ Optimized: Using existing data + ${reviews.length} reviews`);
+      } else {
+        // LOW-QUALITY SALON: Skip expensive API call, use template content
+        addLog(`⚡ Template content for: ${salon.name} (${salon.rating || 'N/A'}⭐, ${salon.reviewCount || 0} reviews)`);
+
+        const { createRawDataFromExisting } = await import('./googleMapsEnrichmentService');
+        // Create raw data with NO reviews (template-based content)
+        rawData = createRawDataFromExisting(salon, []);
+        googleMapsCost = 0; // No API call = $0!
+
+        console.log(`   💰 Cost saved: $0.017 (using template content)`);
       }
 
       // Save raw data to R2
       await saveRawDataToR2(salon, rawData);
     } else {
       addLog(`📦 Using cached raw data for: ${salon.name}`);
+      googleMapsCost = 0; // Using cache = $0
     }
 
     // Enrich with Gemini AI (Tier 1)
@@ -137,9 +146,9 @@ async function processSalon(salon: NailSalon): Promise<boolean> {
     // Save enriched data to R2
     await saveEnrichedDataToR2(salon, enrichedData);
 
-    // Calculate costs
+    // Calculate costs (accurate tracking!)
     const costs = {
-      googleMaps: rawData ? 0.017 : 0, // Only charge if we fetched fresh data
+      googleMaps: googleMapsCost,
       gemini: 0.013, // Estimated Gemini cost for tier1
     };
 

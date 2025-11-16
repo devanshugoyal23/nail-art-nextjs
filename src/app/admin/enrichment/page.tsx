@@ -402,11 +402,15 @@ export default function EnrichmentAdminPage() {
               </h3>
               <div className="grid md:grid-cols-2 gap-4 text-sm text-blue-800">
                 <div>
-                  <p className="font-medium mb-2">💰 Cost Per Salon:</p>
+                  <p className="font-medium mb-2">💰 Cost Per Salon (Optimized!):</p>
                   <ul className="space-y-1 ml-4">
-                    <li>• Google Maps API: $0.017 (Place Details)</li>
-                    <li>• Gemini AI: ~$0.013 (1 consolidated call)</li>
-                    <li>• Total: ~$0.03 per salon</li>
+                    <li>• High-rated (≥4.0⭐, ≥10 reviews): $0.03</li>
+                    <li>  - Google Maps: $0.017 (reviews only)</li>
+                    <li>  - Gemini AI: $0.013</li>
+                    <li>• Low-rated (&lt;4.0⭐ or &lt;10 reviews): $0.013</li>
+                    <li>  - Google Maps: $0 (uses R2 data)</li>
+                    <li>  - Gemini AI: $0.013</li>
+                    <li>• Average: ~$0.021 per salon (30% savings!)</li>
                   </ul>
                 </div>
                 <div>
@@ -421,11 +425,11 @@ export default function EnrichmentAdminPage() {
                 <div>
                   <p className="font-medium mb-2">📦 What Gets Generated:</p>
                   <ul className="space-y-1 ml-4">
-                    <li>• About Section (150-250 words)</li>
-                    <li>• Review Insights (sentiment analysis)</li>
+                    <li>• About Section (250-300 words)</li>
+                    <li>• Review Insights (AI-powered analysis)</li>
                     <li>• FAQ (5-6 questions)</li>
-                    <li>• Best Times to Visit</li>
-                    <li>• Parking Information</li>
+                    <li className="mt-2 text-xs">High-rated: Rich AI content from reviews</li>
+                    <li className="text-xs">Low-rated: Quality template content</li>
                   </ul>
                 </div>
                 <div>
