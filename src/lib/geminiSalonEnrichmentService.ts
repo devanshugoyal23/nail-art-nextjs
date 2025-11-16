@@ -77,12 +77,15 @@ async function generateTier1Content(
 
 You will create THREE sections in ONE response:
 
-1. ABOUT SECTION (150-250 words):
-   - Write in simple, conversational language like telling a friend
-   - Focus on 2-3 specific things customers love
-   - Mention vibe/atmosphere from reviews
-   - NO marketing fluff
-   - Use short paragraphs
+1. ABOUT SECTION (250-300 words):
+   - Write in professional, polished language suitable for a business website
+   - Open with an engaging introduction highlighting what makes this salon unique
+   - Describe their services, specialties, and approach to nail care
+   - Include specific details from reviews about quality, atmosphere, and customer experience
+   - Mention their commitment to cleanliness, professionalism, and customer satisfaction
+   - Use well-structured paragraphs with smooth transitions
+   - Maintain a warm, welcoming tone while being informative and credible
+   - End with what customers can expect when they visit
 
 2. REVIEW INSIGHTS:
    - Analyze Google's featured reviews (typically 5 most helpful)
