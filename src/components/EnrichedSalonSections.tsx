@@ -166,46 +166,55 @@ export default function EnrichedSalonSections({ enrichedData, salonName }: Enric
             <div className="mt-6">
               <h3 className="font-semibold text-[#1b0d14] mb-3">Detailed Analysis</h3>
               <div className="grid gap-3">
-                {sections.reviewInsights.insights.map((insight, index) => (
-                  <div key={index} className="p-3 bg-[#f8f6f7] rounded-lg">
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="font-medium text-[#1b0d14]">{insight.category}</span>
-                      <span className={`text-xs px-2 py-1 rounded ${
-                        insight.sentiment === 'positive'
-                          ? 'bg-green-100 text-green-700'
-                          : insight.sentiment === 'negative'
-                          ? 'bg-red-100 text-red-700'
-                          : 'bg-gray-100 text-gray-700'
-                      }`}>
-                        {insight.sentiment}
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-2 mb-2">
-                      <div className="flex-1 h-2 bg-white rounded-full overflow-hidden">
-                        <div
-                          className={`h-full ${
-                            insight.sentiment === 'positive'
-                              ? 'bg-green-500'
-                              : insight.sentiment === 'negative'
-                              ? 'bg-red-500'
-                              : 'bg-gray-500'
-                          }`}
-                          style={{ width: `${(insight.score / 5) * 100}%` }}
-                        />
+                {sections.reviewInsights.insights.map((insight, index) => {
+                  // Backwards compatibility: Convert old 0-100 scores to 1-5
+                  const isOldFormat = insight.score > 5;
+                  const normalizedScore = isOldFormat
+                    ? Math.round((insight.score / 100) * 5) || 1  // Convert 0-100 to 1-5
+                    : insight.score;
+                  const progressPercent = (normalizedScore / 5) * 100;
+
+                  return (
+                    <div key={index} className="p-3 bg-[#f8f6f7] rounded-lg">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="font-medium text-[#1b0d14]">{insight.category}</span>
+                        <span className={`text-xs px-2 py-1 rounded ${
+                          insight.sentiment === 'positive'
+                            ? 'bg-green-100 text-green-700'
+                            : insight.sentiment === 'negative'
+                            ? 'bg-red-100 text-red-700'
+                            : 'bg-gray-100 text-gray-700'
+                        }`}>
+                          {insight.sentiment}
+                        </span>
                       </div>
-                      <span className="text-xs font-semibold text-[#1b0d14]/60">{insight.score}/5</span>
-                    </div>
-                    {insight.keyPhrases.length > 0 && (
-                      <div className="flex flex-wrap gap-1 mt-2">
-                        {insight.keyPhrases.slice(0, 3).map((phrase, i) => (
-                          <span key={i} className="text-xs px-2 py-1 bg-white rounded text-[#1b0d14]/70">
-                            {phrase}
-                          </span>
-                        ))}
+                      <div className="flex items-center gap-2 mb-2">
+                        <div className="flex-1 h-2 bg-white rounded-full overflow-hidden">
+                          <div
+                            className={`h-full ${
+                              insight.sentiment === 'positive'
+                                ? 'bg-green-500'
+                                : insight.sentiment === 'negative'
+                                ? 'bg-red-500'
+                                : 'bg-gray-500'
+                            }`}
+                            style={{ width: `${progressPercent}%` }}
+                          />
+                        </div>
+                        <span className="text-xs font-semibold text-[#1b0d14]/60">{normalizedScore}/5</span>
                       </div>
-                    )}
-                  </div>
-                ))}
+                      {insight.keyPhrases.length > 0 && (
+                        <div className="flex flex-wrap gap-1 mt-2">
+                          {insight.keyPhrases.slice(0, 3).map((phrase, i) => (
+                            <span key={i} className="text-xs px-2 py-1 bg-white rounded text-[#1b0d14]/70">
+                              {phrase}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
               </div>
             </div>
           )}
