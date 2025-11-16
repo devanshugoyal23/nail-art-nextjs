@@ -174,30 +174,31 @@ export default function EnrichedSalonSections({ enrichedData, salonName }: Enric
                     : insight.score;
                   const progressPercent = (normalizedScore / 5) * 100;
 
+                  // Color based on score: 1-2 = red, 3 = yellow, 4-5 = green
+                  const getScoreColor = (score: number) => {
+                    if (score >= 4) return 'bg-green-500';
+                    if (score >= 3) return 'bg-yellow-500';
+                    return 'bg-red-500';
+                  };
+
+                  const getSentimentBadgeColor = (score: number) => {
+                    if (score >= 4) return 'bg-green-100 text-green-700';
+                    if (score >= 3) return 'bg-yellow-100 text-yellow-700';
+                    return 'bg-red-100 text-red-700';
+                  };
+
                   return (
                     <div key={index} className="p-3 bg-[#f8f6f7] rounded-lg">
                       <div className="flex items-center justify-between mb-2">
                         <span className="font-medium text-[#1b0d14]">{insight.category}</span>
-                        <span className={`text-xs px-2 py-1 rounded ${
-                          insight.sentiment === 'positive'
-                            ? 'bg-green-100 text-green-700'
-                            : insight.sentiment === 'negative'
-                            ? 'bg-red-100 text-red-700'
-                            : 'bg-gray-100 text-gray-700'
-                        }`}>
-                          {insight.sentiment}
+                        <span className={`text-xs px-2 py-1 rounded ${getSentimentBadgeColor(normalizedScore)}`}>
+                          {normalizedScore >= 4 ? 'Excellent' : normalizedScore >= 3 ? 'Good' : 'Needs Improvement'}
                         </span>
                       </div>
                       <div className="flex items-center gap-2 mb-2">
                         <div className="flex-1 h-2 bg-white rounded-full overflow-hidden">
                           <div
-                            className={`h-full ${
-                              insight.sentiment === 'positive'
-                                ? 'bg-green-500'
-                                : insight.sentiment === 'negative'
-                                ? 'bg-red-500'
-                                : 'bg-gray-500'
-                            }`}
+                            className={`h-full ${getScoreColor(normalizedScore)}`}
                             style={{ width: `${progressPercent}%` }}
                           />
                         </div>
