@@ -241,16 +241,16 @@ export async function startBatchEnrichment(config: BatchConfig, resume: boolean 
       }
 
       // Rate limiting: wait between salons (avoid API throttling)
-      // Gemini Flash supports 1000 RPM (paid) or 15 RPM (free)
-      // Using 2s delay = 30 salons/minute (well within limits)
+      // Gemini Flash 1.5 paid tier: 1000 RPM = 16.6 requests/second
+      // Using 300ms delay = 200 salons/minute (20% of API limit, very safe!)
       if (i < salons.length - 1) {
-        await sleep(2000); // 2 seconds (5x faster than before!)
+        await sleep(300); // 300ms (67x faster than original 10s!)
       }
 
-      // After each batch, take a shorter break
+      // After each batch, minimal break (just to allow progress updates)
       if (processedInBatch >= batchSize) {
-        addLog(`📊 Completed batch of ${batchSize} salons. Taking a 5s break...`);
-        await sleep(5000); // 5 seconds break between batches (6x faster!)
+        addLog(`📊 Completed batch of ${batchSize} salons. Taking a 1s break...`);
+        await sleep(1000); // 1 second break (30x faster than original!)
         processedInBatch = 0;
         updateTimeEstimate();
       }
@@ -301,7 +301,7 @@ export async function retryFailedSalons() {
       }
 
       await processSalon(salon);
-      await sleep(2000); // Rate limiting (2s = 30 salons/minute)
+      await sleep(300); // Rate limiting (300ms = 200 salons/minute)
     }
 
     stopEnrichment();
@@ -365,11 +365,11 @@ export async function enrichSelectedSalons(salonsToEnrich: NailSalon[]) {
       console.log(`   ✅ Completed in ${duration}s\n`);
 
       // Rate limiting: wait between salons
-      // Gemini Flash supports 1000 RPM (paid tier)
-      // Using 2s delay = 30 salons/minute (6x faster than original!)
+      // Gemini Flash paid tier: 1000 RPM = 16.6 requests/second
+      // Using 300ms delay = 200 salons/minute (BLAZING FAST!)
       if (i < salonsToEnrich.length - 1) {
-        console.log(`   ⏱️  Waiting 2s before next salon...\n`);
-        await sleep(2000); // 2 seconds (2x faster!)
+        console.log(`   ⏱️  Waiting 0.3s before next salon...\n`);
+        await sleep(300); // 300ms (33x faster than original!)
       }
 
       // Update time estimate every salon
