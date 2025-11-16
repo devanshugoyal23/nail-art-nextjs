@@ -68,37 +68,43 @@ async function generateTier1Content(
 }> {
   const aiInstance = getAI();
   const reviews = rawData.placeDetails.reviews || [];
-  const reviewSummary =
-    reviews.length > 0
-      ? reviews.map((r) => `"${r.text.substring(0, 300)}..." - ${r.rating}/5`).join('\n\n')
-      : 'No reviews available';
+  const hasReviews = reviews.length > 0;
+  const reviewSummary = hasReviews
+    ? reviews.map((r) => `"${r.text.substring(0, 300)}..." - ${r.rating}/5`).join('\n\n')
+    : 'No customer reviews available from Google Maps.';
 
   const systemPrompt = `You are an expert local business content writer. Generate comprehensive, SEO-friendly content for a nail salon.
+
+${hasReviews ? '**This salon HAS customer reviews - use them for insights**' : '**This salon has NO reviews - generate professional template content based on industry standards**'}
 
 You will create THREE sections in ONE response:
 
 1. ABOUT SECTION (250-300 words):
    - MUST be formatted as 2-3 separate HTML paragraphs using <p> tags
-   - PARAGRAPH 1 (80-100 words): Opening introduction highlighting what makes this salon unique, their location convenience, and overall reputation
-   - PARAGRAPH 2 (100-120 words): Detailed description of services, specialties, approach to nail care, and specific quality aspects from reviews (cleanliness, professionalism, atmosphere)
-   - PARAGRAPH 3 (70-80 words): Customer experience, commitment to satisfaction, and what clients can expect when they visit
+   - PARAGRAPH 1 (80-100 words): Opening introduction highlighting ${hasReviews ? 'what makes this salon unique based on customer feedback' : 'professional nail care services offered in this location'}
+   - PARAGRAPH 2 (100-120 words): ${hasReviews ? 'Detailed description based on specific quality aspects from reviews (cleanliness, professionalism, atmosphere)' : 'Description of typical nail salon services (manicures, pedicures, nail art, gel nails) and professional standards'}
+   - PARAGRAPH 3 (70-80 words): ${hasReviews ? 'Customer experience themes from reviews' : 'Commitment to customer satisfaction, cleanliness, and quality service'}
    - Write in professional, polished language suitable for a business website
-   - Use smooth transitions between paragraphs
+   - ${hasReviews ? 'Use specific details from reviews' : 'Use professional, welcoming language without making specific claims'}
    - Maintain a warm, welcoming tone while being informative and credible
-   - Each paragraph should stand alone but flow naturally to the next
 
 2. REVIEW INSIGHTS:
-   - Analyze Google's featured reviews (typically 5 most helpful)
+   ${hasReviews ? `- Analyze Google's featured reviews (typically 5 most helpful)
    - Extract key insights by category (Cleanliness, Service Quality, Value, Staff Friendliness, Expertise, Wait Times, Atmosphere)
    - For each category, provide a score from 1-5 (where 1=very poor, 3=average, 5=excellent)
-   - Overall sentiment
-   - Top 3-5 strengths
-   - Areas for improvement if mentioned
+   - Overall sentiment based on actual reviews
+   - Top 3-5 strengths mentioned by customers
+   - Areas for improvement if mentioned` : `- Since NO reviews are available:
+   - Provide neutral scores of 3/5 for all categories
+   - Overall sentiment: "neutral"
+   - Strengths: Generic professional standards (e.g., "Professional nail care", "Clean environment", "Variety of services")
+   - Improvements: Leave empty or generic suggestions
+   - Summary should clearly state "No customer reviews available yet"`}
 
 3. FAQ (5-6 questions):
-   - Based on common themes in reviews and typical customer concerns
+   ${hasReviews ? '- Based on common themes in reviews and typical customer concerns' : '- Based on typical nail salon customer questions'}
    - Practical, helpful answers
-   - Include: services offered, pricing, booking, cleanliness, wait times, specialties
+   - Include: services offered, pricing ranges, booking methods, cleanliness standards, typical services
 
 Return JSON with this structure:
 {
@@ -108,7 +114,7 @@ Return JSON with this structure:
     "wordCount": number
   },
   "reviewInsights": {
-    "summary": "string (2-3 sentences, mention these are featured Google reviews)",
+    "summary": "string (2-3 sentences${hasReviews ? ', mention these are featured Google reviews' : ', clearly state no reviews available yet'})",
     "overallSentiment": "positive" | "neutral" | "negative",
     "insights": [{"category": "string", "sentiment": "string", "score": number (1-5), "keyPhrases": [], "exampleQuotes": []}],
     "strengths": ["string"],
