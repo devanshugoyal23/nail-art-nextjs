@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { enrichSelectedSalons } from '@/lib/batchEnrichmentService';
 import { NailSalon } from '@/lib/nailSalonService';
+import { loadProgress } from '@/lib/enrichmentProgressService';
 
 /**
  * Enrich all salons from sitemap cities (top 200 cities)
@@ -10,6 +11,13 @@ export async function POST() {
   console.log('📥 POST /api/admin/enrichment/enrich-sitemap - Request received');
 
   try {
+    // Check if enrichment is already running
+    const progress = loadProgress();
+    if (progress.isRunning) {
+      console.log('⚠️ Enrichment already running');
+      return NextResponse.json({ error: 'Enrichment already running' }, { status: 400 });
+    }
+
     console.log('🚀 Starting sitemap cities enrichment...');
 
     // Get top 200 cities from consolidated data (same as sitemap)
@@ -70,9 +78,9 @@ export async function POST() {
     console.log(`📊 Will enrich top ${topCities.length} cities from sitemap`);
     console.log(`   Top 10: ${topCities.slice(0, 10).map(c => `${c.cityName}, ${c.stateName}`).join('; ')}`);
 
-    // Start enrichment in background (don't await)
+    // Start enrichment in background (collect all salons then enrich)
     console.log('🎯 Starting background enrichment process...');
-    enrichCitiesInBackground(topCities);
+    loadAndEnrichSalonsFromCities(topCities);
 
     const responseData = {
       success: true,
@@ -96,66 +104,49 @@ export async function POST() {
 }
 
 /**
- * Process cities in background
+ * Load all salons from cities, then enrich them all at once
+ * This prevents progress from resetting for each city
  */
-async function enrichCitiesInBackground(
+async function loadAndEnrichSalonsFromCities(
   cities: Array<{ state: string; city: string; cityName: string; stateName: string }>
 ) {
-  console.log(`\n🎯 Starting background enrichment for ${cities.length} sitemap cities...\n`);
+  try {
+    console.log(`\n🎯 Loading salons from ${cities.length} sitemap cities...\n`);
 
-  for (let i = 0; i < cities.length; i++) {
-    const { cityName, stateName } = cities[i];
+    const allSalons: NailSalon[] = [];
+    const { getCityDataFromR2 } = await import('@/lib/salonDataService');
 
-    try {
-      // Check if enrichment was paused
-      const { loadProgress } = await import('@/lib/enrichmentProgressService');
-      const progress = loadProgress();
-      if (!progress.isRunning) {
-        console.log('\n⏸️  Sitemap enrichment paused by user - stopping city processing\n');
-        return; // Stop the entire background process
-      }
+    // Load all salons from all cities
+    for (let i = 0; i < cities.length; i++) {
+      const { cityName, stateName } = cities[i];
 
-      console.log(`\n[${i + 1}/${cities.length}] 🏙️  Processing: ${cityName}, ${stateName}`);
+      try {
+        console.log(`[${i + 1}/${cities.length}] 📍 Loading salons from ${cityName}, ${stateName}...`);
 
-      // Fetch all salons from this city
-      const { getCityDataFromR2 } = await import('@/lib/salonDataService');
-      const cityData = await getCityDataFromR2(stateName, cityName);
+        const cityData = await getCityDataFromR2(stateName, cityName);
 
-      if (!cityData || !cityData.salons || cityData.salons.length === 0) {
-        console.log(`   ⚠️  No salons found in ${cityName}, ${stateName} - skipping`);
+        if (!cityData || !cityData.salons || cityData.salons.length === 0) {
+          console.log(`   ⚠️  No salons found - skipping`);
+          continue;
+        }
+
+        const salons = cityData.salons as NailSalon[];
+        console.log(`   ✅ Loaded ${salons.length} salons`);
+        allSalons.push(...salons);
+      } catch (error) {
+        console.error(`   ❌ Error loading ${cityName}, ${stateName}:`, error);
         continue;
       }
-
-      const salons = cityData.salons as NailSalon[];
-      console.log(`   📍 Found ${salons.length} salons in ${cityName}, ${stateName}`);
-
-      // Enrich all salons from this city
-      await enrichSelectedSalons(salons);
-
-      console.log(`   ✅ Completed ${cityName}, ${stateName}`);
-
-      // Wait 10 seconds between cities (salons already have 4s delay between them)
-      if (i < cities.length - 1) {
-        console.log(`   ⏱️  Waiting 10s before next city...\n`);
-        await sleep(10000);
-
-        // Check again after wait to stop promptly if paused
-        const progressAfterWait = loadProgress();
-        if (!progressAfterWait.isRunning) {
-          console.log('\n⏸️  Sitemap enrichment paused during wait - stopping\n');
-          return;
-        }
-      }
-    } catch (error) {
-      console.error(`   ❌ Error enriching ${cityName}, ${stateName}:`, error);
-      // Continue with next city even if this one fails
-      continue;
     }
+
+    console.log(`\n✅ Loaded ${allSalons.length} total salons from ${cities.length} cities`);
+    console.log(`🚀 Starting enrichment for all ${allSalons.length} salons...\n`);
+
+    // Now enrich all salons at once (this properly tracks progress)
+    await enrichSelectedSalons(allSalons);
+
+    console.log(`\n🎉 Finished enriching sitemap salons!\n`);
+  } catch (error) {
+    console.error('❌ Error in sitemap enrichment:', error);
   }
-
-  console.log(`\n🎉 Finished enriching ${cities.length} sitemap cities!\n`);
-}
-
-function sleep(ms: number): Promise<void> {
-  return new Promise((resolve) => setTimeout(resolve, ms));
 }
