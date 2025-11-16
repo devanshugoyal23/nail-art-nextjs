@@ -111,7 +111,10 @@ async function loadAndEnrichSalonsFromCities(
   cities: Array<{ state: string; city: string; cityName: string; stateName: string }>
 ) {
   try {
+    const { addLog } = await import('@/lib/enrichmentProgressService');
+
     console.log(`\n🎯 Loading salons from ${cities.length} sitemap cities...\n`);
+    addLog(`🎯 Loading salons from ${cities.length} sitemap cities...`);
 
     const allSalons: NailSalon[] = [];
     const { getCityDataFromR2 } = await import('@/lib/salonDataService');
@@ -122,31 +125,41 @@ async function loadAndEnrichSalonsFromCities(
 
       try {
         console.log(`[${i + 1}/${cities.length}] 📍 Loading salons from ${cityName}, ${stateName}...`);
+        addLog(`[${i + 1}/${cities.length}] Loading salons from ${cityName}, ${stateName}...`);
 
         const cityData = await getCityDataFromR2(stateName, cityName);
 
         if (!cityData || !cityData.salons || cityData.salons.length === 0) {
           console.log(`   ⚠️  No salons found - skipping`);
+          addLog(`   ⚠️ No salons in ${cityName}, ${stateName} - skipping`);
           continue;
         }
 
         const salons = cityData.salons as NailSalon[];
         console.log(`   ✅ Loaded ${salons.length} salons`);
+        addLog(`   ✅ Loaded ${salons.length} salons from ${cityName}, ${stateName}`);
         allSalons.push(...salons);
       } catch (error) {
         console.error(`   ❌ Error loading ${cityName}, ${stateName}:`, error);
+        addLog(`   ❌ Error loading ${cityName}, ${stateName}`);
         continue;
       }
     }
 
     console.log(`\n✅ Loaded ${allSalons.length} total salons from ${cities.length} cities`);
+    addLog(`✅ Loaded ${allSalons.length} total salons from ${cities.length} cities`);
+
     console.log(`🚀 Starting enrichment for all ${allSalons.length} salons...\n`);
+    addLog(`🚀 Starting enrichment for all ${allSalons.length} salons...`);
 
     // Now enrich all salons at once (this properly tracks progress)
     await enrichSelectedSalons(allSalons);
 
     console.log(`\n🎉 Finished enriching sitemap salons!\n`);
+    addLog(`🎉 Finished enriching sitemap salons!`);
   } catch (error) {
     console.error('❌ Error in sitemap enrichment:', error);
+    const { addLog } = await import('@/lib/enrichmentProgressService');
+    addLog(`❌ Error in sitemap enrichment: ${error instanceof Error ? error.message : String(error)}`);
   }
 }
