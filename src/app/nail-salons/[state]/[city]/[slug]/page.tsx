@@ -67,10 +67,10 @@ export async function generateMetadata({ params }: SalonDetailPageProps): Promis
 
   // Optimized title (55-60 chars)
   const optimizedTitle = `${salonName} | ${formattedCity}, ${formattedState} Nail Salon`;
-  
-  // Get image URL (use Google Maps API image) - only if URL is valid
-  const validPhotos = salon?.photos?.filter(photo => photo.url && photo.url.trim() !== '') || [];
-  const imageUrl = validPhotos.length > 0 ? validPhotos[0].url : undefined;
+
+  // Get image URL: Use nail design image from gallery instead of salon photos
+  // This ensures consistent, beautiful OG images for social sharing
+  const imageUrl = undefined; // Will use default OG image (nail design images are loaded later in the page)
   
   // Build canonical URL (absolute)
   const canonicalUrl = absoluteUrl(`/nail-salons/${resolvedParams.state}/${resolvedParams.city}/${resolvedParams.slug}`);
@@ -82,10 +82,10 @@ export async function generateMetadata({ params }: SalonDetailPageProps): Promis
     if (salon.rating) qualityScore += (salon.rating / 5) * 40;
     // Reviews (0-20 points)
     if (salon.reviewCount) qualityScore += Math.min((salon.reviewCount / 100) * 20, 20);
-    // Completeness (0-40 points)
-    if (validPhotos.length > 0) qualityScore += 10;
+    // Completeness (0-40 points) - removed photo check since using nail designs
     if (salon.website) qualityScore += 10;
     if (salon.phone) qualityScore += 10;
+    if (salon.address) qualityScore += 10;
     if (salon.currentOpeningHours) qualityScore += 5;
     if (salon.businessStatus === 'OPERATIONAL') qualityScore += 5;
   }
@@ -440,11 +440,12 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
     notFound();
   }
 
-  // Get hero image (use first salon photo or fallback) - only if URL is valid
-  const validPhotosForHero = salon.photos?.filter(photo => photo.url && photo.url.trim() !== '') || [];
-  const heroImage = validPhotosForHero.length > 0 
-    ? validPhotosForHero[0].url 
-    : `https://images.unsplash.com/photo-1604654894610-df63bc536371?w=1200&h=500&fit=crop&q=80`;
+  // Get hero image: Use nail design from R2 gallery (deterministic selection for consistency)
+  // ✅ Changed from salon photos to nail design images from R2
+  // This ensures all salons have beautiful, relevant hero images even if salon photos aren't in R2
+  const heroImage = galleryDesigns.length > 0
+    ? galleryDesigns[0].imageUrl // Use first design (deterministically selected above)
+    : `https://images.unsplash.com/photo-1604654894610-df63bc536371?w=1200&h=500&fit=crop&q=80`; // Fallback to nail-related stock image
 
   return (
     <div className="min-h-screen bg-[#f8f6f7]">
@@ -465,7 +466,7 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
           <div className="absolute inset-0">
             <OptimizedImage
               src={heroImage}
-              alt={salon.name}
+              alt={`Beautiful nail art design showcasing work from ${salon.name} in ${formattedCity}, ${formattedState}`}
               width={1200}
               height={500}
               className="w-full h-full object-cover"
