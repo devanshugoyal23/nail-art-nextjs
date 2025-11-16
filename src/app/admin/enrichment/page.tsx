@@ -194,7 +194,8 @@ export default function EnrichmentAdminPage() {
         alert(`Started enrichment for ${selectedSalons.size} salon(s)!\n\nSwitch to "Overview & Progress" tab to monitor.`);
         setSelectedSalons(new Set());
       }
-    } catch (error) {
+    } catch (err) {
+      console.error('Failed to start enrichment:', err);
       alert('Failed to start enrichment');
     } finally {
       setLoading(false);

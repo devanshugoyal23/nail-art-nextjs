@@ -2,7 +2,6 @@ import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { getSalonAdditionalData, generateSlug, NailSalon, SalonDetails } from '@/lib/nailSalonService';
-import { getSalonsForCity } from '@/lib/salonDataService';
 import OptimizedImage from '@/components/OptimizedImage';
 import NailArtGallerySection from '@/components/NailArtGallerySection';
 import SeasonalTrendsSection from '@/components/SeasonalTrendsSection';

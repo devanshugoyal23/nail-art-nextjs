@@ -18,7 +18,6 @@ import {
   ReviewInsight,
   BestTimeToVisit,
   ParkingOption,
-  NearbyAmenity,
   FAQItem,
   EnrichmentTier,
 } from '@/types/salonEnrichment';
@@ -219,7 +218,7 @@ Generate all three sections (About, Review Insights, FAQ) based on this data.`;
  * Generate enhanced about section
  * Uses raw data + Gemini to create compelling, unique description
  */
-async function generateAboutSection_DEPRECATED(
+async function _generateAboutSection_DEPRECATED(
   salon: NailSalon,
   rawData: RawSalonData
 ): Promise<EnrichedSection> {
@@ -292,7 +291,7 @@ Write a brief, conversational "About" section (150-250 words). Focus on what rea
 /**
  * Generate review insights using AI analysis
  */
-async function generateReviewInsights(rawData: RawSalonData): Promise<{
+async function _generateReviewInsights(rawData: RawSalonData): Promise<{
   summary: string;
   overallSentiment: 'positive' | 'neutral' | 'negative';
   insights: ReviewInsight[];
@@ -370,7 +369,7 @@ Categories to analyze: Cleanliness, Service Quality, Value for Money, Staff Frie
 /**
  * Generate data-driven FAQ from reviews
  */
-async function generateFAQ(salon: NailSalon, rawData: RawSalonData): Promise<{
+async function _generateFAQ(salon: NailSalon, rawData: RawSalonData): Promise<{
   summary: string;
   questions: FAQItem[];
   generatedAt: string;

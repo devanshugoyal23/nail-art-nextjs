@@ -11,16 +11,15 @@
  */
 
 import { NailSalon, getAllSalons } from './nailSalonService';
-import { fetchRawSalonData } from './googleMapsEnrichmentService';
 import { enrichSalonData } from './geminiSalonEnrichmentService';
-import { saveRawDataToR2, saveEnrichedDataToR2, getRawDataFromR2, getEnrichedDataFromR2 } from './r2SalonStorage';
+import { saveEnrichedDataToR2, getRawDataFromR2, getEnrichedDataFromR2 } from './r2SalonStorage';
+import { RawPlaceDetails, RawSalonData } from '@/types/salonEnrichment';
 import {
   loadProgress,
   updateProgress,
   markSalonEnriched,
   markSalonFailed,
   incrementSkipped,
-  markCityCompleted,
   setCurrentLocation,
   startEnrichment,
   stopEnrichment,
@@ -95,9 +94,9 @@ async function processSalon(salon: NailSalon): Promise<boolean> {
     }
 
     // MIGRATION-SAFE: Check multiple sources for reviews (enriched first, then raw, then fresh)
-    let reviews: any[] | null = null;
+    let reviews: RawPlaceDetails['reviews'] | null = null;
     let googleMapsCost = 0;
-    let rawData: any = null;
+    let rawData: RawSalonData | null = null;
 
     // Try 1: Check if reviews exist in OLD enriched data (post-migration)
     const existingEnrichedForReviews = await getEnrichedDataFromR2(salon).catch(() => null);

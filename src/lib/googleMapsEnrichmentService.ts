@@ -341,7 +341,18 @@ export async function fetchPlaceReviews(placeId: string): Promise<RawPlaceDetail
 
     const data = await response.json();
 
-    const reviews = data.reviews?.map((review: any) => ({
+    // Type for Google Places API review response
+    interface GooglePlacesReview {
+      authorAttribution?: { displayName?: string; uri?: string; photoUri?: string };
+      authorDisplayName?: string;
+      originalText?: { languageCode?: string };
+      rating?: number;
+      relativePublishTimeDescription?: string;
+      text?: string | { text?: string };
+      publishTime?: string;
+    }
+
+    const reviews = data.reviews?.map((review: GooglePlacesReview) => ({
       authorName: review.authorAttribution?.displayName || review.authorDisplayName || 'Anonymous',
       authorUrl: review.authorAttribution?.uri,
       language: review.originalText?.languageCode,

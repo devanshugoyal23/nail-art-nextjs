@@ -5,7 +5,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { startEnrichment, loadProgress } from '@/lib/enrichmentProgressService';
+import { loadProgress } from '@/lib/enrichmentProgressService';
 import { startBatchEnrichment } from '@/lib/batchEnrichmentService';
 
 export async function POST(request: NextRequest) {

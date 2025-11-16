@@ -21,18 +21,6 @@ import { NextResponse } from 'next/server';
  * - On-demand ISR (all 80,000+ salons work via dynamic routes)
  */
 
-interface CityData {
-  name: string;
-  slug: string;
-  salonCount?: number;
-  population?: number;
-}
-
-interface StateData {
-  state: string;
-  cities: CityData[];
-}
-
 /**
  * Get all states and cities from imported JSON files
  * JSON files are bundled with the serverless function (no HTTP needed)
