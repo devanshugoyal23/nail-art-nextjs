@@ -95,14 +95,24 @@ async function processSalon(salon: NailSalon): Promise<boolean> {
     }
 
     // Fetch raw data from Google Maps API
-    let rawData = await getRawDataFromR2(salon).catch(() => null);
+    let rawData = await getRawDataFromR2(salon).catch((err) => {
+      console.log(`   📦 No cached raw data: ${err.message}`);
+      return null;
+    });
 
     if (!rawData) {
       addLog(`📍 Fetching fresh data for: ${salon.name}`);
-      rawData = await fetchRawSalonData(salon);
+      try {
+        rawData = await fetchRawSalonData(salon);
+      } catch (fetchError) {
+        const fetchMsg = fetchError instanceof Error ? fetchError.message : 'Unknown error';
+        addLog(`❌ Google Maps API error for ${salon.name}: ${fetchMsg}`);
+        console.error(`   ❌ fetchRawSalonData error:`, fetchError);
+        throw new Error(`Google Maps API failed: ${fetchMsg}`);
+      }
 
       if (!rawData) {
-        throw new Error('Failed to fetch raw data from Google Maps');
+        throw new Error('Failed to fetch raw data from Google Maps (returned null)');
       }
 
       // Update salon object with fetched data
@@ -125,17 +135,40 @@ async function processSalon(salon: NailSalon): Promise<boolean> {
       }
 
       // Save raw data to R2
-      await saveRawDataToR2(salon, rawData);
+      try {
+        await saveRawDataToR2(salon, rawData);
+      } catch (saveError) {
+        const saveMsg = saveError instanceof Error ? saveError.message : 'Unknown error';
+        addLog(`⚠️  Failed to save raw data to R2: ${saveMsg}`);
+        console.error(`   ⚠️  R2 save error:`, saveError);
+        // Continue anyway - we have the data
+      }
     } else {
       addLog(`📦 Using cached raw data for: ${salon.name}`);
     }
 
     // Enrich with Gemini AI (Tier 1)
     addLog(`🤖 Enriching with AI: ${salon.name}`);
-    const enrichedData = await enrichSalonData(salon, rawData, ['tier1']);
+    let enrichedData;
+    try {
+      enrichedData = await enrichSalonData(salon, rawData, ['tier1']);
+    } catch (geminiError) {
+      const geminiMsg = geminiError instanceof Error ? geminiError.message : 'Unknown error';
+      addLog(`❌ Gemini AI error for ${salon.name}: ${geminiMsg}`);
+      console.error(`   ❌ enrichSalonData error:`, geminiError);
+      throw new Error(`Gemini AI failed: ${geminiMsg}`);
+    }
 
     // Save enriched data to R2
-    await saveEnrichedDataToR2(salon, enrichedData);
+    try {
+      await saveEnrichedDataToR2(salon, enrichedData);
+      addLog(`✅ Successfully enriched and saved: ${salon.name}`);
+    } catch (saveError) {
+      const saveMsg = saveError instanceof Error ? saveError.message : 'Unknown error';
+      addLog(`❌ Failed to save enriched data to R2: ${saveMsg}`);
+      console.error(`   ❌ R2 enriched save error:`, saveError);
+      throw new Error(`R2 save failed: ${saveMsg}`);
+    }
 
     // Calculate costs
     const costs = {
@@ -148,6 +181,13 @@ async function processSalon(salon: NailSalon): Promise<boolean> {
     return true;
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    const errorStack = error instanceof Error ? error.stack : '';
+    addLog(`❌ Failed to process ${salon.name}: ${errorMessage}`);
+    console.error(`\n❌ ERROR processing ${salon.name}:`);
+    console.error(`   Message: ${errorMessage}`);
+    if (errorStack) {
+      console.error(`   Stack: ${errorStack}`);
+    }
     markSalonFailed(salon.placeId || '', salon.name, errorMessage);
     return false;
   }
@@ -201,15 +241,16 @@ export async function startBatchEnrichment(config: BatchConfig, resume: boolean 
       }
 
       // Rate limiting: wait between salons (avoid API throttling)
-      // ~6 salons per minute = 10 seconds between salons
+      // Gemini Flash supports 1000 RPM (paid) or 15 RPM (free)
+      // Using 2s delay = 30 salons/minute (well within limits)
       if (i < salons.length - 1) {
-        await sleep(10000); // 10 seconds
+        await sleep(2000); // 2 seconds (5x faster than before!)
       }
 
-      // After each batch, wait longer
+      // After each batch, take a shorter break
       if (processedInBatch >= batchSize) {
-        addLog(`📊 Completed batch of ${batchSize} salons. Taking a 30s break...`);
-        await sleep(30000); // 30 seconds break between batches
+        addLog(`📊 Completed batch of ${batchSize} salons. Taking a 5s break...`);
+        await sleep(5000); // 5 seconds break between batches (6x faster!)
         processedInBatch = 0;
         updateTimeEstimate();
       }
@@ -260,7 +301,7 @@ export async function retryFailedSalons() {
       }
 
       await processSalon(salon);
-      await sleep(10000); // Rate limiting
+      await sleep(2000); // Rate limiting (2s = 30 salons/minute)
     }
 
     stopEnrichment();
@@ -324,11 +365,11 @@ export async function enrichSelectedSalons(salonsToEnrich: NailSalon[]) {
       console.log(`   ✅ Completed in ${duration}s\n`);
 
       // Rate limiting: wait between salons
-      // Gemini Flash Tier 1: 15 RPM = 1 request every 4s
-      // This allows ~15 salons/minute (2.5x faster than before!)
+      // Gemini Flash supports 1000 RPM (paid tier)
+      // Using 2s delay = 30 salons/minute (6x faster than original!)
       if (i < salonsToEnrich.length - 1) {
-        console.log(`   ⏱️  Waiting 4s before next salon...\n`);
-        await sleep(4000); // 4 seconds (was 10s)
+        console.log(`   ⏱️  Waiting 2s before next salon...\n`);
+        await sleep(2000); // 2 seconds (2x faster!)
       }
 
       // Update time estimate every salon
