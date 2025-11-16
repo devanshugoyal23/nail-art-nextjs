@@ -25,7 +25,10 @@ export default function EnrichedSalonSections({ enrichedData, salonName }: Enric
             <span>{sections.about.title || `About ${salonName}`}</span>
           </h2>
           <div
-            className="prose prose-pink max-w-none text-[#1b0d14]/80 leading-relaxed space-y-4 text-base md:text-lg [&>p]:mb-4 [&>p:last-child]:mb-0 [&>p]:leading-relaxed [&>p]:text-[#1b0d14]/80"
+            className="prose prose-pink max-w-none text-[#1b0d14]/90 leading-[1.8] text-base md:text-lg
+              [&>p]:mb-6 [&>p:last-child]:mb-0 [&>p]:text-[#1b0d14]/90 [&>p]:leading-[1.8]
+              [&>p:not(:first-child)]:pt-2 [&>p:not(:first-child)]:border-t [&>p:not(:first-child)]:border-gray-100
+              [&>p:first-letter]:text-2xl [&>p:first-letter]:font-semibold [&>p:first-letter]:text-[#ee2b8c]"
             dangerouslySetInnerHTML={{ __html: sections.about.content }}
           />
           <p className="text-xs text-gray-400 mt-6 pt-4 border-t border-[#ee2b8c]/10">
