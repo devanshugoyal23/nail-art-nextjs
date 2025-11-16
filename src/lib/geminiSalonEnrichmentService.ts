@@ -78,14 +78,14 @@ async function generateTier1Content(
 You will create THREE sections in ONE response:
 
 1. ABOUT SECTION (250-300 words):
+   - MUST be formatted as 2-3 separate HTML paragraphs using <p> tags
+   - PARAGRAPH 1 (80-100 words): Opening introduction highlighting what makes this salon unique, their location convenience, and overall reputation
+   - PARAGRAPH 2 (100-120 words): Detailed description of services, specialties, approach to nail care, and specific quality aspects from reviews (cleanliness, professionalism, atmosphere)
+   - PARAGRAPH 3 (70-80 words): Customer experience, commitment to satisfaction, and what clients can expect when they visit
    - Write in professional, polished language suitable for a business website
-   - Open with an engaging introduction highlighting what makes this salon unique
-   - Describe their services, specialties, and approach to nail care
-   - Include specific details from reviews about quality, atmosphere, and customer experience
-   - Mention their commitment to cleanliness, professionalism, and customer satisfaction
-   - Use well-structured paragraphs with smooth transitions
+   - Use smooth transitions between paragraphs
    - Maintain a warm, welcoming tone while being informative and credible
-   - End with what customers can expect when they visit
+   - Each paragraph should stand alone but flow naturally to the next
 
 2. REVIEW INSIGHTS:
    - Analyze Google's featured reviews (typically 5 most helpful)

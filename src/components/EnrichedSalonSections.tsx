@@ -19,16 +19,16 @@ export default function EnrichedSalonSections({ enrichedData, salonName }: Enric
     <div className="space-y-6">
       {/* About Section */}
       {sections.about && (
-        <div className="bg-white rounded-xl p-6 ring-1 ring-[#ee2b8c]/15 shadow-sm">
-          <h2 className="text-2xl font-bold text-[#1b0d14] mb-4 flex items-center gap-2">
+        <div className="bg-white rounded-xl p-6 md:p-8 ring-1 ring-[#ee2b8c]/15 shadow-sm">
+          <h2 className="text-2xl font-bold text-[#1b0d14] mb-6 flex items-center gap-2">
             <span>ℹ️</span>
             <span>{sections.about.title || `About ${salonName}`}</span>
           </h2>
           <div
-            className="prose prose-pink max-w-none text-[#1b0d14]/80 leading-relaxed"
+            className="prose prose-pink max-w-none text-[#1b0d14]/80 leading-relaxed space-y-4 text-base md:text-lg [&>p]:mb-4 [&>p:last-child]:mb-0 [&>p]:leading-relaxed [&>p]:text-[#1b0d14]/80"
             dangerouslySetInnerHTML={{ __html: sections.about.content }}
           />
-          <p className="text-xs text-gray-400 mt-4">
+          <p className="text-xs text-gray-400 mt-6 pt-4 border-t border-[#ee2b8c]/10">
             {sections.about.wordCount} words • AI-generated from real reviews
           </p>
         </div>
