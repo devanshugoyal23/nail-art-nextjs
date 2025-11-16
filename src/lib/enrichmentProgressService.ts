@@ -141,6 +141,15 @@ export function markSalonEnriched(salonName: string, costs: { googleMaps: number
 }
 
 /**
+ * Increment skipped count (for already enriched salons)
+ */
+export function incrementSkipped() {
+  const progress = loadProgress();
+  progress.skipped += 1;
+  saveProgress(progress);
+}
+
+/**
  * Mark salon as failed
  */
 export function markSalonFailed(placeId: string, name: string, error: string) {

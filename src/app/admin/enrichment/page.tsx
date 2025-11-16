@@ -394,11 +394,12 @@ export default function EnrichmentAdminPage() {
                   </ul>
                 </div>
                 <div>
-                  <p className="font-medium mb-2">⚡ Processing Speed:</p>
+                  <p className="font-medium mb-2">⚡ Processing Speed (Optimized!):</p>
                   <ul className="space-y-1 ml-4">
-                    <li>• Rate limit: ~6 salons/minute</li>
-                    <li>• 100 salons: ~17 minutes</li>
-                    <li>• 1,000 salons: ~2.8 hours</li>
+                    <li>• Rate: ~15 salons/minute (4s delay)</li>
+                    <li>• 100 salons: ~7 minutes</li>
+                    <li>• 1,000 salons: ~1.1 hours</li>
+                    <li>• Already enriched: Auto-skipped ✨</li>
                   </ul>
                 </div>
                 <div>

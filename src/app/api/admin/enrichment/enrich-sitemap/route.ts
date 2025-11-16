@@ -114,10 +114,10 @@ async function enrichCitiesInBackground(
 
       console.log(`   ✅ Completed ${cityName}, ${stateName}`);
 
-      // Wait 30 seconds between cities to respect rate limits
+      // Wait 10 seconds between cities (salons already have 4s delay between them)
       if (i < cities.length - 1) {
-        console.log(`   ⏱️  Waiting 30s before next city...\n`);
-        await sleep(30000);
+        console.log(`   ⏱️  Waiting 10s before next city...\n`);
+        await sleep(10000);
       }
     } catch (error) {
       console.error(`   ❌ Error enriching ${cityName}, ${stateName}:`, error);
