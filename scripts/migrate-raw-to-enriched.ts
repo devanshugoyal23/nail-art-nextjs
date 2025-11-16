@@ -6,15 +6,18 @@
  * - Adds reviews to existing /enriched files
  * - Keeps /raw files intact (manual cleanup later)
  *
- * Run with: npx ts-node scripts/migrate-raw-to-enriched.ts
+ * Run with: npx tsx scripts/migrate-raw-to-enriched.ts
+ * Or: node --loader ts-node/esm scripts/migrate-raw-to-enriched.ts
  */
 
-import { R2_BUCKET_NAME } from '../src/lib/r2Service';
 import { S3Client, ListObjectsV2Command, GetObjectCommand, PutObjectCommand } from '@aws-sdk/client-s3';
 import * as dotenv from 'dotenv';
 
 // Load environment variables
 dotenv.config({ path: '.env.local' });
+
+// Get R2 bucket name from env
+const R2_BUCKET_NAME = process.env.R2_BUCKET_NAME || 'nail-art-unified';
 
 const client = new S3Client({
   region: 'auto',

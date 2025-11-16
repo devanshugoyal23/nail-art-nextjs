@@ -47,7 +47,11 @@ Should show:
 ### Step 2: Run Migration
 
 ```bash
-npx ts-node scripts/migrate-raw-to-enriched.ts
+# Option 1: Using tsx (recommended, works better with TypeScript)
+npx tsx scripts/migrate-raw-to-enriched.ts
+
+# Option 2: Using ts-node
+npx ts-node --esm scripts/migrate-raw-to-enriched.ts
 ```
 
 ### Step 3: Verify Results
