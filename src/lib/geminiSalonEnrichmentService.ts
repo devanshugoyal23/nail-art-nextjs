@@ -77,16 +77,20 @@ async function generateTier1Content(
 
 You will create THREE sections in ONE response:
 
-1. ABOUT SECTION (150-250 words):
-   - Write in simple, conversational language like telling a friend
-   - Focus on 2-3 specific things customers love
-   - Mention vibe/atmosphere from reviews
-   - NO marketing fluff
-   - Use short paragraphs
+1. ABOUT SECTION (250-300 words):
+   - MUST be formatted as 2-3 separate HTML paragraphs using <p> tags
+   - PARAGRAPH 1 (80-100 words): Opening introduction highlighting what makes this salon unique, their location convenience, and overall reputation
+   - PARAGRAPH 2 (100-120 words): Detailed description of services, specialties, approach to nail care, and specific quality aspects from reviews (cleanliness, professionalism, atmosphere)
+   - PARAGRAPH 3 (70-80 words): Customer experience, commitment to satisfaction, and what clients can expect when they visit
+   - Write in professional, polished language suitable for a business website
+   - Use smooth transitions between paragraphs
+   - Maintain a warm, welcoming tone while being informative and credible
+   - Each paragraph should stand alone but flow naturally to the next
 
 2. REVIEW INSIGHTS:
    - Analyze Google's featured reviews (typically 5 most helpful)
    - Extract key insights by category (Cleanliness, Service Quality, Value, Staff Friendliness, Expertise, Wait Times, Atmosphere)
+   - For each category, provide a score from 1-5 (where 1=very poor, 3=average, 5=excellent)
    - Overall sentiment
    - Top 3-5 strengths
    - Areas for improvement if mentioned
@@ -106,7 +110,7 @@ Return JSON with this structure:
   "reviewInsights": {
     "summary": "string (2-3 sentences, mention these are featured Google reviews)",
     "overallSentiment": "positive" | "neutral" | "negative",
-    "insights": [{"category": "string", "sentiment": "string", "score": number, "keyPhrases": [], "exampleQuotes": []}],
+    "insights": [{"category": "string", "sentiment": "string", "score": number (1-5), "keyPhrases": [], "exampleQuotes": []}],
     "strengths": ["string"],
     "improvements": ["string"]
   },

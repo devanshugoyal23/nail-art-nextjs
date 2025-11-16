@@ -19,16 +19,19 @@ export default function EnrichedSalonSections({ enrichedData, salonName }: Enric
     <div className="space-y-6">
       {/* About Section */}
       {sections.about && (
-        <div className="bg-white rounded-xl p-6 ring-1 ring-[#ee2b8c]/15 shadow-sm">
-          <h2 className="text-2xl font-bold text-[#1b0d14] mb-4 flex items-center gap-2">
+        <div className="bg-white rounded-xl p-6 md:p-8 ring-1 ring-[#ee2b8c]/15 shadow-sm">
+          <h2 className="text-2xl font-bold text-[#1b0d14] mb-6 flex items-center gap-2">
             <span>ℹ️</span>
             <span>{sections.about.title || `About ${salonName}`}</span>
           </h2>
           <div
-            className="prose prose-pink max-w-none text-[#1b0d14]/80 leading-relaxed"
+            className="prose prose-pink max-w-none text-[#1b0d14]/90 leading-[1.8] text-base md:text-lg
+              [&>p]:mb-6 [&>p:last-child]:mb-0 [&>p]:text-[#1b0d14]/90 [&>p]:leading-[1.8]
+              [&>p:not(:first-child)]:pt-2 [&>p:not(:first-child)]:border-t [&>p:not(:first-child)]:border-gray-100
+              [&>p:first-letter]:text-2xl [&>p:first-letter]:font-semibold [&>p:first-letter]:text-[#ee2b8c]"
             dangerouslySetInnerHTML={{ __html: sections.about.content }}
           />
-          <p className="text-xs text-gray-400 mt-4">
+          <p className="text-xs text-gray-400 mt-6 pt-4 border-t border-[#ee2b8c]/10">
             {sections.about.wordCount} words • AI-generated from real reviews
           </p>
         </div>
@@ -166,46 +169,56 @@ export default function EnrichedSalonSections({ enrichedData, salonName }: Enric
             <div className="mt-6">
               <h3 className="font-semibold text-[#1b0d14] mb-3">Detailed Analysis</h3>
               <div className="grid gap-3">
-                {sections.reviewInsights.insights.map((insight, index) => (
-                  <div key={index} className="p-3 bg-[#f8f6f7] rounded-lg">
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="font-medium text-[#1b0d14]">{insight.category}</span>
-                      <span className={`text-xs px-2 py-1 rounded ${
-                        insight.sentiment === 'positive'
-                          ? 'bg-green-100 text-green-700'
-                          : insight.sentiment === 'negative'
-                          ? 'bg-red-100 text-red-700'
-                          : 'bg-gray-100 text-gray-700'
-                      }`}>
-                        {insight.sentiment}
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-2 mb-2">
-                      <div className="flex-1 h-2 bg-white rounded-full overflow-hidden">
-                        <div
-                          className={`h-full ${
-                            insight.sentiment === 'positive'
-                              ? 'bg-green-500'
-                              : insight.sentiment === 'negative'
-                              ? 'bg-red-500'
-                              : 'bg-gray-500'
-                          }`}
-                          style={{ width: `${insight.score}%` }}
-                        />
+                {sections.reviewInsights.insights.map((insight, index) => {
+                  // Backwards compatibility: Convert old 0-100 scores to 1-5
+                  const isOldFormat = insight.score > 5;
+                  const normalizedScore = isOldFormat
+                    ? Math.round((insight.score / 100) * 5) || 1  // Convert 0-100 to 1-5
+                    : insight.score;
+                  const progressPercent = (normalizedScore / 5) * 100;
+
+                  // Color based on score: 1-2 = red, 3 = yellow, 4-5 = green
+                  const getScoreColor = (score: number) => {
+                    if (score >= 4) return 'bg-green-500';
+                    if (score >= 3) return 'bg-yellow-500';
+                    return 'bg-red-500';
+                  };
+
+                  const getSentimentBadgeColor = (score: number) => {
+                    if (score >= 4) return 'bg-green-100 text-green-700';
+                    if (score >= 3) return 'bg-yellow-100 text-yellow-700';
+                    return 'bg-red-100 text-red-700';
+                  };
+
+                  return (
+                    <div key={index} className="p-3 bg-[#f8f6f7] rounded-lg">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="font-medium text-[#1b0d14]">{insight.category}</span>
+                        <span className={`text-xs px-2 py-1 rounded ${getSentimentBadgeColor(normalizedScore)}`}>
+                          {normalizedScore >= 4 ? 'Excellent' : normalizedScore >= 3 ? 'Good' : 'Needs Improvement'}
+                        </span>
                       </div>
-                      <span className="text-xs font-semibold text-[#1b0d14]/60">{insight.score}/100</span>
-                    </div>
-                    {insight.keyPhrases.length > 0 && (
-                      <div className="flex flex-wrap gap-1 mt-2">
-                        {insight.keyPhrases.slice(0, 3).map((phrase, i) => (
-                          <span key={i} className="text-xs px-2 py-1 bg-white rounded text-[#1b0d14]/70">
-                            {phrase}
-                          </span>
-                        ))}
+                      <div className="flex items-center gap-2 mb-2">
+                        <div className="flex-1 h-2 bg-white rounded-full overflow-hidden">
+                          <div
+                            className={`h-full ${getScoreColor(normalizedScore)}`}
+                            style={{ width: `${progressPercent}%` }}
+                          />
+                        </div>
+                        <span className="text-xs font-semibold text-[#1b0d14]/60">{normalizedScore}/5</span>
                       </div>
-                    )}
-                  </div>
-                ))}
+                      {insight.keyPhrases.length > 0 && (
+                        <div className="flex flex-wrap gap-1 mt-2">
+                          {insight.keyPhrases.slice(0, 3).map((phrase, i) => (
+                            <span key={i} className="text-xs px-2 py-1 bg-white rounded text-[#1b0d14]/70">
+                              {phrase}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
               </div>
             </div>
           )}
@@ -262,52 +275,6 @@ export default function EnrichedSalonSections({ enrichedData, salonName }: Enric
               </ul>
             </div>
           </div>
-        </div>
-      )}
-
-      {/* Parking & Transportation */}
-      {sections.parking && (
-        <div className="bg-white rounded-xl p-6 ring-1 ring-[#ee2b8c]/15 shadow-sm">
-          <h2 className="text-2xl font-bold text-[#1b0d14] mb-4 flex items-center gap-2">
-            <span>🚗</span>
-            <span>Parking & Transportation</span>
-          </h2>
-          <p className="text-[#1b0d14]/80 mb-4">{sections.parking.summary}</p>
-
-          <div className="space-y-3">
-            {sections.parking.options.map((option, index) => (
-              <div key={index} className="p-3 bg-[#f8f6f7] rounded-lg">
-                <div className="flex items-start justify-between mb-1">
-                  <span className="font-semibold text-[#1b0d14] capitalize">{option.type}</span>
-                  {option.distance && (
-                    <span className="text-xs px-2 py-1 bg-white rounded text-[#1b0d14]/60">
-                      {option.distance}
-                    </span>
-                  )}
-                </div>
-                {option.name && (
-                  <p className="text-sm text-[#1b0d14] mb-1">{option.name}</p>
-                )}
-                {option.notes && (
-                  <p className="text-sm text-[#1b0d14]/70">{option.notes}</p>
-                )}
-                {option.cost && (
-                  <p className="text-xs text-[#1b0d14]/50 mt-1">Cost: {option.cost}</p>
-                )}
-              </div>
-            ))}
-          </div>
-
-          {sections.parking.transitOptions && sections.parking.transitOptions.length > 0 && (
-            <div className="mt-4 pt-4 border-t border-[#ee2b8c]/10">
-              <h3 className="font-semibold text-[#1b0d14] mb-2">Public Transit</h3>
-              <ul className="space-y-1">
-                {sections.parking.transitOptions.map((transit, index) => (
-                  <li key={index} className="text-sm text-[#1b0d14]/70">• {transit}</li>
-                ))}
-              </ul>
-            </div>
-          )}
         </div>
       )}
 

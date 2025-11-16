@@ -19,6 +19,7 @@ import {
   updateProgress,
   markSalonEnriched,
   markSalonFailed,
+  incrementSkipped,
   markCityCompleted,
   setCurrentLocation,
   startEnrichment,
@@ -80,13 +81,16 @@ async function processSalon(salon: NailSalon): Promise<boolean> {
   try {
     if (!salon.placeId) {
       addLog(`⏭️  Skipping ${salon.name}: No placeId`);
+      incrementSkipped(); // Track skipped salons
       return false;
     }
 
     // Check if already enriched (skip if cached in R2)
     const existingEnriched = await getEnrichedDataFromR2(salon).catch(() => null);
     if (existingEnriched) {
-      addLog(`⏭️  Skipping ${salon.name}: Already enriched`);
+      console.log(`   ⏭️  Already enriched - skipping`);
+      addLog(`⏭️  Skipping ${salon.name}: Already enriched in R2`);
+      incrementSkipped(); // Track skipped salons
       return false;
     }
 
@@ -320,9 +324,11 @@ export async function enrichSelectedSalons(salonsToEnrich: NailSalon[]) {
       console.log(`   ✅ Completed in ${duration}s\n`);
 
       // Rate limiting: wait between salons
+      // Gemini Flash Tier 1: 15 RPM = 1 request every 4s
+      // This allows ~15 salons/minute (2.5x faster than before!)
       if (i < salonsToEnrich.length - 1) {
-        console.log(`   ⏱️  Waiting 10s before next salon...\n`);
-        await sleep(10000); // 10 seconds
+        console.log(`   ⏱️  Waiting 4s before next salon...\n`);
+        await sleep(4000); // 4 seconds (was 10s)
       }
 
       // Update time estimate every salon
