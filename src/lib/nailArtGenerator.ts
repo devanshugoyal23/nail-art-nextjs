@@ -48,11 +48,22 @@ function isGloballyStopped(): boolean {
 function getAI() {
   if (!ai) {
     const API_KEY = process.env.GEMINI_API_KEY;
-    
-    if (!API_KEY) {
-      throw new Error("GEMINI_API_KEY environment variable is not set.");
+
+    if (!API_KEY || API_KEY === 'your_gemini_api_key_here') {
+      const errorMsg = `
+⚠️ GEMINI_API_KEY is not configured correctly!
+
+Please follow these steps to fix:
+1. Open the .env.local file in the project root
+2. Replace 'your_gemini_api_key_here' with your actual Gemini API key
+3. Get your API key from: https://makersuite.google.com/app/apikey
+4. Restart the development server (npm run dev)
+
+Current value: ${API_KEY || 'undefined'}
+      `.trim();
+      throw new Error(errorMsg);
     }
-    
+
     ai = new GoogleGenAI({ apiKey: API_KEY });
   }
   return ai;
