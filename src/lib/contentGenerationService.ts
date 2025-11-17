@@ -2,6 +2,7 @@ import { generateCategoryNailArt } from './nailArtGenerator';
 import { getUnderPopulatedCategories, getCategoryItemCount } from './galleryService';
 import { CONTENT_THRESHOLDS } from './tagService';
 import { supabase } from './supabase';
+import { globalStopService } from './globalStopService';
 
 // Global stop flag for immediate halting
 let globalStopFlag = false;
@@ -22,18 +23,15 @@ function isGloballyStopped(): boolean {
 }
 
 /**
- * Check if there's an active stop signal
+ * Check if there's an active stop signal using the globalStopService
  */
 async function checkStopSignal(): Promise<boolean> {
   try {
-    const response = await fetch('/api/global-stop');
-    if (response.ok) {
-      const data = await response.json();
-      if (data.success && data.data.activeSignals > 0) {
-        console.log('🚨 STOP SIGNAL DETECTED - Halting generation immediately');
-        setGlobalStopFlag(true);
-        return true;
-      }
+    const hasStopSignal = globalStopService.hasActiveStopSignal();
+    if (hasStopSignal) {
+      console.log('🚨 STOP SIGNAL DETECTED - Halting generation immediately');
+      setGlobalStopFlag(true);
+      return true;
     }
   } catch (error) {
     console.error('Error checking stop signal:', error);

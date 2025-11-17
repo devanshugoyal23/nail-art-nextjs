@@ -5,21 +5,19 @@ import { extractTagsFromGalleryItem } from './tagService';
 import { uploadToR2, generateR2Key } from './r2Service';
 // import { getOptimalPinterestDimensions } from './imageTransformation'; // Unused since optimization is server-side only
 import { updateR2DataForNewContent } from './r2DataUpdateService';
+import { globalStopService } from './globalStopService';
 
 let ai: GoogleGenAI | null = null;
 
 /**
- * Check if there's an active stop signal
+ * Check if there's an active stop signal using the globalStopService
  */
 async function checkStopSignal(): Promise<boolean> {
   try {
-    const response = await fetch('/api/global-stop');
-    if (response.ok) {
-      const data = await response.json();
-      if (data.success && data.data.activeSignals > 0) {
-        console.log('🚨 STOP SIGNAL DETECTED - Halting generation immediately');
-        return true;
-      }
+    const hasStopSignal = globalStopService.hasActiveStopSignal();
+    if (hasStopSignal) {
+      console.log('🚨 STOP SIGNAL DETECTED - Halting generation immediately');
+      return true;
     }
   } catch (error) {
     console.error('Error checking stop signal:', error);
