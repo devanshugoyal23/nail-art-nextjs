@@ -153,14 +153,25 @@ CREATE TRIGGER sync_tags_trigger
 
 -- Sync existing data
 -- This will populate the junction table for all existing gallery items
-DO $$
-DECLARE
-  item RECORD;
-BEGIN
-  FOR item IN SELECT * FROM gallery_items LOOP
-    PERFORM sync_tags_to_junction_table() FROM gallery_items WHERE id = item.id;
-  END LOOP;
-END $$;
+-- We manually insert tag relationships from the array columns
+WITH all_tags AS (
+  SELECT g.id as gallery_item_id, unnest(g.colors) as tag_name FROM gallery_items g WHERE g.colors IS NOT NULL
+  UNION ALL
+  SELECT g.id, unnest(g.techniques) FROM gallery_items g WHERE g.techniques IS NOT NULL
+  UNION ALL
+  SELECT g.id, unnest(g.occasions) FROM gallery_items g WHERE g.occasions IS NOT NULL
+  UNION ALL
+  SELECT g.id, unnest(g.seasons) FROM gallery_items g WHERE g.seasons IS NOT NULL
+  UNION ALL
+  SELECT g.id, unnest(g.styles) FROM gallery_items g WHERE g.styles IS NOT NULL
+  UNION ALL
+  SELECT g.id, unnest(g.shapes) FROM gallery_items g WHERE g.shapes IS NOT NULL
+)
+INSERT INTO gallery_item_tags (gallery_item_id, tag_id)
+SELECT DISTINCT at.gallery_item_id, t.id
+FROM all_tags at
+JOIN tags t ON t.name = at.tag_name
+ON CONFLICT (gallery_item_id, tag_id) DO NOTHING;
 
 -- Add RLS policies for junction table
 ALTER TABLE gallery_item_tags ENABLE ROW LEVEL SECURITY;
