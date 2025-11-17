@@ -19,6 +19,20 @@ import { GalleryItem } from '@/lib/supabase';
 import { deterministicSelect } from '@/lib/deterministicSelection';
 import EnrichedSalonSections from '@/components/EnrichedSalonSections';
 import { EnrichedSalonData } from '@/types/salonEnrichment';
+import {
+  NearbyCitiesSection,
+  SimilarQualitySalonsSection,
+  PriceLevelSalonsSection,
+  TopRatedSalonsSection,
+  ExploreMoreLinksSection,
+} from '@/components/SalonInternalLinks';
+import {
+  getSimilarQualitySalons,
+  getSimilarPriceLevelSalons,
+  getTopRatedSalons,
+  CityGroup,
+} from '@/lib/salonInternalLinking';
+import { getNearbyCitiesFromState, getMajorCitiesInState } from '@/lib/nearbyCitiesHelper';
 
 // ISR Configuration - Cache salon pages for 7 days to reduce CPU usage and R2 costs
 // ✅ PHASE 2.3: Increased from 6h to 7 days (96% fewer regenerations)
@@ -167,6 +181,12 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
   let designCollections: Array<{ title: string; description: string; icon: string; designs: Array<{ id: string; imageUrl: string; title?: string; colors?: string[]; techniques?: string[]; occasions?: string[] }>; href: string }> = [];
   let colorPalettes: Array<{ color: string; designs: Array<{ id: string; imageUrl: string; title?: string; colors?: string[]; techniques?: string[]; occasions?: string[] }>; emoji: string }> = [];
   let techniqueShowcases: Array<{ name: string; designs: Array<{ id: string; imageUrl: string; title?: string; colors?: string[]; techniques?: string[]; occasions?: string[] }>; description: string; icon: string; difficulty: string }> = [];
+
+  // ✅ NEW: Internal linking data for SEO
+  let nearbyCitiesData: CityGroup[] = [];
+  let similarQualitySalons: NailSalon[] = [];
+  let priceLevelSalons: NailSalon[] = [];
+  let topRatedStateSalons: NailSalon[] = [];
   
   try {
     // ✅ OPTIMIZATION: Fetch city data once from R2 (was 2-3 duplicate requests!)
@@ -192,6 +212,73 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
     if (salon) {
       // Use city data for related salons (no additional R2 request)
       relatedSalons = cityData.salons.filter(s => generateSlug(s.name) !== resolvedParams.slug).slice(0, 5);
+
+      // ✅ NEW: Calculate internal linking data for SEO
+      // Get similar quality salons from current city
+      similarQualitySalons = getSimilarQualitySalons(
+        salon,
+        cityData.salons,
+        resolvedParams.slug,
+        6
+      );
+
+      // Get salons with similar price level from current city
+      if (salon.priceLevel) {
+        priceLevelSalons = getSimilarPriceLevelSalons(
+          salon,
+          cityData.salons,
+          resolvedParams.slug,
+          6
+        );
+      }
+
+      // Get nearby cities (lightweight - just city info, no salon data)
+      const nearbyCities = await getNearbyCitiesFromState(
+        formattedState,
+        formattedCity,
+        4
+      );
+
+      // Convert to CityGroup format for the component
+      nearbyCitiesData = nearbyCities.map((city) => ({
+        city: city.name,
+        citySlug: city.slug,
+        state: city.state,
+        stateSlug: city.stateSlug,
+        distance: 0, // We don't have distance data without coordinates
+        salons: [],
+        topRated: null,
+      }));
+
+      // Get top-rated salons from major cities in the state (for state-level links)
+      // This fetches data from 2-3 major cities for better coverage
+      try {
+        const majorCities = await getMajorCitiesInState(formattedState, 3);
+        const { getCityDataFromR2 } = await import('@/lib/salonDataService');
+
+        // Fetch salon data from major cities in parallel
+        const majorCityData = await Promise.all(
+          majorCities.map(async (city) => {
+            try {
+              const data = await getCityDataFromR2(formattedState, city.name);
+              return data?.salons || [];
+            } catch {
+              return [];
+            }
+          })
+        );
+
+        // Flatten and get top-rated salons
+        const allStateSalons = majorCityData.flat();
+        topRatedStateSalons = getTopRatedSalons(
+          allStateSalons,
+          resolvedParams.slug,
+          8
+        );
+      } catch (error) {
+        console.error('Error fetching state-level top salons:', error);
+        // Continue without state-level salons if fetch fails
+      }
 
       // ✅ OPTIMIZATION: Use shared gallery cache (96% query reduction)
       // BEFORE: 26+ parallel Supabase queries (300-500ms, $0.11/month per 10k views)
@@ -842,6 +929,44 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
                 />
               )}
 
+              {/* ✅ NEW: Internal Linking Sections for SEO */}
+              {/* Nearby Cities Section */}
+              {nearbyCitiesData.length > 0 && (
+                <NearbyCitiesSection
+                  nearbyCities={nearbyCitiesData}
+                  currentState={formattedState}
+                  currentStateSlug={stateSlug}
+                />
+              )}
+
+              {/* Similar Quality Salons Section */}
+              {similarQualitySalons.length > 0 && (
+                <SimilarQualitySalonsSection
+                  salons={similarQualitySalons}
+                  currentState={formattedState}
+                  currentStateSlug={stateSlug}
+                />
+              )}
+
+              {/* Price Level Salons Section */}
+              {priceLevelSalons.length > 0 && salon.priceLevel && (
+                <PriceLevelSalonsSection
+                  salons={priceLevelSalons}
+                  priceLevel={salon.priceLevel}
+                  currentState={formattedState}
+                  currentStateSlug={stateSlug}
+                />
+              )}
+
+              {/* Top-Rated State Salons Section */}
+              {topRatedStateSalons.length > 0 && (
+                <TopRatedSalonsSection
+                  salons={topRatedStateSalons}
+                  currentState={formattedState}
+                  currentStateSlug={stateSlug}
+                />
+              )}
+
               {/* FAQ Section - Compact (only show if no enriched data) */}
               {!enrichedData && salonDetails?.faq && salonDetails.faq.length > 0 && (
                 <CollapsibleSection
@@ -1076,6 +1201,16 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
                 )}
               </div>
             </div>
+          </div>
+
+          {/* ✅ NEW: Explore More Links Section */}
+          <div className="mt-8">
+            <ExploreMoreLinksSection
+              currentState={formattedState}
+              currentStateSlug={stateSlug}
+              currentCity={formattedCity}
+              currentCitySlug={citySlug}
+            />
           </div>
         </div>
 
