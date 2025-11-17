@@ -217,4 +217,4 @@ ANALYZE gallery_item_tags;
 COMMENT ON TABLE gallery_item_tags IS 'Junction table for many-to-many relationship between gallery items and tags';
 COMMENT ON COLUMN gallery_items.category_id IS 'Foreign key to categories table (normalized category reference)';
 COMMENT ON VIEW gallery_item_tags_view IS 'Simplified view of gallery item tags with tag details';
-COMMENT ON VIEW gallery_items_with_tags AS 'Complete view of gallery items with all tag information in JSON format';
+COMMENT ON VIEW gallery_items_with_tags IS 'Complete view of gallery items with all tag information in JSON format';
