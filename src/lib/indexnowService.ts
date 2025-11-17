@@ -3,6 +3,9 @@
  * Supports Bing, Yandex, and other IndexNow-compatible search engines
  */
 
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
+
 interface IndexNowConfig {
   baseUrl: string;
   searchEngines: string[];
@@ -17,9 +20,41 @@ const INDEXNOW_CONFIG: IndexNowConfig = {
   ]
 };
 
-// Get API key dynamically to support runtime environment variable loading
+// Get API key dynamically - checks env var first, then falls back to public folder
 function getApiKey(): string {
-  return process.env.INDEXNOW_API_KEY || '';
+  // First check environment variable
+  if (process.env.INDEXNOW_API_KEY) {
+    return process.env.INDEXNOW_API_KEY;
+  }
+
+  // Fallback: try to auto-detect from public folder (Node.js environment only)
+  if (typeof window === 'undefined') {
+    try {
+      const fs = require('fs');
+      const path = require('path');
+      const publicDir = path.join(process.cwd(), 'public');
+
+      // Look for .txt files that match UUID/hex pattern (IndexNow key format)
+      // Matches both: 16c58702ade8484b9f5557f3f8d07e8e and 16c58702-ade8-484b-9f55-57f3f8d07e8e
+      const files = fs.readdirSync(publicDir);
+      const keyFile = files.find((file: string) => {
+        if (!file.endsWith('.txt')) return false;
+        const keyName = file.replace('.txt', '');
+        // Match 32 hex characters (with or without dashes)
+        return /^[0-9a-f]{32}$/i.test(keyName.replace(/-/g, ''));
+      });
+
+      if (keyFile) {
+        const apiKey = keyFile.replace('.txt', '');
+        console.log(`✓ Auto-detected IndexNow API key: ${apiKey.substring(0, 8)}...`);
+        return apiKey;
+      }
+    } catch (error) {
+      // Silently fail - API key must be in environment variable
+    }
+  }
+
+  return '';
 }
 
 interface IndexNowRequest {

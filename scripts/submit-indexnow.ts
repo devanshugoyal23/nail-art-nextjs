@@ -20,15 +20,8 @@ async function main() {
   console.log('🚀 IndexNow Submission Tool\n');
   console.log('====================================\n');
 
-  // Check for API key
-  if (!process.env.INDEXNOW_API_KEY) {
-    console.error('❌ ERROR: INDEXNOW_API_KEY not found in environment variables');
-    console.error('Please set INDEXNOW_API_KEY in your .env.local file\n');
-    console.error('Get your API key from: https://www.bing.com/indexnow');
-    process.exit(1);
-  }
-
-  console.log(`✓ IndexNow API Key: ${process.env.INDEXNOW_API_KEY.substring(0, 8)}...`);
+  // Note: API key is auto-detected from public/*.txt file or INDEXNOW_API_KEY env var
+  console.log('✓ API key will be auto-detected from public folder or environment');
   console.log(`✓ Base URL: https://nailartai.app\n`);
 
   try {
