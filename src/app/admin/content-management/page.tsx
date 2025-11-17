@@ -234,15 +234,24 @@ export default function ContentManagementPage() {
           count: tagGenerationCount
         })
       });
-      
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
       const data = await response.json();
       if (data.success) {
         setLastResult({ generated: tagGenerationCount, categories: [selectedTag] });
+        alert(`Successfully generated ${tagGenerationCount} items for tag: ${selectedTag}`);
         await loadUnderPopulatedTags(); // Refresh tag data
         await analyzeContentGaps(); // Refresh content gaps
+      } else {
+        alert(`Tag generation failed: ${data.error || 'Unknown error'}\n\nPlease check:\n1. Your internet connection\n2. That the API is running\n3. The browser console for more details`);
       }
     } catch (error) {
       console.error('Error generating for tag:', error);
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      alert(`Error generating for tag: ${errorMessage}\n\nPlease check:\n1. Your internet connection\n2. That the API is running\n3. The browser console for more details`);
     } finally {
       setIsGeneratingForTag(false);
     }
@@ -258,15 +267,24 @@ export default function ContentManagementPage() {
           action: 'generate-for-tag-pages'
         })
       });
-      
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
       const data = await response.json();
       if (data.success) {
         setLastResult({ generated: data.data.generated, categories: data.data.categories });
+        alert(`Successfully generated ${data.data.generated} items for under-populated tag pages!`);
         await loadUnderPopulatedTags(); // Refresh tag data
         await analyzeContentGaps(); // Refresh content gaps
+      } else {
+        alert(`Tag pages generation failed: ${data.error || 'Unknown error'}\n\nPlease check:\n1. Your internet connection\n2. That the API is running\n3. The browser console for more details`);
       }
     } catch (error) {
       console.error('Error generating for tag pages:', error);
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      alert(`Error generating for tag pages: ${errorMessage}\n\nPlease check:\n1. Your internet connection\n2. That the API is running\n3. The browser console for more details`);
     } finally {
       setIsGeneratingTagPages(false);
     }
@@ -339,14 +357,23 @@ export default function ContentManagementPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ action: 'fill-gaps' })
       });
-      
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
       const data = await response.json();
       if (data.success) {
         setLastResult(data.data);
+        alert(`Successfully filled content gaps! Generated ${data.data.generated} items across ${data.data.categories.length} categories.`);
         await analyzeContentGaps(); // Refresh the gaps
+      } else {
+        alert(`Failed to fill content gaps: ${data.error || 'Unknown error'}\n\nPlease check:\n1. Your internet connection\n2. That the API is running\n3. The browser console for more details`);
       }
     } catch (error) {
       console.error('Error filling content gaps:', error);
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      alert(`Error filling content gaps: ${errorMessage}\n\nPlease check:\n1. Your internet connection\n2. That the API is running\n3. The browser console for more details`);
     } finally {
       setIsFillingGaps(false);
     }

@@ -73,6 +73,43 @@ export default function GenerateGalleryPage() {
   const [isGeneratingNailArt, setIsGeneratingNailArt] = useState(false);
   const [isGeneratingForTag, setIsGeneratingForTag] = useState(false);
   const [isGeneratingTagPages, setIsGeneratingTagPages] = useState(false);
+  const [stopSignalStatus, setStopSignalStatus] = useState<{ activeSignals: number } | null>(null);
+
+  // Check stop signal status
+  const checkStopSignalStatus = async () => {
+    try {
+      const response = await fetch('/api/global-stop');
+      if (response.ok) {
+        const data = await response.json();
+        if (data.success) {
+          setStopSignalStatus(data.data);
+        }
+      }
+    } catch (error) {
+      console.error('Error checking stop signal status:', error);
+    }
+  };
+
+  // Clear stop signals
+  const clearStopSignals = async () => {
+    try {
+      const response = await fetch('/api/global-stop', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'clear' })
+      });
+
+      if (response.ok) {
+        alert('Stop signals cleared successfully!');
+        await checkStopSignalStatus();
+      } else {
+        alert('Failed to clear stop signals. Please check your admin permissions.');
+      }
+    } catch (error) {
+      console.error('Error clearing stop signals:', error);
+      alert('Error clearing stop signals');
+    }
+  };
 
   // Load categories on component mount
   useEffect(() => {
@@ -82,6 +119,7 @@ export default function GenerateGalleryPage() {
     setTier3Categories(getCategoriesByTier('TIER_3'));
     setTier4Categories(getCategoriesByTier('TIER_4'));
     loadUnderPopulatedTags();
+    checkStopSignalStatus();
   }, []);
 
   const loadUnderPopulatedTags = async () => {
@@ -143,12 +181,17 @@ export default function GenerateGalleryPage() {
         })
       });
 
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
       const data = await response.json();
-      
+
       if (data.success) {
         setResults(data.results);
+        alert(`Successfully generated ${data.results.length} items for tag: ${selectedTag}`);
         await loadUnderPopulatedTags(); // Refresh tag data
-        
+
         // Auto-generate SEO for new content
         try {
           const seoResults = await generateBulkSEO(data.results, 'gallery');
@@ -162,11 +205,12 @@ export default function GenerateGalleryPage() {
         }
       } else {
         console.error('Tag generation failed:', data.error);
-        alert('Tag generation failed: ' + data.error);
+        alert(`Tag generation failed: ${data.error || 'Unknown error'}\n\nPlease check:\n1. Your internet connection\n2. That the API is running\n3. The browser console for more details`);
       }
     } catch (error) {
       console.error('Error generating for tag:', error);
-      alert('Error generating for tag');
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      alert(`Error generating for tag: ${errorMessage}\n\nPlease check:\n1. Your internet connection\n2. That the API is running\n3. The browser console for more details`);
     } finally {
       setIsGeneratingForTag(false);
     }
@@ -180,7 +224,7 @@ export default function GenerateGalleryPage() {
       currentPage: 'Starting generation...',
       isGenerating: true
     });
-    
+
     try {
       const response = await fetch('/api/auto-generate-content', {
         method: 'POST',
@@ -190,18 +234,23 @@ export default function GenerateGalleryPage() {
         })
       });
 
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
       const data = await response.json();
-      
+
       if (data.success) {
         alert(`Successfully generated ${data.data.generated} items for under-populated tag pages!`);
         await loadUnderPopulatedTags(); // Refresh tag data
       } else {
         console.error('Tag page generation failed:', data.error);
-        alert('Tag page generation failed: ' + data.error);
+        alert(`Tag page generation failed: ${data.error || 'Unknown error'}\n\nPlease check:\n1. Your internet connection\n2. That the API is running\n3. The browser console for more details`);
       }
     } catch (error) {
       console.error('Error generating for tag pages:', error);
-      alert('Error generating for tag pages');
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      alert(`Error generating for tag pages: ${errorMessage}\n\nPlease check:\n1. Your internet connection\n2. That the API is running\n3. The browser console for more details`);
     } finally {
       setIsGeneratingTagPages(false);
       setGenerationProgress({
@@ -249,7 +298,7 @@ export default function GenerateGalleryPage() {
       currentPage: `Generating ${count} items for ${selectedCategory || 'random category'}...`,
       isGenerating: true
     });
-    
+
     try {
       const response = await fetch('/api/generate-gallery', {
         method: 'POST',
@@ -264,8 +313,12 @@ export default function GenerateGalleryPage() {
         }),
       });
 
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
       const data = await response.json();
-      
+
       if (data.success) {
         setResults(data.results);
         setGenerationProgress(prev => ({
@@ -273,7 +326,9 @@ export default function GenerateGalleryPage() {
           current: count,
           currentPage: 'Generation completed!'
         }));
-        
+
+        alert(`Successfully generated ${data.results.length} nail art designs!`);
+
         // Auto-generate SEO for new content
         try {
           const seoResults = await generateBulkSEO(data.results, 'gallery');
@@ -287,11 +342,12 @@ export default function GenerateGalleryPage() {
         }
       } else {
         console.error('Generation failed:', data.error);
-        alert('Generation failed: ' + data.error);
+        alert(`Generation failed: ${data.error || 'Unknown error'}\n\nPlease check:\n1. Your internet connection\n2. That the API is running\n3. The browser console for more details`);
       }
     } catch (error) {
       console.error('Error generating nail art:', error);
-      alert('Error generating nail art');
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      alert(`Error generating nail art: ${errorMessage}\n\nPlease check:\n1. Your internet connection\n2. That the API is running\n3. The browser console for more details`);
     } finally {
       setIsGeneratingNailArt(false);
       setGenerationProgress({
@@ -319,6 +375,27 @@ export default function GenerateGalleryPage() {
             Content Management
           </Link>
         </div>
+
+        {/* Stop Signal Warning */}
+        {stopSignalStatus && stopSignalStatus.activeSignals > 0 && (
+          <div className="bg-red-900/20 border border-red-700 rounded-lg p-4 mb-8">
+            <div className="flex justify-between items-center">
+              <div>
+                <h3 className="text-red-400 font-semibold mb-1">⚠️ Active Stop Signals Detected</h3>
+                <p className="text-red-300 text-sm">
+                  There are {stopSignalStatus.activeSignals} active stop signal(s) that may be blocking content generation.
+                  Click the button to clear them.
+                </p>
+              </div>
+              <button
+                onClick={clearStopSignals}
+                className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition-colors font-semibold"
+              >
+                Clear Stop Signals
+              </button>
+            </div>
+          </div>
+        )}
 
         {/* Progress Display */}
         {generationProgress.isGenerating && (
