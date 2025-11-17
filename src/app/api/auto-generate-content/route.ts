@@ -4,31 +4,6 @@ import { consolidateSimilarTags } from '@/lib/tagService';
 
 export async function POST(request: NextRequest) {
   try {
-    // Check for stop signal before starting (with timeout and error handling)
-    try {
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 2000); // 2 second timeout
-
-      const stopResponse = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/global-stop`, {
-        signal: controller.signal
-      });
-      clearTimeout(timeoutId);
-
-      if (stopResponse.ok) {
-        const stopData = await stopResponse.json();
-        if (stopData.success && stopData.data.activeSignals > 0) {
-          return NextResponse.json({
-            success: false,
-            error: 'Content generation stopped by global stop signal. Please clear stop signals in admin settings.',
-            stopped: true
-          });
-        }
-      }
-    } catch (stopCheckError) {
-      // If stop check fails, log it but continue with generation
-      console.warn('Stop signal check failed, continuing with generation:', stopCheckError);
-    }
-
     const { action, category, count, customPrompt, tag } = await request.json();
     
     switch (action) {
