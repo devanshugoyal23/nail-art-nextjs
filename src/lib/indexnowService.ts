@@ -4,13 +4,11 @@
  */
 
 interface IndexNowConfig {
-  apiKey: string;
   baseUrl: string;
   searchEngines: string[];
 }
 
 const INDEXNOW_CONFIG: IndexNowConfig = {
-  apiKey: process.env.INDEXNOW_API_KEY || '',
   baseUrl: 'https://nailartai.app',
   searchEngines: [
     'https://api.indexnow.org/indexnow',
@@ -18,6 +16,11 @@ const INDEXNOW_CONFIG: IndexNowConfig = {
     'https://yandex.com/indexnow'
   ]
 };
+
+// Get API key dynamically to support runtime environment variable loading
+function getApiKey(): string {
+  return process.env.INDEXNOW_API_KEY || '';
+}
 
 interface IndexNowRequest {
   host: string;
@@ -31,15 +34,16 @@ interface IndexNowRequest {
  */
 export async function submitToIndexNow(urls: string[]): Promise<boolean> {
   try {
-    if (!INDEXNOW_CONFIG.apiKey || INDEXNOW_CONFIG.apiKey === 'your-indexnow-api-key' || INDEXNOW_CONFIG.apiKey === '') {
+    const apiKey = getApiKey();
+    if (!apiKey || apiKey === 'your-indexnow-api-key' || apiKey === '') {
       console.warn('IndexNow API key not configured. Skipping IndexNow submission.');
       return false;
     }
 
     const request: IndexNowRequest = {
       host: INDEXNOW_CONFIG.baseUrl,
-      key: INDEXNOW_CONFIG.apiKey,
-      keyLocation: `${INDEXNOW_CONFIG.baseUrl}/${INDEXNOW_CONFIG.apiKey}.txt`,
+      key: apiKey,
+      keyLocation: `${INDEXNOW_CONFIG.baseUrl}/${apiKey}.txt`,
       urlList: urls
     };
 
@@ -110,7 +114,7 @@ export async function submitUrlsInBatches(urls: string[], batchSize: number = 10
  * This should be placed at /{apiKey}.txt on your domain
  */
 export function generateIndexNowKeyFile(): string {
-  return INDEXNOW_CONFIG.apiKey;
+  return getApiKey();
 }
 
 /**
