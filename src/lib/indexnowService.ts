@@ -199,12 +199,22 @@ export async function submitAllSitemapUrlsToIndexNow(): Promise<boolean> {
   try {
     console.log('Fetching all sitemap URLs...');
 
+    // Headers to bypass Cloudflare bot protection
+    const fetchHeaders = {
+      'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+      'Accept': 'application/xml, text/xml, */*',
+      'Accept-Language': 'en-US,en;q=0.9',
+      'Accept-Encoding': 'gzip, deflate, br',
+      'Cache-Control': 'no-cache',
+      'Pragma': 'no-cache',
+    };
+
     // Fetch sitemap index to get all sitemaps
     const sitemapIndexUrl = `${INDEXNOW_CONFIG.baseUrl}/sitemap-index.xml`;
-    const response = await fetch(sitemapIndexUrl);
+    const response = await fetch(sitemapIndexUrl, { headers: fetchHeaders });
 
     if (!response.ok) {
-      console.error('Failed to fetch sitemap index');
+      console.error(`Failed to fetch sitemap index: ${response.status} ${response.statusText}`);
       return false;
     }
 
@@ -228,10 +238,10 @@ export async function submitAllSitemapUrlsToIndexNow(): Promise<boolean> {
 
     for (const sitemapUrl of sitemapUrls) {
       console.log(`Fetching ${sitemapUrl}...`);
-      const sitemapResponse = await fetch(sitemapUrl);
+      const sitemapResponse = await fetch(sitemapUrl, { headers: fetchHeaders });
 
       if (!sitemapResponse.ok) {
-        console.warn(`Failed to fetch ${sitemapUrl}`);
+        console.warn(`Failed to fetch ${sitemapUrl}: ${sitemapResponse.status} ${sitemapResponse.statusText}`);
         continue;
       }
 
