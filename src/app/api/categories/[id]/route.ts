@@ -4,13 +4,14 @@ import { supabase } from '@/lib/supabase';
 // GET - Get single category by ID
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const { data: category, error } = await supabase
       .from('categories')
       .select('*')
-      .eq('id', params.id)
+      .eq('id', id)
       .single();
 
     if (error || !category) {
@@ -45,9 +46,10 @@ export async function GET(
 // PUT - Update category
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const body = await request.json();
     const { name, tier, description, meta_title, meta_description, is_active } = body;
 
@@ -76,7 +78,7 @@ export async function PUT(
     const { data: updatedCategory, error } = await supabase
       .from('categories')
       .update(updateData)
-      .eq('id', params.id)
+      .eq('id', id)
       .select()
       .single();
 
@@ -104,14 +106,15 @@ export async function PUT(
 // DELETE - Delete category (soft delete by setting is_active = false)
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     // Check if category has items
     const { data: category } = await supabase
       .from('categories')
       .select('name')
-      .eq('id', params.id)
+      .eq('id', id)
       .single();
 
     if (!category) {
@@ -131,7 +134,7 @@ export async function DELETE(
       const { error } = await supabase
         .from('categories')
         .update({ is_active: false })
-        .eq('id', params.id);
+        .eq('id', id);
 
       if (error) {
         return NextResponse.json(
@@ -149,7 +152,7 @@ export async function DELETE(
       const { error } = await supabase
         .from('categories')
         .delete()
-        .eq('id', params.id);
+        .eq('id', id);
 
       if (error) {
         return NextResponse.json(

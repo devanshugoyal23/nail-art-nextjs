@@ -4,13 +4,14 @@ import { supabase } from '@/lib/supabase';
 // GET - Get single tag by ID
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const { data: tag, error } = await supabase
       .from('tags')
       .select('*')
-      .eq('id', params.id)
+      .eq('id', id)
       .single();
 
     if (error || !tag) {
@@ -45,9 +46,10 @@ export async function GET(
 // PUT - Update tag
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const body = await request.json();
     const { name, type, priority, description, is_active } = body;
 
@@ -75,7 +77,7 @@ export async function PUT(
     const { data: updatedTag, error } = await supabase
       .from('tags')
       .update(updateData)
-      .eq('id', params.id)
+      .eq('id', id)
       .select()
       .single();
 
@@ -103,14 +105,15 @@ export async function PUT(
 // DELETE - Delete tag (soft delete by setting is_active = false)
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     // Check if tag has items
     const { data: tag } = await supabase
       .from('tags')
       .select('name')
-      .eq('id', params.id)
+      .eq('id', id)
       .single();
 
     if (!tag) {
@@ -130,7 +133,7 @@ export async function DELETE(
       const { error } = await supabase
         .from('tags')
         .update({ is_active: false })
-        .eq('id', params.id);
+        .eq('id', id);
 
       if (error) {
         return NextResponse.json(
@@ -148,7 +151,7 @@ export async function DELETE(
       const { error } = await supabase
         .from('tags')
         .delete()
-        .eq('id', params.id);
+        .eq('id', id);
 
       if (error) {
         return NextResponse.json(
