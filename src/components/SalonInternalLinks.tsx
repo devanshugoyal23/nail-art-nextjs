@@ -18,10 +18,10 @@ export function NearbyCitiesSection({ nearbyCities, currentState, currentStateSl
     <div className="bg-white rounded-xl p-6 ring-1 ring-[#ee2b8c]/15 shadow-sm">
       <h2 className="text-xl font-bold text-[#1b0d14] mb-2 flex items-center gap-2">
         <span>🗺️</span>
-        <span>Nearby Cities</span>
+        <span>Explore Salons in Other {currentState} Cities</span>
       </h2>
       <p className="text-sm text-[#1b0d14]/60 mb-4">
-        Explore nail salons in cities near you
+        Find nail salons in major cities across {currentState}
       </p>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {nearbyCities.map((cityGroup) => (
@@ -32,28 +32,13 @@ export function NearbyCitiesSection({ nearbyCities, currentState, currentStateSl
           >
             <div className="flex items-start justify-between mb-2">
               <h3 className="font-semibold text-[#1b0d14] group-hover:text-[#ee2b8c] transition-colors">
-                {cityGroup.city}, {currentState}
+                {cityGroup.city}
               </h3>
-              <span className="text-xs text-[#1b0d14]/50 whitespace-nowrap ml-2">
-                {cityGroup.distance} mi
-              </span>
+              <span className="text-lg">🏙️</span>
             </div>
-            <div className="space-y-1">
-              {cityGroup.topRated && (
-                <div className="flex items-center gap-2">
-                  <span className="text-yellow-500 text-sm">⭐</span>
-                  <span className="text-sm text-[#1b0d14]/70">
-                    {cityGroup.topRated.name.length > 30
-                      ? cityGroup.topRated.name.substring(0, 30) + '...'
-                      : cityGroup.topRated.name
-                    }
-                  </span>
-                </div>
-              )}
-              <p className="text-xs text-[#1b0d14]/50">
-                {cityGroup.salons.length} {cityGroup.salons.length === 1 ? 'salon' : 'salons'} available
-              </p>
-            </div>
+            <p className="text-xs text-[#1b0d14]/50">
+              Browse nail salons in {cityGroup.city}
+            </p>
           </Link>
         ))}
       </div>
