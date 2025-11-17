@@ -141,51 +141,85 @@ export interface GeneratedNailArt {
 }
 
 /**
- * Generate nail art images using Gemini API
+ * Sleep helper for retry delays
+ */
+function sleep(ms: number): Promise<void> {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+/**
+ * Generate nail art images using Gemini API with retry logic for rate limits
  */
 export async function generateNailArtImage(prompt: string): Promise<string | null> {
-  try {
-    const aiInstance = getAI();
-    
-    // Enhanced prompt for better nail art generation
-    const enhancedPrompt = `Create a high-quality nail art design: ${prompt}. 
-    The image should show:
-    - Clean, well-manicured nails
-    - Professional nail art application
-    - High resolution and detailed work
-    - Beautiful lighting and composition
-    - Focus on the nail design as the main subject`;
-    
-    const response = await aiInstance.models.generateContent({
-      model: 'gemini-2.5-flash-image-preview',
-      contents: {
-        parts: [
-          {
-            text: enhancedPrompt,
-          },
-        ],
-      },
-      config: {
-        responseModalities: [Modality.IMAGE, Modality.TEXT],
-      },
-    });
+  const MAX_RETRIES = 3;
+  const BASE_DELAY = 2000; // 2 seconds
 
-    // Find the image part in the response
-    if (response.candidates && response.candidates[0] && response.candidates[0].content && response.candidates[0].content.parts) {
-      for (const part of response.candidates[0].content.parts) {
-        if (part.inlineData) {
-          return part.inlineData.data || null;
+  for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
+    try {
+      const aiInstance = getAI();
+
+      // Enhanced prompt for better nail art generation
+      const enhancedPrompt = `Create a high-quality nail art design: ${prompt}.
+      The image should show:
+      - Clean, well-manicured nails
+      - Professional nail art application
+      - High resolution and detailed work
+      - Beautiful lighting and composition
+      - Focus on the nail design as the main subject`;
+
+      const response = await aiInstance.models.generateContent({
+        model: 'gemini-2.5-flash-image-preview',
+        contents: {
+          parts: [
+            {
+              text: enhancedPrompt,
+            },
+          ],
+        },
+        config: {
+          responseModalities: [Modality.IMAGE, Modality.TEXT],
+        },
+      });
+
+      // Find the image part in the response
+      if (response.candidates && response.candidates[0] && response.candidates[0].content && response.candidates[0].content.parts) {
+        for (const part of response.candidates[0].content.parts) {
+          if (part.inlineData) {
+            console.log(`✅ Successfully generated image on attempt ${attempt + 1}`);
+            return part.inlineData.data || null;
+          }
         }
       }
+
+      console.warn("No image part found in the Gemini response.");
+      return null;
+
+    } catch (error: any) {
+      // Check if it's a rate limit error (429)
+      const is429Error = error?.status === 429 ||
+                         error?.message?.includes('429') ||
+                         error?.message?.includes('rate limit') ||
+                         error?.message?.includes('quota');
+
+      if (is429Error && attempt < MAX_RETRIES) {
+        // Exponential backoff: 2s, 4s, 8s
+        const delay = BASE_DELAY * Math.pow(2, attempt);
+        console.log(`⏱️  Rate limit hit (429). Retrying in ${delay/1000}s... (Attempt ${attempt + 1}/${MAX_RETRIES})`);
+        await sleep(delay);
+        continue; // Retry
+      }
+
+      // If not a 429 error, or we've exhausted retries, throw the error
+      console.error("Error calling Gemini API:", error);
+      throw new Error(is429Error ?
+        'Gemini API rate limit exceeded. Please wait a moment and try again. Consider generating fewer items at once.' :
+        `Failed to generate image: ${error.message || 'Unknown error'}`
+      );
     }
-
-    console.warn("No image part found in the Gemini response.");
-    return null;
-
-  } catch (error) {
-    console.error("Error calling Gemini API:", error);
-    throw error;
   }
+
+  // If we get here, all retries failed
+  throw new Error('Failed to generate image after multiple retries due to rate limits. Please wait a few minutes before trying again.');
 }
 
 /**
@@ -440,9 +474,10 @@ export async function generateMultipleNailArt(options: GenerationOptions): Promi
         results.push(result);
       }
       
-      // Add delay between generations to avoid rate limiting
+      // Add delay between generations to avoid rate limiting (increased to 3s for better rate limit handling)
       if (i < count - 1) {
-        await new Promise(resolve => setTimeout(resolve, 2000));
+        console.log(`⏱️  Waiting 3s before next generation to avoid rate limits...`);
+        await sleep(3000);
       }
     } catch (error) {
       console.error(`Error generating nail art ${i + 1}:`, error);
