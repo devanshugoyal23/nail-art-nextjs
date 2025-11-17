@@ -52,7 +52,7 @@ export async function PUT(
     const { name, tier, description, meta_title, meta_description, is_active } = body;
 
     // Build update object with only provided fields
-    const updateData: any = {};
+    const updateData: Record<string, string | boolean> = {};
     if (name !== undefined) {
       updateData.name = name;
       updateData.slug = name

@@ -57,7 +57,6 @@ export default function UnifiedAdminPage() {
 
   // Form State
   const [selectedCategory, setSelectedCategory] = useState('');
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [count, setCount] = useState(5);
   const [customPrompt, setCustomPrompt] = useState('');
 
@@ -70,6 +69,7 @@ export default function UnifiedAdminPage() {
   // ===== DATA LOADING =====
   useEffect(() => {
     loadAllData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const loadAllData = async () => {
@@ -677,7 +677,7 @@ export default function UnifiedAdminPage() {
                 <label className="block text-sm font-medium mb-2">Type</label>
                 <select
                   value={newTag.type}
-                  onChange={(e) => setNewTag({ ...newTag, type: e.target.value as any })}
+                  onChange={(e) => setNewTag({ ...newTag, type: e.target.value as 'color' | 'technique' | 'occasion' | 'season' | 'style' | 'shape' | 'length' | 'theme' })}
                   className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white"
                 >
                   <option value="color">Color</option>
@@ -695,7 +695,7 @@ export default function UnifiedAdminPage() {
                 <label className="block text-sm font-medium mb-2">Priority</label>
                 <select
                   value={newTag.priority}
-                  onChange={(e) => setNewTag({ ...newTag, priority: e.target.value as any })}
+                  onChange={(e) => setNewTag({ ...newTag, priority: e.target.value as 'high' | 'medium' | 'low' })}
                   className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white"
                 >
                   <option value="high">High Priority</option>
