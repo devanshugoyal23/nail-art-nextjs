@@ -19,7 +19,9 @@
     "generate-cities:fast": "node scripts/generate-cities-json.js --batch-size=15",
     "collect-salon-data": "tsx scripts/collect-salon-data.ts",
     "recollect-failed-states": "tsx scripts/recollect-failed-states.ts",
-    "enrich-salon": "tsx scripts/enrich-single-salon.ts"
+    "enrich-salon": "tsx scripts/enrich-single-salon.ts",
+    "indexnow:submit-all": "tsx scripts/submit-indexnow.ts all",
+    "indexnow:submit-sitemaps": "tsx scripts/submit-indexnow.ts sitemaps"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.906.0",

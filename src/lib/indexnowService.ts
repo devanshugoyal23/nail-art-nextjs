@@ -138,13 +138,92 @@ export async function submitUpdatedDesign(designId: string, category: string, de
  */
 export async function submitSitemapToIndexNow(): Promise<boolean> {
   const sitemapUrls = [
+    `${INDEXNOW_CONFIG.baseUrl}/sitemap.xml`,
     `${INDEXNOW_CONFIG.baseUrl}/sitemap-index.xml`,
+    `${INDEXNOW_CONFIG.baseUrl}/sitemap-static.xml`,
     `${INDEXNOW_CONFIG.baseUrl}/sitemap-designs.xml`,
+    `${INDEXNOW_CONFIG.baseUrl}/sitemap-gallery.xml`,
     `${INDEXNOW_CONFIG.baseUrl}/sitemap-images.xml`,
     `${INDEXNOW_CONFIG.baseUrl}/sitemap-categories.xml`,
-    `${INDEXNOW_CONFIG.baseUrl}/sitemap-static.xml`,
-    `${INDEXNOW_CONFIG.baseUrl}/sitemap-programmatic.xml`
+    `${INDEXNOW_CONFIG.baseUrl}/sitemap-nail-salons.xml`,
+    `${INDEXNOW_CONFIG.baseUrl}/sitemap-nail-salons-premium.xml`,
+    `${INDEXNOW_CONFIG.baseUrl}/sitemap-nail-salons-cities.xml`
   ];
 
   return submitToIndexNow(sitemapUrls);
 }
+
+/**
+ * Fetch all URLs from all sitemaps and submit to IndexNow
+ */
+export async function submitAllSitemapUrlsToIndexNow(): Promise<boolean> {
+  try {
+    console.log('Fetching all sitemap URLs...');
+
+    // Fetch sitemap index to get all sitemaps
+    const sitemapIndexUrl = `${INDEXNOW_CONFIG.baseUrl}/sitemap-index.xml`;
+    const response = await fetch(sitemapIndexUrl);
+
+    if (!response.ok) {
+      console.error('Failed to fetch sitemap index');
+      return false;
+    }
+
+    const xml = await response.text();
+
+    // Extract sitemap URLs from sitemap index
+    const sitemapUrlMatches = xml.match(/<loc>(.*?)<\/loc>/g);
+    if (!sitemapUrlMatches) {
+      console.error('No sitemap URLs found in sitemap index');
+      return false;
+    }
+
+    const sitemapUrls = sitemapUrlMatches.map(match =>
+      match.replace('<loc>', '').replace('</loc>', '')
+    );
+
+    console.log(`Found ${sitemapUrls.length} sitemaps`);
+
+    // Collect all URLs from all sitemaps
+    const allUrls: string[] = [];
+
+    for (const sitemapUrl of sitemapUrls) {
+      console.log(`Fetching ${sitemapUrl}...`);
+      const sitemapResponse = await fetch(sitemapUrl);
+
+      if (!sitemapResponse.ok) {
+        console.warn(`Failed to fetch ${sitemapUrl}`);
+        continue;
+      }
+
+      const sitemapXml = await sitemapResponse.text();
+      const urlMatches = sitemapXml.match(/<loc>(.*?)<\/loc>/g);
+
+      if (urlMatches) {
+        const urls = urlMatches.map(match =>
+          match.replace('<loc>', '').replace('</loc>', '')
+        );
+        allUrls.push(...urls);
+        console.log(`  - Found ${urls.length} URLs`);
+      }
+    }
+
+    console.log(`\nTotal URLs found: ${allUrls.length}`);
+    console.log('Submitting to IndexNow in batches...\n');
+
+    // Submit in batches
+    const success = await submitUrlsInBatches(allUrls, 10000);
+
+    if (success) {
+      console.log('\n✅ Successfully submitted all sitemap URLs to IndexNow!');
+    } else {
+      console.log('\n❌ Failed to submit sitemap URLs to IndexNow');
+    }
+
+    return success;
+  } catch (error) {
+    console.error('Error submitting all sitemap URLs:', error);
+    return false;
+  }
+}
+
