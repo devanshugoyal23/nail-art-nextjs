@@ -8,16 +8,9 @@
 import fs from 'fs';
 import path from 'path';
 
-// Use different paths for local vs production
-// Production (Vercel): /tmp is the only writable directory
-// Local development: use data/ directory in project root
-const isProduction = process.env.VERCEL || process.env.NODE_ENV === 'production';
-const PROGRESS_FILE = isProduction
-  ? path.join('/tmp', 'enrichment-progress.json')
-  : path.join(process.cwd(), 'data', 'enrichment-progress.json');
-
-// Log the path being used for debugging
-console.log(`📂 Progress file path: ${PROGRESS_FILE} (${isProduction ? 'production' : 'local'} mode)`);
+// Use /tmp for all environments (serverless-safe)
+// /tmp is writable in both Vercel and local development
+const PROGRESS_FILE = path.join('/tmp', 'enrichment-progress.json');
 
 export interface EnrichmentProgress {
   isRunning: boolean;
@@ -69,17 +62,10 @@ const DEFAULT_PROGRESS: EnrichmentProgress = {
 
 /**
  * Ensure data directory exists
- * - In production (Vercel): /tmp always exists, no need to create
- * - In local development: create data/ directory if it doesn't exist
+ * /tmp always exists in all environments, so this is a no-op
  */
 function ensureDataDirectory() {
-  if (!isProduction) {
-    const dataDir = path.join(process.cwd(), 'data');
-    if (!fs.existsSync(dataDir)) {
-      fs.mkdirSync(dataDir, { recursive: true });
-      console.log('📁 Created data directory for local development');
-    }
-  }
+  // /tmp directory always exists, no need to create it
 }
 
 /**

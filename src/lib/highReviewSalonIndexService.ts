@@ -95,17 +95,20 @@ export async function generateHighReviewSalonIndex(): Promise<HighReviewSalonInd
   // Sort by population to prioritize major cities
   const sortedCities = allCities.sort((a, b) => (b.population || 0) - (a.population || 0));
 
-  // IMPORTANT: Process ALL cities to capture ALL 100+ review salons
-  // Timeout protection will stop processing after 45 seconds
-  const MAX_PROCESSING_TIME = 45000; // 45 seconds (safe for most Vercel plans)
+  // Vercel timeout limits (with fluid compute enabled by default):
+  // Hobby: 5 minutes (300s) default and max
+  // Pro: 5 minutes (300s) default, 13 minutes max
+  // We'll use 4 minutes (240s) to be safe
+  const MAX_PROCESSING_TIME = 240000; // 4 minutes
+  const MAX_CITIES = 400; // Limit to top 400 cities for consistent results
 
   // Note: We take ALL salons from each city (no limit per city)
   // Salons are filtered by review tiers: 500+, 200+, 100+
 
-  // Process ALL cities (sorted by population for best coverage)
-  const citiesToProcess = sortedCities;
+  // Process top 400 cities by population (most high-review salons)
+  const citiesToProcess = sortedCities.slice(0, MAX_CITIES);
 
-  console.log(`📊 Processing up to ${citiesToProcess.length} cities (ALL cities, timeout-protected at ${MAX_PROCESSING_TIME / 1000}s)...`);
+  console.log(`📊 Processing top ${citiesToProcess.length} cities (timeout-protected at ${MAX_PROCESSING_TIME / 1000}s)...`);
 
   // Process each city
   for (const city of citiesToProcess) {
