@@ -224,6 +224,43 @@ export default function EnrichmentAdminPage() {
     }
   };
 
+  const handleRegenerateIndex = async () => {
+    if (!confirm('Regenerate the high-review salon index?\n\nThis will scan ALL cities and create a pre-computed index for fast filtering.\n\nEstimated time: 2-5 minutes\n\nContinue?')) {
+      return;
+    }
+
+    setLoading(true);
+    try {
+      console.log('Starting index regeneration...');
+      const res = await fetch('/api/admin/enrichment/regenerate-index', {
+        method: 'POST',
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        let message = '✅ Index regenerated successfully!\n\n';
+        message += `Total salons indexed: ${data.stats.totalSalons}\n`;
+        message += `Cities included: ${data.stats.citiesIncluded}\n`;
+        message += `States included: ${data.stats.statesIncluded}\n\n`;
+        message += `Review tiers:\n`;
+        message += `- 500+ reviews: ${data.stats.tierCounts['500+']}\n`;
+        message += `- 200+ reviews: ${data.stats.tierCounts['200+']}\n`;
+        message += `- 100+ reviews: ${data.stats.tierCounts['100+']}\n`;
+        message += `- 50+ reviews: ${data.stats.tierCounts['50+']}\n\n`;
+        message += `Processing time: ${data.stats.processingTimeSeconds}s`;
+
+        alert(message);
+      } else {
+        alert(`Error: ${data.error || 'Failed to regenerate index'}`);
+      }
+    } catch (error) {
+      alert(`Failed to regenerate index: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleEnrichSitemap = async () => {
     console.log('🗺️ Sitemap enrichment button clicked');
 
@@ -610,14 +647,24 @@ export default function EnrichmentAdminPage() {
                 )}
 
                 {!progress?.isRunning && (
-                  <button
-                    onClick={handleEnrichSitemap}
-                    disabled={loading}
-                    className="px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50 font-medium flex items-center gap-2"
-                  >
-                    <span>🗺️</span>
-                    <span>Start Enrichment with Filters</span>
-                  </button>
+                  <>
+                    <button
+                      onClick={handleEnrichSitemap}
+                      disabled={loading}
+                      className="px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50 font-medium flex items-center gap-2"
+                    >
+                      <span>🗺️</span>
+                      <span>Start Enrichment with Filters</span>
+                    </button>
+                    <button
+                      onClick={handleRegenerateIndex}
+                      disabled={loading}
+                      className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 font-medium flex items-center gap-2"
+                    >
+                      <span>🔄</span>
+                      <span>Regenerate Index (Required First!)</span>
+                    </button>
+                  </>
                 )}
               </div>
             </div>

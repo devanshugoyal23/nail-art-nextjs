@@ -2,6 +2,11 @@ import { NextResponse } from 'next/server';
 import { enrichSelectedSalons } from '@/lib/batchEnrichmentService';
 import { NailSalon } from '@/lib/nailSalonService';
 import { loadProgress } from '@/lib/enrichmentProgressService';
+import {
+  getSalonsByReviewTier,
+  getSalonsByReviewTierWithDiversity,
+  highReviewSalonIndexExists,
+} from '@/lib/highReviewSalonIndexService';
 
 interface EnrichmentFilters {
   reviewFilter?: '50+' | '100+' | '200+' | '500+';
@@ -10,7 +15,12 @@ interface EnrichmentFilters {
 }
 
 /**
- * Enrich salons from sitemap cities (top 200 cities) with optional filters
+ * Enrich salons using pre-computed high-review index (FAST!)
+ *
+ * NEW APPROACH:
+ * - Uses pre-computed index from R2 (single fetch, 2-3 seconds)
+ * - Includes ALL cities (not just top 200)
+ * - Already filtered by review tiers
  *
  * Filters:
  * - reviewFilter: Minimum review count (50+, 100+, 200+, 500+)
@@ -39,79 +49,32 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Enrichment already running' }, { status: 400 });
     }
 
-    console.log('🚀 Starting sitemap cities enrichment with filters...');
-
-    // Get top 200 cities from consolidated data (same as sitemap)
-    console.log('📦 Importing consolidatedCitiesData...');
-    const { getAllStateCityData } = await import('@/lib/consolidatedCitiesData');
-    console.log('📊 Calling getAllStateCityData()...');
-    const statesMap = getAllStateCityData();
-    console.log(`📍 Got statesMap with ${statesMap.size} states`);
-
-    // Collect all cities
-    const allCities: Array<{
-      state: string;
-      city: string;
-      cityName: string;
-      stateName: string;
-      population?: number;
-      salonCount?: number;
-    }> = [];
-
-    for (const [stateSlug, data] of statesMap.entries()) {
-      if (!data.cities || !Array.isArray(data.cities)) continue;
-
-      for (const city of data.cities) {
-        allCities.push({
-          state: stateSlug,
-          city: city.slug,
-          cityName: city.name,
-          stateName: data.state,
-          population: city.population,
-          salonCount: city.salonCount,
-        });
-      }
+    // Check if index exists
+    const indexExists = await highReviewSalonIndexExists();
+    if (!indexExists) {
+      console.log('⚠️ High-review salon index not found');
+      return NextResponse.json(
+        {
+          error: 'High-review salon index not found. Please regenerate it first.',
+          hint: 'Use the "Regenerate Index" button in the admin UI',
+        },
+        { status: 400 }
+      );
     }
 
-    // Sort cities by population/salon count (same as sitemap logic)
-    const sortedCities = allCities.sort((a, b) => {
-      // Prioritize cities with population data
-      if (a.population && b.population) {
-        return b.population - a.population;
-      }
-      if (a.population && !b.population) return -1;
-      if (!a.population && b.population) return 1;
+    console.log('🚀 Starting enrichment using pre-computed index...');
 
-      // Then by salon count
-      if (a.salonCount && b.salonCount) {
-        return b.salonCount - a.salonCount;
-      }
-      if (a.salonCount && !b.salonCount) return -1;
-      if (!a.salonCount && b.salonCount) return 1;
-
-      // Finally alphabetical
-      return a.cityName.localeCompare(b.cityName);
-    });
-
-    // Take top 200 cities (same as sitemap)
-    const topCities = sortedCities.slice(0, 200);
-
-    console.log(`📊 Will enrich top ${topCities.length} cities from sitemap`);
-    console.log(`   Top 10: ${topCities.slice(0, 10).map(c => `${c.cityName}, ${c.stateName}`).join('; ')}`);
-
-    // Start enrichment in background (collect all salons then enrich)
-    console.log('🎯 Starting background enrichment process with filters...');
-    loadAndEnrichSalonsFromCities(topCities, filters);
+    // Start enrichment in background using index
+    loadAndEnrichSalonsFromIndex(filters);
 
     const responseData = {
       success: true,
-      message: `Started enrichment for ${topCities.length} sitemap cities`,
-      citiesCount: topCities.length,
-      topCities: topCities.slice(0, 10).map(c => ({ city: c.cityName, state: c.stateName })),
-      reviewFilter: filters.reviewFilter,
+      message: 'Started enrichment using pre-computed index',
+      reviewFilter: filters.reviewFilter || 'all',
       strategy: filters.enrichmentStrategy === 'top-per-city'
         ? `Top ${filters.topPerCityCount || 10} per city`
         : 'All matching salons',
+      note: 'Using fast index lookup (2-3 seconds instead of 13 minutes!)',
     };
 
     console.log('✅ Returning success response:', responseData);
@@ -129,18 +92,15 @@ export async function POST(request: Request) {
 }
 
 /**
- * Load all salons from cities, apply filters, then enrich them all at once
- * This prevents progress from resetting for each city
+ * Load salons from pre-computed index (FAST!) and enrich them
+ * No need to scan cities one by one - index is already pre-filtered
  */
-async function loadAndEnrichSalonsFromCities(
-  cities: Array<{ state: string; city: string; cityName: string; stateName: string }>,
-  filters: EnrichmentFilters = {}
-) {
+async function loadAndEnrichSalonsFromIndex(filters: EnrichmentFilters = {}) {
   try {
     const { addLog } = await import('@/lib/enrichmentProgressService');
 
-    console.log(`\n🎯 Loading salons from ${cities.length} sitemap cities...\n`);
-    addLog(`🎯 Loading salons from ${cities.length} sitemap cities...`);
+    console.log(`\n🎯 Loading salons from pre-computed index...\n`);
+    addLog(`🎯 Loading salons from pre-computed high-review index...`);
 
     if (filters.reviewFilter) {
       addLog(`📊 Filter: Salons with ${filters.reviewFilter} reviews`);
@@ -149,88 +109,78 @@ async function loadAndEnrichSalonsFromCities(
       addLog(`🎯 Strategy: Top ${filters.topPerCityCount || 10} salons per city`);
     }
 
-    const allSalons: NailSalon[] = [];
-    const { getCityDataFromR2 } = await import('@/lib/salonDataService');
+    const startTime = Date.now();
 
-    // Parse review filter threshold
-    const getReviewThreshold = (filter?: string): number => {
-      if (!filter) return 0;
-      const match = filter.match(/(\d+)\+/);
-      return match ? parseInt(match[1]) : 0;
-    };
+    let salons: NailSalon[];
 
-    const reviewThreshold = getReviewThreshold(filters.reviewFilter);
+    // Use index to get salons (single R2 fetch!)
+    if (filters.reviewFilter) {
+      const tier = filters.reviewFilter;
 
-    // Load all salons from all cities
-    for (let i = 0; i < cities.length; i++) {
-      const { cityName, stateName } = cities[i];
+      if (filters.enrichmentStrategy === 'top-per-city') {
+        // Geographic diversity: Top N per city
+        const topPerCity = filters.topPerCityCount || 10;
+        console.log(`📊 Loading ${tier} salons with top ${topPerCity} per city...`);
+        addLog(`📊 Loading ${tier} salons with top ${topPerCity} per city...`);
 
-      try {
-        console.log(`[${i + 1}/${cities.length}] 📍 Loading salons from ${cityName}, ${stateName}...`);
-        addLog(`[${i + 1}/${cities.length}] Loading salons from ${cityName}, ${stateName}...`);
+        const salonsWithLocation = await getSalonsByReviewTierWithDiversity(tier, topPerCity);
+        salons = salonsWithLocation as NailSalon[];
+      } else {
+        // All matching salons
+        console.log(`📊 Loading all salons with ${tier} reviews...`);
+        addLog(`📊 Loading all salons with ${tier} reviews...`);
 
-        const cityData = await getCityDataFromR2(stateName, cityName);
-
-        if (!cityData || !cityData.salons || cityData.salons.length === 0) {
-          console.log(`   ⚠️  No salons found - skipping`);
-          addLog(`   ⚠️ No salons in ${cityName}, ${stateName} - skipping`);
-          continue;
-        }
-
-        let salons = cityData.salons as NailSalon[];
-        const originalCount = salons.length;
-
-        // Apply review filter
-        if (reviewThreshold > 0) {
-          salons = salons.filter((s) => (s.reviewCount || 0) >= reviewThreshold);
-          console.log(`   🔍 Filtered by reviews: ${salons.length}/${originalCount} salons`);
-        }
-
-        // Apply top-per-city strategy
-        if (filters.enrichmentStrategy === 'top-per-city' && salons.length > 0) {
-          const topN = filters.topPerCityCount || 10;
-          // Sort by review count descending, then take top N
-          salons = salons
-            .sort((a, b) => (b.reviewCount || 0) - (a.reviewCount || 0))
-            .slice(0, topN);
-          console.log(`   🎯 Top ${topN} salons selected: ${salons.length} salons`);
-        }
-
-        if (salons.length > 0) {
-          console.log(`   ✅ Added ${salons.length} salons from ${cityName}`);
-          addLog(`   ✅ Added ${salons.length} salons from ${cityName}, ${stateName}`);
-          allSalons.push(...salons);
-        } else {
-          console.log(`   ⏭️  No salons match filters - skipping`);
-          addLog(`   ⏭️ No salons match filters in ${cityName}, ${stateName}`);
-        }
-      } catch (error) {
-        console.error(`   ❌ Error loading ${cityName}, ${stateName}:`, error);
-        addLog(`   ❌ Error loading ${cityName}, ${stateName}`);
-        continue;
+        const salonsWithLocation = await getSalonsByReviewTier(tier);
+        salons = salonsWithLocation as NailSalon[];
       }
+    } else {
+      // No filter - use all salons (not recommended, but supported)
+      console.log(`⚠️  No review filter specified - this may take a long time!`);
+      addLog(`⚠️ No review filter - loading ALL salons (not recommended)`);
+
+      // Fall back to old method if no filter
+      const { getAllStateCityData } = await import('@/lib/consolidatedCitiesData');
+      const { getCityDataFromR2 } = await import('@/lib/salonDataService');
+
+      const statesMap = getAllStateCityData();
+      const allSalons: NailSalon[] = [];
+
+      for (const [stateSlug, data] of statesMap.entries()) {
+        if (!data.cities || !Array.isArray(data.cities)) continue;
+
+        for (const city of data.cities) {
+          const cityData = await getCityDataFromR2(data.state, city.name);
+          if (cityData && cityData.salons) {
+            allSalons.push(...(cityData.salons as NailSalon[]));
+          }
+        }
+      }
+
+      salons = allSalons;
     }
 
-    console.log(`\n✅ Loaded ${allSalons.length} total salons from ${cities.length} cities`);
-    addLog(`✅ Loaded ${allSalons.length} total salons from ${cities.length} cities`);
+    const loadTime = Date.now() - startTime;
 
-    if (allSalons.length === 0) {
-      console.log(`⚠️ No salons match the selected filters!`);
-      addLog(`⚠️ No salons match the selected filters!`);
+    console.log(`\n✅ Loaded ${salons.length} salons in ${(loadTime / 1000).toFixed(1)}s`);
+    addLog(`✅ Loaded ${salons.length} salons in ${(loadTime / 1000).toFixed(1)}s (using index!)`);
+
+    if (salons.length === 0) {
+      console.log(`⚠️ No salons found with selected filters!`);
+      addLog(`⚠️ No salons found with selected filters!`);
       return;
     }
 
-    console.log(`🚀 Starting enrichment for all ${allSalons.length} salons...\n`);
-    addLog(`🚀 Starting enrichment for all ${allSalons.length} salons...`);
+    console.log(`🚀 Starting enrichment for ${salons.length} salons...\n`);
+    addLog(`🚀 Starting enrichment for ${salons.length} salons...`);
 
     // Now enrich all salons at once (this properly tracks progress)
-    await enrichSelectedSalons(allSalons);
+    await enrichSelectedSalons(salons);
 
-    console.log(`\n🎉 Finished enriching sitemap salons!\n`);
-    addLog(`🎉 Finished enriching sitemap salons!`);
+    console.log(`\n🎉 Finished enriching salons!\n`);
+    addLog(`🎉 Finished enriching salons!`);
   } catch (error) {
-    console.error('❌ Error in sitemap enrichment:', error);
+    console.error('❌ Error in enrichment:', error);
     const { addLog } = await import('@/lib/enrichmentProgressService');
-    addLog(`❌ Error in sitemap enrichment: ${error instanceof Error ? error.message : String(error)}`);
+    addLog(`❌ Error in enrichment: ${error instanceof Error ? error.message : String(error)}`);
   }
 }
