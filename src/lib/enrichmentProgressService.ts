@@ -8,7 +8,9 @@
 import fs from 'fs';
 import path from 'path';
 
-const PROGRESS_FILE = path.join(process.cwd(), 'data', 'enrichment-progress.json');
+// Use /tmp for serverless environments (Vercel, AWS Lambda, etc.)
+// /tmp is the only writable directory in serverless
+const PROGRESS_FILE = path.join('/tmp', 'enrichment-progress.json');
 
 export interface EnrichmentProgress {
   isRunning: boolean;
@@ -60,12 +62,12 @@ const DEFAULT_PROGRESS: EnrichmentProgress = {
 
 /**
  * Ensure data directory exists
+ * Note: /tmp always exists in serverless, so this is a no-op
+ * Kept for backward compatibility
  */
 function ensureDataDirectory() {
-  const dataDir = path.dirname(PROGRESS_FILE);
-  if (!fs.existsSync(dataDir)) {
-    fs.mkdirSync(dataDir, { recursive: true });
-  }
+  // /tmp directory always exists in serverless environments
+  // No need to create it
 }
 
 /**
