@@ -50,7 +50,7 @@ export interface HighReviewSalonIndex {
 
 /**
  * Generate high-review salon index from all cities
- * Scans ALL cities in consolidated data (not just top 200)
+ * Optimized for serverless function timeout limits
  */
 export async function generateHighReviewSalonIndex(): Promise<HighReviewSalonIndex> {
   console.log('🏗️ Starting high-review salon index generation...');
@@ -72,12 +72,13 @@ export async function generateHighReviewSalonIndex(): Promise<HighReviewSalonInd
   let totalSalons = 0;
   let citiesProcessed = 0;
 
-  // Build list of all cities
+  // Build list of all cities with population data
   const allCities: Array<{
     state: string;
     stateSlug: string;
     city: string;
     citySlug: string;
+    population?: number;
   }> = [];
 
   for (const [stateSlug, data] of statesMap.entries()) {
@@ -89,14 +90,29 @@ export async function generateHighReviewSalonIndex(): Promise<HighReviewSalonInd
         stateSlug,
         city: city.name,
         citySlug: city.slug,
+        population: city.population,
       });
     }
   }
 
-  console.log(`📊 Processing ${allCities.length} total cities...`);
+  // Sort by population to prioritize major cities
+  const sortedCities = allCities.sort((a, b) => (b.population || 0) - (a.population || 0));
+
+  // IMPORTANT: Timeout protection for serverless functions
+  const MAX_PROCESSING_TIME = 45000; // 45 seconds (safe for most Vercel plans)
+  const MAX_CITIES = 400; // Process top 400 cities (still 2x better than old top 200!)
+  const citiesToProcess = sortedCities.slice(0, MAX_CITIES);
+
+  console.log(`📊 Processing top ${citiesToProcess.length} cities (timeout-safe)...`);
 
   // Process each city
-  for (const city of allCities) {
+  for (const city of citiesToProcess) {
+    // Check timeout
+    if (Date.now() - startTime > MAX_PROCESSING_TIME) {
+      console.warn(`⏰ Timeout protection: Stopping after ${citiesProcessed} cities (${(Date.now() - startTime) / 1000}s)`);
+      break;
+    }
+
     try {
       const cityData = await getCityDataFromR2(city.state, city.city);
 
