@@ -101,7 +101,10 @@ export async function generateHighReviewSalonIndex(): Promise<HighReviewSalonInd
   // IMPORTANT: Ensure ALL states are represented (geographic diversity)
   // Instead of just taking top 400 globally, take top N per state
   const MAX_PROCESSING_TIME = 45000; // 45 seconds (safe for most Vercel plans)
-  const CITIES_PER_STATE = 8; // Top 8 cities per state = ~400 total (50 states × 8)
+  const CITIES_PER_STATE = 15; // Top 15 cities per state = ~750 total (50 states × 15)
+
+  // Note: We take ALL salons from each city (no limit per city)
+  // Salons are filtered by review tiers: 500+, 200+, 100+, 50+
 
   // Group cities by state
   const citiesByState = new Map<string, typeof allCities>();
