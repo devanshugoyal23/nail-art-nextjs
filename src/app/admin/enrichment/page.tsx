@@ -206,10 +206,21 @@ export default function EnrichmentAdminPage() {
     }
   };
 
-  const handlePause = async () => {
+  const handleStop = async () => {
+    if (!confirm('Stop the current enrichment process?\n\nProgress will be saved and you can resume later.\n\nContinue?')) {
+      return;
+    }
+
     setLoading(true);
     try {
-      await fetch('/api/admin/enrichment/pause', { method: 'POST' });
+      const res = await fetch('/api/admin/enrichment/pause', { method: 'POST' });
+      if (res.ok) {
+        alert('✅ Enrichment stopped successfully!\n\nProgress has been saved. You can resume by starting a new enrichment.');
+      } else {
+        alert('Failed to stop enrichment. Please try again.');
+      }
+    } catch (error) {
+      alert(`Failed to stop: ${error instanceof Error ? error.message : 'Unknown error'}`);
     } finally {
       setLoading(false);
     }
@@ -617,37 +628,41 @@ export default function EnrichmentAdminPage() {
             {/* Control Buttons */}
             <div className="bg-white rounded-lg shadow-sm p-6">
               <h3 className="font-semibold text-gray-900 mb-4">Quick Actions</h3>
+
+              {/* Show STOP button prominently when running */}
+              {progress?.isRunning && (
+                <div className="mb-4 p-4 bg-red-50 border-2 border-red-300 rounded-lg">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="font-semibold text-red-900 mb-1">🔴 Enrichment In Progress</p>
+                      <p className="text-sm text-red-700">
+                        {progress.enriched} / {progress.totalSalons} salons processed
+                        {progress.currentCity && ` • Currently: ${progress.currentCity}, ${progress.currentState}`}
+                      </p>
+                    </div>
+                    <button
+                      onClick={handleStop}
+                      disabled={loading}
+                      className="px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 disabled:opacity-50 font-bold flex items-center gap-2 shadow-lg"
+                    >
+                      <span>🛑</span>
+                      <span>{loading ? 'Stopping...' : 'STOP Process'}</span>
+                    </button>
+                  </div>
+                </div>
+              )}
+
               <div className="flex flex-wrap gap-3">
-                {!progress?.isRunning ? (
-                  <button
-                    onClick={() => setViewMode('salons')}
-                    className="px-6 py-3 bg-pink-600 text-white rounded-lg hover:bg-pink-700 disabled:opacity-50 font-medium flex items-center gap-2"
-                  >
-                    <span>🎯</span>
-                    <span>Select Salons to Enrich</span>
-                  </button>
-                ) : (
-                  <button
-                    onClick={handlePause}
-                    disabled={loading}
-                    className="px-6 py-3 bg-orange-600 text-white rounded-lg hover:bg-orange-700 disabled:opacity-50 font-medium"
-                  >
-                    {loading ? 'Pausing...' : '⏸️ Pause Current Process'}
-                  </button>
-                )}
-
-                {progress && progress.failedSalons.length > 0 && (
-                  <button
-                    onClick={handleRetryFailed}
-                    disabled={loading || progress.isRunning}
-                    className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 font-medium"
-                  >
-                    🔄 Retry Failed ({progress.failedSalons.length})
-                  </button>
-                )}
-
                 {!progress?.isRunning && (
                   <>
+                    <button
+                      onClick={() => setViewMode('salons')}
+                      className="px-6 py-3 bg-pink-600 text-white rounded-lg hover:bg-pink-700 disabled:opacity-50 font-medium flex items-center gap-2"
+                    >
+                      <span>🎯</span>
+                      <span>Select Salons to Enrich</span>
+                    </button>
+
                     <button
                       onClick={handleEnrichSitemap}
                       disabled={loading}
@@ -656,6 +671,7 @@ export default function EnrichmentAdminPage() {
                       <span>🗺️</span>
                       <span>Start Enrichment with Filters</span>
                     </button>
+
                     <button
                       onClick={handleRegenerateIndex}
                       disabled={loading}
@@ -665,6 +681,16 @@ export default function EnrichmentAdminPage() {
                       <span>Regenerate Index (Required First!)</span>
                     </button>
                   </>
+                )}
+
+                {progress && progress.failedSalons.length > 0 && !progress.isRunning && (
+                  <button
+                    onClick={handleRetryFailed}
+                    disabled={loading}
+                    className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 font-medium"
+                  >
+                    🔄 Retry Failed ({progress.failedSalons.length})
+                  </button>
                 )}
               </div>
             </div>
