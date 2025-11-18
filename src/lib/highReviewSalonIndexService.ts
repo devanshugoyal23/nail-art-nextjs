@@ -98,12 +98,29 @@ export async function generateHighReviewSalonIndex(): Promise<HighReviewSalonInd
   // Sort by population to prioritize major cities
   const sortedCities = allCities.sort((a, b) => (b.population || 0) - (a.population || 0));
 
-  // IMPORTANT: Timeout protection for serverless functions
+  // IMPORTANT: Ensure ALL states are represented (geographic diversity)
+  // Instead of just taking top 400 globally, take top N per state
   const MAX_PROCESSING_TIME = 45000; // 45 seconds (safe for most Vercel plans)
-  const MAX_CITIES = 400; // Process top 400 cities (still 2x better than old top 200!)
-  const citiesToProcess = sortedCities.slice(0, MAX_CITIES);
+  const CITIES_PER_STATE = 8; // Top 8 cities per state = ~400 total (50 states × 8)
 
-  console.log(`📊 Processing top ${citiesToProcess.length} cities (timeout-safe)...`);
+  // Group cities by state
+  const citiesByState = new Map<string, typeof allCities>();
+  for (const city of sortedCities) {
+    if (!citiesByState.has(city.stateSlug)) {
+      citiesByState.set(city.stateSlug, []);
+    }
+    citiesByState.get(city.stateSlug)!.push(city);
+  }
+
+  // Take top N cities from each state (ensures all states represented)
+  const citiesToProcess: typeof allCities = [];
+  for (const [stateSlug, stateCities] of citiesByState.entries()) {
+    // Take top cities from this state (already sorted by population)
+    const topCitiesInState = stateCities.slice(0, CITIES_PER_STATE);
+    citiesToProcess.push(...topCitiesInState);
+  }
+
+  console.log(`📊 Processing ${citiesToProcess.length} cities from ${citiesByState.size} states (${CITIES_PER_STATE} per state, timeout-safe)...`);
 
   // Process each city
   for (const city of citiesToProcess) {
