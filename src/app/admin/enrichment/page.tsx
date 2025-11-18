@@ -87,6 +87,11 @@ export default function EnrichmentAdminPage() {
   // View mode
   const [viewMode, setViewMode] = useState<'overview' | 'salons'>('overview');
 
+  // Enrichment filters
+  const [reviewFilter, setReviewFilter] = useState<'all' | '50+' | '100+' | '200+' | '500+'>('all');
+  const [enrichmentStrategy, setEnrichmentStrategy] = useState<'all' | 'top-per-city'>('all');
+  const [topPerCityCount, setTopPerCityCount] = useState(10);
+
   // Fetch states on mount
   useEffect(() => {
     fetchStates();
@@ -222,7 +227,17 @@ export default function EnrichmentAdminPage() {
   const handleEnrichSitemap = async () => {
     console.log('🗺️ Sitemap enrichment button clicked');
 
-    if (!confirm('This will enrich all salons from the top 200 cities in your sitemap. This is a long-running process that will take several hours. Continue?')) {
+    // Build confirmation message based on filters
+    let confirmMessage = 'This will enrich salons from the top 200 cities in your sitemap';
+    if (reviewFilter !== 'all') {
+      confirmMessage += ` (only salons with ${reviewFilter} reviews)`;
+    }
+    if (enrichmentStrategy === 'top-per-city') {
+      confirmMessage += ` (top ${topPerCityCount} salons per city for geographic diversity)`;
+    }
+    confirmMessage += '. This is a long-running process. Continue?';
+
+    if (!confirm(confirmMessage)) {
       console.log('User cancelled sitemap enrichment');
       return;
     }
@@ -231,12 +246,22 @@ export default function EnrichmentAdminPage() {
     setLoading(true);
 
     try {
-      console.log('Calling /api/admin/enrichment/enrich-sitemap...');
+      console.log('Calling /api/admin/enrichment/enrich-sitemap with filters:', {
+        reviewFilter,
+        enrichmentStrategy,
+        topPerCityCount,
+      });
+
       const res = await fetch('/api/admin/enrichment/enrich-sitemap', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
+        body: JSON.stringify({
+          reviewFilter: reviewFilter !== 'all' ? reviewFilter : undefined,
+          enrichmentStrategy,
+          topPerCityCount: enrichmentStrategy === 'top-per-city' ? topPerCityCount : undefined,
+        }),
       });
 
       console.log('Response status:', res.status);
@@ -244,7 +269,19 @@ export default function EnrichmentAdminPage() {
       console.log('Response data:', data);
 
       if (res.ok) {
-        alert(`Started enrichment for ${data.citiesCount} sitemap cities!\n\nTop 10 cities:\n${data.topCities.map((c: { city: string; state: string }) => `${c.city}, ${c.state}`).join('\n')}\n\nSwitch to "Overview & Progress" tab to monitor progress.`);
+        let message = `Started enrichment!\n\n`;
+        message += `Cities: ${data.citiesCount}\n`;
+        message += `Salons to enrich: ${data.salonCount || 'calculating...'}\n`;
+        if (data.reviewFilter) {
+          message += `Review filter: ${data.reviewFilter}\n`;
+        }
+        if (data.strategy) {
+          message += `Strategy: ${data.strategy}\n`;
+        }
+        message += `\nTop 10 cities:\n${data.topCities.map((c: { city: string; state: string }) => `${c.city}, ${c.state}`).join('\n')}`;
+        message += `\n\nSwitch to "Overview & Progress" tab to monitor.`;
+
+        alert(message);
       } else {
         console.error('Error response:', data);
         alert(`Error: ${data.error || 'Failed to start'}`);
@@ -467,6 +504,79 @@ export default function EnrichmentAdminPage() {
               </div>
             )}
 
+            {/* Enrichment Filters */}
+            {!progress?.isRunning && (
+              <div className="bg-white rounded-lg shadow-sm p-6">
+                <h3 className="font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                  <span>🎛️</span>
+                  <span>Enrichment Filters (Optimize ROI)</span>
+                </h3>
+                <div className="grid md:grid-cols-2 gap-6">
+                  {/* Review Count Filter */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-900 mb-2">
+                      Review Count Filter
+                    </label>
+                    <select
+                      value={reviewFilter}
+                      onChange={(e) => setReviewFilter(e.target.value as typeof reviewFilter)}
+                      className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                    >
+                      <option value="all">All Salons</option>
+                      <option value="50+">50+ Reviews (Good)</option>
+                      <option value="100+">100+ Reviews (High Quality) ⭐</option>
+                      <option value="200+">200+ Reviews (Premium) 🌟 RECOMMENDED</option>
+                      <option value="500+">500+ Reviews (Elite)</option>
+                    </select>
+                    <p className="text-xs text-gray-600 mt-1">
+                      Higher reviews = More content + Better ROI
+                    </p>
+                  </div>
+
+                  {/* Enrichment Strategy */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-900 mb-2">
+                      Enrichment Strategy
+                    </label>
+                    <select
+                      value={enrichmentStrategy}
+                      onChange={(e) => setEnrichmentStrategy(e.target.value as typeof enrichmentStrategy)}
+                      className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                    >
+                      <option value="all">All Matching Salons</option>
+                      <option value="top-per-city">Top N per City (Geographic Diversity)</option>
+                    </select>
+                    {enrichmentStrategy === 'top-per-city' && (
+                      <div className="mt-2">
+                        <label className="block text-xs text-gray-700 mb-1">Salons per City:</label>
+                        <input
+                          type="number"
+                          min="1"
+                          max="50"
+                          value={topPerCityCount}
+                          onChange={(e) => setTopPerCityCount(parseInt(e.target.value) || 10)}
+                          className="w-full border border-gray-300 rounded px-3 py-1 text-sm focus:ring-2 focus:ring-purple-500"
+                        />
+                      </div>
+                    )}
+                    <p className="text-xs text-gray-600 mt-1">
+                      {enrichmentStrategy === 'all' ? 'Enrich all salons matching filter' : 'Ensure coverage across all cities'}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Filter Summary */}
+                <div className="mt-4 p-3 bg-purple-50 rounded-lg border border-purple-200">
+                  <p className="text-sm text-purple-900">
+                    <strong>Selected:</strong>{' '}
+                    {reviewFilter === 'all' ? 'All salons' : `Salons with ${reviewFilter} reviews`}
+                    {enrichmentStrategy === 'top-per-city' && ` (top ${topPerCityCount} per city)`}
+                    {' '} from top 200 cities
+                  </p>
+                </div>
+              </div>
+            )}
+
             {/* Control Buttons */}
             <div className="bg-white rounded-lg shadow-sm p-6">
               <h3 className="font-semibold text-gray-900 mb-4">Quick Actions</h3>
@@ -506,7 +616,7 @@ export default function EnrichmentAdminPage() {
                     className="px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50 font-medium flex items-center gap-2"
                   >
                     <span>🗺️</span>
-                    <span>Enrich All Sitemap Cities (Top 200)</span>
+                    <span>Start Enrichment with Filters</span>
                   </button>
                 )}
               </div>

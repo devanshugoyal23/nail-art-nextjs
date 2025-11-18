@@ -3,14 +3,35 @@ import { enrichSelectedSalons } from '@/lib/batchEnrichmentService';
 import { NailSalon } from '@/lib/nailSalonService';
 import { loadProgress } from '@/lib/enrichmentProgressService';
 
+interface EnrichmentFilters {
+  reviewFilter?: '50+' | '100+' | '200+' | '500+';
+  enrichmentStrategy?: 'all' | 'top-per-city';
+  topPerCityCount?: number;
+}
+
 /**
- * Enrich all salons from sitemap cities (top 200 cities)
- * This follows the same logic as the sitemap generation - top 200 cities sorted by population/salon count
+ * Enrich salons from sitemap cities (top 200 cities) with optional filters
+ *
+ * Filters:
+ * - reviewFilter: Minimum review count (50+, 100+, 200+, 500+)
+ * - enrichmentStrategy: 'all' (all matching salons) or 'top-per-city' (geographic diversity)
+ * - topPerCityCount: Number of top salons per city (only for 'top-per-city' strategy)
  */
-export async function POST() {
+export async function POST(request: Request) {
   console.log('📥 POST /api/admin/enrichment/enrich-sitemap - Request received');
 
   try {
+    // Parse request body for filters
+    let filters: EnrichmentFilters = {};
+    try {
+      const body = await request.json();
+      filters = body as EnrichmentFilters;
+      console.log('📋 Enrichment filters:', filters);
+    } catch (e) {
+      // No body or invalid JSON - use default filters
+      console.log('ℹ️ No filters provided, using defaults');
+    }
+
     // Check if enrichment is already running
     const progress = loadProgress();
     if (progress.isRunning) {
@@ -18,7 +39,7 @@ export async function POST() {
       return NextResponse.json({ error: 'Enrichment already running' }, { status: 400 });
     }
 
-    console.log('🚀 Starting sitemap cities enrichment...');
+    console.log('🚀 Starting sitemap cities enrichment with filters...');
 
     // Get top 200 cities from consolidated data (same as sitemap)
     console.log('📦 Importing consolidatedCitiesData...');
@@ -79,14 +100,18 @@ export async function POST() {
     console.log(`   Top 10: ${topCities.slice(0, 10).map(c => `${c.cityName}, ${c.stateName}`).join('; ')}`);
 
     // Start enrichment in background (collect all salons then enrich)
-    console.log('🎯 Starting background enrichment process...');
-    loadAndEnrichSalonsFromCities(topCities);
+    console.log('🎯 Starting background enrichment process with filters...');
+    loadAndEnrichSalonsFromCities(topCities, filters);
 
     const responseData = {
       success: true,
       message: `Started enrichment for ${topCities.length} sitemap cities`,
       citiesCount: topCities.length,
       topCities: topCities.slice(0, 10).map(c => ({ city: c.cityName, state: c.stateName })),
+      reviewFilter: filters.reviewFilter,
+      strategy: filters.enrichmentStrategy === 'top-per-city'
+        ? `Top ${filters.topPerCityCount || 10} per city`
+        : 'All matching salons',
     };
 
     console.log('✅ Returning success response:', responseData);
@@ -104,11 +129,12 @@ export async function POST() {
 }
 
 /**
- * Load all salons from cities, then enrich them all at once
+ * Load all salons from cities, apply filters, then enrich them all at once
  * This prevents progress from resetting for each city
  */
 async function loadAndEnrichSalonsFromCities(
-  cities: Array<{ state: string; city: string; cityName: string; stateName: string }>
+  cities: Array<{ state: string; city: string; cityName: string; stateName: string }>,
+  filters: EnrichmentFilters = {}
 ) {
   try {
     const { addLog } = await import('@/lib/enrichmentProgressService');
@@ -116,8 +142,24 @@ async function loadAndEnrichSalonsFromCities(
     console.log(`\n🎯 Loading salons from ${cities.length} sitemap cities...\n`);
     addLog(`🎯 Loading salons from ${cities.length} sitemap cities...`);
 
+    if (filters.reviewFilter) {
+      addLog(`📊 Filter: Salons with ${filters.reviewFilter} reviews`);
+    }
+    if (filters.enrichmentStrategy === 'top-per-city') {
+      addLog(`🎯 Strategy: Top ${filters.topPerCityCount || 10} salons per city`);
+    }
+
     const allSalons: NailSalon[] = [];
     const { getCityDataFromR2 } = await import('@/lib/salonDataService');
+
+    // Parse review filter threshold
+    const getReviewThreshold = (filter?: string): number => {
+      if (!filter) return 0;
+      const match = filter.match(/(\d+)\+/);
+      return match ? parseInt(match[1]) : 0;
+    };
+
+    const reviewThreshold = getReviewThreshold(filters.reviewFilter);
 
     // Load all salons from all cities
     for (let i = 0; i < cities.length; i++) {
@@ -135,10 +177,33 @@ async function loadAndEnrichSalonsFromCities(
           continue;
         }
 
-        const salons = cityData.salons as NailSalon[];
-        console.log(`   ✅ Loaded ${salons.length} salons`);
-        addLog(`   ✅ Loaded ${salons.length} salons from ${cityName}, ${stateName}`);
-        allSalons.push(...salons);
+        let salons = cityData.salons as NailSalon[];
+        const originalCount = salons.length;
+
+        // Apply review filter
+        if (reviewThreshold > 0) {
+          salons = salons.filter((s) => (s.reviewCount || 0) >= reviewThreshold);
+          console.log(`   🔍 Filtered by reviews: ${salons.length}/${originalCount} salons`);
+        }
+
+        // Apply top-per-city strategy
+        if (filters.enrichmentStrategy === 'top-per-city' && salons.length > 0) {
+          const topN = filters.topPerCityCount || 10;
+          // Sort by review count descending, then take top N
+          salons = salons
+            .sort((a, b) => (b.reviewCount || 0) - (a.reviewCount || 0))
+            .slice(0, topN);
+          console.log(`   🎯 Top ${topN} salons selected: ${salons.length} salons`);
+        }
+
+        if (salons.length > 0) {
+          console.log(`   ✅ Added ${salons.length} salons from ${cityName}`);
+          addLog(`   ✅ Added ${salons.length} salons from ${cityName}, ${stateName}`);
+          allSalons.push(...salons);
+        } else {
+          console.log(`   ⏭️  No salons match filters - skipping`);
+          addLog(`   ⏭️ No salons match filters in ${cityName}, ${stateName}`);
+        }
       } catch (error) {
         console.error(`   ❌ Error loading ${cityName}, ${stateName}:`, error);
         addLog(`   ❌ Error loading ${cityName}, ${stateName}`);
@@ -148,6 +213,12 @@ async function loadAndEnrichSalonsFromCities(
 
     console.log(`\n✅ Loaded ${allSalons.length} total salons from ${cities.length} cities`);
     addLog(`✅ Loaded ${allSalons.length} total salons from ${cities.length} cities`);
+
+    if (allSalons.length === 0) {
+      console.log(`⚠️ No salons match the selected filters!`);
+      addLog(`⚠️ No salons match the selected filters!`);
+      return;
+    }
 
     console.log(`🚀 Starting enrichment for all ${allSalons.length} salons...\n`);
     addLog(`🚀 Starting enrichment for all ${allSalons.length} salons...`);

@@ -12,6 +12,8 @@ import { NextResponse } from 'next/server';
  * - sitemap-gallery.xml: Gallery overview only (no item URLs)
  * - sitemap-nail-salons.xml: Main salon directory page
  * - sitemap-nail-salons-premium.xml: Top 500 premium salons (score ≥ 80)
+ * - sitemap-nail-salons-top-reviews.xml: Salons with 200+ reviews (highest ROI)
+ * - sitemap-nail-salons-high-reviews.xml: Top 2000 salons with 100+ reviews
  * - sitemap-nail-salons-cities.xml: 50 states + top 200 cities (strategic indexing)
  */
 export async function GET() {
@@ -46,6 +48,14 @@ export async function GET() {
   </sitemap>
   <sitemap>
     <loc>${baseUrl}/sitemap-nail-salons-premium.xml</loc>
+    <lastmod>${currentDate}</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>${baseUrl}/sitemap-nail-salons-top-reviews.xml</loc>
+    <lastmod>${currentDate}</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>${baseUrl}/sitemap-nail-salons-high-reviews.xml</loc>
     <lastmod>${currentDate}</lastmod>
   </sitemap>
   <sitemap>
