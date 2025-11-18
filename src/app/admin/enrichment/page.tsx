@@ -601,7 +601,7 @@ export default function EnrichmentAdminPage() {
                     placeholder="Search states..."
                     value={stateSearch}
                     onChange={(e) => setStateSearch(e.target.value)}
-                    className="w-full border border-gray-300 rounded-lg px-4 py-2 mb-2 focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                    className="w-full border border-gray-300 rounded-lg px-4 py-2 mb-2 text-gray-900 focus:ring-2 focus:ring-pink-500 focus:border-transparent"
                   />
                   <select
                     value={selectedState}
@@ -610,7 +610,7 @@ export default function EnrichmentAdminPage() {
                       setSelectedCity('');
                       setSalons([]);
                     }}
-                    className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                    className="w-full border border-gray-300 rounded-lg px-4 py-2 text-gray-900 focus:ring-2 focus:ring-pink-500 focus:border-transparent"
                   >
                     <option value="">-- Select State --</option>
                     {filteredStates.map((state) => (
@@ -630,13 +630,13 @@ export default function EnrichmentAdminPage() {
                     value={citySearch}
                     onChange={(e) => setCitySearch(e.target.value)}
                     disabled={!selectedState}
-                    className="w-full border border-gray-300 rounded-lg px-4 py-2 mb-2 focus:ring-2 focus:ring-pink-500 focus:border-transparent disabled:bg-gray-100"
+                    className="w-full border border-gray-300 rounded-lg px-4 py-2 mb-2 text-gray-900 focus:ring-2 focus:ring-pink-500 focus:border-transparent disabled:bg-gray-100"
                   />
                   <select
                     value={selectedCity}
                     onChange={(e) => setSelectedCity(e.target.value)}
                     disabled={!selectedState}
-                    className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-pink-500 focus:border-transparent disabled:bg-gray-100"
+                    className="w-full border border-gray-300 rounded-lg px-4 py-2 text-gray-900 focus:ring-2 focus:ring-pink-500 focus:border-transparent disabled:bg-gray-100"
                   >
                     <option value="">-- Select City --</option>
                     {filteredCities.map((city, idx) => (
@@ -675,7 +675,7 @@ export default function EnrichmentAdminPage() {
                         placeholder="Search by name..."
                         value={salonSearch}
                         onChange={(e) => setSalonSearch(e.target.value)}
-                        className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                        className="w-full border border-gray-300 rounded-lg px-4 py-2 text-gray-900 focus:ring-2 focus:ring-pink-500 focus:border-transparent"
                       />
                     </div>
 
@@ -685,7 +685,7 @@ export default function EnrichmentAdminPage() {
                       <select
                         value={statusFilter}
                         onChange={(e) => setStatusFilter(e.target.value as typeof statusFilter)}
-                        className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                        className="w-full border border-gray-300 rounded-lg px-4 py-2 text-gray-900 focus:ring-2 focus:ring-pink-500 focus:border-transparent"
                       >
                         <option value="all">All Salons ({salons.length})</option>
                         <option value="enriched">Enriched Only ({enrichedCount})</option>
