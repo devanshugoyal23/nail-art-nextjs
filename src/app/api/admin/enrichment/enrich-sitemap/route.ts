@@ -9,7 +9,7 @@ import {
 } from '@/lib/highReviewSalonIndexService';
 
 interface EnrichmentFilters {
-  reviewFilter?: '50+' | '100+' | '200+' | '500+';
+  reviewFilter?: '100+' | '200+' | '500+';
   enrichmentStrategy?: 'all' | 'top-per-city';
   topPerCityCount?: number;
 }
@@ -23,7 +23,7 @@ interface EnrichmentFilters {
  * - Already filtered by review tiers
  *
  * Filters:
- * - reviewFilter: Minimum review count (50+, 100+, 200+, 500+)
+ * - reviewFilter: Minimum review count (100+, 200+, 500+)
  * - enrichmentStrategy: 'all' (all matching salons) or 'top-per-city' (geographic diversity)
  * - topPerCityCount: Number of top salons per city (only for 'top-per-city' strategy)
  */

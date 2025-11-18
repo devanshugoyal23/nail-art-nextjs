@@ -34,14 +34,12 @@ export interface HighReviewSalonIndex {
     '500+': SalonWithLocation[];
     '200+': SalonWithLocation[];
     '100+': SalonWithLocation[];
-    '50+': SalonWithLocation[];
   };
   cityStats: Array<{
     city: string;
     state: string;
     citySlug: string;
     stateSlug: string;
-    count50Plus: number;
     count100Plus: number;
     count200Plus: number;
     count500Plus: number;
@@ -64,7 +62,6 @@ export async function generateHighReviewSalonIndex(): Promise<HighReviewSalonInd
     '500+': [],
     '200+': [],
     '100+': [],
-    '50+': [],
   };
 
   const cityStats: HighReviewSalonIndex['cityStats'] = [];
@@ -103,7 +100,7 @@ export async function generateHighReviewSalonIndex(): Promise<HighReviewSalonInd
   const MAX_PROCESSING_TIME = 45000; // 45 seconds (safe for most Vercel plans)
 
   // Note: We take ALL salons from each city (no limit per city)
-  // Salons are filtered by review tiers: 500+, 200+, 100+, 50+
+  // Salons are filtered by review tiers: 500+, 200+, 100+
 
   // Process ALL cities (sorted by population for best coverage)
   const citiesToProcess = sortedCities;
@@ -128,7 +125,6 @@ export async function generateHighReviewSalonIndex(): Promise<HighReviewSalonInd
       citiesProcessed++;
       statesSet.add(city.stateSlug);
 
-      let count50Plus = 0;
       let count100Plus = 0;
       let count200Plus = 0;
       let count500Plus = 0;
@@ -136,6 +132,11 @@ export async function generateHighReviewSalonIndex(): Promise<HighReviewSalonInd
       // Process each salon
       for (const salon of cityData.salons) {
         const reviewCount = salon.reviewCount || 0;
+
+        // Only include salons with 100+ reviews
+        if (reviewCount < 100) {
+          continue;
+        }
 
         // Create salon with location info
         const salonWithLocation: SalonWithLocation = {
@@ -158,21 +159,16 @@ export async function generateHighReviewSalonIndex(): Promise<HighReviewSalonInd
           tiers['100+'].push(salonWithLocation);
           count100Plus++;
           totalSalons++;
-        } else if (reviewCount >= 50) {
-          tiers['50+'].push(salonWithLocation);
-          count50Plus++;
-          totalSalons++;
         }
       }
 
-      // Track city stats if it has any high-review salons
-      if (count50Plus + count100Plus + count200Plus + count500Plus > 0) {
+      // Track city stats if it has any high-review salons (100+)
+      if (count100Plus + count200Plus + count500Plus > 0) {
         cityStats.push({
           city: city.city,
           state: city.state,
           citySlug: city.citySlug,
           stateSlug: city.stateSlug,
-          count50Plus,
           count100Plus,
           count200Plus,
           count500Plus,
@@ -192,12 +188,11 @@ export async function generateHighReviewSalonIndex(): Promise<HighReviewSalonInd
   tiers['500+'].sort((a, b) => (b.reviewCount || 0) - (a.reviewCount || 0));
   tiers['200+'].sort((a, b) => (b.reviewCount || 0) - (a.reviewCount || 0));
   tiers['100+'].sort((a, b) => (b.reviewCount || 0) - (a.reviewCount || 0));
-  tiers['50+'].sort((a, b) => (b.reviewCount || 0) - (a.reviewCount || 0));
 
-  // Sort city stats by total high-review salons
+  // Sort city stats by total high-review salons (100+)
   cityStats.sort((a, b) => {
-    const totalA = a.count50Plus + a.count100Plus + a.count200Plus + a.count500Plus;
-    const totalB = b.count50Plus + b.count100Plus + b.count200Plus + b.count500Plus;
+    const totalA = a.count100Plus + a.count200Plus + a.count500Plus;
+    const totalB = b.count100Plus + b.count200Plus + b.count500Plus;
     return totalB - totalA;
   });
 
@@ -217,7 +212,6 @@ export async function generateHighReviewSalonIndex(): Promise<HighReviewSalonInd
   console.log(`   500+ reviews: ${tiers['500+'].length} salons`);
   console.log(`   200+ reviews: ${tiers['200+'].length} salons`);
   console.log(`   100+ reviews: ${tiers['100+'].length} salons`);
-  console.log(`   50+ reviews: ${tiers['50+'].length} salons`);
   console.log(`   Total: ${totalSalons} salons`);
   console.log(`   Cities: ${cityStats.length}`);
   console.log(`   States: ${statesSet.size}`);
@@ -272,7 +266,7 @@ export async function highReviewSalonIndexExists(): Promise<boolean> {
  * Get salons by review tier
  */
 export async function getSalonsByReviewTier(
-  tier: '50+' | '100+' | '200+' | '500+'
+  tier: '100+' | '200+' | '500+'
 ): Promise<SalonWithLocation[]> {
   const index = await getHighReviewSalonIndex();
 
@@ -289,7 +283,7 @@ export async function getSalonsByReviewTier(
  * Returns top N salons per city
  */
 export async function getSalonsByReviewTierWithDiversity(
-  tier: '50+' | '100+' | '200+' | '500+',
+  tier: '100+' | '200+' | '500+',
   topPerCity: number = 10
 ): Promise<SalonWithLocation[]> {
   const allSalons = await getSalonsByReviewTier(tier);
@@ -340,7 +334,6 @@ export async function getHighReviewSalonIndexStats() {
       '500+': index.tiers['500+'].length,
       '200+': index.tiers['200+'].length,
       '100+': index.tiers['100+'].length,
-      '50+': index.tiers['50+'].length,
     },
     topCities: index.cityStats.slice(0, 20),
   };

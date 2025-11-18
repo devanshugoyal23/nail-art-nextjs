@@ -88,7 +88,7 @@ export default function EnrichmentAdminPage() {
   const [viewMode, setViewMode] = useState<'overview' | 'salons'>('overview');
 
   // Enrichment filters
-  const [reviewFilter, setReviewFilter] = useState<'all' | '50+' | '100+' | '200+' | '500+'>('all');
+  const [reviewFilter, setReviewFilter] = useState<'all' | '100+' | '200+' | '500+'>('all');
   const [enrichmentStrategy, setEnrichmentStrategy] = useState<'all' | 'top-per-city'>('all');
   const [topPerCityCount, setTopPerCityCount] = useState(10);
 
@@ -257,8 +257,7 @@ export default function EnrichmentAdminPage() {
         message += `Review tiers:\n`;
         message += `- 500+ reviews: ${data.stats.tierCounts['500+']}\n`;
         message += `- 200+ reviews: ${data.stats.tierCounts['200+']}\n`;
-        message += `- 100+ reviews: ${data.stats.tierCounts['100+']}\n`;
-        message += `- 50+ reviews: ${data.stats.tierCounts['50+']}\n\n`;
+        message += `- 100+ reviews: ${data.stats.tierCounts['100+']}\n\n`;
         message += `Processing time: ${data.stats.processingTimeSeconds}s`;
 
         alert(message);
@@ -571,7 +570,6 @@ export default function EnrichmentAdminPage() {
                       className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                     >
                       <option value="all">All Salons</option>
-                      <option value="50+">50+ Reviews (Good)</option>
                       <option value="100+">100+ Reviews (High Quality) ⭐</option>
                       <option value="200+">200+ Reviews (Premium) 🌟 RECOMMENDED</option>
                       <option value="500+">500+ Reviews (Elite)</option>

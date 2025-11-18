@@ -5,7 +5,7 @@ import { getCityDataFromR2 } from '@/lib/salonDataService';
  * Analytics Endpoint: Review Distribution
  *
  * Provides insights into salon review counts across all cities:
- * - Total salons by review count thresholds (50+, 100+, 200+, 500+)
+ * - Total salons by review count thresholds (100+, 200+, 500+)
  * - Top cities by high-review salon count
  * - Average reviews per city
  * - Geographic distribution insights
@@ -51,7 +51,6 @@ export async function GET() {
     let totalSalons = 0;
     let salonsWithReviews = 0;
     const reviewBuckets = {
-      '50+': 0,
       '100+': 0,
       '200+': 0,
       '500+': 0,
@@ -95,8 +94,7 @@ export async function GET() {
             cityTotalReviews += reviewCount;
           }
 
-          // Count by thresholds
-          if (reviewCount >= 50) reviewBuckets['50+']++;
+          // Count by thresholds (100+ minimum)
           if (reviewCount >= 100) {
             reviewBuckets['100+']++;
             cityHighReviewCount++;
@@ -143,7 +141,6 @@ export async function GET() {
       },
       reviewThresholds: reviewBuckets,
       thresholdPercentages: {
-        '50+': totalSalons > 0 ? ((reviewBuckets['50+'] / totalSalons) * 100).toFixed(1) + '%' : '0%',
         '100+': totalSalons > 0 ? ((reviewBuckets['100+'] / totalSalons) * 100).toFixed(1) + '%' : '0%',
         '200+': totalSalons > 0 ? ((reviewBuckets['200+'] / totalSalons) * 100).toFixed(1) + '%' : '0%',
         '500+': totalSalons > 0 ? ((reviewBuckets['500+'] / totalSalons) * 100).toFixed(1) + '%' : '0%',
@@ -151,7 +148,6 @@ export async function GET() {
       },
       estimatedCosts: {
         'all': `$${(totalSalons * 0.03).toFixed(2)}`,
-        '50+': `$${(reviewBuckets['50+'] * 0.03).toFixed(2)}`,
         '100+': `$${(reviewBuckets['100+'] * 0.03).toFixed(2)}`,
         '200+': `$${(reviewBuckets['200+'] * 0.03).toFixed(2)}`,
         '500+': `$${(reviewBuckets['500+'] * 0.03).toFixed(2)}`,

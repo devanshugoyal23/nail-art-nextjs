@@ -38,7 +38,6 @@ export async function POST() {
           '500+': index.tiers['500+'].length,
           '200+': index.tiers['200+'].length,
           '100+': index.tiers['100+'].length,
-          '50+': index.tiers['50+'].length,
         },
         processingTimeSeconds: (duration / 1000).toFixed(1),
       },
