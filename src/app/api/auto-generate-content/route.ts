@@ -367,9 +367,21 @@ export async function POST(request: NextRequest) {
     }
   } catch (error) {
     console.error('Error in auto-generate-content API:', error);
+
+    // Provide detailed error message for debugging
+    const errorMessage = error instanceof Error ? error.message : 'Internal server error';
+    const isApiKeyError = errorMessage.includes('GEMINI_API_KEY');
+
     return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
+      {
+        success: false,
+        error: errorMessage,
+        isConfigError: isApiKeyError,
+        suggestion: isApiKeyError
+          ? 'Please configure your GEMINI_API_KEY in .env.local file'
+          : 'Please check server logs for more details'
+      },
+      { status: isApiKeyError ? 503 : 500 }
     );
   }
 }
