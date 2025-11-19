@@ -84,6 +84,11 @@ export default function EnrichmentAdminPage() {
   const [salonSearch, setSalonSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState<'all' | 'enriched' | 'pending' | 'failed'>('all');
 
+  // ROI Optimization Filters
+  const [minReviews, setMinReviews] = useState<number>(0);
+  const [minRating, setMinRating] = useState<number>(0);
+  const [sortBy, setSortBy] = useState<'name' | 'reviews' | 'rating'>('reviews');
+
   // View mode
   const [viewMode, setViewMode] = useState<'overview' | 'salons'>('overview');
 
@@ -301,8 +306,27 @@ export default function EnrichmentAdminPage() {
       filtered = filtered.filter((s) => s.enrichmentStatus === statusFilter);
     }
 
+    // Filter by minimum reviews (ROI optimization)
+    if (minReviews > 0) {
+      filtered = filtered.filter((s) => (s.reviewCount || 0) >= minReviews);
+    }
+
+    // Filter by minimum rating (ROI optimization)
+    if (minRating > 0) {
+      filtered = filtered.filter((s) => (s.rating || 0) >= minRating);
+    }
+
+    // Sort salons
+    if (sortBy === 'reviews') {
+      filtered = [...filtered].sort((a, b) => (b.reviewCount || 0) - (a.reviewCount || 0));
+    } else if (sortBy === 'rating') {
+      filtered = [...filtered].sort((a, b) => (b.rating || 0) - (a.rating || 0));
+    } else {
+      filtered = [...filtered].sort((a, b) => a.name.localeCompare(b.name));
+    }
+
     return filtered;
-  }, [salons, salonSearch, statusFilter]);
+  }, [salons, salonSearch, statusFilter, minReviews, minRating, sortBy]);
 
   const percentComplete = progress ? Math.round((progress.enriched / progress.totalSalons) * 100) : 0;
   const estimatedCostRemaining = progress ? ((progress.totalSalons - progress.enriched) * 0.03).toFixed(2) : '0';
@@ -691,6 +715,66 @@ export default function EnrichmentAdminPage() {
                         <option value="enriched">Enriched Only ({enrichedCount})</option>
                         <option value="pending">Pending Only ({pendingCount})</option>
                       </select>
+                    </div>
+                  </div>
+
+                  {/* ROI Optimization Filters */}
+                  <div className="mt-4 p-4 bg-gradient-to-r from-green-50 to-blue-50 rounded-lg border border-green-200">
+                    <h4 className="text-sm font-semibold text-gray-900 mb-3 flex items-center gap-2">
+                      <span>💰</span>
+                      <span>ROI Optimization Filters</span>
+                      <span className="text-xs font-normal text-gray-600">(Prioritize high-value salons)</span>
+                    </h4>
+                    <div className="grid md:grid-cols-3 gap-4">
+                      {/* Minimum Reviews */}
+                      <div>
+                        <label className="block text-sm font-medium text-gray-900 mb-2">Minimum Reviews</label>
+                        <select
+                          value={minReviews}
+                          onChange={(e) => setMinReviews(Number(e.target.value))}
+                          className="w-full border border-gray-300 rounded-lg px-4 py-2 text-gray-900 focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                        >
+                          <option value="0">All Salons</option>
+                          <option value="10">10+ reviews</option>
+                          <option value="25">25+ reviews</option>
+                          <option value="50">50+ reviews</option>
+                          <option value="100">100+ reviews ⭐</option>
+                          <option value="200">200+ reviews 🏆</option>
+                        </select>
+                      </div>
+
+                      {/* Minimum Rating */}
+                      <div>
+                        <label className="block text-sm font-medium text-gray-900 mb-2">Minimum Rating</label>
+                        <select
+                          value={minRating}
+                          onChange={(e) => setMinRating(Number(e.target.value))}
+                          className="w-full border border-gray-300 rounded-lg px-4 py-2 text-gray-900 focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                        >
+                          <option value="0">All Ratings</option>
+                          <option value="3.0">3.0+ stars</option>
+                          <option value="3.5">3.5+ stars</option>
+                          <option value="4.0">4.0+ stars ⭐</option>
+                          <option value="4.5">4.5+ stars 🏆</option>
+                        </select>
+                      </div>
+
+                      {/* Sort By */}
+                      <div>
+                        <label className="block text-sm font-medium text-gray-900 mb-2">Sort By</label>
+                        <select
+                          value={sortBy}
+                          onChange={(e) => setSortBy(e.target.value as typeof sortBy)}
+                          className="w-full border border-gray-300 rounded-lg px-4 py-2 text-gray-900 focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                        >
+                          <option value="reviews">Most Reviews (Best ROI)</option>
+                          <option value="rating">Highest Rating</option>
+                          <option value="name">Name (A-Z)</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div className="mt-3 text-xs text-gray-700">
+                      💡 <strong>Pro Tip:</strong> Enrich salons with 100+ reviews first for maximum SEO impact and ROI. High-review salons drive more traffic.
                     </div>
                   </div>
 

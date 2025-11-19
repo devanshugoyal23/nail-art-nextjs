@@ -75,6 +75,15 @@ export async function POST() {
     // Take top 200 cities (same as sitemap)
     const topCities = sortedCities.slice(0, 200);
 
+    // Validate we have cities to enrich
+    if (!topCities || topCities.length === 0) {
+      console.error('❌ No cities found to enrich');
+      return NextResponse.json(
+        { error: 'No cities found in sitemap data. Please ensure consolidated city data is populated.' },
+        { status: 400 }
+      );
+    }
+
     console.log(`📊 Will enrich top ${topCities.length} cities from sitemap`);
     console.log(`   Top 10: ${topCities.slice(0, 10).map(c => `${c.cityName}, ${c.stateName}`).join('; ')}`);
 
