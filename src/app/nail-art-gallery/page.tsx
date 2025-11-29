@@ -53,15 +53,15 @@ export const metadata: Metadata = {
   },
 };
 
-// Enable ISR (Incremental Static Regeneration) - revalidate every hour
-export const revalidate = 3600;
+// Enable ISR (Incremental Static Regeneration) - revalidate every 30 days (data is static)
+export const revalidate = 2592000; // 30 days in seconds
 
 export default async function GalleryPage() {
   // Fetch initial data server-side for instant rendering
-  const initialData = await getGalleryItems({ 
-    page: 1, 
-    limit: 20, 
-    sortBy: 'newest' 
+  const initialData = await getGalleryItems({
+    page: 1,
+    limit: 20,
+    sortBy: 'newest'
   });
 
   return (
@@ -101,7 +101,7 @@ export default async function GalleryPage() {
           })
         }}
       />
-      
+
       <div className="min-h-screen bg-[#f8f6f7]">
         <div className="max-w-7xl mx-auto px-2 sm:px-4 py-4 sm:py-6">
           {/* SEO Header */}
@@ -110,18 +110,18 @@ export default async function GalleryPage() {
               AI Nail Art Gallery
             </h1>
             <p className="text-base sm:text-lg text-[#1b0d14]/70 max-w-3xl mx-auto px-2">
-              Discover hundreds of unique AI-generated nail art designs. From classic French manicures to bold artistic creations, 
+              Discover hundreds of unique AI-generated nail art designs. From classic French manicures to bold artistic creations,
               find your perfect manicure inspiration.
             </p>
           </div>
-          
-          <EnhancedGallery 
-            showPrompts={true} 
-            showDelete={false} 
+
+          <EnhancedGallery
+            showPrompts={true}
+            showDelete={false}
             initialItems={initialData.items}
             initialTotalCount={initialData.totalCount}
           />
-          
+
           {/* SEO Content Section */}
           <div className="mt-12 sm:mt-16 bg-white rounded-xl p-4 sm:p-6 lg:p-8 ring-1 ring-[#ee2b8c]/15">
             <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6">About Our AI Nail Art Gallery</h2>
@@ -129,7 +129,7 @@ export default async function GalleryPage() {
               <div>
                 <h3 className="text-lg sm:text-xl font-semibold mb-3">🎨 Unique AI-Generated Designs</h3>
                 <p className="text-[#1b0d14]/80 mb-4 text-sm sm:text-base">
-                  Our AI creates completely unique nail art designs that you won&apos;t find anywhere else. 
+                  Our AI creates completely unique nail art designs that you won&apos;t find anywhere else.
                   Each design is generated using advanced machine learning algorithms to ensure originality and creativity.
                 </p>
                 <ul className="text-[#1b0d14]/80 space-y-2 text-sm sm:text-base">
@@ -142,7 +142,7 @@ export default async function GalleryPage() {
               <div>
                 <h3 className="text-lg sm:text-xl font-semibold mb-3">✨ How to Use the Gallery</h3>
                 <p className="text-[#1b0d14]/80 mb-4 text-sm sm:text-base">
-                  Browse our collection by category, color, technique, or occasion. Each design comes with 
+                  Browse our collection by category, color, technique, or occasion. Each design comes with
                   detailed instructions and supply lists for easy recreation.
                 </p>
                 <ul className="text-[#1b0d14]/80 space-y-2 text-sm sm:text-base">
@@ -154,7 +154,7 @@ export default async function GalleryPage() {
               </div>
             </div>
           </div>
-          
+
           {/* Related Categories Section */}
           <div className="mt-16">
             <RelatedCategories />

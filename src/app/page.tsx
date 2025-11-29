@@ -45,8 +45,8 @@ export const metadata: Metadata = {
   },
 };
 
-// ISR Configuration - Cache homepage for 1 hour to reduce CPU usage
-export const revalidate = 3600; // 1 hour in seconds
+// ISR Configuration - Cache homepage for 30 days (data is static)
+export const revalidate = 2592000; // 30 days in seconds (2592000 = 30 * 24 * 60 * 60)
 
 export default async function Home() {
   // Fetch real data for homepage sections

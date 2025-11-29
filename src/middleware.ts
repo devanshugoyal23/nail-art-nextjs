@@ -69,26 +69,26 @@ export function middleware(request: NextRequest) {
       }
     }
   }
-  
+
   // Check if accessing admin routes (except login page)
   if (pathname.startsWith('/admin') && pathname !== '/admin/login') {
     const expectedPassword = process.env.ADMIN_PASSWORD;
-    
+
     // SECURITY: Always require a password - no development fallback
     if (!expectedPassword) {
       console.error('SECURITY WARNING: ADMIN_PASSWORD not set in environment variables');
-      return new NextResponse('Admin password not configured. Please set ADMIN_PASSWORD environment variable.', { 
+      return new NextResponse('Admin password not configured. Please set ADMIN_PASSWORD environment variable.', {
         status: 500,
         headers: {
           'Content-Type': 'text/plain'
         }
       });
     }
-    
+
     // Check for admin password in headers or cookies
-    const adminPassword = request.headers.get('x-admin-password') || 
-                         request.cookies.get('admin-auth')?.value;
-    
+    const adminPassword = request.headers.get('x-admin-password') ||
+      request.cookies.get('admin-auth')?.value;
+
     // Check if password matches
     if (!adminPassword || adminPassword !== expectedPassword) {
       // Redirect to login page instead of triggering basic auth
@@ -96,16 +96,16 @@ export function middleware(request: NextRequest) {
       return NextResponse.redirect(loginUrl);
     }
   }
-  
+
   // Add security headers to all responses
   const response = NextResponse.next();
-  
+
   // Security headers
   response.headers.set('X-Frame-Options', 'DENY');
   response.headers.set('X-Content-Type-Options', 'nosniff');
   response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
   response.headers.set('X-XSS-Protection', '1; mode=block');
-  
+
   // CORS headers for API routes
   if (pathname.startsWith('/api')) {
     const allowedOrigins = [
@@ -113,29 +113,37 @@ export function middleware(request: NextRequest) {
       'http://localhost:3000',
       'https://localhost:3000'
     ];
-    
+
     const origin = request.headers.get('origin');
     const allowedOrigin = allowedOrigins.includes(origin || '') ? origin : allowedOrigins[0];
-    
+
     response.headers.set('Access-Control-Allow-Origin', allowedOrigin || '*');
     response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
     response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Admin-Password, X-API-Key');
     response.headers.set('Access-Control-Allow-Credentials', 'true');
     response.headers.set('Access-Control-Max-Age', '86400');
-    
+
     // Handle preflight requests
     if (request.method === 'OPTIONS') {
       return new NextResponse(null, { status: 200, headers: response.headers });
     }
   }
-  
+
   return response;
 }
 
 export const config = {
   matcher: [
-    '/((?!_next/static|_next/image|favicon.ico|robots.txt|sitemap|manifest.json|sw.js|globals.css|.*\\.css|.*\\.js|.*\\.png|.*\\.jpg|.*\\.jpeg|.*\\.gif|.*\\.svg|.*\\.ico|.*\\.woff|.*\\.woff2|.*\\.ttf|.*\\.eot).*)',
+    // Admin routes (authentication required)
     '/admin/:path*',
-    '/api/:path*'
+
+    // API routes (CORS and security headers)
+    '/api/:path*',
+
+    // Dynamic routes that need slug normalization
+    '/nail-art-gallery/category/:path*',
+
+    // Design pages that need normalization (exclude reserved paths)
+    '/:category((?!_next|api|admin|static|favicon.ico|robots.txt|sitemap|manifest.json|sw.js).*?)/:slug*',
   ]
 };

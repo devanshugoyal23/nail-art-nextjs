@@ -1,0 +1,85 @@
+{
+    "headers": [
+        {
+            "source": "/_next/static/(.*)",
+            "headers": [
+                {
+                    "key": "Cache-Control",
+                    "value": "public, max-age=31536000, immutable"
+                }
+            ]
+        },
+        {
+            "source": "/static/(.*)",
+            "headers": [
+                {
+                    "key": "Cache-Control",
+                    "value": "public, max-age=31536000, immutable"
+                }
+            ]
+        },
+        {
+            "source": "/(.*\\.(png|jpg|jpeg|gif|svg|ico|webp|avif|woff|woff2|ttf|eot))",
+            "headers": [
+                {
+                    "key": "Cache-Control",
+                    "value": "public, max-age=31536000, immutable"
+                }
+            ]
+        },
+        {
+            "source": "/api/nail-salons/states",
+            "headers": [
+                {
+                    "key": "Cache-Control",
+                    "value": "public, s-maxage=2592000, stale-while-revalidate=2592000"
+                }
+            ]
+        },
+        {
+            "source": "/api/nail-salons/cities",
+            "headers": [
+                {
+                    "key": "Cache-Control",
+                    "value": "public, s-maxage=2592000, stale-while-revalidate=2592000"
+                }
+            ]
+        },
+        {
+            "source": "/api/gallery",
+            "headers": [
+                {
+                    "key": "Cache-Control",
+                    "value": "public, s-maxage=2592000, stale-while-revalidate=2592000"
+                }
+            ]
+        },
+        {
+            "source": "/sitemap(.*).xml",
+            "headers": [
+                {
+                    "key": "Cache-Control",
+                    "value": "public, max-age=2592000, s-maxage=2592000"
+                }
+            ]
+        },
+        {
+            "source": "/(.*)",
+            "headers": [
+                {
+                    "key": "X-DNS-Prefetch-Control",
+                    "value": "on"
+                },
+                {
+                    "key": "X-Frame-Options",
+                    "value": "SAMEORIGIN"
+                },
+                {
+                    "key": "X-Content-Type-Options",
+                    "value": "nosniff"
+                }
+            ]
+        }
+    ],
+    "crons": []
+}

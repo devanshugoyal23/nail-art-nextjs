@@ -26,23 +26,23 @@ interface GalleryDetailPageProps {
 }
 
 // Enable ISR (Incremental Static Regeneration) - revalidate every 2 hours
-export const revalidate = 7200;
+export const revalidate = 2592000; // 30 days in seconds (data is static)
 
 // Generate static params for popular pages
 export async function generateStaticParams() {
   try {
     // Get the most popular/recent items for static generation
-    const result = await getGalleryItems({ 
-      page: 1, 
+    const result = await getGalleryItems({
+      page: 1,
       limit: 500, // Generate static pages for top 500 items
-      sortBy: 'newest' 
+      sortBy: 'newest'
     });
-    
+
     return result.items.map((item) => {
       const categorySlug = item.category?.toLowerCase().replace(/\s+/g, '-') || 'design';
       const designSlug = item.design_name?.toLowerCase().replace(/\s+/g, '-') || 'design';
       const idSuffix = item.id.slice(-8);
-      
+
       return {
         category: categorySlug,
         slug: `${designSlug}-${idSuffix}`
@@ -57,7 +57,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: GalleryDetailPageProps): Promise<Metadata> {
   const resolvedParams = await params;
   const item = await getGalleryItemBySlug(resolvedParams.category, resolvedParams.slug);
-  
+
   if (!item) {
     return {
       title: "Design Not Found",
@@ -66,18 +66,18 @@ export async function generateMetadata({ params }: GalleryDetailPageProps): Prom
 
   const title = item.design_name || 'Generated Nail Art';
   const baseDescription = item.prompt || 'AI-generated nail art design';
-  
+
   // Create SEO-optimized description with keywords
   const categoryKeyword = item.category ? `${item.category} nail art` : 'nail art';
   const colorKeywords = item.colors && item.colors.length > 0 ? ` ${item.colors.join(', ')} colors` : '';
   const techniqueKeywords = item.techniques && item.techniques.length > 0 ? ` ${item.techniques.join(', ')} technique` : '';
-  
+
   const enhancedDescription = `${baseDescription}${colorKeywords}${techniqueKeywords}. Try this ${categoryKeyword} design virtually with AI-powered nail art try-on.`;
   // Create SEO-optimized title with keyword context
   const categoryContext = item.category ? ` - ${item.category} Nail Art` : '';
   const fullTitle = `${title}${categoryContext} | Nail Art AI`;
   const fullDescription = enhancedDescription.length > 160 ? enhancedDescription.substring(0, 157) + '...' : enhancedDescription;
-  
+
   // Enhanced keywords with long-tail variations
   const baseKeywords = [
     'nail art',
@@ -91,25 +91,25 @@ export async function generateMetadata({ params }: GalleryDetailPageProps): Prom
     'nail art design',
     'nail art gallery'
   ];
-  
+
   const categoryKeywords = item.category ? [
     `${item.category} nail art`,
     `${item.category} nail design`,
     `${item.category} manicure`
   ] : [];
-  
+
   const colorKeywordArray = (item.colors || []).map(color => [
     `${color} nail art`,
     `${color} nail design`,
     `${color} manicure`
   ]).flat();
-  
+
   const techniqueKeywordArray = (item.techniques || []).map(technique => [
     `${technique} nail art`,
     `${technique} nail design`,
     `${technique} manicure`
   ]).flat();
-  
+
   const occasionKeywords = (item.occasions || []).map(occasion => [
     `${occasion} nail art`,
     `${occasion} nail design`,
@@ -190,7 +190,7 @@ export async function generateMetadata({ params }: GalleryDetailPageProps): Prom
       'article:author': 'Nail Art AI',
       'article:published_time': item.created_at,
       'article:modified_time': item.created_at,
-      
+
       // Pinterest Article Rich Pins meta tags
       'pinterest-rich-pin': 'true',
       'pinterest:title': `${title}${categoryContext}`,
@@ -236,11 +236,11 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
 
   const parseAttributes = (text: string) => {
     const lower = (text || '').toLowerCase();
-    const colorsList = ['purple','red','blue','green','gold','silver','black','white','nude','pink','lavender','emerald'];
-    const shapes = ['almond','square','coffin','oval','stiletto'];
-    const lengths = ['short','medium','long'];
-    const finishes = ['glitter','chrome','matte','glossy','shimmer'];
-    const techniques = ['butterfly','marble','ombre','french','stamping','foil'];
+    const colorsList = ['purple', 'red', 'blue', 'green', 'gold', 'silver', 'black', 'white', 'nude', 'pink', 'lavender', 'emerald'];
+    const shapes = ['almond', 'square', 'coffin', 'oval', 'stiletto'];
+    const lengths = ['short', 'medium', 'long'];
+    const finishes = ['glitter', 'chrome', 'matte', 'glossy', 'shimmer'];
+    const techniques = ['butterfly', 'marble', 'ombre', 'french', 'stamping', 'foil'];
 
     const pick = (list: string[]) => list.filter(k => lower.includes(k));
 
@@ -254,7 +254,7 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
   };
 
   const attrs = parseAttributes(item.prompt || '');
-  
+
   const getColorChipBg = (color: string) => {
     const c = (color || '').toLowerCase();
     if (c.includes('red') || c.includes('rose')) return 'bg-[#ffe5ec]';
@@ -270,7 +270,7 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
     if (c.includes('yellow')) return 'bg-[#fff6cf]';
     return 'bg-[#fde7f2]';
   };
-  
+
   // Get related keywords for SEO
   const relatedKeywords = getRelatedKeywords(item.category, attrs.colors, attrs.technique);
 
@@ -279,8 +279,8 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
   if (!editorial) {
     try {
       editorial = await generateEditorialContentForNailArt(
-        item.design_name, 
-        item.category || undefined, 
+        item.design_name,
+        item.category || undefined,
         item.prompt || undefined,
         relatedKeywords
       );
@@ -436,7 +436,7 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
           })
         }}
       />
-      
+
       {/* ImageObject Schema */}
       <script
         type="application/ld+json"
@@ -502,7 +502,7 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
       <div className="min-h-screen bg-[#f8f6f7] text-[#1b0d14]">
         {/* Progress Bar */}
         <ProgressBar />
-        
+
         <div className="max-w-7xl mx-auto px-4 py-8">
           {/* 1. Breadcrumb Navigation - SEO Critical */}
           <nav className="mb-6" aria-label="Breadcrumb">
@@ -520,7 +520,7 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
               </li>
               <li className="text-[#1b0d14]/40">/</li>
               <li>
-                <Link 
+                <Link
                   href={`/nail-art-gallery/category/${encodeURIComponent(item.category || '')}`}
                   className="hover:text-[#ee2b8c] transition-colors"
                 >
@@ -533,7 +533,7 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
               </li>
             </ol>
           </nav>
-          
+
           {/* 2–5. Hero split: image left, details/CTAs right */}
           <div className="mb-8 grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
             {/* Left: Portrait image with zoom + caption */}
@@ -613,7 +613,7 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
                 <div className="flex items-center gap-4">
                   <div className="text-sm text-[#1b0d14]/60">Saved by nail art lovers</div>
                   <button className="inline-flex items-center gap-2 text-sm px-3 py-1.5 rounded-full bg-white ring-1 ring-[#ee2b8c]/20 hover:bg-[#f8f6f7] transition">
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 12v.01M12 12v.01M20 12v.01M4 12a8 8 0 016-7.75M4 12a8 8 0 006 7.75M20 12a8 8 0 00-6 7.75M20 12a8 8 0 00-6-7.75"/></svg>
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 12v.01M12 12v.01M20 12v.01M4 12a8 8 0 016-7.75M4 12a8 8 0 006 7.75M20 12a8 8 0 00-6 7.75M20 12a8 8 0 00-6-7.75" /></svg>
                     Share
                   </button>
                 </div>
@@ -651,7 +651,7 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
                   {/* Row 1: Who It's For - left label, right text */}
                   <div className="grid grid-cols-12 items-start gap-3">
                     <div className="col-span-3 flex items-center gap-2 text-[#ee2b8c] text-sm font-semibold whitespace-nowrap">
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
                       Who It&apos;s For
                     </div>
                     <div className="col-span-9 text-[#1b0d14] text-sm leading-relaxed">
@@ -662,21 +662,21 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
                   <div className="grid grid-cols-3 text-center pt-4 mt-4 border-t border-[#ee2b8c]/15">
                     <div className="flex flex-col items-center space-y-1">
                       <div className="flex items-center gap-2 text-green-600 text-sm font-medium">
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                         Time Needed
                       </div>
                       <div className="text-[#1b0d14] text-sm font-semibold">{editorial?.timeMinutes || 45} min</div>
                     </div>
                     <div className="flex flex-col items-center space-y-1">
                       <div className="flex items-center gap-2 text-blue-600 text-sm font-medium">
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                         Difficulty
                       </div>
                       <div className="text-[#1b0d14] text-sm font-semibold">{editorial?.difficulty || 'Medium'}</div>
                     </div>
                     <div className="flex flex-col items-center space-y-1">
                       <div className="flex items-center gap-2 text-pink-600 text-sm font-medium">
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"/></svg>
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" /></svg>
                         Est. Cost
                       </div>
                       <div className="text-[#1b0d14] text-sm font-semibold">{editorial?.costEstimate || '$20-40'}</div>
@@ -704,7 +704,7 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
                 {/* Row 1: Who It's For */}
                 <div className="col-span-3 flex flex-col items-center space-y-1">
                   <div className="flex items-center gap-2 text-[#ee2b8c] text-sm font-medium">
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
                     Who It&apos;s For
                   </div>
                   <div className="text-[#1b0d14] text-xs font-semibold px-2">{editorial?.audience || 'All skill levels'}</div>
@@ -712,21 +712,21 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
                 {/* Row 2: three items */}
                 <div className="flex flex-col items-center space-y-1">
                   <div className="flex items-center gap-2 text-green-600 text-sm font-medium">
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                     Time Needed
                   </div>
                   <div className="text-[#1b0d14] text-sm font-semibold">{editorial?.timeMinutes || 45} min</div>
                 </div>
                 <div className="flex flex-col items-center space-y-1">
                   <div className="flex items-center gap-2 text-blue-600 text-sm font-medium">
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                     Difficulty
                   </div>
                   <div className="text-[#1b0d14] text-sm font-semibold">{editorial?.difficulty || 'Medium'}</div>
                 </div>
                 <div className="flex flex-col items-center space-y-1">
                   <div className="flex items-center gap-2 text-pink-600 text-sm font-medium">
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"/></svg>
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" /></svg>
                     Est. Cost
                   </div>
                   <div className="text-[#1b0d14] text-sm font-semibold">{editorial?.costEstimate || '$20-40'}</div>
@@ -749,7 +749,7 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
             className="mb-8"
           >
             <ul className="grid sm:grid-cols-2 gap-3 text-[#1b0d14]">
-              {(editorial?.supplies || ['Base coat','Gel color polish','Detail liner brush','Top coat']).map((supply, i) => (
+              {(editorial?.supplies || ['Base coat', 'Gel color polish', 'Detail liner brush', 'Top coat']).map((supply, i) => (
                 <li key={i} className="flex items-start">
                   <svg className="w-5 h-5 text-purple-400 mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
@@ -811,91 +811,91 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
 
           {/* 9. Design Attributes Grid - All linked */}
           <section className="mb-8">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {/* Colors with links */}
-                    {item.colors && item.colors.length > 0 && (
-                      <div className="bg-white rounded-xl p-4 ring-1 ring-[#ee2b8c]/15 transition-colors">
-                        <div className="flex items-center mb-3">
-                          <div className="w-2 h-2 bg-[#ee2b8c] rounded-full mr-2"></div>
-                          <h4 className="text-sm font-semibold">Colors</h4>
-                        </div>
-                        <div className="flex flex-wrap gap-2">
-                          {item.colors.map((color, index) => (
+              {item.colors && item.colors.length > 0 && (
+                <div className="bg-white rounded-xl p-4 ring-1 ring-[#ee2b8c]/15 transition-colors">
+                  <div className="flex items-center mb-3">
+                    <div className="w-2 h-2 bg-[#ee2b8c] rounded-full mr-2"></div>
+                    <h4 className="text-sm font-semibold">Colors</h4>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {item.colors.map((color, index) => (
                       <Link
                         key={index}
                         href={`/nail-colors/${color.toLowerCase().replace(/\s+/g, '-')}`}
-                              className="bg-white ring-1 ring-[#ee2b8c]/20 text-[#1b0d14] px-3 py-1.5 rounded-full text-xs font-medium hover:ring-[#ee2b8c]/40 transition"
+                        className="bg-white ring-1 ring-[#ee2b8c]/20 text-[#1b0d14] px-3 py-1.5 rounded-full text-xs font-medium hover:ring-[#ee2b8c]/40 transition"
                       >
-                              {color}
+                        {color}
                       </Link>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                    
+                    ))}
+                  </div>
+                </div>
+              )}
+
               {/* Techniques with links */}
-                    {item.techniques && item.techniques.length > 0 && (
-                      <div className="bg-white rounded-xl p-4 ring-1 ring-[#ee2b8c]/15 transition-colors">
-                        <div className="flex items-center mb-3">
-                          <div className="w-2 h-2 bg-[#ee2b8c] rounded-full mr-2"></div>
-                          <h4 className="text-sm font-semibold">Techniques</h4>
-                        </div>
-                        <div className="flex flex-wrap gap-2">
-                          {item.techniques.map((technique, index) => (
+              {item.techniques && item.techniques.length > 0 && (
+                <div className="bg-white rounded-xl p-4 ring-1 ring-[#ee2b8c]/15 transition-colors">
+                  <div className="flex items-center mb-3">
+                    <div className="w-2 h-2 bg-[#ee2b8c] rounded-full mr-2"></div>
+                    <h4 className="text-sm font-semibold">Techniques</h4>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {item.techniques.map((technique, index) => (
                       <Link
                         key={index}
                         href={`/techniques/${technique.toLowerCase().replace(/\s+/g, '-')}`}
-                              className="bg-white ring-1 ring-[#ee2b8c]/20 text-[#1b0d14] px-3 py-1.5 rounded-full text-xs font-medium hover:ring-[#ee2b8c]/40 transition"
+                        className="bg-white ring-1 ring-[#ee2b8c]/20 text-[#1b0d14] px-3 py-1.5 rounded-full text-xs font-medium hover:ring-[#ee2b8c]/40 transition"
                       >
-                              {technique}
+                        {technique}
                       </Link>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                    
+                    ))}
+                  </div>
+                </div>
+              )}
+
               {/* Occasions with links */}
-                    {item.occasions && item.occasions.length > 0 && (
-                      <div className="bg-white rounded-xl p-4 ring-1 ring-[#ee2b8c]/15 transition-colors">
-                        <div className="flex items-center mb-3">
-                          <div className="w-2 h-2 bg-[#ee2b8c] rounded-full mr-2"></div>
-                          <h4 className="text-sm font-semibold">Perfect For</h4>
-                        </div>
-                        <div className="flex flex-wrap gap-2">
-                          {item.occasions.map((occasion, index) => (
+              {item.occasions && item.occasions.length > 0 && (
+                <div className="bg-white rounded-xl p-4 ring-1 ring-[#ee2b8c]/15 transition-colors">
+                  <div className="flex items-center mb-3">
+                    <div className="w-2 h-2 bg-[#ee2b8c] rounded-full mr-2"></div>
+                    <h4 className="text-sm font-semibold">Perfect For</h4>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {item.occasions.map((occasion, index) => (
                       <Link
                         key={index}
                         href={`/nail-art/occasion/${occasion.toLowerCase().replace(/\s+/g, '-')}`}
-                              className="bg-white ring-1 ring-[#ee2b8c]/20 text-[#1b0d14] px-3 py-1.5 rounded-full text-xs font-medium hover:ring-[#ee2b8c]/40 transition"
+                        className="bg-white ring-1 ring-[#ee2b8c]/20 text-[#1b0d14] px-3 py-1.5 rounded-full text-xs font-medium hover:ring-[#ee2b8c]/40 transition"
                       >
-                              {occasion}
+                        {occasion}
                       </Link>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                    
+                    ))}
+                  </div>
+                </div>
+              )}
+
               {/* Styles with links */}
-                    {item.styles && item.styles.length > 0 && (
-                      <div className="bg-white rounded-xl p-4 ring-1 ring-[#ee2b8c]/15 transition-colors">
-                        <div className="flex items-center mb-3">
-                          <div className="w-2 h-2 bg-[#ee2b8c] rounded-full mr-2"></div>
-                          <h4 className="text-sm font-semibold">Styles</h4>
-                        </div>
-                        <div className="flex flex-wrap gap-2">
-                          {item.styles.map((style, index) => (
+              {item.styles && item.styles.length > 0 && (
+                <div className="bg-white rounded-xl p-4 ring-1 ring-[#ee2b8c]/15 transition-colors">
+                  <div className="flex items-center mb-3">
+                    <div className="w-2 h-2 bg-[#ee2b8c] rounded-full mr-2"></div>
+                    <h4 className="text-sm font-semibold">Styles</h4>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {item.styles.map((style, index) => (
                       <Link
                         key={index}
                         href={`/nail-art-gallery/category/${style.toLowerCase().replace(/\s+/g, '-')}`}
-                              className="bg-white ring-1 ring-[#ee2b8c]/20 text-[#1b0d14] px-3 py-1.5 rounded-full text-xs font-medium hover:ring-[#ee2b8c]/40 transition"
+                        className="bg-white ring-1 ring-[#ee2b8c]/20 text-[#1b0d14] px-3 py-1.5 rounded-full text-xs font-medium hover:ring-[#ee2b8c]/40 transition"
                       >
-                              {style}
+                        {style}
                       </Link>
-                          ))}
-                        </div>
-                      </div>
-                    )}
+                    ))}
                   </div>
+                </div>
+              )}
+            </div>
           </section>
 
           {/* 10. Expert Tip */}
@@ -909,59 +909,59 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
                   <div>
                     <h3 className="text-lg font-semibold mb-2">Expert Tip</h3>
                     <p className="text-[#1b0d14]">{editorial.expertTip}</p>
+                  </div>
                 </div>
               </div>
-                </div>
             </section>
           )}
 
           {/* 11. Similar Designs You'll Love */}
-        {otherCategoryItems.length > 0 && (
+          {otherCategoryItems.length > 0 && (
             <section className="mb-8">
               <h2 className="text-2xl font-bold mb-6">Similar Styles</h2>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
                 {otherCategoryItems.slice(0, 12).map((categoryItem) => (
-                <Link
-                  key={categoryItem.id}
-                  href={generateGalleryItemUrl(categoryItem)}
-                  className="group bg-white ring-1 ring-[#ee2b8c]/10 rounded-lg overflow-hidden hover:shadow-md transition-all duration-300 transform hover:-translate-y-1"
-                >
-                  <div className="aspect-square relative">
+                  <Link
+                    key={categoryItem.id}
+                    href={generateGalleryItemUrl(categoryItem)}
+                    className="group bg-white ring-1 ring-[#ee2b8c]/10 rounded-lg overflow-hidden hover:shadow-md transition-all duration-300 transform hover:-translate-y-1"
+                  >
+                    <div className="aspect-square relative">
                       <OptimizedImage
-                      src={categoryItem.original_image_url || categoryItem.image_url}
+                        src={categoryItem.original_image_url || categoryItem.image_url}
                         alt={generateImageAltText(categoryItem.design_name || 'Generated nail art', categoryItem.category, categoryItem.prompt)}
-                      width={300}
-                      height={300}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                      loading="lazy"
+                        width={300}
+                        height={300}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        loading="lazy"
                         preset="thumbnail"
-                    />
-                  </div>
-                  
-                  <div className="p-3">
-                    {categoryItem.design_name && (
-                      <h3 className="text-sm font-medium mb-1 line-clamp-1">
-                        {categoryItem.design_name}
-                      </h3>
-                    )}
-                    <p className="text-xs text-[#1b0d14]/60 line-clamp-2">
-                      {categoryItem.prompt}
-                    </p>
-                  </div>
-                </Link>
-              ))}
-            </div>
-            
-              {otherCategoryItems.length > 8 && (
-              <div className="text-center mt-6">
-                <Link
-                  href={`/nail-art-gallery/category/${encodeURIComponent(item.category!)}`}
-                  className="inline-flex items-center bg-gray-800 text-white font-semibold py-3 px-6 rounded-lg hover:bg-gray-700 transition-colors"
-                >
-                  View All {item.category} Designs ({otherCategoryItems.length})
-                </Link>
+                      />
+                    </div>
+
+                    <div className="p-3">
+                      {categoryItem.design_name && (
+                        <h3 className="text-sm font-medium mb-1 line-clamp-1">
+                          {categoryItem.design_name}
+                        </h3>
+                      )}
+                      <p className="text-xs text-[#1b0d14]/60 line-clamp-2">
+                        {categoryItem.prompt}
+                      </p>
+                    </div>
+                  </Link>
+                ))}
               </div>
-            )}
+
+              {otherCategoryItems.length > 8 && (
+                <div className="text-center mt-6">
+                  <Link
+                    href={`/nail-art-gallery/category/${encodeURIComponent(item.category!)}`}
+                    className="inline-flex items-center bg-gray-800 text-white font-semibold py-3 px-6 rounded-lg hover:bg-gray-700 transition-colors"
+                  >
+                    View All {item.category} Designs ({otherCategoryItems.length})
+                  </Link>
+                </div>
+              )}
             </section>
           )}
 
@@ -992,24 +992,24 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
                         };
                         const hexColor = colorMap[color.label.toLowerCase()] || '#6B7280';
                         return (
-            <Link 
+                          <Link
                             key={index}
                             href={`/nail-colors/${color.value}`}
                             className="group flex items-center gap-2 bg-white ring-1 ring-[#ee2b8c]/15 hover:bg-[#f8f6f7] px-4 py-2 rounded-full transition-all duration-200 hover:scale-105"
                           >
-                            <div 
+                            <div
                               className="w-4 h-4 rounded-full border-2 border-white/20 shadow-sm"
                               style={{ backgroundColor: hexColor }}
                             />
-                          <span className="text-sm font-medium">{color.label}</span>
+                            <span className="text-sm font-medium">{color.label}</span>
                             <svg className="w-3 h-3 text-[#1b0d14]/50 group-hover:text-[#1b0d14] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                             </svg>
-            </Link>
+                          </Link>
                         );
                       })}
-          </div>
-        </div>
+                    </div>
+                  </div>
                 )}
 
                 {/* Techniques with Icons */}
@@ -1020,9 +1020,9 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
                         <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v12a4 4 0 004 4h4a2 2 0 002-2V5z" />
                         </svg>
-              </div>
+                      </div>
                       <h3 className="text-lg font-semibold">Techniques Used</h3>
-              </div>
+                    </div>
                     <div className="flex flex-wrap gap-3">
                       {extractedTags.techniques.map((technique, index) => (
                         <Link
@@ -1037,8 +1037,8 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
                           </svg>
                         </Link>
                       ))}
-              </div>
-              </div>
+                    </div>
+                  </div>
                 )}
 
                 {/* Occasions with Event Icons */}
@@ -1049,7 +1049,7 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
                         <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                         </svg>
-            </div>
+                      </div>
                       <h3 className="text-lg font-semibold">Perfect For</h3>
                     </div>
                     <div className="flex flex-wrap gap-3">
@@ -1063,7 +1063,7 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
                           <span className="text-sm font-medium">{occasion.label}</span>
                           <svg className="w-3 h-3 text-pink-300 group-hover:text-pink-100 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
+                          </svg>
                         </Link>
                       ))}
                     </div>
@@ -1077,10 +1077,10 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
                       <div className="w-8 h-8 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full mr-3 flex items-center justify-center">
                         <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
-                </svg>
-                </div>
+                        </svg>
+                      </div>
                       <h3 className="text-lg font-semibold">Best Seasons</h3>
-              </div>
+                    </div>
                     <div className="flex flex-wrap gap-3">
                       {extractedTags.seasons.map((season, index) => (
                         <Link
@@ -1124,7 +1124,7 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
                           </svg>
                         </Link>
                       ))}
-          </div>
+                    </div>
                   </div>
                 )}
 
@@ -1136,7 +1136,7 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
                         <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
-                  </div>
+                      </div>
                       <h3 className="text-lg font-semibold">Nail Shapes</h3>
                     </div>
                     <div className="flex flex-wrap gap-3">
@@ -1152,8 +1152,8 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                           </svg>
                         </Link>
-                ))}
-              </div>
+                      ))}
+                    </div>
                   </div>
                 )}
               </div>
@@ -1162,7 +1162,7 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
               <div className="mt-12 pt-8 border-t border-[#ee2b8c]/15">
                 <h3 className="text-xl font-bold mb-6 text-center">More Categories to Explore</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                  
+
                   {/* Popular Colors with Swatches */}
                   <div className="bg-white rounded-xl p-6 ring-1 ring-[#ee2b8c]/15">
                     <div className="flex items-center mb-4">
@@ -1187,7 +1187,7 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
                           href={`/nail-colors/${item.name.toLowerCase()}`}
                           className="group flex items-center gap-2 bg-white ring-1 ring-[#ee2b8c]/15 hover:bg-[#f8f6f7] px-3 py-2 rounded-lg transition-all duration-200 hover:scale-105"
                         >
-                          <div 
+                          <div
                             className="w-4 h-4 rounded-full border border-white/20"
                             style={{ backgroundColor: item.color }}
                           />
@@ -1204,7 +1204,7 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
                         <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v12a4 4 0 004 4h4a2 2 0 002-2V5z" />
                         </svg>
-                  </div>
+                      </div>
                       <h4 className="text-lg font-semibold">Popular Techniques</h4>
                     </div>
                     <div className="grid grid-cols-2 gap-3">
@@ -1260,40 +1260,40 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
                   </div>
                 </div>
               </div>
-              </div>
-            </section>
+            </div>
+          </section>
 
           {/* 13. FAQs with Schema */}
           <section className="mb-8">
             <div className="bg-white rounded-xl p-6 ring-1 ring-[#ee2b8c]/15 shadow-sm">
               <h2 className="text-xl font-semibold mb-4">Frequently Asked Questions</h2>
-            <div className="space-y-4 text-[#1b0d14]">
-              {(editorial?.faqs || [
+              <div className="space-y-4 text-[#1b0d14]">
+                {(editorial?.faqs || [
                   { q: 'How long does this design last?', a: 'With a gel top coat, typically 2–3 weeks depending on prep and lifestyle.' },
                   { q: 'What nail shapes work best?', a: `${attrs.shape[0] ? `${attrs.shape[0][0].toUpperCase()}${attrs.shape[0].slice(1)}` : 'Almond'} and coffin shapes showcase the artwork nicely.` },
                   { q: 'Is glitter required for this look?', a: 'No—you can swap glitter for chrome or keep a clean glossy finish.' },
                   { q: 'Can beginners recreate this design?', a: `This design is ${editorial?.difficulty || 'medium'} difficulty. Start with simpler variations if you're new to nail art.` }
-              ]).map((f, i) => (
+                ]).map((f, i) => (
                   <div key={i} className="border-b border-[#ee2b8c]/15 pb-4 last:border-b-0">
                     <h3 className="font-medium mb-2">{f.q}</h3>
-                  <p className="text-sm text-[#1b0d14]/80">{f.a}</p>
-                </div>
-              ))}
+                    <p className="text-sm text-[#1b0d14]/80">{f.a}</p>
+                  </div>
+                ))}
               </div>
-              </div>
-            </section>
+            </div>
+          </section>
 
           {/* 14. Related Categories */}
           <section className="mb-8">
             <RelatedCategories currentCategory={item.category} />
-            </section>
+          </section>
 
           {/* 15. Aftercare & Maintenance */}
           <div className="grid sm:grid-cols-2 gap-6 mb-8">
             <section className="bg-white rounded-xl p-6 ring-1 ring-[#ee2b8c]/15 shadow-sm">
               <h3 className="text-lg font-semibold mb-3">Aftercare Tips</h3>
               <ul className="space-y-2 text-sm text-[#1b0d14]/80">
-                {(editorial?.aftercare || ['Apply cuticle oil daily','Wear gloves when cleaning','Avoid prolonged water exposure']).map((tip, i) => (
+                {(editorial?.aftercare || ['Apply cuticle oil daily', 'Wear gloves when cleaning', 'Avoid prolonged water exposure']).map((tip, i) => (
                   <li key={i} className="flex items-start">
                     <span className="text-green-400 mr-2">✓</span>
                     {tip}
@@ -1304,7 +1304,7 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
             <section className="bg-white rounded-xl p-6 ring-1 ring-[#ee2b8c]/15 shadow-sm">
               <h3 className="text-lg font-semibold mb-3">Safe Removal</h3>
               <ul className="space-y-2 text-sm text-[#1b0d14]/80">
-                {(editorial?.removal || ['Soak cotton in acetone, wrap with foil','Wait 10-15 minutes','Gently push off softened polish']).map((step, i) => (
+                {(editorial?.removal || ['Soak cotton in acetone, wrap with foil', 'Wait 10-15 minutes', 'Gently push off softened polish']).map((step, i) => (
                   <li key={i} className="flex items-start">
                     <span className="text-blue-400 mr-2">{i + 1}.</span>
                     {step}
@@ -1332,7 +1332,7 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
                     </svg>
                   </Link>
                 )}
-                
+
                 {/* Color Links */}
                 {item.colors && item.colors.slice(0, 2).map((color: string, index: number) => (
                   <Link
@@ -1347,7 +1347,7 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
                     </svg>
                   </Link>
                 ))}
-                
+
                 {/* Technique Links */}
                 {item.techniques && item.techniques.slice(0, 1).map((technique: string, index: number) => (
                   <Link
@@ -1362,7 +1362,7 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
                     </svg>
                   </Link>
                 ))}
-                
+
                 {/* Occasion Links */}
                 {item.occasions && item.occasions.slice(0, 1).map((occasion: string, index: number) => (
                   <Link
@@ -1378,61 +1378,65 @@ export default async function GalleryDetailPage({ params }: GalleryDetailPagePro
                   </Link>
                 ))}
               </div>
-              </div>
-            </section>
+            </div>
+          </section>
 
           {/* Enhanced JSON-LD for HowTo + FAQ */}
           {editorial && (
             <>
-              <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
-                '@context': 'https://schema.org',
-                '@type': 'HowTo',
-                name: editorial.title || item.design_name,
-                description: editorial.intro,
-                totalTime: `PT${editorial.timeMinutes || 45}M`,
-                estimatedCost: {
-                  '@type': 'MonetaryAmount',
-                  currency: 'USD',
-                  value: editorial.costEstimate || '$20-40'
-                },
-                supply: (editorial.supplies || []).map((s: string) => ({
-                  '@type': 'HowToSupply',
-                  name: s
-                })),
-                tool: (editorial.supplies || []).filter((s: string) => s.toLowerCase().includes('brush') || s.toLowerCase().includes('tool')).map((s: string) => ({
-                  '@type': 'HowToTool',
-                  name: s
-                })),
-                step: (editorial.steps || []).map((s: string, idx: number) => ({
-                  '@type': 'HowToStep',
-                  position: idx + 1,
-                  name: s.length > 50 ? s.substring(0, 50) + '...' : s,
-                  text: s
-                }))
-              }) }} />
-              <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
-                '@context': 'https://schema.org',
-                '@type': 'FAQPage',
-                mainEntity: (editorial.faqs || []).map((f: { q: string; a: string }) => ({
-                  '@type': 'Question',
-                  name: f.q,
-                  acceptedAnswer: {
-                    '@type': 'Answer',
-                    text: f.a
-                  }
-                }))
-              }) }} />
+              <script type="application/ld+json" dangerouslySetInnerHTML={{
+                __html: JSON.stringify({
+                  '@context': 'https://schema.org',
+                  '@type': 'HowTo',
+                  name: editorial.title || item.design_name,
+                  description: editorial.intro,
+                  totalTime: `PT${editorial.timeMinutes || 45}M`,
+                  estimatedCost: {
+                    '@type': 'MonetaryAmount',
+                    currency: 'USD',
+                    value: editorial.costEstimate || '$20-40'
+                  },
+                  supply: (editorial.supplies || []).map((s: string) => ({
+                    '@type': 'HowToSupply',
+                    name: s
+                  })),
+                  tool: (editorial.supplies || []).filter((s: string) => s.toLowerCase().includes('brush') || s.toLowerCase().includes('tool')).map((s: string) => ({
+                    '@type': 'HowToTool',
+                    name: s
+                  })),
+                  step: (editorial.steps || []).map((s: string, idx: number) => ({
+                    '@type': 'HowToStep',
+                    position: idx + 1,
+                    name: s.length > 50 ? s.substring(0, 50) + '...' : s,
+                    text: s
+                  }))
+                })
+              }} />
+              <script type="application/ld+json" dangerouslySetInnerHTML={{
+                __html: JSON.stringify({
+                  '@context': 'https://schema.org',
+                  '@type': 'FAQPage',
+                  mainEntity: (editorial.faqs || []).map((f: { q: string; a: string }) => ({
+                    '@type': 'Question',
+                    name: f.q,
+                    acceptedAnswer: {
+                      '@type': 'Answer',
+                      text: f.a
+                    }
+                  }))
+                })
+              }} />
             </>
           )}
         </div>
-        
+
         {/* Floating Action Bar */}
         <FloatingActionBar
           designId={item.id}
           designName={item.design_name || 'Nail Art Design'}
           imageUrl={item.image_url}
         />
-    </div>
+      </div>
     </>
   );
 }

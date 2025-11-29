@@ -61,13 +61,13 @@ export default function OptimizedImage({
   const finalWidth = presetConfig ? presetConfig.width : width;
   const finalHeight = presetConfig ? presetConfig.height : height;
   const finalSizes = presetConfig ? presetConfig.sizes : sizes;
-  
+
   // Initialize with appropriate image URL based on device
   useEffect(() => {
     const optimizedSrc = getOptimizedImageUrl(src, isMobile);
     setCurrentSrc(optimizedSrc);
   }, [src, isMobile]);
-  
+
   // Switch to original image if optimized image fails
   const handleImageError = () => {
     if (currentSrc !== src) {
@@ -76,12 +76,12 @@ export default function OptimizedImage({
   };
 
   // Mobile-optimized sizes
-  const mobileSizes = isMobile 
-    ? '100vw' 
+  const mobileSizes = isMobile
+    ? '100vw'
     : finalSizes || '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw';
 
   return (
-    <div 
+    <div
       className={`relative overflow-hidden ${onClick ? 'cursor-pointer' : ''} ${className}`}
       onClick={onClick}
     >
@@ -93,7 +93,8 @@ export default function OptimizedImage({
         className="w-full h-full object-cover transition-transform duration-300 hover:scale-105 image-optimized"
         priority={priority}
         sizes={mobileSizes}
-        unoptimized={true}
+        loading={priority ? 'eager' : 'lazy'}
+        quality={75}
         // Core Web Vitals optimizations - enhanced for mobile performance
         data-priority={priority ? "true" : "false"}
         // Additional mobile optimizations
