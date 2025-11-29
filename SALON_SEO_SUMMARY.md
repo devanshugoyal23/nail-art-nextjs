@@ -17,7 +17,7 @@
    - 2,500-3,500 words per page
    - 90%+ unique content
    - NOT thin content
-   - High E-E-A-T score
+   - High E-E-A-T scorerrt
 
 2. **Technical SEO**
    - Perfect meta tags
