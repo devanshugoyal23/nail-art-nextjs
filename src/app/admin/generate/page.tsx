@@ -144,11 +144,11 @@ export default function GenerateGalleryPage() {
       });
 
       const data = await response.json();
-      
+
       if (data.success) {
         setResults(data.results);
         await loadUnderPopulatedTags(); // Refresh tag data
-        
+
         // Auto-generate SEO for new content
         try {
           const seoResults = await generateBulkSEO(data.results, 'gallery');
@@ -162,7 +162,10 @@ export default function GenerateGalleryPage() {
         }
       } else {
         console.error('Tag generation failed:', data.error);
-        alert('Tag generation failed: ' + data.error);
+        const errorMsg = data.isConfigError
+          ? `Configuration Error: ${data.error}\n\n${data.suggestion}`
+          : `Tag generation failed: ${data.error}`;
+        alert(errorMsg);
       }
     } catch (error) {
       console.error('Error generating for tag:', error);
@@ -273,7 +276,7 @@ export default function GenerateGalleryPage() {
           current: count,
           currentPage: 'Generation completed!'
         }));
-        
+
         // Auto-generate SEO for new content
         try {
           const seoResults = await generateBulkSEO(data.results, 'gallery');
@@ -287,7 +290,10 @@ export default function GenerateGalleryPage() {
         }
       } else {
         console.error('Generation failed:', data.error);
-        alert('Generation failed: ' + data.error);
+        const errorMsg = data.isConfigError
+          ? `Configuration Error: ${data.error}\n\n${data.suggestion}`
+          : `Generation failed: ${data.error}`;
+        alert(errorMsg);
       }
     } catch (error) {
       console.error('Error generating nail art:', error);
