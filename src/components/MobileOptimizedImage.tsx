@@ -103,34 +103,33 @@ export default function MobileOptimizedImage({
   };
 
   // Determine which image to use
-  const imageSrc = imageError && isMobile 
+  const imageSrc = imageError && isMobile
     ? src.replace('/mobile-optimized/', '/pinterest-optimized/').replace('.webp', '.jpg')
-    : isMobile 
+    : isMobile
       ? getOptimizedSrc(src)
       : src;
 
   // Generate responsive sizes for better performance
-  const responsiveSizes = isMobile 
+  const responsiveSizes = isMobile
     ? '(max-width: 768px) 300px, (max-width: 1024px) 400px, 600px'
     : '(max-width: 768px) 300px, (max-width: 1024px) 600px, 800px';
 
   return (
     <div className={`relative ${className}`}>
       {isLoading && (
-        <div 
+        <div
           className="absolute inset-0 bg-gray-200 animate-pulse rounded"
           style={{ aspectRatio: `${width}/${height}` }}
         />
       )}
-      
+
       <Image
         src={imageSrc}
         alt={alt}
         width={width}
         height={height}
-        className={`transition-opacity duration-300 ${
-          isLoading ? 'opacity-0' : 'opacity-100'
-        } ${className}`}
+        className={`transition-opacity duration-300 ${isLoading ? 'opacity-0' : 'opacity-100'
+          } ${className}`}
         priority={priority}
         sizes={responsiveSizes}
         quality={quality}
@@ -141,9 +140,10 @@ export default function MobileOptimizedImage({
         loading={priority ? 'eager' : 'lazy'}
         decoding={priority ? 'sync' : 'async'}
         fetchPriority={priority ? 'high' : 'low'}
+        unoptimized
         {...props}
       />
-      
+
       {/* Debug info in development */}
       {process.env.NODE_ENV === 'development' && (
         <div className="absolute top-0 left-0 bg-black bg-opacity-75 text-white text-xs p-1 rounded-br">
@@ -187,7 +187,7 @@ export function getOptimizedImageUrl(originalUrl: string, isMobile: boolean = fa
     if (originalUrl.includes('/pinterest-optimized/')) {
       return originalUrl.replace('/pinterest-optimized/', '/mobile-optimized/').replace(/\.(jpg|jpeg|png)$/i, '.webp');
     }
-    
+
     if (originalUrl.includes('/images/')) {
       const baseUrl = originalUrl.split('/images/')[0];
       const imagePath = originalUrl.split('/images/')[1];

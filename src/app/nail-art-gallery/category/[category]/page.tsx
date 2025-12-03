@@ -6,6 +6,9 @@ import { Metadata } from "next";
 import { absoluteUrl } from "@/lib/absoluteUrl";
 import { slugify } from "@/lib/slugify";
 
+// Enable ISR (Incremental Static Regeneration) - revalidate every 30 days
+export const revalidate = 2592000;
+
 interface CategoryPageProps {
   params: Promise<{
     category: string;
@@ -15,10 +18,10 @@ interface CategoryPageProps {
 export async function generateMetadata({ params }: CategoryPageProps): Promise<Metadata> {
   const resolvedParams = await params;
   const category = decodeURIComponent(resolvedParams.category).replace(/-/g, ' ');
-  
+
   const title = `${category} Nail Art Designs`;
   const description = `Browse our collection of ${category} nail art designs. Discover stunning AI-generated nail art in the ${category} category.`;
-  
+
   return {
     title: `${title} | Nail Art AI`,
     description,
@@ -61,7 +64,7 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
 export async function generateStaticParams() {
   // Only generate static params for categories with minimum content
   const categories = await getCategoriesWithMinimumContent(3);
-  
+
   return categories.map((category) => ({
     category: encodeURIComponent(category),
   }));
@@ -97,7 +100,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
             {category} Nail Art Designs
           </h1>
           <p className="text-[#1b0d14]/70 text-lg max-w-3xl mx-auto">
-            Discover our curated collection of stunning {category.toLowerCase()} nail art designs. 
+            Discover our curated collection of stunning {category.toLowerCase()} nail art designs.
             Each design is carefully crafted to inspire your next manicure.
           </p>
           <p className="text-[#1b0d14]/60 mt-2">
@@ -108,8 +111,8 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
         {/* Gallery Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {items.map((item) => (
-            <Link 
-              key={item.id} 
+            <Link
+              key={item.id}
               href={generateGalleryItemUrl(item)}
               className="bg-white ring-1 ring-[#ee2b8c]/15 rounded-lg overflow-hidden hover:shadow-md transition-all duration-300 transform hover:-translate-y-1 block"
             >
@@ -123,13 +126,13 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                   loading="lazy"
                 />
               </div>
-              
+
               <div className="p-4">
                 {item.design_name && (
                   <h3 className="text-lg font-bold text-[#1b0d14] mb-2">{item.design_name}</h3>
                 )}
                 <p className="text-sm text-[#1b0d14]/70 mb-3 line-clamp-2">{item.prompt}</p>
-                
+
                 <div className="w-full bg-[#ee2b8c] text-white font-bold py-2 px-4 rounded-full hover:brightness-95 transition duration-300 text-center">
                   View Design
                 </div>

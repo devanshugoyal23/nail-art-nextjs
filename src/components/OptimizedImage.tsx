@@ -108,6 +108,7 @@ export default function OptimizedImage({
         }}
         // Fallback to original image if mobile-optimized fails
         onError={handleImageError}
+        unoptimized
       />
     </div>
   );
