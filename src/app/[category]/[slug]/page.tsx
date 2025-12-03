@@ -34,7 +34,7 @@ export async function generateStaticParams() {
     // Get the most popular/recent items for static generation
     const result = await getGalleryItems({
       page: 1,
-      limit: 500, // Generate static pages for top 500 items
+      limit: 2000, // Generate static pages for top 5000 items
       sortBy: 'newest'
     });
 
