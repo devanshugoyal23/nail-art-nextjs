@@ -3,23 +3,18 @@ import { getCityDataFromR2 } from '@/lib/salonDataService';
 import { generateSlug, type NailSalon } from '@/lib/nailSalonService';
 
 /**
- * Premium Nail Salons Sitemap - Top 500 High-Quality Salons
+ * Premium Nail Salons Sitemap - Top 2,500 Quality Salons (Tiered)
  *
- * SEO Strategy: Quality-first indexing
- * - Only includes best salons (score ≥ 80/100)
- * - Sorted by quality score (best first)
- * - Limited to 500 salons for focused crawl budget
+ * SEO Strategy: Tiered quality-first indexing
+ * - Tier 1: Best salons (score ≥ 80/100) - Priority 0.9
+ * - Tier 2: Good salons (score 60-79) - Priority 0.7
+ * - Total: Up to 2,500 salons for balanced crawl budget
  *
  * Quality Score Calculation (0-100):
  * - Rating: 0-40 points (based on Google rating / 5 × 40)
  * - Reviews: 0-30 points (reviewCount / 200 × 30, max 30)
  * - Completeness: 0-30 points (photos, phone, website, hours, status)
  *
- * Expansion Plan:
- * - Month 1: 500 salons (score ≥ 80)
- * - Month 2: 2,000 salons (score ≥ 70)
- * - Month 3: 5,000 salons (score ≥ 60)
- * 
  * STATIC GENERATION: Fetches R2 data at build time only.
  * Zero runtime function invocations - huge cost savings!
  */
@@ -95,9 +90,9 @@ async function getAllSalonsWithScores(): Promise<SalonWithScore[]> {
 
     console.log(`📊 Processing top cities from ${statesMap.size} states for premium sitemap...`);
 
-    // Safety limits to prevent timeout
-    const MAX_CITIES_TO_PROCESS = 100; // Process only top 100 cities initially
-    const MAX_PROCESSING_TIME = 25000; // 25 seconds max
+    // Safety limits to prevent timeout - INCREASED for 2,500 salons
+    const MAX_CITIES_TO_PROCESS = 450; // Process top 450 cities to get more salons
+    const MAX_PROCESSING_TIME = 50000; // 50 seconds max (build has more time)
     const startTime = Date.now();
 
     let citiesProcessed = 0;
@@ -177,34 +172,49 @@ export async function GET() {
       );
     }
 
-    // Filter premium salons (score ≥ 80) and sort by score
-    const premiumSalons = allSalons
+    // TIERED APPROACH: Include quality salons with different priorities
+    // Tier 1: score >= 80 (best salons) - Priority 0.9
+    // Tier 2: score 60-79 (good salons) - Priority 0.7
+    const tier1Salons = allSalons
       .filter(salon => salon.score >= 80)
-      .sort((a, b) => b.score - a.score)
-      .slice(0, 500); // Top 500 premium salons
+      .sort((a, b) => b.score - a.score);
 
-    const avgScore = premiumSalons.reduce((sum, s) => sum + s.score, 0) / premiumSalons.length;
+    const tier2Salons = allSalons
+      .filter(salon => salon.score >= 60 && salon.score < 80)
+      .sort((a, b) => b.score - a.score);
 
-    console.log(`📈 Premium sitemap stats:`);
+    // Combine tiers, prioritizing Tier 1
+    const combinedSalons = [
+      ...tier1Salons.map(s => ({ ...s, priority: 0.9 })),
+      ...tier2Salons.map(s => ({ ...s, priority: 0.7 }))
+    ].slice(0, 2500); // Top 2,500 salons total
+
+    const tier1Count = combinedSalons.filter(s => s.priority === 0.9).length;
+    const tier2Count = combinedSalons.filter(s => s.priority === 0.7).length;
+    const avgScore = combinedSalons.reduce((sum, s) => sum + s.score, 0) / combinedSalons.length;
+
+    console.log(`📈 Tiered sitemap stats:`);
     console.log(`   Total salons processed: ${allSalons.length}`);
-    console.log(`   Premium salons (score ≥ 80): ${premiumSalons.length}`);
+    console.log(`   Tier 1 (score ≥ 80): ${tier1Count} salons (priority 0.9)`);
+    console.log(`   Tier 2 (score 60-79): ${tier2Count} salons (priority 0.7)`);
+    console.log(`   Total in sitemap: ${combinedSalons.length}`);
     console.log(`   Average score: ${avgScore.toFixed(1)}/100`);
-    console.log(`   Top salon: ${premiumSalons[0]?.name} (${premiumSalons[0]?.score}/100)`);
-    console.log(`   Lowest in sitemap: ${premiumSalons[premiumSalons.length - 1]?.name} (${premiumSalons[premiumSalons.length - 1]?.score}/100)`);
+    console.log(`   Top salon: ${combinedSalons[0]?.name} (${combinedSalons[0]?.score}/100)`);
+    console.log(`   Lowest in sitemap: ${combinedSalons[combinedSalons.length - 1]?.name} (${combinedSalons[combinedSalons.length - 1]?.score}/100)`);
 
-    // Generate XML sitemap
+    // Generate XML sitemap with tiered priorities
     const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${premiumSalons.map(salon => `  <url>
+${combinedSalons.map(salon => `  <url>
     <loc>${baseUrl}${salon.url}</loc>
     <lastmod>${currentDate}</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>${salon.priority}</priority>
   </url>`).join('\n')}
 </urlset>`;
 
     const duration = Date.now() - startTime;
-    console.log(`✅ Premium sitemap generated in ${duration}ms (${premiumSalons.length} salons)`);
+    console.log(`✅ Tiered sitemap generated in ${duration}ms (${combinedSalons.length} salons)`);
 
     return new NextResponse(sitemap, {
       status: 200,
