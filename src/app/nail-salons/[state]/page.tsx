@@ -18,10 +18,10 @@ export async function generateStaticParams() {
     const fs = await import('fs/promises');
     const path = await import('path');
     const citiesDir = path.join(process.cwd(), 'src', 'data', 'cities');
-    
+
     const files = await fs.readdir(citiesDir);
     const stateFiles = files.filter(file => file.endsWith('.json'));
-    
+
     return stateFiles.map(file => ({
       state: file.replace('.json', ''),
     }));
@@ -44,13 +44,13 @@ export const dynamicParams = true;
 // Enable ISR - revalidate every 7 days
 // ✅ PHASE 2.3: Increased from 1h to 7 days (99% fewer regenerations)
 // State city lists rarely change, so 7-day cache is appropriate
-export const revalidate = 604800; // 7 days in seconds (was 3600 = 1 hour, then 86400 = 24 hours)
+export const revalidate = 2592000; // 30 days - data is static, no need for frequent regeneration
 
 export async function generateMetadata({ params }: StatePageProps): Promise<Metadata> {
   const resolvedParams = await params;
   const stateSlug = resolvedParams.state;
   const stateName = decodeURIComponent(stateSlug).replace(/-/g, ' ');
-  const formattedState = stateName.split(' ').map(word => 
+  const formattedState = stateName.split(' ').map(word =>
     word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
   ).join(' ');
 
@@ -109,7 +109,7 @@ export default async function StatePage({ params }: StatePageProps) {
   const resolvedParams = await params;
   const stateSlug = resolvedParams.state;
   const stateName = decodeURIComponent(stateSlug).replace(/-/g, ' ');
-  const formattedState = stateName.split(' ').map(word => 
+  const formattedState = stateName.split(' ').map(word =>
     word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
   ).join(' ');
 
@@ -164,7 +164,7 @@ export default async function StatePage({ params }: StatePageProps) {
         itemCount={cities.length}
       />
       <FAQStructuredData faqs={faqs} />
-      
+
       {/* Hero Section with State Image */}
       <div className="relative overflow-hidden">
         {/* State Background Image */}
@@ -199,10 +199,10 @@ export default async function StatePage({ params }: StatePageProps) {
               Nail Salons in {formattedState}
             </h1>
             <p className="text-xl md:text-2xl text-white/90 max-w-4xl mx-auto mb-8 drop-shadow-md">
-              Find the best nail salons, nail spas, and nail art studios in {formattedState}. 
+              Find the best nail salons, nail spas, and nail art studios in {formattedState}.
               Browse by city to discover top-rated salons near you.
             </p>
-            
+
             {/* Quick Stats */}
             <div className="flex flex-wrap justify-center gap-6 mt-8">
               <div className="bg-white/90 backdrop-blur-sm px-6 py-3 rounded-full">
@@ -240,7 +240,7 @@ export default async function StatePage({ params }: StatePageProps) {
             // Get city image (using Unsplash with city and state name)
             const cityImageUrl = `https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=400&h=300&fit=crop&q=80`;
             const isTopCity = topCities.some(tc => tc.name === city.name);
-            
+
             return (
               <Link
                 key={city.name}
@@ -258,14 +258,14 @@ export default async function StatePage({ params }: StatePageProps) {
                     priority={index < 8}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
-                  
+
                   {/* Top City Badge */}
                   {isTopCity && (
                     <div className="absolute top-3 right-3 bg-[#ee2b8c]/90 backdrop-blur-sm px-2.5 py-1 rounded-md">
                       <span className="text-xs font-bold text-white">⭐ Top</span>
                     </div>
                   )}
-                  
+
                   {/* Salon Count Badge */}
                   {city.salonCount > 0 && (
                     <div className="absolute bottom-3 left-3 bg-white/90 backdrop-blur-sm px-2.5 py-1 rounded-md">
@@ -280,7 +280,7 @@ export default async function StatePage({ params }: StatePageProps) {
                   <h3 className="font-bold text-lg text-[#1b0d14] group-hover:text-[#ee2b8c] transition-colors mb-2">
                     {city.name}
                   </h3>
-                  
+
                   {/* Stats */}
                   <div className="flex items-center gap-3 mb-3 text-sm">
                     {city.salonCount > 0 && (
@@ -450,28 +450,28 @@ export default async function StatePage({ params }: StatePageProps) {
                 <div>
                   <h4 className="text-base font-semibold text-[#1b0d14] mb-1">How do I choose a nail salon in {formattedState}?</h4>
                   <p className="text-sm text-[#1b0d14]/70">
-                    Look for salons with high ratings (4.5+ stars), read customer reviews, check their photos, 
+                    Look for salons with high ratings (4.5+ stars), read customer reviews, check their photos,
                     and verify they offer the services you need. Our directory provides all this information to help you decide.
                   </p>
                 </div>
                 <div>
                   <h4 className="text-base font-semibold text-[#1b0d14] mb-1">What are typical nail salon prices in {formattedState}?</h4>
                   <p className="text-sm text-[#1b0d14]/70">
-                    Prices vary by location and service. Basic manicures typically range from $20-$40, pedicures from $30-$60, 
+                    Prices vary by location and service. Basic manicures typically range from $20-$40, pedicures from $30-$60,
                     and specialty services like gel nails or nail art can range from $40-$100+. Check individual salon listings for pricing.
                   </p>
                 </div>
                 <div>
                   <h4 className="text-base font-semibold text-[#1b0d14] mb-1">Do I need an appointment?</h4>
                   <p className="text-sm text-[#1b0d14]/70">
-                    While many salons accept walk-ins, appointments are recommended, especially during peak times (weekends and evenings). 
+                    While many salons accept walk-ins, appointments are recommended, especially during peak times (weekends and evenings).
                     Call ahead using the phone numbers provided in our listings.
                   </p>
                 </div>
                 <div>
                   <h4 className="text-base font-semibold text-[#1b0d14] mb-1">What services do nail salons in {formattedState} offer?</h4>
                   <p className="text-sm text-[#1b0d14]/70">
-                    Most salons offer manicures, pedicures, gel polish, acrylic nails, nail art, nail repairs, extensions, 
+                    Most salons offer manicures, pedicures, gel polish, acrylic nails, nail art, nail repairs, extensions,
                     and spa treatments. Some also offer waxing, massage, and special event packages.
                   </p>
                 </div>

@@ -22,7 +22,7 @@ export async function GET(request: NextRequest) {
     }
 
     let salons: NailSalon[] = [];
-    
+
     if (useApi) {
       // Use API if explicitly requested (for data collection)
       const places = await fetchNailSalonsFromAPI(state, city || undefined, limit);
@@ -38,7 +38,7 @@ export async function GET(request: NextRequest) {
         salons = [];
       }
     }
-    
+
     return NextResponse.json({
       success: true,
       data: salons,
@@ -49,7 +49,7 @@ export async function GET(request: NextRequest) {
     }, {
       headers: {
         // Cache for 1 hour, allow stale for 24 hours while revalidating
-        'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400',
+        'Cache-Control': 'public, s-maxage=2592000, stale-while-revalidate=2592000', // 30 days cache
       },
     });
   } catch (error) {

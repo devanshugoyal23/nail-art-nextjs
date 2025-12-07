@@ -108,6 +108,9 @@ export default function OptimizedImage({
         }}
         // Fallback to original image if mobile-optimized fails
         onError={handleImageError}
+        // Using unoptimized because images are served from Cloudflare R2 CDN
+        // R2 already handles caching and delivery optimization
+        // This saves Vercel's image optimization quota and reduces latency
         unoptimized
       />
     </div>

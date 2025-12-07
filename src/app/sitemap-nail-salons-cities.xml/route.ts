@@ -19,19 +19,16 @@ import { NextResponse } from 'next/server';
  * - Premium sitemap (top 500 salons)
  * - Internal links from city pages
  * - On-demand ISR (all 80,000+ salons work via dynamic routes)
+ * 
+ * STATIC GENERATION: Uses imported JSON data at build time only.
+ * Zero runtime function invocations.
  */
 
-interface CityData {
-  name: string;
-  slug: string;
-  salonCount?: number;
-  population?: number;
-}
+// Force static generation at build time - no runtime function calls
+export const dynamic = 'force-static';
+export const revalidate = false;
 
-interface StateData {
-  state: string;
-  cities: CityData[];
-}
+// CityData and StateData interfaces removed - were unused
 
 /**
  * Get all states and cities from imported JSON files
@@ -132,7 +129,7 @@ export async function GET() {
         {
           headers: {
             'Content-Type': 'application/xml',
-            'Cache-Control': 'public, max-age=86400, s-maxage=86400', // 24 hours
+            'Cache-Control': 'public, max-age=2592000, s-maxage=2592000, stale-while-revalidate=2592000', // 30 days cache
           },
         }
       );
@@ -182,7 +179,7 @@ ${urls.join('\n')}
       status: 200,
       headers: {
         'Content-Type': 'application/xml',
-        'Cache-Control': 'public, max-age=86400, s-maxage=86400', // Cache for 24 hours
+        'Cache-Control': 'public, max-age=2592000, s-maxage=2592000, stale-while-revalidate=2592000', // 30 days cache
       },
     });
   } catch (error) {

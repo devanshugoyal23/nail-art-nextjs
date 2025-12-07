@@ -13,7 +13,15 @@ import { NextResponse } from 'next/server';
  * - sitemap-nail-salons.xml: Main salon directory page
  * - sitemap-nail-salons-premium.xml: Top 500 premium salons (score ≥ 80)
  * - sitemap-nail-salons-cities.xml: 50 states + top 200 cities (strategic indexing)
+ * 
+ * STATIC GENERATION: This sitemap is generated at build time only.
+ * No serverless function invocations at runtime.
  */
+
+// Force static generation at build time - no runtime function calls
+export const dynamic = 'force-static';
+export const revalidate = false;
+
 export async function GET() {
   const baseUrl = 'https://nailartai.app';
   const currentDate = new Date().toISOString();
@@ -58,7 +66,7 @@ export async function GET() {
     status: 200,
     headers: {
       'Content-Type': 'application/xml',
-      'Cache-Control': 'public, max-age=86400, s-maxage=86400', // Cache for 24 hours
+      'Cache-Control': 'public, max-age=2592000, s-maxage=2592000, stale-while-revalidate=2592000', // 30 days cache
     },
   });
 }

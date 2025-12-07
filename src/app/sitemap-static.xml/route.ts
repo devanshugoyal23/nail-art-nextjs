@@ -3,11 +3,18 @@ import { NextResponse } from 'next/server';
 /**
  * Static Pages Sitemap - Core site pages that don't change frequently
  * These are the most important pages for SEO
+ * 
+ * STATIC GENERATION: Generated at build time only - zero runtime function calls.
  */
+
+// Force static generation at build time - no runtime function calls
+export const dynamic = 'force-static';
+export const revalidate = false;
+
 export async function GET() {
   const baseUrl = 'https://nailartai.app';
   const currentDate = new Date().toISOString();
-  
+
   const staticPages = [
     {
       url: `${baseUrl}/`,
@@ -109,7 +116,7 @@ ${staticPages.map(page => `  <url>
     status: 200,
     headers: {
       'Content-Type': 'application/xml',
-      'Cache-Control': 'public, max-age=86400, s-maxage=86400', // Cache for 24 hours
+      'Cache-Control': 'public, max-age=2592000, s-maxage=2592000, stale-while-revalidate=2592000', // 30 days cache
     },
   });
 }

@@ -19,7 +19,14 @@ import { generateSlug, type NailSalon } from '@/lib/nailSalonService';
  * - Month 1: 500 salons (score ≥ 80)
  * - Month 2: 2,000 salons (score ≥ 70)
  * - Month 3: 5,000 salons (score ≥ 60)
+ * 
+ * STATIC GENERATION: Fetches R2 data at build time only.
+ * Zero runtime function invocations - huge cost savings!
  */
+
+// Force static generation at build time - no runtime function calls
+export const dynamic = 'force-static';
+export const revalidate = false;
 
 interface SalonWithScore extends NailSalon {
   score: number;
@@ -164,7 +171,7 @@ export async function GET() {
         {
           headers: {
             'Content-Type': 'application/xml',
-            'Cache-Control': 'public, max-age=21600, s-maxage=21600', // 6 hours
+            'Cache-Control': 'public, max-age=2592000, s-maxage=2592000, stale-while-revalidate=2592000', // 30 days cache
           },
         }
       );
@@ -203,7 +210,7 @@ ${premiumSalons.map(salon => `  <url>
       status: 200,
       headers: {
         'Content-Type': 'application/xml',
-        'Cache-Control': 'public, max-age=21600, s-maxage=21600', // Cache for 6 hours
+        'Cache-Control': 'public, max-age=2592000, s-maxage=2592000, stale-while-revalidate=2592000', // 30 days cache
       },
     });
   } catch (error) {

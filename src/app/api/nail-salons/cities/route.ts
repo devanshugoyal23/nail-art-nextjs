@@ -27,7 +27,7 @@ export async function GET(request: NextRequest) {
       headers: {
         // Cache for 6 hours, allow stale for 24 hours while revalidating
         // Cities rarely change
-        'Cache-Control': 'public, s-maxage=21600, stale-while-revalidate=86400',
+        'Cache-Control': 'public, s-maxage=2592000, stale-while-revalidate=2592000', // 30 days cache
       },
     });
   } catch (error) {

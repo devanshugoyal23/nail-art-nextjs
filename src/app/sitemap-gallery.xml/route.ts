@@ -7,11 +7,17 @@ import { NextResponse } from 'next/server';
  * Individual design URLs are in sitemap-designs.xml to prevent duplication.
  * 
  * CRITICAL: No redirect URLs or gallery item URLs included here.
+ * STATIC GENERATION: Generated at build time only - zero runtime function calls.
  */
+
+// Force static generation at build time - no runtime function calls
+export const dynamic = 'force-static';
+export const revalidate = false;
+
 export async function GET() {
   const baseUrl = 'https://nailartai.app';
   const currentDate = new Date().toISOString();
-  
+
   // Only include the main gallery overview page - NO individual item URLs
   const galleryPages = [
     {
@@ -21,7 +27,7 @@ export async function GET() {
       priority: 0.95,
     },
   ];
-  
+
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${galleryPages.map(page => `  <url>
@@ -36,7 +42,7 @@ ${galleryPages.map(page => `  <url>
     status: 200,
     headers: {
       'Content-Type': 'application/xml',
-      'Cache-Control': 'public, max-age=3600, s-maxage=3600',
+      'Cache-Control': 'public, max-age=2592000, s-maxage=2592000, stale-while-revalidate=2592000', // 30 days cache
     },
   });
 }

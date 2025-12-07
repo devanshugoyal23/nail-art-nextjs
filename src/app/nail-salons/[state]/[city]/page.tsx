@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
-import { generateSlug, getPhotoUrl, generateCitySlug, type NailSalon } from '@/lib/nailSalonService';
+import { generateSlug, generateCitySlug, type NailSalon } from '@/lib/nailSalonService';
 import { getSalonsForCity } from '@/lib/salonDataService';
 import OptimizedImage from '@/components/OptimizedImage';
 import { DirectoryStructuredData } from '@/components/DirectoryStructuredData';
@@ -84,7 +84,7 @@ export const dynamicParams = true;
 // Enable ISR - revalidate every 7 days
 // ✅ PHASE 2.3: Increased from 1h to 7 days (99% fewer regenerations)
 // City salon lists rarely change, so 7-day cache is appropriate
-export const revalidate = 604800; // 7 days in seconds (was 3600 = 1 hour, then 86400 = 24 hours)
+export const revalidate = 2592000; // 30 days - data is static, no need for frequent regeneration
 
 export async function generateMetadata({ params }: CityPageProps): Promise<Metadata> {
   const resolvedParams = await params;
@@ -92,10 +92,10 @@ export async function generateMetadata({ params }: CityPageProps): Promise<Metad
   const citySlug = resolvedParams.city;
   const stateName = decodeURIComponent(stateSlug).replace(/-/g, ' ');
   const cityName = decodeURIComponent(citySlug).replace(/-/g, ' ');
-  const formattedState = stateName.split(' ').map(word => 
+  const formattedState = stateName.split(' ').map(word =>
     word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
   ).join(' ');
-  const formattedCity = cityName.split(' ').map(word => 
+  const formattedCity = cityName.split(' ').map(word =>
     word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
   ).join(' ');
 
@@ -156,7 +156,7 @@ export default async function CityPage({ params }: CityPageProps) {
   const citySlug = resolvedParams.city;
   const stateName = decodeURIComponent(stateSlug).replace(/-/g, ' ');
   const cityName = decodeURIComponent(citySlug).replace(/-/g, ' ');
-  const formattedState = stateName.split(' ').map(word => 
+  const formattedState = stateName.split(' ').map(word =>
     word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
   ).join(' ');
   const formattedCity = cityName.split(' ').map(word =>
@@ -233,7 +233,7 @@ export default async function CityPage({ params }: CityPageProps) {
         itemCount={salons.length}
       />
       <FAQStructuredData faqs={faqs} />
-      
+
       {/* Hero Section with City Image */}
       <div className="relative overflow-hidden">
         {/* City Background Image */}
@@ -274,7 +274,7 @@ export default async function CityPage({ params }: CityPageProps) {
             <p className="text-xl md:text-2xl text-white/90 max-w-4xl mx-auto mb-8 drop-shadow-md">
               Discover {salons.length} top-rated nail salons, nail spas, and nail art studios in {formattedCity}
             </p>
-            
+
             {/* Quick Stats */}
             <div className="flex flex-wrap justify-center gap-6 mt-8">
               {avgRating && (
@@ -322,7 +322,7 @@ export default async function CityPage({ params }: CityPageProps) {
               No Salons Found Yet
             </h3>
             <p className="text-[#1b0d14]/70 mb-6">
-              We&apos;re currently collecting salon data for {formattedCity}, {formattedState}. 
+              We&apos;re currently collecting salon data for {formattedCity}, {formattedState}.
               Check back soon for updated listings!
             </p>
             <Link
@@ -335,136 +335,134 @@ export default async function CityPage({ params }: CityPageProps) {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {salons.map((salon, index) => {
-            // Use nail design image instead of salon photo (deterministic selection)
-            // Each salon gets a consistent, unique nail design based on its slug
-            const salonSlug = generateSlug(salon.name);
-            const selectedDesigns = deterministicSelect(cachedGallery.all, salonSlug, 1);
-            const salonImage = selectedDesigns.length > 0
-              ? selectedDesigns[0].imageUrl
-              : null;
-            const isOpen = salon.currentOpeningHours?.openNow;
-            
-            return (
-              <Link
-                key={salon.placeId ? salon.placeId : `${generateSlug(salon.name)}-${index}`}
-                href={`/nail-salons/${stateSlug}/${citySlug}/${generateSlug(salon.name)}`}
-                className="group bg-white rounded-xl overflow-hidden ring-1 ring-[#ee2b8c]/15 hover:ring-[#ee2b8c]/30 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2"
-              >
-                {/* Salon Image */}
-                {salonImage ? (
-                  <div className="relative h-48 bg-gradient-to-br from-[#ee2b8c]/20 to-[#f8f6f7] overflow-hidden">
-                    <OptimizedImage
-                      src={salonImage}
-                      alt={salon.name}
-                      width={400}
-                      height={192}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                      priority={index < 6}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
-                    
-                    {/* Status Badge */}
-                    {isOpen !== undefined && (
-                      <div className="absolute top-3 right-3">
-                        <span className={`px-3 py-1 rounded-full text-xs font-semibold backdrop-blur-sm ${
-                          isOpen 
-                            ? 'bg-green-500/90 text-white' 
+              // Use nail design image instead of salon photo (deterministic selection)
+              // Each salon gets a consistent, unique nail design based on its slug
+              const salonSlug = generateSlug(salon.name);
+              const selectedDesigns = deterministicSelect(cachedGallery.all, salonSlug, 1);
+              const salonImage = selectedDesigns.length > 0
+                ? selectedDesigns[0].imageUrl
+                : null;
+              const isOpen = salon.currentOpeningHours?.openNow;
+
+              return (
+                <Link
+                  key={salon.placeId ? salon.placeId : `${generateSlug(salon.name)}-${index}`}
+                  href={`/nail-salons/${stateSlug}/${citySlug}/${generateSlug(salon.name)}`}
+                  className="group bg-white rounded-xl overflow-hidden ring-1 ring-[#ee2b8c]/15 hover:ring-[#ee2b8c]/30 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2"
+                >
+                  {/* Salon Image */}
+                  {salonImage ? (
+                    <div className="relative h-48 bg-gradient-to-br from-[#ee2b8c]/20 to-[#f8f6f7] overflow-hidden">
+                      <OptimizedImage
+                        src={salonImage}
+                        alt={salon.name}
+                        width={400}
+                        height={192}
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                        priority={index < 6}
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
+
+                      {/* Status Badge */}
+                      {isOpen !== undefined && (
+                        <div className="absolute top-3 right-3">
+                          <span className={`px-3 py-1 rounded-full text-xs font-semibold backdrop-blur-sm ${isOpen
+                            ? 'bg-green-500/90 text-white'
                             : 'bg-red-500/90 text-white'
-                        }`}>
-                          {isOpen ? 'Open Now' : 'Closed'}
-                        </span>
-                      </div>
-                    )}
-                    
-                    {/* Rating Badge */}
-                    {salon.rating && (
-                      <div className="absolute bottom-3 left-3 bg-white/90 backdrop-blur-sm px-2.5 py-1 rounded-md flex items-center gap-1.5">
-                        <span className="text-yellow-500 text-sm">⭐</span>
-                        <span className="font-bold text-[#1b0d14] text-sm">{salon.rating}</span>
-                      </div>
-                    )}
-                  </div>
-                ) : (
-                  <div className="relative h-48 bg-gradient-to-br from-[#ee2b8c]/20 to-[#f8f6f7] flex items-center justify-center">
-                    <div className="text-6xl opacity-30">💅</div>
-                    {isOpen !== undefined && (
-                      <div className="absolute top-3 right-3">
-                        <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                          isOpen 
-                            ? 'bg-green-500 text-white' 
+                            }`}>
+                            {isOpen ? 'Open Now' : 'Closed'}
+                          </span>
+                        </div>
+                      )}
+
+                      {/* Rating Badge */}
+                      {salon.rating && (
+                        <div className="absolute bottom-3 left-3 bg-white/90 backdrop-blur-sm px-2.5 py-1 rounded-md flex items-center gap-1.5">
+                          <span className="text-yellow-500 text-sm">⭐</span>
+                          <span className="font-bold text-[#1b0d14] text-sm">{salon.rating}</span>
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    <div className="relative h-48 bg-gradient-to-br from-[#ee2b8c]/20 to-[#f8f6f7] flex items-center justify-center">
+                      <div className="text-6xl opacity-30">💅</div>
+                      {isOpen !== undefined && (
+                        <div className="absolute top-3 right-3">
+                          <span className={`px-3 py-1 rounded-full text-xs font-semibold ${isOpen
+                            ? 'bg-green-500 text-white'
                             : 'bg-red-500 text-white'
-                        }`}>
-                          {isOpen ? 'Open Now' : 'Closed'}
-                        </span>
+                            }`}>
+                            {isOpen ? 'Open Now' : 'Closed'}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  {/* Salon Info */}
+                  <div className="p-5">
+                    <h3 className="text-xl font-bold text-[#1b0d14] group-hover:text-[#ee2b8c] transition-colors mb-3 line-clamp-2">
+                      {salon.name}
+                    </h3>
+
+                    {/* Rating & Reviews */}
+                    {salon.rating && (
+                      <div className="flex items-center gap-2 mb-3">
+                        <div className="flex items-center gap-1">
+                          <span className="text-yellow-500">⭐</span>
+                          <span className="font-semibold text-[#1b0d14]">{salon.rating}</span>
+                        </div>
+                        {salon.reviewCount && (
+                          <span className="text-sm text-[#1b0d14]/60">
+                            ({salon.reviewCount.toLocaleString()} {salon.reviewCount === 1 ? 'review' : 'reviews'})
+                          </span>
+                        )}
+                        {salon.priceLevel && (
+                          <span className="ml-auto text-sm text-[#1b0d14]/60">
+                            {salon.priceLevel === 'INEXPENSIVE' && '💰'}
+                            {salon.priceLevel === 'MODERATE' && '💰💰'}
+                            {salon.priceLevel === 'EXPENSIVE' && '💰💰💰'}
+                            {salon.priceLevel === 'VERY_EXPENSIVE' && '💰💰💰💰'}
+                          </span>
+                        )}
                       </div>
                     )}
-                  </div>
-                )}
 
-                {/* Salon Info */}
-                <div className="p-5">
-                  <h3 className="text-xl font-bold text-[#1b0d14] group-hover:text-[#ee2b8c] transition-colors mb-3 line-clamp-2">
-                    {salon.name}
-                  </h3>
-
-                  {/* Rating & Reviews */}
-                  {salon.rating && (
-                    <div className="flex items-center gap-2 mb-3">
-                      <div className="flex items-center gap-1">
-                        <span className="text-yellow-500">⭐</span>
-                        <span className="font-semibold text-[#1b0d14]">{salon.rating}</span>
-                      </div>
-                      {salon.reviewCount && (
-                        <span className="text-sm text-[#1b0d14]/60">
-                          ({salon.reviewCount.toLocaleString()} {salon.reviewCount === 1 ? 'review' : 'reviews'})
-                        </span>
-                      )}
-                      {salon.priceLevel && (
-                        <span className="ml-auto text-sm text-[#1b0d14]/60">
-                          {salon.priceLevel === 'INEXPENSIVE' && '💰'}
-                          {salon.priceLevel === 'MODERATE' && '💰💰'}
-                          {salon.priceLevel === 'EXPENSIVE' && '💰💰💰'}
-                          {salon.priceLevel === 'VERY_EXPENSIVE' && '💰💰💰💰'}
-                        </span>
-                      )}
-                    </div>
-                  )}
-
-                  {/* Address */}
-                  {salon.address && (
-                    <p className="text-[#1b0d14]/70 text-sm mb-3 flex items-start gap-2 line-clamp-2">
-                      <span className="text-[#ee2b8c] flex-shrink-0 mt-0.5">📍</span>
-                      <span>{salon.shortFormattedAddress || salon.address}</span>
-                    </p>
-                  )}
-
-                  {/* Phone */}
-                  {salon.phone && (
-                    <p className="text-[#1b0d14]/70 text-sm mb-3 flex items-center gap-2">
-                      <span className="text-[#ee2b8c]">📞</span>
-                      <span className="hover:text-[#ee2b8c] transition-colors">{salon.phone}</span>
-                    </p>
-                  )}
-
-                  {/* Opening Hours Preview */}
-                  {salon.currentOpeningHours?.weekdayDescriptions && salon.currentOpeningHours.weekdayDescriptions.length > 0 && (
-                    <div className="mb-3 pb-3 border-b border-[#ee2b8c]/10">
-                      <p className="text-xs text-[#1b0d14]/60 mb-1">Today:</p>
-                      <p className="text-sm text-[#1b0d14]/80 font-medium">
-                        {salon.currentOpeningHours.weekdayDescriptions[0]}
+                    {/* Address */}
+                    {salon.address && (
+                      <p className="text-[#1b0d14]/70 text-sm mb-3 flex items-start gap-2 line-clamp-2">
+                        <span className="text-[#ee2b8c] flex-shrink-0 mt-0.5">📍</span>
+                        <span>{salon.shortFormattedAddress || salon.address}</span>
                       </p>
-                    </div>
-                  )}
+                    )}
 
-                  {/* CTA */}
-                  <div className="mt-4 flex items-center gap-2 text-[#ee2b8c] text-sm font-semibold group-hover:gap-3 transition-all">
-                    <span>View Details</span>
-                    <span className="group-hover:translate-x-1 transition-transform">→</span>
+                    {/* Phone */}
+                    {salon.phone && (
+                      <p className="text-[#1b0d14]/70 text-sm mb-3 flex items-center gap-2">
+                        <span className="text-[#ee2b8c]">📞</span>
+                        <span className="hover:text-[#ee2b8c] transition-colors">{salon.phone}</span>
+                      </p>
+                    )}
+
+                    {/* Opening Hours Preview */}
+                    {salon.currentOpeningHours?.weekdayDescriptions && salon.currentOpeningHours.weekdayDescriptions.length > 0 && (
+                      <div className="mb-3 pb-3 border-b border-[#ee2b8c]/10">
+                        <p className="text-xs text-[#1b0d14]/60 mb-1">Today:</p>
+                        <p className="text-sm text-[#1b0d14]/80 font-medium">
+                          {salon.currentOpeningHours.weekdayDescriptions[0]}
+                        </p>
+                      </div>
+                    )}
+
+                    {/* CTA */}
+                    <div className="mt-4 flex items-center gap-2 text-[#ee2b8c] text-sm font-semibold group-hover:gap-3 transition-all">
+                      <span>View Details</span>
+                      <span className="group-hover:translate-x-1 transition-transform">→</span>
+                    </div>
                   </div>
-                </div>
-              </Link>
-            );
-          })}
+                </Link>
+              );
+            })}
           </div>
         )}
       </div>
@@ -617,36 +615,36 @@ export default async function CityPage({ params }: CityPageProps) {
                 <div>
                   <h4 className="text-base font-semibold text-[#1b0d14] mb-1">What are the best nail salons in {formattedCity}?</h4>
                   <p className="text-sm text-[#1b0d14]/70">
-                    The best nail salons in {formattedCity} are those with ratings of 4.5+ stars and positive customer reviews. 
+                    The best nail salons in {formattedCity} are those with ratings of 4.5+ stars and positive customer reviews.
                     Check our &quot;Top Rated Salons&quot; section above to see the highest-rated options in your area.
                   </p>
                 </div>
                 <div>
                   <h4 className="text-base font-semibold text-[#1b0d14] mb-1">How much does a manicure cost in {formattedCity}?</h4>
                   <p className="text-sm text-[#1b0d14]/70">
-                    Manicure prices in {formattedCity} typically range from $20-$40 for basic services, $40-$60 for gel manicures, 
+                    Manicure prices in {formattedCity} typically range from $20-$40 for basic services, $40-$60 for gel manicures,
                     and $50-$100+ for specialty nail art. Check the price level indicators (💰) on each salon card for guidance.
                   </p>
                 </div>
                 <div>
                   <h4 className="text-base font-semibold text-[#1b0d14] mb-1">Are walk-ins accepted at nail salons in {formattedCity}?</h4>
                   <p className="text-sm text-[#1b0d14]/70">
-                    Many salons in {formattedCity} accept walk-ins, but appointments are recommended during busy times. 
+                    Many salons in {formattedCity} accept walk-ins, but appointments are recommended during busy times.
                     Call ahead using the phone numbers in our listings to check availability and book your appointment.
                   </p>
                 </div>
                 <div>
                   <h4 className="text-base font-semibold text-[#1b0d14] mb-1">What nail services are available in {formattedCity}?</h4>
                   <p className="text-sm text-[#1b0d14]/70">
-                    Salons in {formattedCity} offer a wide range of services including manicures, pedicures, gel polish, 
-                    acrylic nails, dip powder, nail art, nail repairs, extensions, and spa treatments. Some also offer 
+                    Salons in {formattedCity} offer a wide range of services including manicures, pedicures, gel polish,
+                    acrylic nails, dip powder, nail art, nail repairs, extensions, and spa treatments. Some also offer
                     waxing, massage, and special packages for weddings and events.
                   </p>
                 </div>
                 <div>
                   <h4 className="text-base font-semibold text-[#1b0d14] mb-1">How can I find nail salons open now in {formattedCity}?</h4>
                   <p className="text-sm text-[#1b0d14]/70">
-                    Look for the &quot;Open Now&quot; badge (green) on salon cards above. Our directory shows real-time open/closed 
+                    Look for the &quot;Open Now&quot; badge (green) on salon cards above. Our directory shows real-time open/closed
                     status for all salons. You can also check the &quot;Today&apos;s hours&quot; preview on each card to see when they close.
                   </p>
                 </div>

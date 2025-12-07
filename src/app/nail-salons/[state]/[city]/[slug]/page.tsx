@@ -2,7 +2,6 @@ import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { getSalonAdditionalData, generateSlug, NailSalon, SalonDetails } from '@/lib/nailSalonService';
-import { getSalonsForCity } from '@/lib/salonDataService';
 import OptimizedImage from '@/components/OptimizedImage';
 import NailArtGallerySection from '@/components/NailArtGallerySection';
 import SeasonalTrendsSection from '@/components/SeasonalTrendsSection';
@@ -37,7 +36,7 @@ import { getNearbyCitiesFromState, getMajorCitiesInState } from '@/lib/nearbyCit
 // ISR Configuration - Cache salon pages for 7 days to reduce CPU usage and R2 costs
 // ✅ PHASE 2.3: Increased from 6h to 7 days (96% fewer regenerations)
 // Salon data rarely changes, so 7-day cache is appropriate for business listings
-export const revalidate = 604800; // 7 days in seconds (was 21600 = 6 hours, then 86400 = 24 hours)
+export const revalidate = 2592000; // 30 days - data is static, no need for frequent regeneration
 export const dynamicParams = true; // Allow on-demand generation for new salons
 
 interface SalonDetailPageProps {
@@ -52,10 +51,10 @@ export async function generateMetadata({ params }: SalonDetailPageProps): Promis
   const resolvedParams = await params;
   const stateName = decodeURIComponent(resolvedParams.state).replace(/-/g, ' ');
   const cityName = decodeURIComponent(resolvedParams.city).replace(/-/g, ' ');
-  const formattedState = stateName.split(' ').map(word => 
+  const formattedState = stateName.split(' ').map(word =>
     word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
   ).join(' ');
-  const formattedCity = cityName.split(' ').map(word => 
+  const formattedCity = cityName.split(' ').map(word =>
     word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
   ).join(' ');
 
@@ -73,9 +72,9 @@ export async function generateMetadata({ params }: SalonDetailPageProps): Promis
   }
 
   const salonName = salon?.name || 'Nail Salon';
-  
+
   // Enhanced description with rating, services, and CTA (no dependency on salonDetails)
-  const enhancedDescription = salon?.address 
+  const enhancedDescription = salon?.address
     ? `${salonName} in ${formattedCity}, ${formattedState}. ${salon?.rating ? `Rated ${salon.rating}/5 stars` : ''}${salon?.reviewCount ? ` with ${salon.reviewCount} reviews.` : '.'} ${salon.address}. Professional nail services including manicures, pedicures, and nail art. Book your appointment today!`
     : `Find ${salonName} in ${formattedCity}, ${formattedState}. ${salon?.rating ? `Rated ${salon.rating}/5 stars` : ''}${salon?.reviewCount ? ` with ${salon.reviewCount} reviews.` : ''} Get contact information, ratings, and reviews for this nail salon.`;
 
@@ -85,7 +84,7 @@ export async function generateMetadata({ params }: SalonDetailPageProps): Promis
   // Get image URL: Use nail design image from gallery instead of salon photos
   // This ensures consistent, beautiful OG images for social sharing
   const imageUrl = undefined; // Will use default OG image (nail design images are loaded later in the page)
-  
+
   // Build canonical URL (absolute)
   const canonicalUrl = absoluteUrl(`/nail-salons/${resolvedParams.state}/${resolvedParams.city}/${resolvedParams.slug}`);
 
@@ -165,10 +164,10 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
   const citySlug = resolvedParams.city;
   const stateName = decodeURIComponent(stateSlug).replace(/-/g, ' ');
   const cityName = decodeURIComponent(citySlug).replace(/-/g, ' ');
-  const formattedState = stateName.split(' ').map(word => 
+  const formattedState = stateName.split(' ').map(word =>
     word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
   ).join(' ');
-  const formattedCity = cityName.split(' ').map(word => 
+  const formattedCity = cityName.split(' ').map(word =>
     word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
   ).join(' ');
 
@@ -187,7 +186,7 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
   let similarQualitySalons: NailSalon[] = [];
   let priceLevelSalons: NailSalon[] = [];
   let topRatedStateSalons: NailSalon[] = [];
-  
+
   try {
     // ✅ OPTIMIZATION: Fetch city data once from R2 (was 2-3 duplicate requests!)
     // This eliminates duplicate R2 calls in getSalonFromR2() and getSalonsForCity()
@@ -313,19 +312,19 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
             question: q.question,
             answer: q.answer
           })) || [
-            {
-              question: 'Do I need an appointment?',
-              answer: 'Walk-ins are welcome, but appointments are recommended to ensure availability.'
-            },
-            {
-              question: 'What payment methods do you accept?',
-              answer: 'Most nail salons accept cash, credit cards, and mobile payments.'
-            },
-            {
-              question: 'Is this salon family-friendly?',
-              answer: 'Please contact the salon to inquire about services for children.'
-            },
-          ],
+              {
+                question: 'Do I need an appointment?',
+                answer: 'Walk-ins are welcome, but appointments are recommended to ensure availability.'
+              },
+              {
+                question: 'What payment methods do you accept?',
+                answer: 'Most nail salons accept cash, credit cards, and mobile payments.'
+              },
+              {
+                question: 'Is this salon family-friendly?',
+                answer: 'Please contact the salon to inquire about services for children.'
+              },
+            ],
 
           // Use real customer reviews from enriched data
           placeReviews: fetchedEnrichedData.sections.customerReviews?.featuredReviews.map(r => ({
@@ -537,294 +536,289 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
 
   return (
     <div className="min-h-screen bg-[#f8f6f7]">
-        {/* Structured Data for SEO */}
-        {salon && salonDetails && (
-          <SalonStructuredData
-            salon={salon}
-            salonDetails={salonDetails as { description?: string; faq?: Array<{ question: string; answer: string }>; [key: string]: unknown }}
-            stateSlug={stateSlug}
-            citySlug={citySlug}
-            slug={resolvedParams.slug}
-          />
-        )}
-        
-        {/* Hero Section with Image */}
-        <div className="relative overflow-hidden">
-          {/* Hero Background Image */}
-          <div className="absolute inset-0">
-            <OptimizedImage
-              src={heroImage}
-              alt={`Beautiful nail art design showcasing work from ${salon.name} in ${formattedCity}, ${formattedState}`}
-              width={1200}
-              height={500}
-              className="w-full h-full object-cover"
-              priority
-            />
-            <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/70"></div>
-          </div>
+      {/* Structured Data for SEO */}
+      {salon && salonDetails && (
+        <SalonStructuredData
+          salon={salon}
+          salonDetails={salonDetails as { description?: string; faq?: Array<{ question: string; answer: string }>;[key: string]: unknown }}
+          stateSlug={stateSlug}
+          citySlug={citySlug}
+          slug={resolvedParams.slug}
+        />
+      )}
 
-          <div className="relative max-w-7xl mx-auto px-4 py-20">
-            <div className="text-center">
-              <div className="mb-4">
-                <Link
-                  href={`/nail-salons/${stateSlug}/${citySlug}`}
-                  className="text-white/90 hover:text-white text-sm font-medium inline-flex items-center gap-2 bg-black/30 backdrop-blur-sm px-4 py-2 rounded-full"
-                >
-                  ← Back to {formattedCity} Salons
-                </Link>
+      {/* Hero Section with Image */}
+      <div className="relative overflow-hidden">
+        {/* Hero Background Image */}
+        <div className="absolute inset-0">
+          <OptimizedImage
+            src={heroImage}
+            alt={`Beautiful nail art design showcasing work from ${salon.name} in ${formattedCity}, ${formattedState}`}
+            width={1200}
+            height={500}
+            className="w-full h-full object-cover"
+            priority
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/70"></div>
+        </div>
+
+        <div className="relative max-w-7xl mx-auto px-4 py-20">
+          <div className="text-center">
+            <div className="mb-4">
+              <Link
+                href={`/nail-salons/${stateSlug}/${citySlug}`}
+                className="text-white/90 hover:text-white text-sm font-medium inline-flex items-center gap-2 bg-black/30 backdrop-blur-sm px-4 py-2 rounded-full"
+              >
+                ← Back to {formattedCity} Salons
+              </Link>
+            </div>
+            <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 drop-shadow-lg">
+              {salon.name}
+            </h1>
+            {salon.rating && (
+              <div className="flex items-center justify-center gap-3 mb-4">
+                <div className="flex items-center gap-2 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full">
+                  <span className="text-yellow-500 text-2xl">⭐</span>
+                  <span className="text-2xl font-bold text-[#1b0d14]">{salon.rating}</span>
+                  {salon.reviewCount && (
+                    <span className="text-lg text-[#1b0d14]/70 ml-2">
+                      ({salon.reviewCount.toLocaleString()} {salon.reviewCount === 1 ? 'review' : 'reviews'})
+                    </span>
+                  )}
+                </div>
               </div>
-              <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 drop-shadow-lg">
-                {salon.name}
-              </h1>
-              {salon.rating && (
-                <div className="flex items-center justify-center gap-3 mb-4">
-                  <div className="flex items-center gap-2 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full">
-                    <span className="text-yellow-500 text-2xl">⭐</span>
-                    <span className="text-2xl font-bold text-[#1b0d14]">{salon.rating}</span>
-                    {salon.reviewCount && (
-                      <span className="text-lg text-[#1b0d14]/70 ml-2">
-                        ({salon.reviewCount.toLocaleString()} {salon.reviewCount === 1 ? 'review' : 'reviews'})
+            )}
+
+            {/* Business Status & Open Now */}
+            <div className="flex flex-wrap items-center justify-center gap-3 mb-4">
+              {salon.currentOpeningHours?.openNow !== undefined && (
+                <div className={`px-4 py-2 rounded-full text-sm font-semibold backdrop-blur-sm ${salon.currentOpeningHours.openNow
+                  ? 'bg-green-500/90 text-white'
+                  : 'bg-red-500/90 text-white'
+                  }`}>
+                  {salon.currentOpeningHours.openNow ? '🟢 Open Now' : '🔴 Closed'}
+                </div>
+              )}
+              {salon.businessStatus && salon.businessStatus !== 'OPERATIONAL' && (
+                <div className="px-4 py-2 rounded-full text-sm font-semibold bg-yellow-500/90 text-white backdrop-blur-sm">
+                  {salon.businessStatus === 'CLOSED_TEMPORARILY' ? '⚠️ Temporarily Closed' : '❌ Permanently Closed'}
+                </div>
+              )}
+              {salon.priceLevel && (
+                <div className="px-4 py-2 rounded-full text-sm font-semibold bg-blue-500/90 text-white backdrop-blur-sm">
+                  {salon.priceLevel === 'INEXPENSIVE' && '💰 Budget-Friendly'}
+                  {salon.priceLevel === 'MODERATE' && '💰💰 Moderate'}
+                  {salon.priceLevel === 'EXPENSIVE' && '💰💰💰 Expensive'}
+                  {salon.priceLevel === 'VERY_EXPENSIVE' && '💰💰💰💰 Very Expensive'}
+                </div>
+              )}
+            </div>
+            <p className="text-xl text-white/90 drop-shadow-md">
+              {formattedCity}, {formattedState}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <div className="max-w-7xl mx-auto px-4 py-12">
+        {/* Content Freshness Indicator */}
+        <div className="mb-6 text-center">
+          <p className="text-sm text-[#1b0d14]/60">
+            Last updated: <time dateTime={new Date().toISOString()}>{new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</time>
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Left Column - Salon Details */}
+          <div className="lg:col-span-2 space-y-6">
+            {/* About Section - HIGH PRIORITY: Key information */}
+            {salonDetails?.description && (
+              <div className="bg-white rounded-xl p-6 ring-1 ring-[#ee2b8c]/15 shadow-sm">
+                <h2 className="text-2xl font-bold text-[#1b0d14] mb-4">About {salon.name}</h2>
+                <div className="prose prose-lg text-[#1b0d14]/70 max-w-none">
+                  <p className="leading-relaxed">{salonDetails.description}</p>
+                </div>
+              </div>
+            )}
+
+
+            {/* Opening Hours - COMPACT VERSION with expandable full hours */}
+            {(salon.openingHours || salon.currentOpeningHours?.weekdayDescriptions) && (() => {
+              const hoursList = salon.currentOpeningHours?.weekdayDescriptions || salon.openingHours || [];
+              const currentDay = new Date().getDay(); // 0 = Sunday, 1 = Monday, etc.
+              const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+              // Parse hours to extract day and time
+              const parseHours = (hoursString: string) => {
+                const match = hoursString.match(/^([^:]+):\s*(.+)$/);
+                if (match) {
+                  return {
+                    day: match[1].trim(),
+                    time: match[2].trim(),
+                    isToday: false
+                  };
+                }
+                return {
+                  day: '',
+                  time: hoursString,
+                  isToday: false
+                };
+              };
+
+              const parsedHours = hoursList.map((hours, index) => {
+                const parsed = parseHours(hours);
+                const dayIndex = dayNames.findIndex(day =>
+                  parsed.day.toLowerCase().includes(day.toLowerCase()) ||
+                  day.toLowerCase().includes(parsed.day.toLowerCase())
+                );
+                parsed.isToday = dayIndex === currentDay;
+                return { ...parsed, original: hours, index };
+              });
+
+              const todayHours = parsedHours.find(h => h.isToday);
+
+              return (
+                <div className="bg-white rounded-xl p-6 ring-1 ring-[#ee2b8c]/15 shadow-sm">
+                  <div className="flex items-center justify-between mb-4">
+                    <h2 className="text-xl font-bold text-[#1b0d14] flex items-center gap-2">
+                      <span>🕐</span>
+                      <span>Opening Hours</span>
+                    </h2>
+                    {salon.currentOpeningHours?.openNow !== undefined && (
+                      <span className={`px-3 py-1.5 rounded-md text-sm font-semibold ${salon.currentOpeningHours.openNow
+                        ? 'bg-green-50 text-green-700 ring-1 ring-green-200'
+                        : 'bg-red-50 text-red-700 ring-1 ring-red-200'
+                        }`}>
+                        {salon.currentOpeningHours.openNow ? 'Open Now' : 'Closed'}
                       </span>
                     )}
                   </div>
-                </div>
-              )}
-              
-              {/* Business Status & Open Now */}
-              <div className="flex flex-wrap items-center justify-center gap-3 mb-4">
-                {salon.currentOpeningHours?.openNow !== undefined && (
-                  <div className={`px-4 py-2 rounded-full text-sm font-semibold backdrop-blur-sm ${
-                    salon.currentOpeningHours.openNow 
-                      ? 'bg-green-500/90 text-white' 
-                      : 'bg-red-500/90 text-white'
-                  }`}>
-                    {salon.currentOpeningHours.openNow ? '🟢 Open Now' : '🔴 Closed'}
-                  </div>
-                )}
-                {salon.businessStatus && salon.businessStatus !== 'OPERATIONAL' && (
-                  <div className="px-4 py-2 rounded-full text-sm font-semibold bg-yellow-500/90 text-white backdrop-blur-sm">
-                    {salon.businessStatus === 'CLOSED_TEMPORARILY' ? '⚠️ Temporarily Closed' : '❌ Permanently Closed'}
-                  </div>
-                )}
-                {salon.priceLevel && (
-                  <div className="px-4 py-2 rounded-full text-sm font-semibold bg-blue-500/90 text-white backdrop-blur-sm">
-                    {salon.priceLevel === 'INEXPENSIVE' && '💰 Budget-Friendly'}
-                    {salon.priceLevel === 'MODERATE' && '💰💰 Moderate'}
-                    {salon.priceLevel === 'EXPENSIVE' && '💰💰💰 Expensive'}
-                    {salon.priceLevel === 'VERY_EXPENSIVE' && '💰💰💰💰 Very Expensive'}
-                  </div>
-                )}
-              </div>
-              <p className="text-xl text-white/90 drop-shadow-md">
-                {formattedCity}, {formattedState}
-              </p>
-            </div>
-          </div>
-        </div>
 
-        {/* Main Content */}
-        <div className="max-w-7xl mx-auto px-4 py-12">
-          {/* Content Freshness Indicator */}
-          <div className="mb-6 text-center">
-            <p className="text-sm text-[#1b0d14]/60">
-              Last updated: <time dateTime={new Date().toISOString()}>{new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</time>
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Left Column - Salon Details */}
-            <div className="lg:col-span-2 space-y-6">
-              {/* About Section - HIGH PRIORITY: Key information */}
-              {salonDetails?.description && (
-                <div className="bg-white rounded-xl p-6 ring-1 ring-[#ee2b8c]/15 shadow-sm">
-                  <h2 className="text-2xl font-bold text-[#1b0d14] mb-4">About {salon.name}</h2>
-                  <div className="prose prose-lg text-[#1b0d14]/70 max-w-none">
-                    <p className="leading-relaxed">{salonDetails.description}</p>
-                  </div>
-                </div>
-              )}
-
-
-              {/* Opening Hours - COMPACT VERSION with expandable full hours */}
-              {(salon.openingHours || salon.currentOpeningHours?.weekdayDescriptions) && (() => {
-                const hoursList = salon.currentOpeningHours?.weekdayDescriptions || salon.openingHours || [];
-                const currentDay = new Date().getDay(); // 0 = Sunday, 1 = Monday, etc.
-                const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-                
-                // Parse hours to extract day and time
-                const parseHours = (hoursString: string) => {
-                  const match = hoursString.match(/^([^:]+):\s*(.+)$/);
-                  if (match) {
-                    return {
-                      day: match[1].trim(),
-                      time: match[2].trim(),
-                      isToday: false
-                    };
-                  }
-                  return {
-                    day: '',
-                    time: hoursString,
-                    isToday: false
-                  };
-                };
-
-                const parsedHours = hoursList.map((hours, index) => {
-                  const parsed = parseHours(hours);
-                  const dayIndex = dayNames.findIndex(day => 
-                    parsed.day.toLowerCase().includes(day.toLowerCase()) ||
-                    day.toLowerCase().includes(parsed.day.toLowerCase())
-                  );
-                  parsed.isToday = dayIndex === currentDay;
-                  return { ...parsed, original: hours, index };
-                });
-
-                const todayHours = parsedHours.find(h => h.isToday);
-
-                return (
-                  <div className="bg-white rounded-xl p-6 ring-1 ring-[#ee2b8c]/15 shadow-sm">
-                    <div className="flex items-center justify-between mb-4">
-                      <h2 className="text-xl font-bold text-[#1b0d14] flex items-center gap-2">
-                        <span>🕐</span>
-                        <span>Opening Hours</span>
-                      </h2>
-                      {salon.currentOpeningHours?.openNow !== undefined && (
-                        <span className={`px-3 py-1.5 rounded-md text-sm font-semibold ${
-                          salon.currentOpeningHours.openNow 
-                            ? 'bg-green-50 text-green-700 ring-1 ring-green-200' 
-                            : 'bg-red-50 text-red-700 ring-1 ring-red-200'
-                        }`}>
-                          {salon.currentOpeningHours.openNow ? 'Open Now' : 'Closed'}
-                        </span>
-                      )}
+                  {/* Today's Hours - Prominently Displayed */}
+                  {todayHours && (
+                    <div className="mb-4 p-4 bg-gradient-to-r from-[#ee2b8c]/5 to-[#ee2b8c]/10 rounded-lg border-l-4 border-[#ee2b8c]">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="text-sm font-semibold text-[#ee2b8c] mb-1">Today ({todayHours.day})</p>
+                          <p className="text-lg font-bold text-[#1b0d14]">{todayHours.time}</p>
+                        </div>
+                      </div>
                     </div>
-                    
-                    {/* Today's Hours - Prominently Displayed */}
-                    {todayHours && (
-                      <div className="mb-4 p-4 bg-gradient-to-r from-[#ee2b8c]/5 to-[#ee2b8c]/10 rounded-lg border-l-4 border-[#ee2b8c]">
-                        <div className="flex items-center justify-between">
-                          <div>
-                            <p className="text-sm font-semibold text-[#ee2b8c] mb-1">Today ({todayHours.day})</p>
-                            <p className="text-lg font-bold text-[#1b0d14]">{todayHours.time}</p>
-                          </div>
-                        </div>
-                      </div>
-                    )}
+                  )}
 
-                    {/* Full Hours - Collapsible */}
-                    <CollapsibleSection
-                      title="View All Hours"
-                      defaultExpanded={false}
-                      icon={<span>📅</span>}
-                    >
-                      <div className="space-y-2">
-                        {parsedHours.map((item, index) => {
-                          const isToday = item.isToday;
-                          const isClosed = item.time.toLowerCase().includes('closed');
-                          
-                          return (
-                            <div 
-                              key={index} 
-                              className={`flex items-center justify-between py-2 px-3 rounded-lg ${
-                                isToday 
-                                  ? 'bg-[#ee2b8c]/5 ring-1 ring-[#ee2b8c]/20' 
-                                  : 'hover:bg-[#f8f6f7]'
+                  {/* Full Hours - Collapsible */}
+                  <CollapsibleSection
+                    title="View All Hours"
+                    defaultExpanded={false}
+                    icon={<span>📅</span>}
+                  >
+                    <div className="space-y-2">
+                      {parsedHours.map((item, index) => {
+                        const isToday = item.isToday;
+                        const isClosed = item.time.toLowerCase().includes('closed');
+
+                        return (
+                          <div
+                            key={index}
+                            className={`flex items-center justify-between py-2 px-3 rounded-lg ${isToday
+                              ? 'bg-[#ee2b8c]/5 ring-1 ring-[#ee2b8c]/20'
+                              : 'hover:bg-[#f8f6f7]'
                               }`}
-                            >
-                              <span className={`text-sm font-medium ${
-                                isToday 
-                                  ? 'text-[#ee2b8c] font-semibold' 
-                                  : 'text-[#1b0d14]/70'
+                          >
+                            <span className={`text-sm font-medium ${isToday
+                              ? 'text-[#ee2b8c] font-semibold'
+                              : 'text-[#1b0d14]/70'
                               }`}>
-                                {item.day || `Day ${index + 1}`}
-                              </span>
-                              <span className={`text-sm ${
-                                isClosed 
-                                  ? 'text-gray-400' 
-                                  : isToday 
-                                    ? 'text-[#1b0d14] font-semibold' 
-                                    : 'text-[#1b0d14]/80'
+                              {item.day || `Day ${index + 1}`}
+                            </span>
+                            <span className={`text-sm ${isClosed
+                              ? 'text-gray-400'
+                              : isToday
+                                ? 'text-[#1b0d14] font-semibold'
+                                : 'text-[#1b0d14]/80'
                               }`}>
-                                {item.time}
-                              </span>
-                            </div>
-                          );
-                        })}
-                      </div>
-                    </CollapsibleSection>
-                  </div>
-                );
-              })()}
+                              {item.time}
+                            </span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </CollapsibleSection>
+                </div>
+              );
+            })()}
 
-              {/* Services & Pricing - MEDIUM PRIORITY */}
-              {((salonDetails as { services?: Array<{ name: string; description?: string; price?: string }> })?.services && (salonDetails as { services?: Array<{ name: string; description?: string; price?: string }> }).services!.length > 0) || (salon.types && salon.types.length > 0) ? (
-                <div className="bg-white rounded-xl p-6 ring-1 ring-[#ee2b8c]/15 shadow-sm">
-                  <h2 className="text-xl font-bold text-[#1b0d14] mb-4 flex items-center gap-2">
-                    <span>💅</span>
-                    <span>Services & Pricing</span>
-                  </h2>
-                  {(salonDetails as { services?: Array<{ name: string; description?: string; price?: string }> })?.services && (salonDetails as { services?: Array<{ name: string; description?: string; price?: string }> }).services!.length > 0 ? (
-                    <div className="space-y-3">
-                      {/* Group services by type for better structure */}
-                      <div>
-                        <h3 className="text-lg font-semibold text-[#1b0d14] mb-3">Manicure Services</h3>
-                        <div className="space-y-3">
-                          {((salonDetails as { services: Array<{ name: string; description?: string; price?: string }> }).services).filter((s) => 
-                            s.name?.toLowerCase().includes('manicure') || 
-                            s.name?.toLowerCase().includes('nail art') ||
-                            s.name?.toLowerCase().includes('gel')
-                          ).map((service, index: number) => (
-                            <div key={index} className="border-b border-[#ee2b8c]/10 pb-3 last:border-0 last:pb-0">
-                              <div className="flex items-start justify-between gap-4">
-                                <div className="flex-1">
-                                  <h4 className="font-semibold text-[#1b0d14] mb-1">{service.name}</h4>
-                                  {service.description && (
-                                    <p className="text-sm text-[#1b0d14]/70">{service.description}</p>
-                                  )}
-                                </div>
-                                {service.price && (
-                                  <span className="text-[#ee2b8c] font-semibold whitespace-nowrap">{service.price}</span>
+            {/* Services & Pricing - MEDIUM PRIORITY */}
+            {((salonDetails as { services?: Array<{ name: string; description?: string; price?: string }> })?.services && (salonDetails as { services?: Array<{ name: string; description?: string; price?: string }> }).services!.length > 0) || (salon.types && salon.types.length > 0) ? (
+              <div className="bg-white rounded-xl p-6 ring-1 ring-[#ee2b8c]/15 shadow-sm">
+                <h2 className="text-xl font-bold text-[#1b0d14] mb-4 flex items-center gap-2">
+                  <span>💅</span>
+                  <span>Services & Pricing</span>
+                </h2>
+                {(salonDetails as { services?: Array<{ name: string; description?: string; price?: string }> })?.services && (salonDetails as { services?: Array<{ name: string; description?: string; price?: string }> }).services!.length > 0 ? (
+                  <div className="space-y-3">
+                    {/* Group services by type for better structure */}
+                    <div>
+                      <h3 className="text-lg font-semibold text-[#1b0d14] mb-3">Manicure Services</h3>
+                      <div className="space-y-3">
+                        {((salonDetails as { services: Array<{ name: string; description?: string; price?: string }> }).services).filter((s) =>
+                          s.name?.toLowerCase().includes('manicure') ||
+                          s.name?.toLowerCase().includes('nail art') ||
+                          s.name?.toLowerCase().includes('gel')
+                        ).map((service, index: number) => (
+                          <div key={index} className="border-b border-[#ee2b8c]/10 pb-3 last:border-0 last:pb-0">
+                            <div className="flex items-start justify-between gap-4">
+                              <div className="flex-1">
+                                <h4 className="font-semibold text-[#1b0d14] mb-1">{service.name}</h4>
+                                {service.description && (
+                                  <p className="text-sm text-[#1b0d14]/70">{service.description}</p>
                                 )}
                               </div>
+                              {service.price && (
+                                <span className="text-[#ee2b8c] font-semibold whitespace-nowrap">{service.price}</span>
+                              )}
                             </div>
-                          ))}
-                        </div>
+                          </div>
+                        ))}
                       </div>
-                      <div>
-                        <h3 className="text-lg font-semibold text-[#1b0d14] mb-3">Pedicure Services</h3>
-                        <div className="space-y-3">
-                          {((salonDetails as { services: Array<{ name: string; description?: string; price?: string }> }).services).filter((s) => 
-                            s.name?.toLowerCase().includes('pedicure') || 
-                            s.name?.toLowerCase().includes('foot')
-                          ).map((service, index: number) => (
-                            <div key={index} className="border-b border-[#ee2b8c]/10 pb-3 last:border-0 last:pb-0">
-                              <div className="flex items-start justify-between gap-4">
-                                <div className="flex-1">
-                                  <h4 className="font-semibold text-[#1b0d14] mb-1">{service.name}</h4>
-                                  {service.description && (
-                                    <p className="text-sm text-[#1b0d14]/70">{service.description}</p>
-                                  )}
-                                </div>
-                                {service.price && (
-                                  <span className="text-[#ee2b8c] font-semibold whitespace-nowrap">{service.price}</span>
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-[#1b0d14] mb-3">Pedicure Services</h3>
+                      <div className="space-y-3">
+                        {((salonDetails as { services: Array<{ name: string; description?: string; price?: string }> }).services).filter((s) =>
+                          s.name?.toLowerCase().includes('pedicure') ||
+                          s.name?.toLowerCase().includes('foot')
+                        ).map((service, index: number) => (
+                          <div key={index} className="border-b border-[#ee2b8c]/10 pb-3 last:border-0 last:pb-0">
+                            <div className="flex items-start justify-between gap-4">
+                              <div className="flex-1">
+                                <h4 className="font-semibold text-[#1b0d14] mb-1">{service.name}</h4>
+                                {service.description && (
+                                  <p className="text-sm text-[#1b0d14]/70">{service.description}</p>
                                 )}
                               </div>
+                              {service.price && (
+                                <span className="text-[#ee2b8c] font-semibold whitespace-nowrap">{service.price}</span>
+                              )}
                             </div>
-                          ))}
-                        </div>
+                          </div>
+                        ))}
                       </div>
-                      {/* Other services */}
-                      {((salonDetails as { services: Array<{ name: string; description?: string; price?: string }> }).services).filter((s) => 
-                        !s.name?.toLowerCase().includes('manicure') && 
-                        !s.name?.toLowerCase().includes('pedicure') &&
-                        !s.name?.toLowerCase().includes('nail art') &&
-                        !s.name?.toLowerCase().includes('gel') &&
-                        !s.name?.toLowerCase().includes('foot')
-                      ).length > 0 && (
+                    </div>
+                    {/* Other services */}
+                    {((salonDetails as { services: Array<{ name: string; description?: string; price?: string }> }).services).filter((s) =>
+                      !s.name?.toLowerCase().includes('manicure') &&
+                      !s.name?.toLowerCase().includes('pedicure') &&
+                      !s.name?.toLowerCase().includes('nail art') &&
+                      !s.name?.toLowerCase().includes('gel') &&
+                      !s.name?.toLowerCase().includes('foot')
+                    ).length > 0 && (
                         <div>
                           <h3 className="text-lg font-semibold text-[#1b0d14] mb-3">Additional Services</h3>
                           <div className="space-y-3">
-                            {((salonDetails as { services: Array<{ name: string; description?: string; price?: string }> }).services).filter((s) => 
-                              !s.name?.toLowerCase().includes('manicure') && 
+                            {((salonDetails as { services: Array<{ name: string; description?: string; price?: string }> }).services).filter((s) =>
+                              !s.name?.toLowerCase().includes('manicure') &&
                               !s.name?.toLowerCase().includes('pedicure') &&
                               !s.name?.toLowerCase().includes('nail art') &&
                               !s.name?.toLowerCase().includes('gel') &&
@@ -847,397 +841,396 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
                           </div>
                         </div>
                       )}
-                    </div>
-                  ) : (
-                    <div className="flex flex-wrap gap-2">
-                      {salon.types?.map((type, index) => (
-                        <span
-                          key={index}
-                          className="px-3 py-1 bg-[#ee2b8c]/10 text-[#ee2b8c] rounded-full text-sm"
-                        >
-                          {type}
-                        </span>
-                      ))}
+                  </div>
+                ) : (
+                  <div className="flex flex-wrap gap-2">
+                    {salon.types?.map((type, index) => (
+                      <span
+                        key={index}
+                        className="px-3 py-1 bg-[#ee2b8c]/10 text-[#ee2b8c] rounded-full text-sm"
+                      >
+                        {type}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ) : null}
+
+            {/* Amenities & Features - Combined compact section */}
+            {(salon.accessibilityOptions && (salon.accessibilityOptions.wheelchairAccessibleParking || salon.accessibilityOptions.wheelchairAccessibleEntrance || salon.accessibilityOptions.wheelchairAccessibleRestroom || salon.accessibilityOptions.wheelchairAccessibleSeating)) && (
+              <div className="bg-white rounded-xl p-6 ring-1 ring-[#ee2b8c]/15 shadow-sm">
+                <h2 className="text-xl font-bold text-[#1b0d14] mb-4 flex items-center gap-2">
+                  <span>✨</span>
+                  <span>Amenities & Features</span>
+                </h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {salon.accessibilityOptions?.wheelchairAccessibleParking && (
+                    <div className="flex items-center gap-2 text-sm">
+                      <span className="text-lg">♿</span>
+                      <span className="text-[#1b0d14]/70">Wheelchair Accessible</span>
                     </div>
                   )}
                 </div>
-              ) : null}
+              </div>
+            )}
 
-              {/* Amenities & Features - Combined compact section */}
-              {(salon.accessibilityOptions && (salon.accessibilityOptions.wheelchairAccessibleParking || salon.accessibilityOptions.wheelchairAccessibleEntrance || salon.accessibilityOptions.wheelchairAccessibleRestroom || salon.accessibilityOptions.wheelchairAccessibleSeating)) && (
-                <div className="bg-white rounded-xl p-6 ring-1 ring-[#ee2b8c]/15 shadow-sm">
-                  <h2 className="text-xl font-bold text-[#1b0d14] mb-4 flex items-center gap-2">
-                    <span>✨</span>
-                    <span>Amenities & Features</span>
-                  </h2>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    {salon.accessibilityOptions?.wheelchairAccessibleParking && (
-                      <div className="flex items-center gap-2 text-sm">
-                        <span className="text-lg">♿</span>
-                        <span className="text-[#1b0d14]/70">Wheelchair Accessible</span>
+            {/* Parking & Transportation - Compact */}
+            {(salonDetails?.parkingInfo || (salonDetails as unknown as { transportation?: string | string[] })?.transportation) && (
+              <div className="bg-white rounded-xl p-6 ring-1 ring-[#ee2b8c]/15 shadow-sm">
+                <h2 className="text-xl font-bold text-[#1b0d14] mb-4 flex items-center gap-2">
+                  <span>🅿️</span>
+                  <span>Parking & Transportation</span>
+                </h2>
+                <div className="space-y-4">
+                  {salonDetails?.parkingInfo && (
+                    <div>
+                      <h3 className="text-lg font-semibold text-[#1b0d14] mb-2 flex items-center gap-2">
+                        <span className="text-xl">🅿️</span>
+                        <span>Parking</span>
+                      </h3>
+                      <p className="text-[#1b0d14]/70 text-sm ml-7">{salonDetails.parkingInfo}</p>
+                    </div>
+                  )}
+                  {(salonDetails as { transportation?: string | string[] })?.transportation && (
+                    <div>
+                      <h3 className="text-lg font-semibold text-[#1b0d14] mb-2 flex items-center gap-2">
+                        <span className="text-xl">🚇</span>
+                        <span>Public Transportation</span>
+                      </h3>
+                      <div className="text-[#1b0d14]/70 text-sm ml-7">
+                        {typeof (salonDetails as unknown as { transportation: string | string[] }).transportation === 'string' ? (
+                          <p>{(salonDetails as unknown as { transportation: string }).transportation}</p>
+                        ) : (
+                          <ul className="list-disc list-inside space-y-1">
+                            {((salonDetails as unknown as { transportation: string[] }).transportation).map((transport: string, index: number) => (
+                              <li key={index}>{transport}</li>
+                            ))}
+                          </ul>
+                        )}
                       </div>
-                    )}
-                  </div>
+                    </div>
+                  )}
                 </div>
-              )}
+              </div>
+            )}
 
-              {/* Parking & Transportation - Compact */}
-              {(salonDetails?.parkingInfo || (salonDetails as unknown as { transportation?: string | string[] })?.transportation) && (
-                <div className="bg-white rounded-xl p-6 ring-1 ring-[#ee2b8c]/15 shadow-sm">
-                  <h2 className="text-xl font-bold text-[#1b0d14] mb-4 flex items-center gap-2">
-                    <span>🅿️</span>
-                    <span>Parking & Transportation</span>
-                  </h2>
-                  <div className="space-y-4">
-                    {salonDetails?.parkingInfo && (
-                      <div>
-                        <h3 className="text-lg font-semibold text-[#1b0d14] mb-2 flex items-center gap-2">
-                          <span className="text-xl">🅿️</span>
-                          <span>Parking</span>
-                        </h3>
-                        <p className="text-[#1b0d14]/70 text-sm ml-7">{salonDetails.parkingInfo}</p>
-                      </div>
-                    )}
-                    {(salonDetails as { transportation?: string | string[] })?.transportation && (
-                      <div>
-                        <h3 className="text-lg font-semibold text-[#1b0d14] mb-2 flex items-center gap-2">
-                          <span className="text-xl">🚇</span>
-                          <span>Public Transportation</span>
-                        </h3>
-                        <div className="text-[#1b0d14]/70 text-sm ml-7">
-                          {typeof (salonDetails as unknown as { transportation: string | string[] }).transportation === 'string' ? (
-                            <p>{(salonDetails as unknown as { transportation: string }).transportation}</p>
-                          ) : (
-                            <ul className="list-disc list-inside space-y-1">
-                              {((salonDetails as unknown as { transportation: string[] }).transportation).map((transport: string, index: number) => (
-                                <li key={index}>{transport}</li>
-                              ))}
-                            </ul>
-                          )}
-                        </div>
-                      </div>
-                    )}
-                  </div>
+            {/* Enriched Salon Sections - Real data from Google Maps + Gemini AI */}
+            {enrichedData && (
+              <EnrichedSalonSections
+                enrichedData={enrichedData}
+                salonName={salon.name}
+              />
+            )}
+
+            {/* ✅ NEW: Internal Linking Sections for SEO */}
+            {/* Nearby Cities Section */}
+            {nearbyCitiesData.length > 0 && (
+              <NearbyCitiesSection
+                nearbyCities={nearbyCitiesData}
+                currentState={formattedState}
+                currentStateSlug={stateSlug}
+              />
+            )}
+
+            {/* Similar Quality Salons Section */}
+            {similarQualitySalons.length > 0 && (
+              <SimilarQualitySalonsSection
+                salons={similarQualitySalons}
+                currentState={formattedState}
+                currentStateSlug={stateSlug}
+              />
+            )}
+
+            {/* Price Level Salons Section */}
+            {priceLevelSalons.length > 0 && salon.priceLevel && (
+              <PriceLevelSalonsSection
+                salons={priceLevelSalons}
+                priceLevel={salon.priceLevel}
+                currentState={formattedState}
+                currentStateSlug={stateSlug}
+              />
+            )}
+
+            {/* Top-Rated State Salons Section */}
+            {topRatedStateSalons.length > 0 && (
+              <TopRatedSalonsSection
+                salons={topRatedStateSalons}
+                currentState={formattedState}
+                currentStateSlug={stateSlug}
+              />
+            )}
+
+            {/* FAQ Section - Compact (only show if no enriched data) */}
+            {!enrichedData && salonDetails?.faq && salonDetails.faq.length > 0 && (
+              <CollapsibleSection
+                title="Frequently Asked Questions"
+                defaultExpanded={false}
+                icon={<span>❓</span>}
+              >
+                <div className="space-y-4">
+                  {salonDetails.faq.map((item: { question: string; answer: string }, index: number) => (
+                    <div key={index} className="border-b border-[#ee2b8c]/10 pb-3 last:border-0 last:pb-0">
+                      <h3 className="font-semibold text-[#1b0d14] mb-1 text-sm">Q: {item.question}</h3>
+                      <p className="text-[#1b0d14]/70 leading-relaxed text-sm">A: {item.answer}</p>
+                    </div>
+                  ))}
                 </div>
-              )}
+              </CollapsibleSection>
+            )}
 
-              {/* Enriched Salon Sections - Real data from Google Maps + Gemini AI */}
-              {enrichedData && (
-                <EnrichedSalonSections
-                  enrichedData={enrichedData}
-                  salonName={salon.name}
-                />
-              )}
-
-              {/* ✅ NEW: Internal Linking Sections for SEO */}
-              {/* Nearby Cities Section */}
-              {nearbyCitiesData.length > 0 && (
-                <NearbyCitiesSection
-                  nearbyCities={nearbyCitiesData}
-                  currentState={formattedState}
-                  currentStateSlug={stateSlug}
-                />
-              )}
-
-              {/* Similar Quality Salons Section */}
-              {similarQualitySalons.length > 0 && (
-                <SimilarQualitySalonsSection
-                  salons={similarQualitySalons}
-                  currentState={formattedState}
-                  currentStateSlug={stateSlug}
-                />
-              )}
-
-              {/* Price Level Salons Section */}
-              {priceLevelSalons.length > 0 && salon.priceLevel && (
-                <PriceLevelSalonsSection
-                  salons={priceLevelSalons}
-                  priceLevel={salon.priceLevel}
-                  currentState={formattedState}
-                  currentStateSlug={stateSlug}
-                />
-              )}
-
-              {/* Top-Rated State Salons Section */}
-              {topRatedStateSalons.length > 0 && (
-                <TopRatedSalonsSection
-                  salons={topRatedStateSalons}
-                  currentState={formattedState}
-                  currentStateSlug={stateSlug}
-                />
-              )}
-
-              {/* FAQ Section - Compact (only show if no enriched data) */}
-              {!enrichedData && salonDetails?.faq && salonDetails.faq.length > 0 && (
-                <CollapsibleSection
-                  title="Frequently Asked Questions"
-                  defaultExpanded={false}
-                  icon={<span>❓</span>}
-                >
-                  <div className="space-y-4">
-                    {salonDetails.faq.map((item: { question: string; answer: string }, index: number) => (
-                      <div key={index} className="border-b border-[#ee2b8c]/10 pb-3 last:border-0 last:pb-0">
-                        <h3 className="font-semibold text-[#1b0d14] mb-1 text-sm">Q: {item.question}</h3>
-                        <p className="text-[#1b0d14]/70 leading-relaxed text-sm">A: {item.answer}</p>
-                      </div>
-                    ))}
-                  </div>
-                </CollapsibleSection>
-              )}
-
-              {/* Visual Content Sections - LOWER PRIORITY but valuable */}
-              <div className="space-y-6">
-                {/* Nail Art Design Gallery Section */}
-                {galleryDesigns.length > 0 && (
-                  <NailArtGallerySection
-                    salonName={salon.name}
-                    city={formattedCity}
-                    state={formattedState}
-                    designs={rawGalleryItems}
-                  />
-                )}
-
-                {/* Design Collections Section */}
-                {designCollections && designCollections.length > 0 && (
-                  <DesignCollectionsSection
-                    salonName={salon.name}
-                    collections={designCollections}
-                  />
-                )}
-
-                {/* Color Palette Recommendations Section */}
-                {colorPalettes && colorPalettes.length > 0 && (
-                  <ColorPaletteSection
-                    salonName={salon.name}
-                    palettes={colorPalettes}
-                  />
-                )}
-
-                {/* Technique Showcase Section */}
-                {techniqueShowcases && techniqueShowcases.length > 0 && (
-                  <TechniqueShowcaseSection
-                    salonName={salon.name}
-                    techniques={techniqueShowcases}
-                  />
-                )}
-
-                {/* Seasonal Trends Section */}
-                <SeasonalTrendsSection
+            {/* Visual Content Sections - LOWER PRIORITY but valuable */}
+            <div className="space-y-6">
+              {/* Nail Art Design Gallery Section */}
+              {galleryDesigns.length > 0 && (
+                <NailArtGallerySection
                   salonName={salon.name}
                   city={formattedCity}
+                  state={formattedState}
+                  designs={rawGalleryItems}
                 />
-
-                {/* Nail Care Tips Section */}
-                <NailCareTipsSection
-                  salonName={salon.name}
-                />
-
-                {/* Browse by Tags Section */}
-                <BrowseByTagsSection
-                  salonName={salon.name}
-                />
-              </div>
-
-              {/* Related Salons - LOWER PRIORITY */}
-              {relatedSalons.length > 0 && (
-                <div className="bg-white rounded-xl p-6 ring-1 ring-[#ee2b8c]/15 shadow-sm">
-                  <h2 className="text-xl font-bold text-[#1b0d14] mb-4">Other Salons in {formattedCity}</h2>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    {relatedSalons.map((relatedSalon) => (
-                      <Link
-                        key={relatedSalon.name}
-                        href={`/nail-salons/${stateSlug}/${citySlug}/${generateSlug(relatedSalon.name)}`}
-                        className="block p-4 rounded-lg border border-[#ee2b8c]/20 hover:border-[#ee2b8c]/40 hover:bg-[#f8f6f7] transition-all duration-300"
-                      >
-                        <h3 className="font-semibold text-[#1b0d14] mb-1 hover:text-[#ee2b8c] transition-colors line-clamp-1">
-                          {relatedSalon.name}
-                        </h3>
-                        {relatedSalon.address && (
-                          <p className="text-sm text-[#1b0d14]/60 line-clamp-1">{relatedSalon.shortFormattedAddress || relatedSalon.address}</p>
-                        )}
-                        {relatedSalon.rating && (
-                          <div className="flex items-center gap-2 mt-2">
-                            <span className="text-yellow-500 text-sm">⭐</span>
-                            <span className="text-sm font-semibold text-[#1b0d14]">{relatedSalon.rating}</span>
-                          </div>
-                        )}
-                      </Link>
-                    ))}
-                  </div>
-                  <div className="mt-4 text-center">
-                    <Link
-                      href={`/nail-salons/${stateSlug}/${citySlug}`}
-                      className="text-[#ee2b8c] hover:underline text-sm font-medium"
-                    >
-                      View all salons in {formattedCity} →
-                    </Link>
-                  </div>
-                </div>
               )}
 
-              {/* Google Maps Attribution */}
-              {salon.uri && (
-                <div className="bg-white rounded-xl p-6 ring-1 ring-[#ee2b8c]/15">
-                  <p className="text-sm text-[#1b0d14]/60">
-                    Data provided by{' '}
-                    <span className="font-roboto" translate="no">Google Maps</span>
-                  </p>
-                </div>
+              {/* Design Collections Section */}
+              {designCollections && designCollections.length > 0 && (
+                <DesignCollectionsSection
+                  salonName={salon.name}
+                  collections={designCollections}
+                />
               )}
+
+              {/* Color Palette Recommendations Section */}
+              {colorPalettes && colorPalettes.length > 0 && (
+                <ColorPaletteSection
+                  salonName={salon.name}
+                  palettes={colorPalettes}
+                />
+              )}
+
+              {/* Technique Showcase Section */}
+              {techniqueShowcases && techniqueShowcases.length > 0 && (
+                <TechniqueShowcaseSection
+                  salonName={salon.name}
+                  techniques={techniqueShowcases}
+                />
+              )}
+
+              {/* Seasonal Trends Section */}
+              <SeasonalTrendsSection
+                salonName={salon.name}
+                city={formattedCity}
+              />
+
+              {/* Nail Care Tips Section */}
+              <NailCareTipsSection
+                salonName={salon.name}
+              />
+
+              {/* Browse by Tags Section */}
+              <BrowseByTagsSection
+                salonName={salon.name}
+              />
             </div>
 
-            {/* Right Column - Sidebar */}
-            <div className="lg:col-span-1">
-              <div className="sticky top-4 space-y-6">
-                {/* Map Section */}
-                {(salon.address || salon.name) && (
-                  <div className="bg-white rounded-xl p-6 ring-1 ring-[#ee2b8c]/15 shadow-sm">
-                    <h2 className="text-xl font-bold text-[#1b0d14] mb-4 flex items-center gap-2">
-                      <span>📍</span>
-                      <span>Location</span>
-                    </h2>
-                    <div className="aspect-video rounded-lg overflow-hidden ring-1 ring-gray-200 mb-4">
-                      <iframe
-                        width="100%"
-                        height="100%"
-                        style={{ border: 0 }}
-                        loading="lazy"
-                        allowFullScreen
-                        referrerPolicy="no-referrer-when-downgrade"
-                        src={
-                          salon.address
-                            ? `https://www.google.com/maps?q=${encodeURIComponent(salon.address)}&output=embed`
-                            : salon.name
+            {/* Related Salons - LOWER PRIORITY */}
+            {relatedSalons.length > 0 && (
+              <div className="bg-white rounded-xl p-6 ring-1 ring-[#ee2b8c]/15 shadow-sm">
+                <h2 className="text-xl font-bold text-[#1b0d14] mb-4">Other Salons in {formattedCity}</h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {relatedSalons.map((relatedSalon) => (
+                    <Link
+                      key={relatedSalon.name}
+                      href={`/nail-salons/${stateSlug}/${citySlug}/${generateSlug(relatedSalon.name)}`}
+                      className="block p-4 rounded-lg border border-[#ee2b8c]/20 hover:border-[#ee2b8c]/40 hover:bg-[#f8f6f7] transition-all duration-300"
+                    >
+                      <h3 className="font-semibold text-[#1b0d14] mb-1 hover:text-[#ee2b8c] transition-colors line-clamp-1">
+                        {relatedSalon.name}
+                      </h3>
+                      {relatedSalon.address && (
+                        <p className="text-sm text-[#1b0d14]/60 line-clamp-1">{relatedSalon.shortFormattedAddress || relatedSalon.address}</p>
+                      )}
+                      {relatedSalon.rating && (
+                        <div className="flex items-center gap-2 mt-2">
+                          <span className="text-yellow-500 text-sm">⭐</span>
+                          <span className="text-sm font-semibold text-[#1b0d14]">{relatedSalon.rating}</span>
+                        </div>
+                      )}
+                    </Link>
+                  ))}
+                </div>
+                <div className="mt-4 text-center">
+                  <Link
+                    href={`/nail-salons/${stateSlug}/${citySlug}`}
+                    className="text-[#ee2b8c] hover:underline text-sm font-medium"
+                  >
+                    View all salons in {formattedCity} →
+                  </Link>
+                </div>
+              </div>
+            )}
+
+            {/* Google Maps Attribution */}
+            {salon.uri && (
+              <div className="bg-white rounded-xl p-6 ring-1 ring-[#ee2b8c]/15">
+                <p className="text-sm text-[#1b0d14]/60">
+                  Data provided by{' '}
+                  <span className="font-roboto" translate="no">Google Maps</span>
+                </p>
+              </div>
+            )}
+          </div>
+
+          {/* Right Column - Sidebar */}
+          <div className="lg:col-span-1">
+            <div className="sticky top-4 space-y-6">
+              {/* Map Section */}
+              {(salon.address || salon.name) && (
+                <div className="bg-white rounded-xl p-6 ring-1 ring-[#ee2b8c]/15 shadow-sm">
+                  <h2 className="text-xl font-bold text-[#1b0d14] mb-4 flex items-center gap-2">
+                    <span>📍</span>
+                    <span>Location</span>
+                  </h2>
+                  <div className="aspect-video rounded-lg overflow-hidden ring-1 ring-gray-200 mb-4">
+                    <iframe
+                      width="100%"
+                      height="100%"
+                      style={{ border: 0 }}
+                      loading="lazy"
+                      allowFullScreen
+                      referrerPolicy="no-referrer-when-downgrade"
+                      src={
+                        salon.address
+                          ? `https://www.google.com/maps?q=${encodeURIComponent(salon.address)}&output=embed`
+                          : salon.name
                             ? `https://www.google.com/maps?q=${encodeURIComponent(`${salon.name}, ${salon.city}, ${salon.state}`)}&output=embed`
                             : ''
-                        }
-                      />
+                      }
+                    />
+                  </div>
+                  {salon.address && (
+                    <div className="space-y-2">
+                      <p className="text-sm text-[#1b0d14]/70">{salon.shortFormattedAddress || salon.address}</p>
+                      {salon.uri && (
+                        <a
+                          href={salon.uri}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 text-[#ee2b8c] hover:text-[#ee2b8c]/80 text-sm font-medium transition-colors"
+                        >
+                          <span>View on Google Maps</span>
+                          <span>→</span>
+                        </a>
+                      )}
                     </div>
-                    {salon.address && (
-                      <div className="space-y-2">
-                        <p className="text-sm text-[#1b0d14]/70">{salon.shortFormattedAddress || salon.address}</p>
-                        {salon.uri && (
-                          <a
-                            href={salon.uri}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-2 text-[#ee2b8c] hover:text-[#ee2b8c]/80 text-sm font-medium transition-colors"
-                          >
-                            <span>View on Google Maps</span>
-                            <span>→</span>
-                          </a>
-                        )}
-                      </div>
-                    )}
-                  </div>
-                )}
-
-                {/* Quick Contact Card */}
-                <div className="bg-white rounded-xl p-6 ring-1 ring-[#ee2b8c]/15 shadow-sm">
-                  <h3 className="text-lg font-bold text-[#1b0d14] mb-4">Quick Contact</h3>
-                  <div className="space-y-3">
-                    {salon.phone && (
-                      <a
-                        href={`tel:${salon.phone}`}
-                        className="flex items-center gap-3 p-3 rounded-lg bg-[#f8f6f7] hover:bg-[#ee2b8c]/5 transition-colors group"
-                      >
-                        <span className="text-2xl">📞</span>
-                        <div className="flex-1">
-                          <p className="text-xs text-[#1b0d14]/60">Phone</p>
-                          <p className="text-sm font-semibold text-[#1b0d14] group-hover:text-[#ee2b8c] transition-colors">
-                            {salon.phone}
-                          </p>
-                        </div>
-                      </a>
-                    )}
-                    {salon.website && (
-                      <a
-                        href={salon.website}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-3 p-3 rounded-lg bg-[#f8f6f7] hover:bg-[#ee2b8c]/5 transition-colors group"
-                      >
-                        <span className="text-2xl">🌐</span>
-                        <div className="flex-1">
-                          <p className="text-xs text-[#1b0d14]/60">Website</p>
-                          <p className="text-sm font-semibold text-[#1b0d14] group-hover:text-[#ee2b8c] transition-colors line-clamp-1">
-                            Visit Website
-                          </p>
-                        </div>
-                      </a>
-                    )}
-                    {salon.rating && (
-                      <div className="flex items-center gap-3 p-3 rounded-lg bg-gradient-to-r from-yellow-50 to-orange-50">
-                        <span className="text-2xl">⭐</span>
-                        <div className="flex-1">
-                          <p className="text-xs text-[#1b0d14]/60">Rating</p>
-                          <p className="text-sm font-bold text-[#1b0d14]">
-                            {salon.rating} {salon.reviewCount ? `(${salon.reviewCount.toLocaleString()} reviews)` : ''}
-                          </p>
-                        </div>
-                      </div>
-                    )}
-                  </div>
+                  )}
                 </div>
+              )}
 
-                {/* Opening Hours Summary */}
-                {salon.currentOpeningHours?.weekdayDescriptions && salon.currentOpeningHours.weekdayDescriptions.length > 0 && (
-                  <div className="bg-white rounded-xl p-6 ring-1 ring-[#ee2b8c]/15 shadow-sm">
-                    <h3 className="text-lg font-bold text-[#1b0d14] mb-3 flex items-center gap-2">
-                      <span>🕐</span>
-                      <span>Today&apos;s Hours</span>
-                    </h3>
-                    <p className="text-sm font-semibold text-[#1b0d14]">
-                      {salon.currentOpeningHours.weekdayDescriptions[0]}
-                    </p>
-                    {salon.currentOpeningHours.openNow !== undefined && (
-                      <p className={`text-xs mt-2 ${
-                        salon.currentOpeningHours.openNow ? 'text-green-600' : 'text-red-600'
-                      }`}>
-                        {salon.currentOpeningHours.openNow ? '✓ Currently Open' : '✗ Currently Closed'}
-                      </p>
-                    )}
-                  </div>
-                )}
+              {/* Quick Contact Card */}
+              <div className="bg-white rounded-xl p-6 ring-1 ring-[#ee2b8c]/15 shadow-sm">
+                <h3 className="text-lg font-bold text-[#1b0d14] mb-4">Quick Contact</h3>
+                <div className="space-y-3">
+                  {salon.phone && (
+                    <a
+                      href={`tel:${salon.phone}`}
+                      className="flex items-center gap-3 p-3 rounded-lg bg-[#f8f6f7] hover:bg-[#ee2b8c]/5 transition-colors group"
+                    >
+                      <span className="text-2xl">📞</span>
+                      <div className="flex-1">
+                        <p className="text-xs text-[#1b0d14]/60">Phone</p>
+                        <p className="text-sm font-semibold text-[#1b0d14] group-hover:text-[#ee2b8c] transition-colors">
+                          {salon.phone}
+                        </p>
+                      </div>
+                    </a>
+                  )}
+                  {salon.website && (
+                    <a
+                      href={salon.website}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-3 p-3 rounded-lg bg-[#f8f6f7] hover:bg-[#ee2b8c]/5 transition-colors group"
+                    >
+                      <span className="text-2xl">🌐</span>
+                      <div className="flex-1">
+                        <p className="text-xs text-[#1b0d14]/60">Website</p>
+                        <p className="text-sm font-semibold text-[#1b0d14] group-hover:text-[#ee2b8c] transition-colors line-clamp-1">
+                          Visit Website
+                        </p>
+                      </div>
+                    </a>
+                  )}
+                  {salon.rating && (
+                    <div className="flex items-center gap-3 p-3 rounded-lg bg-gradient-to-r from-yellow-50 to-orange-50">
+                      <span className="text-2xl">⭐</span>
+                      <div className="flex-1">
+                        <p className="text-xs text-[#1b0d14]/60">Rating</p>
+                        <p className="text-sm font-bold text-[#1b0d14]">
+                          {salon.rating} {salon.reviewCount ? `(${salon.reviewCount.toLocaleString()} reviews)` : ''}
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
+
+              {/* Opening Hours Summary */}
+              {salon.currentOpeningHours?.weekdayDescriptions && salon.currentOpeningHours.weekdayDescriptions.length > 0 && (
+                <div className="bg-white rounded-xl p-6 ring-1 ring-[#ee2b8c]/15 shadow-sm">
+                  <h3 className="text-lg font-bold text-[#1b0d14] mb-3 flex items-center gap-2">
+                    <span>🕐</span>
+                    <span>Today&apos;s Hours</span>
+                  </h3>
+                  <p className="text-sm font-semibold text-[#1b0d14]">
+                    {salon.currentOpeningHours.weekdayDescriptions[0]}
+                  </p>
+                  {salon.currentOpeningHours.openNow !== undefined && (
+                    <p className={`text-xs mt-2 ${salon.currentOpeningHours.openNow ? 'text-green-600' : 'text-red-600'
+                      }`}>
+                      {salon.currentOpeningHours.openNow ? '✓ Currently Open' : '✗ Currently Closed'}
+                    </p>
+                  )}
+                </div>
+              )}
             </div>
           </div>
-
-          {/* ✅ NEW: Explore More Links Section */}
-          <div className="mt-8">
-            <ExploreMoreLinksSection
-              currentState={formattedState}
-              currentStateSlug={stateSlug}
-              currentCity={formattedCity}
-              currentCitySlug={citySlug}
-            />
-          </div>
         </div>
 
-        {/* Navigation */}
-        <div className="max-w-7xl mx-auto px-4 py-8">
-          <div className="flex flex-wrap gap-4 justify-center">
-            <Link
-              href={`/nail-salons/${stateSlug}/${citySlug}`}
-              className="bg-white ring-1 ring-[#ee2b8c]/20 hover:bg-[#f8f6f7] text-[#1b0d14] font-semibold py-3 px-6 rounded-full transition-all duration-300"
-            >
-              ← Back to {formattedCity} Salons
-            </Link>
-            <Link
-              href={`/nail-salons/${stateSlug}`}
-              className="bg-white ring-1 ring-[#ee2b8c]/20 hover:bg-[#f8f6f7] text-[#1b0d14] font-semibold py-3 px-6 rounded-full transition-all duration-300"
-            >
-              View All {formattedState} Cities
-            </Link>
-            <Link
-              href="/nail-salons"
-              className="bg-white ring-1 ring-[#ee2b8c]/20 hover:bg-[#f8f6f7] text-[#1b0d14] font-semibold py-3 px-6 rounded-full transition-all duration-300"
-            >
-              Browse All States
-            </Link>
-          </div>
+        {/* ✅ NEW: Explore More Links Section */}
+        <div className="mt-8">
+          <ExploreMoreLinksSection
+            currentState={formattedState}
+            currentStateSlug={stateSlug}
+            currentCity={formattedCity}
+            currentCitySlug={citySlug}
+          />
         </div>
       </div>
+
+      {/* Navigation */}
+      <div className="max-w-7xl mx-auto px-4 py-8">
+        <div className="flex flex-wrap gap-4 justify-center">
+          <Link
+            href={`/nail-salons/${stateSlug}/${citySlug}`}
+            className="bg-white ring-1 ring-[#ee2b8c]/20 hover:bg-[#f8f6f7] text-[#1b0d14] font-semibold py-3 px-6 rounded-full transition-all duration-300"
+          >
+            ← Back to {formattedCity} Salons
+          </Link>
+          <Link
+            href={`/nail-salons/${stateSlug}`}
+            className="bg-white ring-1 ring-[#ee2b8c]/20 hover:bg-[#f8f6f7] text-[#1b0d14] font-semibold py-3 px-6 rounded-full transition-all duration-300"
+          >
+            View All {formattedState} Cities
+          </Link>
+          <Link
+            href="/nail-salons"
+            className="bg-white ring-1 ring-[#ee2b8c]/20 hover:bg-[#f8f6f7] text-[#1b0d14] font-semibold py-3 px-6 rounded-full transition-all duration-300"
+          >
+            Browse All States
+          </Link>
+        </div>
+      </div>
+    </div>
   );
 }
 

@@ -4,15 +4,23 @@ import { getAllCategories } from '@/lib/galleryService';
 /**
  * Categories Sitemap - Category pages for filtering and organization
  * These help with topical authority and internal linking
+ * 
+ * STATIC GENERATION: Queries database at build time only.
+ * Zero runtime function invocations.
  */
+
+// Force static generation at build time - no runtime function calls
+export const dynamic = 'force-static';
+export const revalidate = false;
+
 export async function GET() {
   try {
     const baseUrl = 'https://nailartai.app';
     const currentDate = new Date().toISOString();
-    
+
     // Get all unique categories
     const categories = await getAllCategories();
-    
+
     // Generate category pages - match generateStaticParams format
     const categoryPages = categories.map(category => ({
       url: `${baseUrl}/nail-art-gallery/category/${encodeURIComponent(category)}`,
@@ -20,7 +28,7 @@ export async function GET() {
       changeFrequency: 'weekly',
       priority: 0.7,
     }));
-    
+
     // Add additional category pages for different taxonomies
     const additionalCategoryPages = [
       // Color-based categories
@@ -30,7 +38,7 @@ export async function GET() {
         changeFrequency: 'weekly',
         priority: 0.6,
       })),
-      
+
       // Technique-based categories
       ...['french-manicure', 'gel-polish', 'nail-art', 'gradient', 'glitter', 'matte', 'chrome', 'marble'].map(technique => ({
         url: `${baseUrl}/techniques/${technique}`,
@@ -38,7 +46,7 @@ export async function GET() {
         changeFrequency: 'weekly',
         priority: 0.6,
       })),
-      
+
       // Occasion-based categories
       ...['wedding', 'prom', 'graduation', 'birthday', 'date-night'].map(occasion => ({
         url: `${baseUrl}/nail-art/occasion/${occasion}`,
@@ -46,7 +54,7 @@ export async function GET() {
         changeFrequency: 'weekly',
         priority: 0.6,
       })),
-      
+
       // Season-based categories
       ...['spring', 'summer', 'autumn', 'winter', 'christmas', 'halloween'].map(season => ({
         url: `${baseUrl}/nail-art/season/${season}`,
@@ -55,9 +63,9 @@ export async function GET() {
         priority: 0.6,
       })),
     ];
-    
+
     const allCategoryPages = [...categoryPages, ...additionalCategoryPages];
-    
+
     const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${allCategoryPages.map(page => `  <url>
@@ -72,7 +80,7 @@ ${allCategoryPages.map(page => `  <url>
       status: 200,
       headers: {
         'Content-Type': 'application/xml',
-        'Cache-Control': 'public, max-age=3600, s-maxage=3600', // Cache for 1 hour
+        'Cache-Control': 'public, max-age=2592000, s-maxage=2592000, stale-while-revalidate=2592000', // 30 days cache
       },
     });
   } catch (error) {

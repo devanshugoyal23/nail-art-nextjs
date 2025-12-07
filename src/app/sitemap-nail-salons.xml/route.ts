@@ -11,7 +11,13 @@ import { NextResponse } from 'next/server';
  * from state/city pages and will work on-demand (fetched from R2).
  * 
  * This prevents sitemap bloat and protects crawl budget.
+ * STATIC GENERATION: Generated at build time only - zero runtime function calls.
  */
+
+// Force static generation at build time - no runtime function calls
+export const dynamic = 'force-static';
+export const revalidate = false;
+
 export async function GET() {
   try {
     const baseUrl = 'https://nailartai.app';
@@ -49,7 +55,7 @@ ${urls.map(page => `  <url>
       status: 200,
       headers: {
         'Content-Type': 'application/xml',
-        'Cache-Control': 'public, max-age=3600, s-maxage=3600', // Cache for 1 hour
+        'Cache-Control': 'public, max-age=2592000, s-maxage=2592000, stale-while-revalidate=2592000', // 30 days cache
       },
     });
   } catch (error) {

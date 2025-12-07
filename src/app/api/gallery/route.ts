@@ -39,9 +39,9 @@ export async function GET(request: NextRequest) {
       tags: tags || [],
       sortBy
     })
-    
-    const response = NextResponse.json({ 
-      success: true, 
+
+    const response = NextResponse.json({
+      success: true,
       items: result.items,
       totalCount: result.totalCount,
       totalPages: result.totalPages,
@@ -49,15 +49,15 @@ export async function GET(request: NextRequest) {
     })
 
     // Add cache headers for edge caching - increased TTL for better performance
-    response.headers.set('Cache-Control', 'public, s-maxage=7200, stale-while-revalidate=172800')
-    response.headers.set('CDN-Cache-Control', 'public, s-maxage=14400')
-    response.headers.set('Vercel-CDN-Cache-Control', 'public, s-maxage=14400')
-    
+    response.headers.set('Cache-Control', 'public, s-maxage=2592000, stale-while-revalidate=2592000') // 30 days cache
+    response.headers.set('CDN-Cache-Control', 'public, s-maxage=2592000')
+    response.headers.set('Vercel-CDN-Cache-Control', 'public, s-maxage=2592000')
+
     // Add rate limit headers
     Object.entries(rateLimit.headers).forEach(([key, value]) => {
       response.headers.set(key, value);
     });
-    
+
     return response
   } catch (error) {
     console.error('Error fetching gallery items:', error)
@@ -93,7 +93,7 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json()
-    
+
     // Validate gallery item data
     const validation = validateGalleryItem(body);
     if (!validation.isValid) {

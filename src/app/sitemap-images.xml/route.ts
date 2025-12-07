@@ -5,48 +5,56 @@ import { GalleryItem } from '@/lib/supabase';
 /**
  * Optimized Image Sitemap - Fixed for CC0 license and proper dimensions
  * Cached for better performance, only regenerates when content changes
+ * 
+ * STATIC GENERATION: Queries database at build time only.
+ * Zero runtime function invocations.
  */
+
+// Force static generation at build time - no runtime function calls
+export const dynamic = 'force-static';
+export const revalidate = false;
+
 export async function GET() {
   try {
     const baseUrl = 'https://nailartai.app';
-    
+
     // Get all gallery items with paging support
     let allGalleryItems: GalleryItem[] = [];
     let page = 1;
     const limit = 1000;
-    
+
     while (true) {
-      const galleryItemsResult = await getGalleryItems({ 
-        page, 
+      const galleryItemsResult = await getGalleryItems({
+        page,
         limit,
-        sortBy: 'newest' 
+        sortBy: 'newest'
       });
-      
+
       if (!galleryItemsResult.items || galleryItemsResult.items.length === 0) {
         break;
       }
-      
+
       allGalleryItems = [...allGalleryItems, ...galleryItemsResult.items];
-      
+
       if (galleryItemsResult.items.length < limit) {
         break;
       }
-      
+
       page++;
-      
+
       if (page > 10) {
         console.warn('Reached safety limit of 10 pages in images sitemap');
         break;
       }
     }
-    
+
     console.log(`Generated images sitemap with ${allGalleryItems.length} items`);
-    
+
     // Generate image sitemap entries following Google's current best practices
     const imageEntries = allGalleryItems.map(item => {
       const imageUrl = item.image_url; // All URLs are now R2 URLs
       const pageUrl = `${baseUrl}/${item.category?.toLowerCase().replace(/\s+/g, '-') || 'design'}/${item.design_name?.toLowerCase().replace(/\s+/g, '-') || 'design'}-${item.id.slice(-8)}`;
-      
+
       return {
         image: {
           loc: imageUrl, // Only required tag per Google's current schema
@@ -73,7 +81,7 @@ ${imageEntries.map(entry => `  <url>
       status: 200,
       headers: {
         'Content-Type': 'application/xml',
-        'Cache-Control': 'public, max-age=3600, s-maxage=3600', // Cache for 1 hour
+        'Cache-Control': 'public, max-age=2592000, s-maxage=2592000, stale-while-revalidate=2592000', // 30 days cache
       },
     });
   } catch (error) {

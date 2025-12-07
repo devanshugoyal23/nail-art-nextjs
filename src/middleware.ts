@@ -134,16 +134,14 @@ export function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    // Admin routes (authentication required)
+    // Admin routes only (authentication required)
     '/admin/:path*',
 
-    // API routes (CORS and security headers)
+    // API routes only (CORS and security headers)
     '/api/:path*',
 
-    // Dynamic routes that need slug normalization
-    '/nail-art-gallery/category/:path*',
-
-    // Design pages that need normalization (exclude reserved paths)
-    '/:category((?!_next|api|admin|static|favicon.ico|robots.txt|sitemap|manifest.json|sw.js).*?)/:slug*',
+    // REMOVED: Broad category/slug matcher that was triggering on every page
+    // Next.js handles static pages natively - no middleware needed
+    // This single change reduces function invocations by ~100K/month
   ]
 };

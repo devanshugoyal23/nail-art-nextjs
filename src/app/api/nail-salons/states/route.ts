@@ -13,7 +13,7 @@ export async function GET() {
       headers: {
         // Cache for 24 hours, allow stale for 7 days while revalidating
         // States list is very static
-        'Cache-Control': 'public, s-maxage=86400, stale-while-revalidate=604800',
+        'Cache-Control': 'public, s-maxage=2592000, stale-while-revalidate=2592000', // 30 days cache
       },
     });
   } catch (error) {
