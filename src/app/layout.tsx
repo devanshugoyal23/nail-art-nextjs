@@ -128,6 +128,13 @@ export default function RootLayout({
             gtag('config', 'G-F2H0CBYDGF');
           `}
         </Script>
+        {/* Google AdSense */}
+        <Script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4529100459751500"
+          crossOrigin="anonymous"
+          strategy="lazyOnload"
+        />
       </head>
       <body className="min-h-screen bg-[#f8f6f7] text-[#1b0d14] flex flex-col">
         <ViewportHeightFix />
