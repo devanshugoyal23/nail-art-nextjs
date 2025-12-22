@@ -40,7 +40,7 @@ export default function LightHomepage({ trendingItems = [], categories = [] }: P
     brown: '#92400e',
     gray: '#6b7280'
   };
-  
+
   // Emoji fallback when we don't have a good preview image
   const getEmojiFor = (type: 'technique' | 'occasion' | 'season', key: string): string => {
     const k = key.toLowerCase();
@@ -116,10 +116,11 @@ export default function LightHomepage({ trendingItems = [], categories = [] }: P
           <div className="container mx-auto flex flex-col items-center gap-8 px-4">
             <div className="flex flex-col gap-4">
               <h1 className="text-4xl font-black leading-tight tracking-[-0.033em] sm:text-5xl md:text-6xl">
-                Find Your Next Manicure
+                Try 1,000+ Designs<br />
+                <span className="text-white/95">Before Your Salon Visit</span>
               </h1>
               <p className="mx-auto max-w-2xl text-base font-normal leading-normal text-white/90 md:text-lg">
-                Describe your dream nails and let our AI bring them to life. What are you looking for today?
+                Stop second-guessing your next look. Use AI to instantly preview hundreds of stunning nail arts on your own hands.
               </p>
             </div>
             <div className="w-full max-w-2xl">
@@ -269,12 +270,12 @@ export default function LightHomepage({ trendingItems = [], categories = [] }: P
           </div>
         </div>
 
-        
+
       </section>
 
       {/* Explore by Theme section removed per request */}
 
-      
+
 
       {/* Curated quick links: colors, techniques, occasions, seasons */}
       <section className="container mx-auto px-4 pb-8">
@@ -308,8 +309,8 @@ export default function LightHomepage({ trendingItems = [], categories = [] }: P
             <Link href="/categories/techniques" className="text-[#ee2b8c] text-sm font-semibold hover:underline">View all</Link>
           </div>
           <div className="flex flex-wrap gap-3">
-            {['french-manicure','ombre','marble','glitter','chrome','stamping'].map((t) => {
-              const label = t.replace(/-/g,' ').replace(/\b\w/g, l => l.toUpperCase());
+            {['french-manicure', 'ombre', 'marble', 'glitter', 'chrome', 'stamping'].map((t) => {
+              const label = t.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
               const emoji = getEmojiFor('technique', t);
               const tint = getTintFor('technique', t);
               return (
@@ -331,8 +332,8 @@ export default function LightHomepage({ trendingItems = [], categories = [] }: P
             <Link href="/categories/occasions" className="text-[#ee2b8c] text-sm font-semibold hover:underline">View all</Link>
           </div>
           <div className="flex flex-wrap gap-3">
-            {['wedding','date-night','party','work','prom','christmas','halloween'].map((o) => {
-              const label = o.replace(/-/g,' ').replace(/\b\w/g, l => l.toUpperCase());
+            {['wedding', 'date-night', 'party', 'work', 'prom', 'christmas', 'halloween'].map((o) => {
+              const label = o.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
               const emoji = getEmojiFor('occasion', o);
               const tint = getTintFor('occasion', o);
               return (
@@ -354,8 +355,8 @@ export default function LightHomepage({ trendingItems = [], categories = [] }: P
             <Link href="/categories/seasons" className="text-[#ee2b8c] text-sm font-semibold hover:underline">View all</Link>
           </div>
           <div className="flex flex-wrap gap-3">
-            {['spring','summer','autumn','winter'].map((s) => {
-              const label = s.charAt(0).toUpperCase()+s.slice(1);
+            {['spring', 'summer', 'autumn', 'winter'].map((s) => {
+              const label = s.charAt(0).toUpperCase() + s.slice(1);
               const emoji = getEmojiFor('season', s);
               const tint = getTintFor('season', s);
               return (
@@ -416,7 +417,7 @@ export default function LightHomepage({ trendingItems = [], categories = [] }: P
         </div>
       </section>
 
-      
+
 
       {/* Newsletter */}
       <section className="bg-[#fde7f2]">
