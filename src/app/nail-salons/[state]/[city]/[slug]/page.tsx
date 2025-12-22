@@ -11,6 +11,7 @@ import DesignCollectionsSection from '@/components/DesignCollectionsSection';
 import ColorPaletteSection from '@/components/ColorPaletteSection';
 import TechniqueShowcaseSection from '@/components/TechniqueShowcaseSection';
 import CollapsibleSection from '@/components/CollapsibleSection';
+import StickySalonCTA from '@/components/StickySalonCTA';
 import { SalonStructuredData } from '@/components/SalonStructuredData';
 import { absoluteUrl } from '@/lib/absoluteUrl';
 import { getCachedGalleryData } from '@/lib/salonPageCache';
@@ -75,11 +76,11 @@ export async function generateMetadata({ params }: SalonDetailPageProps): Promis
 
   // Enhanced description with rating, services, and CTA (no dependency on salonDetails)
   const enhancedDescription = salon?.address
-    ? `${salonName} in ${formattedCity}, ${formattedState}. ${salon?.rating ? `Rated ${salon.rating}/5 stars` : ''}${salon?.reviewCount ? ` with ${salon.reviewCount} reviews.` : '.'} ${salon.address}. Professional nail services including manicures, pedicures, and nail art. Book your appointment today!`
-    : `Find ${salonName} in ${formattedCity}, ${formattedState}. ${salon?.rating ? `Rated ${salon.rating}/5 stars` : ''}${salon?.reviewCount ? ` with ${salon.reviewCount} reviews.` : ''} Get contact information, ratings, and reviews for this nail salon.`;
+    ? `Planning a visit to ${salonName} in ${formattedCity}, ${formattedState}? See real prices, hours, and try 1000+ nail designs virtually on YOUR hands before you go. Best for 2026.`
+    : `Find ${salonName} in ${formattedCity}, ${formattedState}. Rated ${salon?.rating || 'high'} with ${salon?.reviewCount || 'many'} reviews. Try on 1000+ nail art designs virtually before your salon visit.`;
 
   // Optimized title (55-60 chars)
-  const optimizedTitle = `${salonName} | ${formattedCity}, ${formattedState} Nail Salon`;
+  const optimizedTitle = `${salonName} - ${formattedCity}, ${formattedState} | Prices, Reviews & Virtual Try-On 2026`;
 
   // Get image URL: Use nail design image from gallery instead of salon photos
   // This ensures consistent, beautiful OG images for social sharing
@@ -112,12 +113,13 @@ export async function generateMetadata({ params }: SalonDetailPageProps): Promis
     keywords: [
       salonName,
       `nail salon ${formattedCity}`,
-      `nail salon ${formattedState}`,
-      `best nail salon ${formattedCity}`,
+      `nail spa ${formattedCity}`,
+      `nail art studio ${formattedCity}`,
+      `best nail salon ${formattedCity} 2026`,
+      `nail salon near me ${formattedCity}`,
+      `virtual nail art try on`,
       'manicure',
       'pedicure',
-      'nail art',
-      'nail spa',
       formattedCity,
       formattedState
     ],
@@ -613,9 +615,24 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
                 </div>
               )}
             </div>
-            <p className="text-xl text-white/90 drop-shadow-md">
+            <p className="text-xl text-white/90 drop-shadow-md mb-8">
               {formattedCity}, {formattedState}
             </p>
+
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link
+                href="/try-on"
+                className="inline-block bg-[#ee2b8c] text-white font-bold py-4 px-10 rounded-full hover:bg-[#ee2b8c]/90 transition-all shadow-xl shadow-[#ee2b8c]/20 hover:scale-105"
+              >
+                Try Virtual Try-On 💅
+              </Link>
+              <Link
+                href="/nail-art-gallery"
+                className="inline-block bg-white/20 backdrop-blur-sm text-white font-bold py-4 px-10 rounded-full hover:bg-white/30 transition-all border border-white/30"
+              >
+                Browse Designs
+              </Link>
+            </div>
           </div>
         </div>
       </div>
@@ -1230,6 +1247,7 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
           </Link>
         </div>
       </div>
+      <StickySalonCTA />
     </div>
   );
 }

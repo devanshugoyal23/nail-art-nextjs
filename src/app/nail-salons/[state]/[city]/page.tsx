@@ -5,6 +5,7 @@ import { getSalonsForCity } from '@/lib/salonDataService';
 import OptimizedImage from '@/components/OptimizedImage';
 import { DirectoryStructuredData } from '@/components/DirectoryStructuredData';
 import { FAQStructuredData } from '@/components/FAQStructuredData';
+import StickySalonCTA from '@/components/StickySalonCTA';
 import { getCachedGalleryData } from '@/lib/salonPageCache';
 import { deterministicSelect } from '@/lib/deterministicSelection';
 
@@ -103,16 +104,17 @@ export async function generateMetadata({ params }: CityPageProps): Promise<Metad
   const cityImageUrl = `https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1200&h=630&fit=crop&q=80`;
 
   return {
-    title: `Nail Salons in ${formattedCity}, ${formattedState} | Best Nail Salons Near You`,
-    description: `Find the best nail salons, nail spas, and nail art studios in ${formattedCity}, ${formattedState}. Browse top-rated salons with reviews, ratings, phone numbers, and addresses.`,
+    title: `10 Best Nail Salons in ${formattedCity}, ${formattedState} (2026) + Virtual Try-On`,
+    description: `Find the best nail salons, nail spas, and nail art studios in ${formattedCity}, ${formattedState}. Visualize 1000+ designs virtually on YOUR hands before you book. Top-rated for 2026.`,
     keywords: [
       `nail salons ${formattedCity} ${formattedState}`,
       `nail spas ${formattedCity}`,
       `nail art studios ${formattedCity}`,
-      `best nail salons ${formattedCity}`,
+      `best nail salons ${formattedCity} 2026`,
+      `nail salon near me ${formattedCity}`,
+      `virtual nail try on ${formattedCity}`,
       `manicure ${formattedCity}`,
       `pedicure ${formattedCity}`,
-      `nail salon near me ${formattedCity}`,
     ],
     openGraph: {
       title: `Nail Salons in ${formattedCity}, ${formattedState}`,
@@ -272,8 +274,23 @@ export default async function CityPage({ params }: CityPageProps) {
               Nail Salons in {formattedCity}, {formattedState}
             </h1>
             <p className="text-xl md:text-2xl text-white/90 max-w-4xl mx-auto mb-8 drop-shadow-md">
-              Discover {salons.length} top-rated nail salons, nail spas, and nail art studios in {formattedCity}
+              Discover {salons.length} top-rated nail salons in {formattedCity}. Try 1000+ designs virtually before you go!
             </p>
+
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
+              <Link
+                href="/try-on"
+                className="inline-block bg-[#ee2b8c] text-white font-bold py-4 px-10 rounded-full hover:bg-[#ee2b8c]/90 transition-all shadow-xl shadow-[#ee2b8c]/20 hover:scale-105"
+              >
+                Try Virtual Try-On 💅
+              </Link>
+              <Link
+                href="#salons-list"
+                className="inline-block bg-white/20 backdrop-blur-sm text-white font-bold py-4 px-10 rounded-full hover:bg-white/30 transition-all border border-white/30"
+              >
+                Browse Salons
+              </Link>
+            </div>
 
             {/* Quick Stats */}
             <div className="flex flex-wrap justify-center gap-6 mt-8">
@@ -305,10 +322,10 @@ export default async function CityPage({ params }: CityPageProps) {
       </div>
 
       {/* Salons List */}
-      <div className="max-w-7xl mx-auto px-4 py-12">
+      <div id="salons-list" className="max-w-7xl mx-auto px-4 py-12">
         <div className="mb-8">
           <h2 className="text-3xl font-bold text-[#1b0d14] mb-2">
-            Top Nail Salons
+            Top Nail Salons in {formattedCity} (2026)
           </h2>
           <p className="text-[#1b0d14]/70">
             {salons.length} {salons.length === 1 ? 'salon' : 'salons'} found in {formattedCity}
@@ -710,6 +727,7 @@ export default async function CityPage({ params }: CityPageProps) {
           </div>
         </div>
       </div>
+      <StickySalonCTA />
     </div>
   );
 }
