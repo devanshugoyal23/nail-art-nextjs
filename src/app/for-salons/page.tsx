@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import OptimizedImage from "@/components/OptimizedImage";
 import { SUBSCRIPTION_PLANS } from "@/config/subscriptions";
+import SalonPageComparison from "@/components/SalonPageComparison";
 
 export const metadata: Metadata = {
     title: "For Salon Owners - Get Featured on Nail Art AI | Grow Your Business",
@@ -27,6 +29,34 @@ export const metadata: Metadata = {
 
 // Revalidate once per day
 export const revalidate = 86400;
+
+// Demo salon data for visual previews
+const demoSalon = {
+    name: "Luxe Nail Spa",
+    rating: 4.9,
+    reviewCount: 287,
+    address: "456 Beauty Lane, Los Angeles, CA 90210",
+    phone: "(310) 555-7890",
+    hours: "9:00 AM - 8:00 PM",
+    services: [
+        "Classic Manicure - $25",
+        "Gel Manicure - $45",
+        "Acrylic Full Set - $65",
+        "Pedicure - $40",
+        "Nail Art - $10+",
+        "Dip Powder - $55",
+    ],
+    instagram: "@luxenailspa_la",
+    specialOffer: "15% OFF your first visit!",
+};
+
+// Gallery images for demos
+const galleryImages = [
+    "https://images.unsplash.com/photo-1604654894610-df63bc536371?w=400&h=300&fit=crop&q=80",
+    "https://images.unsplash.com/photo-1607779097040-26e80aa78e66?w=400&h=300&fit=crop&q=80",
+    "https://images.unsplash.com/photo-1519014816548-bf5fe059798b?w=400&h=300&fit=crop&q=80",
+    "https://images.unsplash.com/photo-1632345031435-8727f6897d53?w=400&h=300&fit=crop&q=80",
+];
 
 const pricingTiers = [
     {
@@ -178,10 +208,10 @@ export default function ForSalonsPage() {
                                 See Pricing Plans 💰
                             </a>
                             <a
-                                href="mailto:salons@nailartai.app?subject=Claim My Salon Listing"
+                                href="#demo"
                                 className="inline-block bg-white/10 backdrop-blur-sm text-white font-bold py-4 px-10 rounded-full hover:bg-white/20 transition-all border border-white/20"
                             >
-                                Claim Your Free Listing
+                                See Examples First 👀
                             </a>
                         </div>
 
@@ -208,89 +238,448 @@ export default function ForSalonsPage() {
                 </div>
             </div>
 
-            {/* Why Feature Your Salon Section */}
-            <div className="max-w-7xl mx-auto px-4 py-16">
+            {/* Visual Demo Section - See What You Get */}
+            <div id="demo" className="max-w-7xl mx-auto px-4 py-16">
                 <div className="text-center mb-12">
+                    <span className="bg-[#ee2b8c]/10 text-[#ee2b8c] px-4 py-2 rounded-full text-sm font-semibold mb-4 inline-block">
+                        👀 SEE THE DIFFERENCE
+                    </span>
                     <h2 className="text-3xl md:text-4xl font-bold text-[#1b0d14] mb-4">
-                        Why Feature Your Salon?
+                        Regular vs Featured Comparison
                     </h2>
                     <p className="text-lg text-[#1b0d14]/70 max-w-2xl mx-auto">
-                        Stand out from competitors and attract customers who are actively looking for nail salons in your area.
+                        See exactly how your salon listing transforms with a Featured upgrade — it&apos;s the difference between being invisible and standing out.
                     </p>
                 </div>
 
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <div className="bg-white rounded-xl p-6 ring-1 ring-[#ee2b8c]/15 hover:ring-[#ee2b8c]/30 transition-all hover:shadow-lg">
-                        <div className="w-12 h-12 bg-[#ee2b8c]/10 rounded-xl flex items-center justify-center text-2xl mb-4">
-                            🔝
+                <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                    {/* Regular Listing */}
+                    <div>
+                        <div className="text-center mb-4">
+                            <span className="bg-gray-200 text-gray-600 px-4 py-1 rounded-full text-sm font-medium">
+                                REGULAR LISTING (Free)
+                            </span>
                         </div>
-                        <h3 className="text-xl font-bold text-[#1b0d14] mb-2">Top Search Placement</h3>
-                        <p className="text-[#1b0d14]/70">
-                            Appear at the top of your city&apos;s salon listings, above competitors. Be the first salon customers see.
+                        <div className="bg-white rounded-xl overflow-hidden ring-1 ring-gray-200">
+                            <div className="h-48 bg-gradient-to-br from-[#ee2b8c]/20 to-[#f8f6f7] flex items-center justify-center">
+                                <span className="text-6xl opacity-30">💅</span>
+                            </div>
+                            <div className="p-5">
+                                <h3 className="text-xl font-bold text-[#1b0d14] mb-2">{demoSalon.name}</h3>
+                                <div className="flex items-center gap-2 mb-3">
+                                    <span className="text-yellow-500">⭐</span>
+                                    <span className="font-semibold">{demoSalon.rating}</span>
+                                    <span className="text-sm text-gray-500">({demoSalon.reviewCount} reviews)</span>
+                                </div>
+                                <p className="text-gray-600 text-sm mb-2">📍 {demoSalon.address}</p>
+                                <p className="text-gray-600 text-sm">📞 {demoSalon.phone}</p>
+                                <div className="mt-4 text-[#ee2b8c] text-sm font-semibold">
+                                    View Details →
+                                </div>
+                            </div>
+                        </div>
+                        <p className="text-center text-gray-500 text-sm mt-3">
+                            ❌ No photos • ❌ Basic info only • ❌ Lost in the crowd
                         </p>
                     </div>
 
-                    <div className="bg-white rounded-xl p-6 ring-1 ring-[#ee2b8c]/15 hover:ring-[#ee2b8c]/30 transition-all hover:shadow-lg">
-                        <div className="w-12 h-12 bg-[#ee2b8c]/10 rounded-xl flex items-center justify-center text-2xl mb-4">
-                            ⭐
+                    {/* Featured Listing (Spotlight) */}
+                    <div>
+                        <div className="text-center mb-4">
+                            <span className="bg-gradient-to-r from-yellow-400 via-amber-500 to-orange-500 text-white px-4 py-1 rounded-full text-sm font-bold">
+                                ⭐ SPOTLIGHT LISTING ($99/mo)
+                            </span>
                         </div>
-                        <h3 className="text-xl font-bold text-[#1b0d14] mb-2">&quot;Featured&quot; &amp; &quot;Verified&quot; Badges</h3>
-                        <p className="text-[#1b0d14]/70">
-                            Build instant trust with eye-catching badges that show customers you&apos;re a premium, verified business.
-                        </p>
-                    </div>
+                        <div className="relative">
+                            {/* Glow effect */}
+                            <div className="absolute -inset-1 bg-gradient-to-r from-yellow-400/30 via-amber-500/30 to-orange-500/30 rounded-xl blur-sm"></div>
+                            <div className="relative bg-white rounded-xl overflow-hidden ring-2 ring-amber-400">
+                                {/* Verified Badge */}
+                                <div className="absolute top-3 left-3 z-10">
+                                    <span className="bg-gradient-to-r from-yellow-400 via-amber-500 to-orange-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
+                                        ⭐ VERIFIED
+                                    </span>
+                                </div>
+                                <div className="absolute top-3 right-3 z-10">
+                                    <span className="bg-green-500 text-white px-3 py-1 rounded-full text-xs font-semibold">
+                                        🟢 Open Now
+                                    </span>
+                                </div>
 
-                    <div className="bg-white rounded-xl p-6 ring-1 ring-[#ee2b8c]/15 hover:ring-[#ee2b8c]/30 transition-all hover:shadow-lg">
-                        <div className="w-12 h-12 bg-[#ee2b8c]/10 rounded-xl flex items-center justify-center text-2xl mb-4">
-                            📸
-                        </div>
-                        <h3 className="text-xl font-bold text-[#1b0d14] mb-2">Enhanced Photo Gallery</h3>
-                        <p className="text-[#1b0d14]/70">
-                            Showcase up to 10 photos of your best work, interior, and happy customers to attract more bookings.
-                        </p>
-                    </div>
+                                {/* Photo Gallery */}
+                                <div className="grid grid-cols-4 gap-0.5">
+                                    {galleryImages.map((img, i) => (
+                                        <div key={i} className="h-24 overflow-hidden">
+                                            <OptimizedImage
+                                                src={img}
+                                                alt={`Nail art ${i + 1}`}
+                                                width={200}
+                                                height={150}
+                                                className="w-full h-full object-cover"
+                                            />
+                                        </div>
+                                    ))}
+                                </div>
 
-                    <div className="bg-white rounded-xl p-6 ring-1 ring-[#ee2b8c]/15 hover:ring-[#ee2b8c]/30 transition-all hover:shadow-lg">
-                        <div className="w-12 h-12 bg-[#ee2b8c]/10 rounded-xl flex items-center justify-center text-2xl mb-4">
-                            📊
-                        </div>
-                        <h3 className="text-xl font-bold text-[#1b0d14] mb-2">Analytics Dashboard</h3>
-                        <p className="text-[#1b0d14]/70">
-                            See exactly how many people view your listing, click for directions, or call your salon each month.
-                        </p>
-                    </div>
+                                <div className="p-5">
+                                    <div className="flex items-start justify-between mb-2">
+                                        <h3 className="text-xl font-bold text-[#1b0d14]">{demoSalon.name}</h3>
+                                        <span className="text-xs bg-amber-100 text-amber-700 px-2 py-0.5 rounded font-medium">
+                                            #1 in LA
+                                        </span>
+                                    </div>
 
-                    <div className="bg-white rounded-xl p-6 ring-1 ring-[#ee2b8c]/15 hover:ring-[#ee2b8c]/30 transition-all hover:shadow-lg">
-                        <div className="w-12 h-12 bg-[#ee2b8c]/10 rounded-xl flex items-center justify-center text-2xl mb-4">
-                            📅
-                        </div>
-                        <h3 className="text-xl font-bold text-[#1b0d14] mb-2">Booking Link Integration</h3>
-                        <p className="text-[#1b0d14]/70">
-                            Add your booking link (Vagaro, Fresha, etc.) so customers can book appointments directly from your listing.
-                        </p>
-                    </div>
+                                    <div className="flex items-center gap-2 mb-3">
+                                        <div className="flex text-yellow-500">
+                                            ⭐⭐⭐⭐⭐
+                                        </div>
+                                        <span className="font-bold">{demoSalon.rating}</span>
+                                        <span className="text-sm text-gray-500">({demoSalon.reviewCount} reviews)</span>
+                                        <span className="text-sm text-gray-500">💰💰</span>
+                                    </div>
 
-                    <div className="bg-white rounded-xl p-6 ring-1 ring-[#ee2b8c]/15 hover:ring-[#ee2b8c]/30 transition-all hover:shadow-lg">
-                        <div className="w-12 h-12 bg-[#ee2b8c]/10 rounded-xl flex items-center justify-center text-2xl mb-4">
-                            💬
+                                    {/* Special Offer */}
+                                    <div className="bg-gradient-to-r from-[#ee2b8c]/10 to-[#ee2b8c]/5 border border-[#ee2b8c]/20 rounded-lg p-3 mb-3">
+                                        <p className="text-[#ee2b8c] font-semibold text-sm">
+                                            🎁 {demoSalon.specialOffer}
+                                        </p>
+                                    </div>
+
+                                    <div className="grid grid-cols-2 gap-2 text-sm mb-3">
+                                        <p className="text-gray-600">📍 {demoSalon.address.split(',')[0]}</p>
+                                        <p className="text-gray-600">🕐 {demoSalon.hours}</p>
+                                        <p className="text-[#ee2b8c] font-medium">📞 {demoSalon.phone}</p>
+                                        <p className="text-blue-600">📱 {demoSalon.instagram}</p>
+                                    </div>
+
+                                    {/* Services */}
+                                    <div className="mb-4">
+                                        <p className="text-xs text-gray-500 mb-1">Popular Services:</p>
+                                        <div className="flex flex-wrap gap-1">
+                                            {demoSalon.services.slice(0, 4).map((service, i) => (
+                                                <span key={i} className="text-xs bg-gray-100 px-2 py-0.5 rounded">
+                                                    {service}
+                                                </span>
+                                            ))}
+                                        </div>
+                                    </div>
+
+                                    {/* CTAs */}
+                                    <div className="flex gap-2">
+                                        <span className="flex-1 bg-[#ee2b8c] text-white text-center py-2.5 rounded-lg font-semibold text-sm">
+                                            📞 Call Now
+                                        </span>
+                                        <span className="flex-1 bg-green-500 text-white text-center py-2.5 rounded-lg font-semibold text-sm">
+                                            📅 Book Online
+                                        </span>
+                                        <span className="bg-gray-100 text-gray-700 px-4 py-2.5 rounded-lg font-semibold text-sm">
+                                            📍
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <h3 className="text-xl font-bold text-[#1b0d14] mb-2">Priority Support</h3>
-                        <p className="text-[#1b0d14]/70">
-                            Get fast responses from our team and help optimizing your listing for maximum visibility and conversions.
+                        <p className="text-center text-green-600 text-sm mt-3 font-medium">
+                            ✓ Photos • ✓ Special offers • ✓ #1 Position • ✓ Booking link
                         </p>
                     </div>
                 </div>
             </div>
 
-            {/* Pricing Section */}
-            <div id="pricing" className="bg-white py-16">
+            {/* All Tiers Visual Preview */}
+            <div className="bg-white py-16">
                 <div className="max-w-7xl mx-auto px-4">
                     <div className="text-center mb-12">
                         <h2 className="text-3xl md:text-4xl font-bold text-[#1b0d14] mb-4">
-                            Simple, Transparent Pricing
+                            All Featured Listing Tiers
                         </h2>
                         <p className="text-lg text-[#1b0d14]/70 max-w-2xl mx-auto">
-                            Choose the plan that works for your salon. All plans include a 14-day money-back guarantee.
+                            Here&apos;s how each tier looks in the salon directory — choose the level that fits your goals.
+                        </p>
+                    </div>
+
+                    <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+                        {/* Basic Tier */}
+                        <div>
+                            <div className="text-center mb-3">
+                                <span className="bg-blue-500 text-white px-4 py-1 rounded-full text-sm font-bold">
+                                    ✨ BASIC BOOST - $29/mo
+                                </span>
+                            </div>
+                            <div className="bg-white rounded-xl overflow-hidden ring-2 ring-blue-400 shadow-lg shadow-blue-500/10">
+                                <div className="relative h-40 bg-gradient-to-br from-blue-50 to-blue-100">
+                                    <OptimizedImage
+                                        src={galleryImages[0]}
+                                        alt="Nail art"
+                                        width={400}
+                                        height={200}
+                                        className="w-full h-full object-cover"
+                                    />
+                                    <div className="absolute top-2 left-2">
+                                        <span className="bg-blue-500 text-white px-2 py-0.5 rounded text-xs font-bold">
+                                            ✨ Featured
+                                        </span>
+                                    </div>
+                                </div>
+                                <div className="p-4">
+                                    <h3 className="font-bold text-[#1b0d14] mb-1">{demoSalon.name}</h3>
+                                    <div className="flex items-center gap-1 text-sm mb-2">
+                                        <span className="text-yellow-500">⭐</span>
+                                        <span className="font-semibold">{demoSalon.rating}</span>
+                                        <span className="text-gray-500">({demoSalon.reviewCount})</span>
+                                    </div>
+                                    <p className="text-gray-600 text-xs mb-1">📍 {demoSalon.address.split(',')[0]}</p>
+                                    <p className="text-gray-600 text-xs mb-2">🌐 Website displayed</p>
+                                    <div className="text-[#ee2b8c] text-sm font-semibold">View →</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Premium Tier */}
+                        <div>
+                            <div className="text-center mb-3">
+                                <span className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-4 py-1 rounded-full text-sm font-bold">
+                                    💎 PREMIUM - $49/mo ⭐ POPULAR
+                                </span>
+                            </div>
+                            <div className="bg-white rounded-xl overflow-hidden ring-2 ring-purple-400 shadow-lg shadow-purple-500/10">
+                                <div className="relative">
+                                    <div className="grid grid-cols-3 gap-0.5 h-32">
+                                        {galleryImages.slice(0, 3).map((img, i) => (
+                                            <div key={i} className="overflow-hidden">
+                                                <OptimizedImage
+                                                    src={img}
+                                                    alt={`Nail ${i + 1}`}
+                                                    width={150}
+                                                    height={150}
+                                                    className="w-full h-full object-cover"
+                                                />
+                                            </div>
+                                        ))}
+                                    </div>
+                                    <div className="absolute top-2 left-2">
+                                        <span className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-2 py-0.5 rounded text-xs font-bold">
+                                            💎 Premium
+                                        </span>
+                                    </div>
+                                    <div className="absolute top-2 right-2">
+                                        <span className="bg-green-500 text-white px-2 py-0.5 rounded text-xs font-semibold">
+                                            Open
+                                        </span>
+                                    </div>
+                                </div>
+                                <div className="p-4">
+                                    <h3 className="font-bold text-[#1b0d14] mb-1">{demoSalon.name}</h3>
+                                    <div className="flex items-center gap-1 text-sm mb-2">
+                                        <span className="text-yellow-500">⭐</span>
+                                        <span className="font-semibold">{demoSalon.rating}</span>
+                                        <span className="text-gray-500">({demoSalon.reviewCount})</span>
+                                        <span className="text-gray-400 ml-auto">💰💰</span>
+                                    </div>
+                                    <p className="text-gray-600 text-xs mb-1">📍 {demoSalon.address.split(',')[0]}</p>
+                                    <p className="text-gray-600 text-xs mb-1">🕐 {demoSalon.hours}</p>
+                                    <div className="flex flex-wrap gap-1 mb-2">
+                                        <span className="text-xs bg-gray-100 px-1.5 py-0.5 rounded">Gel</span>
+                                        <span className="text-xs bg-gray-100 px-1.5 py-0.5 rounded">Acrylic</span>
+                                        <span className="text-xs bg-gray-100 px-1.5 py-0.5 rounded">+4</span>
+                                    </div>
+                                    <div className="flex gap-2">
+                                        <span className="flex-1 bg-[#ee2b8c] text-white text-center py-1.5 rounded text-xs font-semibold">
+                                            📞 Call
+                                        </span>
+                                        <span className="flex-1 bg-gray-100 text-gray-700 text-center py-1.5 rounded text-xs font-semibold">
+                                            View →
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Spotlight Tier */}
+                        <div>
+                            <div className="text-center mb-3">
+                                <span className="bg-gradient-to-r from-yellow-400 via-amber-500 to-orange-500 text-white px-4 py-1 rounded-full text-sm font-bold">
+                                    ⭐ SPOTLIGHT - $99/mo
+                                </span>
+                            </div>
+                            <div className="relative">
+                                <div className="absolute -inset-0.5 bg-gradient-to-r from-yellow-400 via-amber-500 to-orange-500 rounded-xl blur-sm opacity-50"></div>
+                                <div className="relative bg-white rounded-xl overflow-hidden ring-2 ring-amber-400">
+                                    <div className="relative">
+                                        <div className="grid grid-cols-4 gap-0.5 h-28">
+                                            {galleryImages.map((img, i) => (
+                                                <div key={i} className="overflow-hidden">
+                                                    <OptimizedImage
+                                                        src={img}
+                                                        alt={`Nail ${i + 1}`}
+                                                        width={100}
+                                                        height={100}
+                                                        className="w-full h-full object-cover"
+                                                    />
+                                                </div>
+                                            ))}
+                                        </div>
+                                        <div className="absolute top-2 left-2">
+                                            <span className="bg-gradient-to-r from-yellow-400 via-amber-500 to-orange-500 text-white px-2 py-0.5 rounded text-xs font-bold shadow">
+                                                ⭐ Verified
+                                            </span>
+                                        </div>
+                                        <div className="absolute top-2 right-2">
+                                            <span className="bg-green-500 text-white px-2 py-0.5 rounded text-xs font-semibold">
+                                                Open
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div className="p-4">
+                                        <div className="flex items-center justify-between mb-1">
+                                            <h3 className="font-bold text-[#1b0d14]">{demoSalon.name}</h3>
+                                            <span className="text-xs bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded font-medium">#1</span>
+                                        </div>
+                                        <div className="flex items-center gap-1 text-sm mb-2">
+                                            <span className="text-yellow-500">⭐</span>
+                                            <span className="font-semibold">{demoSalon.rating}</span>
+                                            <span className="text-gray-500">({demoSalon.reviewCount})</span>
+                                        </div>
+                                        <div className="bg-[#ee2b8c]/5 border border-[#ee2b8c]/20 rounded p-2 mb-2">
+                                            <p className="text-[#ee2b8c] text-xs font-medium">🎁 15% OFF first visit!</p>
+                                        </div>
+                                        <div className="flex gap-2">
+                                            <span className="flex-1 bg-[#ee2b8c] text-white text-center py-1.5 rounded text-xs font-semibold">
+                                                📞 Call
+                                            </span>
+                                            <span className="flex-1 bg-green-500 text-white text-center py-1.5 rounded text-xs font-semibold">
+                                                📅 Book
+                                            </span>
+                                            <span className="bg-gray-100 text-gray-700 px-3 py-1.5 rounded text-xs">
+                                                📍
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* Feature Comparison Table */}
+            <div className="max-w-5xl mx-auto px-4 py-16">
+                <div className="text-center mb-8">
+                    <h2 className="text-3xl md:text-4xl font-bold text-[#1b0d14] mb-4">
+                        Quick Comparison: What Each Tier Gets
+                    </h2>
+                </div>
+                <div className="bg-white rounded-2xl p-6 ring-1 ring-gray-200 overflow-x-auto">
+                    <table className="w-full text-sm">
+                        <thead>
+                            <tr className="border-b">
+                                <th className="text-left py-3 px-2">Feature</th>
+                                <th className="text-center py-3 px-2">
+                                    <span className="bg-gray-200 text-gray-600 px-2 py-1 rounded text-xs">Regular</span>
+                                    <div className="text-xs text-gray-500 mt-1">Free</div>
+                                </th>
+                                <th className="text-center py-3 px-2">
+                                    <span className="bg-blue-500 text-white px-2 py-1 rounded text-xs">Basic</span>
+                                    <div className="text-xs text-gray-500 mt-1">$29/mo</div>
+                                </th>
+                                <th className="text-center py-3 px-2 bg-purple-50">
+                                    <span className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-2 py-1 rounded text-xs">Premium</span>
+                                    <div className="text-xs text-purple-600 mt-1 font-medium">$49/mo ⭐</div>
+                                </th>
+                                <th className="text-center py-3 px-2">
+                                    <span className="bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-2 py-1 rounded text-xs">Spotlight</span>
+                                    <div className="text-xs text-gray-500 mt-1">$99/mo</div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr className="border-b">
+                                <td className="py-3 px-2">Photos</td>
+                                <td className="text-center">❌</td>
+                                <td className="text-center">1</td>
+                                <td className="text-center bg-purple-50 font-medium">5</td>
+                                <td className="text-center">10</td>
+                            </tr>
+                            <tr className="border-b">
+                                <td className="py-3 px-2">Featured Badge</td>
+                                <td className="text-center">❌</td>
+                                <td className="text-center">✨</td>
+                                <td className="text-center bg-purple-50">💎</td>
+                                <td className="text-center">⭐ Verified</td>
+                            </tr>
+                            <tr className="border-b">
+                                <td className="py-3 px-2">Position in Results</td>
+                                <td className="text-center">Normal</td>
+                                <td className="text-center">Higher</td>
+                                <td className="text-center bg-purple-50 font-medium">Top 3</td>
+                                <td className="text-center">#1</td>
+                            </tr>
+                            <tr className="border-b">
+                                <td className="py-3 px-2">Services &amp; Pricing</td>
+                                <td className="text-center">❌</td>
+                                <td className="text-center">❌</td>
+                                <td className="text-center bg-purple-50">✅</td>
+                                <td className="text-center">✅</td>
+                            </tr>
+                            <tr className="border-b">
+                                <td className="py-3 px-2">Website Link</td>
+                                <td className="text-center">❌</td>
+                                <td className="text-center">✅</td>
+                                <td className="text-center bg-purple-50">✅</td>
+                                <td className="text-center">✅</td>
+                            </tr>
+                            <tr className="border-b">
+                                <td className="py-3 px-2">Monthly Analytics</td>
+                                <td className="text-center">❌</td>
+                                <td className="text-center">❌</td>
+                                <td className="text-center bg-purple-50">✅</td>
+                                <td className="text-center">✅</td>
+                            </tr>
+                            <tr className="border-b">
+                                <td className="py-3 px-2">Book Online Button</td>
+                                <td className="text-center">❌</td>
+                                <td className="text-center">❌</td>
+                                <td className="text-center bg-purple-50">❌</td>
+                                <td className="text-center">✅</td>
+                            </tr>
+                            <tr className="border-b">
+                                <td className="py-3 px-2">Special Offers Display</td>
+                                <td className="text-center">❌</td>
+                                <td className="text-center">❌</td>
+                                <td className="text-center bg-purple-50">❌</td>
+                                <td className="text-center">✅</td>
+                            </tr>
+                            <tr className="border-b">
+                                <td className="py-3 px-2">Social Media Links</td>
+                                <td className="text-center">❌</td>
+                                <td className="text-center">❌</td>
+                                <td className="text-center bg-purple-50">❌</td>
+                                <td className="text-center">✅</td>
+                            </tr>
+                            <tr>
+                                <td className="py-3 px-2">Featured on State Page</td>
+                                <td className="text-center">❌</td>
+                                <td className="text-center">❌</td>
+                                <td className="text-center bg-purple-50">❌</td>
+                                <td className="text-center">✅</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            {/* Individual Salon Page: Before vs After - Interactive Tabbed Comparison */}
+            <SalonPageComparison />
+
+            {/* Pricing Section */}
+            <div id="pricing" className="bg-gradient-to-br from-[#1b0d14] via-[#2d1520] to-[#1b0d14] py-16">
+                <div className="max-w-7xl mx-auto px-4">
+                    <div className="text-center mb-12">
+                        <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+                            Choose Your Plan
+                        </h2>
+                        <p className="text-lg text-white/70 max-w-2xl mx-auto">
+                            All plans include a 14-day money-back guarantee. Less than what you earn from ONE new customer.
                         </p>
                     </div>
 
@@ -300,7 +689,7 @@ export default function ForSalonsPage() {
                                 key={index}
                                 className={`relative rounded-2xl p-6 ${tier.popular
                                     ? 'bg-gradient-to-br from-[#ee2b8c] to-[#c91f6f] text-white ring-4 ring-[#ee2b8c]/30 scale-105'
-                                    : 'bg-[#f8f6f7] ring-1 ring-[#ee2b8c]/15'
+                                    : 'bg-white ring-1 ring-white/20'
                                     }`}
                             >
                                 {tier.popular && (
@@ -337,8 +726,8 @@ export default function ForSalonsPage() {
 
                                 <a
                                     href={tier.checkoutUrl}
-                                    className={`block w-full text-center font-bold py-3 px-6 rounded-full transition-all ${tier.popular
-                                        ? 'bg-white text-[#ee2b8c] hover:bg-white/90'
+                                    className={`block w-full text-center font-bold py-3 px-6 rounded-full transition-all hover:scale-105 ${tier.popular
+                                        ? 'bg-white text-[#ee2b8c] hover:bg-white/90 shadow-xl'
                                         : 'bg-[#ee2b8c] text-white hover:bg-[#ee2b8c]/90'
                                         }`}
                                 >
@@ -348,7 +737,7 @@ export default function ForSalonsPage() {
                         ))}
                     </div>
 
-                    <p className="text-center text-sm text-[#1b0d14]/60 mt-8">
+                    <p className="text-center text-sm text-white/60 mt-8">
                         💰 All plans are less than what you earn from ONE new customer. Cancel anytime.
                     </p>
                 </div>
@@ -473,7 +862,7 @@ export default function ForSalonsPage() {
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
                         <a
-                            href="mailto:salons@nailartai.app?subject=I want to feature my salon"
+                            href="#pricing"
                             className="inline-block bg-[#ee2b8c] text-white font-bold py-4 px-10 rounded-full hover:bg-[#ee2b8c]/90 transition-all shadow-xl shadow-[#ee2b8c]/20 hover:scale-105"
                         >
                             Get Started Today 🚀

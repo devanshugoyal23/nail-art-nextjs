@@ -34,17 +34,16 @@ export async function GET(request: Request) {
         } else {
             throw new Error('No checkout URL returned');
         }
-    } catch (error: any) {
+    } catch (error: unknown) {
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+        const errorStack = error instanceof Error ? error.stack : undefined;
         console.error('Error creating checkout session details:', {
-            message: error.message,
-            stack: error.stack,
-            response: error.response?.data,
-            status: error.status || error.response?.status
+            message: errorMessage,
+            stack: errorStack,
         });
         return NextResponse.json({
             error: 'Failed to create checkout session',
-            details: error.message,
-            status: error.status || error.response?.status
+            details: errorMessage,
         }, { status: 500 });
     }
 }
