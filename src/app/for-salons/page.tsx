@@ -168,7 +168,7 @@ const faqs = [
     },
     {
         question: "What if I'm not satisfied?",
-        answer: "We offer a 14-day money-back guarantee. If you're not seeing results in the first 14 days, contact us for a full refund, no questions asked."
+        answer: "You can cancel your subscription anytime. No long-term contracts, no cancellation fees. Your listing stays active until the end of your billing period."
     },
     {
         question: "Can I upgrade or downgrade my plan?",
@@ -238,11 +238,11 @@ export default function ForSalonsPage() {
                             </div>
                         </div>
 
-                        {/* Right: Mini Featured Listing Preview */}
-                        <div className="relative">
+                        {/* Right: Mini Featured Listing Preview - Hidden on small mobile, compact on tablet */}
+                        <div className="relative hidden sm:block">
                             {/* "This could be you" label */}
                             <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-20">
-                                <span className="bg-[#ee2b8c] text-white px-4 py-1.5 rounded-full text-sm font-bold shadow-lg">
+                                <span className="bg-[#ee2b8c] text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg whitespace-nowrap">
                                     ↓ This could be YOUR salon ↓
                                 </span>
                             </div>
@@ -251,23 +251,23 @@ export default function ForSalonsPage() {
                             <div className="absolute -inset-2 bg-gradient-to-r from-amber-400/20 via-[#ee2b8c]/20 to-purple-500/20 rounded-2xl blur-xl"></div>
 
                             {/* Featured Listing Card */}
-                            <div className="relative bg-white rounded-xl overflow-hidden ring-2 ring-amber-400 shadow-2xl">
+                            <div className="relative bg-white rounded-xl overflow-hidden ring-2 ring-amber-400 shadow-2xl max-w-sm mx-auto lg:max-w-none">
                                 {/* Verified Badge */}
-                                <div className="absolute top-3 left-3 z-10">
-                                    <span className="bg-gradient-to-r from-yellow-400 via-amber-500 to-orange-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
+                                <div className="absolute top-2 left-2 z-10">
+                                    <span className="bg-gradient-to-r from-yellow-400 via-amber-500 to-orange-500 text-white px-2 py-0.5 rounded-full text-[10px] sm:text-xs font-bold shadow-lg">
                                         ⭐ VERIFIED
                                     </span>
                                 </div>
-                                <div className="absolute top-3 right-3 z-10">
-                                    <span className="bg-green-500 text-white px-2 py-0.5 rounded-full text-xs font-semibold">
+                                <div className="absolute top-2 right-2 z-10">
+                                    <span className="bg-green-500 text-white px-1.5 py-0.5 rounded-full text-[10px] font-semibold">
                                         🟢 Open
                                     </span>
                                 </div>
 
-                                {/* Photo Grid */}
+                                {/* Photo Grid - smaller on mobile */}
                                 <div className="grid grid-cols-4 gap-0.5">
                                     {galleryImages.map((img, i) => (
-                                        <div key={i} className="h-20 overflow-hidden">
+                                        <div key={i} className="h-14 sm:h-16 lg:h-20 overflow-hidden">
                                             <OptimizedImage
                                                 src={img}
                                                 alt={`Nail art ${i + 1}`}
@@ -279,45 +279,45 @@ export default function ForSalonsPage() {
                                     ))}
                                 </div>
 
-                                <div className="p-4">
-                                    <div className="flex items-start justify-between mb-2">
-                                        <h3 className="text-lg font-bold text-[#1b0d14]">{demoSalon.name}</h3>
-                                        <span className="text-xs bg-amber-100 text-amber-700 px-2 py-0.5 rounded font-medium">
+                                <div className="p-3 sm:p-4">
+                                    <div className="flex items-start justify-between mb-1.5">
+                                        <h3 className="text-base sm:text-lg font-bold text-[#1b0d14]">{demoSalon.name}</h3>
+                                        <span className="text-[10px] sm:text-xs bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded font-medium">
                                             #1 in LA
                                         </span>
                                     </div>
 
-                                    <div className="flex items-center gap-2 mb-2">
-                                        <div className="flex text-yellow-500 text-sm">⭐⭐⭐⭐⭐</div>
-                                        <span className="font-bold text-sm">{demoSalon.rating}</span>
-                                        <span className="text-xs text-gray-500">({demoSalon.reviewCount} reviews)</span>
+                                    <div className="flex items-center gap-1.5 mb-2">
+                                        <div className="flex text-yellow-500 text-xs sm:text-sm">⭐⭐⭐⭐⭐</div>
+                                        <span className="font-bold text-xs sm:text-sm">{demoSalon.rating}</span>
+                                        <span className="text-[10px] sm:text-xs text-gray-500">({demoSalon.reviewCount} reviews)</span>
                                     </div>
 
                                     {/* Special Offer */}
-                                    <div className="bg-gradient-to-r from-[#ee2b8c]/10 to-[#ee2b8c]/5 border border-[#ee2b8c]/20 rounded-lg p-2 mb-3">
-                                        <p className="text-[#ee2b8c] font-semibold text-sm">
+                                    <div className="bg-gradient-to-r from-[#ee2b8c]/10 to-[#ee2b8c]/5 border border-[#ee2b8c]/20 rounded-lg p-1.5 sm:p-2 mb-2 sm:mb-3">
+                                        <p className="text-[#ee2b8c] font-semibold text-xs sm:text-sm">
                                             🎁 {demoSalon.specialOffer}
                                         </p>
                                     </div>
 
-                                    <div className="grid grid-cols-2 gap-2 text-xs mb-3">
+                                    <div className="grid grid-cols-2 gap-2 text-[10px] sm:text-xs mb-2 sm:mb-3">
                                         <p className="text-gray-600">📍 Los Angeles</p>
                                         <p className="text-gray-600">🕐 9AM - 8PM</p>
                                     </div>
 
                                     {/* CTAs */}
                                     <div className="flex gap-2">
-                                        <span className="flex-1 bg-[#ee2b8c] text-white text-center py-2 rounded-lg font-semibold text-sm">
+                                        <span className="flex-1 bg-[#ee2b8c] text-white text-center py-1.5 sm:py-2 rounded-lg font-semibold text-xs sm:text-sm">
                                             📞 Call Now
                                         </span>
-                                        <span className="flex-1 bg-green-500 text-white text-center py-2 rounded-lg font-semibold text-sm">
+                                        <span className="flex-1 bg-green-500 text-white text-center py-1.5 sm:py-2 rounded-lg font-semibold text-xs sm:text-sm">
                                             📅 Book
                                         </span>
                                     </div>
                                 </div>
                             </div>
 
-                            {/* Annotation arrows */}
+                            {/* Annotation arrows - only on large screens */}
                             <div className="hidden lg:block absolute -right-4 top-1/4 text-white/60 text-xs">
                                 <div className="flex items-center gap-1">
                                     <span>Photos that sell</span>
@@ -334,6 +334,17 @@ export default function ForSalonsPage() {
                                 <div className="flex items-center gap-1">
                                     <span>Direct booking</span>
                                     <span>←</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Mobile: Simple CTA instead of preview card */}
+                        <div className="sm:hidden text-center mt-4">
+                            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-xl px-4 py-3 border border-white/20">
+                                <span className="text-2xl">📸</span>
+                                <div className="text-left">
+                                    <p className="text-white font-semibold text-sm">Photos, offers & reviews</p>
+                                    <p className="text-white/60 text-xs">See how your listing could look ↓</p>
                                 </div>
                             </div>
                         </div>
@@ -788,7 +799,7 @@ export default function ForSalonsPage() {
                             One new customer pays for <span className="text-white font-semibold">3 months</span> of your listing. Most salons see ROI in the first week.
                         </p>
                         <p className="text-sm text-green-400 font-medium">
-                            ✓ 14-day money-back guarantee • Cancel anytime
+                            ✓ Cancel anytime • No long-term contracts
                         </p>
                     </div>
 
@@ -1006,7 +1017,7 @@ export default function ForSalonsPage() {
                     </div>
 
                     <p className="text-green-400 text-sm font-medium mb-4">
-                        ✓ 14-day money-back guarantee • ✓ Cancel anytime • ✓ Live in 24 hours
+                        ✓ Cancel anytime • ✓ No contracts • ✓ Live in 24 hours
                     </p>
 
                     <p className="text-white/50 text-sm">
