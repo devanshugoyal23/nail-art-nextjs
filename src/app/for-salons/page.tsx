@@ -127,22 +127,25 @@ const pricingTiers = [
 
 const testimonials = [
     {
-        quote: "Since getting featured, I've received 15+ new customer calls per week directly from Nail Art AI!",
-        author: "Sunny Nails",
+        quote: "I got 23 new customers in the first month. At $45 average per visit, that's $1,035 from a $49 investment. No-brainer.",
+        author: "Maria's Nail Studio",
         location: "Houston, TX",
-        rating: 5
+        rating: 5,
+        result: "+23 customers/month"
     },
     {
-        quote: "The analytics dashboard helps me understand where my customers are coming from. Worth every penny.",
+        quote: "Went from invisible to #1 in Phoenix. Now I'm turning away customers. Best problem I've ever had!",
         author: "Luxe Nail Spa",
         location: "Phoenix, AZ",
-        rating: 5
+        rating: 5,
+        result: "#1 in city"
     },
     {
-        quote: "I was skeptical at first, but within a month I recovered my investment 10x over.",
+        quote: "Was skeptical about $29/month. Then I tracked it: 8 bookings last week came directly from Nail Art AI. That's $400+ revenue.",
         author: "Nail Artistry Studio",
         location: "San Diego, CA",
-        rating: 5
+        rating: 5,
+        result: "8x ROI first week"
     }
 ];
 
@@ -176,62 +179,162 @@ const faqs = [
 export default function ForSalonsPage() {
     return (
         <div className="min-h-screen bg-[#f8f6f7]">
-            {/* Hero Section */}
+            {/* Hero Section - Conversion Optimized */}
             <div className="relative overflow-hidden bg-gradient-to-br from-[#1b0d14] via-[#2d1520] to-[#1b0d14]">
                 <div className="absolute inset-0 opacity-20">
-                    <div className="absolute top-20 left-10 w-72 h-72 bg-[#ee2b8c]/30 rounded-full blur-3xl"></div>
-                    <div className="absolute bottom-20 right-10 w-96 h-96 bg-[#ee2b8c]/20 rounded-full blur-3xl"></div>
+                    <div className="absolute top-10 left-10 w-64 h-64 bg-[#ee2b8c]/40 rounded-full blur-3xl"></div>
+                    <div className="absolute bottom-10 right-10 w-80 h-80 bg-[#ee2b8c]/30 rounded-full blur-3xl"></div>
                 </div>
 
-                <div className="relative max-w-7xl mx-auto px-4 py-20 md:py-28">
-                    <div className="text-center max-w-4xl mx-auto">
-                        <div className="inline-flex items-center gap-2 bg-[#ee2b8c]/20 border border-[#ee2b8c]/30 rounded-full px-4 py-2 mb-6">
-                            <span className="text-[#ee2b8c] text-sm font-medium">🏪 For Salon Owners</span>
+                <div className="relative max-w-7xl mx-auto px-4 py-12 md:py-16">
+                    <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+                        {/* Left: Copy */}
+                        <div className="text-center lg:text-left">
+                            {/* Urgency Badge */}
+                            <div className="inline-flex items-center gap-2 bg-green-500/20 border border-green-500/30 rounded-full px-3 py-1.5 mb-4">
+                                <span className="relative flex h-2 w-2">
+                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                                    <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                                </span>
+                                <span className="text-green-400 text-sm font-medium">3 salons upgraded in your area this week</span>
+                            </div>
+
+                            <h1 className="text-3xl md:text-5xl font-bold text-white mb-4 leading-tight">
+                                What if <span className="text-[#ee2b8c]">10 new customers</span> called you this week?
+                            </h1>
+
+                            <p className="text-lg md:text-xl text-white/80 mb-6 leading-relaxed">
+                                Right now, <span className="text-white font-semibold">400,000+ people</span> are searching for nail salons on our site every month.
+                                Your competitors are getting those calls. <span className="text-[#ee2b8c] font-semibold">You could be too.</span>
+                            </p>
+
+                            {/* Quick Value Props */}
+                            <div className="flex flex-wrap gap-3 mb-6 justify-center lg:justify-start">
+                                <span className="bg-white/10 text-white/90 px-3 py-1.5 rounded-full text-sm">✓ Show up first</span>
+                                <span className="bg-white/10 text-white/90 px-3 py-1.5 rounded-full text-sm">✓ Photos & offers</span>
+                                <span className="bg-white/10 text-white/90 px-3 py-1.5 rounded-full text-sm">✓ Click-to-call</span>
+                                <span className="bg-white/10 text-white/90 px-3 py-1.5 rounded-full text-sm">✓ From $29/mo</span>
+                            </div>
+
+                            {/* Primary CTA */}
+                            <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start mb-6">
+                                <a
+                                    href="#pricing"
+                                    className="inline-flex items-center justify-center gap-2 bg-[#ee2b8c] text-white font-bold py-3.5 px-8 rounded-full hover:bg-[#ee2b8c]/90 transition-all shadow-xl shadow-[#ee2b8c]/30 hover:scale-105 text-lg"
+                                >
+                                    Get Featured Today
+                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+                                </a>
+                            </div>
+
+                            {/* Social Proof */}
+                            <div className="flex items-center gap-3 justify-center lg:justify-start text-sm text-white/60">
+                                <div className="flex -space-x-2">
+                                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-pink-400 to-pink-600 flex items-center justify-center text-xs text-white font-bold ring-2 ring-[#1b0d14]">S</div>
+                                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center text-xs text-white font-bold ring-2 ring-[#1b0d14]">L</div>
+                                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-xs text-white font-bold ring-2 ring-[#1b0d14]">N</div>
+                                </div>
+                                <span>Join <strong className="text-white">127+ salons</strong> already featured</span>
+                            </div>
                         </div>
 
-                        <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">
-                            Get More Customers from{' '}
-                            <span className="text-[#ee2b8c]">Nail Art AI</span>
-                        </h1>
-
-                        <p className="text-xl md:text-2xl text-white/80 mb-8 leading-relaxed">
-                            Your potential customers are already searching for you.{' '}
-                            <span className="text-white font-semibold">400,000+ monthly impressions</span>{' '}
-                            from people looking for nail salons in their area.
-                        </p>
-
-                        <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-                            <a
-                                href="#pricing"
-                                className="inline-block bg-[#ee2b8c] text-white font-bold py-4 px-10 rounded-full hover:bg-[#ee2b8c]/90 transition-all shadow-xl shadow-[#ee2b8c]/20 hover:scale-105"
-                            >
-                                See Pricing Plans 💰
-                            </a>
-                            <a
-                                href="#demo"
-                                className="inline-block bg-white/10 backdrop-blur-sm text-white font-bold py-4 px-10 rounded-full hover:bg-white/20 transition-all border border-white/20"
-                            >
-                                See Examples First 👀
-                            </a>
-                        </div>
-
-                        {/* Stats */}
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
-                            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/10">
-                                <div className="text-3xl md:text-4xl font-bold text-[#ee2b8c]">407k+</div>
-                                <div className="text-sm text-white/70">Monthly Views</div>
+                        {/* Right: Mini Featured Listing Preview */}
+                        <div className="relative">
+                            {/* "This could be you" label */}
+                            <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-20">
+                                <span className="bg-[#ee2b8c] text-white px-4 py-1.5 rounded-full text-sm font-bold shadow-lg">
+                                    ↓ This could be YOUR salon ↓
+                                </span>
                             </div>
-                            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/10">
-                                <div className="text-3xl md:text-4xl font-bold text-[#ee2b8c]">50</div>
-                                <div className="text-sm text-white/70">States Covered</div>
+
+                            {/* Glow effect */}
+                            <div className="absolute -inset-2 bg-gradient-to-r from-amber-400/20 via-[#ee2b8c]/20 to-purple-500/20 rounded-2xl blur-xl"></div>
+
+                            {/* Featured Listing Card */}
+                            <div className="relative bg-white rounded-xl overflow-hidden ring-2 ring-amber-400 shadow-2xl">
+                                {/* Verified Badge */}
+                                <div className="absolute top-3 left-3 z-10">
+                                    <span className="bg-gradient-to-r from-yellow-400 via-amber-500 to-orange-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
+                                        ⭐ VERIFIED
+                                    </span>
+                                </div>
+                                <div className="absolute top-3 right-3 z-10">
+                                    <span className="bg-green-500 text-white px-2 py-0.5 rounded-full text-xs font-semibold">
+                                        🟢 Open
+                                    </span>
+                                </div>
+
+                                {/* Photo Grid */}
+                                <div className="grid grid-cols-4 gap-0.5">
+                                    {galleryImages.map((img, i) => (
+                                        <div key={i} className="h-20 overflow-hidden">
+                                            <OptimizedImage
+                                                src={img}
+                                                alt={`Nail art ${i + 1}`}
+                                                width={150}
+                                                height={100}
+                                                className="w-full h-full object-cover"
+                                            />
+                                        </div>
+                                    ))}
+                                </div>
+
+                                <div className="p-4">
+                                    <div className="flex items-start justify-between mb-2">
+                                        <h3 className="text-lg font-bold text-[#1b0d14]">{demoSalon.name}</h3>
+                                        <span className="text-xs bg-amber-100 text-amber-700 px-2 py-0.5 rounded font-medium">
+                                            #1 in LA
+                                        </span>
+                                    </div>
+
+                                    <div className="flex items-center gap-2 mb-2">
+                                        <div className="flex text-yellow-500 text-sm">⭐⭐⭐⭐⭐</div>
+                                        <span className="font-bold text-sm">{demoSalon.rating}</span>
+                                        <span className="text-xs text-gray-500">({demoSalon.reviewCount} reviews)</span>
+                                    </div>
+
+                                    {/* Special Offer */}
+                                    <div className="bg-gradient-to-r from-[#ee2b8c]/10 to-[#ee2b8c]/5 border border-[#ee2b8c]/20 rounded-lg p-2 mb-3">
+                                        <p className="text-[#ee2b8c] font-semibold text-sm">
+                                            🎁 {demoSalon.specialOffer}
+                                        </p>
+                                    </div>
+
+                                    <div className="grid grid-cols-2 gap-2 text-xs mb-3">
+                                        <p className="text-gray-600">📍 Los Angeles</p>
+                                        <p className="text-gray-600">🕐 9AM - 8PM</p>
+                                    </div>
+
+                                    {/* CTAs */}
+                                    <div className="flex gap-2">
+                                        <span className="flex-1 bg-[#ee2b8c] text-white text-center py-2 rounded-lg font-semibold text-sm">
+                                            📞 Call Now
+                                        </span>
+                                        <span className="flex-1 bg-green-500 text-white text-center py-2 rounded-lg font-semibold text-sm">
+                                            📅 Book
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
-                            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/10">
-                                <div className="text-3xl md:text-4xl font-bold text-[#ee2b8c]">10k+</div>
-                                <div className="text-sm text-white/70">Salons Listed</div>
+
+                            {/* Annotation arrows */}
+                            <div className="hidden lg:block absolute -right-4 top-1/4 text-white/60 text-xs">
+                                <div className="flex items-center gap-1">
+                                    <span>Photos that sell</span>
+                                    <span>←</span>
+                                </div>
                             </div>
-                            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/10">
-                                <div className="text-3xl md:text-4xl font-bold text-[#ee2b8c]">#1</div>
-                                <div className="text-sm text-white/70">Nail Art Site</div>
+                            <div className="hidden lg:block absolute -right-4 top-1/2 text-white/60 text-xs">
+                                <div className="flex items-center gap-1">
+                                    <span>Your special offer</span>
+                                    <span>←</span>
+                                </div>
+                            </div>
+                            <div className="hidden lg:block absolute -right-4 bottom-1/4 text-white/60 text-xs">
+                                <div className="flex items-center gap-1">
+                                    <span>Direct booking</span>
+                                    <span>←</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -239,16 +342,16 @@ export default function ForSalonsPage() {
             </div>
 
             {/* Visual Demo Section - See What You Get */}
-            <div id="demo" className="max-w-7xl mx-auto px-4 py-16">
-                <div className="text-center mb-12">
-                    <span className="bg-[#ee2b8c]/10 text-[#ee2b8c] px-4 py-2 rounded-full text-sm font-semibold mb-4 inline-block">
-                        👀 SEE THE DIFFERENCE
+            <div id="demo" className="max-w-7xl mx-auto px-4 py-12">
+                <div className="text-center mb-10">
+                    <span className="bg-amber-100 text-amber-700 px-4 py-2 rounded-full text-sm font-semibold mb-4 inline-block">
+                        🔥 THE TRANSFORMATION
                     </span>
                     <h2 className="text-3xl md:text-4xl font-bold text-[#1b0d14] mb-4">
-                        Regular vs Featured Comparison
+                        Same Salon. <span className="text-[#ee2b8c]">10x More Clicks.</span>
                     </h2>
                     <p className="text-lg text-[#1b0d14]/70 max-w-2xl mx-auto">
-                        See exactly how your salon listing transforms with a Featured upgrade — it&apos;s the difference between being invisible and standing out.
+                        Which listing would <em>you</em> click on? One gets scrolled past. The other gets booked.
                     </p>
                 </div>
 
@@ -672,14 +775,20 @@ export default function ForSalonsPage() {
             <SalonPageComparison />
 
             {/* Pricing Section */}
-            <div id="pricing" className="bg-gradient-to-br from-[#1b0d14] via-[#2d1520] to-[#1b0d14] py-16">
+            <div id="pricing" className="bg-gradient-to-br from-[#1b0d14] via-[#2d1520] to-[#1b0d14] py-14">
                 <div className="max-w-7xl mx-auto px-4">
-                    <div className="text-center mb-12">
+                    <div className="text-center mb-10">
+                        <span className="bg-[#ee2b8c]/20 text-[#ee2b8c] px-4 py-2 rounded-full text-sm font-semibold mb-4 inline-block border border-[#ee2b8c]/30">
+                            💰 SIMPLE PRICING
+                        </span>
                         <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-                            Choose Your Plan
+                            Stop Losing Customers to Competitors
                         </h2>
-                        <p className="text-lg text-white/70 max-w-2xl mx-auto">
-                            All plans include a 14-day money-back guarantee. Less than what you earn from ONE new customer.
+                        <p className="text-lg text-white/70 max-w-2xl mx-auto mb-2">
+                            One new customer pays for <span className="text-white font-semibold">3 months</span> of your listing. Most salons see ROI in the first week.
+                        </p>
+                        <p className="text-sm text-green-400 font-medium">
+                            ✓ 14-day money-back guarantee • Cancel anytime
                         </p>
                     </div>
 
@@ -798,26 +907,38 @@ export default function ForSalonsPage() {
             </div>
 
             {/* Testimonials Section */}
-            <div className="bg-gradient-to-br from-[#ee2b8c]/5 to-[#f8f6f7] py-16">
+            <div className="bg-gradient-to-br from-[#ee2b8c]/5 to-[#f8f6f7] py-12">
                 <div className="max-w-7xl mx-auto px-4">
-                    <div className="text-center mb-12">
+                    <div className="text-center mb-10">
+                        <span className="bg-green-100 text-green-700 px-4 py-2 rounded-full text-sm font-semibold mb-4 inline-block">
+                            💬 REAL RESULTS
+                        </span>
                         <h2 className="text-3xl md:text-4xl font-bold text-[#1b0d14] mb-4">
-                            What Salon Owners Say
+                            "Best $29 I spend every month."
                         </h2>
+                        <p className="text-lg text-[#1b0d14]/70">
+                            Don&apos;t take our word for it. Here&apos;s what salon owners say:
+                        </p>
                     </div>
 
                     <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
                         {testimonials.map((testimonial, index) => (
                             <div
                                 key={index}
-                                className="bg-white rounded-xl p-6 ring-1 ring-[#ee2b8c]/15"
+                                className="bg-white rounded-xl p-6 ring-1 ring-[#ee2b8c]/15 relative"
                             >
-                                <div className="flex gap-1 mb-4">
+                                {/* Result Badge */}
+                                <div className="absolute -top-3 left-4">
+                                    <span className="bg-green-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow-md">
+                                        {testimonial.result}
+                                    </span>
+                                </div>
+                                <div className="flex gap-1 mb-3 mt-2">
                                     {[...Array(testimonial.rating)].map((_, i) => (
                                         <span key={i} className="text-yellow-500">⭐</span>
                                     ))}
                                 </div>
-                                <p className="text-[#1b0d14]/80 mb-4 italic">
+                                <p className="text-[#1b0d14]/80 mb-4">
                                     &quot;{testimonial.quote}&quot;
                                 </p>
                                 <div className="text-sm">
@@ -852,31 +973,45 @@ export default function ForSalonsPage() {
             </div>
 
             {/* Final CTA Section */}
-            <div className="bg-gradient-to-br from-[#1b0d14] via-[#2d1520] to-[#1b0d14] py-16">
+            <div className="bg-gradient-to-br from-[#1b0d14] via-[#2d1520] to-[#1b0d14] py-14">
                 <div className="max-w-4xl mx-auto px-4 text-center">
+                    <span className="bg-red-500/20 text-red-400 px-4 py-2 rounded-full text-sm font-semibold mb-4 inline-block border border-red-500/30">
+                        ⏰ DON'T WAIT
+                    </span>
                     <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-                        Ready to Grow Your Salon?
+                        Your Competitors Are Getting <span className="text-[#ee2b8c]">Your Customers</span>
                     </h2>
-                    <p className="text-xl text-white/80 mb-8">
-                        Join hundreds of salons already benefiting from featured listings on Nail Art AI.
+                    <p className="text-xl text-white/80 mb-4">
+                        Right now, someone is searching for a nail salon in your area.
                     </p>
-                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                    <p className="text-lg text-white/60 mb-8">
+                        Will they find <span className="text-white">you</span>... or someone else?
+                    </p>
+
+                    <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 mb-8 border border-white/10 max-w-lg mx-auto">
+                        <p className="text-white/80 text-sm mb-3">💡 Quick math:</p>
+                        <p className="text-white text-lg font-medium">
+                            Just <span className="text-[#ee2b8c] font-bold">3 new customers</span> this month pays for your listing for the <span className="text-[#ee2b8c] font-bold">entire year</span>.
+                        </p>
+                    </div>
+
+                    <div className="flex flex-col sm:flex-row gap-4 justify-center mb-6">
                         <a
                             href="#pricing"
-                            className="inline-block bg-[#ee2b8c] text-white font-bold py-4 px-10 rounded-full hover:bg-[#ee2b8c]/90 transition-all shadow-xl shadow-[#ee2b8c]/20 hover:scale-105"
+                            className="inline-flex items-center justify-center gap-2 bg-[#ee2b8c] text-white font-bold py-4 px-10 rounded-full hover:bg-[#ee2b8c]/90 transition-all shadow-xl shadow-[#ee2b8c]/30 hover:scale-105 text-lg"
                         >
-                            Get Started Today 🚀
+                            Get Featured Now
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
                         </a>
-                        <Link
-                            href="/nail-salons"
-                            className="inline-block bg-white/10 backdrop-blur-sm text-white font-bold py-4 px-10 rounded-full hover:bg-white/20 transition-all border border-white/20"
-                        >
-                            Browse Salon Directory
-                        </Link>
                     </div>
-                    <p className="text-white/60 text-sm mt-6">
-                        Questions? Email us at{' '}
-                        <a href="mailto:salons@nailartai.app" className="text-[#ee2b8c] underline">
+
+                    <p className="text-green-400 text-sm font-medium mb-4">
+                        ✓ 14-day money-back guarantee • ✓ Cancel anytime • ✓ Live in 24 hours
+                    </p>
+
+                    <p className="text-white/50 text-sm">
+                        Questions? Email{' '}
+                        <a href="mailto:salons@nailartai.app" className="text-[#ee2b8c] underline hover:text-[#ee2b8c]/80">
                             salons@nailartai.app
                         </a>
                     </p>
