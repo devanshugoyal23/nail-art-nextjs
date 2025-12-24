@@ -10,10 +10,9 @@ const Header: React.FC = () => {
   const pathname = usePathname();
 
   const linkClass = (path: string) =>
-    `px-3 py-2 rounded-md text-sm font-medium transition-colors duration-300 ${
-      pathname === path
-        ? 'text-[#ee2b8c]'
-        : 'text-[#1b0d14] hover:text-[#ee2b8c]'
+    `px-3 py-2 rounded-md text-sm font-medium transition-colors duration-300 ${pathname === path
+      ? 'text-[#ee2b8c]'
+      : 'text-[#1b0d14] hover:text-[#ee2b8c]'
     }`;
 
   return (
@@ -21,7 +20,7 @@ const Header: React.FC = () => {
       <div className="container mx-auto px-2 sm:px-4 lg:px-8">
         <div className="flex items-center justify-between h-14 sm:h-16">
           <div className="flex-shrink-0">
-             <Link href="/" className="text-[#1b0d14] text-lg sm:text-xl font-bold tracking-wider">
+            <Link href="/" className="text-[#1b0d14] text-lg sm:text-xl font-bold tracking-wider">
               Nail Art AI
             </Link>
           </div>
@@ -32,6 +31,12 @@ const Header: React.FC = () => {
               <Link href="/try-on" className={linkClass('/try-on')}>Virtual Try-On</Link>
               <Link href="/nail-art-gallery" className={linkClass('/nail-art-gallery')}>Gallery</Link>
               <Link href="/nail-salons" className={linkClass('/nail-salons')}>Find Salons</Link>
+              <Link
+                href="/for-salons"
+                className="px-3 py-1.5 rounded-full text-sm font-semibold bg-[#ee2b8c]/10 text-[#ee2b8c] hover:bg-[#ee2b8c] hover:text-white transition-all duration-300 border border-[#ee2b8c]/30"
+              >
+                🏪 For Salon Owners
+              </Link>
             </div>
           </div>
           <div className="-mr-2 flex md:hidden">
@@ -60,40 +65,47 @@ const Header: React.FC = () => {
       {isOpen && (
         <div className="md:hidden" id="mobile-menu">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white/95 backdrop-blur-sm shadow">
-            <Link 
-              href="/" 
-              className="block px-3 py-2 rounded-md text-base font-medium text-[#1b0d14] hover:text-[#ee2b8c] transition-colors duration-200 touch-manipulation" 
+            <Link
+              href="/"
+              className="block px-3 py-2 rounded-md text-base font-medium text-[#1b0d14] hover:text-[#ee2b8c] transition-colors duration-200 touch-manipulation"
               onClick={() => setIsOpen(false)}
             >
               Home
             </Link>
-            <Link 
-              href="/categories" 
-              className="block px-3 py-2 rounded-md text-base font-medium text-[#1b0d14] hover:text-[#ee2b8c] transition-colors duration-200 touch-manipulation" 
+            <Link
+              href="/categories"
+              className="block px-3 py-2 rounded-md text-base font-medium text-[#1b0d14] hover:text-[#ee2b8c] transition-colors duration-200 touch-manipulation"
               onClick={() => setIsOpen(false)}
             >
               Categories
             </Link>
-            <Link 
-              href="/try-on" 
-              className="block px-3 py-2 rounded-md text-base font-medium text-[#1b0d14] hover:text-[#ee2b8c] transition-colors duration-200 touch-manipulation" 
+            <Link
+              href="/try-on"
+              className="block px-3 py-2 rounded-md text-base font-medium text-[#1b0d14] hover:text-[#ee2b8c] transition-colors duration-200 touch-manipulation"
               onClick={() => setIsOpen(false)}
             >
               Virtual Try-On
             </Link>
-            <Link 
-              href="/nail-art-gallery" 
-              className="block px-3 py-2 rounded-md text-base font-medium text-[#1b0d14] hover:text-[#ee2b8c] transition-colors duration-200 touch-manipulation" 
+            <Link
+              href="/nail-art-gallery"
+              className="block px-3 py-2 rounded-md text-base font-medium text-[#1b0d14] hover:text-[#ee2b8c] transition-colors duration-200 touch-manipulation"
               onClick={() => setIsOpen(false)}
             >
               Gallery
             </Link>
-            <Link 
-              href="/nail-salons" 
-              className="block px-3 py-2 rounded-md text-base font-medium text-[#1b0d14] hover:text-[#ee2b8c] transition-colors duration-200 touch-manipulation" 
+            <Link
+              href="/nail-salons"
+              className="block px-3 py-2 rounded-md text-base font-medium text-[#1b0d14] hover:text-[#ee2b8c] transition-colors duration-200 touch-manipulation"
               onClick={() => setIsOpen(false)}
             >
               Find Salons
+            </Link>
+            <Link
+              href="/for-salons"
+              className="block mx-2 mt-3 px-3 py-2.5 rounded-lg text-base font-semibold bg-[#ee2b8c]/10 text-[#ee2b8c] border border-[#ee2b8c]/30 text-center"
+              onClick={() => setIsOpen(false)}
+            >
+              🏪 For Salon Owners
             </Link>
           </div>
         </div>

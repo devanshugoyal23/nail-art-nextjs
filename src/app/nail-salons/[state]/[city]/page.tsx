@@ -6,6 +6,7 @@ import OptimizedImage from '@/components/OptimizedImage';
 import { DirectoryStructuredData } from '@/components/DirectoryStructuredData';
 import { FAQStructuredData } from '@/components/FAQStructuredData';
 import StickySalonCTA from '@/components/StickySalonCTA';
+import ClaimListingCTA from '@/components/ClaimListingCTA';
 import { getCachedGalleryData } from '@/lib/salonPageCache';
 import { deterministicSelect } from '@/lib/deterministicSelection';
 
@@ -727,6 +728,10 @@ export default async function CityPage({ params }: CityPageProps) {
           </div>
         </div>
       </div>
+
+      {/* Claim Listing Banner for Salon Owners */}
+      <ClaimListingCTA salonName="this business" variant="banner" />
+
       <StickySalonCTA />
     </div>
   );

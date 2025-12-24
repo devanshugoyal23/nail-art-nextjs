@@ -26,6 +26,7 @@ import {
   TopRatedSalonsSection,
   ExploreMoreLinksSection,
 } from '@/components/SalonInternalLinks';
+import ClaimListingCTA from '@/components/ClaimListingCTA';
 import {
   getSimilarQualitySalons,
   getSimilarPriceLevelSalons,
@@ -1222,6 +1223,11 @@ export default async function SalonDetailPage({ params }: SalonDetailPageProps) 
             currentCitySlug={citySlug}
           />
         </div>
+      </div>
+
+      {/* Claim Listing CTA for Salon Owners */}
+      <div className="max-w-7xl mx-auto px-4 py-8">
+        <ClaimListingCTA salonName={salon.name} />
       </div>
 
       {/* Navigation */}
