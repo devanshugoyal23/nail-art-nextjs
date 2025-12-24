@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { SUBSCRIPTION_PLANS } from "@/config/subscriptions";
 
 export const metadata: Metadata = {
     title: "For Salon Owners - Get Featured on Nail Art AI | Grow Your Business",
@@ -29,8 +30,9 @@ export const revalidate = 86400;
 
 const pricingTiers = [
     {
-        name: "Basic Boost",
-        price: 29,
+        name: SUBSCRIPTION_PLANS.BASIC_BOOST.name,
+        price: SUBSCRIPTION_PLANS.BASIC_BOOST.price,
+        checkoutUrl: SUBSCRIPTION_PLANS.BASIC_BOOST.checkout_url,
         icon: "🥉",
         popular: false,
         features: [
@@ -49,8 +51,9 @@ const pricingTiers = [
         ]
     },
     {
-        name: "Premium",
-        price: 79,
+        name: SUBSCRIPTION_PLANS.PREMIUM_BOOST.name,
+        price: SUBSCRIPTION_PLANS.PREMIUM_BOOST.price,
+        checkoutUrl: SUBSCRIPTION_PLANS.PREMIUM_BOOST.checkout_url,
         icon: "🥈",
         popular: true,
         features: [
@@ -71,8 +74,9 @@ const pricingTiers = [
         ]
     },
     {
-        name: "Spotlight",
-        price: 149,
+        name: SUBSCRIPTION_PLANS.SPOTLIGHT_BOOST.name,
+        price: SUBSCRIPTION_PLANS.SPOTLIGHT_BOOST.price,
+        checkoutUrl: SUBSCRIPTION_PLANS.SPOTLIGHT_BOOST.checkout_url,
         icon: "🥇",
         popular: false,
         features: [
@@ -295,8 +299,8 @@ export default function ForSalonsPage() {
                             <div
                                 key={index}
                                 className={`relative rounded-2xl p-6 ${tier.popular
-                                        ? 'bg-gradient-to-br from-[#ee2b8c] to-[#c91f6f] text-white ring-4 ring-[#ee2b8c]/30 scale-105'
-                                        : 'bg-[#f8f6f7] ring-1 ring-[#ee2b8c]/15'
+                                    ? 'bg-gradient-to-br from-[#ee2b8c] to-[#c91f6f] text-white ring-4 ring-[#ee2b8c]/30 scale-105'
+                                    : 'bg-[#f8f6f7] ring-1 ring-[#ee2b8c]/15'
                                     }`}
                             >
                                 {tier.popular && (
@@ -332,10 +336,10 @@ export default function ForSalonsPage() {
                                 </ul>
 
                                 <a
-                                    href={`mailto:salons@nailartai.app?subject=Sign up for ${tier.name} Plan ($${tier.price}/mo)`}
+                                    href={tier.checkoutUrl}
                                     className={`block w-full text-center font-bold py-3 px-6 rounded-full transition-all ${tier.popular
-                                            ? 'bg-white text-[#ee2b8c] hover:bg-white/90'
-                                            : 'bg-[#ee2b8c] text-white hover:bg-[#ee2b8c]/90'
+                                        ? 'bg-white text-[#ee2b8c] hover:bg-white/90'
+                                        : 'bg-[#ee2b8c] text-white hover:bg-[#ee2b8c]/90'
                                         }`}
                                 >
                                     Get Started

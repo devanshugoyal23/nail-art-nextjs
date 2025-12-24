@@ -122,25 +122,25 @@ export async function getNailSalonsForLocation(
     if (!GOOGLE_MAPS_API_KEY) {
       throw new Error('NEXT_PUBLIC_GOOGLE_MAPS_API_KEY is not configured');
     }
-    
+
     // Get location coordinates for bias
     const locationCoords = await getLocationCoordinates(state);
 
     // Use multiple search queries to get more results
     // Places API Text Search has a max of 20 per request, so we'll make multiple requests
-    const searchQueries = city 
+    const searchQueries = city
       ? [
-          `nail salons in ${city}, ${state}`,
-          `nail spa in ${city}, ${state}`,
-          `nail art studio in ${city}, ${state}`,
-          `manicure pedicure in ${city}, ${state}`,
-          `beauty salon in ${city}, ${state}`
-        ]
+        `nail salons in ${city}, ${state}`,
+        `nail spa in ${city}, ${state}`,
+        `nail art studio in ${city}, ${state}`,
+        `manicure pedicure in ${city}, ${state}`,
+        `beauty salon in ${city}, ${state}`
+      ]
       : [
-          `nail salons in ${state}`,
-          `nail spa in ${state}`,
-          `nail art studio in ${state}`
-        ];
+        `nail salons in ${state}`,
+        `nail spa in ${state}`,
+        `nail art studio in ${state}`
+      ];
 
     const allPlaces: Array<{ id: string; displayName?: string | { text: string }; formattedAddress?: string; nationalPhoneNumber?: string; rating?: number; userRatingCount?: number; websiteUri?: string; location?: { latitude: number; longitude: number }; businessStatus?: string; regularOpeningHours?: { weekdayDescriptions: string[] }; types?: string[]; priceLevel?: string; currentOpeningHours?: { openNow?: boolean; weekdayDescriptions?: string[] }; photos?: Array<{ name?: string; widthPx?: number; heightPx?: number; authorAttributions?: Array<{ displayName?: string; uri?: string }> }> }> = [];
     const seenPlaceIds = new Set<string>();
@@ -195,7 +195,7 @@ export async function getNailSalonsForLocation(
         } else {
           // Log non-OK responses for debugging
           const errorText = await placesResponse.text();
-          
+
           // Check for rate limit (429) or quota exceeded
           if (placesResponse.status === 429 || placesResponse.status === 403) {
             try {
@@ -211,7 +211,7 @@ export async function getNailSalonsForLocation(
               }
             }
           }
-          
+
           console.error(`Places API error for "${searchQuery}": ${placesResponse.status} ${placesResponse.statusText} - ${errorText.substring(0, 200)}`);
         }
       } catch (error) {
@@ -223,7 +223,7 @@ export async function getNailSalonsForLocation(
     // Wait for all requests and combine results
     const results = await Promise.all(requestPromises);
     results.forEach(places => {
-      places.forEach((place: { id?: string; placeId?: string; [key: string]: unknown }) => {
+      places.forEach((place: { id?: string; placeId?: string;[key: string]: unknown }) => {
         const placeId = place.id || place.placeId;
         if (placeId && !seenPlaceIds.has(placeId)) {
           seenPlaceIds.add(placeId);
@@ -236,12 +236,12 @@ export async function getNailSalonsForLocation(
     const beautyTypes = ['beauty_salon', 'hair_salon', 'spa', 'nail_salon'];
     const filteredPlaces = allPlaces.filter(place => {
       const placeTypes = place.types || [];
-      const displayName = (typeof place.displayName === 'string' 
-        ? place.displayName 
+      const displayName = (typeof place.displayName === 'string'
+        ? place.displayName
         : place.displayName?.text || '').toLowerCase();
-      
+
       // Include if it's a beauty salon type OR if the name suggests nail salon
-      return placeTypes.some((type: string) => 
+      return placeTypes.some((type: string) =>
         beautyTypes.some(bt => type.toLowerCase().includes(bt))
       ) || displayName.includes('nail') || displayName.includes('manicure') || displayName.includes('pedicure');
     });
@@ -254,11 +254,11 @@ export async function getNailSalonsForLocation(
       const address = place.formattedAddress || '';
       const addressParts = address.split(',');
       const salonCity = city || (addressParts.length > 1 ? addressParts[addressParts.length - 2].trim() : '');
-      
-      const displayName = typeof place.displayName === 'string' 
-        ? place.displayName 
+
+      const displayName = typeof place.displayName === 'string'
+        ? place.displayName
         : place.displayName?.text || 'Nail Salon';
-      
+
       // Process photos if available
       const photos = place.photos ? place.photos.slice(0, 5).map((photo: { name?: string; widthPx?: number; heightPx?: number; authorAttributions?: Array<{ displayName?: string; uri?: string }> }) => ({
         name: photo.name || '',
@@ -398,25 +398,25 @@ export async function getCitiesInState(state: string): Promise<City[]> {
   try {
     // Generate slug for the state (e.g., "California" -> "california", "New York" -> "new-york")
     const stateSlug = state.toLowerCase().replace(/\s+/g, '-');
-    
+
     // Try to read from JSON file
     const fs = await import('fs/promises');
     const path = await import('path');
-    
+
     // Construct path to JSON file
     const jsonPath = path.join(process.cwd(), 'src', 'data', 'cities', `${stateSlug}.json`);
-    
+
     try {
       const fileContent = await fs.readFile(jsonPath, 'utf-8');
       const data = JSON.parse(fileContent);
-      
+
       // Convert JSON data to City[] format
       const cities: City[] = data.cities.map((city: { name: string; state: string; salonCount: number }) => ({
         name: city.name,
         state: state,
         salonCount: city.salonCount || 0,
       }));
-      
+
       console.log(`✅ Loaded ${cities.length} cities for ${state} from JSON (instant!)`);
       return cities;
     } catch {
@@ -457,11 +457,11 @@ export async function getNailSalonBySlug(
     if (!GOOGLE_MAPS_API_KEY) {
       throw new Error('NEXT_PUBLIC_GOOGLE_MAPS_API_KEY is not configured');
     }
-    
+
     // ✅ OPTIMIZATION: Direct salon lookup instead of fetching 100 salons
     // Convert slug back to approximate name for search
     const approximateName = slug.replace(/-/g, ' ');
-    
+
     // Direct search for the specific salon using Places API
     const response = await fetch(PLACES_API_URL, {
       method: 'POST',
@@ -487,19 +487,19 @@ export async function getNailSalonBySlug(
 
     const data = await response.json();
     const places = data.places || [];
-    
+
     // Find best match by slug
     for (const place of places) {
-      const displayName = typeof place.displayName === 'string' 
-        ? place.displayName 
+      const displayName = typeof place.displayName === 'string'
+        ? place.displayName
         : place.displayName?.text || '';
-      
+
       if (generateSlug(displayName) === slug) {
         // Convert to NailSalon format
         const address = place.formattedAddress || '';
         const addressParts = address.split(',');
         const salonCity = city || (addressParts.length > 1 ? addressParts[addressParts.length - 2].trim() : '');
-        
+
         // Process photos if available
         const photos = place.photos ? place.photos.slice(0, 5).map((photo: { name?: string; widthPx?: number; heightPx?: number; authorAttributions?: Array<{ displayName?: string; uri?: string }> }) => ({
           name: photo.name || '',
@@ -532,25 +532,25 @@ export async function getNailSalonBySlug(
             weekdayDescriptions: place.currentOpeningHours.weekdayDescriptions,
           } : undefined,
         };
-        
+
         console.log(`✅ Found salon directly: ${displayName} (fast lookup!)`);
         return salon;
       }
     }
-    
+
     // If no exact slug match, return first result if it's close
     if (places.length > 0) {
       const firstPlace = places[0];
-      const displayName = typeof firstPlace.displayName === 'string' 
-        ? firstPlace.displayName 
+      const displayName = typeof firstPlace.displayName === 'string'
+        ? firstPlace.displayName
         : firstPlace.displayName?.text || '';
-      
+
       console.log(`⚠️  No exact slug match, returning closest match: ${displayName}`);
-      
+
       const address = firstPlace.formattedAddress || '';
       const addressParts = address.split(',');
       const salonCity = city || (addressParts.length > 1 ? addressParts[addressParts.length - 2].trim() : '');
-      
+
       const photos = firstPlace.photos ? firstPlace.photos.slice(0, 5).map((photo: { name?: string; widthPx?: number; heightPx?: number; authorAttributions?: Array<{ displayName?: string; uri?: string }> }) => ({
         name: photo.name || '',
         url: getPhotoUrl(photo.name || ''),
@@ -583,12 +583,12 @@ export async function getNailSalonBySlug(
         } : undefined,
       };
     }
-    
+
     console.warn(`❌ No salon found for slug: ${slug}, falling back to list search`);
     // Final fallback: search in list
     const salons = await getNailSalonsForLocation(state, city, 20);
     return salons.find(s => generateSlug(s.name) === slug) || null;
-    
+
   } catch (error) {
     console.error('Error in direct salon lookup:', error);
     // Fallback to old method if direct search fails
@@ -613,10 +613,10 @@ function parseSalonDataFromResponse(
   city?: string
 ): NailSalon[] {
   const salons: NailSalon[] = [];
-  
+
   // First, try to use grounding chunks from Google Maps if available
   const groundingChunks = (groundingMetadata as { groundingChunks?: unknown[] })?.groundingChunks || [];
-  
+
   if (groundingChunks.length > 0) {
     // We have real Google Maps data!
     for (const chunk of groundingChunks) {
@@ -633,7 +633,7 @@ function parseSalonDataFromResponse(
       }
     }
   }
-  
+
   // Parse the text response to extract additional details
   const lines = text.split('\n').filter(line => line.trim());
   let currentSalon: Partial<NailSalon> | null = null;
@@ -641,23 +641,23 @@ function parseSalonDataFromResponse(
 
   for (const line of lines) {
     const trimmedLine = line.trim();
-    
+
     // Check if this is a salon name
-    if (trimmedLine.startsWith('**') || 
-        /^(\d+\.|[-*•])\s+[A-Z]/.test(trimmedLine)) {
-      
+    if (trimmedLine.startsWith('**') ||
+      /^(\d+\.|[-*•])\s+[A-Z]/.test(trimmedLine)) {
+
       // Save previous salon if exists
       if (currentSalon && currentSalon.name) {
         textSalons.push(currentSalon);
       }
-      
+
       // Extract salon name
       const salonName = trimmedLine
         .replace(/^\*\*/, '')
         .replace(/\*\*$/, '')
         .replace(/^(\d+\.|[-*•])\s+/, '')
         .trim();
-      
+
       currentSalon = {
         name: salonName,
         state,
@@ -705,7 +705,7 @@ function parseSalonDataFromResponse(
     for (let i = 0; i < Math.min(salons.length, textSalons.length); i++) {
       const groundedSalon = salons[i];
       const textSalon = textSalons[i];
-      
+
       // Merge data
       salons[i] = {
         ...groundedSalon,
@@ -747,26 +747,26 @@ function parseCitiesFromResponse(text: string, state: string): City[] {
 
   for (const line of lines) {
     const trimmedLine = line.trim();
-    
+
     // Skip empty lines, headers, or lines that are too short
     if (!trimmedLine || trimmedLine.length < 3) continue;
-    
+
     // Skip lines that look like headers or instructions
     if (trimmedLine.match(/^(here|list|cities|towns|major|example)/i)) continue;
-    
+
     // Remove numbering, bullets, and markdown
     const cityName = trimmedLine
       .replace(/^(\d+\.|[-*•])\s+/, '')
       .replace(/^\*\*/, '')
       .replace(/\*\*$/, '')
       .trim();
-    
+
     // Validate city name
-    if (cityName && 
-        cityName.length >= 3 && 
-        cityName.length < 50 &&
-        !cityName.match(/^\d+$/) &&
-        !cityName.match(/^(and|or|the|with|for|from)$/i)) {
+    if (cityName &&
+      cityName.length >= 3 &&
+      cityName.length < 50 &&
+      !cityName.match(/^\d+$/) &&
+      !cityName.match(/^(and|or|the|with|for|from)$/i)) {
       cities.push({
         name: cityName,
         state,
@@ -861,7 +861,7 @@ export async function getSalonDetails(
 function parseServices(text: string): Array<{ name: string; description?: string; price?: string }> {
   const services: Array<{ name: string; description?: string; price?: string }> = [];
   const lines = text.split('\n').filter(line => line.trim());
-  
+
   for (const line of lines) {
     // Match patterns like "Service Name - Description - $Price"
     const match = line.match(/^[-\d.]+(.+?)(?:[-–—](.+?))?(?:[-–—](\$?\d+))?$/i);
@@ -876,7 +876,7 @@ function parseServices(text: string): Array<{ name: string; description?: string
       services.push({ name: line.replace(/^[-•\d.]+/, '').trim() });
     }
   }
-  
+
   return services.slice(0, 15);
 }
 
@@ -896,7 +896,7 @@ function parsePopularServices(text: string): string[] {
 function parseAttractions(text: string): Array<{ name: string; distance?: string }> {
   const attractions: Array<{ name: string; distance?: string }> = [];
   const lines = text.split('\n').filter(line => line.trim());
-  
+
   for (const line of lines) {
     const match = line.match(/^[-\d.]+(.+?)(?:[-–—](.+?))?$/i);
     if (match) {
@@ -906,7 +906,7 @@ function parseAttractions(text: string): Array<{ name: string; distance?: string
       });
     }
   }
-  
+
   return attractions.slice(0, 5);
 }
 
@@ -918,7 +918,7 @@ function parseParkingInfo(text: string): { parking?: string; transportation?: st
   const transportation: string[] = [];
   const lines = text.split('\n').filter(line => line.trim());
   let parking = '';
-  
+
   for (const line of lines) {
     if (line.match(/parking/i)) {
       parking = line.replace(/^[-•\d.]+/, '').trim();
@@ -926,7 +926,7 @@ function parseParkingInfo(text: string): { parking?: string; transportation?: st
       transportation.push(line.replace(/^[-•\d.]+/, '').trim());
     }
   }
-  
+
   return { parking, transportation: transportation.length > 0 ? transportation : undefined };
 }
 
@@ -937,10 +937,10 @@ function parseParkingInfo(text: string): { parking?: string; transportation?: st
 function parseFAQ(text: string): Array<{ question: string; answer: string }> {
   const faq: Array<{ question: string; answer: string }> = [];
   const lines = text.split('\n').filter(line => line.trim());
-  
+
   let currentQ = '';
   let currentA = '';
-  
+
   for (const line of lines) {
     if (line.match(/^[Qq](\d+[.:])?\s*[?:]/)) {
       if (currentQ && currentA) {
@@ -956,11 +956,11 @@ function parseFAQ(text: string): Array<{ question: string; answer: string }> {
       currentA += ' ' + line.trim();
     }
   }
-  
+
   if (currentQ && currentA) {
     faq.push({ question: currentQ, answer: currentA });
   }
-  
+
   return faq.slice(0, 5);
 }
 
@@ -972,7 +972,7 @@ export async function getPlaceDetails(placeId: string): Promise<{ reviews?: Arra
     if (!GOOGLE_MAPS_API_KEY) {
       throw new Error('NEXT_PUBLIC_GOOGLE_MAPS_API_KEY is not configured');
     }
-    
+
     const response = await fetch(`https://places.googleapis.com/v1/places/${placeId}`, {
       method: 'GET',
       headers: {
@@ -1020,7 +1020,7 @@ export async function getSalonAdditionalData(
 ): Promise<Partial<NailSalon>> {
   // Note: This function now only processes provided placeDetails.
   // To fetch fresh data from API, use googleMapsApiService.ts
-  
+
   if (!salon.placeId) {
     return {};
   }
@@ -1033,7 +1033,7 @@ export async function getSalonAdditionalData(
       // Photos and other data should already be in salon object from R2
       return {};
     }
-    
+
     const details = placeDetails;
 
     const additionalData: Partial<NailSalon> = {};

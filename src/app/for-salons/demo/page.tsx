@@ -105,7 +105,7 @@ export default function FeaturedDemoPage() {
                         <div>
                             <div className="text-center mb-4">
                                 <span className="bg-gradient-to-r from-yellow-400 via-amber-500 to-orange-500 text-white px-4 py-1 rounded-full text-sm font-bold">
-                                    ⭐ SPOTLIGHT LISTING ($149/mo)
+                                    ⭐ SPOTLIGHT LISTING ($99/mo)
                                 </span>
                             </div>
                             <div className="relative">
@@ -259,7 +259,7 @@ export default function FeaturedDemoPage() {
                         <div>
                             <div className="text-center mb-3">
                                 <span className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-4 py-1 rounded-full text-sm font-bold">
-                                    💎 PREMIUM - $79/mo
+                                    💎 PREMIUM - $49/mo
                                 </span>
                             </div>
                             <div className="bg-white rounded-xl overflow-hidden ring-2 ring-purple-400 shadow-lg shadow-purple-500/10">
@@ -319,7 +319,7 @@ export default function FeaturedDemoPage() {
                         <div>
                             <div className="text-center mb-3">
                                 <span className="bg-gradient-to-r from-yellow-400 via-amber-500 to-orange-500 text-white px-4 py-1 rounded-full text-sm font-bold">
-                                    ⭐ SPOTLIGHT - $149/mo
+                                    ⭐ SPOTLIGHT - $99/mo
                                 </span>
                             </div>
                             <div className="relative">
@@ -562,7 +562,7 @@ export default function FeaturedDemoPage() {
                         <div>
                             <div className="text-center mb-4">
                                 <span className="bg-gradient-to-r from-yellow-400 via-amber-500 to-orange-500 text-white px-4 py-2 rounded-full text-sm font-bold">
-                                    ✅ AFTER: Spotlight Listing ($149/mo)
+                                    ✅ AFTER: Spotlight Listing ($99/mo)
                                 </span>
                             </div>
                             <div className="relative">
@@ -729,10 +729,10 @@ export default function FeaturedDemoPage() {
                     </div>
                 </div>
 
-                {/* Section 5: Premium ($79) Individual Page Comparison */}
+                {/* Section 5: Premium ($49/mo) Individual Page Comparison */}
                 <div className="mb-16">
                     <h2 className="text-3xl font-bold text-[#1b0d14] mb-2 text-center">
-                        Premium Tier ($79/mo): Individual Page
+                        Premium Tier ($49/mo): Individual Page
                     </h2>
                     <p className="text-[#1b0d14]/70 text-center mb-2 max-w-2xl mx-auto">
                         Our most popular option - best value for money
@@ -808,11 +808,11 @@ export default function FeaturedDemoPage() {
                             </div>
                         </div>
 
-                        {/* AFTER - Premium Page ($79) */}
+                        {/* AFTER - Premium Page ($49/mo) */}
                         <div>
                             <div className="text-center mb-4">
                                 <span className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-4 py-2 rounded-full text-sm font-bold">
-                                    ✅ AFTER: Premium Listing ($79/mo)
+                                    ✅ AFTER: Premium Listing ($49/mo)
                                 </span>
                             </div>
                             <div className="relative">
@@ -986,11 +986,11 @@ export default function FeaturedDemoPage() {
                                         </th>
                                         <th className="text-center py-3 px-2 bg-purple-50">
                                             <span className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-2 py-1 rounded text-xs">Premium</span>
-                                            <div className="text-xs text-purple-600 mt-1 font-medium">$79/mo ⭐</div>
+                                            <div className="text-xs text-purple-600 mt-1 font-medium">$49/mo ⭐</div>
                                         </th>
                                         <th className="text-center py-3 px-2">
                                             <span className="bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-2 py-1 rounded text-xs">Spotlight</span>
-                                            <div className="text-xs text-gray-500 mt-1">$149/mo</div>
+                                            <div className="text-xs text-gray-500 mt-1">$99/mo</div>
                                         </th>
                                     </tr>
                                 </thead>
