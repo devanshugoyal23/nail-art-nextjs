@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import OptimizedImage from "@/components/OptimizedImage";
 import { SUBSCRIPTION_PLANS } from "@/config/subscriptions";
 import SalonPageComparison from "@/components/SalonPageComparison";
@@ -925,7 +924,7 @@ export default function ForSalonsPage() {
                             💬 REAL RESULTS
                         </span>
                         <h2 className="text-3xl md:text-4xl font-bold text-[#1b0d14] mb-4">
-                            "Best $29 I spend every month."
+                            &quot;Best $29 I spend every month.&quot;
                         </h2>
                         <p className="text-lg text-[#1b0d14]/70">
                             Don&apos;t take our word for it. Here&apos;s what salon owners say:
@@ -987,7 +986,7 @@ export default function ForSalonsPage() {
             <div className="bg-gradient-to-br from-[#1b0d14] via-[#2d1520] to-[#1b0d14] py-14">
                 <div className="max-w-4xl mx-auto px-4 text-center">
                     <span className="bg-red-500/20 text-red-400 px-4 py-2 rounded-full text-sm font-semibold mb-4 inline-block border border-red-500/30">
-                        ⏰ DON'T WAIT
+                        ⏰ DON&apos;T WAIT
                     </span>
                     <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
                         Your Competitors Are Getting <span className="text-[#ee2b8c]">Your Customers</span>
