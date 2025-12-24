@@ -4,7 +4,7 @@ import { SUBSCRIPTION_PLANS } from '@/config/subscriptions';
 
 const client = new DodoPayments({
     bearerToken: process.env.DODO_PAYMENTS_API_KEY,
-    environment: 'test_mode',
+    environment: 'live_mode',
 });
 
 export async function GET(request: Request) {
