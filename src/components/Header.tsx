@@ -25,7 +25,7 @@ const Header: React.FC = () => {
             </Link>
           </div>
           <div className="hidden md:block">
-            <div className="ml-10 flex items-baseline space-x-4">
+            <nav className="ml-10 flex items-center space-x-1">
               <Link href="/" className={linkClass('/')}>Home</Link>
               <Link href="/categories" className={linkClass('/categories')}>Categories</Link>
               <Link href="/try-on" className={linkClass('/try-on')}>Virtual Try-On</Link>
@@ -33,11 +33,12 @@ const Header: React.FC = () => {
               <Link href="/nail-salons" className={linkClass('/nail-salons')}>Find Salons</Link>
               <Link
                 href="/for-salons"
-                className="px-3 py-1.5 rounded-full text-sm font-semibold bg-[#ee2b8c]/10 text-[#ee2b8c] hover:bg-[#ee2b8c] hover:text-white transition-all duration-300 border border-[#ee2b8c]/30"
+                className="inline-flex items-center ml-2 px-4 py-2 rounded-full text-sm font-semibold bg-[#ee2b8c]/10 text-[#ee2b8c] hover:bg-[#ee2b8c] hover:text-white transition-all duration-300 border border-[#ee2b8c]/30 shadow-sm hover:shadow-md"
               >
-                🏪 For Salon Owners
+                <span className="mr-1.5">🏪</span>
+                <span>For Salon Owners</span>
               </Link>
-            </div>
+            </nav>
           </div>
           <div className="-mr-2 flex md:hidden">
             <button
@@ -102,10 +103,11 @@ const Header: React.FC = () => {
             </Link>
             <Link
               href="/for-salons"
-              className="block mx-2 mt-3 px-3 py-2.5 rounded-lg text-base font-semibold bg-[#ee2b8c]/10 text-[#ee2b8c] border border-[#ee2b8c]/30 text-center"
+              className="flex items-center justify-center mx-2 mt-3 px-4 py-3 rounded-xl text-base font-semibold bg-[#ee2b8c]/10 text-[#ee2b8c] border border-[#ee2b8c]/30 gap-2"
               onClick={() => setIsOpen(false)}
             >
-              🏪 For Salon Owners
+              <span>🏪</span>
+              <span>For Salon Owners</span>
             </Link>
           </div>
         </div>
