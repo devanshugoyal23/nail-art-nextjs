@@ -31,7 +31,10 @@
     "create-queue:top500": "tsx scripts/create-quality-queue.ts --limit=500",
     "create-queue:top1000": "tsx scripts/create-quality-queue.ts --limit=1000",
     "batch-enrich:queue": "tsx scripts/batch-enrich-salons.ts --queue",
-    "generate-sitemap-index": "tsx scripts/generate-enriched-sitemap-index.ts"
+    "generate-sitemap-index": "tsx scripts/generate-enriched-sitemap-index.ts",
+    "mobile:test": "node scripts/generate-mobile-optimized.js --test --dry-run",
+    "mobile:test-real": "node scripts/generate-mobile-optimized.js --test",
+    "mobile:optimize": "node scripts/generate-mobile-optimized.js"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.906.0",

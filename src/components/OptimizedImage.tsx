@@ -54,7 +54,12 @@ export default function OptimizedImage({
   preset
 }: OptimizedImageProps) {
   const { isMobile } = useMobileOptimization();
-  const [currentSrc, setCurrentSrc] = useState<string>('');
+
+  // Initialize with mobile-optimized URL immediately (SSR defaults to mobile)
+  // This prevents image flashing and ensures faster LCP
+  const initialSrc = getOptimizedImageUrl(src, true);
+  const [currentSrc, setCurrentSrc] = useState<string>(initialSrc);
+  const [hasError, setHasError] = useState(false);
 
   // Use preset if provided, otherwise use individual props
   const presetConfig = preset ? IMAGE_PRESETS[preset] : null;
@@ -62,15 +67,18 @@ export default function OptimizedImage({
   const finalHeight = presetConfig ? presetConfig.height : height;
   const finalSizes = presetConfig ? presetConfig.sizes : sizes;
 
-  // Initialize with appropriate image URL based on device
+  // Update image URL when mobile detection finalizes client-side
   useEffect(() => {
-    const optimizedSrc = getOptimizedImageUrl(src, isMobile);
-    setCurrentSrc(optimizedSrc);
-  }, [src, isMobile]);
+    if (!hasError) {
+      const optimizedSrc = getOptimizedImageUrl(src, isMobile);
+      setCurrentSrc(optimizedSrc);
+    }
+  }, [src, isMobile, hasError]);
 
   // Switch to original image if optimized image fails
   const handleImageError = () => {
-    if (currentSrc !== src) {
+    if (!hasError && currentSrc !== src) {
+      setHasError(true);
       setCurrentSrc(src);
     }
   };
@@ -86,7 +94,7 @@ export default function OptimizedImage({
       onClick={onClick}
     >
       <Image
-        src={currentSrc || getOptimizedImageUrl(src, isMobile)}
+        src={currentSrc}
         alt={alt}
         width={finalWidth}
         height={finalHeight}
@@ -95,9 +103,10 @@ export default function OptimizedImage({
         sizes={mobileSizes}
         loading={priority ? 'eager' : 'lazy'}
         quality={75}
-        // Core Web Vitals optimizations - enhanced for mobile performance
+        // fetchPriority for LCP optimization
+        fetchPriority={priority ? 'high' : 'auto'}
+        // Core Web Vitals optimizations
         data-priority={priority ? "true" : "false"}
-        // Additional mobile optimizations
         style={{
           aspectRatio: `${finalWidth} / ${finalHeight}`,
           width: '100%',
@@ -110,7 +119,7 @@ export default function OptimizedImage({
         onError={handleImageError}
         // Using unoptimized because images are served from Cloudflare R2 CDN
         // R2 already handles caching and delivery optimization
-        // This saves Vercel's image optimization quota and reduces latency
+        // Mobile WebP images are pre-generated for optimal performance
         unoptimized
       />
     </div>
