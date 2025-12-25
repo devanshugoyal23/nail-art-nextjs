@@ -1,4 +1,4 @@
-import { S3Client, PutObjectCommand, GetObjectCommand, HeadObjectCommand, ListObjectsV2Command } from '@aws-sdk/client-s3';
+import { S3Client, PutObjectCommand, GetObjectCommand, HeadObjectCommand, ListObjectsV2Command, ListObjectsV2CommandOutput, _Object } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 
 // Cloudflare R2 configuration
@@ -383,13 +383,11 @@ export async function listDataFiles(prefix: string = ''): Promise<string[]> {
         ContinuationToken: continuationToken,
       });
 
-      const response = await getR2Client().send(command);
-      // Cast response to any or ListObjectsV2CommandOutput to access specific properties
-      const data = response as any;
-      const keys = data.Contents?.map((obj: any) => obj.Key || '') || [];
+      const response = await getR2Client().send(command) as ListObjectsV2CommandOutput;
+      const keys = response.Contents?.map((obj: _Object) => obj.Key || '') || [];
       allKeys = allKeys.concat(keys);
 
-      continuationToken = data.NextContinuationToken;
+      continuationToken = response.NextContinuationToken;
     } while (continuationToken);
 
     return allKeys;

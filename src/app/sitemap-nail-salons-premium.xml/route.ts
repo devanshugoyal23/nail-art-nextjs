@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import { getCityDataFromR2 } from '@/lib/salonDataService';
 import { generateSlug, type NailSalon } from '@/lib/nailSalonService';
+import { getDataFromR2 } from '@/lib/r2Service';
+import { EnrichedSitemapIndex, IndexItem } from '../sitemap-nail-salons-enriched.xml/route';
 
 /**
  * Premium Nail Salons Sitemap - Top 2,500 Quality Salons (Tiered)
@@ -59,8 +61,10 @@ function calculateQualityScore(salon: NailSalon): number {
 /**
  * Get all salons from all cities with quality scores
  * Using imported JSON files for city data (bundled with serverless function)
+ * 
+ * DEDUPLICATION: We pass a Set of enriched URLs to skip them.
  */
-async function getAllSalonsWithScores(): Promise<SalonWithScore[]> {
+async function getAllSalonsWithScores(enrichedUrls: Set<string>): Promise<SalonWithScore[]> {
   const allSalons: SalonWithScore[] = [];
 
   try {
@@ -121,12 +125,19 @@ async function getAllSalonsWithScores(): Promise<SalonWithScore[]> {
 
         // Calculate score for each salon
         for (const salon of cityData.salons) {
+          const salonUrl = `/nail-salons/${city.stateSlug}/${city.citySlug}/${generateSlug(salon.name)}`;
+
+          // SKIP if already in enriched sitemap
+          if (enrichedUrls.has(salonUrl)) {
+            continue;
+          }
+
           const score = calculateQualityScore(salon);
 
           allSalons.push({
             ...salon,
             score,
-            url: `/nail-salons/${city.stateSlug}/${city.citySlug}/${generateSlug(salon.name)}`,
+            url: salonUrl,
             stateSlug: city.stateSlug,
             citySlug: city.citySlug
           });
@@ -156,8 +167,20 @@ export async function GET() {
     console.log('🚀 Generating premium salon sitemap...');
     const startTime = Date.now();
 
-    // Get all salons with quality scores
-    const allSalons = await getAllSalonsWithScores();
+    // 1. Fetch enriched index to identify salons to skip
+    const enrichedUrls = new Set<string>();
+    try {
+      const enrichedIndex = await getDataFromR2('nail-salons/sitemap-enriched-index.json') as EnrichedSitemapIndex | null;
+      if (enrichedIndex && Array.isArray(enrichedIndex.items)) {
+        enrichedIndex.items.forEach((item: IndexItem) => enrichedUrls.add(item.url));
+        console.log(`🧹 Found ${enrichedUrls.size} enriched salons to skip in premium sitemap.`);
+      }
+    } catch (_e) {
+      console.warn('⚠️ Could not load enriched index, skipping deduplication check.');
+    }
+
+    // 2. Get all salons with quality scores (excluding enriched ones)
+    const allSalons = await getAllSalonsWithScores(enrichedUrls);
 
     if (allSalons.length === 0) {
       console.warn('⚠️ No salons found for sitemap');

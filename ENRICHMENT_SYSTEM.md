@@ -64,6 +64,16 @@ The system follows a Three-Tier refinement process:
     npx tsx scripts/enrich-single-salon.ts "Salon Name" "City Name" "State Name"
     ```
 
+### 5. `scripts/generate-enriched-sitemap-index.ts`
+**Purpose**: Scans all enriched salon files in R2 and creates a fast, consolidated index for the sitemap. This is critical for SEO of 21,000+ enriched pages.
+
+*   **Logic**: It calculates a quality score for each salon (Rating + Review Density) to assign sitemap priorities (0.6 - 0.9).
+*   **Usage**:
+    ```bash
+    npm run generate-sitemap-index
+    ```
+*   **Benefit**: Allows the dynamic sitemap to load instantly on Vercel without hitting R2 for every request.
+
 ---
 
 ## 💎 The Enrichment Service (`geminiSalonEnrichmentService.ts`)

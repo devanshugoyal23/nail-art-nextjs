@@ -60,6 +60,10 @@ export async function GET() {
     <loc>${baseUrl}/sitemap-nail-salons-cities.xml</loc>
     <lastmod>${currentDate}</lastmod>
   </sitemap>
+  <sitemap>
+    <loc>${baseUrl}/sitemap-nail-salons-enriched.xml</loc>
+    <lastmod>${currentDate}</lastmod>
+  </sitemap>
 </sitemapindex>`;
 
   return new NextResponse(sitemapIndex, {

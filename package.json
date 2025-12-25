@@ -30,7 +30,8 @@
     "create-queue:preview": "tsx scripts/create-quality-queue.ts --dry-run",
     "create-queue:top500": "tsx scripts/create-quality-queue.ts --limit=500",
     "create-queue:top1000": "tsx scripts/create-quality-queue.ts --limit=1000",
-    "batch-enrich:queue": "tsx scripts/batch-enrich-salons.ts --queue"
+    "batch-enrich:queue": "tsx scripts/batch-enrich-salons.ts --queue",
+    "generate-sitemap-index": "tsx scripts/generate-enriched-sitemap-index.ts"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.906.0",
