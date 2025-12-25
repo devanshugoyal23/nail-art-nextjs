@@ -1,4 +1,4 @@
-import { S3Client, PutObjectCommand, GetObjectCommand, HeadObjectCommand } from '@aws-sdk/client-s3';
+import { S3Client, PutObjectCommand, GetObjectCommand, HeadObjectCommand, ListObjectsV2Command } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 
 // Cloudflare R2 configuration
@@ -369,18 +369,30 @@ export async function dataExistsInR2(key: string): Promise<boolean> {
  */
 export async function listDataFiles(prefix: string = ''): Promise<string[]> {
   try {
-    const { ListObjectsV2Command } = await import('@aws-sdk/client-s3');
 
     // Add data prefix to the search prefix
     const searchPrefix = prefix.startsWith(DATA_PREFIX) ? prefix : `${DATA_PREFIX}${prefix}`;
 
-    const command = new ListObjectsV2Command({
-      Bucket: UNIFIED_BUCKET,
-      Prefix: searchPrefix,
-    });
+    let allKeys: string[] = [];
+    let continuationToken: string | undefined = undefined;
 
-    const response = await getR2Client().send(command);
-    return response.Contents?.map(obj => obj.Key || '') || [];
+    do {
+      const command = new ListObjectsV2Command({
+        Bucket: UNIFIED_BUCKET,
+        Prefix: searchPrefix,
+        ContinuationToken: continuationToken,
+      });
+
+      const response = await getR2Client().send(command);
+      // Cast response to any or ListObjectsV2CommandOutput to access specific properties
+      const data = response as any;
+      const keys = data.Contents?.map((obj: any) => obj.Key || '') || [];
+      allKeys = allKeys.concat(keys);
+
+      continuationToken = data.NextContinuationToken;
+    } while (continuationToken);
+
+    return allKeys;
   } catch (error) {
     console.error('Error listing data files:', error);
     return [];

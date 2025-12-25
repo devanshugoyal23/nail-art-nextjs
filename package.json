@@ -19,7 +19,18 @@
     "generate-cities:fast": "node scripts/generate-cities-json.js --batch-size=15",
     "collect-salon-data": "tsx scripts/collect-salon-data.ts",
     "recollect-failed-states": "tsx scripts/recollect-failed-states.ts",
-    "enrich-salon": "tsx scripts/enrich-single-salon.ts"
+    "enrich-salon": "tsx scripts/enrich-single-salon.ts",
+    "parse-gsc": "tsx scripts/parse-gsc-pages.ts",
+    "batch-enrich": "tsx scripts/batch-enrich-salons.ts",
+    "batch-enrich:dry-run": "tsx scripts/batch-enrich-salons.ts --dry-run",
+    "batch-enrich:50": "tsx scripts/batch-enrich-salons.ts --limit=50",
+    "batch-enrich:100": "tsx scripts/batch-enrich-salons.ts --limit=100",
+    "check-enrichment": "tsx scripts/check-enrichment-status.ts",
+    "create-queue": "tsx scripts/create-quality-queue.ts",
+    "create-queue:preview": "tsx scripts/create-quality-queue.ts --dry-run",
+    "create-queue:top500": "tsx scripts/create-quality-queue.ts --limit=500",
+    "create-queue:top1000": "tsx scripts/create-quality-queue.ts --limit=1000",
+    "batch-enrich:queue": "tsx scripts/batch-enrich-salons.ts --queue"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.906.0",

@@ -33,6 +33,9 @@ import {
   getEnrichedDataFromR2,
   saveEnrichedDataToR2,
   getDataFreshness,
+  getSalonPathComponents,
+  getRawDataPath,
+  getEnrichedDataPath,
 } from '../src/lib/r2SalonStorage';
 import { fetchRawSalonData } from '../src/lib/googleMapsEnrichmentService';
 import { enrichSalonData } from '../src/lib/geminiSalonEnrichmentService';
@@ -299,10 +302,13 @@ async function main() {
   console.log(`   Total: $${(rawDataCost + enrichmentCost).toFixed(3)}`);
 
   console.log('\n📍 R2 STORAGE:\n');
-  console.log(`   Raw data path: data/nail-salons/raw/${salon.state.toLowerCase().replace(/\s+/g, '-')}/${salon.city.toLowerCase().replace(/\s+/g, '-')}/${salon.name.toLowerCase().replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-')}.json`);
-  console.log(
-    `   Enriched data path: data/nail-salons/enriched/${salon.state.toLowerCase().replace(/\s+/g, '-')}/${salon.city.toLowerCase().replace(/\s+/g, '-')}/${salon.name.toLowerCase().replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-')}.json`
-  );
+  const components = getSalonPathComponents(salon);
+  if (components) {
+    const rawPath = getRawDataPath(components.stateSlug, components.citySlug, components.salonSlug);
+    const enrichedPath = getEnrichedDataPath(components.stateSlug, components.citySlug, components.salonSlug);
+    console.log(`   Raw data path: ${rawPath}`);
+    console.log(`   Enriched data path: ${enrichedPath}`);
+  }
 
   console.log('\n✨ Next steps:\n');
   console.log('   1. View the enriched data in R2');

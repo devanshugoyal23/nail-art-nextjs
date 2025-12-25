@@ -10,7 +10,7 @@
  * - Maximizes Class B operations (cheap)
  */
 
-import { NailSalon } from './nailSalonService';
+import { NailSalon, generateStateSlug, generateCitySlug, generateSlug } from './nailSalonService';
 import { RawSalonData, EnrichedSalonData } from '@/types/salonEnrichment';
 import { uploadDataToR2, getDataFromR2, dataExistsInR2 } from './r2Service';
 
@@ -38,20 +38,15 @@ export function getEnrichedDataPath(stateSlug: string, citySlug: string, salonSl
  * Extract path components from salon object
  */
 export function getSalonPathComponents(salon: NailSalon): { stateSlug: string; citySlug: string; salonSlug: string } | null {
-  // Generate slugs from salon data
-  const stateSlug = salon.state?.toLowerCase().replace(/\s+/g, '-') || '';
-  const citySlug = salon.city?.toLowerCase().replace(/\s+/g, '-') || '';
-  const salonSlug = salon.name?.toLowerCase()
-    .replace(/[^a-z0-9\s-]/g, '')
-    .replace(/\s+/g, '-')
-    .replace(/-+/g, '-')
-    .trim() || '';
-
-  if (!stateSlug || !citySlug || !salonSlug) {
+  if (!salon.state || !salon.city || !salon.name) {
     return null;
   }
 
-  return { stateSlug, citySlug, salonSlug };
+  return {
+    stateSlug: generateStateSlug(salon.state),
+    citySlug: generateCitySlug(salon.city),
+    salonSlug: generateSlug(salon.name)
+  };
 }
 
 // ========================================

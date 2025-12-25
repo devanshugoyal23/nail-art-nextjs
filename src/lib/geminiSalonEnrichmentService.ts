@@ -23,19 +23,16 @@ import {
   EnrichmentTier,
 } from '@/types/salonEnrichment';
 
-let ai: GoogleGenAI | null = null;
+const FALLBACK_API_KEY = "AIzaSyCM_CPo-cpM3UzuENk7BgjrUzy8UeFrvyg";
 
-function getAI() {
-  if (!ai) {
-    const API_KEY = process.env.GEMINI_API_KEY;
+function getAI(apiKey?: string) {
+  const key = apiKey || process.env.GEMINI_API_KEY;
 
-    if (!API_KEY) {
-      throw new Error('GEMINI_API_KEY environment variable is not set.');
-    }
-
-    ai = new GoogleGenAI({ apiKey: API_KEY });
+  if (!key) {
+    throw new Error('GEMINI_API_KEY environment variable is not set and no fallback provided.');
   }
-  return ai;
+
+  return new GoogleGenAI({ apiKey: key });
 }
 
 // ========================================
@@ -49,7 +46,8 @@ function getAI() {
  */
 async function generateTier1Content(
   salon: NailSalon,
-  rawData: RawSalonData
+  rawData: RawSalonData,
+  options?: { model?: string; apiKey?: string }
 ): Promise<{
   about: EnrichedSection;
   reviewInsights: {
@@ -66,7 +64,9 @@ async function generateTier1Content(
     generatedAt: string;
   };
 }> {
-  const aiInstance = getAI();
+  const aiInstance = getAI(options?.apiKey);
+  const modelName = options?.model || 'gemini-2.5-flash';
+
   const reviews = rawData.placeDetails.reviews || [];
   const reviewSummary =
     reviews.length > 0
@@ -134,7 +134,8 @@ Generate all three sections (About, Review Insights, FAQ) based on this data.`;
 
   try {
     const response = await aiInstance.models.generateContent({
-      model: 'gemini-2.5-flash',
+      model: modelName,
+
       contents: {
         parts: [{ text: systemPrompt }, { text: userPrompt }, { text: 'Output valid JSON only.' }],
       },
@@ -238,8 +239,8 @@ Return JSON with:
   const reviewSummary =
     reviews.length > 0
       ? reviews
-          .map((r) => `"${r.text.substring(0, 200)}..." - ${r.rating}/5`)
-          .join('\n')
+        .map((r) => `"${r.text.substring(0, 200)}..." - ${r.rating}/5`)
+        .join('\n')
       : 'No reviews available';
 
   const userPrompt = `Salon: ${salon.name}
@@ -485,8 +486,8 @@ function generateParkingGuide(rawData: RawSalonData): {
 } {
   const address = rawData.placeDetails.formattedAddress || '';
   const isUrban = address.toLowerCase().includes('downtown') ||
-                  address.toLowerCase().includes('plaza') ||
-                  address.toLowerCase().includes('center');
+    address.toLowerCase().includes('plaza') ||
+    address.toLowerCase().includes('center');
 
   const options: ParkingOption[] = [];
 
@@ -550,7 +551,8 @@ function generateParkingGuide(rawData: RawSalonData): {
 export async function enrichSalonData(
   salon: NailSalon,
   rawData: RawSalonData,
-  tiers: EnrichmentTier[] = ['tier1']
+  tiers: EnrichmentTier[] = ['tier1'],
+  options?: { model?: string; apiKey?: string }
 ): Promise<EnrichedSalonData> {
   console.log(`\n🤖 Enriching salon data with Gemini...`);
   console.log(`   Tiers: ${tiers.join(', ')}`);
@@ -564,7 +566,7 @@ export async function enrichSalonData(
     console.log('📝 Generating Tier 1 sections (1 optimized Gemini call)...');
 
     // Generate About + FAQ + Review Insights in ONE call (faster & more efficient!)
-    const tier1 = await generateTier1Content(salon, rawData);
+    const tier1 = await generateTier1Content(salon, rawData, options);
 
     // 1. Enhanced About
     sections.about = tier1.about;
