@@ -86,6 +86,66 @@ const Footer: React.FC = () => {
 
         <div className="mt-8 flex flex-col items-center justify-between gap-4 border-t border-[#ee2b8c]/20 pt-8 md:flex-row">
           <p className="text-sm text-[#1b0d14]/70">© 2025 NailArt AI. All rights reserved.</p>
+          <div className="flex items-center gap-4 flex-wrap justify-center">
+            <a href="https://startupfa.me/s/nail-art-ai?utm_source=nailartai.app" target="_blank" rel="noopener noreferrer">
+              <img
+                src="https://startupfa.me/badges/featured-badge-small.webp"
+                alt="Nail Art AI - Featured on Startup Fame"
+                width={224}
+                height={36}
+              />
+            </a>
+            <a href="https://twelve.tools" target="_blank" rel="noopener noreferrer">
+              <img
+                src="https://twelve.tools/badge0-white.svg"
+                alt="Featured on Twelve Tools"
+                width={200}
+                height={54}
+              />
+            </a>
+            <a href="https://wired.business" target="_blank" rel="noopener noreferrer">
+              <img
+                src="https://wired.business/badge0-white.svg"
+                alt="Featured on Wired Business"
+                width={200}
+                height={54}
+              />
+            </a>
+            <a href="https://turbo0.com/item/nail-art-ai" target="_blank" rel="noopener noreferrer">
+              <img
+                src="https://img.turbo0.com/badge-listed-light.svg"
+                alt="Listed on Turbo0"
+                style={{ height: 54, width: 'auto' }}
+              />
+            </a>
+            <a href="https://findly.tools/nail-art-ai?utm_source=nail-art-ai" target="_blank" rel="noopener noreferrer">
+              <img
+                src="https://findly.tools/badges/findly-tools-badge-light.svg"
+                alt="Featured on findly.tools"
+                width={150}
+              />
+            </a>
+            <a href="https://fazier.com/launches/nailartai.app" target="_blank" rel="noopener noreferrer">
+              <img
+                src="https://fazier.com/api/v1//public/badges/launch_badges.svg?badge_type=launched&theme=neutral"
+                alt="Fazier badge"
+                width={120}
+              />
+            </a>
+            <a href="https://auraplusplus.com/projects/ai-virtual-nail-art-try-on" target="_blank" rel="noopener noreferrer">
+              <img
+                src="https://auraplusplus.com/images/badges/featured-on-light.svg"
+                alt="Featured on Aura++"
+              />
+            </a>
+            <a href="https://www.verifiedtools.info" target="_blank" rel="noopener noreferrer">
+              <img
+                src="https://www.verifiedtools.info/badge.png"
+                alt="Verified on Verified Tools"
+                width={120}
+              />
+            </a>
+          </div>
           <div className="flex space-x-4 text-[#1b0d14]/70">
             <a className="hover:text-[#ee2b8c] transition-colors" href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">Instagram</a>
             <a className="hover:text-[#ee2b8c] transition-colors" href="https://www.pinterest.com/nailartaiapp/" target="_blank" rel="noopener noreferrer" aria-label="Pinterest">Pinterest</a>
